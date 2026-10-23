@@ -1,0 +1,26 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.5.3",
+  "stored_versions": {
+    "perl": "v5.34.1",
+    "pod_simple": "3.42"
+  },
+  "missing_runtime": {
+    "implementation": "cpython",
+    "implementation_version": [
+      3,
+      14,
+      7,
+      "final",
+      0
+    ],
+    "language_version": [
+      3,
+      14,
+      7,
+      "final",
+      0
+    ]
+  },
+  "generator_source_sha256": "883d85b35a36788b5d6c865612caaf3bd6d75d0a58e480b41e75d46b060d8f33",
+  "gap": "Current capture_inputs records Perl/Pod versions but omits the Python runtime; .5.3 must bind it before final closure."
+}

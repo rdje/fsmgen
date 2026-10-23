@@ -30,6 +30,9 @@ generation result is not JSON-safe. Use the documented normalized reports for
 external consumers. The MCP adapter exposes its documented read-only query
 subset; VIAL tooling's plan/run operations have a separate host boundary.
 
+The book search covers the manual and this guide. Use the API index, coverage
+list or browser Find to navigate the standalone module pages.
+
 ## Build and preview
 
 Normal HTML builds and previews generate and validate the reference
@@ -87,5 +90,20 @@ symlinks and foreign repository/volume paths are refused. Resolve any unowned
 content deliberately; the generator will not delete it. Simultaneous generator
 invocations fail clearly rather than modifying the output concurrently.
 
-The book search covers the manual and this guide. Use the API index, coverage
-list or browser Find to navigate the standalone module pages.
+## Check the documented examples
+
+The existing CI Python fixture job discovers the POD example suite. It executes
+the selected guides' actual SYNOPSIS programs and checks concrete public
+results, source identities and their agreement with the book's entry-point list.
+Run the same checker from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B scripts/check_pod_api_examples.py
+```
+
+Keep each selected SYNOPSIS as one complete Perl program indented by four
+spaces. New selected entry points need an explicit result check. Each invocation
+uses a unique repository-local workspace. Failed programs and raw stdout/stderr
+are retained at the printed relative evidence path; successful temporary
+workspaces are removed. The checker offers a per-program `--timeout` option.
+Reference rendering and normal book builds do not execute these programs.

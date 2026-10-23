@@ -98,20 +98,20 @@ HIAL, claim, locality, or source-feature signoff gates.
   Goal: `Make POD reference discovery durable within the existing Knowledge Map bounds.`
   Acceptance: `Add an atomic dated POD reference signpost. Preserve every existing fact/question and exact historical retrieval while removing the redundant fact-directory installer README pointer and retaining its full authoring guidance at the bundle entrypoint. Copy-edit only redundant wording in the related historical mdBook card as needed; retain all source meanings, metadata and questions with explicit before/after evidence and adverse controls. Do not raise any Knowledge Map allowance/ceiling. Prove query/parity/current-source checks and commit.`
   Verification: `New atomic signpost/query resolves to the canonical API guide. Whole Git-archive/source membership and bytes preserve every other card; contained historical card retains identical metadata/questions and all reviewed body meanings. Every old query row survives, with exactly the new POD question added. Actual omission/owner/location/metadata controls reject. Collection remains within its unchanged authority; no allowance or ceiling changes. Knowledge Map parity/check passes; unchanged historical saved reader verifies exact book recovery while worker/operational admission stays false and owned by HIAL.`
-  Commit: `pending`
+  Commit: `62a314b7f`
 
 - ID: `PERL-POD-API-REFERENCE.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Guard actual facade POD examples in the existing CI fixture workflow.`
   Acceptance: `Promote the checked synopsis runner to a canonical script with isolated same-volume workspaces, retain the dated audit command as a compatibility route, and add a meaningful CI-discovered actual-example check. Execute source snippets and validate concrete public results, not copied headings or only exit codes. Keep runtime execution separate from documentation rendering, preserve previous capture identities and verify genuine malformed/invalid example controls before committing.`
-  Verification: `pending discovery closure`
-  Commit: `pending`
+  Verification: `Canonical isolated checker and existing audit compatibility command execute all six actual synopses with concrete result checks; evidence bytes match the prior real capture. The existing CI glob discovers seven example controls; all 19 generator/example tests and three relevant Perl contract files pass. Exact old-observer reproduction accepts counterfeit Boolean version true; current checker refuses it while accepting numeric 1 and 1.0. Timeout/invalid-program/wrong-result/stderr controls retain exact failure evidence.`
+  Commit: `PERL-POD-API-REFERENCE.5.2: guard executable POD examples in CI`
 
 - ID: `PERL-POD-API-REFERENCE.5.3`
   Status: `pending`
   Goal: `Close complete POD reference qualification and restore the saved feature frontier.`
-  Acceptance: `Independently rejoin all source/POD/selected-facade populations to final generated/copied/native links, check examples, output freshness, no-write reuse, relevant regression and current book/source/index/doctrine contracts. Retain limits and original failures, commit the clean delivery, and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2. No unqualified push or closure of separately owned legacy/manual/historical gates.`
-  Verification: `pending CI example guard`
+  Acceptance: `Bind the generating Python runtime identity into the cache fingerprint with a genuine missing/stale-runtime RED/GREEN control. Independently rejoin all source/POD/selected-facade populations to final generated/copied/native links, check examples, output freshness, no-write reuse, relevant regression and current book/source/index/doctrine contracts. Retain limits and original failures, commit the clean delivery, and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2. No unqualified push or closure of separately owned legacy/manual/historical gates.`
+  Verification: `Python-runtime fingerprint omission recorded by .5.2; actual current manifest/tool identity retained in runtime-fingerprint-before.json. Repair and qualification pending.`
   Commit: `pending`
 
 ## Decisions
@@ -331,3 +331,31 @@ HIAL, claim, locality, or source-feature signoff gates.
   signpost boundary. With the relocated authoring instruction, the complete
   README is smaller than its committed predecessor. No ancillary allowance
   or ceiling increases; the complete first failure remains retained.
+
+
+## Acceptance Checklist — .5.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'manifest_schema_version' -1 -- docs/audits/pod-api-20261023/check_examples.py` identifies cfb13b284, the original audit-only observer. It used Python equality for numeric schema versions, accepted any nonempty VIAL object, reused a fixed workspace, and was absent from fixture discovery. The exact Git-recovered observer really accepts counterfeit true as version 1; the current checker rejects that payload at the intended result predicate. No product API emitted the counterfeit payload.
+- [x] **ADDRESSED (verified)** — Canonical checker executes actual source synopses in unique same-volume workspaces, checks concrete typed results/source hashes, rejects stderr and bounds each process. Failure evidence survives; successful exact workspaces are removed. The existing CI fixture glob discovers the actual-example/guide-population join plus malformed/result/Boolean/numeric/stderr/timeout controls. The audit compatibility command returns byte-identical evidence for the real prior capture.
+- [x] **NO REGRESSION** — The 19 real generator/example tests pass; the broader actual Perl facade cohort reports All tests successful. Files=3, Tests=13. Compressed raw outputs are retained, and native book/source/index/delivery plus staged doctrine checks are required before this commit.
+
+### .5.2 evidence and successor ownership
+
+- Re-derivation executes the actual source programs; falsification executes
+  malformed Perl, a successful wrong-result process, Boolean/numeric payloads,
+  unexpected stderr and a timed-out process. Durable source/program identities,
+  complete old producer and controlled payload/output bytes are retained in
+  previous-observer-probe.json and its executable producer. These are distinct
+  legs; a zero exit code alone is never the result oracle.
+- example-runner-conservation.json joins the complete successful evidence bytes
+  to the .3 capture. It does not claim that arbitrary old observer predicates
+  were sufficient. The stronger VIAL check joins the typed report and actual
+  source content hash; the Boolean repair preserves integral numeric spellings.
+- Qualification also finds that capture_inputs fingerprints Perl/Pod versions
+  but omits the generating Python runtime. runtime-fingerprint-before.json
+  retains the actual manifest versions and generator source identity. The
+  reproducibility gap is owned and scheduled in immediate successor .5.3 with
+  a missing/stale-runtime control; no cache-version claim is closed here.
+- Example execution stays separate from rendering. Existing CI workflow
+  discovery needs no new job or workflow policy; hosted execution itself has
+  not occurred and existing publication gates remain unchanged.

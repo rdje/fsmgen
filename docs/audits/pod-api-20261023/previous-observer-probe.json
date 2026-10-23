@@ -1,0 +1,72 @@
+{
+  "cases": [
+    {
+      "case": "integer",
+      "current_accepted": true,
+      "current_error": null,
+      "current_evidence": [
+        {
+          "exit_status": 0,
+          "module": "FSM::Support::CapabilityManifest",
+          "observation": "expected public result accepted",
+          "snippet_sha256": "53e0c29554cb6196f0695f81854e3ff439eac31b06ecbc95164652e6c54fdb37",
+          "source": "perl/FSM/Support/CapabilityManifest.pm",
+          "source_sha256": "069ac2eae4e7908fdc1122ea06d680b3da36a0b7a09103f0e163db9db1b49abd"
+        }
+      ],
+      "current_failed_members": {},
+      "fixture_source": "package FSM::Support::CapabilityManifest;\n1;\n__END__\n\n=head1 SYNOPSIS\n\n    use FSM::Support::CapabilityManifest;\n    print '{\"manifest_schema_version\":1,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}';\n\n=cut\n",
+      "payload": "{\"manifest_schema_version\":1,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}",
+      "previous_exit_status": 0,
+      "previous_stderr": "",
+      "previous_stdout": "[\n  {\n    \"exit_status\": 0,\n    \"module\": \"FSM::Support::CapabilityManifest\",\n    \"observation\": \"expected public result accepted\",\n    \"snippet_sha256\": \"53e0c29554cb6196f0695f81854e3ff439eac31b06ecbc95164652e6c54fdb37\",\n    \"source\": \"perl/FSM/Support/CapabilityManifest.pm\",\n    \"source_sha256\": \"069ac2eae4e7908fdc1122ea06d680b3da36a0b7a09103f0e163db9db1b49abd\"\n  }\n]\n"
+    },
+    {
+      "case": "integral_number",
+      "current_accepted": true,
+      "current_error": null,
+      "current_evidence": [
+        {
+          "exit_status": 0,
+          "module": "FSM::Support::CapabilityManifest",
+          "observation": "expected public result accepted",
+          "snippet_sha256": "ce7a900409b1a4087474501c7cbcc81080819eea7bfcdc2df834b4aaf4eda380",
+          "source": "perl/FSM/Support/CapabilityManifest.pm",
+          "source_sha256": "6bddd0452cab67e8b3fe0ccac10277e99f28d4f2b3c59a6ed5ea9de17e29951f"
+        }
+      ],
+      "current_failed_members": {},
+      "fixture_source": "package FSM::Support::CapabilityManifest;\n1;\n__END__\n\n=head1 SYNOPSIS\n\n    use FSM::Support::CapabilityManifest;\n    print '{\"manifest_schema_version\":1.0,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}';\n\n=cut\n",
+      "payload": "{\"manifest_schema_version\":1.0,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}",
+      "previous_exit_status": 0,
+      "previous_stderr": "",
+      "previous_stdout": "[\n  {\n    \"exit_status\": 0,\n    \"module\": \"FSM::Support::CapabilityManifest\",\n    \"observation\": \"expected public result accepted\",\n    \"snippet_sha256\": \"ce7a900409b1a4087474501c7cbcc81080819eea7bfcdc2df834b4aaf4eda380\",\n    \"source\": \"perl/FSM/Support/CapabilityManifest.pm\",\n    \"source_sha256\": \"6bddd0452cab67e8b3fe0ccac10277e99f28d4f2b3c59a6ed5ea9de17e29951f\"\n  }\n]\n"
+    },
+    {
+      "case": "boolean",
+      "current_accepted": false,
+      "current_error": "FSM::Support::CapabilityManifest: expected numeric manifest schema version 1\nEvidence retained: .artifacts/tmp/pod-api-examples-ikhp6pg6",
+      "current_evidence": null,
+      "current_failed_members": {
+        "FSM-Support-CapabilityManifest.pl": "use FSM::Support::CapabilityManifest;\nprint '{\"manifest_schema_version\":true,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}';\n",
+        "FSM-Support-CapabilityManifest.pm.source": "package FSM::Support::CapabilityManifest;\n1;\n__END__\n\n=head1 SYNOPSIS\n\n    use FSM::Support::CapabilityManifest;\n    print '{\"manifest_schema_version\":true,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}';\n\n=cut\n",
+        "FSM-Support-CapabilityManifest.stderr": "",
+        "FSM-Support-CapabilityManifest.stdout": "{\"manifest_schema_version\":true,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}",
+        "completed-examples.json": "[]\n"
+      },
+      "fixture_source": "package FSM::Support::CapabilityManifest;\n1;\n__END__\n\n=head1 SYNOPSIS\n\n    use FSM::Support::CapabilityManifest;\n    print '{\"manifest_schema_version\":true,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}';\n\n=cut\n",
+      "payload": "{\"manifest_schema_version\":true,\"embedding\":{\"hdl_generator_facade\":{\"method_names\":[\"new\",\"generate_hdl_from_file\"]}}}",
+      "previous_exit_status": 0,
+      "previous_stderr": "",
+      "previous_stdout": "[\n  {\n    \"exit_status\": 0,\n    \"module\": \"FSM::Support::CapabilityManifest\",\n    \"observation\": \"expected public result accepted\",\n    \"snippet_sha256\": \"15d5f4114293418c9c19d0cb01c9a31aa511d3dac821850bb102222f55a99489\",\n    \"source\": \"perl/FSM/Support/CapabilityManifest.pm\",\n    \"source_sha256\": \"93d9b2a493da5c0d6eac3e549976b5a976b9f106c10c95b61844f80eb8bccf12\"\n  }\n]\n"
+    }
+  ],
+  "current_checker_sha256": "2f354832d2e0a685cfdb8a6ae90f59b8790c0409dbba8bf22e18c1b43530d177",
+  "exact_disposable_workspace_removed": true,
+  "original_producer": "#!/usr/bin/env python3\n\"\"\"Execute the actual facade POD synopses with repository-local artifacts.\"\"\"\nimport hashlib\nimport json\nfrom pathlib import Path\nimport subprocess\n\nroot = Path(__file__).resolve().parents[3]\nassert Path.cwd().resolve() == root, 'Run from the repository root'\nwork = root / '.artifacts/pod-api/examples'\nwork.mkdir(parents=True, exist_ok=True)\nentries = json.loads((root / 'docs/pod-api-entrypoints.json').read_text())\nevidence = []\nfor module in entries:\n    path = Path('perl/' + module.replace('::', '/') + '.pm')\n    raw = path.read_bytes()\n    section = raw.decode().split('=head1 SYNOPSIS\\n', 1)[1].split('=head1 ', 1)[0].split('=cut', 1)[0]\n    snippet = '\\n'.join(line[4:] for line in section.splitlines() if line.startswith('    ')) + '\\n'\n    assert 'use FSM::' in snippet, module\n    script = work / (module.replace('::', '-') + '.pl')\n    script.write_text(snippet)\n    result = subprocess.run(['perl', '-Iperl', str(script.relative_to(root))],\n                            cwd=root, capture_output=True)\n    (script.with_suffix('.stdout')).write_bytes(result.stdout)\n    (script.with_suffix('.stderr')).write_bytes(result.stderr)\n    assert result.returncode == 0, (module, result.returncode, result.stderr.decode(errors='replace'))\n    text = result.stdout.decode('utf-8')\n    if module == 'FSM::Adapter::ISF':\n        assert text.strip() == 'i2c_master'\n    elif module == 'FSM::Pipeline::HDLGenerator':\n        assert 'module ahb_lite_subordinate' in text and 'endmodule' in text\n    elif module == 'FSM::Scheduler::ISF':\n        report = json.loads(text)\n        assert report['scheduled_fsm'] == 'i2c_master.fsm' and report['schema_version'] == 1\n    elif module == 'FSM::Support::CapabilityManifest':\n        manifest = json.loads(text)\n        assert manifest['manifest_schema_version'] == 1\n        assert manifest['embedding']['hdl_generator_facade']['method_names'] == ['new', 'generate_hdl_from_file']\n    elif module == 'FSM::Support::SemanticIntrospectionMCPAdapter':\n        response = json.loads(text)\n        assert response['jsonrpc'] == '2.0' and response['id'] == 1\n        assert 'fsmgen_vial_inspect' in [tool['name'] for tool in response['result']['tools']]\n    elif module == 'FSM::VIAL::Tool':\n        inspection = json.loads(text)\n        assert isinstance(inspection, dict) and inspection\n    else:\n        raise AssertionError('Unqualified synopsis: ' + module)\n    evidence.append({'module': module, 'source': path.as_posix(),\n                     'source_sha256': hashlib.sha256(raw).hexdigest(),\n                     'snippet_sha256': hashlib.sha256(snippet.encode()).hexdigest(),\n                     'exit_status': result.returncode, 'observation': 'expected public result accepted'})\nprint(json.dumps(evidence, indent=2, sort_keys=True))\n",
+  "original_producer_path": "docs/audits/pod-api-20261023/check_examples.py",
+  "original_producer_revision": "cfb13b284302c1d0c48b14739fe09add6612c61e",
+  "original_producer_sha256": "9319e160ce4e9200da5c4881a0a0e339301a0e38eb1e521dbc15b99d61cb7d39",
+  "probe_sha256": "4dad42a9d22dd488b92bb3bc5697a2594ebd2642532ea1fcef82b712bfa29e31",
+  "scope": "Synthetic POD programs exercise observer result predicates; no product API emits these counterfeit payloads."
+}

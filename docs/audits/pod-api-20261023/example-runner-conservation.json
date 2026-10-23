@@ -1,0 +1,7 @@
+{
+  "prior_capture": "docs/audits/pod-api-20261023/examples-evidence.json",
+  "current_checker": "scripts/check_pod_api_examples.py",
+  "compatibility_command": "docs/audits/pod-api-20261023/check_examples.py",
+  "all_module_source_program_status_observation_bytes_equal": true,
+  "evidence_sha256": "e8e5349e3cc4eccf99052213addcbef558dc0e74dd025b20a4be77477d5ac38a"
+}
