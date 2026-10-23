@@ -44,12 +44,22 @@ prove that a file exists or supports the requested query. See the
 for the separate VIAL inspection and version-selection boundaries.
 
 `fsmgen_explain_diagnostic` accepts optional integer `limit_examples` alongside
-required `code`. Use 1 through 100; omitted, zero and negative limits select
-10. The support-summary tool treats zero as no samples. Matching catalog
+required `code`. Omitted, zero and negative limits select 10. Positive limits
+cap at 100, including large integral numbers such as `1e30`. Matching catalog
 entries can be fewer than the limit, including none; reading them does not
 execute the examples. See the
-[diagnostic sample limits](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DIAGNOSTIC_SAMPLE_LIMITS)
-and the current large-integer caveat below.
+[catalog sample limits](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DIAGNOSTIC_SAMPLE_LIMITS).
+
+| Tool limit | Omitted or negative | Zero | Positive |
+| --- | --- | --- | --- |
+| Diagnostic `limit_examples` | 10 | 10 | Capped at 100 |
+| Support-summary `limit_examples` | 10 | No samples | Capped at 100 |
+| Source-discovery `limit` | 25 | No sources | Capped at 100 |
+| Example `limit` | 25 | 25 | No numeric cap; at most the matching catalog |
+
+Limits preserve catalog order and leave full-population aggregates intact.
+Discovery and example results report the effective limit and returned count;
+diagnostic and support results carry sample arrays. Resource reads use defaults.
 
 `fsmgen_capability_query` returns an object. Selected sections normally use
 `{section, payload}`; the manifest version is an integer payload, while other
@@ -80,7 +90,6 @@ reference and its drift checks remain under qualification.
 
 | Surface | Current discrepancy |
 | --- | --- |
-| Metadata limits | Very large JSON integers such as `1e30` can select the default sample limit instead of the cap; use positive limits from 1 through 100 until repaired |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
 | VIAL tool versions | Some numeric strings are accepted despite the integer schema; supply JSON integers |
 | Embedded caller data | Invalid numbers supplied to source identity string fields can change kind in later copies of a caller's request; use the declared kinds while this is repaired |

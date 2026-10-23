@@ -212,7 +212,7 @@ sub list_tools {
                 'Discover catalog-backed repo/workspace-relative source identities without workspace traversal.',
                 {
                     query => { type => 'string', description => 'Optional case-insensitive substring matched against public catalog identity and support fields.' },
-                    limit => { type => 'integer', description => 'Maximum number of sources to return; default 25.' },
+                    limit => { type => 'integer', description => 'Maximum sources: omitted or negative selects 25; zero returns none; positive values cap at 100.' },
                     file_kind => { type => 'string', description => 'Optional exact source file kind: fsm, isf, ppif, axi, apb, ahb or vial.' },
                     source_kind => { type => 'string', description => 'Optional exact support-catalog source_kind filter.' },
                     classification => { type => 'string', description => 'Optional exact support-catalog classification filter.' },
@@ -226,7 +226,7 @@ sub list_tools {
                 'Find repo-relative documentation and corpus examples from the manifest/support catalog.',
                 {
                     query => { type => 'string', description => 'Optional case-insensitive substring matched against ids and repo-relative paths.' },
-                    limit => { type => 'integer', description => 'Maximum number of catalog examples to return; default 25.' },
+                    limit => { type => 'integer', description => 'Maximum catalog examples: omitted, zero or negative selects 25; positive values have no numeric cap.' },
                 },
                 [],
                 _examples_output_schema(),
@@ -237,7 +237,7 @@ sub list_tools {
                 'Explain a stable FSMGen diagnostic code from the manifest registry.',
                 {
                     code => { type => 'string', description => 'Stable diagnostic code to explain.' },
-                    limit_examples => { type => 'integer', description => 'Sample limit: omitted, zero or negative selects 10. Use 1..100; larger values cap at 100, except very large integers can currently select 10.' },
+                    limit_examples => { type => 'integer', description => 'Sample limit: omitted, zero or negative selects 10; positive values cap at 100.' },
                 },
                 ['code'],
                 _diagnostic_output_schema(),
@@ -247,7 +247,7 @@ sub list_tools {
                 'fsmgen_support_summary',
                 'Return a bounded support-accounting summary with optional example samples.',
                 {
-                    limit_examples => { type => 'integer', description => 'Maximum number of sample catalog entries to include; default 10.' },
+                    limit_examples => { type => 'integer', description => 'Maximum samples: omitted or negative selects 10; zero returns none; positive values cap at 100.' },
                 },
                 [],
                 _support_summary_output_schema(),
@@ -640,7 +640,7 @@ sub _examples_payload {
     my $manifest = $self->_manifest;
     my $query = lc($arguments->{query} // '');
     my $limit = $arguments->{limit} || 25;
-    $limit = 25 unless $limit =~ /\A\d+\z/ && $limit > 0;
+    $limit = 25 unless _is_json_integer($limit) && $limit > 0;
 
     my @entries = @{$manifest->{support_accounting}{catalog_entries} || []};
     if (length $query) {
@@ -875,7 +875,7 @@ sub _catalog_entry_sample {
 sub _bounded_limit {
     my ($value, $default) = @_;
     $default = 10 unless defined($default);
-    return $default unless defined($value) && $value =~ /\A\d+\z/;
+    return $default unless _is_json_integer($value) && $value >= 0;
     return 0 if $value == 0;
     return 100 if $value > 100;
     return $value;
@@ -1449,8 +1449,8 @@ present and string-valued; an unknown string code still produces the semantic
 lookup error, while a missing code or numeric code is an invalid parameter.
 String fields accept strings that look numeric; integer fields reject quoted
 numbers, Booleans and fractional numbers. Integral number spellings such as
-C<1.0> and C<1e0> are integers. Admission does not change each operation's
-sample-limit policy; see L</DIAGNOSTIC SAMPLE LIMITS> for its current caveat.
+C<1.0> and C<1e0> are integers. Each operation has its own sample-limit policy;
+see L</DIAGNOSTIC SAMPLE LIMITS>.
 Metadata admission preserves the caller's request values and kinds through
 later copies. Resource reads and capability aliases keep their own contracts.
 
@@ -1486,11 +1486,39 @@ C<diagnostic_code> matches it. Unknown or missing codes are refused. This is a
 metadata lookup; it does not execute those examples or diagnose a source.
 
 The optional integer C<limit_examples> selects the maximum sample count.
-Omission, zero or a negative value selects the default of 10. Use positive
-values from 1 through 100; larger limits are capped at 100, with a current
-compatibility defect for very large integers such as C<1e30>, which can select
-the default instead. Until that repair, use the documented 1-through-100 range.
-The separate C<fsmgen_support_summary> operation treats zero as no samples.
+Omission, zero or a negative value selects the default of 10. Positive limits
+are capped at 100, including large integral numbers such as C<1e30>.
+
+The metadata operations deliberately have different policies:
+
+=over 4
+
+=item C<fsmgen_explain_diagnostic.limit_examples>
+
+Omitted, zero or negative selects 10; positive values cap at 100.
+
+=item C<fsmgen_support_summary.limit_examples>
+
+Omitted or negative selects 10; zero returns no samples; positive values cap at 100.
+
+=item C<fsmgen_discover_sources.limit>
+
+Omitted or negative selects 25; zero returns no sources; positive values cap at 100.
+
+=item C<fsmgen_find_examples.limit>
+
+Omitted, zero or negative selects 25. Positive values have no numeric cap;
+a sufficiently large value returns all matching catalog entries.
+
+=back
+
+All supplied limits must be JSON integers, including mathematically integral
+decimal or exponent spellings. Quoted numbers, Booleans, null and fractions are
+invalid parameters. Limits count catalog records, preserve catalog order and
+do not change full-population aggregates. Discovery and example results expose
+the effective C<limit> and actual C<returned_count>; diagnostic and support
+results expose their sample arrays. Resource reads use their default limits;
+select a limit through the corresponding tool's arguments.
 
 Actual samples can be fewer than the selected maximum, including an empty
 array when no catalog entry matches the code. Samples follow catalog order;

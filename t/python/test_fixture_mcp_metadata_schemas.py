@@ -19,6 +19,11 @@ CODE = 'FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE'
 FIELDS = ('id', 'relpath', 'family', 'classification', 'coverage', 'source_kind',
           'strict_supported', 'diagnostic_code')
 LIMITS = ((None, 10), (0, 10), (1, 1), (2, 2), (100, 100), (101, 100), (-1, 10))
+SAMPLE_OPERATIONS = (('fsmgen_explain_diagnostic', 'limit_examples', {'code': CODE}),
+                     ('fsmgen_support_summary', 'limit_examples', {}),
+                     ('fsmgen_discover_sources', 'limit', {}),
+                     ('fsmgen_find_examples', 'limit', {}))
+SAMPLE_LIMITS = ('omitted', 0, -1, 1, 100, 101, 1e30, 1e300)
 
 
 class MetadataClient:
@@ -66,7 +71,42 @@ def capture_capability(server):
     return client.exchanges
 
 
+def capture_limits(server):
+    client = MetadataClient(server)
+    client.call('tools/list')
+    client.call('resources/read', {'uri': 'fsmgen://capabilities'})
+    for name, field, extra in SAMPLE_OPERATIONS:
+        for limit in SAMPLE_LIMITS:
+            arguments = dict(extra)
+            if limit != 'omitted':
+                arguments[field] = limit
+            client.call('tools/call', {'name': name, 'arguments': arguments})
+    return client.exchanges
+
+
 class MCPMetadataSchemaTest(unittest.TestCase):
+    def test_large_integer_limits_keep_each_live_catalog_policy(self):
+        with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
+            exchanges = capture_limits(server)
+        manifest = json.loads(exchanges[2]['response']['result']['contents'][0]['text'])
+        calls = exchanges[3:]
+        self.assertEqual(len(calls), 4 * len(SAMPLE_LIMITS))
+        for offset, (name, _, _) in enumerate(SAMPLE_OPERATIONS):
+            results = {limit: calls[offset * len(SAMPLE_LIMITS) + i]['response']['result']
+                       for i, limit in enumerate(SAMPLE_LIMITS)}
+            for limit, result in results.items():
+                self.assertIs(result['isError'], False)
+                self.assertEqual(_reader.encoded(json.loads(result['content'][0]['text'])),
+                                 _reader.encoded(result['structuredContent']))
+                if name != 'fsmgen_find_examples' and limit in (101, 1e30, 1e300):
+                    self.assertEqual(_reader.encoded(result), _reader.encoded(results[100]))
+            if name == 'fsmgen_find_examples':
+                for limit in (1e30, 1e300):
+                    wanted = dict(results['omitted']['structuredContent'], limit=limit,
+                                  returned_count=len(manifest['support_accounting']['catalog_entries']),
+                                  catalog_entries=manifest['support_accounting']['catalog_entries'])
+                    self.assertEqual(_reader.encoded(results[limit]['structuredContent']), _reader.encoded(wanted))
+
     def test_metadata_argument_refusals_over_persistent_stdio(self):
         bases = {
             'fsmgen_capability_query': {'section': 'semantic_introspection'},
@@ -193,5 +233,7 @@ if __name__ == '__main__':
         save_capture(sys.argv[2], capture_diagnostic)
     elif len(sys.argv) == 3 and sys.argv[1] == '--capture-capability':
         save_capture(sys.argv[2], capture_capability)
+    elif len(sys.argv) == 3 and sys.argv[1] == '--capture-limits':
+        save_capture(sys.argv[2], capture_limits)
     else:
         unittest.main()

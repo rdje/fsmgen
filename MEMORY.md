@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.4.3`
-- next_action: Repair valid large-integer sample limits while preserving each tool's zero/negative/default/positive-limit policy; use public controlled catalogs and actual results before source-kind repairs.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.4.4`
+- next_action: Enforce source identity and VIAL tool-version JSON kinds without caller-copy mutation; preserve every valid source result, selector precedence and textual versioned-resource behavior.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

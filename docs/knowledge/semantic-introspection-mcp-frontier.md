@@ -104,8 +104,8 @@ identity/public provenance.
 value is nonempty; source_path wins. Controls:
 `docs/tasks/PERL-POD-API-REFERENCE.md` (.6.1.2.2.1).
 Diagnostic limit_examples: omitted/zero/negative => 10; support-summary zero
-=> no samples. Use 1..100. Large-integer fallback defect remains owned by
-PERL-POD-API-REFERENCE.6.1.2.2.4 (2026-10-23 public API witness).
+=> no samples. Positive samples cap at 100, including large integers (fixed
+PERL-POD-API-REFERENCE.6.1.2.2.4.3; 2026-10-23 API/newline controls).
 Capability payloads: object/integer; manifest_schema_version is integer.
 all/contracts/examples: direct objects (.6.1.2.2.3, 2026-10-23).
 Argument audit .6.1.2.2.4.1; metadata repair .4.2 (same task).

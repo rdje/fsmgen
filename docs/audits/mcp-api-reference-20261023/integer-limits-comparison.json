@@ -1,0 +1,27 @@
+{
+  "controlled_cases_per_entrypoint": 88,
+  "changed_cases": [
+    "fsmgen_explain_diagnostic:1e30",
+    "fsmgen_explain_diagnostic:1e300",
+    "fsmgen_support_summary:1e30",
+    "fsmgen_support_summary:1e300",
+    "fsmgen_discover_sources:1e30",
+    "fsmgen_discover_sources:1e300",
+    "fsmgen_find_examples:1e30",
+    "fsmgen_find_examples:1e300"
+  ],
+  "exact_nonlarge_successes_and_wrong_kind_codes_conserve": true,
+  "selected_source_paths": [
+    "perl/FSM/Support/SemanticIntrospectionContract.pm",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm",
+    "t/2103-mcp-metadata-integer-limits.t"
+  ],
+  "controls_rejected": [
+    "restored_large_fallback",
+    "universal_example_cap",
+    "boolean_numeric_limit",
+    "reordered_complete_records",
+    "lost_newline_reply",
+    "tampered_producer_source"
+  ]
+}

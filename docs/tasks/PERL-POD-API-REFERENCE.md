@@ -230,11 +230,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.2: enforce metadata argument contracts`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair valid large-integer sample limits while retaining each operation's policy.`
   Acceptance: `Fix the public 1e30 => default discrepancy after typed admission. Preserve diagnostic/default-zero behavior, support/discovery zero-empty policies, negative/default behavior, bounded samples and the examples operation's distinct positive-limit policy. Qualify ordinary and large integral spellings, scalar kinds, actual complete outputs and clearly counterfactual populations when real catalog counts cannot distinguish bounds. Reject genuine fractional/wrong-kind inputs at the owning admission boundary, retain before/after data and adverse controls, update current caveats/claim records/POD/book, and commit.`
-  Verification: `Public dispatcher reproduction and exact decimal-predicate root cause are retained in diagnostic-controlled-before/after.json.gz; no fix yet.`
-  Commit: `pending`
+  Verification: `T2103 retains 88 explicit per-operation API and newline cases over a clearly counterfactual 121-entry catalog. The original adapter fails exactly the large-number assertions in four operation subtests; the two-line numeric-predicate repair passes all five subtests. The independent reader verifies every complete ordered typed result, conserves ordinary/default/zero/negative and wrong-kind behavior, and rejects six coherent fallback/cap/type/order/wire/source counterfeits. A source-joined real persistent capture verifies all 32 limit calls against the full public catalog and rejects four additional identity/type/wire/native-boundary controls. All four live metadata tests and Files=26 Tests=80 pass. Descriptors/POD/book describe each distinct sampling policy, remove the obsolete caveat and retain explicit host/coverage limits. Full evidence and original failures remain in the dated audit directory.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.3: repair large integer catalog limits`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.4`
   Status: `pending`
@@ -300,10 +300,25 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.6`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.6.1, PERL-POD-API-REFERENCE.6.6.2`
   Goal: `Guard complete MCP documentation coverage and runnable examples against drift.`
   Acceptance: `Join the exhaustive published methods/tools/resources/templates/schema/applicability population to explicit reference records and executable examples. Derive field membership from authoritative producers/schemas and verify descriptions and canonical links, not copied counts. Add genuine missing-surface/field/stale-schema/wrong-result controls without tests that only mirror implementation. Integrate focused checks through existing workflows, preserve all original failures and commit bounded guards.`
   Verification: `pending completed documented cohorts`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.6.1`
+  Status: `pending`
+  Goal: `P2: repair claim-scanner paragraph-continuation versus list-marker ambiguity.`
+  Acceptance: `Reproduce the actual classify_prose false-incidental result for the API guide's continued default literal 10. and compare its native mdBook paragraph rendering. Trace the line-only list-marker stripping and relevant history before fixing it. Preserve real ordered-list navigation exclusions while treating continued contractual numeric prose conservatively; add actual paragraph/list/fence/adversarial controls, reclassify every affected current candidate with full owned evidence and update canonical policy/tool/book guidance if its contract changes. Commit before the remaining MCP coverage guards. Until then, author numeric policy prose unambiguously and explicitly disposition every policy table row; do not infer complete semantic classification from the scanner's green structural join.`
+  Verification: `Discovered during .6.1.2.2.4.3 claim publication. The current classifier strips a physical-line 10. prefix without Markdown paragraph context. Source/renderer/native-function evidence is retained in integer-limits-claim-context.json. The numeric-limit policy rows retain independent producer/oracle/watcher coverage; this is a classification gap, not evidence that those limit claims are false. The current paragraph is rewritten unambiguously. Priority P2, scheduled first in .6.6 before final reference signoff; not a pivot from the numeric slice.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.6.2`
+  Status: `pending`
+  Goal: `Complete the exhaustive MCP reference membership, field and runnable-example drift guards.`
+  Acceptance: `Refine exact guard cohorts from the completed .6.1 inventory and .6.2-.6.5 reference/workflows. Fulfill every remaining .6.6 coverage obligation with independent published-surface/schema/result joins and actual missing/stale/wrong-result controls. Preserve the scanner repair and its classification limitations; no name/schema-only stub counts as documented semantics. Split safely before implementation and commit each guard cohort.`
+  Verification: `pending completed reference cohorts and .6.6.1`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.7`
@@ -1001,3 +1016,69 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   its authority. No new cross-cutting rationale or private supported API is
   introduced. Complete normal gates and commit before .4.3's numeric limits;
   .4.4 still owns source identities and VIAL version kinds/caller preservation.
+
+
+## Acceptance Checklist — .6.1.2.2.4.3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $default unless defined($value) && $value =~' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies c0204a138's decimal-spelling predicate in _bounded_limit. The committed public dispatcher witness selects 10 for 1e30 but 100 for 101. Fresh T2103 on b41de342d reproduces the large-number fallback in all four limit-bearing tools; the ordinary/default/zero/negative and complete API/newline controls remain green. The examples helper has the same decimal-only predicate and its separate positive-limit policy.
+- [x] **ADDRESSED (verified)** — Replace only the two numeric-spelling tests with the already qualified detached JSON-integer predicate and each existing sign policy. The complete controlled reader verifies exact requests, source capsules, raw newline replies, every result field/order/kind and the eight specifically changed large-number cases. Six actual competing fallback/shared-cap/Boolean/order/wire/source interventions reject. Complete real-catalog projections and the controlled/live native boundary are independently joined; four additional real identity/Boolean/wire/borrowed-source controls reject. Descriptors and POD/book now state all four policies and remove the obsolete caveat. Claim records are updated to the repaired contract with current producer/oracle/watcher evidence.
+- [x] **NO REGRESSION** — All tests successful. Files=26, Tests=80 across the existing MCP cohort plus argument and numeric-limit regressions. All four actual persistent metadata tests pass. Full controlled ordinary results and wrong-kind codes conserve; caller and manifest JSON/later-copy checks remain green. Native POD/book/source/delivery and staged doctrines qualify. Syntax and Python 3.9 parsing pass; the scope is these metadata limits, not hardware execution, performance, arbitrary precision or a platform matrix.
+
+### .6.1.2.2.4.3 evidence and continuity
+
+- Re-derivation is the explicit literal/policy table through actual public API
+  and newline dispatch, plus real initialized persistent queries over the full
+  current public manifest/catalog. Falsification uses an independently written
+  complete projection reader, the genuine original RED/repaired GREEN, unique
+  ordered fixture records with optional fields and Boolean kinds, six controlled
+  and four live adverse interventions. Durability is tracked T2103, the shared
+  metadata collector/CI tests, original and final full source/result capsules,
+  complete stdout/raw exchanges, comparison and logs in the dated audit directory.
+- The controlled population is deliberately invented and is never support
+  evidence. It distinguishes bounds that the real per-diagnostic catalog cannot
+  establish. Its complete input is retained, with three selected source capsules
+  and runtime identities. The live capture fingerprints all tracked FSM modules
+  plus its named launcher/framing/collector inputs; the same exact adapter hash
+  joins both routes. The original controlled adapter matches b41de342d; repair
+  bytes are retained explicitly rather than misattributed to that source commit.
+- Omitted/zero/negative diagnostic limits select 10. Support defaults to 10 and
+  discovery to 25; zero is empty and negative selects their respective defaults.
+  Positive samples cap at 100. Examples default to 25 for omitted/zero/negative
+  and keep uncapped positive limits, bounded only by matches. Integral decimal
+  and exponent spellings are admitted; non-integer kinds remain invalid params.
+  These observations cover the selected finite native values, not arbitrary-
+  precision JSON arithmetic. Sampling never changes full catalog aggregates.
+- The first repaired controlled packet predates descriptor/POD edits; it remains
+  intact. A final packet repeats the full qualification against the published
+  adapter. The final collector is shared with its CI test and requalified after
+  that refactor. The saved reader additionally rejects a coherent borrowed old
+  native boundary even when its fabricated current results look valid.
+- Knowledge Map keeps every fact/question and its unchanged allowance. The
+  first wording draft exceeds that allowance and is refused before writing;
+  the final wording preserves the new exact meaning within the original bound.
+  No rationale-ledger entry or supported private helper API is introduced.
+- Complete normal gates and commit, then clear the message and verify clean
+  state before .4.4's source identity/VIAL version admission and caller repair.
+  Error locations, example result typing and full operating-model documentation
+  retain their owned successors. Historical source epochs and publication gates
+  remain sealed/open as recorded; no full CI/push signoff is inferred.
+
+- During numeric claim publication, the line-only classifier is found to remove
+  a continued paragraph's default 10. as though it were an ordered-list marker.
+  Native prior book rendering and exact function execution isolate the mismatch;
+  .6.6.1 owns the P2 correction before final signoff. Current policy rows have
+  explicit evidence and the paragraph is rewritten unambiguously. The original
+  stale-disposition refusal also retains: old caveat/claim IDs are retired into
+  Git history and replaced by current policy dispositions, not left stale.
+
+- The claim-inventory Knowledge Map card also records the precise paragraph
+  ambiguity. Its existing scope/original-cohort/ownership/input/provenance facts
+  and every question remain; redundant prose is compressed within its original
+  byte footprint. The original paragraph HTML is retained and its exact native
+  classifier/contrast replay is executable with verify_claim_context.py. No
+  collection allowance or ceiling grows; the scanner's P2 fix remains pending.
+
+- The first staged doctrine run rejects the newly split .6.6 container's pending
+  status (including dependent containment/README checks). Correct it to active
+  under the task-tree status contract; its pending leaves and selected .4.4
+  frontier are unchanged. Retain the original refusal and rerun normal gates.
