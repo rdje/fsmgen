@@ -1,0 +1,11 @@
+{
+  "loopback_port": 4328,
+  "builds_before": 1,
+  "builds_after_source_change": 2,
+  "builds_after_restore": 3,
+  "builds_after_idle_observation": 3,
+  "idle_observation_seconds": 4,
+  "original_style_sha256": "2f4410775d06028a32bdb6fb3437c57490373428f9f760456bb96c77fa57e94e",
+  "source_change_reached_served_asset": true,
+  "exact_source_restored": true
+}

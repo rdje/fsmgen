@@ -1,0 +1,14 @@
+{
+  "book": {
+    "authors": [
+      "FSMGen contributors"
+    ],
+    "description": "Progressive, example-rich documentation for FSMGen and the .fsm language.",
+    "language": "en",
+    "text-direction": null,
+    "title": "FSMGen Book"
+  },
+  "capture": "mdBook 0.5.4 actual preprocessor context; relevant unmodified book projection",
+  "mdbook_version": "0.5.4",
+  "renderer": "html"
+}

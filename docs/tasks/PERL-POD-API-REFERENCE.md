@@ -79,11 +79,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.3: document supported Perl bindings and repair POD encoding`
 
 - ID: `PERL-POD-API-REFERENCE.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate reference generation, styling and navigation into normal mdBook build/serve.`
   Acceptance: `Add the native build integration and a book landing/sidebar route, with matching readable responsive styling and relative manual/module backlinks. Support documented invocations from repository root and book directory; watch source changes without an infinite rebuild loop. Keep generated output ignored/local and synchronize README/build/tool guidance only where their contracts change. Verify native built delivery, complete source/index contracts, fresh output after an input change and browser/rendered readability, then commit.`
-  Verification: `pending generated reference and facade POD`
-  Commit: `pending`
+  Verification: `Native root/book-cwd builds, independent complete source/coverage/copied-byte/link join, actual loopback serve refresh and Chrome guide/module/index/anchor/backlink checks pass. Narrow observed pages have viewport/document width 390/390. Fresh relocated root with spaces independently regenerates identical reference bytes; native malformed/missing-output refusals preserve prior output and explicit repair restores exact bytes. Probe restores stylesheet, resets viewport, closes tab/server; stopped listener confirmed. All captured observations/readers and original failures retained in docs/audits/pod-api-20261023.`
+  Commit: `PERL-POD-API-REFERENCE.4: integrate POD reference with native mdBook delivery`
 
 - ID: `PERL-POD-API-REFERENCE.5`
   Status: `pending`
@@ -220,3 +220,57 @@ HIAL, claim, locality, or source-feature signoff gates.
   They are outside the selected binding-guide scope; this is explicit coverage,
   not a claim of exhaustive method documentation or a newly stable interface.
   Native automatic delivery and rendered/serve qualification remain .4/.5.
+
+## Acceptance Checklist — .4
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '[output.html]' -1 -- docs/book/book.toml` identifies the native configuration that lacked POD generation. The first actual preprocessor build fails on missing src metadata; retained native context shows mdBook 0.5.4 omits that default field. Use the default when absent and still reject an explicit unsupported source path. The first HTTP probe was denied by the filesystem sandbox before source mutation; the authorized unchanged loopback probe succeeds.
+- [x] **ADDRESSED (verified)** — Native preprocessor, watch inputs/ignores, sidebar/landing/index links, README requirements and Toolbox guidance now deliver the reference. Fresh same-volume relocated build with a space-containing root matches complete generated/native file bytes, and both cwd forms work. Deliberately malformed POD and missing owned output fail the actual book build without replacing prior source/built output; explicit owned repair restores it. Scope prose is corrected to the exact perl/FSM .pm population.
+- [x] **NO REGRESSION** — The 12 real-generator fixture controls pass. Existing native source/index checks and complete staged doctrine driver are required before this commit. Perl syntax remains unchanged from .3:
+
+  scripts/pod_api_render.pl syntax OK
+
+### .4 delivery, live preview and review evidence
+
+- `verify_delivery.py REPO_RELATIVE_BOOK_OUTPUT` independently joins actual
+  module files, selected guide population, coverage, source/tool hashes, complete
+  copied membership/bytes and every generated local href/fragment. The native
+  graph has 404 copied members and 3974 local-link checks at this capture.
+  Coverage is 399 .pm sources: 112 with POD, 287 explicitly without. These are
+  source/coverage observations, not method-completeness or stability claims.
+- `check_relocated.py` proves actual fresh native generation, both invocation
+  directories, full-byte identity, genuine native refusals and owned repair in
+  a disposable same-volume root with spaces; the exact fixture is removed.
+- `check_serve.py LOOPBACK_PORT` observes the original CSS, changes it, observes
+  the served replacement, restores exact source bytes in finally, and observes
+  the served original. Builds advance 1 -> 2 -> 3 and remain 3 over the bounded
+  four-second idle observation. This is no latency/platform guarantee.
+- Browser QA observes the guide/sidebar, HDL facade, API index, MCP page, method
+  anchor and manual backlink. At a 390-pixel viewport, tested document width is
+  also 390. Styles and long names remain readable; code blocks scroll locally.
+  Viewport is restored and the temporary tab closed. One Playwright timeout on
+  the old large embedding chapter is recovered through the documented native
+  AX action. Broader manual visual QA is not thereby closed.
+- `browser-rendered-pages.json.gz` and `browser-qa.json` retain the actually
+  observed HTML/CSS/manifest identities and the visual-observation limits. A
+  later narrow wording correction makes the namespace scope explicit; final
+  native bytes and links are requalified separately.
+- The older embedding chapter's test link produces HTTP 404. This distinct P2
+  defect is owned/scheduled by MDBOOK-LEGACY-SOURCE-LINKS; it is not silently
+  included in the passing generated-reference graph. No implementation pivot
+  occurs before this task is committed and clean.
+- All source/tool/test/temp work stays inside this project and on its volume.
+  Normal stop closes the loopback listener; no preview job is left required.
+  Hosted/full-CI publication and the broader Python/Perl/platform matrix remain
+  outside these local signoffs.
+
+- The first .4 staged gate rejects README growth and a source-inventory refresh
+  generated before complete staging. Keep its full log, tighten only redundant
+  README discovery prose while retaining all links/instructions, and regenerate
+  the inventory after the complete new chapter is staged. No README ceiling or
+  allowance is increased.
+
+- The second .4 gate identifies SUMMARY's mandatory-read bound. Omit only its
+  optional parser-ignored title, as permitted by the official mdBook summary
+  format; retain every original entry in order and add the API child. The saved
+  navigation join and native source/index/build checks qualify the result. No
+  chapter or navigation member is removed and no bound increases.

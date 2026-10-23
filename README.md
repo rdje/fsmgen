@@ -2,7 +2,7 @@
 
 FSMGen compiles Lisp-like state-machine and intent specifications into
 synthesizable HDL with explicit semantics, reviewable lowering, machine-readable
-diagnostics, and practical-to-inspect generated output.
+diagnostics, and inspectable output.
 
 For exact current coverage, use the [mdBook](docs/book/src/SUMMARY.md) and
 capability manifest; parser acceptance alone does not imply support.
@@ -40,6 +40,7 @@ The precise backend and language boundaries live in
 
 - Perl 5.20 or newer for the main implementation.
 - mdBook to build or serve the user manual.
+- Python 3.9+ on macOS/Linux and Pod::Simple 3.42+ for the book's generated POD reference.
 - Verilator and Yosys only when `--verify-hdl` external SystemVerilog
   validation is requested.
 
@@ -95,23 +96,24 @@ Common modes are discoverable through `./bin/fsmgen --help`:
 | Supported/VIAL surfaces | `--capability-manifest`; `vial capabilities|check|inspect|format|plan|run` |
 | Enable deterministic trace output | `--trace-verbosity LEVEL --trace-log FILE` |
 
-FSMGen also provides `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio
+FSMGen provides `bin/fsmgen-mcp`, a read-only local JSON-RPC stdio
 adapter over the semantic-introspection contract. Its supported resources,
 tools, safety boundary, and examples are documented in
 [Extensions and Embedding](docs/book/src/11-extensions-and-embedding.md).
 
 ## Documentation
 
-The mdBook is the product manual:
+The mdBook is the manual:
 
 - [Introduction](docs/book/src/00-introduction.md)
 - [Your First FSM](docs/book/src/01-first-fsm.md)
 - [Language Basics](docs/book/src/02-language-basics.md)
 - [Cookbook](docs/book/src/12-cookbook.md)
+- [Perl API Reference](docs/book/src/11a-perl-api-reference.md)
 - [HIAL/VIAL Verification](docs/book/src/16d-hial-vial-verification-architecture.md)
 - [Contents](docs/book/src/SUMMARY.md)
 
-Build or serve it from the repository:
+Build or serve from the repository:
 
 ```bash
 mdbook build docs/book
@@ -119,8 +121,7 @@ cd docs/book
 mdbook serve
 ```
 
-Focused references remain outside the book where a narrower contract is more
-useful:
+Focused references outside the book provide narrower contracts:
 
 | Topic | Canonical reference |
 | --- | --- |
@@ -133,11 +134,11 @@ useful:
 | Live CLI import architecture | [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) |
 | Change/claim evidence | [TASK_ACCEPTANCE.md](TASK_ACCEPTANCE.md), [CLAIM_VERIFICATION.md](CLAIM_VERIFICATION.md) |
 
-Complete generated classification: [focused/ancillary document index](docs/index/FOCUSED_DOCUMENTS.md).
+Generated classification: [focused/ancillary document index](docs/index/FOCUSED_DOCUMENTS.md).
 
 ## Where current truth lives
 
-Changing project state does not belong in this landing page:
+Find current state here:
 
 | Question | Source of truth |
 | --- | --- |
@@ -175,9 +176,8 @@ rationale-ledger owner.
 | `scripts/` | Doctrine, validation, resource-guard, and maintenance tooling |
 | `.artifacts/` | Git-ignored, repository-local generated output |
 
-For the exact transitive entrypoint graph and package ownership, use
-[docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md), not a package
-list duplicated here.
+For the transitive entrypoint graph and package ownership, see
+[docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md).
 
 ## Development workflow
 
@@ -201,7 +201,7 @@ Activate the repository hooks once per clone:
 git config core.hooksPath .githooks
 ```
 
-Useful validation entrypoints:
+Validation entrypoints:
 
 ```bash
 scripts/check_doctrines.sh

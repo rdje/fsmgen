@@ -1,0 +1,4 @@
+# Generated source assets are copied by the HTML renderer, but must not trigger
+# their own serve/watch rebuilds. mdBook reads watcher ignores from the book root.
+/src/perl-api/
+/book/

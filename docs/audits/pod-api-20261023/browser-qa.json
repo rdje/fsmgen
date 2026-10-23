@@ -1,0 +1,36 @@
+{
+  "anchor_top_css_pixels": -0.09375,
+  "api_index_and_manual_backlink_verified": true,
+  "browser": "Chrome through CUA",
+  "capture": "PERL-POD-API-REFERENCE.4 before final scope-wording correction",
+  "guide_sidebar_and_entry_links_verified": true,
+  "limit": "Screenshots were visually inspected through CUA; this packet preserves observed HTML/CSS and exact source/tool manifest, not screenshot pixels. Final scope-wording correction is separately rendered/link-qualified. No whole-manual visual or platform-matrix qualification.",
+  "module_method_anchor_verified": "#new(%25options)",
+  "narrow_observations": [
+    {
+      "document_scroll_width": 390,
+      "page": "HDLGenerator",
+      "viewport_width": 390
+    },
+    {
+      "document_scroll_width": 390,
+      "page": "API index",
+      "viewport_width": 390
+    },
+    {
+      "document_scroll_width": 390,
+      "page": "SemanticIntrospectionMCPAdapter",
+      "viewport_width": 390
+    }
+  ],
+  "page_sha256": {
+    "11a-perl-api-reference.html": "b885e0f8570ea8b840044287eedda3f8ecbdf5f849c25f1529384cd83daf5251",
+    "perl-api/.fsmgen-pod-reference.json": "479c1fb6329f8caf14092a968f3458acff96e9249af040f4a58eb21bb42130e9",
+    "perl-api/FSM/Pipeline/HDLGenerator.html": "0ed287076e9a3fc91eba3695c58e63c6bc925a255ea8547a779ec9b9eab7c35c",
+    "perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html": "a2eb72bfe6ee955d81e45eed5062a12f441aa34c97872ddcc9d2ea76dde585ac",
+    "perl-api/index.html": "b2f73bef75ba419e3980b3640e3911d0195a7853f4ccf85ae8eace694d6ba8c6",
+    "perl-api/reference.css": "2f4410775d06028a32bdb6fb3437c57490373428f9f760456bb96c77fa57e94e"
+  },
+  "temporary_tab_closed": true,
+  "viewport_restored": true
+}

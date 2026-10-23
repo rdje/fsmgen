@@ -238,7 +238,7 @@ def render(root, work, sources):
                             f'<p class="source">Source: <code>{modules[module]}</code></p>',
                             '../' * (len(module.split('::')) - 1)), encoding='utf-8')
         require(page.is_file(), f'POD page missing for {module}')
-    body = ('<p>Every repository-owned module is listed below. POD presence is a syntax/coverage '
+    body = ('<p>Every .pm source under perl/FSM is listed below. POD presence is a syntax/coverage '
             'observation; it does not prove semantic completeness or interface stability.</p><ul>'
             + ''.join(f'<li><a href="{r["module"].replace("::", "/")}.html">{r["module"]}</a> — '
                       f'{"POD provided" if r["pod"] else "no POD"}; {r["role"]}</li>' for r in coverage)

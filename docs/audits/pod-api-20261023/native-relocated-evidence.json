@@ -1,0 +1,12 @@
+{
+  "complete_relocated_and_copied_byte_identity": true,
+  "exact_test_owned_workspace_removed": true,
+  "explicit_owned_repair_restored_original_bytes": true,
+  "fresh_native_generation": true,
+  "malformed_and_missing_output_refused": true,
+  "previous_source_and_built_output_retained_on_refusal": true,
+  "reference_members": 404,
+  "root_and_book_cwd": true,
+  "root_contains_spaces": true,
+  "same_volume": true
+}

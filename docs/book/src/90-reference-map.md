@@ -18,6 +18,7 @@ Start here:
 - [Your First FSM](01-first-fsm.md)
 - [Cookbook](12-cookbook.md)
 - [Implementation Blueprint](15-implementation-blueprint.md)
+- [Perl API Reference](11a-perl-api-reference.md)
 
 ## Canonical Source Views
 

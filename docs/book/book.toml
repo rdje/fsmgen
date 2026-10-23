@@ -7,6 +7,11 @@ src = "src"
 
 [build]
 create-missing = false
+extra-watch-dirs = ["../../perl/FSM", "../../scripts/lib/FSMGen", "../../scripts/generate_pod_reference.py", "../../scripts/pod_api_render.pl", "../../scripts/mdbook_pod_api.py", "../pod-reference.css", "../pod-api-entrypoints.json"]
+
+[preprocessor.pod-api-reference]
+command = "python3 -B ../../scripts/mdbook_pod_api.py"
+renderers = ["html"]
 
 [output.html]
 default-theme = "light"

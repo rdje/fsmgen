@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.4`
-- next_action: Integrate validated POD generation into native mdBook build/serve, with landing/sidebar navigation and rendered delivery checks.
+- active_work_unit: `PERL-POD-API-REFERENCE.5`
+- next_action: Finish independent POD delivery qualification and a bounded Knowledge Map route, then restore the saved reusable-width frontier.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Before/after source epochs are sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

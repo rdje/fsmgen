@@ -1,0 +1,9 @@
+{
+  "baseline_revision": "cfb13b284302c1d0c48b14739fe09add6612c61e",
+  "baseline_sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b",
+  "result_sha256": "260738474ae54a31a5afb6070d567aaf77a158d0e0f87cc3b6e5abaacaeca9d8",
+  "original_entries_preserved_in_order": true,
+  "only_added_entry": "  - [Perl API Reference](11a-perl-api-reference.md)",
+  "optional_ignored_title_removed": true,
+  "primary_reference": "https://rust-lang.github.io/mdBook/format/summary.html"
+}

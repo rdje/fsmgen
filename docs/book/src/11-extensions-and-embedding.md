@@ -3976,5 +3976,5 @@ python3 -B scripts/generate_pod_reference.py --check
 Generated assets live in the ignored `docs/book/src/perl-api/` directory.
 Generation refuses unowned directories and unknown extra files. If known
 manifest-owned output has been damaged, inspect it first, then use `--repair`
-to regenerate it. That option still refuses unknown extras. Native build/serve
-integration is tracked by `PERL-POD-API-REFERENCE.4`.
+to regenerate it. That option still refuses unknown extras. Normal mdBook HTML build/serve runs this generator automatically. Open the
+[Perl API Reference](11a-perl-api-reference.md) for navigation and build details.
