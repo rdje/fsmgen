@@ -194,11 +194,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.1: advertise required MCP source selectors`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish the diagnostic sample-limit argument already used by public workflows.`
   Acceptance: `Advertise limit_examples in explain_diagnostic's closed input schema, preserving existing documented/native behavior and defaults. Qualify declared field/type, real capped results and refusals, snapshot compatibility and precise per-tool zero/default semantics. Do not silently impose uniform limit behavior across unrelated tools. Commit before generic argument enforcement.`
-  Verification: `Actual limit_examples calls succeed, and existing book/T1445 use the argument, but tools/list advertises code alone with additionalProperties false.`
-  Commit: `pending`
+  Verification: `The original schema rejects six actual valid limit-bearing requests and the new API fixture test fails on the missing field. The repaired descriptor and exact snapshot property/type addition pass, preserving all seven live diagnostic results and eight controlled results with full typed payload equality; five coherent adverse controls reject. Omitted/zero/negative defaults and the distinct support-summary zero policy retain; missing/unknown code refusals retain. Broader MCP cohort passes All tests successful Files=23, Tests=65. Native POD/book/source/delivery and staged doctrines qualify this commit; the newly confirmed large-integer limit defect remains owned by .2.4 and is disclosed in the manual/POD.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.2: advertise diagnostic sample limits`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.3`
   Status: `pending`
@@ -211,7 +211,7 @@ HIAL, claim, locality, or source-feature signoff gates.
   Status: `pending`
   Goal: `Enforce advertised metadata-tool argument types and closed fields consistently.`
   Acceptance: `Five metadata tools accept an unpublished argument despite closed schemas; discovery/examples/support also accept wrong array-typed fields, while capability/diagnostic wrong types expose ARRAY reference addresses in errors. Reuse established project JSON-kind/argument facilities where suitable, or select a bounded validator for exactly the published schema vocabulary without introducing an unrelated evaluator/dependency. Preserve all valid supported values, JSON scalar kinds and intended per-tool limits; reject invalid types/fields cleanly with actual API/newline controls. Split validation cohorts if needed, document and commit.`
-  Verification: `Actual extra-argument calls succeed on capability, discovery, examples, diagnostic and support tools. Wrong-array query/limit calls succeed on discovery/examples/support; wrong-array section/code errors contain ARRAY(0x...) strings. Exact wire captures retained; implementation/qualification pending.`
+  Verification: `Actual extra-argument calls succeed on capability, discovery, examples, diagnostic and support tools. Wrong-array query/limit calls succeed on discovery/examples/support; wrong-array section/code errors contain ARRAY(0x...) strings. Exact wire captures retained; implementation/qualification pending. P2 numeric-limit defect is also owned here before complete reference/publication: JSON integer 1e30 reaches _bounded_limit as a Perl exponent string and falls back to 10, whereas 101 caps at 100. Reproduce through actual public calls with a controlled catalog large enough to distinguish the results, then normalize valid JSON integer limits consistently without conflating Boolean/string kinds or silently changing zero/default policies. The public dispatcher confirms 101 => 100 samples but 1e30 => 10 with a controlled 121-entry catalog; real per-code populations are too small to distinguish those limits. Reproduce with perl -Iperl docs/audits/mcp-api-reference-20261023/probe_diagnostic_limits.pl. Complete typed public results and source hashes retain in diagnostic-controlled-before/after.json.gz; the exact decimal-regex root cause is confirmed. Fix at this leaf before reference completion/publication, splitting bounded validation/numeric leaves first if needed.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
@@ -784,3 +784,47 @@ HIAL, claim, locality, or source-feature signoff gates.
   keeping all substantive detail in this task and the complete captures. Both
   refusals and the original guide retain; no limit or allowance increases, no
   debt remains, and the unchanged doctrine gate reruns.
+
+## Acceptance Checklist — .6.1.2.2.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'limit_examples' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies c0204a138's existing diagnostic sample behavior. Discovery omitted the argument from its closed schema; the new original API test fails and six real limit-bearing requests violate that schema. Controlled public calls also isolate the separately owned very-large-integer fallback in _bounded_limit's decimal-string predicate.
+- [x] **ADDRESSED (verified)** — The integer argument is advertised and the golden fixture changes only its property name/type. The actual persistent query test passes. Full saved live/controlled comparisons preserve seven real queries and eight controlled requests, including order, complete fields, Boolean kinds, text/structured equality, defaults and caps. Five coherent missing-field/wrong-type/changed-live/changed-controlled/lost-wire controls reject at their intended checks. No runtime query code changes. POD/book disclose accurate sample limits and the pending large-integer defect rather than promising a uniform zero policy.
+- [x] **NO REGRESSION** — All tests successful. Files=23, Tests=65 across the existing MCP protocol/schema/source-failure/UTF-8 cohort, now including independent controlled bounds and refusal assertions. The actual metadata test and saved reader pass; native POD/book/source/delivery and staged doctrines qualify. Syntax diagnostics:
+
+  perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm syntax OK
+
+### .6.1.2.2.2 evidence and continuity
+
+- Re-derivation: original/repaired real persistent metadata calls and actual
+  dispatcher calls with a clearly counterfactual larger catalog. Falsification:
+  the saved reader joins raw frames, decoded objects, selected native/observer
+  source hashes, exact discovery change, complete typed payloads and unchanged
+  runtime; coherent adverse controls target five distinct checks. Durability:
+  complete live and controlled captures, tracked producers/reader, comparison,
+  original refusals and final logs under docs/audits/mcp-api-reference-20261023/.
+  The real catalog cannot establish the cap alone; no hardware/source epoch,
+  whole-feature/platform or latency claim follows from these metadata queries.
+- The first saved-reader attempt requires a HEAD key absent from the Perl
+  fixture packet. The corrected reader first joins the fixture adapter hash to
+  its paired live capture, then uses that boundary only to locate exact source
+  history. Original refusal retains; no product result is rewritten or dropped.
+- Large JSON integer 1e30 selecting the default is confirmed through the public
+  dispatcher and traced to exponent stringification failing a decimal regex.
+  Own and schedule its fix under .6.1.2.2.4 before publication. The current POD,
+  tool description and manual disclose it and give the usable 1-through-100
+  range. This slice preserves zero/negative behavior, compact sample meaning,
+  missing/unknown code refusals and the full underlying registry/catalog.
+- Knowledge Map retains all questions/facts within a smaller byte footprint.
+  The compressed reverify glob is checked to retain exactly its original five
+  test paths; no sealed source epoch is rerun or allowance increased. The audit
+  guide updates one status row without growth. Detailed records stay here.
+- Complete normal commit gates, clear the message and verify a clean tree.
+  Next is .6.1.2.2.3: admit every supported capability-section payload type
+  without changing actual values. The overall exhaustive reference stays active.
+- The first doctrine pass identifies the new API guide's numeric-limit prose
+  as undisposed claims. Add its exact path as one required-complete POD-owned
+  review group within the existing registry bound; register both candidates
+  with distinct producer, adverse-oracle and durable-watcher legs. T1445 now
+  checks every supported integer from 1 through 100; its fresh focused run
+  passes alongside the unchanged broader cohort. The original gate refusal
+  retains, and no registry capacity or document ceiling increases.

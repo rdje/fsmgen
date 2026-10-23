@@ -874,10 +874,12 @@
          ],
          "output_schema_type" : "object",
          "property_names" : [
-            "code"
+            "code",
+            "limit_examples"
          ],
          "property_types" : {
-            "code" : "string"
+            "code" : "string",
+            "limit_examples" : "integer"
          },
          "readOnlyHint" : true,
          "required" : [

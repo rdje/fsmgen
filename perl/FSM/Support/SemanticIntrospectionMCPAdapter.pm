@@ -237,6 +237,7 @@ sub list_tools {
                 'Explain a stable FSMGen diagnostic code from the manifest registry.',
                 {
                     code => { type => 'string', description => 'Stable diagnostic code to explain.' },
+                    limit_examples => { type => 'integer', description => 'Sample limit: omitted, zero or negative selects 10. Use 1..100; larger values cap at 100, except very large integers can currently select 10.' },
                 },
                 ['code'],
                 _diagnostic_output_schema(),
@@ -1354,6 +1355,25 @@ Schedule preview has no version selector and does not accept VIAL sources.
 The separate C<fsmgen_vial_inspect> tool requires a relative C<source_id> and
 has no C<source_path> alias. Discover current applicability and schemas before
 selecting a query.
+
+=head1 DIAGNOSTIC SAMPLE LIMITS
+
+C<fsmgen_explain_diagnostic> requires the stable diagnostic C<code> string.
+It returns that registry entry and compact C<support_examples> whose catalog
+C<diagnostic_code> matches it. Unknown or missing codes are refused. This is a
+metadata lookup; it does not execute those examples or diagnose a source.
+
+The optional integer C<limit_examples> selects the maximum sample count.
+Omission, zero or a negative value selects the default of 10. Use positive
+values from 1 through 100; larger limits are capped at 100, with a current
+compatibility defect for very large integers such as C<1e30>, which can select
+the default instead. Until that repair, use the documented 1-through-100 range.
+The separate C<fsmgen_support_summary> operation treats zero as no samples.
+
+Actual samples can be fewer than the selected maximum, including an empty
+array when no catalog entry matches the code. Samples follow catalog order;
+neither their number nor their presence proves a fresh source check. Their
+complete compact field dictionary follows below.
 
 =head1 CATALOG SAMPLE RESULTS
 

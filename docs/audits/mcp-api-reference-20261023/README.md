@@ -37,7 +37,7 @@ and complete backing-model semantics are not inferred from these counts.
 | Owner suffix under `.6.1.2.2` | Evidence |
 | --- | --- |
 | `.1` source identities | Repaired after the census: discovery now requires a nonempty selector alternative; original observations remain in the saved capture |
-| `.2` diagnostic limit | Existing `limit_examples` calls succeed although the closed schema omits the field |
+| `.2` diagnostic limit | Repaired: discovery advertises the diagnostic sample limit; defaults retain |
 | `.3` capability payload | The selected manifest version is numeric against an object-only payload declaration |
 | `.4` argument enforcement | Undeclared fields and some wrong types are accepted; two malformed metadata arguments expose reference addresses |
 | `.5` error locations | Persistent refusals retain the adapter location and input-record suffix |

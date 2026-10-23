@@ -121,6 +121,60 @@ subtest 'support sample schema accepts both real optional-field variants in eith
     is($json->encode($manifest), $before, 'variant calls leave the original complete manifest unchanged');
 };
 
+subtest 'diagnostic discovery and bounded samples retain their public contract' => sub {
+    my ($tool) = grep { $_->{name} eq 'fsmgen_explain_diagnostic' }
+        @{$adapter->list_tools->{tools}};
+    is(($tool->{inputSchema}{properties}{limit_examples} || {})->{type}, 'integer',
+        'discovery advertises the existing integer sample limit');
+    is_deeply($tool->{inputSchema}{required}, ['code'], 'only the diagnostic code is required');
+    ok(!$tool->{inputSchema}{additionalProperties}, 'diagnostic arguments remain closed');
+
+    my $manifest = build_capability_manifest();
+    my $json = JSON::PP->new->canonical;
+    my $before = $json->encode($manifest);
+    my $code = 'FSMGEN_COMPOSITION_CHILD_ITEM_LIST_SHAPE';
+    my ($diagnostic) = grep { $_->{code} eq $code } @{$manifest->{diagnostics}{stable_codes}};
+    # A controlled catalog is necessary: real per-code sample populations are
+    # smaller than the cap. Keep genuine record identities/fields and order;
+    # only their diagnostic association is counterfactual in this fixture.
+    my @entries = map { +{%$_, diagnostic_code => $code} }
+        @{$manifest->{support_accounting}{catalog_entries}}[0 .. 120];
+    my $fixture = {%$manifest, support_accounting => {
+        %{$manifest->{support_accounting}}, catalog_entries => \@entries,
+    }};
+    my $client = FSM::Support::SemanticIntrospectionMCPAdapter->new(
+        repo_root => $repo_root, workspace_root => $repo_root,
+        manifest_builder => sub { $fixture });
+    my @fields = qw(id relpath family classification coverage source_kind strict_supported diagnostic_code);
+    for my $case ([undef, 10], [0, 10], [101, 100], [-1, 10], map { [$_, $_] } 1 .. 100) {
+        my ($limit, $count) = @$case;
+        my $arguments = {code => $code};
+        $arguments->{limit_examples} = $limit if defined $limit;
+        my $result = $client->call_tool('fsmgen_explain_diagnostic', $arguments);
+        my @wanted = map { my $entry = $_; +{map { $_ => $entry->{$_} } @fields} }
+            @entries[0 .. $count - 1];
+        my $expected = {code => $code, diagnostic => $diagnostic,
+            registry_contract => $manifest->{diagnostics}{stable_code_registry},
+            support_examples => \@wanted};
+        my $label = defined($limit) ? $limit : 'omitted';
+        is($json->encode($result->{structuredContent}), $json->encode($expected),
+            "$label preserves complete bounded records, order and JSON kinds");
+        is($json->encode(decode_json($result->{content}[0]{text})), $json->encode($expected),
+            "$label preserves the same complete text result");
+        ok(!$result->{isError}, "$label is a successful metadata query");
+    }
+    is_deeply($client->call_tool('fsmgen_support_summary', {limit_examples => 0})
+        ->{structuredContent}{sample_catalog_entries}, [], 'support-summary zero retains its distinct empty-sample policy');
+    for my $arguments ({}, {code => 'UNKNOWN_DIAGNOSTIC_FIXTURE'}) {
+        my $response = $client->handle_jsonrpc_request({jsonrpc => '2.0', id => 1,
+            method => 'tools/call', params => {name => 'fsmgen_explain_diagnostic', arguments => $arguments}});
+        is($response->{error}{code}, -32000, 'existing missing/unknown code refusal classification is preserved');
+        like($response->{error}{message}, qr/(?:Diagnostic code argument is required|Unknown FSMGen diagnostic code)/,
+            'refusal retains the public reason');
+    }
+    is($json->encode($manifest), $before, 'counterfactual bounds checks do not mutate the actual manifest');
+};
+
 done_testing();
 
 sub build_schema_snapshot {

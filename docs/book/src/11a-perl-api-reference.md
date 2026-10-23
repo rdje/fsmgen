@@ -43,6 +43,14 @@ prove that a file exists or supports the requested query. See the
 [selector reference](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#SOURCE_QUERY_SELECTORS)
 for the separate VIAL inspection and version-selection boundaries.
 
+`fsmgen_explain_diagnostic` accepts optional integer `limit_examples` alongside
+required `code`. Use 1 through 100; omitted, zero and negative limits select
+10. The support-summary tool treats zero as no samples. Matching catalog
+entries can be fewer than the limit, including none; reading them does not
+execute the examples. See the
+[diagnostic sample limits](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DIAGNOSTIC_SAMPLE_LIMITS)
+and the current large-integer caveat below.
+
 ## Current MCP schema compatibility
 
 The live MCP audit has identified the compatibility defects below. A client
@@ -52,7 +60,7 @@ reference and its drift checks remain under qualification.
 
 | Surface | Current discrepancy |
 | --- | --- |
-| Diagnostic explanation | `limit_examples` is supported by existing workflows but missing from the closed input schema |
+| Metadata limits | Very large JSON integers such as `1e30` can select the default sample limit instead of the cap; use positive limits from 1 through 100 until repaired |
 | Capability sections | The selected manifest version is an integer payload; the schema declares an object payload |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
 | Metadata-tool arguments | Some extra fields and wrong types are accepted despite the advertised schemas; that leniency is outside the supported argument contract |
