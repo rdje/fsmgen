@@ -1,0 +1,66 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/build_shared_aggregate.py",
+        "docs/audits/mcp-api-reference-20261023/shared-aggregate-qualified.json.gz"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_shared_aggregate.py",
+        "docs/audits/mcp-api-reference-20261023/shared-aggregate-qualified.json.gz",
+        "--current"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "prove",
+        "-Iperl",
+        "t/297-capability-manifest.t",
+        "t/311-normalized-semantic-report-contract.t",
+        "t/330-normalized-semantic-payload-contract.t",
+        "t/334-normalized-semantic-forward-ir-contract.t",
+        "t/340-normalized-semantic-lowered-rtl-ir-contract.t",
+        "t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t",
+        "t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t",
+        "t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t",
+        "t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_shared_aggregate.py",
+        "docs/audits/mcp-api-reference-20261023/shared-aggregate-qualified.json.gz",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "log": "docs/audits/mcp-api-reference-20261023/shared-aggregate-qualified.log.gz",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "d1e1377adc6eb1cd3e4a4fbc71a6420e832f7fa66885328aa3c356c6f39e4327",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4",
+  "projection_conservation": "Old wrap-refused and final packets differ only in the declared source-availability book line wrap.",
+  "retained_log_sha256": "aa3cf275444063b297cc37fdf68d4a565368d5b43f8289dc2cf65e10448af422",
+  "toolchain_access": "The observed absolute executable is the required installed Python interpreter, resolved at runtime and used read-only. Project artifacts and fixtures remain repository-derived on the repository volume."
+}

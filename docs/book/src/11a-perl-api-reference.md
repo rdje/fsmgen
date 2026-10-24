@@ -589,6 +589,52 @@ semantics retain their dedicated deeper models.
 `normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys`. Composition aliases and forward/payload/report contracts republish the
 corresponding root/lowered metadata. Equal key lists do not establish equal populations, actual execution, verified arbitration or source/backend support.
 
+### Normalized shared-datapath aggregate and assertion subjects
+
+The following suffixes apply under both metadata prefixes. The root composition
+and lowered-RTL records use the same dedicated LoweredRTLIRContract family
+lists; matching schemas do not establish equal candidate populations.
+
+| Metadata prefix | Candidate context |
+| --- | --- |
+| `composition_shared_datapath_` | `semantic.composition.shared_datapath_candidates[]` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_` | `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]` |
+
+| Metadata suffix | Relative subject | Container | Advertised keys |
+| --- | --- | --- | --- |
+| `aggregate_enable_family_entry_keys` | `aggregate_enable_families[]` | `array_element` | `rhs_value`, `aggregate_enable_signal`, `same_value_conflict_signal`, `same_value_assertion`, `contributor_count`, `contributors` |
+| `aggregate_enable_contributor_entry_keys` | `aggregate_enable_families[].contributors[]` | `array_element` | `endpoint`, `family_enable_signal`, `source_enable_signal`, `driver_blocks`, `driver_enable_signals` |
+| `assertion_keys` | `multi_value_assertion`; `aggregate_enable_families[].same_value_assertion` | `object` | `input_count`, `input_enable_signals`, `kind`, `result_signal` |
+
+`aggregate_enable_families` groups the candidate contributors' available RHS
+families by `rhs_value`, in sorted RHS-key order. Only hash-shaped RHS families
+with a defined value participate; the resulting array can be empty. Its
+`aggregate_enable_family_count` counts the family entries. Each family's
+`contributor_count` counts its own `contributors` array, whose entries identify
+an endpoint, its original family enable, its source enable, and copied driver
+block/enable arrays. These entries have their own bounded schema, separate from
+the candidate-level contributor objects described above. An array establishes
+neither scheduling priority nor equality with another candidate population.
+
+The assertion family describes two singular objects with different inputs:
+
+- Candidate `multi_value_assertion.input_enable_signals` contains the families'
+  `aggregate_enable_signal` values. Its `result_signal` names the candidate's
+  multi-value conflict signal.
+- Family `same_value_assertion.input_enable_signals` contains that family's
+  contributor `source_enable_signal` values. Its `result_signal` names the
+  family's same-value conflict signal.
+
+Both shared-datapath objects carry `kind: onehot0`. Their input list drops
+undefined or empty signal names, preserves the surviving order, and uses
+`input_count` for the surviving length. The metadata constructor returns an
+object even for an empty input list. A family assertion exists only where its
+family entry exists; optional candidate/IR availability still applies. Metadata
+presence alone establishes neither emitted assertions nor verified arbitration
+or execution. Use the separate backend/runtime contracts for those guarantees.
+RHS/default/reset values, full expression and deeper IR models,
+source availability, and source-query applicability remain separately qualified.
+
 ## Build and preview
 
 Normal HTML builds and previews generate and validate the reference

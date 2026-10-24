@@ -431,6 +431,33 @@ republish the corresponding root/lowered metadata. Default/reset/RHS values,
 complete expression grammar and deeper IR/value models stay delegated. Metadata
 does not establish equal populations, execution, arbitration or backend support.
 
+=head2 Normalized shared-datapath aggregate and assertion subjects
+
+Under C<composition_shared_datapath_> and
+C<success_forward_ir_lowered_rtl_ir_composition_shared_datapath_>,
+C<aggregate_enable_family_entry_keys> describes candidate
+C<aggregate_enable_families[]> elements. C<aggregate_enable_contributor_entry_keys>
+describes each family's C<contributors[]> element, distinct from candidate-level
+contributor objects. LoweredRTLIRContract owns both lists; composition, forward,
+payload and report contracts republish the corresponding root/lowered metadata.
+
+Families group available hash-shaped RHS-family records with defined RHS values,
+in sorted RHS-key order; the array can be empty. The candidate family count and
+each family's contributor count name their respective array lengths. Family
+contributors carry endpoint, family/source enable names and copied driver arrays.
+
+C<assertion_keys> describes both the candidate's C<multi_value_assertion> object
+and each aggregate family's C<same_value_assertion> object. The former takes
+family C<aggregate_enable_signal> values; the latter takes contributor
+C<source_enable_signal> values. Their C<result_signal> names the corresponding
+multi-value or same-value conflict signal. Both carry C<kind: onehot0> and an
+C<input_enable_signals> array filtered to defined, nonempty names in input order;
+C<input_count> is that surviving length. Construction returns an object for an
+empty input list. A family object exists only with its family entry; optional
+candidate/IR availability still applies. Metadata alone does not prove emitted
+assertions, arbitration or execution. Complete values/expression/deeper IR models,
+source availability and source-query applicability remain separately qualified.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

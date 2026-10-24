@@ -1,0 +1,85 @@
+{
+  "commands": [
+    {
+      "command": [
+        "scripts/check_claim_verification_inventory.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_shared_aggregate.py",
+        "docs/audits/mcp-api-reference-20261023/shared-aggregate-qualified.json.gz",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "log": "docs/audits/mcp-api-reference-20261023/shared-aggregate-final-gates.log.gz",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "8429fc42f73a75b395237b71e11d806ef8b5359dc0191aab84a0f0a6e2ddc1b5",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4",
+  "retained_log_sha256": "0bba05fc5ac45c5ae620bd3d6b2d3916bd26b72122ae74b2305f0d82fe5acb64",
+  "scope": "Focused current-source/native/index/doc/doctrine delivery; completed unchanged tests retain, not full CI."
+}

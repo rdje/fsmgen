@@ -1,0 +1,21 @@
+{
+  "diagnosis": "Initial source/field/delegation proof reaches missing guide. First documented epoch reaches literal source availability check because the phrase crosses a Markdown line break. Correct only that wrap; retain original packet and instrument.",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4",
+  "records": [
+    {
+      "exit_status": 1,
+      "label": "shared-aggregate-before",
+      "log": "docs/audits/mcp-api-reference-20261023/shared-aggregate-before.log.gz",
+      "original_log_sha256": "7565cbd41f73c49de2989111551ac2e3d94c7715d490738655a6c3ef24f45fcb",
+      "retained_log_sha256": "2a17c73c8e8747c42dca75a54fd6a94885f9b44faba9a438285354b8a143e3e4"
+    },
+    {
+      "exit_status": 1,
+      "label": "shared-aggregate-guide-wrap-refused",
+      "log": "docs/audits/mcp-api-reference-20261023/shared-aggregate-guide-wrap-refused.log.gz",
+      "original_log_sha256": "89b2dbd6498cea06816446b81826bdce6c7ad55accbbfc8d71b10675d5ebbec8",
+      "retained_log_sha256": "a6dd7e383446ae2fc6ee5c69caecbab50a13c1ac1228561ad43d4775faa81302"
+    }
+  ]
+}

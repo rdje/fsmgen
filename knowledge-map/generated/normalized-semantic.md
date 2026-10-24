@@ -1,7 +1,7 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **114** uniquely owned question entries.
+> **26** facts · **115** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -25,6 +25,7 @@
 - q="does normalized semantic JSON report the original .ppif source path?" · facts=[normalized-semantic-public-source-identity](../../docs/knowledge/normalized-semantic-public-source-identity.md)
 - q="does semantic.composition.shared_datapath_candidates reuse lowered-RTL shared-datapath schemas?" · facts=[normalized-semantic-composition-shared-datapath-alias-schema](../../docs/knowledge/normalized-semantic-composition-shared-datapath-alias-schema.md)
 - q="how do embedders discover optional semantic children?" · facts=[normalized-semantic-optional-children](../../docs/knowledge/normalized-semantic-optional-children.md)
+- q="how do shared-datapath multi-value and same-value assertions choose inputs?" · facts=[normalized-semantic-shared-datapath-candidate-entry-schema](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
 - q="what are semantic.forward_ir.structural_rtl_ir auxiliary_assignments entries?" · facts=[normalized-semantic-structural-auxiliary-assignment-entry-schema](../../docs/knowledge/normalized-semantic-structural-auxiliary-assignment-entry-schema.md)
 - q="what are success_semantic_optional_child_presence_keys?" · facts=[normalized-semantic-optional-children](../../docs/knowledge/normalized-semantic-optional-children.md)
 - q="what contract owns semantic.forward_ir.lowered_rtl_ir.selector_conflict_targets?" · facts=[normalized-semantic-lowered-rtl-selector-conflicts](../../docs/knowledge/normalized-semantic-lowered-rtl-selector-conflicts.md)
@@ -201,7 +202,7 @@ _Normalized semantic lowered RTL advertises selector-conflict entry schemas_
 
 ### normalized-semantic-shared-datapath-candidate-entry-schema
 
-_Normalized semantic lowered RTL advertises shared-datapath candidate entry schemas_
+_Shared-datapath entry and assertion schemas_
 
 - **date:** 2026-10-24 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md`](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
