@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **79** uniquely owned question entries.
+> **1** facts · **80** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -60,6 +60,7 @@
 - q="what can FSMGen apply from an RTL simulator MCP design?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what do FSMGen MCP initialize instructions advertise?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what do manifest nested presence maps describe?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what is the FSMGen MCP workspace-root authority?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what is the active priority after FSMGen MCP source discovery?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what is the first MCP-related FSMGen task?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

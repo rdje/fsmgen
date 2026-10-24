@@ -112,6 +112,25 @@ C<source_is_manifest_builder_module>. C<contract_authority> currently emits true
 but stronger meaning is undefined by the producer contract and remains an owned
 documentation gap. Do not infer additional trust, release or compatibility promises.
 
+=head2 Section-shell records
+
+The book's C<Section-shell contract records> guide covers the common fields and
+owner-specific maps in the backend-validation, diagnostics, documentation,
+embedding, language and semantic-export shells. C<nested_presence_key_map> can
+describe a result, a report fragment, registry siblings or a contract record;
+follow its dedicated owner before choosing the object to validate. In particular,
+the backend C<systemverilog_external> family names success-result fields, and the
+diagnostic registry family names sibling fields in the diagnostics section.
+The generator-result map is a sorted known-key union across common, direct-root
+and composition-root families; not every key is required on every result. The
+generation-result snapshot family describes snapshot output, not its contract.
+Documentation instead publishes C<path_list_contract_map> with repository-relative
+tracked Markdown rules and unfrozen exact path lists. The language shell's
+C<file_surface_entry_presence_keys> describes each C<file_surfaces.entries> item.
+Advertising flags do not enable execution, and false whole-section stability
+flags do not remove the named bounded presence promises. Deeper payload semantics
+remain with their dedicated contracts; these shells are not a universal schema.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

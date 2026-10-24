@@ -2,7 +2,7 @@
 
 This directory retains `PERL-POD-API-REFERENCE` interface/root audits and repairs.
 `model-roots-qualified.json.gz` / `model-root-graph-qualified.json.gz` freeze metadata roots.
-Field semantics remain pending; this is not complete MCP operating documentation.
+Shell census: `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/verify_section_shell_fields.py docs/audits/mcp-api-reference-20261023/section-shell-fields-final.json.gz` (`--current`: freshness); root/producer also qualified; rest pending.
 
 ## Live census boundary
 

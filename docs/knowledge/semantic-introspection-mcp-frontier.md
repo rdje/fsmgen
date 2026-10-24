@@ -81,6 +81,7 @@ answers:
   - what is the active priority after FSMGen MCP source discovery?
   - what type is MCP examples documentation?
   - where are manifest producer fields defined?
+  - what do manifest nested presence maps describe?
 date: 2026-09-27
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
@@ -91,15 +92,14 @@ reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl t/14[4-6]*-semantic-introspection-mcp-*.t t/186[89]-semantic-introspection-mcp-*.t t/188[2-6]-*.t t/188[79]-*.t t/1890-*.t t/210[2-4]-mcp-*.t t/1930-mcp-quoted-division-diagnostics.t
 ---
 
-Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
+Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. History: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
 
-Contract/examples: `docs/book/src/11-extensions-and-embedding.md`; snapshots:
-`t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
+Guide: `docs/book/src/11-extensions-and-embedding.md`; snapshots: `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
 `SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest ownership.
 `SemanticIntrospectionMCPAdapter`: `bin/fsmgen-mcp`. Semantic API first.
-Root/producer: book “Manifest shell and producer fields” (2026-10-24).
+Book (2026-10-24): “Manifest shell and producer fields”; “Section-shell contract records”.
 No private Perl AST/scheduler/lowering/generator hash API.
-Discover families, names and applicability: `./bin/fsmgen --capability-manifest`,
+Families/names/applicability: `./bin/fsmgen --capability-manifest`,
 `tools/list`. Catalog discovery never scans workspace; results retain relative
 identity/public provenance.
 
@@ -112,7 +112,7 @@ manifest_schema_version integer; all/contracts/examples direct objects.
 .4 kinds/copies; .5.2 loaded-code/record suffixes/authored locations;
 .5.3 case fixed; .5.4 zero preserved. .6 examples.documentation is the manifest documentation object.
 
-One-shot JSON-RPC and newline stdio use UTF-8 JSON with
+One-shot JSON-RPC/newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
 versions do not widen that profile. `--workspace-root` is the source authority;
 client roots are not consumed. Tools return text JSON and `structuredContent`, compact output schemas,
@@ -127,7 +127,7 @@ commit/push tools remain separately owned future work.
 2026-09-24 audit (earlier profile tests missed these limits):
 
 - `.31.2.3` exposes `.axi`, `.apb` and `.ahb` through catalog discovery.
-  The exported `semantic_introspection_source_query_kinds()` and manifest
+  Exported `semantic_introspection_source_query_kinds()` and manifest
   `source_query_kinds` map own applicability; aliases share PPIF's check,
   semantic and schedule queries. T1869 compares all alias catalog records,
   native suffix coverage and actual native/MCP reports; availability does not
@@ -172,7 +172,7 @@ T1883 accounts sources/queries. T1884 compares actual native/API/newline reports
 T1885 adds authored storage, observation and VIAL oracles, shared-corruption and
 failed-source controls. ISF/IAL2 report shapes stay distinct. CI partitions T1884;
 public features require API/MCP signoff. Exhaustive qualification remains owned.
-Full-run ASCII wire encoding amplified memory; UTF-8 removes that mechanism,
+Full-run ASCII wire encoding amplified memory; UTF-8 removes it,
 preserving full values. T1886 guards both CLI modes, Unicode identity and
 report/type equality.
 
@@ -186,8 +186,8 @@ Repair retains concat operands, literal class/value/width/radix, signal slices
 and aggregate paths; skips unsupported kinds/containing expressions; sorts
 allocation. T1887 proves distinct-driver substitution, seed/order stability and
 independent HDL behavior. The original differing APB driver was unused; its repro proves no APB output failure. Native size fields remain intact.
-Evidence: `docs/audits/mcp-feature-coverage-20260924/source-query-identity-repair.json`.
+`docs/audits/mcp-feature-coverage-20260924/source-query-identity-repair.json`.
 
 ISF/PPIF CLI failures map registered lowered sources to authored paths; direct/external child paths remain physical. T1889 checks clean width reasons, retained/domain artifacts and native/API/MCP equality; no line/column map.
 
-T1890 qualifies canonical multi-clock wiring and all reset policies through native/API/MCP. ISF emission preserves explicit polarity; direct/domain behavior and exact controls are in docs/knowledge/explicit-system-reset-polarity.md. Broader activation qualification remains owned by .32.1.3.3.
+T1890 qualifies canonical multi-clock wiring and all reset policies through native/API/MCP. ISF emission preserves explicit polarity; direct/domain behavior and exact controls are in docs/knowledge/explicit-system-reset-polarity.md. Broader activation qualification: .32.1.3.3.
