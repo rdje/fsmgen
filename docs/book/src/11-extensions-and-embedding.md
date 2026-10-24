@@ -513,6 +513,54 @@ The baseline field guide still owns symbol-object availability and core keys;
 complete payload/source models and the remaining grouped-map closure stay with
 their dedicated contracts.
 
+### Normalized composition envelope and shallow children
+
+Use these fields of `semantic_exports.normalized_semantic_json` to select the
+right composition object or child element. The function column names the
+dedicated `FSM::Support::NormalizedSemanticCompositionContract` function;
+report/payload contracts republish its values, with forward-IR and intent-HIR
+delegation for the flattened HIR locations.
+
+| Metadata field | Payload subject | Dedicated function |
+| --- | --- | --- |
+| `composition_child_entry_keys` | `semantic.composition.children[]` | `normalized_semantic_composition_child_entry_keys` |
+| `composition_generated_child_entry_keys` | `semantic.composition.generated_children[]` | `normalized_semantic_composition_generated_child_entry_keys` |
+| `composition_presence_keys` | `semantic.composition` | `normalized_semantic_composition_presence_keys` |
+| `success_forward_ir_intent_hir_composition_child_entry_keys` | `semantic.forward_ir.intent_hir.composition_children[]` | `normalized_semantic_composition_child_entry_keys` |
+| `success_forward_ir_intent_hir_composition_generated_child_entry_keys` | `semantic.forward_ir.intent_hir.composition_generated_children[]` | `normalized_semantic_composition_generated_child_entry_keys` |
+
+The envelope advertises these keys, in emitted family order:
+`lane`, `child_count`, `children`, `net_count`, `resolved_link_count`, `generated_child_count`, `generated_children`, `standalone_dt_child_count`, `standalone_dt_children`, `shared_datapath_candidate_count`, `shared_datapath_candidates`, `plan_snapshot`, `provenance_report`.
+Counts describe their named summaries or collections; envelope membership does
+not describe every entry inside those collections. `plan_snapshot` delegates
+to `FSM::Support::SerializableCompositionPlanSnapshot`, and the sanitized
+`provenance_report` delegates to `FSM::Support::CompositionReportContract`.
+
+Both ordinary and generated child families advertise the same shallow keys:
+`kind`, `instance_name`, `module_name`, `source_name`, `source_root_kind`, `regular_state_count`, `standalone_dt_count`, `output_drive_family_count`, `standalone_dt_multi_drive_target_count`, `parameter_override_count`, `parameter_overrides`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`.
+The identity fields identify the child instance/module and its source/root;
+the count fields summarize its state, DT, output-drive, multi-drive-target
+and parameter-override data. Read `parameter_overrides` as a collection with
+its own structural parameter-override alias contract. The child `intent_hir`,
+`lowered_rtl_ir` and `structural_rtl_ir` objects retain their dedicated IR
+contracts; this shallow list does not recursively define them.
+
+For example, select `composition_child_entry_keys` when reading
+`report.semantic.composition.children[0]`; select
+`success_forward_ir_intent_hir_composition_generated_child_entry_keys` when
+reading `report.semantic.forward_ir.intent_hir.composition_generated_children[0]`.
+Guard the optional composition object or HIR collection, and check that the
+array has an element before indexing. A HIR collection is flattened under
+`intent_hir`; it is not `intent_hir.composition.generated_children`.
+
+Identical key lists do not establish equal child populations, matching array
+indices, or unconditional source availability. Keep ordinary and generated
+collections distinct, and preserve source-provided array order without treating
+it as priority. The baseline guide owns optional object/tier availability.
+Standalone-DT child entries, `shared_datapath_candidates`, parameter-override
+extensions, deeper value models and grouped-map closure retain their dedicated
+contracts. These metadata families do not establish execution or backend support.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

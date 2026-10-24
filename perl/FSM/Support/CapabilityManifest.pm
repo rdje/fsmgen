@@ -284,6 +284,33 @@ This is not a closed schema for arbitrary nested values. Optional object
 availability, source models, remaining grouped closure and actual execution
 retain their dedicated contracts.
 
+=head2 Normalized composition envelope and shallow children
+
+The book's matching table binds C<composition_presence_keys> to
+C<semantic.composition>, C<composition_child_entry_keys> to its C<children[]>,
+and C<composition_generated_child_entry_keys> to its C<generated_children[]>.
+C<success_forward_ir_intent_hir_composition_child_entry_keys> instead describes
+C<semantic.forward_ir.intent_hir.composition_children[]>; the generated-child
+counterpart describes C<semantic.forward_ir.intent_hir.composition_generated_children[]>.
+Those HIR collections are flattened, not nested under an HIR composition object.
+
+C<FSM::Support::NormalizedSemanticCompositionContract> owns the envelope and
+both shallow child families. Report/payload and forward-IR/intent-HIR helpers
+republish the corresponding dedicated functions. The envelope's lane/counts,
+child collections and C<shared_datapath_candidates> do not recursively define
+their entries. C<plan_snapshot> and sanitized C<provenance_report> retain
+C<FSM::Support::SerializableCompositionPlanSnapshot> and
+C<FSM::Support::CompositionReportContract> ownership respectively.
+
+Ordinary/generated children share identity fields, state/DT/drive/override
+metrics, C<parameter_overrides> and child IR summaries. The book lists their
+complete shallow keys and exact dedicated functions. Nested overrides and
+C<intent_hir>, C<lowered_rtl_ir>, C<structural_rtl_ir> keep their own contracts.
+Equal key lists do not prove equal child populations, array-index correspondence
+or unconditional source availability. Guard optional objects/collections before
+reading an element. Standalone-DT, shared-datapath, grouped-map and deeper value
+models remain separately owned; metadata does not promise execution or backend support.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs
