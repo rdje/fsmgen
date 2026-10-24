@@ -610,6 +610,53 @@ parameter-override alias family. Detailed expression/type/value semantics,
 grouped-map closure and source/backend qualification remain separately owned;
 discovering an alias does not run generation or validation.
 
+### Normalized composition standalone-DT children
+
+Within `semantic_exports.normalized_semantic_json`, combine a prefix below
+with a suffix from the next table. The payload root is an element of the
+standalone-DT child collection, distinct from ordinary/generated children.
+
+| Metadata prefix | Payload root |
+| --- | --- |
+| `composition_standalone_dt_` | `semantic.composition.standalone_dt_children[]` |
+| `success_forward_ir_intent_hir_composition_standalone_dt_` | `semantic.forward_ir.intent_hir.composition_standalone_dt_children[]` |
+
+| Metadata suffix | Subject relative to child entry | Advertised keys |
+| --- | --- | --- |
+| `child_entry_keys` | `(child entry)` | `instance_name`, `module_name`, `source_name`, `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, `standalone_dt_module_enable_family`, `standalone_dt_multi_drive_target_count`, `standalone_dt_multi_drive_targets`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir` |
+| `enable_family_entry_keys` | `standalone_dt_enable_families[]` | `dt_name`, `enable_signal` |
+| `module_enable_family_keys` | `standalone_dt_module_enable_family` | `dt_names`, `enable_signals` |
+| `multi_drive_target_entry_keys` | `standalone_dt_multi_drive_targets[]` | `dt_enable_signals`, `dt_names`, `lhs_enable_signals`, `multi_drive_assertion`, `multiplexer_type`, `rhs_values`, `signal_name` |
+| `multi_drive_assertion_keys` | `standalone_dt_multi_drive_targets[].multi_drive_assertion` | `input_count`, `input_enable_signals`, `kind`, `target_signal` |
+
+`FSM::Support::NormalizedSemanticCompositionContract` directly owns the child,
+per-DT enable and module-enable key lists. Its target/assertion functions
+delegate to `FSM::Support::NormalizedSemanticLoweredRTLIRContract` functions
+with the `normalized_semantic_lowered_rtl_ir_standalone_dt_` prefix and matching
+suffix. Report/payload and forward-IR/intent-HIR helpers republish the
+corresponding families at the distinct root and flattened HIR locations.
+
+The child collection, per-DT enable families and multi-drive targets are
+arrays. The singular `standalone_dt_module_enable_family` and each target's
+`multi_drive_assertion` are objects. The module summary contains arrays of
+DT names and enable signals; each per-DT entry advertises its own
+`dt_name`/`enable_signal` pair. Keep these container subjects distinct when
+selecting a schema; an assertion family does not describe the entire target.
+
+For example, `composition_standalone_dt_multi_drive_assertion_keys` applies
+at `report.semantic.composition.standalone_dt_children[0].standalone_dt_multi_drive_targets[0].multi_drive_assertion`.
+Guard optional composition/HIR collections and check array contents before
+indexing. HIR uses `intent_hir.composition_standalone_dt_children`, with no
+intermediate HIR composition object. Equal metadata lists do not establish
+equal populations or matching indices across tiers.
+
+Child `intent_hir`, `lowered_rtl_ir` and `structural_rtl_ir` remain shallow
+delegations to their own bounded IR contracts. These advertised families
+contain no standalone-DT parameter-override aliases. Enable/assertion metadata
+does not establish execution, emitted/checked HDL assertions, verified
+arbitration or unconditional source availability. Deeper value models,
+grouped-map closure and source/backend qualification retain their owners.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

@@ -1,7 +1,7 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **110** uniquely owned question entries.
+> **26** facts · **111** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -115,6 +115,7 @@
 - q="where are structural_rtl_ir resolved_links entry keys advertised?" · facts=[normalized-semantic-structural-link-entry-schema](../../docs/knowledge/normalized-semantic-structural-link-entry-schema.md)
 - q="where is normalized semantic package-import name-list metadata tracked?" · facts=[normalized-semantic-symbol-package-import-name-list](../../docs/knowledge/normalized-semantic-symbol-package-import-name-list.md)
 - q="where is the direct generated-enable assignment AST exposed?" · facts=[normalized-semantic-structural-assignment-record-entry-schema](../../docs/knowledge/normalized-semantic-structural-assignment-record-entry-schema.md)
+- q="which standalone-DT composition child metadata fields are arrays or objects?" · facts=[normalized-semantic-composition-standalone-dt-child-entry-schema](../../docs/knowledge/normalized-semantic-composition-standalone-dt-child-entry-schema.md)
 
 ## Facts
 
@@ -143,7 +144,7 @@ _Normalized semantic composition advertises shared-datapath candidate alias sche
 
 _Normalized semantic composition advertises standalone-DT child entry schemas_
 
-- **date:** 2026-06-06 · **status:** current
+- **date:** 2026-10-24 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-composition-standalone-dt-child-entry-schema.md`](../../docs/knowledge/normalized-semantic-composition-standalone-dt-child-entry-schema.md)
 
 ### normalized-semantic-generated-child-parameter-override-alias-schema

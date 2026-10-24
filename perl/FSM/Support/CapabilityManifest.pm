@@ -338,6 +338,34 @@ key on every entry. Equal schemas establish neither matching populations nor
 unconditional source availability. No standalone-DT parameter-override alias
 is introduced; deeper models, grouped closure and execution remain separate.
 
+=head2 Normalized composition standalone-DT children
+
+The book's matching tables pair C<composition_standalone_dt_> metadata suffixes
+with C<semantic.composition.standalone_dt_children[]> and
+C<success_forward_ir_intent_hir_composition_standalone_dt_> counterparts with
+C<semantic.forward_ir.intent_hir.composition_standalone_dt_children[]>.
+These are shallow reusable standalone-DT children, distinct from ordinary or
+generated child entries and from nested child IR models.
+
+C<child_entry_keys>, C<enable_family_entry_keys> and
+C<module_enable_family_keys> come directly from CompositionContract.
+C<multi_drive_target_entry_keys> and C<multi_drive_assertion_keys> delegate to
+LoweredRTLIRContract's matching C<normalized_semantic_lowered_rtl_ir_standalone_dt_>
+functions. The book lists complete subjects/keys and the report/payload/HIR
+republishing boundary.
+
+Per-DT enable families and multi-drive targets are arrays; singular
+C<standalone_dt_module_enable_family> and nested C<multi_drive_assertion> are
+objects. The assertion family applies inside each target. Module enable
+metadata contains arrays of DT names and enable signals. Guard optional
+objects/collections and check contents before indexing; HIR child collections
+are flattened rather than nested under an HIR composition object.
+
+There are no standalone-DT parameter-override aliases in these families.
+Child IR contracts and deeper models stay delegated. Metadata does not prove
+execution, emitted/checked assertions, verified arbitration or unconditional
+source availability. Full source/backend and grouped-map closure remain separate.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

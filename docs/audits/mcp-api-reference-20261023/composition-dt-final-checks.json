@@ -1,0 +1,85 @@
+{
+  "commands": [
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_composition_dt.py",
+        "docs/audits/mcp-api-reference-20261023/composition-dt-qualified.json.gz",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "knowledge-map/scripts/check_knowledge_map.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_acceptance.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "log": "docs/audits/mcp-api-reference-20261023/composition-dt-final-checks.log.gz",
+  "normalization": "Only dynamic repository-root prefixes become repository-relative; all other stream bytes retain.",
+  "original_log_sha256": "0fc938149098cc8339a32dcbb36e4c9bbbdaea92f0d16e1a7aa26b4b7b58e682",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.3",
+  "python_39_grammar": "PASS",
+  "retained_log_sha256": "b78d687c713d9efa52ca95664db1b319d3122bc1ee9dc5d9bc6ebf0e887d83c2"
+}
