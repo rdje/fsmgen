@@ -690,6 +690,52 @@ Equal lists do not prove equal child populations or matching indices. This
 selected composition join leaves broader grouped-map/model closure,
 shared-datapath subjects and source/backend qualification with their owners.
 
+### Normalized shared-datapath candidate and contributor subjects
+
+Under `semantic_exports.normalized_semantic_json`, combine either prefix with
+one suffix below to obtain the exact metadata field. Each prefix describes a
+different payload location:
+
+| Metadata prefix | Candidate payload subject |
+| --- | --- |
+| `composition_shared_datapath_` | `semantic.composition.shared_datapath_candidates[]` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_` | `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]` |
+
+| Suffix | Subject relative to the candidate | Family rule | Complete ordered keys |
+| --- | --- | --- | --- |
+| `candidate_entry_keys` | `(candidate entry)` | `core` | `signal_name`, `width`, `interface_type`, `storage_class`, `reset_value`, `contributor_count`, `contributors`, `top_output_signals`, `peer_input_count`, `peer_input_endpoints`, `default_lifted_visibility`, `planned_reexport_top_output_signals`, `loopback_allowed`, `lifted_runtime_kind`, `lifted_runtime_signal`, `lifted_runtime_next_signal`, `lifted_runtime_reset_value`, `lifted_runtime_reset_active_level`, `lifted_runtime_reset_kind`, `lifted_runtime_reset_keyword`, `aggregate_target_enable_signal`, `multi_value_conflict_signal`, `multi_value_assertion`, `aggregate_enable_family_count`, `aggregate_enable_families` |
+| `candidate_declared_type_extension_keys` | `(candidate entry)` | `optional_extension` | `declared_type_name`, `declared_type_spec` |
+| `candidate_contributor_entry_keys` | `contributors[]` | `core` | `kind`, `instance_name`, `module_name`, `source_name`, `endpoint`, `bound_signal`, `bound_signals`, `bound_connection_expr`, `output_drive_family`, `drive_intent`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir` |
+| `candidate_contributor_declared_type_extension_keys` | `contributors[]` | `optional_extension` | `declared_type_name`, `declared_type_spec` |
+
+For example, `composition_shared_datapath_candidate_contributor_entry_keys`
+describes each root candidate's `contributors[]` element; it does not describe
+the candidate itself. The longer prefix selects the corresponding contributor
+subject inside the lowered-RTL candidate collection. These families use the
+lowered tier; do not substitute an intent-HIR prefix.
+
+`FSM::Support::NormalizedSemanticLoweredRTLIRContract` owns all four suffix
+lists through `normalized_semantic_lowered_rtl_ir_composition_shared_datapath_`
+plus the suffix. Root composition aliases delegate through
+`FSM::Support::NormalizedSemanticCompositionContract`; the lowered metadata
+delegates through the forward-IR contract. Payload/report contracts and the
+manifest republish those lists rather than defining another candidate schema.
+
+The declared-type extensions apply to their respective candidate or contributor
+objects. `declared_type_name` and `declared_type_spec` are independently optional:
+the builder emits each only when its corresponding resolved value is defined.
+Check the keys separately. The extension list does not promise both keys on
+every entry, and `declared_type_spec` does not close the deeper type/value model.
+Core families advertise shallow schema members; they do not make every value
+non-null or establish unconditional candidate/source availability.
+
+Contributor `intent_hir`, `lowered_rtl_ir` and `structural_rtl_ir` remain bounded
+delegates. Binding expressions, drive intent, aggregate-enable families and the
+two assertion contexts retain their own nested contracts. Equal root/lowered
+lists do not establish equal populations, matching indices, execution or
+verified arbitration. Preserve arrays without inferring priority, and inspect
+optional collections before indexing.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

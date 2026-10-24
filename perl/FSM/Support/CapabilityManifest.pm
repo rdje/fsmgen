@@ -384,6 +384,31 @@ command. Equal lists imply neither equal populations nor matching indices;
 broader grouped-map/model, shared-datapath and source/backend qualification
 remain separate.
 
+=head2 Normalized shared-datapath candidate and contributor subjects
+
+Combine C<composition_shared_datapath_> or
+C<success_forward_ir_lowered_rtl_ir_composition_shared_datapath_> with
+C<candidate_entry_keys>, C<candidate_declared_type_extension_keys>,
+C<candidate_contributor_entry_keys> or
+C<candidate_contributor_declared_type_extension_keys>. The first prefix targets
+C<semantic.composition.shared_datapath_candidates[]>; the second targets
+C<semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]>.
+Contributor families describe C<contributors[]> elements inside each candidate.
+These are lowered-tier families, not intent-HIR counterparts.
+
+C<FSM::Support::NormalizedSemanticLoweredRTLIRContract> owns the exact lists.
+Composition-side aliases delegate to it; forward/payload/report contracts and
+this manifest republish the corresponding metadata. The book lists complete
+ordered keys and exact subject examples.
+
+C<declared_type_name> and C<declared_type_spec> are independently optional on
+their respective candidate/contributor objects: each is emitted only when its
+resolved value is defined. Check keys separately. The optional extension list
+does not promise both keys, non-null core values or source availability.
+Child IR summaries and deeper type/value, binding/drive, aggregate and assertion
+models remain delegated. Equal lists imply neither equal populations nor
+matching indices, execution or verified arbitration; arrays do not imply priority.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

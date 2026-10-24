@@ -8,27 +8,28 @@ answers:
   - "what keys are in shared-datapath candidate contributor drive_intent entries?"
   - "where are shared-datapath contributor drive-intent rhs_enable_families keys advertised?"
   - "where are shared-datapath aggregate enable and assertion metadata keys advertised?"
-date: 2026-06-06
+  - "are shared-datapath declared_type_name and declared_type_spec always present together?"
+date: 2026-10-24
 status: current
 tags: [normalized-semantic-json, lowered-rtl-ir, composition, shared-datapath, public-api]
 evidence: perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm; perl/FSM/Support/NormalizedSemanticForwardIRContract.pm; perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; t/340-normalized-semantic-lowered-rtl-ir-contract.t; t/334-normalized-semantic-forward-ir-contract.t; t/330-normalized-semantic-payload-contract.t; t/311-normalized-semantic-report-contract.t; t/297-capability-manifest.t; t/354-normalized-semantic-child-runtime-contract-audit.t; t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t; t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md
-reverify: prove -Iperl t/340-normalized-semantic-lowered-rtl-ir-contract.t t/334-normalized-semantic-forward-ir-contract.t t/330-normalized-semantic-payload-contract.t t/311-normalized-semantic-report-contract.t t/297-capability-manifest.t t/354-normalized-semantic-child-runtime-contract-audit.t t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/verify_shared_candidate.py docs/audits/mcp-api-reference-20261023/shared-candidate-qualified.json.gz --current-contracts
 ---
 
-`FSM::Support::NormalizedSemanticLoweredRTLIRContract` advertises the bounded
-entry schemas under
-`semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]`.
+`FSM::Support::NormalizedSemanticLoweredRTLIRContract` advertises bounded schemas
+under `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]`:
+candidate/optional declared-type, contributor/`bound_connection_expr`, contributor
+`drive_intent`/nested `rhs_enable_families[]`, aggregate-enable/family-contributor
+and multi/same-value assertion metadata. Payload/report contracts and the manifest
+inherit these lists through the normalized helper chain. The recorded runtime
+audit checks strict composition semantic JSON against exact entry schemas.
+Contributor `intent_hir`, `lowered_rtl_ir` and `structural_rtl_ir` remain bounded
+child delegates rather than duplicated candidate schemas.
 
-The public key families cover candidate entries, optional declared-type
-extension keys, contributor entries, contributor `bound_connection_expr`
-metadata, contributor `drive_intent` entries, nested drive-intent
-`rhs_enable_families[]` entries, aggregate enable-family entries,
-aggregate-family contributor entries, and multi/same-value assertion metadata.
-Payload/report contracts and the capability manifest inherit those lists
-through the normalized semantic contract helper chain, and the runtime contract
-audit checks a strict composition semantic JSON export against those exact
-entry schemas.
+Candidate and contributor `declared_type_name`/`declared_type_spec` are independently
+optional: the builder emits each only when its value is defined. Check keys
+separately; their family list does not promise both on every entry.
+Replay checks current contract/builder code and dated candidate/type guides;
+nested families remain delegated. No source epoch reruns.
 
-Contributor child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir`
-summaries remain delegated to their existing bounded child contracts instead of
-being duplicated inside the shared-datapath candidate schema.
+`perl/FSM/Composition/SharedDatapathCandidateBuilder.pm`

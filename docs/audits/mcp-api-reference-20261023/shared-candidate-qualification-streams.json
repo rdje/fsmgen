@@ -1,0 +1,7 @@
+{
+  "log": "docs/audits/mcp-api-reference-20261023/shared-candidate-qualification.log.gz",
+  "original_log_sha256": "10d195cfb08e9762b088fc628a115b0e94327926f3b8b9953fe9e0c9e0e98fdf",
+  "retained_log_sha256": "10d195cfb08e9762b088fc628a115b0e94327926f3b8b9953fe9e0c9e0e98fdf",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "python_39_grammar": "PASS"
+}

@@ -1,12 +1,13 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **112** uniquely owned question entries.
+> **26** facts · **113** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are selector_conflict_target_count and selector_conflict_targets public semantic JSON keys?" · facts=[normalized-semantic-lowered-rtl-selector-conflicts](../../docs/knowledge/normalized-semantic-lowered-rtl-selector-conflicts.md)
 - q="are semantic.composition and semantic.symbol_contract mandatory?" · facts=[normalized-semantic-optional-children](../../docs/knowledge/normalized-semantic-optional-children.md)
+- q="are shared-datapath declared_type_name and declared_type_spec always present together?" · facts=[normalized-semantic-shared-datapath-candidate-entry-schema](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
 - q="are structural_rtl_ir auxiliary assignments shell-only?" · facts=[normalized-semantic-structural-auxiliary-assignment-entry-schema](../../docs/knowledge/normalized-semantic-structural-auxiliary-assignment-entry-schema.md)
 - q="are structural_rtl_ir auxiliary assignments the preferred assignment AST?" · facts=[normalized-semantic-structural-auxiliary-assignment-entry-schema](../../docs/knowledge/normalized-semantic-structural-auxiliary-assignment-entry-schema.md)
 - q="are structural_rtl_ir instance parameter overrides entry keys advertised?" · facts=[normalized-semantic-structural-instance-parameter-override-entry-schema](../../docs/knowledge/normalized-semantic-structural-instance-parameter-override-entry-schema.md)
@@ -201,7 +202,7 @@ _Normalized semantic lowered RTL advertises selector-conflict entry schemas_
 
 _Normalized semantic lowered RTL advertises shared-datapath candidate entry schemas_
 
-- **date:** 2026-06-06 · **status:** current
+- **date:** 2026-10-24 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md`](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
 
 ### normalized-semantic-standalone-dt-multi-drive-entry-schema
