@@ -28,6 +28,7 @@ top-level sections:
 - `support_accounting`
 - `diagnostics`
 - `semantic_exports`
+- `semantic_introspection`
 - `backend_validation`
 - `embedding`
 - `language_surface`
@@ -57,6 +58,52 @@ payload-key exception.
 It now also publishes a grouped `presence_key_family_map` so a downstream tool
 can discover the manifest-owned legacy `*_presence_keys` field families from
 one place instead of collecting those compatibility field lists one by one.
+
+### Manifest shell and producer fields
+
+Read the shell through `manifest_contract`, then follow each section's dedicated
+owner. The published presence lists promise named fields at that level; they do
+not recursively close every object. The contract calls for deliberate widening
+backed by documentation and regression evidence. JSON object ordering carries no
+field meaning. The shell does not specify positional priority for its key lists,
+entrypoint examples or guidance arrays; preserve emitted ordering when retaining
+an observation and use field names for lookup.
+
+| Field or family | Meaning and element rules |
+| --- | --- |
+| `manifest_schema_version` | Integer version of the outer manifest shell, currently `1`. |
+| `producer` | Tool/build identity and its dedicated producer contract. |
+| `support_accounting`, `diagnostics`, `documentation` | Support/catalog truth, diagnostic advertisements, and grouped documentation paths; their dedicated contracts own deeper fields. |
+| `semantic_exports`, `semantic_introspection` | Report/export contracts and query/MCP discovery. Metadata is distinct from a source report or an executed query. |
+| `backend_validation`, `verification_outputs` | Validation and verification advertisements; reading them executes no backend and does not guarantee installed tools. |
+| `embedding`, `language_surface` | Embedding and language/backend contracts, including separately scoped VIAL metadata. Advertisement alone does not expose an operation through MCP. |
+| `manifest_contract` | The bounded shell's metadata and grouped discovery maps. |
+| Contract `schema_version`, `status` | This dedicated contract's published numeric schema version and scope marker; both selected contracts use `bounded_public`. This is not an arbitrary-input support guarantee. |
+| `contract_source`, `report_source` | Dedicated contract-owner namespace and manifest-producer namespace. These strings identify owners; they are not instructions to load or execute modules. |
+| `entrypoints` | In the shell and producer contracts, `cli` is a command string, while `cli_aliases` and `in_process` are arrays of command/API example strings. They advertise discovery routes, not new MCP tools. Other contracts can use different labels and shapes. |
+| `public_top_level_presence_keys` | Array of required field-name strings for the described object, rather than a list of this metadata record's own keys. |
+| `top_level_contract_source_map` | Section-name to owner-namespace map. It covers the object sections above; `manifest_schema_version` and `manifest_contract` are outside that domain. `language_surface` retains its `surface_contract` slot; other sections advertise `section_contract`. |
+| `top_level_section_presence_key_map` | The same section-name domain, with arrays of required first-level field names as values. Deeper meaning stays with each owner. |
+| `presence_key_family_map` and legacy `*_presence_keys` | A family-name to field-name-array lookup. Each entry equals the same-named compatibility field; shell section families also equal the corresponding grouped section list. These members name fields, not sample values. |
+| `full_manifest_json_safe`, `nested_section_contracts_advertised` | Boolean promises of JSON serialization and dedicated section-contract advertisement. Neither promises raw compiler-object serialization or freezes every nested value. |
+| `guidance` | Array of explanatory strings about scope and widening; prose does not grant callable operations. |
+
+Within `producer`, `name` identifies the tool, `version` is a tool/build string
+(currently `0.1-dev`), `git_commit` is a best-effort short hash or `unknown`, and
+`source` identifies the manifest builder. This is not a release-management or
+complete replay identity contract. Build/version provenance is separate from the
+manifest schema, nested contract schemas, VIAL language versions and MCP protocol.
+
+`producer.section_contract` publishes `scalar_string_keys` for `name`, `version`,
+`git_commit` and `source`, and `boolean_keys` for `contract_authority`; its grouped
+family map repeats those two lists. `identity_contract` explicitly promises
+`name_is_tool_identity`, `git_commit_is_best_effort_short_hash_or_unknown` and
+`source_is_manifest_builder_module` as Boolean flags. `contract_authority` itself
+currently emits Boolean `true`; stronger meaning is **undefined** by this contract.
+That definition gap remains owned by the operating-reference work; it must not be
+silently converted into a trust, compatibility or release guarantee.
+
+### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public
 file suffixes: `.fsm` as IAL0, `.isf` as IAL1, `.ppif` as the generic IAL2

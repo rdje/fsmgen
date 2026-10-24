@@ -332,17 +332,17 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.4: scope common metadata census cohorts`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the complete manifest-root and producer field semantics/documentation census.`
   Acceptance: `Join every root field, manifest_contract field, producer field and ProducerContract field, nested maps/list elements, identity flags and entrypoint shapes to complete qualified actual values and canonical sources. Explain required presence, ordering, deliberate extension and build/schema/protocol distinctions; state undefined meaning rather than inventing it. Record exact POD/book coverage and owned gaps; fix the demonstrated semantic_introspection owner-list omission. Verify omission/extra/wrong-meaning/stale-doc/source controls, synchronize interpretation guidance and commit before shared-record work.`
-  Verification: `pending root/producer semantic census; book discovery omission is owned P2`
-  Commit: `pending`
+  Verification: `Qualified dated census independently joins 51 root/producer/contract fields and 49 nested containers to complete native values, canonical sources and exact book/POD snapshots. Original book omission is actual RED; repaired owner list and all 13 field/type/meaning/gap/map/source/document/freshness/instrument controls pass. Selected runtime source is byte-conserved. Six focused Perl files/18 top-level tests and native POD/book/source/index checks pass. The producer contract_authority stronger-definition gap stays explicit P2 under .6.4; shared records and deeper sections remain successors.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.1: qualify manifest and producer field meanings`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify shared metadata-record identity, entrypoint, key-family and guidance semantics.`
   Acceptance: `Use the retained complete candidate path list and root graph, plus canonical owner contracts. Inventory common field occurrences and dynamic map/list-element rules while preserving owner-specific status, version, absent-field, order and extension distinctions; supplement or delegate nonconforming/specialized records explicitly. Map exact semantic evidence and POD/book gaps without promoting advertised APIs into MCP operations. Exercise missing/extra/wrong-owner/meaning/documentation controls and commit the bounded census.`
-  Verification: `pending root/producer cohort`
+  Verification: `Root/producer cohort .1 is complete. With fresh context, refine shared-record cohorts from common-shell-selection.json before implementation; preserve each owner/status/entrypoint variant and explicit deeper delegation.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.3`
@@ -426,7 +426,7 @@ HIAL, claim, locality, or source-feature signoff gates.
   Status: `pending`
   Goal: `Document complete public result-model interpretation and source/query applicability.`
   Acceptance: `Split from .6.1's exact report/schema cohorts. Explain public identities, source locations/provenance, diagnostics, capability/support evidence, normalized hardware versus source/schedule/VIAL data and typed nested records. Describe versioning, units, ordering, optional/null/absent fields and extension boundaries where applicable. Link authoritative field dictionaries/schemas and worked reports; never expose private compiler objects as a supported API. Verify against complete actual outputs and independent semantic expectations, including refusal behavior.`
-  Verification: `pending result-model and schema inventory`
+  Verification: `Pending result-model/schema inventory. Explicit P2 from .6.1.2.3.2.1.1: ProducerContract declares producer.contract_authority Boolean, currently true, without a stronger definition. Resolve exact supported meaning from an explicit canonical contract decision or preserve that undefined boundary in the final reference; never infer trust, release or compatibility. Qualified census and book/POD retain the gap.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.5`
@@ -1609,3 +1609,20 @@ Re-derivation, falsification and durability are named in the dated record. Templ
 - [x] **NO REGRESSION** — Task integrity and claim-inventory/disposition checks pass; knowledge-map: OK remains part of final staged/normal doctrine gates. Selection changes task/evidence/resume state only; current manual and runtime behavior remain unchanged. Existing qualified captures are read as evidence, never rerun, and all publication/history/HIAL limits retain.
 
 The selection packet names re-derivation, falsification and durability, and states its structural predicate and exclusions. Full field meaning, actual adverse controls and semantic documentation signoff are expressly successors, not properties inferred from this planning census.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'top_level_contract_source_map' -- perl/FSM/Support/CapabilityManifestContract.pm` identifies the grouped shell authority. The actual original book list omits semantic_introspection; manifest-owner-list-red.json retains exact native expected/list/revision and reader refusal. Canonical ProducerContract/ProducerSection define build provenance and typed families, but no stronger contract_authority meaning. Existing headings and round-trip status prose did not supply a complete field guide.
+- [x] **ADDRESSED (verified)** — Qualified census independently joins all 51 selected fields and 49 nested containers to complete source-bound native values, exact owners/presence families, types, element domains and dedicated book/POD interpretation. Actual owner-list RED becomes GREEN. Thirteen coherent omission/extra/borrowed-value/kind/meaning/numeric-Boolean/gap/map/source/document/freshness/instrument controls reject. The stronger Boolean-marker definition stays explicit, P2-owned under .6.4. Runtime lexical source conserves exactly, and Knowledge Map adds the canonical lookup without losing an old fact/question or growing any allowance.
+- [x] **NO REGRESSION** — All tests successful. Files=6, Tests=18 for manifest/producer contracts, exact native/CLI/alias builders and producer round-trip/copy boundaries. Native POD/book build, copied-source/index and Python 3.9 syntax checks pass; knowledge-map: OK and all prior metadata/questions preserve with one new lookup. Final updated native book/source checks and staged/normal doctrine hooks gate commit. No source query, simulation, backend, sealed epoch, full CI or publication qualification follows.
+
+### .6.1.2.3.2.1.1 evidence and continuation
+
+- Re-derivation: build_manifest_fields.py enumerates complete selected actual root, manifest_contract, producer and ProducerContract objects from the already qualified metadata capture; dedicated sources and current guide/POD snapshots bind the interpretation. Counts name fields and nested containers in those selected contexts, not distinct APIs or all metadata.
+- Falsification: verify_manifest_fields.py independently reconstructs object membership, owner/presence-family relations, exact complete values and nested types, authenticates original native/wire/source capture, and rejects the named coherent interventions. The actual pre-edit owner-list failure retains. Meaning facets and explicitly reviewed phrases expose specific competing claims; general natural-language correctness still requires review.
+- Durability: manifest-fields-qualified.json.gz retains exact source/document/producing-instrument text and hashes plus Python identity; current mode refuses stale docs/instrument, while saved mode authenticates the dated boundary without rerunning producers. The earlier packet and exact initial builder/reader/pass retain separately before custody/freshness strengthening; no predecessor evidence is relabeled as final. Focused/native logs and final reader output are retained in the same dated audit.
+- Capture epoch is 684ca68bb25bde673f6570065b3e5ab52e9e2edb, inherited from .3.1's qualified complete observation. Current contract/producer sources are exact; CapabilityManifest differs only in POD. Its captured Git hint is historical provenance, never a claimed current HEAD. No original source/native compiler epoch repeats.
+- Knowledge Map retains before/after complete card bytes and an exact reverse-edit join. Only listed redundant wording changes; all original questions, metadata, dated observations, test/source identities and limits preserve. New question routes to the book guide. Two proposed byte-growing edits refused before writing; final card shrinks without allowance/ceiling growth.
+- The census deliberately leaves deeper section and heterogeneous common-record meanings for .1.2 and the existing metadata/report/VIAL cohorts. Undefined marker semantics are a documented limitation with an exact .6.4 repair owner, not an invented guarantee. Complete MCP operational coverage, legacy reference/protocol gaps, historical source causality, full CI/push and whole-reference visual QA remain open.
+- Session health: decision0116 authorizes an engineer-selected clean context refresh. The next cohort spans differing owners/status/entrypoint shapes and needs fresh focused review; finish this verified slice, consume all jobs, clear the brief and stop only after the clean commit. Resume .6.1.2.3.2.1.2 by refining shared-record cohorts from the retained selection, not by restarting old captures.

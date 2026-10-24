@@ -71,6 +71,47 @@ supported constructor/method seams through C<embedding>; discover MCP query
 shapes through C<semantic_introspection>. Capability advertisement is not proof
 that an arbitrary source, backend or simulation profile is supported.
 
+=head1 MANIFEST FIELD GUIDE
+
+The book's C<Manifest shell and producer fields> reference supplies the complete
+selected root and producer field/family interpretation. Read the manifest's
+C<manifest_contract>, then its C<top_level_contract_source_map> and
+C<top_level_section_presence_key_map>. Map keys are section names; owner values
+are namespace strings and presence values are arrays of field-name strings.
+C<manifest_schema_version> and C<manifest_contract> are outside the section-map
+domain. C<language_surface> retains C<surface_contract>; other sections advertise
+C<section_contract>. Section payload meaning remains with each dedicated owner.
+
+C<schema_version>, C<status>, C<contract_source> and C<report_source> publish the
+dedicated contract's version, bounded scope, owner and manifest producer.
+C<public_top_level_presence_keys> lists required fields of the described object,
+not the metadata record itself. C<presence_key_family_map> groups named field
+arrays equal to their same-named compatibility fields; the shell's legacy
+C<*_presence_keys> families also match the grouped section lists. Field presence
+is not recursive object closure; widening remains deliberate and owner-backed.
+No positional priority or semantic ordering is specified for these lists, the
+entrypoint examples or guidance. JSON objects are accessed by field name.
+
+In the shell and producer contracts, C<entrypoints.cli> is a string;
+C<cli_aliases> and C<in_process> are arrays of command/API example strings. These
+are discovery routes, not MCP tools or permission to execute an advertised API.
+Other contracts may have different entrypoint labels/shapes. C<guidance> is an
+array of explanatory strings. C<full_manifest_json_safe> and
+C<nested_section_contracts_advertised> are Boolean promises about serialization
+and dedicated-contract discovery, not raw compiler objects or arbitrary support.
+
+C<producer.name> is tool identity. C<version> is a tool/build string, currently
+C<0.1-dev>. C<git_commit> is a best-effort short hash or C<unknown>. C<source>
+identifies the manifest builder. This is not a release-management or complete
+replay identity contract; schema, protocol and VIAL language versions are separate.
+C<section_contract.scalar_string_keys> names C<name>, C<version>, C<git_commit>
+and C<source>; C<boolean_keys> names C<contract_authority>. Its grouped map repeats
+those families. C<identity_contract> explicitly carries the Boolean promises
+C<name_is_tool_identity>, C<git_commit_is_best_effort_short_hash_or_unknown> and
+C<source_is_manifest_builder_module>. C<contract_authority> currently emits true,
+but stronger meaning is undefined by the producer contract and remains an owned
+documentation gap. Do not infer additional trust, release or compatibility promises.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

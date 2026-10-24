@@ -1,0 +1,28 @@
+{
+  "observation": "actual original book owner list RED",
+  "source_revision": "2ab756feb220e7771d2dc206d6d91ff9ef84b4f9",
+  "book_owners": [
+    "producer",
+    "support_accounting",
+    "diagnostics",
+    "semantic_exports",
+    "backend_validation",
+    "embedding",
+    "language_surface",
+    "verification_outputs",
+    "documentation"
+  ],
+  "manifest_owners": [
+    "backend_validation",
+    "diagnostics",
+    "documentation",
+    "embedding",
+    "language_surface",
+    "producer",
+    "semantic_exports",
+    "semantic_introspection",
+    "support_accounting",
+    "verification_outputs"
+  ],
+  "diagnostic": "book owner list mismatch: missing=['semantic_introspection']"
+}

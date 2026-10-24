@@ -80,6 +80,7 @@ answers:
   - what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?
   - what is the active priority after FSMGen MCP source discovery?
   - what type is MCP examples documentation?
+  - where are manifest producer fields defined?
 date: 2026-09-27
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
@@ -96,6 +97,7 @@ Contract/examples: `docs/book/src/11-extensions-and-embedding.md`; snapshots:
 `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
 `SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest ownership.
 `SemanticIntrospectionMCPAdapter`: `bin/fsmgen-mcp`. Semantic API first.
+Root/producer: book “Manifest shell and producer fields” (2026-10-24).
 No private Perl AST/scheduler/lowering/generator hash API.
 Discover families, names and applicability: `./bin/fsmgen --capability-manifest`,
 `tools/list`. Catalog discovery never scans workspace; results retain relative
@@ -113,16 +115,16 @@ manifest_schema_version integer; all/contracts/examples direct objects.
 One-shot JSON-RPC and newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
 versions do not widen that profile. `--workspace-root` is the source authority;
-client roots are not consumed. Tools return text JSON and `structuredContent`
-with compact output schemas, `readOnlyHint: true`, and `openWorldHint: false`.
-Resource listings are static and cursorless. Prompts, completions,
+client roots are not consumed. Tools return text JSON and `structuredContent`, compact output schemas,
+`readOnlyHint: true` and `openWorldHint: false`.
+Resource lists are static, cursorless. Prompts, completions,
 subscriptions, logging, sampling, elicitation, progress/cancellation sessions,
 Streamable HTTP and service mode remain unshipped. Batch/non-object envelopes
 are invalid. JSON-RPC errors have code/message and no error.data.
 Write/generation, arbitrary shell/network/filesystem access, mutation and
 commit/push tools remain separately owned future work.
 
-The 2026-09-24 audit found limits that earlier profile tests did not expose:
+2026-09-24 audit (earlier profile tests missed these limits):
 
 - `.31.2.3` exposes `.axi`, `.apb` and `.ahb` through catalog discovery.
   The exported `semantic_introspection_source_query_kinds()` and manifest
@@ -158,24 +160,23 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   `.31.2.6` separately qualifies the Icarus concat/packed `$onehot0` discrepancy
   with its tracked public probe and exact tool-context limit.
 
-Durable capture and limits:
+Capture/limits:
 `docs/audits/mcp-feature-coverage-20260924/evidence.json` and the `.31.1` task
-record. Reverify checks selected queries, not all-feature coverage. `.31.3` owns
+record. Reverify: selected queries, not all features. `.31.3` owns
 coverage qualification and ongoing feature-signoff integration after repairs.
 
-VIAL summaries omit action bodies and lifecycle nodes by design. Decision
-`0105` and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select additive typed
-inspection. `fsmgen_vial_inspect`, versioned `/inspection` and
+VIAL summaries deliberately omit action bodies and lifecycle nodes. Decision `0105`
+and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select additive typed inspection. `fsmgen_vial_inspect`, versioned `/inspection` and
 `vial_inspection` capabilities now use the clean public API (T1882).
 T1883 accounts sources/queries. T1884 compares actual native/API/newline reports;
 T1885 adds authored storage, observation and VIAL oracles, shared-corruption and
 failed-source controls. ISF/IAL2 report shapes stay distinct. CI partitions T1884;
 public features require API/MCP signoff. Exhaustive qualification remains owned.
-The full run exposed ASCII wire-encoding memory amplification.
-UTF-8 wire encoding removes that mechanism and preserves complete values;
-T1886 guards both CLI modes, Unicode identity and report/type equality.
+Full-run ASCII wire encoding amplified memory; UTF-8 removes that mechanism,
+preserving full values. T1886 guards both CLI modes, Unicode identity and
+report/type equality.
 
-Current-feature query selection and its pilot are captured in
+Current-feature selection/pilot:
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.
 ISF storage fields and passive observations require schedule reports;
 normalized hardware alone does not retain that source-only metadata.
@@ -184,8 +185,7 @@ Class-only matching in `perl/FSM/HDL/ASTFactorization.pm` lost structural identi
 Repair retains concat operands, literal class/value/width/radix, signal slices
 and aggregate paths; skips unsupported kinds/containing expressions; sorts
 allocation. T1887 proves distinct-driver substitution, seed/order stability and
-independent HDL behavior. The original APB differing driver was unused, so that
-reproducer establishes no APB output failure. Native size fields remain intact.
+independent HDL behavior. The original differing APB driver was unused; its repro proves no APB output failure. Native size fields remain intact.
 Evidence: `docs/audits/mcp-feature-coverage-20260924/source-query-identity-repair.json`.
 
 ISF/PPIF CLI failures map registered lowered sources to authored paths; direct/external child paths remain physical. T1889 checks clean width reasons, retained/domain artifacts and native/API/MCP equality; no line/column map.
