@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-24",
+  "dispositions": [
+    {
+      "authority": "docs/decisions/0038-readme-policy-is-harness-neutral-and-locally-authoritative.md",
+      "result": "already adopted; no policy change",
+      "review": "Canonical root README_POLICY.md has local authority/independence metadata, bounded landing role, source-duplicate proof, typed routes, derived independent budgets and unconditional enforcement. Director-selected source is the same canonical file, not a separate upstream.",
+      "topic": "README"
+    },
+    {
+      "authority": "docs/decisions/current/continuity/0104-claim-review-matches-evidence-granularity-and-preserves-uncertainty.md",
+      "result": "selected source unchanged; retain reviewed local adaptation",
+      "review": "Exact selected bytes match the retained 2026-09-23 template. Prior complete hunk dispositions remain applicable. Local policy preserves unit/population granularity, safe attribution, separating hypotheses, scoped/classified censuses, challenge axes, exact contracts, stochastic uncertainty and producer/instrument durability; rejected unconditional affirmation and foreign deployment assertions remain source history.",
+      "topic": "claim verification"
+    },
+    {
+      "authority": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+      "result": "guide and local doctrine aligned; no new adoption needed",
+      "review": "Reviewed complete canonical adoption bridge against local doctrine: bounded overwritten memory, role-based lifecycle, direct/verified derived state, pressure and typed-route closure, exact retained source and semantic closure, bounded task narration, retrievable acceptance-history suffixes, finite data registries and executed freshness/currency verifiers. Guide is explanatory; local normative body and registries own paths, limits and debt. No bound, deletion, archival topology or user-browsing change follows.",
+      "topic": "containment"
+    }
+  ],
+  "evidence_legs": {
+    "durability": "This dated record, existing complete retained template/review and Git-bound local policy sources.",
+    "falsify": "Compare actual sibling source bytes to the separately retained exact template and review all previous hunk dispositions; inspect guide obligations against local normative sections rather than assuming policy filenames establish adoption.",
+    "rederive": "Read selected sources and hash complete bytes at this revision."
+  },
+  "limits": "Dated policy-source/adoption review only; no complete implementation or feature audit, no claimed automatic upstream synchronization, no runtime or user-visible behavior change.",
+  "local_inputs": {
+    "CLAIM_VERIFICATION.md": "a83d74f53d4b5503cecb25dea0b8e3fb2a5ac6778767b7a9caf9a30d8fc75ca6",
+    "LIVE_DOCUMENT_SIZE_CONTAINMENT.md": "beefcc17ed958a1a5b3d55f4ba91cf6458c68c5e91ab715046980444cf723cbf",
+    "README_POLICY.md": "882682fa1ace703ae68726b8532a4ad24fe2c8a271bae4e07b859bd197a621c9",
+    "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md": "8f77fa39c9bcb9cfc43166259a627a6ced64682030088400b727dccc5d674a53",
+    "docs/audits/claim-template-review-20260923/review.json": "cf5f979bd2a9c7e5276543fdab5fd477d7383f6de1ddac11d8c4b0151b4f1ebc"
+  },
+  "owner": "PERL-POD-API-REFERENCE.7.2",
+  "retained_template": "docs/audits/claim-template-review-20260923/template.txt",
+  "revision": "766c248aba4a589990504609b1ec822f20d291d2",
+  "schema": "fsmgen.startup_policy_review.v1",
+  "selected_claim_template_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd",
+  "selected_equals_retained_bytes": true,
+  "source_access": "Director-authorized read-only same-volume sibling claim template; no other repository writes or execution. Selected README policy and containment guide are this repository's canonical paths."
+}

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R13 / documentation and embedding`
 - Created: `2026-10-23`
-- Last updated: `2026-10-23`
+- Last updated: `2026-10-24`
 - Owner: repo-local workflow
 
 ## Goal
@@ -437,7 +437,7 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.7`
-  Status: `active`
+  Status: `done`
   Goal: `Complete startup maintenance while preserving the selected MCP documentation frontier.`
   Children: `PERL-POD-API-REFERENCE.7.1, PERL-POD-API-REFERENCE.7.2`
 
@@ -449,11 +449,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.7.1: refresh safe daily artifact census`
 
 - ID: `PERL-POD-API-REFERENCE.7.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Review the director-selected README, claim and containment policy sources for adoption changes.`
   Acceptance: `Read the named local policy/guide and read-only sibling claim template. Compare neutral normative contracts to the locally adopted authorities and retained prior review; preserve meaningful differences and source identities, adopt only necessary local changes under exact ownership, or record why none is required. Never write outside this Git repository. Commit review before resuming the selected common metadata census.`
-  Verification: `pending policy-source review`
-  Commit: `pending`
+  Verification: `Complete selected sibling claim bytes equal the retained 2026-09-23 reviewed template; existing decision0104 adaptation remains applicable. Canonical local README policy and complete containment bridge match adopted authority/lifecycle/derived-state/pressure/retrieval contracts. Dated source identities, dispositions and evidence legs retain in docs/audits/startup-policy-review-20261024.json. No policy, runtime, mdBook behavior, ceiling or external repository write required.`
+  Commit: `PERL-POD-API-REFERENCE.7.2: verify startup policy-source adoption`
 
 ## Decisions
 
@@ -1562,3 +1562,12 @@ Re-derivation: actual dated collector bound to native HEAD/prior record and inst
 The first staged gate correctly refused an unnecessary maintained-reference authority change: the dated route replacement changes neither aggregate bytes nor lines. Complete refusal retains in the dated census directory; restore the unchanged prior aggregate authority, regenerate the affected inventory and rerun staged/normal gates. No content, ceiling or disposal scope changes.
 
 The next complete gate also identifies task_evidence total line/byte transition allowance exhaustion. Following the root containment procedure, declare actual plus that surface's own ratchet step for only these dimensions, keep the baseline/ceilings/targets/owner unchanged, and retain the full refusal. This is an ordinary warning-debt allowance declaration, not rollover-debt growth or a ceiling increase.
+
+
+## Acceptance Checklist — .7.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Reviewed update' -- CLAIM_VERIFICATION.md` and decision0104 identify the retained local adoption. The actual director-selected read-only sibling bytes equal the separately retained reviewed template; re-importing it would undo deliberate reviewed adaptations. The selected README source and containment bridge are already canonical repository-owned policies/routes.
+- [x] **ADDRESSED (verified)** — Complete policy-source review and exact source hashes/dispositions retain in docs/audits/startup-policy-review-20261024.json. No new normative difference requires adoption; no external writes or executions occur. Startup maintenance closes and the exact saved metadata census resumes. No user-visible behavior changes, so the existing mdBook policy guidance needs no ceremonial edit.
+- [x] **NO REGRESSION** — Focused task integrity and exact source identity/equality checks pass; knowledge-map: OK is enforced by final staged/normal doctrine gates. Only current task-evidence line/byte warning-debt allowances are measured per the documented actual-plus-own-step procedure; baseline, target, ceilings, ownership and every retained fact remain unchanged. No original source epoch, compiler, simulation or publication gate repeats.
+
+Re-derivation, falsification and durability are named in the dated record. Template identity is a dated observation, not a current-state shadow; later source changes require another explicit review. The next executable work is the unchanged .6.1.2.3.2.1 manifest/producer/common-shell field census.
