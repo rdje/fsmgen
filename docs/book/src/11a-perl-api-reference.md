@@ -33,6 +33,16 @@ subset; VIAL tooling's plan/run operations have a separate host boundary.
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 
+For result interpretation, follow a tool's query family through its domains
+and contract surfaces to the dedicated owners. A shared source tool can return
+hardware or VIAL models, selected by source kind and version. Manifest section
+owner maps and nested contract records describe deeper fields; presence-key
+lists alone do not close every object. A schema or CLI/library operation named
+inside metadata is a description of that separate API. The current MCP tool
+list determines callable operations. See
+[result contract discovery](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DISCOVERING_RESULT_CONTRACTS)
+for the ownership joins and the distinct tool/resource envelopes.
+
 For `fsmgen_check`, `fsmgen_semantic_introspect` and
 `fsmgen_schedule_preview`, supply `source_id` or `source_path`. Discovery
 expresses this alternative with `anyOf`; both may be supplied. Every supplied

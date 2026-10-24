@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3`
-- next_action: Inventory the full public result-model/contract graph and every nested field meaning, unit, ordering, optionality, version and availability boundary; map exact POD/book gaps and owners before reference cohorts.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3.2`
+- next_action: Refine bounded nested metadata/contract model cohorts from the qualified root graph, then inventory complete field-family meanings and exact POD/book gaps without promoting separate APIs or private payloads.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

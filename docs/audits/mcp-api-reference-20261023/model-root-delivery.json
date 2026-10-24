@@ -1,0 +1,27 @@
+{
+  "book_output": "docs/book/book",
+  "module_sources": 399,
+  "provided_pod": 112,
+  "missing_pod": 287,
+  "selected_entrypoints": 6,
+  "copied_members": 404,
+  "python_runtime": {
+    "implementation": "cpython",
+    "implementation_version": [
+      3,
+      14,
+      7,
+      "final",
+      0
+    ],
+    "language_version": [
+      3,
+      14,
+      7,
+      "final",
+      0
+    ]
+  },
+  "local_link_checks": 4001,
+  "source_and_native_bytes_equal": true
+}

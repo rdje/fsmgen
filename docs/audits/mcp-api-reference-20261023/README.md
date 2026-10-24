@@ -1,8 +1,8 @@
 # MCP operating-reference evidence — 2026-10-23
 
-This directory retains the transport repair, catalog-observer repair and live
-public-interface census owned by `PERL-POD-API-REFERENCE`. It is evidence for
-the ongoing reference work, not a claim of complete MCP operating documentation.
+This directory retains `PERL-POD-API-REFERENCE` interface/root audits and repairs.
+`model-roots-qualified.json.gz` / `model-root-graph-qualified.json.gz` freeze metadata roots.
+Field semantics remain pending; this is not complete MCP operating documentation.
 
 ## Live census boundary
 

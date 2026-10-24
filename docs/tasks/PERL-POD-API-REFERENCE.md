@@ -288,9 +288,45 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3`
   Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.1, PERL-POD-API-REFERENCE.6.1.2.3.2, PERL-POD-API-REFERENCE.6.1.2.3.3, PERL-POD-API-REFERENCE.6.1.2.3.4, PERL-POD-API-REFERENCE.6.1.2.3.5`
   Goal: `Join every public result contract and documentation obligation into a complete gap matrix.`
   Acceptance: `Follow the manifest's full contract-surface graph, current report/schema producers, typed VIAL inspection contract and relevant book/POD. Inventory every public field family, nested record, meaning/unit/order/optionality/version/identity/failure boundary and its canonical documentation, stability and representative evidence. Names or object schemas alone do not count as semantic explanation. Separate compact/full variants and source temporal/schedule/runtime availability; retain explicit omissions and exact owners. No private compiler implementation is promoted to public API.`
   Verification: `Pending result-model/documentation census after interface repairs. Reproduced documentation debt: the book semantic_introspection JSON excerpt omits the currently shipped VIAL inspection tool/template, while live discovery and the following VIAL section include them. The gap matrix must own its refresh or explicitly partial presentation before reference completion; existing discovery remains authoritative.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.1`
+  Status: `done`
+  Goal: `Freeze the complete public result-root and owning-contract graph after interface repairs.`
+  Acceptance: `Recover canonical model facts and R13/read-only boundaries. Capture or source-bind actual full manifest, versioned VIAL/inspection capabilities, published tools/resources/templates and wrapped/direct roots. Join every selected root and advertised contract surface/owner/schema identity to its exact producer and public scope, recording duplicates/aliases and explicit private/execution exclusions. Preserve complete raw data, selected source/runtime custody and meaningful missing/extra/wrong-owner/borrowed-root controls. Classify this as root topology, not complete field semantics or documentation. Refine later model cohorts from the observed graph, synchronize the book's interpretation/discovery guidance and commit before descending.`
+  Verification: `Qualified MCP/native capture retains 30 exchanges and 433 selected inputs. Independent root/owner/schema projection verifies 45 observed roots, 22 declared tool/template roots, every owner/reference/schema-slot occurrence and no unresolved declared owner, with nine omission/binding/type/completion/execution controls. Tool owners derive through all family domains, preserving hardware/VIAL alternatives. Native manifest/versioned capabilities/inspection bindings match complete MCP values. POD/book explain discovery, envelopes and separate API metadata; adapter runtime bytes preserve. Deeper model semantics remain explicit pending successors.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.1: qualify public result roots and contract ownership`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2`
+  Status: `active`
+  Goal: `Inventory nested manifest/capability/support/diagnostic/documentation model families and public ownership.`
+  Acceptance: `Refine from .3.1. Follow all public metadata owner/key-family/schema maps and catalog compact/full variants. Inventory field families and dynamic-map/array element models with meaning/version/optionality/order/identity/extension boundaries and canonical prose/evidence. Separate metadata advertising another API from operations the MCP server actually offers. Record every semantic-doc gap and exact successor; retain full source/graph custody and commit bounded cohorts without declaring names or schema keys sufficient.`
+  Verification: `pending root topology`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.3`
+  Status: `pending`
+  Goal: `Inventory normalized hardware check/semantic/schedule result models and applicability.`
+  Acceptance: `Refine exact cohorts from the root graph and public report contracts. Map complete normalized source/provenance/diagnostic/generated-output/support, semantic IR and schedule families to owners, public producer schemas, units, temporal meaning, optional/null/absent cases, format applicability and existing actual evidence. Keep raw parser/scheduler/generator objects excluded. Use existing qualified source records first; any genuinely required new public query requires its normal admission and owning leaf. Schedule all exact field/doc gaps and commit each bounded cohort.`
+  Verification: `pending root topology; saved source epochs remain sealed`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.4`
+  Status: `pending`
+  Goal: `Inventory typed VIAL source/check/inspection and capability models with precise temporal/execution boundaries.`
+  Acceptance: `Refine exact version/record cohorts from .3.1. Follow the public v1/v2 tooling and typed source-inspection contracts, including nested semantic groups, expressions/intents, identity/import limits, failures and source locations. Distinguish source temporal declarations and schedule predictions from actual lifecycle/backend execution evidence and unavailable MCP execution controls. Map each model/field family to meaning, ordering, units, optionality, version and canonical documentation, without inspecting submodule internals or running sealed epochs. Retain exact evidence and schedule missing semantics before committing.`
+  Verification: `pending root topology; no new simulation/backend execution`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.5`
+  Status: `pending`
+  Goal: `Join every public model/field/documentation obligation into the exhaustive operating-reference gap matrix.`
+  Acceptance: `Join all .3.1-.4 populations and aliases to exact POD/book locations, representative actual evidence and .6.2-.6.6 successor owners. Mark absent/partial/complete semantics explicitly; field-name/schema-only stubs remain gaps. Carry original VIAL excerpt omission, the main MCP error-code paragraph's missing -32602 and remaining reference-address/protocol debt into their exact scheduled fixes. No model, dynamic family, version, failure or source/schedule/runtime boundary may disappear between inventories. Verify omissions/duplicates/stale/wrong-owner controls and commit before .6.1.2.4 final cohort selection.`
+  Verification: `pending full model inventories; original excerpt/code-list debt stays P2-owned by .6.2/.6.3`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.4`
@@ -1359,3 +1395,57 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   cohorts. P2 original reference-address/protocol findings stay with .6.2;
   claim paragraph-context repair stays .6.6.1 before final signoff. Historical
   attribution, full CI/push and whole-reference visual gates retain.
+
+
+## Acceptance Checklist — .6.1.2.3.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'contract_surface_map' -1 -- perl/FSM/Support/SemanticIntrospectionContract.pm` identifies 93e0c2840's VIAL inspection/discovery extension to the public ownership graph. Current native/MCP metadata spans manifest, versioned tooling, inspection, multiple tool domains and separate APIs; the initial descriptor/property census cannot establish full model semantics. Actual tool declarations identify query families/domains rather than sharing resource declaration fields. Complete native/wire records establish the topology before field interpretation.
+- [x] **ADDRESSED (verified)** — Source/runtime-bound metadata-only MCP capture and independent public in-process manifest/VIAL/inspection/source-kind bindings agree. The separate reader verifies every root, declared tool/template, owner/source reference, schema slot and namespace occurrence by exact location/value, with full wire/raw/native/source custody. It qualifies 45 observed roots and 22 declared result roots across 30 exchanges and 433 inputs, with no unresolved declared owner. Nine meaningful missing/extra/borrowed/wrong-owner/type/availability/completion controls reject. POD/book describe ownership joins and envelope/API boundaries. No root name/schema slot is counted as completed semantic documentation.
+- [x] **NO REGRESSION** — knowledge-map: OK. Native POD/book/source/index/copied-byte/link validation and Python 3.9 syntax pass. Current adapter runtime bytes are identical to 684ca68bb; only its POD changes. The final qualified capture binds that exact POD source and native producer inputs. All actual metadata queries complete with orderly EOF, native success and empty stderr. No source-bound query, planning, simulation, backend execution, sealed source epoch, full CI or push is performed by the audit.
+
+### .6.1.2.3.1 scope, custody and successor ownership
+
+- Re-derivation: actual initialized MCP discovery, every static resource,
+  versioned VIAL capability resources and every manifest/alias selector.
+  Falsification: separate public in-process metadata bindings, independent
+  per-root/per-pointer/type/source joins and nine coherent adverse controls.
+  Durability: `model-roots-qualified*`, `model-root-graph-qualified.json.gz`,
+  exact raw/native bytes, complete observer/native source custody, projector
+  sources, reader and logs in the dated MCP audit directory.
+- The graph has 1175 owner/producer/namespace reference occurrences, 296 schema
+  namespace occurrences and 525 schema-labelled slots. These are occurrences
+  across repeated roots, not counts of distinct public APIs, schemas or field
+  meanings. Every declared owner resolves in the selected source set; a bare
+  namespace reference is not promoted to a callable API. Values equal in this
+  capture are recorded separately from semantic alias/stability promises.
+- MCP tool declarations join through query_family -> query_families domains
+  -> query_domains contract surfaces -> contract_surface_map. Shared check
+  and semantic tools span hardware and VIAL domains. Resource declarations
+  separately advertise output owners; neither form replaces the dedicated
+  nested contracts or source-kind/version applicability. Bounded presence-key
+  families do not automatically close all objects or freeze deeper payloads.
+- An initial new projector assumed resource owner/source-bound fields also
+  existed on tool declarations. Its exact source/failure and actual published
+  tool shape retain; the corrected graph derives those fields through the
+  real family/domain relation. The earlier successful projector source also
+  retains when locality/source-custody handling is strengthened. Initial
+  metadata-only and later native/final-POD observations keep their own source
+  epochs and are not relabeled as the final qualification.
+- A deliberate Boolean-to-zero initialization counterfeit was rejected by
+  the original raw-capture join. The attempted counterexample and exact
+  original reader source retain; it was never emitted by FSMGen and is not
+  classified as a product defect. The final reader makes typed comparison
+  explicit and retains that control alongside omission, wrong-owner, schema,
+  borrowed-value and false completion/execution interventions.
+- Public metadata can name runtime, planning, HDL-generation and raw/private
+  interface contracts without exposing such operations through MCP. The
+  audit's actual operations remain metadata-only. Source/check/semantic/
+  schedule/inspection payload fields and temporal meaning remain .3.3/.3.4;
+  metadata fields and nested contracts are .3.2; the complete doc-gap join is
+  .3.5 before .6.1.2.4 selects exact operating-reference cohorts.
+- Main-book VIAL tool/template excerpt omissions and the missing -32602 in its
+  protocol-code paragraph remain P2-owned in .3.5 -> .6.2/.6.3. Original
+  reference-address findings stay .6.2; the claim paragraph-context scanner
+  stays .6.6.1 before final signoff. Historical source/CI/push gates retain.
+- Complete normal staged/commit gates, clear the brief and verify clean state;
+  then refine .6.1.2.3.2 from the qualified graph before its first implementation.

@@ -1508,6 +1508,49 @@ tooling and VIAL inspection capability selectors use wrapped object payloads.
 Consult the selected section's public contract for its complete field meaning;
 the tool's envelope schema does not freeze every nested capability record.
 
+=head1 DISCOVERING RESULT CONTRACTS
+
+Use C<tools/list> for the implemented tool names and their input/output schemas.
+A tool's C<outputSchema> describes C<structuredContent>; it does not describe
+the surrounding JSON-RPC or tool-result envelope. Resource data is JSON decoded
+from its C<contents> item's C<text>, inside a different envelope.
+
+Query capability section C<semantic_introspection> to navigate model ownership:
+
+=over 4
+
+=item 1.
+
+Find the tool in C<mcp_tools> and read its C<query_family>.
+
+=item 2.
+
+Find that family in C<query_families> and follow all its C<query_domains>.
+A tool can serve both hardware and VIAL domains; its primary domain alone is
+not its complete set of result alternatives.
+
+=item 3.
+
+Read each domain's C<contract_surfaces>, then follow those names through
+C<contract_surface_map>. Entries identify the contract owner, public metadata
+path and relevant separate entry points. Resource declarations also name their
+output-contract owner and surfaces.
+
+=back
+
+For a selected manifest section, C<manifest_contract.top_level_contract_source_map>
+identifies its dedicated owner. Follow that section's nested contract records
+for deeper meaning. Presence-key families are bounded required surfaces; they
+do not automatically make every object closed or freeze every deeper field.
+Select source report interpretation using the source kind, query and version.
+
+Ownership identifiers and schema names in metadata are descriptions, not extra
+MCP methods. A section can describe separate CLI/library planning, execution or
+backend interfaces while the MCP adapter remains read-only. Discover callable
+operations from the actual tool/resource lists and their documented applicability;
+do not infer a simulation-control operation from an advertised runtime schema.
+Raw private parser/scheduler/generator objects remain excluded.
+
 =head1 EXAMPLE DOCUMENTATION
 
 C<fsmgen_find_examples> returns a C<documentation> object, the complete
