@@ -443,10 +443,40 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.3: qualify normalized symbol family subjects`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.4`
   Goal: `Qualify normalized child composition and intent-HIR family subjects.`
   Acceptance: `Cover composition_* non-shared-datapath child/generated-child/parameter-override/standalone-DT families and success_forward_ir_intent_hir_composition_* mirrors. Exclude composition_contract_source and the tier optional-composition baselines owned by .2; shared-datapath families belong to .5. Bind fields to exact children, overrides, raw/value-metadata extensions, DT enable and multi-drive records with root/HIR context and optionality. Refine further before implementation if necessary. Preserve dedicated/deeper ownership, use exact saved sources/docs and adverse controls, synchronize guidance and commit.`
-  Verification: `pending predecessor qualification`
+  Verification: `Scope refinement is qualified: 27 native metadata fields partition into 5 shallow/envelope slots at .1, 12 structural parameter-override aliases at .2 and 10 standalone-DT slots at .3. Distinct underlying owners and availability/deeper-model boundaries require separate reviewable guides before .4 current-source closure. The saved symbol predecessor retains every selected native value and 70 unselected deeper delegations. No composition family meaning is closed by this split; exact packet/replay/adverse controls retain below.`
+  Commit: `pending`
+
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.1`
+  Status: `pending`
+  Goal: `Qualify composition envelope and shallow ordinary/generated-child family subjects.`
+  Acceptance: `Own exactly the partition packet's five .1 metadata slots: composition_presence_keys and root/intent-HIR ordinary/generated child_entry_keys. Bind root semantic.composition collections to flattened intent-HIR composition_children[] and composition_generated_children[] subjects, exact shallow identity/metric/parameter/IR fields and dedicated CompositionContract functions. Do not infer full nested IR/value semantics, unconditional source availability, equal child populations or shared-datapath entry closure from envelope membership. Preserve all remaining fields and original source/owner/deeper delegations; write usable book/POD guidance, qualify literal/source/subject/omission controls, native rendering and current metadata regressions, and commit before override aliases.`
+  Verification: `pending partition-owned shallow cohort`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.2`
+  Status: `pending`
+  Goal: `Qualify composition ordinary/generated child parameter-override aliases and optional extensions.`
+  Acceptance: `Own exactly the twelve .2 metadata slots: root/intent-HIR ordinary/generated-child parameter override core, raw-value extension and value-metadata extension families. Bind every family to its exact child parameter_overrides[] subject and public StructuralRTLIRContract delegation. Explain core versus optional single-authored-token raw_value and resolver/declaration-dependent value metadata without claiming complete raw_value_ast/value models or backend support. Preserve ordinary/generated distinction and every remaining/deeper owner; qualify current/source/literal/optional/wrong-subject controls, usable book/POD/native rendering and relevant regressions, then commit.`
+  Verification: `pending .1 qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.3`
+  Status: `pending`
+  Goal: `Qualify composition standalone-DT child, enable and delegated multi-drive metadata subjects.`
+  Acceptance: `Own exactly the ten .3 metadata slots: root/intent-HIR standalone-DT child, per-DT enable-family, module enable-family, multi-drive target and nested assertion keys. Bind each to its exact standalone_dt_children[] and flattened HIR subject; preserve shallow nested IR ownership and LoweredRTLIRContract target/assertion delegation. Distinguish advertised enable/assertion metadata from execution, verified arbitration and source availability; do not invent standalone-DT parameter-override aliases. Preserve every unselected/deeper owner, qualify dedicated-source/literal/subject/assertion/omission controls, usable book/POD/native rendering and metadata regressions, and commit.`
+  Verification: `pending .2 qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.4`
+  Status: `pending`
+  Goal: `Close the exact composition-family partition against current sources and the combined guide.`
+  Acceptance: `Join all three completed cohorts to the exact 27-field saved-native partition, complete current source/producer/document identities and the 70 originally unselected field/deeper delegations. Preserve every selected value/type/order, source refusal and dedicated structural/lowered/shared-datapath boundary; compare both root and flattened HIR subjects and selected grouped projections without closing broader map/model/source owners. Refresh dated packets after legitimate guide changes rather than relabeling old bytes current; qualify source/doc/field/cohort loss controls, final native rendering, current contracts and required gates, close parent .4 and resume .5 shared datapath.`
+  Verification: `pending all three composition cohorts`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5`
@@ -1999,3 +2029,17 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 - verify_normalized_symbols_rendered.py joins both actual native HTML tables to every qualified metadata prefix, relative subject and complete value, plus generated POD distinctions. This is selected rendered-content evidence, not browser or whole-manual visual signoff. Existing constant/enum/type/package-import cards already preserve all corresponding semantic facts and canonical guide routes; no new Knowledge Map population or allowance is needed.
 - normalized-symbol-card.json.gz records the demonstrated prior full-document current-snapshot refusal after the new POD guide. Live optional-child reverify returns to focused payload/Boolean contract tests, with one equivalent through/via wording change to remain below prior card bytes. Exact reverse reconstruction preserves all questions, evidence and applicability/nullable/discovery facts. The dated baseline snapshot remains retained and valid in saved mode; expected doc drift is not a claimed runtime defect.
 - Current task-evidence totals use actual plus their own ratchet only; baseline, health targets, ceilings and owners do not change. Exact book aggregate authority and claim inventory refresh follow all final documentation/task edits. No separate engineering decision requires DEVELOPMENT_NOTES. Resume child composition .4 after the clean commit; deeper source/HIAL, publication and broader browser obligations remain open.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.2.2.4 partition (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained normalized metadata contains distinct composition shallow-record, structural parameter-override alias and lowered standalone-DT control subjects. git log -S 'normalized_semantic_composition_child_parameter_override_entry_keys' locates the published cross-owner alias at 76a6da65c. CompositionContract directly owns shallow/enable lists, delegates overrides to StructuralRTLIRContract and delegates DT target/assertion lists to LoweredRTLIRContract. One broad closure would mix those independent availability/value-model obligations, so refine the leaf before implementation.
+- [x] **ADDRESSED (verified)** — The exact saved-native prefix census agrees with a separately enumerated suffix allocation: .1 owns five shallow/envelope slots, .2 owns twelve parameter-alias slots and .3 owns ten DT slots; .4 owns final current-source closure. All 27 selected fields/values and 70 unselected deeper delegations retain without overlap or reclassification. Missing/misallocated fields, lost deeper delegation and wrong join owner controls reject. New child acceptance contracts preserve every original parent obligation, with no runtime/source/documented feature change.
+- [x] **NO REGRESSION** — knowledge-map: OK and the required staged/normal scripts/check_doctrines.sh qualify the partition; independent saved-data replay and Python 3.9 grammar pass. Native book/source/index/copied-byte checks follow final MEMORY/index edits because those are shipped source assets. No existing runtime behavior changes, original source/compiler/backend epoch, full CI/publication or whole-manual browser review is claimed.
+
+### Composition scope refinement evidence and next action
+
+- Re-derivation: partition_normalized_composition.py selects non-shared composition and intent-HIR composition fields from the qualified symbol predecessor and original native observation. normalized-composition-partition.json.gz binds exact input digests, complete selected values, cohort allocation, remaining deeper delegations and instrument bytes. Counts concern metadata slots only; ordinary/generated equality of advertised key arrays does not prove equal runtime populations.
+- Falsification: a prefix-derived complete selected population must equal the disjoint union of independently enumerated shallow, override and DT suffix groups. Separate missing-field, wrong-allocation, lost-remaining and wrong-final-owner interventions all reject. Canonical alias/DT Knowledge Map cards and the dedicated contracts establish why the cohorts need different interpretation and verification; this partition closes none of their future semantics.
+- Durability: normalized-composition-partition-checks.json.gz retains actual commands, streams and consumed statuses. Replay with scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/partition_normalized_composition.py. The full original .4 acceptance remains intact; each child narrows exact work before current-source joining restores the complete parent obligation. Original source, HIAL causality, full-CI/publication and broader browser duties remain owned.
+- The mdBook's shipped behavior remains unchanged: this is task decomposition, not a completed composition guide or feature. Regenerate native copied-source assets after final pointer/index edits. Current task-evidence declarations use actual plus their existing ratchet only; no baseline, target, ceiling, retention or Knowledge Map allowance changes. No DEVELOPMENT_NOTES rationale entry is needed beyond these canonical task decisions. Resume .4.1 from committed state.
