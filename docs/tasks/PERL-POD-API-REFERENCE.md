@@ -392,11 +392,75 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.1: qualify diagnostic families and repair object-map audit`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.7, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.8, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.9`
   Goal: `Qualify normalized semantic report and nested-family subjects.`
   Acceptance: `Follow /semantic_exports/normalized_semantic_json and all fields delegated by the identity census. Distinguish report envelope, success semantic payload, shared diagnostic/source/producer objects, optional composition/IR records and key versus value/meaning families. Refine additional bounded cohorts before implementation if required by actual subjects. Bind every selected family to its exact object/element/conditional/extension rule and canonical owner, preserve deeper .3.2.3, .3.3 and .6.3-.6.4 obligations, exercise source/value/meaning/omission/doc controls, synchronize book/POD and commit.`
-  Verification: `pending preceding selection/qualification`
+  Verification: `Diagnostic predecessor is qualified at 55361cfa9. The saved native normalized record and public report/payload owners distinguish envelope, payload/IR baseline, symbols, composition, shared datapath, lowered control, structural entries and grouped-map closure. Exact children preserve every original identity delegation and deeper owner; .1 shared envelope is next. No normalized family semantics are closed by this decomposition.`
   Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.1`
+  Status: `pending`
+  Goal: `Qualify normalized report-envelope and shared nested-object families.`
+  Acceptance: `Cover public_top_level_presence_keys, success_only_top_level_keys, command/generated_output/producer/source presence and optional families, producer_extra_presence_keys, support_accounting_presence_keys and every failure/matched diagnostic/support family. Cover their shared scalar contract-source identities, including diagnostic_summary and generation_result_snapshot. Preserve the distinction from check reports: normalized failure support is also report-level, while semantic and generation_result_snapshot are success-only. Follow exact canonical owners and saved values; preserve optional map versus arrays, matched/null/extension rules and metadata-field versus payload subjects. Qualify book/POD and coherent source/value/subject/condition controls; retain .3.2.3/.3.3/.6.3-.6.4 deeper semantics and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Qualify normalized semantic payload and IR-tier baseline families.`
+  Acceptance: `Cover public_layers, success_semantic_presence_keys and optional children, module required/optional metrics, explicit-system, signal-analysis container/entry, system and symbol base families, success_forward_ir_presence_keys and each IR tier base/optional-composition family. Cover their scalar dedicated contract-source identities. Bind each list to its exact payload/container/element/conditional subject and preserve artifact versus live compiler objects. Join existing Knowledge Map authorities, saved native values and canonical owners; exercise omission/wrong-tier/mandatory-versus-optional/doc controls and synchronize book/POD before commit. Deeper payload and source execution remain .3.2.3/.3.3/.6.3-.6.4.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Qualify normalized symbol families and intent-HIR mirrors.`
+  Acceptance: `Cover symbol_contract_* nested constant/enum/type/package-import key, extension, value-kind and meaning families plus success_forward_ir_intent_hir_symbol_contract_* counterparts, excluding the base presence and owner identities assigned to .2. Preserve scalar meanings versus their grouped single-element arrays, dynamic names, recursive type/aggregate extensions and exact root-versus-HIR subjects. Source-bind complete saved values, precise owner/documentation and deeper .3.2.3/.3.3/.6.4 delegation; reject borrowed/wrong-tier/value-versus-key/omission controls and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4`
+  Status: `pending`
+  Goal: `Qualify normalized child composition and intent-HIR family subjects.`
+  Acceptance: `Cover composition_* non-shared-datapath child/generated-child/parameter-override/standalone-DT families and success_forward_ir_intent_hir_composition_* mirrors. Exclude composition_contract_source and the tier optional-composition baselines owned by .2; shared-datapath families belong to .5. Bind fields to exact children, overrides, raw/value-metadata extensions, DT enable and multi-drive records with root/HIR context and optionality. Refine further before implementation if necessary. Preserve dedicated/deeper ownership, use exact saved sources/docs and adverse controls, synchronize guidance and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5`
+  Status: `pending`
+  Goal: `Qualify normalized shared-datapath family subjects and lowered mirrors.`
+  Acceptance: `Cover composition_shared_datapath_* and success_forward_ir_lowered_rtl_ir_composition_shared_datapath_* families. Preserve candidate/contributor/declared-type/drive-intent/enable-family/aggregate/assertion/bound-expression subjects and root-versus-lowered context. Use canonical nested owners and original complete values, not names alone; refine further where needed. Join exact optional/extension rules and deeper .3.2.3/.3.3/.6.4 delegation, exercise missing/wrong-record/owner/value/doc controls, synchronize book/POD and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6`
+  Status: `pending`
+  Goal: `Qualify normalized lowered-RTL drive and control family subjects.`
+  Acceptance: `Cover remaining success_forward_ir_lowered_rtl_ir_* output-drive, RHS-enable, selector-conflict assertion/target and standalone-DT multi-drive entry families after excluding the .2 base/optional-composition and .5 shared-datapath groups. Bind exact entries, extension/optional rules and source-prediction versus execution boundaries with canonical source/saved values and existing fact cards. Preserve deeper semantics, reject wrong-field/tier/meaning/doc controls, synchronize book/POD and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.7`
+  Status: `pending`
+  Goal: `Qualify normalized structural-RTL entry and extension family subjects.`
+  Acceptance: `Cover success_forward_ir_structural_rtl_ir_* assignment/LHS/RHS/provenance, auxiliary-assignment kind/meaning, instance/interface/parameter override/port binding, port/source/target, net and declared/resolved-link entry/extension families; exclude its base presence list owned by .2. Refine independent structural record cohorts before implementation where warranted. Keep direct versus composition/generation and rendered-text versus typed AST limits precise, preserve exact deeper owners and saved evidence, exercise coherent subject/type/omission/source/doc controls, synchronize book/POD and commit.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.8`
+  Status: `pending`
+  Goal: `Close normalized grouped-map subjects and complete field delegation.`
+  Acceptance: `Join .1-.7 to every original normalized field from enriched-identity-final.json.gz. Qualify nested_contract_source_map, nested_presence_key_map, presence_key_family_map, semantic_presence_key_family_map, semantic_nested_presence_key_map and both forward_ir_nested maps with exact per-member subjects and their documented scalar/array/object projection rules. Preserve every remaining non-family metadata field under exact .3.2.3/.3.3/.6.4 owners and all identity fields under prior .3.1. Prove no omission/duplicate/lost projection or wrong subject, preserve complete source/doc custody and commit closure before optional-validation .3.2.3.`
+  Verification: `pending predecessor qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.9`
+  Status: `done`
+  Goal: `Select bounded normalized family cohorts before qualification.`
+  Acceptance: `Read the existing normalized identity delegation, saved native record, public report/payload owners and relevant optional/structural fact cards. Split heterogeneous subjects into concrete children, retain every parent obligation and exact next action, verify task/Git continuity and existing declaration rules, and commit selection before .1. No source query, backend epoch or public behavior change.`
+  Verification: `Saved native record and source-owned maps confirm the separate subjects; the original field census stays authoritative and .8 must prove complete allocation. The optional-child and structural assignment fact cards were consulted before source review. This selection closes no semantic/documentation gap. Task integrity and staged/normal doctrine gates qualify the continuity-only split.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.9: scope normalized semantic family cohorts`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.3`
   Status: `pending`
@@ -1833,3 +1897,9 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 - P2 audit repair: diagnostic-map-repair-before.json.gz retains original T383 and contract bytes plus the complete genuine failing cohort. qualify_diagnostic_map_repair.py runs the unchanged actual old/new helpers against retained local metadata fixtures. The saved-reader verify_diagnostic_map_repair.py --current proves complete case/input/probe/status/TAP/source joins and exact test reversal outside the narrow object branch. Labeled fixtures include overlapping generic-object/wrong-family observations; they are not distinct bugs. The first control runner had wrongly expected the original invalid array to fail; its incomplete attempt/source/output retain rather than being relabeled success. No source/compiler epoch is involved.
 - diagnostic-family-checks.json.gz retains complete command streams, consumed execution statuses, independent readers and selected rendered HTML tables. Native rendering is scoped content evidence; whole-manual browser review remains pending. The Knowledge Map update preserves every original question/metadata and distinct fact, with complete before/after bytes, exact reversal and no card line/byte growth. Task collection declarations use existing actual-plus-ratchet rules; no baseline, ceiling or Knowledge Map allowance grows.
 - The check/registry leaf closes the encountered audit/prose blocker. Resume normalized .3.2.2 after this clean commit, refining bounded subjects before implementation where needed; optional validation .3.2.3 and the joined family closure .3.2.4 remain open. Historical HIAL/source causality, required delivery and qualified full-CI/publication obligations retain.
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.2.2.9 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The saved normalized record's nested subjects and canonical NormalizedSemanticReportContract distinguish shared envelope, optional payload and heterogeneous IR entry families. git log -S 'source_optional_fields => report_source_optional_fields()' identifies the shared-object promotion at d5c1806c2; 55361cfa9 qualifies its exact audit handling. This child selection preserves that known contract instead of restarting a source epoch or treating every family as a uniform list.
+- [x] **ADDRESSED (verified)** — Exact children now own envelope, baseline/tier, symbol, composition, shared-datapath, lowered-control, structural-entry and grouped closure obligations. The original field list remains preserved in the qualified identity packet; final join must allocate every field or retain an exact deeper owner. The current next action is .1. Existing warning-debt declarations are recomputed as actual plus their own ratchet without baseline/ceiling or Knowledge Map growth.
+- [x] **NO REGRESSION** — The previous committed slice passed All tests successful Files=10, Tests=1155 and all normal hooks. This selection changes task continuity/declarations only: current task-tree integrity and full staged/normal scripts/check_doctrines.sh qualify the new graph. The book and runtime remain unchanged; no new feature, field meaning or execution claim is made.
