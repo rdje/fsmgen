@@ -377,11 +377,47 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.1: document enriched identity and repair discovery drift`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.5`
   Goal: `Qualify enriched check, normalized-report, registry and external-validation key-family subjects.`
   Acceptance: `Follow /diagnostics/check_json, /diagnostics/stable_code_registry, /semantic_exports/normalized_semantic_json and /backend_validation/systemverilog_external from .3.1. Explain common presence/key/value-family maps, exact subject and conditional-success/failure/optional/extension meanings with canonical owner evidence. Preserve all remaining field/deeper payload delegation to .3.2.2-.4 and .6.3-.6.4, test coherent wrong-subject/value-versus-key/omission controls, synchronize book/POD and commit.`
-  Verification: `Unstarted family-subject qualification; use the final identity census and exact per-field delegation after the .3.1 commit.`
+  Verification: `Source-bound review distinguishes check/registry key and value subjects, extensive normalized semantic/IR families, and optional external-validation success/failure families. Exact children retain all four native paths and every prior delegated field. Check/registry .1 is first; normalized .2, external .3 and complete join .4 follow. No semantic completion is inferred from this selection.`
   Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.1`
+  Status: `pending`
+  Goal: `Qualify check-report and stable-code registry family subjects.`
+  Acceptance: `Use the two diagnostics paths from the final identity census. Join all shell-owned presence, optional/matched, nested-owner, grouped-key and bounded-value families to their canonical contracts and saved native observation. Explain success versus failure placement, conditional fields, diagnostic entries versus registry siblings, key lists versus allowed values, array/object ordering and extension limits. Delegate unrelated metadata and deeper diagnostic/report fields exactly to .3.2.2, .3.3 and .6.3-.6.4; retain every original field. Add precise book/POD guidance, independent source/value/meaning/doc joins and coherent adverse controls; commit before normalized families.`
+  Verification: `pending preceding selection/qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2`
+  Status: `pending`
+  Goal: `Qualify normalized semantic report and nested-family subjects.`
+  Acceptance: `Follow /semantic_exports/normalized_semantic_json and all fields delegated by the identity census. Distinguish report envelope, success semantic payload, shared diagnostic/source/producer objects, optional composition/IR records and key versus value/meaning families. Refine additional bounded cohorts before implementation if required by actual subjects. Bind every selected family to its exact object/element/conditional/extension rule and canonical owner, preserve deeper .3.2.3, .3.3 and .6.3-.6.4 obligations, exercise source/value/meaning/omission/doc controls, synchronize book/POD and commit.`
+  Verification: `pending preceding selection/qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.3`
+  Status: `pending`
+  Goal: `Qualify optional external-validation success and failure family subjects.`
+  Acceptance: `Follow /backend_validation/systemverilog_external. Explain required/optional tool and stage-name values, success top-level/step key families, failure categories and text-prefix maps with their exact subjects and optional in-process ABC distinction. Do not infer installation, execution, frozen complete error text or MCP execution. Preserve unrelated metadata and deeper .3.2.4/.6.4 owners; bind source/saved values/docs, exercise wrong-key/value/availability/prefix controls and commit.`
+  Verification: `pending preceding selection/qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.4`
+  Status: `pending`
+  Goal: `Close the joined report/registry/validation family qualification.`
+  Acceptance: `Join .1-.3 to all four original native paths and exact final identity-census field delegations. Prove every field has a qualified common-family subject or an exact deeper repair owner, preserving report/manifest distinction, conditional/optional/value rules and source/document custody. Reject missing/duplicate/wrong-subject/owner/stale joins and commit before enriched query/support/verification .3.3.`
+  Verification: `pending preceding selection/qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.5`
+  Status: `done`
+  Goal: `Select independently reviewable report/registry/validation cohorts.`
+  Acceptance: `Read the saved identity delegation and dedicated public owners before implementation. Preserve all four paths, separate heterogeneous families into bounded exact children with complete acceptance and deeper ownership, verify task/policy/Git continuity and commit selection before .1. If normal task growth reaches its declared warning-debt allowance, apply the existing measured-actual-plus-ratchet procedure without raising any ceiling and retain the first refusal.`
+  Verification: `Qualified final identity census and dedicated CheckDiagnosticsContract, DiagnosticCodeRegistryContract, NormalizedSemanticReportContract and HDLExternalValidationContract separate the selected subjects. Current README, memory/lifecycle/claim/doctrine/toolbox and R13 direction were recovered; cleanup is current and Git was clean. Task integrity and staged/normal doctrines qualify selection. No runtime or manual behavior change.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.5: scope report registry and validation family cohorts`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.3`
   Status: `pending`
@@ -1776,3 +1812,9 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 - verify_enriched_rendered.py reads the actual native built guide and generated POD. It joins each displayed owner/report-source cell to the saved native identity and checks the important absence/route distinctions. This is scoped rendered-content evidence, not browser or whole-manual visual qualification. Current build output remains regenerable under .artifacts; exact reader/source/result retains in the checks packet.
 - enriched-identity-knowledge.json.gz retains complete card before/after bytes and an exact reverse transformation. Every prior question, metadata value and distinct navigation/owner/semantic-API fact survives. The new enriched-entrypoint question resolves to the canonical guide without collection allowance/ceiling growth. Earlier byte-growing draft proposals were refused before writes.
 - The newly encountered P2 root-discovery omission is owned and fixed in this leaf because it blocked its independent regression gate. Source applicability and catalog outcomes remain unchanged. Family subjects/registry values, query policies, catalog/artifact contents, embedding/VIAL and complete operating-reference closure remain with their named successors. Resume .3.2 after this slice's clean commit; historical HIAL/source causality, whole-reference visual review and qualified full-CI/publication remain open.
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.2.5 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The first scripts/check_doctrines.sh stream rejects task_evidence aggregate lines and bytes at the prior declared allowance. git log -S '2570253' -- doctrine/live_document_size/surfaces.jsonl locates that byte allowance at c751598dd. This is warning-debt declaration pressure, below unchanged enforcement ceilings; LIVE_DOCUMENT_SIZE_CONTAINMENT.md explicitly authorizes measured actual plus the surface's own ratchet step. The complete terminal-failure stream retains as family-selection-first-refusal.log.gz; its original execution handle was omitted by the caller, so no consumed exit status is claimed.
+- [x] **ADDRESSED (verified)** — The exact child graph preserves all four native paths and prior deeper obligations. Recompute task_evidence aggregates after this checklist and declare actual plus its existing ratchet step. Do not change baseline, ceiling, milestones, owner, retention or Knowledge Map allowance. No source/runtime epoch or manual behavior change.
+- [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl passed; knowledge-map: OK in the first complete stream. Final staged scripts/check_doctrines.sh and normal commit hooks must qualify the declaration and selection before commit. The sibling claim template matches the retained reviewed SHA-256; local README and containment policy sources are already the adopted authority.
