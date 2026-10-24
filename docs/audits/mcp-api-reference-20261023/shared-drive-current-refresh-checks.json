@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/build_shared_drive.py",
+      "docs/audits/mcp-api-reference-20261023/shared-drive-final-qualified.json.gz"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/verify_shared_drive.py",
+      "docs/audits/mcp-api-reference-20261023/shared-drive-final-qualified.json.gz",
+      "--current"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/verify_shared_drive.py",
+      "--current-contracts"
+    ],
+    "exit_status": 0
+  }
+]

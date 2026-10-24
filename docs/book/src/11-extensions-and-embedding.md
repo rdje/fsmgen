@@ -736,6 +736,46 @@ lists do not establish equal populations, matching indices, execution or
 verified arbitration. Preserve arrays without inferring priority, and inspect
 optional collections before indexing.
 
+### Normalized shared-datapath binding and drive-intent subjects
+
+Use either metadata prefix with one suffix below. Relative subjects begin at the corresponding candidate, and include the contributor collection explicitly:
+
+| Metadata prefix | Candidate payload subject |
+| --- | --- |
+| `composition_shared_datapath_` | `semantic.composition.shared_datapath_candidates[]` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_` | `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]` |
+
+| Suffix | Subject relative to the candidate | Family rule | Complete ordered advertised keys |
+| --- | --- | --- | --- |
+| `bound_connection_expr_keys` | `contributors[].bound_connection_expr` | `signal_ref_variant` | `kind`, `signal_name` |
+| `candidate_contributor_drive_intent_entry_keys` | `contributors[].drive_intent` | `object` | `default_value`, `driver_blocks`, `driver_count`, `driver_enable_signals`, `family_enable_signals`, `multiplexer_type`, `reset_value`, `rhs_enable_families`, `rhs_values` |
+| `candidate_contributor_drive_intent_rhs_enable_family_entry_keys` | `contributors[].drive_intent.rhs_enable_families[]` | `array_element` | `driver_blocks`, `driver_enable_signals`, `family_enable_signal`, `rhs_value` |
+
+The binding is a nullable object. The `signal_ref_variant` rule means the advertised two-key list describes `kind: "signal_ref"`; it is not the complete
+expression grammar. The public structured-IR builder also preserves compound nodes, such as this observed contributor binding:
+
+```json
+{
+  "kind": "concat",
+  "operands": [
+    {"kind": "signal_ref", "signal_name": "left_hi"},
+    {"kind": "signal_ref", "signal_name": "left_lo"}
+  ]
+}
+```
+
+Inspect `kind` and preserve the nested data. Applying the two-key list as a universal closed-object validator would reject or discard valid compound data. This
+direct public-builder example does not establish native source availability or complete support for every expression kind in every query. The structural
+connection-expression owner retains the complete expression grammar and its deeper kind-dependent fields.
+
+`drive_intent` is a singular object; `rhs_enable_families` and its driver-list members are arrays. The helper returns an empty drive object when no valid
+output-drive family is available. Guard contents before indexing, and do not infer priority from array order. Default/reset/RHS values and nested expression
+semantics retain their dedicated deeper models.
+
+`FSM::Support::NormalizedSemanticLoweredRTLIRContract` owns these families. Its shared drive-intent RHS-family helper delegates to
+`normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys`. Composition aliases and forward/payload/report contracts republish the
+corresponding root/lowered metadata. Equal key lists do not establish equal populations, actual execution, verified arbitration or source/backend support.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

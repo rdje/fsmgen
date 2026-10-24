@@ -1,0 +1,8 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3",
+  "log": "docs/audits/mcp-api-reference-20261023/shared-binding-reader.log.gz",
+  "original_log_sha256": "74c2601794703f7c15ce015c14f5b7d62fb5767cb4f4cbab6c2b2c31a63f0572",
+  "retained_log_sha256": "74c2601794703f7c15ce015c14f5b7d62fb5767cb4f4cbab6c2b2c31a63f0572",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "consumed_exit_status": 0
+}

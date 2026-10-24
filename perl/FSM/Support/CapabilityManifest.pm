@@ -409,6 +409,28 @@ Child IR summaries and deeper type/value, binding/drive, aggregate and assertion
 models remain delegated. Equal lists imply neither equal populations nor
 matching indices, execution or verified arbitration; arrays do not imply priority.
 
+=head2 Normalized shared-datapath binding and drive-intent subjects
+
+Under either C<composition_shared_datapath_> or
+C<success_forward_ir_lowered_rtl_ir_composition_shared_datapath_>,
+C<bound_connection_expr_keys> describes the contributor's nullable binding
+object for the C<signal_ref> variant: C<kind> and C<signal_name>. This is not
+the complete expression grammar. The public structured-IR builder preserves
+compound nodes such as C<concat> with nested C<operands>; preserve those fields
+and inspect kind instead of applying a universal two-key validator. The book
+gives a checked public-builder example. Native source availability and deeper
+kind-dependent models remain separately qualified.
+
+C<candidate_contributor_drive_intent_entry_keys> describes the singular
+C<contributors[].drive_intent> object, which can be empty when no valid drive
+family is available. C<candidate_contributor_drive_intent_rhs_enable_family_entry_keys>
+describes each nested C<rhs_enable_families[]> element; driver-list values are
+arrays. LoweredRTLIRContract owns these families and delegates the RHS family
+to its output-drive RHS helper. Composition/forward/payload/report contracts
+republish the corresponding root/lowered metadata. Default/reset/RHS values,
+complete expression grammar and deeper IR/value models stay delegated. Metadata
+does not establish equal populations, execution, arbitration or backend support.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

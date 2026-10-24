@@ -1,0 +1,88 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3",
+  "commands": [
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_shared_drive.py",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "knowledge-map/scripts/check_knowledge_map.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_acceptance.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 1
+    }
+  ],
+  "limits": "Bounded metadata/source/native-content gates; complete recursive binding models and source/backend/publication/whole-manual QA remain owned.",
+  "log": "docs/audits/mcp-api-reference-20261023/shared-drive-final-first-checks.log.gz",
+  "original_log_sha256": "cb11b2e4bf943c4deb8fe614e6dc7ff1e5a64b01dbaa03b93623dbf58f813a03",
+  "retained_log_sha256": "e3545465cde8a8a2a49a43c00adea179832e8bb7d2b61684a8323b12db3f74d4",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "failures": [
+    "container .6.4 has non-container status pending",
+    "shipped_behavior max lines 4738 exceeds existing per-part transition allowance 4728"
+  ]
+}

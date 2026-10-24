@@ -1,0 +1,8 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3",
+  "log": "docs/audits/mcp-api-reference-20261023/shared-drive-qualification.log.gz",
+  "original_log_sha256": "970f2c8379329949c98aa37b67488b8268d5aa991844bdb908714a2a865d5496",
+  "retained_log_sha256": "970f2c8379329949c98aa37b67488b8268d5aa991844bdb908714a2a865d5496",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "consumed_exit_status": 0
+}

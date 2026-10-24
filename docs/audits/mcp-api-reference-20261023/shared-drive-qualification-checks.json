@@ -1,0 +1,49 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/build_shared_drive.py",
+      "docs/audits/mcp-api-reference-20261023/shared-drive-qualified.json.gz"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/verify_shared_drive.py",
+      "--current"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/mcp-api-reference-20261023/verify_shared_drive.py",
+      "--current-contracts"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "prove",
+      "-Iperl",
+      "t/297-capability-manifest.t",
+      "t/311-normalized-semantic-report-contract.t",
+      "t/330-normalized-semantic-payload-contract.t",
+      "t/333-normalized-semantic-composition-contract.t",
+      "t/334-normalized-semantic-forward-ir-contract.t",
+      "t/340-normalized-semantic-lowered-rtl-ir-contract.t",
+      "t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t",
+      "t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t",
+      "t/470-normalized-semantic-composition-contract-defensive-copy-boundary-audit.t",
+      "t/471-normalized-semantic-forward-ir-contract-defensive-copy-boundary-audit.t",
+      "t/477-normalized-semantic-lowered-rtl-ir-contract-defensive-copy-boundary-audit.t",
+      "t/550-structural-rtl-connection-expr-binding-defensive-copy-boundary-audit.t",
+      "t/552-shared-datapath-contributor-drive-family-defensive-copy-boundary-audit.t"
+    ],
+    "exit_status": 0
+  }
+]

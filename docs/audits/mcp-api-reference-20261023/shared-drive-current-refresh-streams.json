@@ -1,0 +1,6 @@
+{
+  "log": "docs/audits/mcp-api-reference-20261023/shared-drive-current-refresh.log.gz",
+  "original_log_sha256": "b0aa6c9ff22d22016f6257deeaebacd324b3766ba14921a4919a29932f9e975b",
+  "retained_log_sha256": "b0aa6c9ff22d22016f6257deeaebacd324b3766ba14921a4919a29932f9e975b",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}
