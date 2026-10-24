@@ -323,6 +323,68 @@ full diagnostic meanings, optional declaration models, classifier policies and
 source-report payload semantics retain their dedicated references below. Reading
 this metadata through MCP performs no source check and enables no execution tool.
 
+
+### Normalized report-envelope families
+
+`semantic_exports.normalized_semantic_json` advertises the normalized report
+contract. Its common family lists describe the native report, rather than the
+capability record or the outer MCP tool envelope. Required presence does not
+imply a non-null value. Use the published source-query applicability before
+requesting a report; reading capability metadata alone performs no source query.
+
+| Metadata field | Subject and condition |
+| --- | --- |
+| `public_top_level_presence_keys` | Normalized report on either outcome: schema version, producer, command, source, success, diagnostics, diagnostic summary, report-level support accounting and generated-output marker. |
+| `success_only_top_level_keys` | Success-only `semantic` and `generation_result_snapshot`. These are not the check report's `result` field. Failure reports omit both. |
+| `command_presence_keys` | The report's `command` object on either outcome; its mode is `semantic_export`. |
+| `generated_output_presence_keys` | The report's `generated_output` object; the report invocation retains `emitted: false`. A serializable generation snapshot does not itself emit HDL. |
+| `producer_presence_keys` | Shared `producer` fields `name` and `report_source` on either outcome. |
+| `producer_extra_presence_keys` | The normalized producer's additive `semantic_layers` field, also on failures. It advertises public projection names; its presence does not mean a failed report carries partial semantics. |
+| `source_presence_keys` | Base `source` fields `input` and `resolved_path` on either outcome. Their values retain the source-identity contract; they do not describe the metadata record. |
+| `source_optional_fields` | The shared name-to-contract object for optional source declarations. Qualifying successful source reports can carry these declarations according to their dedicated contracts; the failure producer uses the base source object. This is not an array of universally required fields. |
+| `support_accounting_presence_keys` | Base fields of report-level `support_accounting` on success and failure; currently `matched`. Unmatched sources/failures retain `matched: false`. |
+| `matched_success_support_accounting_presence_keys` | Additional report-level support fields when a successful source has a corpus match; includes source-kind and strict-support identity. |
+| `matched_failure_support_accounting_presence_keys` | Additional report-level fields for a matched failure; includes diagnostic-code and migration-hint identity. This differs from matched-success additions. |
+| `failure_diagnostic_presence_keys` | Base fields of each failure `diagnostics[]` element. These reuse the check-diagnostic contract, including nested support accounting. Unclassified diagnostics retain `code: null`. |
+| `matched_failure_diagnostic_presence_keys` | Additional corpus identity fields on each matched failure diagnostic. |
+| `failure_diagnostic_optional_artifact_keys` | Optional extracted artifact fields of each diagnostic; absent/unavailable path data must not be treated as a usable path, and the current producer can emit null values. |
+| `failure_diagnostic_support_accounting_presence_keys` | Base fields of each diagnostic's nested `support_accounting`; currently `matched`. |
+| `matched_failure_diagnostic_support_accounting_presence_keys` | Matched-failure additions inside that nested support object. The advertised field list equals the report-level matched-failure family, but the objects occupy different paths. |
+
+A normalized failure keeps **report-level** support accounting as well as the
+support object inside its diagnostic. The current failure producer takes the
+report-level match from the first diagnostic's support object when available,
+otherwise it uses an unmatched object. Check failures instead place their support
+match only inside the diagnostic. Select the family for the actual object path;
+matching field names do not make the report and diagnostic interchangeable.
+
+The corresponding shared `*_contract_source` fields name these dedicated owners:
+
+| Shared subject | Owner under `FSM::Support` |
+| --- | --- |
+| `command` | `ReportCommandContract` |
+| `generated_output` | `ReportGeneratedOutputContract` |
+| `producer` | `ReportProducerContract` |
+| `source` | `ReportSourceContract` |
+| `support_accounting` | `SupportAccountingMatchContract` |
+| `failure_diagnostic` | `CheckFailureDiagnosticContract` |
+| `diagnostic_summary` | `SerializableDiagnosticSummary` |
+| `generation_result_snapshot` | `SerializableGenerationResultSnapshot` |
+
+These are owner identities, not commands or MCP tools. The snapshot owner names
+a serializable result projection, rather than the live generator object.
+The common report `producer` is also distinct from manifest build provenance.
+`normalized_semantic_schema_version` identifies the report schema; do not confuse
+it with the advertised contract's `schema_version`, tool/build identity, MCP
+protocol or VIAL language version.
+
+This is not a closed schema for every nested value. Preserve array order in
+observations without inferring family priority; objects use named lookup.
+The bounded named families coexist with `full_export_stable: false` and deliberate
+regression-backed widening. Semantic payload children, IR tiers, grouped-map
+members, snapshots, optional declaration models and classifier policy retain
+their dedicated contracts and the detailed references below.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

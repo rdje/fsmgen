@@ -200,6 +200,36 @@ Full diagnostic-schema stability is false; deliberate documented regression-back
 widening remains required. This is a family-subject guide, not complete payload
 semantics or an added MCP operation. Deeper fields retain their dedicated owners.
 
+
+=head2 Normalized report-envelope families
+
+The book's C<Normalized report-envelope families> guide binds the common
+C<normalized_semantic_json> families to native report subjects, not the outer
+MCP envelope. Both outcomes carry report-level support accounting.
+C<success_only_top_level_keys> instead names success-only C<semantic> and
+C<generation_result_snapshot>; failures omit both, rather than publishing
+partial semantics or the check report's result object.
+
+C<producer_extra_presence_keys> adds C<semantic_layers> on either outcome.
+Those advertised projection names do not establish that a failed report has
+semantic data. C<source_optional_fields> remains an object of optional declaration
+contracts, applicable to qualifying success reports; failure sources use the base
+fields. Presence does not imply non-null values or universal declaration support.
+
+C<matched_failure_support_accounting_presence_keys> describes report-level
+matched-failure additions, distinct from matched-success source identity.
+C<matched_failure_diagnostic_support_accounting_presence_keys> uses the same
+field list inside each diagnostic's support object. The current failure producer
+uses the first diagnostic's match when available and otherwise keeps an unmatched
+report-level object. Check failures instead keep support only inside diagnostics.
+Unclassified diagnostics retain a null code; optional artifact values may be null.
+
+Shared C<*_contract_source> identities retain dedicated command, source, producer,
+generated-output, support, diagnostic, summary and serializable-snapshot owners.
+They do not add callable tools or expose a live generator object. Report schema,
+contract schema, build, protocol and language versions are distinct. This is not a closed schema
+for all nested values; deeper payload/IR/maps/snapshot meanings retain their owners.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs
