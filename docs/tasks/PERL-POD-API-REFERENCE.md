@@ -66,7 +66,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 - ID: `PERL-POD-API-REFERENCE`
   Status: `active`
   Goal: `Deliver a reproducible POD API reference through the native mdBook workflow.`
-  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5, PERL-POD-API-REFERENCE.6`
+  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5, PERL-POD-API-REFERENCE.6, PERL-POD-API-REFERENCE.7`
 
 - ID: `PERL-POD-API-REFERENCE.1`
   Status: `done`
@@ -434,6 +434,25 @@ HIAL, claim, locality, or source-feature signoff gates.
   Goal: `Qualify the complete MCP operating reference and restore required feature delivery.`
   Acceptance: `Require an exact source/runtime/schema/documentation join with no unexplained surface/field omissions, all real-server workflow/result/refusal controls, native POD/book/link delivery and relevant regression/doctrine checks. Review the human and AI navigation and operational completeness against .6.1's entire inventory. Preserve explicit capability and hosted/platform limits, commit cleanly, clear the message and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2.`
   Verification: `pending complete MCP reference`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.7`
+  Status: `active`
+  Goal: `Complete startup maintenance while preserving the selected MCP documentation frontier.`
+  Children: `PERL-POD-API-REFERENCE.7.1, PERL-POD-API-REFERENCE.7.2`
+
+- ID: `PERL-POD-API-REFERENCE.7.1`
+  Status: `done`
+  Goal: `Perform the due safe daily artifact census and refresh its latest-only record.`
+  Acceptance: `Authenticate and reuse the published census through a new exclusive dated wrapper bound to native HEAD and prior cleanup bytes. Require elapsed-time admission, same-volume regular log/bin census, independent rg membership, root/Rust locations and saved adverse controls. Retain every candidate without exact disposal authority; update latest-only record and book replay route, pass focused and staged doctrine gates, and commit before policy review or metadata work.`
+  Verification: `Actual elapsed-time admission at native a13376d4b passes; authenticated published collector records same-volume regular log/bin lstat metadata, root/Rust locations and independent rg membership. Saved replay and missing-member/unsafe-path/Boolean-size/invented-removal controls pass. All candidates retain; no disposal authority or physical reclamation is claimed. Initial sandbox RAM-guard refusal and approved supervised outcome retain. Latest-only record and book replay route update; focused and required gates recorded below.`
+  Commit: `PERL-POD-API-REFERENCE.7.1: refresh safe daily artifact census`
+
+- ID: `PERL-POD-API-REFERENCE.7.2`
+  Status: `pending`
+  Goal: `Review the director-selected README, claim and containment policy sources for adoption changes.`
+  Acceptance: `Read the named local policy/guide and read-only sibling claim template. Compare neutral normative contracts to the locally adopted authorities and retained prior review; preserve meaningful differences and source identities, adopt only necessary local changes under exact ownership, or record why none is required. Never write outside this Git repository. Commit review before resuming the selected common metadata census.`
+  Verification: `pending policy-source review`
   Commit: `pending`
 
 ## Decisions
@@ -1530,3 +1549,16 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   to the valid unused positive child .3.2.6, preserve the five census cohorts
   and .3.2.1 resume target, and run focused integrity before the full final
   gate. No field census or runtime work has begun.
+
+
+## Acceptance Checklist — .7.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Latest artifact cleanup' -- docs/ARTIFACT_CLEANUP.md` locates the canonical date record. The collector compares actual UTC to complete native prior bytes and admits only after the elapsed-time prerequisite. Published collector functions remain byte-exact; Git bytes are comparison data only.
+- [x] **ADDRESSED (verified)** — Actual supervised census and saved replay pass, including independent whole-member rg equality and all published missing-member/path/type/removal controls. No candidate has exact disposal authority, so all retain. Latest-only date and book saved-reader route now reference the new dated observation; original RAM-guard sandbox refusal retains.
+- [x] **NO REGRESSION** — knowledge-map: OK. Saved collector controls pass without repeating collection or deletion. Focused task integrity and book/source/index checks plus staged doctrine/normal hooks gate this maintenance-only slice. No runtime source, compiler epoch, API, backend execution or publication changes.
+
+Re-derivation: actual dated collector bound to native HEAD/prior record and installed source. Falsification: separate rg membership plus coherent saved-record refusals. Durability: tracked dated wrapper/census/refusal, unchanged published collector, latest-only record, task/book/Git. Lstat fields are dated metadata, not content identity or future absence. Resume .7.2 policy-source review, then the unchanged .6.1.2.3.2.1 common-field census.
+
+The first staged gate correctly refused an unnecessary maintained-reference authority change: the dated route replacement changes neither aggregate bytes nor lines. Complete refusal retains in the dated census directory; restore the unchanged prior aggregate authority, regenerate the affected inventory and rerun staged/normal gates. No content, ceiling or disposal scope changes.
+
+The next complete gate also identifies task_evidence total line/byte transition allowance exhaustion. Following the root containment procedure, declare actual plus that surface's own ratchet step for only these dimensions, keep the baseline/ceilings/targets/owner unchanged, and retain the full refusal. This is an ordinary warning-debt allowance declaration, not rollover-debt growth or a ceiling increase.
