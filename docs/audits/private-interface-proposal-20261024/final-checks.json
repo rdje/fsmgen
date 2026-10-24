@@ -1,0 +1,108 @@
+{
+  "baseline_revision": "8072e605d8314eef24d4853e78f451d560806cad",
+  "commands": [
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0,
+      "label": "native_book"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0,
+      "label": "pod_current"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0,
+      "label": "copied_sources"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0,
+      "label": "complete_source_index"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "from html.parser import HTMLParser\nfrom pathlib import Path\nclass View(HTMLParser):\n def __init__(self):super().__init__();self.active=False;self.text=[];self.links=[]\n def handle_starttag(self,tag,attrs):\n  attrs=dict(attrs)\n  if tag=='h3':self.active=attrs.get('id')=='private-conversational-and-graphical-interface-proposed'\n  if self.active and tag=='a':self.links.append(attrs.get('href'))\n def handle_data(self,data):\n  if self.active:self.text.append(data)\nv=View();root=Path('docs/book/book');v.feed((root/'14l-backends-validation-and-apis.html').read_text());text=' '.join(''.join(v.text).split())\nfor phrase in ('FSMGEN-CONVERSATIONAL-INTERFACE','graphical interface','not active implementation','exact target Codex surface','shipped read-only adapter'):assert phrase in text,phrase\nassert '11-extensions-and-embedding.html' in v.links\nassert (root/'11-extensions-and-embedding.html').is_file()\nprint('selected native proposed-interface paragraph and local embedding link: PASS')\n"
+      ],
+      "exit_status": 0,
+      "label": "rendered_proposal"
+    },
+    {
+      "command": [
+        "scripts/check_task_acceptance.sh"
+      ],
+      "exit_status": 0,
+      "label": "staged_acceptance"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0,
+      "label": "diff_hygiene"
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0,
+      "label": "doctrines"
+    }
+  ],
+  "date": "2026-10-24T17:28:58.228947+00:00",
+  "inputs": {
+    "MEMORY.md": "6b9df306886103371e8b6ab57f981405c6d45c576021a4c7615674376331dc85",
+    "docs/TASK_TREE.md": "49d1aa412385f1cd56ffe60b3b9087f44e989126f77b588411e5d3e7e87835db",
+    "docs/book/src/14l-backends-validation-and-apis.md": "6af5a62f67c9e7b9b919b3842d4c66777228953c89a825bbc170707f7b0ea416",
+    "docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md": "f1794d19869e58e7a33ea8d8f625f3de4a786e5400c17efcd564e52174a374d4",
+    "docs/tasks/PERL-POD-API-REFERENCE.md": "eae4e2deba12ea6eea50051413903f0fc2432dbb186343a219cd5a5a4874c543",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md": "0d25f37ed77cbe5de8f9b6da6ee510e897ef4b7ea359652993f69d45b1bc847a",
+    "doctrine/claim_verification/inventory.jsonl": "a4c034867cce47a5ee0eec8f8bf92541c5a8e7f85f81386c8253b909a19feb7a",
+    "doctrine/live_document_size/surfaces.jsonl": "12abec5e3e4a06e0cd21cac9cc9a242f8753817e3bf07f035bbc43db355f7a0c"
+  },
+  "limits": "Proposal/source/native documentation checks only; no plugin installation, connection, host UI compatibility or runtime feature delivery.",
+  "log": ".artifacts/logs/private-interface-proposal-checks.log",
+  "normalization": "Only dynamic repository-root prefixes become repository-relative; other stream bytes retain.",
+  "original_log_sha256": "bb01bc111b1c5b4fb66df28167bdf08b3063863c2babf0a4baa1198399317517",
+  "owner": "PERL-POD-API-REFERENCE.8.3",
+  "python": {
+    "implementation": "cpython",
+    "version": [
+      3,
+      14,
+      7,
+      "final",
+      0
+    ]
+  },
+  "retained_log": "docs/audits/private-interface-proposal-20261024/final-checks.log.gz",
+  "retained_log_sha256": "c26d52f1d37d4b56cc953228bfeff0eb192ed54b21c751df12d096657b357a5a",
+  "schema": "fsmgen.private_interface_proposal_checks.v1"
+}

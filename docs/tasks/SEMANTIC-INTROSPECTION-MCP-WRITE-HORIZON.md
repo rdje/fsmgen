@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-07-12`
-- Last updated: `2026-07-31`
+- Last updated: `2026-10-24`
 - Owner: repo-local workflow
 
 ## Goal
@@ -107,6 +107,11 @@ work.
   first. Beyond-read-only MCP remains an independent proposed trust-boundary
   decision and is not required for verification-intent architecture.
 
+- `2026-10-24`: The private client/conversation/UI proposal is captured separately
+  in [FSMGEN-CONVERSATIONAL-INTERFACE](FSMGEN-CONVERSATIONAL-INTERFACE.md).
+  Core effects/transport selection remains here. Current work priority is read
+  from MEMORY.md and the active index rather than copied into this future tree.
+
 ## Open Questions
 
 - Which capability is the safest first step: a bounded, opt-in generation tool
@@ -121,8 +126,9 @@ work.
 
 ## Blockers
 
-- Not blocked. It is intentionally proposed until selected by roadmap/user
-  priority. Active priority remains the IAL2/IAL1 feature-completeness frontier.
+- This tree remains proposed until selected by roadmap/user priority. Read
+  `MEMORY.md` and the Active Task Trees table in `docs/TASK_TREE.md` for current
+  work selection; this future capability owner does not copy live priority.
 
 ## Verification Log
 

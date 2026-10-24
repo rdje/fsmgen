@@ -69,6 +69,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `FSMGEN-CONVERSATIONAL-INTERFACE` | `proposed` | `R13 / private client integration and user interface` | `.1.1` qualifies the private host, structured-tool connection and graphical UI support; DBIQNP capture only, with no active-priority change | [task](docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |
 | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` | `proposed` | `HIAL/VIAL native semantics` | `.1/.8` select IASIM authority and NEXSIM checkpoints without runtime activation | [task](docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md) |
@@ -248,7 +249,7 @@ criteria.
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by completed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; ISF extraction remains deferred until a stable family is identified by an exact owner` |
 | `Verification Code Generation` | `completed IAL1-VERIFICATION-CODE-GENERATION-FRONTIER owns the first-class verification-generation lane; .3 selected actor-level passive observation metadata, ISF-VERIFICATION-OBSERVATION-METADATA.1 shipped it, .4 selected a passive UVM monitor skeleton package, .7 selected the public CLI/artifact/report/support-accounting surface, .8 shipped the inert UVM output mode, .5 deferred VHDL artifact selection behind validation-substrate selection, .9 selected shape-only inert-artifact validation, .10 selected an inert VHDL observation package, .11 shipped it, and .6 selected no direct .ppif verification-output route for the current lane` |
 | `Backends And Validation` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted active VHDL/backend-validation/API frontier through .132; future behavior-bearing backend work still requires a new exact active owner leaf` |
-| `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted normalized-export/public-API frontier through .132; future public API/export work still requires a new exact active owner leaf` |
+| `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER owns the prior normalized-export/API frontier through .132; proposed FSMGEN-CONVERSATIONAL-INTERFACE owns private conversational/graphical client integration; new core MCP effects retain SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON; behavior-bearing work requires a selected active leaf` |
 | `Architecture` | `completed ARCHITECTURE-DEBT-FRONTIER tree through .3; direct-backend StructuralRTLIR internal declaration nets shipped, ISF parser/lowerer extraction remains deferred until a stable family has a future exact owner, and broad extraction/refactor work remains gated by exact leaves` |
 
 ## ISF Task-Tree Rule

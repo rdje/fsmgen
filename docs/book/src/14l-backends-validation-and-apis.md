@@ -342,6 +342,21 @@ and regression-backed.
 
 ## Embedding And Public APIs
 
+### Private Conversational And Graphical Interface (Proposed)
+
+`FSMGEN-CONVERSATIONAL-INTERFACE` tracks a proposed private plugin for operating
+the user's own FSMGen instance through conversation and a graphical interface.
+The OpenAI host handles conversation; FSMGen supplies authoritative structured
+operations and results. Graphical views and conversational tools use those same
+APIs. Initial inspection/diagnostic workflows and useful state, source or
+lowering views will be selected against actual available data.
+
+The proposal is not active implementation. Host connection and embedded-UI
+compatibility must be qualified early, including the exact target Codex surface.
+Any new core source-write, generation or server-transport capability retains
+the existing MCP horizon owner. The shipped read-only adapter is described in
+the [embedding reference](11-extensions-and-embedding.md).
+
 ### Semantic Introspection And MCP Adapter
 
 Status: active first-class feature under

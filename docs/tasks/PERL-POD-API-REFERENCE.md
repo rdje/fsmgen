@@ -726,7 +726,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 - ID: `PERL-POD-API-REFERENCE.8`
   Status: `done`
   Goal: `Preserve the director's DBIQNP private OpenAI-plugin discussion without changing the active documentation frontier.`
-  Children: `PERL-POD-API-REFERENCE.8.1, PERL-POD-API-REFERENCE.8.2`
+  Children: `PERL-POD-API-REFERENCE.8.1, PERL-POD-API-REFERENCE.8.2, PERL-POD-API-REFERENCE.8.3`
 
 - ID: `PERL-POD-API-REFERENCE.8.1`
   Status: `done`
@@ -736,11 +736,18 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.8.1: record private OpenAI plugin discussion without pivot`
 
 - ID: `PERL-POD-API-REFERENCE.8.2`
-  Status: `deferred`
+  Status: `superseded`
   Goal: `Evaluate a private OpenAI plugin over the existing FSMGen semantic MCP adapter when selected.`
   Acceptance: `If selected later, qualify exact host/account/tunnel prerequisites, tool discovery/selection, structured result and refusal fidelity against a local instance through published interfaces. Start with existing inspection operations and separately specify any requested validation/generation/artifact effects. Refine safe leaves before implementation; preserve all existing workspace, execution, locality and contract boundaries.`
-  Verification: `Deferred because the director explicitly tagged this as DBIQNP discussion; no implementation pivot or access/setup action is authorized by it. Resume only after a later selection consistent with current documentation and required feature-delivery priority. Private personal use is the requested scope; distribution work is outside it.`
-  Commit: `pending later selection; discussion retained under .8.1`
+  Verification: `Superseded by the dedicated proposed docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md at the director's explicit DBIQNP request. That tree retains private host/connection evaluation, conversational inspection, the explicit graphical UI workstream, canonical API/effect ownership and actual host/result/refusal qualification. No implementation or connection is activated; current documentation and required delivery priorities remain unchanged.`
+  Commit: `PERL-POD-API-REFERENCE.8.3: capture private conversational and graphical interface proposal`
+
+- ID: `PERL-POD-API-REFERENCE.8.3`
+  Status: `done`
+  Goal: `Capture the director-requested dedicated proposed private conversational and graphical interface tree, with existing API ownership and book discovery.`
+  Acceptance: `After the clean .4.2 commit, create the dedicated proposed tree for a conversational interface backed by structured FSMGen API calls. Record private use, the explicit graphical UI workstream, shared tool/data authority, verified ChatGPT UI versus unqualified Codex UI support, future host/deployment questions and precise qualification leaves. Preserve DBIQNP and current PNT selection. Delegate new core MCP effects/transport decisions to their existing horizon owner, replace the .8.2 stub with the exact proposed-tree route, and repair any stale copied priority found in that related owner. Synchronize the proposed index and book backlog, retain original source/decision limits and pass focused native/structural plus required staged/hook checks before committing.`
+  Verification: `Dedicated tree is proposed throughout, with explicit private conversation, graphical UI, host compatibility, shared authoritative API, connection/lifecycle, inspection, conditional effects and end-to-end/documentation qualification leaves. Structural review passes exact parent/child/status/evidence checks, proposed-only index placement and byte-identical active frontier/Memory versus 8072e605d. The prior stub routes to the new tree; the related horizon now derives priority from canonical pointers. Book backlog marks the interface as proposed. Native/source/index/Knowledge Map and required staged/hook checks gate commit; no plugin installation, connection, UI, runtime feature or activation is claimed.`
+  Commit: `PERL-POD-API-REFERENCE.8.3: capture private conversational and graphical interface proposal`
 
 ## Decisions
 
@@ -2115,3 +2122,18 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 
 - The supervised final runner completed native book/POD, current source/copied-byte/index checks, selected actual rendered tables, Python grammar and staged acceptance before entering scripts/check_doctrines.sh. The RAM guard then stopped the process tree with exit 137: host memory 88.6% reached its unchanged 88% cutoff. This is an incomplete doctrine gate, never a green result. composition-overrides-ram-interruption.json binds the exact terminal observation, guard source and complete earlier-check packet. The killed driver's in-memory partial streams are unavailable; this durability gap is explicit and no partial pass is reused. Host-pressure attribution is unproved.
 - A subsequent bounded empty-workload default-guard probe admits at observed host 86.6%, with unchanged descendant cutoff. This is only instantaneous admission evidence. Director clarification: wait for lower host-memory pressure, then restart only the interrupted full-doctrine gate under unchanged continuous supervision. After any further resource trip, return to waiting for fresh admission; do not repeat completed checks with unchanged inputs or relax the guard. No original compiler/backend/source epoch is started. The proposed conversational/graphical-interface tree remains queued until this slice is cleanly committed.
+
+
+## Acceptance Checklist — .8.3 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.17: keep MCP transport local stdio' locates the existing read-only transport decision at 67f97296a. The director explicitly requested a dedicated proposed tree and clarified private use, a conversational interface backed by structured API calls, and a graphical UI workstream. The related write-horizon Blockers paragraph still copied an old active-priority value; canonical current selection lives in MEMORY.md and docs/TASK_TREE.md. Core effect/transport ownership already exists and must be reused.
+- [x] **ADDRESSED (verified)** — Add the dedicated proposed interface tree and proposed index route, preserve all future host/connection/conversation/UI/effect/qualification obligations, and supersede the .8.2 stub with that exact owner. New core effects stay with the existing horizon; its stale priority copy becomes a canonical read-on-demand route. The book backlog labels the private interface proposed. Captured structural review proves all new nodes remain proposed, complete parent/child/leaf fields, and unchanged active-index/Memory bytes. No implementation, installation or connection is selected.
+- [x] **NO REGRESSION** — knowledge-map: OK remains applicable to unchanged facts; the captured proposal graph/no-pivot review passes. Required final native book/POD/source/index/copied-byte, task-integrity, current Knowledge Map and staged/hook scripts/check_doctrines.sh qualify commit. Current FSMGen code, supported operations and API families are unchanged, so no new runtime test or source/compiler/backend epoch is needed. The existing active frontier remains composition standalone-DT .4.3.
+
+### Dedicated private-interface proposal evidence
+
+- The proposal was created only after 8072e605d completed its guarded gate/hook workflow, the message was cleared and the workspace was clean. It records the director's exact conceptual distinction: the host provides conversation and selection, while FSMGen provides authoritative structured operations/results. The graphical interface is an explicit future workstream, with host-specific UI compatibility checked early. Private use and DBIQNP remain explicit; no feature implementation or account/connection setup follows from task capture.
+- docs/audits/private-interface-proposal-20261024/structural-review.json.gz retains the initial review program, baseline revision, selected input hashes, stdout/stderr and consumed exit status; structural-final-review.json.gz refreshes the final category-owner and related-horizon source identities, including duplicate-child rejection. It checks the proposed node graph/status/evidence, index placement, unchanged active frontier/resume bytes, canonical priority route and book discovery. This is structural proposal evidence, not host compatibility or functional plugin/UI qualification. Native/final gate streams retain separately.
+- The new tree references SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON for new core effects/transport decisions instead of duplicating their design owner. Its existing read-only boundary, current public check/report operations and future capability gaps remain distinct. The small related stale-priority defect is repaired in this same owned documentation slice by routing current selection to its authorities; the horizon is still proposed.
+- Re-derivation is the current source/graph/index review and native book/source delivery. Falsification separates proposal from activation through independently compared active-index/Memory bytes, node statuses and explicit availability limits; host/account/UI support remains a named unqualified future leg. Durability is the tracked task graph, source-bound review packet, official dated references, final native/check streams and work-unit Git. No actionable performance, coverage or capacity measurement is added.
+- Book aggregate authority covers this exact proposed-backlog addition. Task-evidence allowances use current actual plus their own ratchet without changing baselines, health targets or ceilings. No Knowledge Map card or allowance changes, and no separate DEVELOPMENT_NOTES rationale entry is warranted. Resume the unchanged standalone-DT documentation frontier after this capture commit.
