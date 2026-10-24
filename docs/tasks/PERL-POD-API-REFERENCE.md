@@ -340,9 +340,52 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2`
   Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.5, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.6`
   Goal: `Qualify shared metadata-record identity, entrypoint, key-family and guidance semantics.`
   Acceptance: `Use the retained complete candidate path list and root graph, plus canonical owner contracts. Inventory common field occurrences and dynamic map/list-element rules while preserving owner-specific status, version, absent-field, order and extension distinctions; supplement or delegate nonconforming/specialized records explicitly. Map exact semantic evidence and POD/book gaps without promoting advertised APIs into MCP operations. Exercise missing/extra/wrong-owner/meaning/documentation controls and commit the bounded census.`
-  Verification: `Root/producer cohort .1 is complete. With fresh context, refine shared-record cohorts from common-shell-selection.json before implementation; preserve each owner/status/entrypoint variant and explicit deeper delegation.`
+  Verification: `Root/producer cohort .1 and exact shared-record selection .2.1 are complete. Section-shell semantic census .2.2 is first; enriched records, embedding variants, specialized VIAL and joined closure follow with every candidate retained.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1`
+  Status: `done`
+  Goal: `Partition the retained shared-record candidates into exact semantic review cohorts.`
+  Acceptance: `Preserve every selected path, owner, status and entrypoint variant. Separate section shells, enriched query/report contracts, embedding contracts and specialized VIAL records; retain the already-qualified root/producer exclusions and exact deeper repair owners. Verify a disjoint complete join to the original candidate list and source-bound capture, record startup policy-source identity checks and commit before semantic census implementation.`
+  Verification: `Saved common-record-cohorts.json reproduces from the original capture/selection. Independent complete native traversal equals every unique candidate path; each original owner, status and entrypoint label/value is preserved, including prior root/producer exclusions. Today's local policy hashes and read-only sibling claim template still match the complete committed adoption review. No source/runtime epoch, manual behavior or publication changes.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1: select shared contract-record review cohorts`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2`
+  Status: `pending`
+  Goal: `Qualify the section-shell common fields and their owner-specific discovery maps.`
+  Acceptance: `Review BackendValidationContract, DiagnosticsContract, DocumentationContract, EmbeddingContract, LanguageSurfaceContract and SemanticExportsContract against the saved complete native manifest. Inventory common identity, entrypoints, presence/key families, guidance and nested ownership/presence map rules, explicitly delegate remaining domain fields. Bind semantic statements to exact source and book/POD evidence. Exercise missing/extra/owner/type/meaning/documentation controls, synchronize a usable field guide and commit before enriched records.`
+  Verification: `pending section-shell census`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3`
+  Status: `pending`
+  Goal: `Qualify common fields in enriched diagnostic, query, support, verification and validation records.`
+  Acceptance: `Follow the exact selected paths, including repeated section projections, and dedicated owner contracts. Preserve optional-tool status, report versus manifest entrypoints, registry key-family labels, MCP adapter routes, common-field absence and extension boundaries. Record complete common-field semantics and exact deeper delegations, source-bound values and POD/book gaps; exercise coherent adverse controls and commit.`
+  Verification: `pending section-shell qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4`
+  Status: `pending`
+  Goal: `Qualify common fields in embedding facade, result, snapshot, extension and debug contracts.`
+  Acceptance: `Follow the selected embedding paths and dedicated owners, preserving singular entrypoint, absent report_source/entrypoints, manifest strings, in-process arrays and extension-specific labels. Distinguish raw presence shells, JSON fragments and serializable snapshots; explain family_map versus presence-key maps without flattening their meanings. Bind exact common fields, semantic sources, POD/book coverage and deeper owners; exercise adverse controls and commit.`
+  Verification: `pending enriched-record qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.5`
+  Status: `pending`
+  Goal: `Qualify specialized VIAL shared fields and retain exact deeper typed-model delegation.`
+  Acceptance: `Join every selected specialized VIAL path and repeated projection to its owner, status, schema/version and actual entrypoint/implementation_entrypoints/guidance shapes. Preserve private/public and execution/emission/inspection distinctions without running a backend or inspecting submodules. Map precise common-field meaning and documentation gaps, retain .3.4 typed-model and .3.2.4 capability delegation, exercise wrong-owner/availability/omission controls and commit.`
+  Verification: `pending embedding-record qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.6`
+  Status: `pending`
+  Goal: `Close the joined shared-record common-field census without losing a candidate or gap.`
+  Acceptance: `Join all selected candidates and prior root/producer exclusions to qualified common fields or exact specialized delegation. Prove unique complete membership, preserve absent/nonconforming records, owner-specific meaning and every deeper documentation obligation. Reject dropped/duplicate/wrong-owner/meaning/stale-document cohorts and commit before the parent common-shell closure.`
+  Verification: `pending all shared-record cohorts`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.3`
@@ -1626,3 +1669,14 @@ The selection packet names re-derivation, falsification and durability, and stat
 - Knowledge Map retains before/after complete card bytes and an exact reverse-edit join. Only listed redundant wording changes; all original questions, metadata, dated observations, test/source identities and limits preserve. New question routes to the book guide. Two proposed byte-growing edits refused before writing; final card shrinks without allowance/ceiling growth.
 - The census deliberately leaves deeper section and heterogeneous common-record meanings for .1.2 and the existing metadata/report/VIAL cohorts. Undefined marker semantics are a documented limitation with an exact .6.4 repair owner, not an invented guarantee. Complete MCP operational coverage, legacy reference/protocol gaps, historical source causality, full CI/push and whole-reference visual QA remain open.
 - Session health: decision0116 authorizes an engineer-selected clean context refresh. The next cohort spans differing owners/status/entrypoint shapes and needs fresh focused review; finish this verified slice, consume all jobs, clear the brief and stop only after the clean commit. Resume .6.1.2.3.2.1.2 by refining shared-record cohorts from the retained selection, not by restarting old captures.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'entrypoints' -1 -- perl/FSM/Support/EmbeddingContract.pm` identifies 51be98306's bounded embedding owner. The complete retained native records include differing statuses, singular entrypoint and implementation_entrypoints forms, label-specific strings/arrays and absent fields. The incoming shared-record leaf spans separate contract families and requires exact cohorts before a safe semantic signoff.
+- [x] **ADDRESSED (verified)** — `select_common_records.py --check` independently expands native candidate membership and joins every original path/owner/status/entrypoint label to one cohort or the prior root/producer census. The retained JSON preserves actual field names and entrypoint values/absence. Exact live children now own section shells, enriched query/report records, embedding variants, specialized VIAL and joined closure; no candidate is silently flattened or dropped. Policy sources still match today's retained complete review.
+- [x] **NO REGRESSION** — Focused task integrity and deterministic selector replay pass; knowledge-map: OK and staged/normal doctrine hooks gate the checkpoint. Runtime code, source epochs, manual behavior and existing publication/HIAL gates remain unchanged. No user-facing behavior changes require a ceremonial mdBook edit.
+
+Re-derivation, independent native per-path falsification and tracked durability are named in common-record-cohorts.json. This is an exact structural selection with semantic work expressly pending. The selector reads the saved capture only. Startup recovered a clean Git tree, active R13 documentation ownership, relevant public contracts/tests/book and unchanged adopted policy sources; no unresolved task-selection decision is required. Resume the selected section-shell census after committing this checkpoint.
+
+The first staged checkpoint gate rejects task_evidence total-line/byte allowance exhaustion. Exact relevant native diagnostic excerpts retain in common-record-selection-refusal.json (not a claimed complete stream). Apply the canonical warning-debt actual-plus-own-ratchet-step procedure to those totals only; preserve baseline, targets, ceilings, owner and all recorded evidence.

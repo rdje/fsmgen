@@ -1,0 +1,12 @@
+{
+  "command": "scripts/check_doctrines.sh",
+  "diagnostics": [
+    "live-doc-size: surface task_evidence transition debt exceeded its owned allowance: total lines is 121592 (> baseline 110919 + growth 10622)",
+    "live-doc-size: surface task_evidence transition debt exceeded its owned allowance: total bytes is 13786915 (> baseline 11239220 + growth 2540784)"
+  ],
+  "exit_status": 1,
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1",
+  "remedy": "Apply the canonical warning-debt actual-plus-own-ratchet-step declaration to only exhausted totals; no baseline, ceiling, health-target or debt-owner change.",
+  "retention": "Exact relevant diagnostic excerpts from the first native staged gate; not a complete stream.",
+  "schema": "fsmgen.gate_refusal_excerpt.v1"
+}

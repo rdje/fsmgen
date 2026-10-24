@@ -1,0 +1,2001 @@
+{
+  "capture": "docs/audits/mcp-api-reference-20261023/model-roots-qualified.json.gz",
+  "capture_head": "684ca68bb25bde673f6570065b3e5ab52e9e2edb",
+  "capture_sha256": "e76f7bf24cd5dde4b6ad6a9ed2a46924ce5d10db2f70644a55c90862588d8a33",
+  "cohorts": {
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.1": [
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "backend_validation_presence_keys",
+          "contract_source",
+          "diagnostics_presence_keys",
+          "documentation_presence_keys",
+          "embedding_presence_keys",
+          "entrypoints",
+          "full_manifest_json_safe",
+          "guidance",
+          "language_surface_presence_keys",
+          "nested_section_contracts_advertised",
+          "presence_key_family_map",
+          "producer_presence_keys",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "semantic_exports_presence_keys",
+          "semantic_introspection_presence_keys",
+          "status",
+          "support_accounting_presence_keys",
+          "top_level_contract_source_map",
+          "top_level_section_presence_key_map",
+          "verification_outputs_presence_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::CapabilityManifestContract",
+        "pointer": "/manifest_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{producer}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "boolean_keys",
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "identity_contract",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "scalar_string_keys",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::ProducerContract",
+        "pointer": "/producer/section_contract",
+        "status": "bounded_public"
+      }
+    ],
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2": [
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{backend_validation}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "full_backend_validation_section_stable",
+          "guidance",
+          "nested_contract_keys",
+          "nested_contract_source_map",
+          "nested_presence_key_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status",
+          "systemverilog_external_contract_advertised"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::BackendValidationContract",
+        "pointer": "/backend_validation/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{diagnostics}",
+              "FSM::Support::DiagnosticsSection::build_diagnostics_section()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "check_json_contract_advertised",
+          "contract_source",
+          "entrypoints",
+          "full_diagnostics_section_stable",
+          "guidance",
+          "list_keys",
+          "nested_contract_keys",
+          "nested_contract_source_map",
+          "nested_presence_key_map",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "scalar_string_keys",
+          "schema_version",
+          "stable_code_entry_presence_keys",
+          "stable_code_family_values",
+          "stable_code_registry_contract_advertised",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::DiagnosticsContract",
+        "pointer": "/diagnostics/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{documentation}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "path_contract",
+          "path_list_contract_map",
+          "path_list_keys",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::DocumentationContract",
+        "pointer": "/documentation/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{embedding}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "full_embedding_section_stable",
+          "guidance",
+          "nested_contract_keys",
+          "nested_contract_source_map",
+          "nested_contracts_advertised",
+          "nested_presence_key_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::EmbeddingContract",
+        "pointer": "/embedding/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{language_surface}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "assignments_presence_keys",
+          "composition_presence_keys",
+          "contract_source",
+          "declarations_presence_keys",
+          "default_mode_compatibility_presence_keys",
+          "entrypoints",
+          "expressions_presence_keys",
+          "file_surface_entry_presence_keys",
+          "file_surfaces_presence_keys",
+          "full_language_surface_stable",
+          "guidance",
+          "hial_vial_bridge_presence_keys",
+          "nested_presence_key_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status",
+          "strict_mode_presence_keys",
+          "system_contracts_presence_keys",
+          "vial_execution_presence_keys",
+          "vial_native_uvm_emission_presence_keys",
+          "vial_tooling_presence_keys",
+          "vial_vhdl_emission_presence_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::LanguageSurfaceContract",
+        "pointer": "/language_surface/surface_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_exports}"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "full_semantic_exports_section_stable",
+          "guidance",
+          "nested_contract_keys",
+          "nested_contract_source_map",
+          "nested_presence_key_map",
+          "normalized_semantic_json_contract_advertised",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SemanticExportsContract",
+        "pointer": "/semantic_exports/section_contract",
+        "status": "bounded_public"
+      }
+    ],
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3": [
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --verify-hdl path/to/file.fsm",
+            "cli_aliases": [
+              "./bin/fsmgen --validate-hdl path/to/file.fsm"
+            ],
+            "in_process": [
+              "FSM::Support::HDLExternalValidation::missing_systemverilog_validation_tools()",
+              "FSM::Support::HDLExternalValidation::validate_systemverilog_file(...)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "abc_mapping_default_enabled",
+          "abc_mapping_invocation",
+          "abc_mapping_opt_in_supported",
+          "abc_mapping_required",
+          "abc_mapping_status",
+          "abc_mapping_success_step_names",
+          "abc_mapping_yosys_stage",
+          "abc_tool_candidates",
+          "alias",
+          "cli_failures_exit_nonzero",
+          "command_shape",
+          "contract_source",
+          "emits_hdl",
+          "entrypoints",
+          "failure_mode_family_map",
+          "failure_mode_names",
+          "failure_stream_excerpt_strategy",
+          "failure_stream_retained_bytes",
+          "failure_text_prefix_map",
+          "guidance",
+          "in_process_failures_throw",
+          "optional_tools",
+          "perl_script_interpreter_handoff",
+          "process_containment",
+          "process_group_cleanup_required",
+          "regression_smoke",
+          "report_source",
+          "required_tools",
+          "retry_on_failure",
+          "schema_version",
+          "separate_stdout_stderr",
+          "shell_free_argv",
+          "status",
+          "step_capture_limit_bytes",
+          "step_timeout_seconds",
+          "success_presence_key_family_map",
+          "success_step_names",
+          "success_step_presence_keys",
+          "success_top_level_presence_keys",
+          "target_languages",
+          "tools",
+          "verilator_stage",
+          "vhdl_generation_scaffold_active",
+          "vhdl_validation_deferred_until_ghdl_validation_lane",
+          "vhdl_validation_deferred_until_vhdl_backend",
+          "working_directory",
+          "yosys_abc_enabled",
+          "yosys_log_mode",
+          "yosys_purpose",
+          "yosys_stage"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::HDLExternalValidationContract",
+        "pointer": "/backend_validation/systemverilog_external",
+        "status": "optional_when_tools_installed"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --strict --check --json path/to/file.fsm",
+            "cli_aliases": [
+              "./bin/fsmgen --strict --check-json path/to/file.fsm"
+            ],
+            "in_process": [
+              "FSM::Support::CheckDiagnostics::build_check_success_report(...)",
+              "FSM::Support::CheckDiagnostics::build_check_failure_report(...)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "alias",
+          "classifier_match_policy",
+          "command_contract_source",
+          "command_presence_keys",
+          "command_shape",
+          "contract_source",
+          "diagnostic_summary_contract_source",
+          "emits_failure_diagnostic_support_accounting_object",
+          "emits_hdl",
+          "emits_stable_codes",
+          "emits_success_support_accounting_object",
+          "emits_support_accounting_object",
+          "entrypoints",
+          "expected_failure_corpus_covered",
+          "failure_diagnostic_contract_source",
+          "failure_diagnostic_optional_artifact_keys",
+          "failure_diagnostic_presence_keys",
+          "failure_diagnostic_support_accounting_presence_keys",
+          "full_diagnostic_schema_stable",
+          "full_report_json_safe",
+          "generated_output_contract_source",
+          "generated_output_presence_keys",
+          "guidance",
+          "matched_failure_diagnostic_presence_keys",
+          "matched_failure_diagnostic_support_accounting_presence_keys",
+          "matched_success_support_accounting_presence_keys",
+          "nested_contract_source_map",
+          "nested_presence_key_map",
+          "presence_key_family_map",
+          "producer_contract_source",
+          "producer_presence_keys",
+          "public_top_level_presence_keys",
+          "report_source",
+          "result_contract_source",
+          "schema_version",
+          "source_contract_source",
+          "source_optional_fields",
+          "source_presence_keys",
+          "status",
+          "strict_supported_corpus_covered",
+          "success_match_policy",
+          "success_only_top_level_keys",
+          "success_result_presence_keys",
+          "success_support_accounting_presence_keys",
+          "support_accounting_contract_source",
+          "supported_smoke_corpus_covered",
+          "unclassified_failures_use_null_code"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::CheckDiagnosticsContract",
+        "pointer": "/diagnostics/check_json",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{diagnostics}",
+              "FSM::Support::DiagnosticCodes::diagnostic_code_registry()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "bounded_family_values",
+          "bounded_severity_values",
+          "bounded_stability_values",
+          "bounded_value_family_map",
+          "code_shape",
+          "contract_source",
+          "entry_presence_keys",
+          "entrypoints",
+          "guidance",
+          "key_family_map",
+          "public_sibling_keys",
+          "registry_returns_defensive_copies",
+          "report_source",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::DiagnosticCodeRegistryContract",
+        "pointer": "/diagnostics/stable_code_registry",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm",
+            "cli_aliases": [
+              "./bin/fsmgen --strict --semantic-json path/to/file.fsm",
+              "./bin/fsmgen --strict --emit-normalized-json path/to/file.fsm",
+              "./bin/fsmgen --strict --normalized-json path/to/file.fsm"
+            ],
+            "in_process": [
+              "FSM::Support::NormalizedSemanticReport::build_normalized_semantic_success_report(...)",
+              "FSM::Support::NormalizedSemanticReport::build_normalized_semantic_failure_report(...)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "command_contract_source",
+          "command_presence_keys",
+          "composition_child_entry_keys",
+          "composition_child_parameter_override_entry_keys",
+          "composition_child_parameter_override_raw_value_extension_keys",
+          "composition_child_parameter_override_value_metadata_extension_keys",
+          "composition_contract_source",
+          "composition_generated_child_entry_keys",
+          "composition_generated_child_parameter_override_entry_keys",
+          "composition_generated_child_parameter_override_raw_value_extension_keys",
+          "composition_generated_child_parameter_override_value_metadata_extension_keys",
+          "composition_presence_keys",
+          "composition_shared_datapath_aggregate_enable_contributor_entry_keys",
+          "composition_shared_datapath_aggregate_enable_family_entry_keys",
+          "composition_shared_datapath_assertion_keys",
+          "composition_shared_datapath_bound_connection_expr_keys",
+          "composition_shared_datapath_candidate_contributor_declared_type_extension_keys",
+          "composition_shared_datapath_candidate_contributor_drive_intent_entry_keys",
+          "composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys",
+          "composition_shared_datapath_candidate_contributor_entry_keys",
+          "composition_shared_datapath_candidate_declared_type_extension_keys",
+          "composition_shared_datapath_candidate_entry_keys",
+          "composition_standalone_dt_child_entry_keys",
+          "composition_standalone_dt_enable_family_entry_keys",
+          "composition_standalone_dt_module_enable_family_keys",
+          "composition_standalone_dt_multi_drive_assertion_keys",
+          "composition_standalone_dt_multi_drive_target_entry_keys",
+          "contract_source",
+          "diagnostic_summary_contract_source",
+          "emits_hdl",
+          "emits_support_accounting_object",
+          "entrypoints",
+          "expected_failure_corpus_covered",
+          "explicit_system_contract_source",
+          "failure_diagnostic_contract_source",
+          "failure_diagnostic_optional_artifact_keys",
+          "failure_diagnostic_presence_keys",
+          "failure_diagnostic_support_accounting_presence_keys",
+          "failure_diagnostics_reuse_stable_codes",
+          "failure_omits_semantic_payload",
+          "forward_ir_contract_source",
+          "forward_ir_intent_hir_contract_source",
+          "forward_ir_lowered_rtl_ir_contract_source",
+          "forward_ir_nested_contract_source_map",
+          "forward_ir_nested_presence_key_map",
+          "forward_ir_structural_rtl_ir_contract_source",
+          "full_export_stable",
+          "full_report_json_safe",
+          "generated_output_contract_source",
+          "generated_output_presence_keys",
+          "generation_result_snapshot_contract_source",
+          "guidance",
+          "matched_failure_diagnostic_presence_keys",
+          "matched_failure_diagnostic_support_accounting_presence_keys",
+          "matched_failure_support_accounting_presence_keys",
+          "matched_success_support_accounting_presence_keys",
+          "module_contract_source",
+          "nested_contract_source_map",
+          "nested_presence_key_map",
+          "presence_key_family_map",
+          "producer_contract_source",
+          "producer_extra_presence_keys",
+          "producer_presence_keys",
+          "public_layers",
+          "public_top_level_presence_keys",
+          "report_source",
+          "sanitizes_private_perl_objects",
+          "schema_version",
+          "semantic_contract_source",
+          "semantic_nested_presence_key_map",
+          "semantic_presence_key_family_map",
+          "signal_analysis_contract_source",
+          "source_contract_source",
+          "source_optional_fields",
+          "source_presence_keys",
+          "status",
+          "strict_supported_corpus_covered",
+          "success_explicit_system_contract_presence_keys",
+          "success_forward_ir_intent_hir_composition_child_entry_keys",
+          "success_forward_ir_intent_hir_composition_child_parameter_override_entry_keys",
+          "success_forward_ir_intent_hir_composition_child_parameter_override_raw_value_extension_keys",
+          "success_forward_ir_intent_hir_composition_child_parameter_override_value_metadata_extension_keys",
+          "success_forward_ir_intent_hir_composition_generated_child_entry_keys",
+          "success_forward_ir_intent_hir_composition_generated_child_parameter_override_entry_keys",
+          "success_forward_ir_intent_hir_composition_generated_child_parameter_override_raw_value_extension_keys",
+          "success_forward_ir_intent_hir_composition_generated_child_parameter_override_value_metadata_extension_keys",
+          "success_forward_ir_intent_hir_composition_standalone_dt_child_entry_keys",
+          "success_forward_ir_intent_hir_composition_standalone_dt_enable_family_entry_keys",
+          "success_forward_ir_intent_hir_composition_standalone_dt_module_enable_family_keys",
+          "success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_assertion_keys",
+          "success_forward_ir_intent_hir_composition_standalone_dt_multi_drive_target_entry_keys",
+          "success_forward_ir_intent_hir_optional_composition_keys",
+          "success_forward_ir_intent_hir_presence_keys",
+          "success_forward_ir_intent_hir_symbol_contract_constant_list_value_extension_keys",
+          "success_forward_ir_intent_hir_symbol_contract_constant_scalar_value_extension_keys",
+          "success_forward_ir_intent_hir_symbol_contract_constant_value_entry_keys",
+          "success_forward_ir_intent_hir_symbol_contract_enum_entry_value_kinds",
+          "success_forward_ir_intent_hir_symbol_contract_enum_member_value_kinds",
+          "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_kinds",
+          "success_forward_ir_intent_hir_symbol_contract_package_import_entry_value_meaning",
+          "success_forward_ir_intent_hir_symbol_contract_type_aggregate_value_kinds",
+          "success_forward_ir_intent_hir_symbol_contract_type_entry_keys",
+          "success_forward_ir_intent_hir_symbol_contract_type_list_extension_keys",
+          "success_forward_ir_intent_hir_symbol_contract_type_record_extension_keys",
+          "success_forward_ir_intent_hir_symbol_contract_type_scalar_value_kinds",
+          "success_forward_ir_intent_hir_symbol_contract_type_state_model_extension_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_contributor_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_aggregate_enable_family_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_bound_connection_expr_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_declared_type_extension_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_drive_intent_rhs_enable_family_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_contributor_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_declared_type_extension_keys",
+          "success_forward_ir_lowered_rtl_ir_composition_shared_datapath_candidate_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_optional_composition_keys",
+          "success_forward_ir_lowered_rtl_ir_output_drive_family_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_presence_keys",
+          "success_forward_ir_lowered_rtl_ir_selector_conflict_multi_value_assertion_keys",
+          "success_forward_ir_lowered_rtl_ir_selector_conflict_rhs_enable_family_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_selector_conflict_same_value_assertion_keys",
+          "success_forward_ir_lowered_rtl_ir_selector_conflict_target_entry_keys",
+          "success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_assertion_keys",
+          "success_forward_ir_lowered_rtl_ir_standalone_dt_multi_drive_target_entry_keys",
+          "success_forward_ir_presence_keys",
+          "success_forward_ir_structural_rtl_ir_assignment_record_entry_keys",
+          "success_forward_ir_structural_rtl_ir_assignment_record_lhs_entry_keys",
+          "success_forward_ir_structural_rtl_ir_assignment_record_provenance_entry_keys",
+          "success_forward_ir_structural_rtl_ir_assignment_record_rhs_entry_keys",
+          "success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_kinds",
+          "success_forward_ir_structural_rtl_ir_auxiliary_assignment_entry_value_meaning",
+          "success_forward_ir_structural_rtl_ir_declared_link_entry_keys",
+          "success_forward_ir_structural_rtl_ir_instance_entry_keys",
+          "success_forward_ir_structural_rtl_ir_instance_interface_port_entry_keys",
+          "success_forward_ir_structural_rtl_ir_instance_parameter_override_entry_keys",
+          "success_forward_ir_structural_rtl_ir_instance_parameter_override_raw_value_extension_keys",
+          "success_forward_ir_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys",
+          "success_forward_ir_structural_rtl_ir_instance_port_binding_entry_keys",
+          "success_forward_ir_structural_rtl_ir_instance_port_binding_typed_extension_keys",
+          "success_forward_ir_structural_rtl_ir_net_entry_keys",
+          "success_forward_ir_structural_rtl_ir_net_source_entry_keys",
+          "success_forward_ir_structural_rtl_ir_net_target_entry_keys",
+          "success_forward_ir_structural_rtl_ir_port_composition_extension_keys",
+          "success_forward_ir_structural_rtl_ir_port_entry_keys",
+          "success_forward_ir_structural_rtl_ir_port_source_entry_keys",
+          "success_forward_ir_structural_rtl_ir_port_source_extension_keys",
+          "success_forward_ir_structural_rtl_ir_port_target_entry_keys",
+          "success_forward_ir_structural_rtl_ir_port_target_extension_keys",
+          "success_forward_ir_structural_rtl_ir_presence_keys",
+          "success_forward_ir_structural_rtl_ir_resolved_link_entry_keys",
+          "success_match_policy",
+          "success_module_optional_metric_keys",
+          "success_module_presence_keys",
+          "success_only_top_level_keys",
+          "success_semantic_optional_child_presence_keys",
+          "success_semantic_presence_keys",
+          "success_signal_analysis_entry_presence_keys",
+          "success_signal_analysis_presence_keys",
+          "success_symbol_contract_presence_keys",
+          "success_system_contract_presence_keys",
+          "support_accounting_contract_source",
+          "support_accounting_presence_keys",
+          "supported_smoke_corpus_covered",
+          "symbol_contract_constant_list_value_extension_keys",
+          "symbol_contract_constant_scalar_value_extension_keys",
+          "symbol_contract_constant_value_entry_keys",
+          "symbol_contract_enum_entry_value_kinds",
+          "symbol_contract_enum_member_value_kinds",
+          "symbol_contract_package_import_entry_value_kinds",
+          "symbol_contract_package_import_entry_value_meaning",
+          "symbol_contract_source",
+          "symbol_contract_type_aggregate_value_kinds",
+          "symbol_contract_type_entry_keys",
+          "symbol_contract_type_list_extension_keys",
+          "symbol_contract_type_record_extension_keys",
+          "symbol_contract_type_scalar_value_kinds",
+          "symbol_contract_type_state_model_extension_keys",
+          "system_contract_source"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::NormalizedSemanticReportContract",
+        "pointer": "/semantic_exports/normalized_semantic_json",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}",
+              "FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()",
+              "FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()"
+            ],
+            "mcp_adapter": [
+              "perl bin/fsmgen-mcp --workspace-root DIR",
+              "perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR",
+              "FSM::Support::SemanticIntrospectionMCPAdapter->new(workspace_root => DIR)->run_stdio()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process",
+          "mcp_adapter"
+        ],
+        "field_names": [
+          "contract_source",
+          "contract_surface_map",
+          "entrypoints",
+          "mcp_adapter_entrypoints",
+          "mcp_adapter_implemented",
+          "mcp_resource_uri_templates",
+          "mcp_resources",
+          "mcp_tool_names",
+          "mcp_tools",
+          "provenance_support_policy",
+          "query_domain_names",
+          "query_domains",
+          "query_families",
+          "query_family_names",
+          "raw_private_surfaces_excluded",
+          "read_only_default",
+          "report_source",
+          "safety_policy",
+          "schema_version",
+          "section_contract",
+          "source_query_kinds",
+          "status",
+          "versioning_policy",
+          "write_generation_tools_enabled"
+        ],
+        "guidance_present": false,
+        "owner": "FSM::Support::SemanticIntrospectionContract",
+        "pointer": "/semantic_introspection",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}",
+              "FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()",
+              "FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()"
+            ],
+            "mcp_adapter": [
+              "perl bin/fsmgen-mcp --workspace-root DIR",
+              "perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR",
+              "FSM::Support::SemanticIntrospectionMCPAdapter->new(workspace_root => DIR)->run_stdio()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process",
+          "mcp_adapter"
+        ],
+        "field_names": [
+          "contract_source",
+          "contract_surface_map",
+          "entrypoints",
+          "guidance",
+          "mcp_adapter_entrypoints",
+          "mcp_adapter_implemented",
+          "mcp_resource_uri_templates",
+          "mcp_tool_names",
+          "presence_key_family_map",
+          "provenance_support_policy",
+          "public_top_level_presence_keys",
+          "query_domain_names",
+          "query_family_names",
+          "raw_private_surfaces_excluded",
+          "read_only_default",
+          "report_source",
+          "safety_policy",
+          "schema_version",
+          "source_query_kinds",
+          "status",
+          "versioning_policy",
+          "write_generation_tools_enabled"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SemanticIntrospectionContract",
+        "pointer": "/semantic_introspection/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{support_accounting}",
+              "FSM::Support::SupportAccountingSection::build_support_accounting_section()",
+              "FSM::Support::RegressionCorpus::regression_corpus_entries()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "bucket_presence_keys",
+          "catalog_entries",
+          "catalog_entry_optional_keys",
+          "catalog_entry_required_keys",
+          "classifications",
+          "contract_source",
+          "coverage_buckets",
+          "derived_from_regression_corpus",
+          "entry_count",
+          "entrypoints",
+          "expected_failure_ids",
+          "families",
+          "guidance",
+          "id_list_presence_keys",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "sanitized_catalog_entries",
+          "schema_version",
+          "section_contract",
+          "source",
+          "source_kinds",
+          "status",
+          "strict_supported_ids",
+          "supported_smoke_ids"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SupportAccountingContract",
+        "pointer": "/support_accounting",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "cli_aliases": [
+              "./bin/fsmgen --emit-capability-manifest"
+            ],
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{support_accounting}",
+              "FSM::Support::SupportAccountingSection::build_support_accounting_section()",
+              "FSM::Support::RegressionCorpus::regression_corpus_entries()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "cli_aliases",
+          "in_process"
+        ],
+        "field_names": [
+          "bucket_presence_keys",
+          "catalog_entry_optional_keys",
+          "catalog_entry_required_keys",
+          "contract_source",
+          "derived_from_regression_corpus",
+          "entrypoints",
+          "guidance",
+          "id_list_presence_keys",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "sanitized_catalog_entries",
+          "schema_version",
+          "status"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SupportAccountingContract",
+        "pointer": "/support_accounting/section_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{verification_outputs}",
+              "FSM::Support::VerificationOutputsSection::build_verification_outputs_section()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "in_process"
+        ],
+        "field_names": [
+          "artifact_entry_keys",
+          "artifact_manifest",
+          "artifact_manifest_keys",
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_when_embedded_in_public_manifest",
+          "observation_entry_keys",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "section_contract",
+          "signal_entry_keys",
+          "source_keys",
+          "status",
+          "target_entry_keys",
+          "targets",
+          "validation",
+          "validation_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VerificationOutputsContract",
+        "pointer": "/verification_outputs",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": "./bin/fsmgen --capability-manifest",
+            "in_process": [
+              "FSM::Support::CapabilityManifest::build_capability_manifest()->{verification_outputs}",
+              "FSM::Support::VerificationOutputsSection::build_verification_outputs_section()"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "in_process"
+        ],
+        "field_names": [
+          "artifact_entry_keys",
+          "artifact_manifest_keys",
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_when_embedded_in_public_manifest",
+          "observation_entry_keys",
+          "presence_key_family_map",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "signal_entry_keys",
+          "source_keys",
+          "status",
+          "target_entry_keys",
+          "validation_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VerificationOutputsContract",
+        "pointer": "/verification_outputs/section_contract",
+        "status": "bounded_public"
+      }
+    ],
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4": [
+      {
+        "entrypoint_fields": {},
+        "entrypoint_labels": [],
+        "field_names": [
+          "collection_keys",
+          "contract_source",
+          "count_map_keys",
+          "example_map_keys",
+          "guidance",
+          "json_fragment_path",
+          "ordered_list_keys",
+          "presence_key_family_map",
+          "public_top_level_keys",
+          "raw_report_json_safe",
+          "raw_result_key",
+          "report_builder",
+          "sanitized_report_json_safe",
+          "sanitizes_private_perl_objects",
+          "schema_version",
+          "stable_nested_content",
+          "status",
+          "summary_keys",
+          "tested_by"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::CompositionReportContract",
+        "pointer": "/embedding/composition_report",
+        "status": "bounded_public_json_fragment"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Debug::capture_fsm_debug_state()",
+              "FSM::Debug::restore_fsm_debug_state($snapshot)",
+              "FSM::Debug::with_fsm_debug_state({ ... }, sub { ... })",
+              "FSM::Pipeline::HDLGenerator->new(debug_level => ...)",
+              "FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)"
+            ],
+            "manifest": "./bin/fsmgen --capability-manifest -> embedding.debug_runtime"
+          }
+        },
+        "entrypoint_labels": [
+          "in_process",
+          "manifest"
+        ],
+        "field_names": [
+          "contract_source",
+          "emoji_control_names",
+          "entrypoints",
+          "family_map",
+          "general_debug_calls_auto_scoped",
+          "guidance",
+          "implementation_owners",
+          "named_trace_verbosity_values",
+          "numeric_trace_level_range",
+          "pipeline_scopes_debug_state",
+          "process_global_singleton",
+          "public_top_level_presence_keys",
+          "restore_snapshot_argument_shape",
+          "schema_version",
+          "snapshot_contains_live_filehandle_when_bound",
+          "snapshot_helper_names",
+          "snapshot_json_safe",
+          "snapshot_state_keys",
+          "state_control_names",
+          "status",
+          "thread_safe",
+          "trace_output_control_names"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::DebugRuntimeContract",
+        "pointer": "/embedding/debug_runtime",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Pipeline::HDLGenerator->new(%args)",
+              "FSM::Pipeline::HDLGenerator->generate_hdl_from_file($path)"
+            ],
+            "manifest": "./bin/fsmgen --capability-manifest -> embedding.hdl_generator_facade"
+          }
+        },
+        "entrypoint_labels": [
+          "in_process",
+          "manifest"
+        ],
+        "field_names": [
+          "backend_generation_family",
+          "compatibility_constructor_option_names",
+          "constructor_argument_list_shape",
+          "constructor_duplicate_option_policy",
+          "constructor_option_family_map",
+          "constructor_option_shape_map",
+          "constructor_receiver_shape",
+          "constructor_unknown_option_policy",
+          "contract_source",
+          "core_constructor_option_names",
+          "debug_level_numeric_range",
+          "debug_runtime_contract_source",
+          "default_generation_mode",
+          "default_target_language",
+          "direct_extension_contract_source",
+          "direct_extension_option_names",
+          "entrypoints",
+          "generation_argument_list_shape",
+          "generation_argument_shape",
+          "generation_mode_constructor_option_public",
+          "generation_mode_names",
+          "generation_receiver_instance_shape",
+          "generation_receiver_shape",
+          "guidance",
+          "implementation_owners",
+          "method_names",
+          "object_injection_arg_policy",
+          "object_injection_args_public",
+          "public_constructor_option_names",
+          "public_top_level_presence_keys",
+          "result_contract_source",
+          "result_surface_json_safe_as_a_whole",
+          "schema_version",
+          "stateful_reuse_supported",
+          "status",
+          "structured_nonflattened_generation_enabled",
+          "structured_nonflattened_generation_status",
+          "target_language_names"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::HDLGeneratorFacadeContract",
+        "pointer": "/embedding/hdl_generator_facade",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoint": "FSM::Pipeline::HDLGenerator->new(...)->generate_hdl_from_file($path)"
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "composition_plan_contract_source",
+          "composition_plan_fallback_surface_map",
+          "composition_plan_raw_value_class",
+          "composition_plan_shell_only",
+          "composition_plan_summary_surfaces",
+          "composition_report_contract_source",
+          "composition_report_json_fragment_path",
+          "composition_report_raw_hash_json_safe",
+          "composition_report_shell_only",
+          "composition_root_top_level_keys",
+          "composition_spec_contract_source",
+          "composition_spec_fallback_surface_map",
+          "composition_spec_raw_value_class",
+          "composition_spec_shell_only",
+          "composition_spec_summary_surfaces",
+          "contract_source",
+          "direct_root_top_level_keys",
+          "entrypoint",
+          "fsm_module_contract_source",
+          "fsm_module_fallback_surface_map",
+          "fsm_module_raw_value_class_when_defined",
+          "fsm_module_shell_only",
+          "fsm_module_summary_surfaces",
+          "full_result_json_safe",
+          "guidance",
+          "intent_hir_contract_source",
+          "intent_hir_full_hash_stable",
+          "intent_hir_optional_composition_keys",
+          "intent_hir_presence_keys",
+          "json_safe_export_surface",
+          "live_or_unsanitized_keys",
+          "lowered_rtl_ir_contract_source",
+          "lowered_rtl_ir_full_hash_stable",
+          "lowered_rtl_ir_optional_composition_keys",
+          "lowered_rtl_ir_presence_keys",
+          "module_info_contract_source",
+          "module_info_full_hash_stable",
+          "module_info_identity_presence_keys",
+          "module_info_optional_composition_summary_keys",
+          "module_info_stable_subsurfaces",
+          "module_info_summary_presence_keys",
+          "module_info_summary_slices_advertised",
+          "nested_contract_source_map",
+          "nested_identity_slices_advertised",
+          "optional_composition_key_family_map",
+          "public_top_level_presence_keys",
+          "raw_ast_contract_source",
+          "raw_ast_fallback_surface_map",
+          "raw_ast_shell_only",
+          "raw_ast_summary_surfaces",
+          "raw_ast_value_shape",
+          "resolved_package_imports_contract_source",
+          "resolved_package_imports_fallback_surface_map",
+          "resolved_package_imports_raw_value_class",
+          "resolved_package_imports_shell_only",
+          "resolved_package_imports_summary_surface",
+          "schema_version",
+          "semantic_layer_presence_key_family_map",
+          "shell_only_fallback_surface_family_map",
+          "shell_only_fallback_surface_map",
+          "source_info_contract_source",
+          "source_info_full_hash_stable",
+          "source_info_identity_presence_keys",
+          "source_info_package_import_summary_copy_policy",
+          "source_info_stable_subsurfaces",
+          "source_info_summary_presence_keys",
+          "source_info_summary_slices_advertised",
+          "stable_nested_content",
+          "stable_subsurface_map",
+          "statistics_contract_source",
+          "statistics_full_hash_stable",
+          "statistics_optional_composition_keys",
+          "statistics_stable_subsurfaces",
+          "statistics_summary_presence_keys",
+          "statistics_summary_slices_advertised",
+          "status",
+          "structural_rtl_ir_contract_source",
+          "structural_rtl_ir_full_hash_stable",
+          "structural_rtl_ir_presence_keys",
+          "tested_by",
+          "top_level_semantic_layer_contracts_advertised"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::HDLGeneratorResultContract",
+        "pointer": "/embedding/hdl_generator_result",
+        "status": "bounded_top_level_presence"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli": [
+              "./bin/fsmgen path/to/file.isf",
+              "./bin/fsmgen --emit-schedule-json path/to/file.isf",
+              "./bin/fsmgen --outdir path/to/outdir path/to/file.isf"
+            ],
+            "in_process": [
+              "FSM::Adapter::ISF->new(%args)",
+              "FSM::Adapter::ISF->new(%args)->parse_file($path)",
+              "FSM::Adapter::ISF->new(%args)->parse_source($source_text, $source_label)",
+              "FSM::Scheduler::ISF->new(%args)",
+              "FSM::Scheduler::ISF->new(%args)->lower($actor)",
+              "FSM::Scheduler::ISF->new(%args)->report($actor)"
+            ],
+            "manifest": "./bin/fsmgen --capability-manifest -> embedding.isf_public_interface"
+          }
+        },
+        "entrypoint_labels": [
+          "cli",
+          "in_process",
+          "manifest"
+        ],
+        "field_names": [
+          "actor_shell_actor_name_shape",
+          "actor_shell_drive_shape",
+          "actor_shell_interface_shape",
+          "actor_shell_required_keys",
+          "actor_shell_rule_shape",
+          "actor_shell_timing_shape",
+          "actor_shell_transaction_shape",
+          "actor_shell_value_shape",
+          "backlog_resource_kind_values",
+          "cli_hdl_generation_success_shape",
+          "cli_option_names",
+          "cli_outdir_success_shape",
+          "cli_schedule_json_success_shape",
+          "cli_strict_hdl_generation_success_shape",
+          "constructor_argument_shape",
+          "constructor_option_names",
+          "constructor_receiver_shape",
+          "contract_source",
+          "dt_assignment_operator_family_map",
+          "enforced_resource_kind_values",
+          "entrypoints",
+          "evolves_with_isf_implementation",
+          "facade_failure_diagnostic_shape",
+          "guidance",
+          "implementation_owners",
+          "library_catalog_entry_keys",
+          "library_catalog_paths",
+          "live_contract_documentation",
+          "live_document_paths",
+          "lower_argument_shape",
+          "lower_result_file_map_shape",
+          "lower_result_file_name_shape",
+          "lower_result_file_text_shape",
+          "lower_result_presence_keys",
+          "lower_return_shape",
+          "lowering_ir_full_hash_stable",
+          "parse_file_argument_shape",
+          "parse_file_path_requirement",
+          "parse_file_return_shape",
+          "parse_source_argument_shape",
+          "parse_source_return_shape",
+          "parser_method_names",
+          "parser_method_receiver_shape",
+          "public_top_level_presence_keys",
+          "raw_actor_full_hash_stable",
+          "report_argument_shape",
+          "report_return_shape",
+          "resource_arbiter_values",
+          "resource_kind_meaning_map",
+          "resource_kind_status_map",
+          "resource_kind_values",
+          "schedule_report_actor_constant_keys",
+          "schedule_report_actor_network_association_schedule_keys",
+          "schedule_report_actor_network_data_movement_keys",
+          "schedule_report_actor_network_event_wait_keys",
+          "schedule_report_actor_network_generated_top_child_keys",
+          "schedule_report_actor_network_generated_top_keys",
+          "schedule_report_actor_network_generated_top_multi_child_keys",
+          "schedule_report_actor_network_group_keys",
+          "schedule_report_actor_network_group_schedule_keys",
+          "schedule_report_actor_network_instance_keys",
+          "schedule_report_actor_network_keys",
+          "schedule_report_actor_network_resolved_instance_keys",
+          "schedule_report_actor_network_transaction_trigger_keys",
+          "schedule_report_actor_param_keys",
+          "schedule_report_actor_phase_keys",
+          "schedule_report_actor_stage_keys",
+          "schedule_report_bank_access_keys",
+          "schedule_report_bank_access_kind_values",
+          "schedule_report_bank_access_policy_values",
+          "schedule_report_clock_domain_child_instance_keys",
+          "schedule_report_clock_domain_crossing_endpoint_keys",
+          "schedule_report_clock_domain_keys",
+          "schedule_report_clock_shape",
+          "schedule_report_compile_issue_keys",
+          "schedule_report_compile_issue_proof_status_values",
+          "schedule_report_compile_issue_severity_values",
+          "schedule_report_compile_issue_source_keys",
+          "schedule_report_compile_issues_success_shape",
+          "schedule_report_crossing_keys",
+          "schedule_report_dt_assignments_shape",
+          "schedule_report_dt_keys",
+          "schedule_report_dt_kind_values",
+          "schedule_report_dt_ordering",
+          "schedule_report_fanin_group_kind_values",
+          "schedule_report_fanin_group_optional_keys",
+          "schedule_report_fanin_group_required_keys",
+          "schedule_report_full_schema_stable",
+          "schedule_report_generated_composition_binding_keys",
+          "schedule_report_generated_composition_child_keys",
+          "schedule_report_generated_composition_child_parameter_keys",
+          "schedule_report_generated_composition_drive_handoff_keys",
+          "schedule_report_generated_composition_instance_keys",
+          "schedule_report_generated_composition_kind_values",
+          "schedule_report_generated_composition_link_keys",
+          "schedule_report_generated_composition_parent_keys",
+          "schedule_report_generated_composition_payload_keys",
+          "schedule_report_generated_composition_required_keys",
+          "schedule_report_interface_count_shape",
+          "schedule_report_interface_ports",
+          "schedule_report_library_use_binding_keys",
+          "schedule_report_library_use_keys",
+          "schedule_report_library_use_parameter_keys",
+          "schedule_report_multi_file_scope",
+          "schedule_report_presence_key_family_map",
+          "schedule_report_priority_resolution_keys",
+          "schedule_report_reductions",
+          "schedule_report_reset_keys",
+          "schedule_report_reset_kind_values",
+          "schedule_report_reset_polarity_values",
+          "schedule_report_reset_provenance",
+          "schedule_report_reset_shape",
+          "schedule_report_resource_arbitration_keys",
+          "schedule_report_scheduled_fsm_shape",
+          "schedule_report_source_shape",
+          "schedule_report_state_count_shape",
+          "schedule_report_storage_kind_values",
+          "schedule_report_storage_optional_keys",
+          "schedule_report_storage_required_keys",
+          "schedule_report_storage_role_values",
+          "schedule_report_storage_width_shape",
+          "schedule_report_temporal_contract_assertion_projection_values",
+          "schedule_report_temporal_contract_keys",
+          "schedule_report_temporal_contract_kind_values",
+          "schedule_report_temporal_contract_overlap_policy_values",
+          "schedule_report_temporal_contract_reset_policy_shape",
+          "schedule_report_top_level_keys",
+          "schedule_report_transaction_count_shape",
+          "schedule_report_transaction_keys",
+          "schedule_report_transaction_loop_keys",
+          "schedule_report_transaction_ordering",
+          "schedule_report_transaction_port_binding_actor_endpoint_kind_values",
+          "schedule_report_transaction_port_binding_authored_timing_mode_values",
+          "schedule_report_transaction_port_binding_keys",
+          "schedule_report_transaction_port_binding_site_kind_values",
+          "schedule_report_transaction_port_binding_timing_values",
+          "schedule_report_transaction_stage_keys",
+          "schedule_report_transaction_stage_kind_values",
+          "schedule_report_transaction_states_shape",
+          "schedule_report_transaction_wait_count_kind_values",
+          "schedule_report_transaction_wait_keys",
+          "schedule_report_verification_bridge_event_keys",
+          "schedule_report_verification_bridge_fact_keys",
+          "schedule_report_verification_bridge_field_keys",
+          "schedule_report_verification_bridge_keys",
+          "schedule_report_verification_bridge_probe_keys",
+          "schedule_report_verification_bridge_protocol_keys",
+          "schedule_report_verification_bridge_source_keys",
+          "schedule_report_verification_bridge_transaction_keys",
+          "schedule_report_verification_observation_keys",
+          "schedule_report_verification_observation_role_values",
+          "schedule_report_verification_observation_signal_keys",
+          "schedule_report_watchdog_shape",
+          "scheduled_fsm_dt_ordering",
+          "scheduled_fsm_text_is_review_artifact",
+          "scheduler_method_names",
+          "scheduler_method_receiver_shape",
+          "schema_version",
+          "shipped_library_definitions",
+          "status",
+          "tested_by"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::ISFPublicInterfaceContract",
+        "pointer": "/embedding/isf_public_interface",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Support::SerializableGenerationResultSnapshot::build_serializable_generation_result_snapshot(result => $result)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_as_whole",
+          "object_name",
+          "public_top_level_presence_keys",
+          "raw_result_object_exported",
+          "report_source",
+          "schema_version",
+          "status",
+          "summary_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SerializableGenerationResultSnapshot",
+        "pointer": "/embedding/serializable_generation_result_snapshot",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {},
+        "entrypoint_labels": [],
+        "field_names": [
+          "composition_plan_snapshot_contract",
+          "composition_report_json_fragment_path",
+          "composition_report_public_top_level_keys",
+          "contract_source",
+          "current_serializable_surfaces_json_safe",
+          "diagnostic_summary_contract",
+          "generation_result_snapshot_contract",
+          "guidance",
+          "json_safe_surface_keys",
+          "nested_contract_source_map",
+          "normalized_semantic_report_public_top_level_keys",
+          "public_top_level_presence_keys",
+          "purpose",
+          "raw_hdl_generator_branches_json_safe",
+          "raw_shell_replacement_keys",
+          "raw_shell_replacement_map",
+          "schema_version",
+          "status",
+          "surface_registry",
+          "surface_registry_entry_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SerializablePlanReportContract",
+        "pointer": "/embedding/serializable_plan_reports",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Support::SerializableCompositionPlanSnapshot::build_serializable_composition_plan_snapshot(composition_plan => $result->{composition_plan})"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "in_process"
+        ],
+        "field_names": [
+          "collection_keys",
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_as_whole",
+          "object_name",
+          "public_top_level_presence_keys",
+          "raw_plan_object_exported",
+          "report_source",
+          "schema_version",
+          "source_object_class_when_present",
+          "status",
+          "summary_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SerializableCompositionPlanSnapshot",
+        "pointer": "/embedding/serializable_plan_reports/composition_plan_snapshot_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Support::SerializableDiagnosticSummary::build_serializable_diagnostic_summary(report => $public_json_report)",
+              "FSM::Support::SerializableDiagnosticSummary::build_serializable_diagnostic_summary(diagnostics => $diagnostics)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_as_whole",
+          "object_name",
+          "public_top_level_presence_keys",
+          "report_source",
+          "schema_version",
+          "status",
+          "summary_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SerializableDiagnosticSummary",
+        "pointer": "/embedding/serializable_plan_reports/diagnostic_summary_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "in_process": [
+              "FSM::Support::SerializableGenerationResultSnapshot::build_serializable_generation_result_snapshot(result => $result)"
+            ]
+          }
+        },
+        "entrypoint_labels": [
+          "in_process"
+        ],
+        "field_names": [
+          "contract_source",
+          "entrypoints",
+          "guidance",
+          "json_safe_as_whole",
+          "object_name",
+          "public_top_level_presence_keys",
+          "raw_result_object_exported",
+          "report_source",
+          "schema_version",
+          "status",
+          "summary_keys"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::SerializableGenerationResultSnapshot",
+        "pointer": "/embedding/serializable_plan_reports/generation_result_snapshot_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "cli_config_files": "./bin/fsmgen --extension-config extensions.fsmext path/to/file.fsm",
+            "cli_modules": "./bin/fsmgen --extension-module Module::Name path/to/file.fsm",
+            "programmatic_config_files": "FSM::Pipeline::HDLGenerator->new(extension_config_files => [ \"extensions.fsmext\", ... ])",
+            "programmatic_modules": "FSM::Pipeline::HDLGenerator->new(extension_modules => [ \"Module::Name\", ... ])",
+            "programmatic_objects": "FSM::Pipeline::HDLGenerator->new(extensions => [ $object, ... ])"
+          }
+        },
+        "entrypoint_labels": [
+          "cli_config_files",
+          "cli_modules",
+          "programmatic_config_files",
+          "programmatic_modules",
+          "programmatic_objects"
+        ],
+        "field_names": [
+          "context_accessors",
+          "context_contract",
+          "contract_source",
+          "entrypoints",
+          "extension_object_contract",
+          "full_extension_api_frozen",
+          "guidance",
+          "hook_names",
+          "hook_set_closed_for_schema_version",
+          "hooks",
+          "implementation_owners",
+          "name_family_map",
+          "public_top_level_presence_keys",
+          "schema_version",
+          "stable_context_accessor_names",
+          "status",
+          "supported_source_kinds",
+          "tested_by"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::ExtensionContract",
+        "pointer": "/embedding/typed_extensions",
+        "status": "bounded_public"
+      }
+    ],
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.5": [
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "FSM::HIAL::VIALBridge::Builder->build_ial0({...})",
+            "FSM::HIAL::VIALBridge::Builder->build_ial1({...})",
+            "FSM::HIAL::VIALBridge::Builder->build_ial2_via_ial1({...})",
+            "FSM::HIAL::VIALBridge::Report->build($manifest)"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "canonical_review_routes",
+          "capabilities",
+          "contract_source",
+          "explicit_nonclaims",
+          "fixture",
+          "guidance",
+          "implementation_entrypoints",
+          "limits",
+          "manifest_schema",
+          "profile",
+          "public_embedding_api",
+          "schema_version",
+          "status",
+          "writes_files"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::HIALVIALBridgeContract",
+        "pointer": "/language_surface/hial_vial_bridge",
+        "status": "shipped_private_in_process"
+      },
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "FSM::VIAL::ExecutionBuilder->build({...})",
+            "FSM::VIAL::ExecutionReport->build($execution_ir)",
+            "FSM::VIAL::Backend::SVPortableVerilator->emit({...})",
+            "FSM::VIAL::Backend::TraceValidator->validate({...})",
+            "FSM::VIAL::Backend::Runner->run({...})",
+            "FSM::VIAL::Backend::ResultProducer->produce({...})",
+            "FSM::VIAL::Parity::AHBBaseOutput->compare({...})",
+            "FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "backend_limits",
+          "backend_profile",
+          "backend_schema",
+          "backend_stage_status",
+          "capabilities",
+          "contract_source",
+          "execution_schema",
+          "explicit_nonclaims",
+          "fixture",
+          "guidance",
+          "implementation_entrypoints",
+          "limits",
+          "plan_schema",
+          "profile",
+          "public_embedding_api",
+          "replay_schema",
+          "runtime_trace_schema",
+          "schema_version",
+          "selected_future_schemas",
+          "status",
+          "trace_projection_schema",
+          "writes_files"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VIALExecutionContract",
+        "pointer": "/language_surface/vial_execution",
+        "status": "shipped_public_verilator_execution_result_and_ahb_parity"
+      },
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "FSM::VIAL::Backend::SVUVMAccellera2020_3_1->emit({...})",
+            "FSM::VIAL::Backend::SVUVMStaticValidator->validate({...})",
+            "FSM::VIAL::Backend::SVUVMReviewClosure->build({...})",
+            "FSM::VIAL::ArtifactTransaction->publish({...})"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "backend_schema",
+          "backend_stage_status",
+          "capabilities",
+          "contract_source",
+          "execution_schema",
+          "experimental_probe",
+          "explicit_nonclaims",
+          "fixture",
+          "guidance",
+          "implementation_entrypoints",
+          "library_materialization",
+          "limits",
+          "mapping_matrix_schema",
+          "methodology_identity",
+          "profile",
+          "public_embedding_api",
+          "review_gallery",
+          "review_workflow_schema",
+          "schema_version",
+          "source_map_schema",
+          "static_validation_schema",
+          "status",
+          "writes_files"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VIALNativeUVMEmissionContract",
+        "pointer": "/language_surface/vial_native_uvm_emission",
+        "status": "shipped_private_selected_matrix_and_review_workflow"
+      },
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "fsmgen vial capabilities [--json]",
+            "fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial",
+            "fsmgen vial format --style normal|terse SOURCE.vial",
+            "fsmgen vial plan --dut HIAL_SOURCE [PLAN_OPTIONS] SOURCE.vial",
+            "fsmgen vial run --dut HIAL_SOURCE --backend sv_portable_verilator [RUN_OPTIONS] SOURCE.vial",
+            "FSM::VIAL::Tool::vial_tool_capabilities()",
+            "FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "architecture_scale_regression",
+          "capabilities",
+          "contract_source",
+          "diagnostics",
+          "explicit_nonclaims",
+          "guidance",
+          "implementation_entrypoints",
+          "limits",
+          "public_embedding_api",
+          "request_schema",
+          "result_schema",
+          "schema_version",
+          "semantic_projection_schema",
+          "source_styles",
+          "status",
+          "supported_actions",
+          "writes_files"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VIALToolingContract",
+        "pointer": "/language_surface/vial_tooling",
+        "status": "shipped_public_verilator_execution_result_and_ahb_parity"
+      },
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "./bin/ci-regression vial-gate [--no-book]",
+            "./bin/ci-regression vial-gate --dry-run [--no-book]",
+            "./bin/ci-regression [--no-book]",
+            "scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result",
+            "perl scripts/verify_vial_regression_promotion_evidence_transport.pl"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "cadence",
+          "capability",
+          "cleanup",
+          "contract_source",
+          "evidence",
+          "explicit_nonclaims",
+          "guidance",
+          "implementation_entrypoints",
+          "latest_result",
+          "performance_applicability",
+          "profiles",
+          "qualified_reference_environment",
+          "schema_version",
+          "schemas",
+          "status",
+          "supported_claim",
+          "topology"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VIALArchitectureScaleRegressionContract",
+        "pointer": "/language_surface/vial_tooling/architecture_scale_regression",
+        "status": "shipped_bounded_regression_gate"
+      },
+      {
+        "entrypoint_fields": {
+          "implementation_entrypoints": [
+            "FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})",
+            "FSM::VIAL::Backend::VHDLPortableStaticValidator->validate({...})",
+            "FSM::VIAL::Backend::VHDLPortableReviewClosure->build({...})",
+            "FSM::VIAL::Backend::VHDLPortableGHDLQualification->qualify({...})",
+            "FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({...})",
+            "FSM::VIAL::Backend::VHDLOSVVM2026_05->emit({...})",
+            "FSM::VIAL::Backend::VHDLOSVVMStaticValidator->validate({...})",
+            "FSM::VIAL::Backend::VHDLOSVVMGHDLQualification->qualify({...})",
+            "FSM::VIAL::ArtifactTransaction->publish({...})",
+            "perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check",
+            "perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check",
+            "perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check"
+          ]
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "backend_schema",
+          "backend_stage_status",
+          "capabilities",
+          "contract_source",
+          "execution_schema",
+          "explicit_nonclaims",
+          "fixture",
+          "guidance",
+          "implementation_entrypoints",
+          "library_materialization",
+          "limits",
+          "mapping_matrix_schema",
+          "methodology_identity",
+          "migration_proof_schema",
+          "profile",
+          "public_embedding_api",
+          "review_gallery",
+          "review_workflow_schema",
+          "schema_version",
+          "source_map_schema",
+          "standard_identity",
+          "static_validation_schema",
+          "status",
+          "tool_selection",
+          "writes_files"
+        ],
+        "guidance_present": true,
+        "owner": "FSM::Support::VIALVHDLEmissionContract",
+        "pointer": "/language_surface/vial_vhdl_emission",
+        "status": "shipped_private_portable_and_osvvm_qualified_profiles"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoint": "FSM::VIAL::Tool::check_vial_source_file($invocation)"
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "action",
+          "combined_bytes_include_root",
+          "contract_source",
+          "defaults",
+          "entrypoint",
+          "imported_file_count_excludes_root",
+          "imported_file_count_is_distinct",
+          "language_versions",
+          "limit_diagnostic",
+          "loading_limits",
+          "optional_invocation_keys",
+          "parser_import_edge_checks_retained",
+          "prints_output",
+          "required_invocation_keys",
+          "result_schemas",
+          "schema_version",
+          "source_identity",
+          "source_styles",
+          "status",
+          "writes_files"
+        ],
+        "guidance_present": false,
+        "owner": "FSM::Support::VIALToolingContract",
+        "pointer": "/semantic_introspection/contract_surface_map/vial_source_file_check/file_query_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "capabilities": "FSM::VIAL::Tool::vial_source_inspection_capabilities()",
+            "cli": "fsmgen vial inspect --json [--language-version 1|2] [--style auto|normal|terse] SOURCE.vial",
+            "filesystem": "FSM::VIAL::Tool::inspect_vial_source_file($invocation)",
+            "portable": "FSM::VIAL::Tool::inspect_vial_source($invocation)"
+          }
+        },
+        "entrypoint_labels": [
+          "capabilities",
+          "cli",
+          "filesystem",
+          "portable"
+        ],
+        "field_names": [
+          "contract_source",
+          "defaults",
+          "detail_schema",
+          "effects",
+          "entrypoints",
+          "error_behavior",
+          "intent_families",
+          "intent_node_schema",
+          "invocations",
+          "language_versions",
+          "loading_limits",
+          "result_schema",
+          "schema",
+          "schema_version",
+          "semantic_groups",
+          "source_styles",
+          "status"
+        ],
+        "guidance_present": false,
+        "owner": "FSM::Support::VIALToolingContract",
+        "pointer": "/semantic_introspection/contract_surface_map/vial_source_inspection/inspection_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoint": "FSM::VIAL::Tool::check_vial_source_file($invocation)"
+        },
+        "entrypoint_labels": [],
+        "field_names": [
+          "action",
+          "combined_bytes_include_root",
+          "contract_source",
+          "defaults",
+          "entrypoint",
+          "imported_file_count_excludes_root",
+          "imported_file_count_is_distinct",
+          "language_versions",
+          "limit_diagnostic",
+          "loading_limits",
+          "optional_invocation_keys",
+          "parser_import_edge_checks_retained",
+          "prints_output",
+          "required_invocation_keys",
+          "result_schemas",
+          "schema_version",
+          "source_identity",
+          "source_styles",
+          "status",
+          "writes_files"
+        ],
+        "guidance_present": false,
+        "owner": "FSM::Support::VIALToolingContract",
+        "pointer": "/semantic_introspection/section_contract/contract_surface_map/vial_source_file_check/file_query_contract",
+        "status": "bounded_public"
+      },
+      {
+        "entrypoint_fields": {
+          "entrypoints": {
+            "capabilities": "FSM::VIAL::Tool::vial_source_inspection_capabilities()",
+            "cli": "fsmgen vial inspect --json [--language-version 1|2] [--style auto|normal|terse] SOURCE.vial",
+            "filesystem": "FSM::VIAL::Tool::inspect_vial_source_file($invocation)",
+            "portable": "FSM::VIAL::Tool::inspect_vial_source($invocation)"
+          }
+        },
+        "entrypoint_labels": [
+          "capabilities",
+          "cli",
+          "filesystem",
+          "portable"
+        ],
+        "field_names": [
+          "contract_source",
+          "defaults",
+          "detail_schema",
+          "effects",
+          "entrypoints",
+          "error_behavior",
+          "intent_families",
+          "intent_node_schema",
+          "invocations",
+          "language_versions",
+          "loading_limits",
+          "result_schema",
+          "schema",
+          "schema_version",
+          "semantic_groups",
+          "source_styles",
+          "status"
+        ],
+        "guidance_present": false,
+        "owner": "FSM::Support::VIALToolingContract",
+        "pointer": "/semantic_introspection/section_contract/contract_surface_map/vial_source_inspection/inspection_contract",
+        "status": "bounded_public"
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Tracked original capture/selection, this deterministic selector, exact per-record cohort data, task and Git. No new runtime or source epoch.",
+    "falsify": "Independently traverse complete native objects using the explicit candidate predicate, then compare unique paths, per-path owner/status and actual entrypoint labels/values.",
+    "rederive": "Reproduce exact cohorts from the retained complete candidate list and native metadata capture."
+  },
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1",
+  "reverify": "python3 -B docs/audits/mcp-api-reference-20261023/select_common_records.py --check",
+  "schema": "fsmgen.common_record_cohorts.v1",
+  "scope": "Structural selection only. Each record occurs once, including prior root/producer exclusions. Common-field semantics remain the named successors; all remaining fields retain the parent metadata/report/VIAL owners.",
+  "selection": "docs/audits/mcp-api-reference-20261023/common-shell-selection.json",
+  "selection_sha256": "a5ca4f4bceb87ee452adc16023ed9146d34cc7c29c39eda632f263fba0cc3563"
+}
