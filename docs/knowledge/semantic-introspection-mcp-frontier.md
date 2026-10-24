@@ -82,6 +82,7 @@ answers:
   - what type is MCP examples documentation?
   - where are manifest producer fields defined?
   - what do manifest nested presence maps describe?
+  - what are enriched entrypoints?
 date: 2026-09-27
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
@@ -94,10 +95,9 @@ reverify: >-
 
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. History: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
 
-Guide: `docs/book/src/11-extensions-and-embedding.md`; snapshots: `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
-`SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest ownership.
-`SemanticIntrospectionMCPAdapter`: `bin/fsmgen-mcp`. Semantic API first.
-Book (2026-10-24): “Manifest shell and producer fields”; “Section-shell contract records”.
+Guide: `docs/book/src/11-extensions-and-embedding.md`; schema: `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
+`SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest; `SemanticIntrospectionMCPAdapter`/`bin/fsmgen-mcp`: adapter. Semantic API first.
+Book 2026-10-24: shell/producer, section shells, enriched routes.
 No private Perl AST/scheduler/lowering/generator hash API.
 Families/names/applicability: `./bin/fsmgen --capability-manifest`,
 `tools/list`. Catalog discovery never scans workspace; results retain relative

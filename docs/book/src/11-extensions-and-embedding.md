@@ -37,6 +37,12 @@ top-level sections:
 
 That grouped map is the intended discovery surface for embedders.
 
+The semantic-introspection presence family derives from its dedicated contract,
+including `source_query_kinds`. Its grouped section map, legacy
+`semantic_introspection_presence_keys`, and same-named grouped presence family
+therefore describe the same complete first-level section. Query applicability
+remains separate from a catalog entry's support outcome.
+
 It lets a tool start from one manifest object, then hand each public top-level section to
 its dedicated contract owner without reconstructing the owner map from scattered
 section payloads, hard-coding owner strings, or remembering that
@@ -175,6 +181,67 @@ This guide interprets the shell fields and their map subjects. The dedicated
 report, embedding, language and VIAL references own deeper payload meanings,
 argument contracts and execution limits. Presence, version and advertising flags
 alone do not establish complete operating-reference coverage.
+
+### Enriched contract identity and routes
+
+The following records combine contract metadata with report advertisements or
+section data. Read each record through its own `contract_source`; the common
+field names do not define a universal record schema. The table covers the
+selected identity and route fields. Presence families, report contents, query
+policies, catalog entries and verification artifacts retain their dedicated
+contracts and the detailed references below.
+
+| Manifest path (also read the named `section_contract` where shown) | Contract owner under `FSM::Support` | `report_source` under `FSM::Support` | Meaning of the advertised routes |
+| --- | --- | --- | --- |
+| `backend_validation.systemverilog_external` | `HDLExternalValidationContract` | `HDLExternalValidation` | CLI generation with external validation, or the listed in-process validation/tool-discovery functions. |
+| `diagnostics.check_json` | `CheckDiagnosticsContract` | `CheckDiagnostics` | Check-JSON success/failure reports. |
+| `diagnostics.stable_code_registry` | `DiagnosticCodeRegistryContract` | `DiagnosticCodes` | Manifest diagnostics discovery and the in-process stable-code registry. |
+| `semantic_exports.normalized_semantic_json` | `NormalizedSemanticReportContract` | `NormalizedSemanticReport` | Normalized semantic success/failure reports. |
+| `semantic_introspection` and its `section_contract` | `SemanticIntrospectionContract` | `CapabilityManifest` | Manifest/section discovery, source-query applicability discovery, and separately listed MCP adapter launch routes. |
+| `support_accounting` and its `section_contract` | `SupportAccountingContract` | `RegressionCorpus` | Manifest/section discovery and the in-process corpus-entry API. The section is a sanitized projection of corpus truth. |
+| `verification_outputs` and its `section_contract` | `VerificationOutputsContract` | `CapabilityManifest` | Manifest/section discovery for verification targets and artifact contracts. These entrypoints do not generate those artifacts. |
+
+`report_source` names the backing report/data authority advertised by this
+contract. It is not always the manifest builder: for example, support accounting
+names `FSM::Support::RegressionCorpus`, even though the manifest publishes its
+sanitized section through `SupportAccountingSection`. `contract_source` identifies
+the dedicated contract owner, rather than a command to import or execute.
+
+All records in this table publish numeric `schema_version: 1`. This identifies
+the selected contract/section schema, separately from tool/build identity, MCP
+protocol, VIAL language versions and report-specific version fields such as
+`check_schema_version`. All use `status: bounded_public` except external
+validation, which uses `optional_when_tools_installed`. That status describes an
+optional lane requiring Verilator and Yosys; reading the record neither checks
+their installation nor runs validation. A bounded contract does not promise
+support for arbitrary inputs or complete stability of every nested payload.
+
+`entrypoints.cli` is a command string. Where present, `cli_aliases` and
+`in_process` are arrays of command/API example strings. The check and normalized
+records advertise report-producing commands; the registry and section records
+advertise manifest discovery. The verification-output records have no
+`cli_aliases` field. An absent field is not an empty list or a JSON `null`.
+Use the emitted labels and values rather than filling in a universal template.
+
+In both semantic-introspection projections, `entrypoints.mcp_adapter` is an
+array equal to the sibling `mcp_adapter_entrypoints`. It lists persistent stdio,
+one-shot `--request-json`, and in-process `run_stdio()` launch examples. These
+strings are not MCP tool names. Discover callable tools through `tools/list`
+and follow their request schemas; an advertised Perl/CLI route does not add a
+tool, enable writes or grant external-tool execution through MCP.
+
+Where present, `guidance` is an array of explanatory strings describing scope,
+interpretation and deliberate widening. The top-level `semantic_introspection`
+record has no `guidance`; its `section_contract` does. Support-accounting and
+verification-output sections retain the guidance from their dedicated contracts.
+Preserve absent fields when retaining an observation. Objects use named lookup;
+these identity records specify no positional priority for route/guidance arrays.
+Retain emitted array order in evidence without treating it as a priority rule.
+
+Named bounded families remain the compatibility boundary. Extension requires
+deliberate documentation and regression-backed widening; identity, status and
+entrypoint metadata alone do not close deeper objects or establish complete
+MCP operating-reference coverage.
 
 ### Section-specific capability interpretation
 

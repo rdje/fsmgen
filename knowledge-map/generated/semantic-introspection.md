@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **80** uniquely owned question entries.
+> **1** facts · **81** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -56,6 +56,7 @@
 - q="is the immediate FSMGen MCP protocol-hardening pass exhausted?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="is the immediate FSMGen MCP semantic-introspection pass complete?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="should FSMGen be MCP-first?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what are enriched entrypoints?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what blocks strict multi-clock ISF qualification?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what can FSMGen apply from an RTL simulator MCP design?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

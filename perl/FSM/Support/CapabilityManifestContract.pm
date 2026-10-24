@@ -29,6 +29,7 @@ use FSM::Support::SemanticExportsContract qw(
 );
 use FSM::Support::SemanticIntrospectionContract qw(
     semantic_introspection_contract_source
+    semantic_introspection_public_top_level_keys
 );
 use FSM::Support::SupportAccountingContract qw(
     support_accounting_contract_source
@@ -234,33 +235,7 @@ sub capability_manifest_semantic_exports_keys {
 }
 
 sub capability_manifest_semantic_introspection_keys {
-    return [
-        qw(
-            schema_version
-            status
-            contract_source
-            report_source
-            entrypoints
-            mcp_adapter_entrypoints
-            contract_surface_map
-            query_domains
-            query_families
-            query_domain_names
-            query_family_names
-            mcp_resources
-            mcp_tools
-            mcp_resource_uri_templates
-            mcp_tool_names
-            versioning_policy
-            provenance_support_policy
-            safety_policy
-            raw_private_surfaces_excluded
-            read_only_default
-            mcp_adapter_implemented
-            write_generation_tools_enabled
-            section_contract
-        ),
-    ];
+    return semantic_introspection_public_top_level_keys();
 }
 
 sub capability_manifest_backend_validation_keys {

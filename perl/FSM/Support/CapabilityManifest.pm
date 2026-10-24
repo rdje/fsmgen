@@ -79,7 +79,8 @@ C<manifest_contract>, then its C<top_level_contract_source_map> and
 C<top_level_section_presence_key_map>. Map keys are section names; owner values
 are namespace strings and presence values are arrays of field-name strings.
 C<manifest_schema_version> and C<manifest_contract> are outside the section-map
-domain. C<language_surface> retains C<surface_contract>; other sections advertise
+domain. The semantic-introspection family derives from its dedicated public
+contract, including C<source_query_kinds>; grouped and legacy presence lists agree. C<language_surface> retains C<surface_contract>; other sections advertise
 C<section_contract>. Section payload meaning remains with each dedicated owner.
 
 C<schema_version>, C<status>, C<contract_source> and C<report_source> publish the
@@ -130,6 +131,38 @@ C<file_surface_entry_presence_keys> describes each C<file_surfaces.entries> item
 Advertising flags do not enable execution, and false whole-section stability
 flags do not remove the named bounded presence promises. Deeper payload semantics
 remain with their dedicated contracts; these shells are not a universal schema.
+
+=head2 Enriched identity and routes
+
+The book's C<Enriched contract identity and routes> guide distinguishes report
+advertisements from manifest discovery. C<contract_source> names the dedicated
+owner; C<report_source> names the backing report/data authority. In particular,
+support accounting names C<FSM::Support::RegressionCorpus>, not the manifest
+builder. Check, normalized-semantic, diagnostic-registry and external-validation
+records retain their respective report owners. Numeric C<schema_version> is the
+contract/section version, separate from build, protocol, language and report
+version fields.
+
+These selected records use C<bounded_public>, except external validation's
+C<optional_when_tools_installed>, which requires Verilator and Yosys. Discovery
+does not test their installation or run validation. Report entrypoints describe
+check/semantic reports or validation; section entrypoints describe manifest/data
+discovery. Verification-output discovery does not generate artifacts.
+
+C<entrypoints.cli> is a string; C<in_process> and, where present,
+C<cli_aliases> are arrays of example strings. Verification-output records omit
+C<cli_aliases>. Both semantic-introspection projections publish an array
+C<entrypoints.mcp_adapter> equal to C<mcp_adapter_entrypoints>: persistent stdio,
+one-shot request and in-process launcher examples. These are not MCP tool names;
+use C<tools/list> and the published request schemas to discover actual tools.
+
+C<guidance>, where present, is an array of scope/widening advice. It is absent
+from the top-level C<semantic_introspection> record and present in its
+C<section_contract>. Support and verification sections retain contract guidance.
+An absent field must not be synthesized as an empty list or JSON null. Retain
+observed array order without inferring positional priority. Named bounded
+families require deliberate documented regression-backed widening; deeper key,
+query, catalog, artifact and payload semantics remain with their owners.
 
 =head1 ERRORS AND EFFECTS
 
