@@ -524,10 +524,46 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.5`
   Goal: `Qualify normalized lowered-RTL drive and control family subjects.`
   Acceptance: `Cover remaining success_forward_ir_lowered_rtl_ir_* output-drive, RHS-enable, selector-conflict assertion/target and standalone-DT multi-drive entry families after excluding the .2 base/optional-composition and .5 shared-datapath groups. Bind exact entries, extension/optional rules and source-prediction versus execution boundaries with canonical source/saved values and existing fact cards. Preserve deeper semantics, reject wrong-field/tier/meaning/doc controls, synchronize book/POD and commit.`
-  Verification: `pending predecessor qualification`
+  Verification: `Shared-family predecessor is committed and clean at 9e8354059. The exact remaining lowered prefix selects output-drive/RHS, selector-conflict target/RHS/assertion and standalone-DT target/assertion cohorts. .1 owns exact original-native allocation before separate subject guides; no model or execution qualification closes through partitioning.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.1`
+  Status: `done`
+  Goal: `Partition remaining lowered drive/control fields before independent subject guides.`
+  Acceptance: `Use the committed shared closure and complete original native/source custody. Compare a complete remaining lowered-prefix census with independently enumerated output-drive, selector and standalone-DT suffix cohorts; conserve every selected native value/type/order and every unselected/deeper owner. Record separate guide and final current-source/grouped join owners, without claiming policy or nested-model qualification. Reject omission, duplication, misallocation, wrong value/order, lost delegation and wrong closure ownership; preserve all original packets and source epochs. Commit before the first guide.`
+  Verification: `Complete retained remaining-prefix census agrees with an independently enumerated 2/4/2 guide allocation. All eight selected original native arrays match exact dedicated source literals, and all forty-two unselected/deeper delegations conserve. Eight omission/duplicate/misallocation/value-order/deeper/owner/input/instrument controls reject. Complete source-bearing packet and guarded consumed results retain; original shared/native/source custody and Python 3.9 grammar pass. Final source/native/index/KM/staged/hook gates qualify this partition only. Subject/policy/model/execution guides remain open; .2 is next.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.1: partition lowered drive and control metadata subjects`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.2`
+  Status: `pending`
+  Goal: `Qualify lowered output-drive and nested RHS-enable family subjects.`
+  Acceptance: `Own exactly output_drive_family_entry_keys and output_drive_rhs_enable_family_entry_keys under success_forward_ir_lowered_rtl_ir_. Bind output_drive_families[] and nested rhs_enable_families[] to dedicated lowered helpers and exact complete values, nullable pulse_delay_cycles, ordinary versus delayed/reset-only cases and deeper value/source/runtime boundaries. Use canonical original source and fact evidence, qualify coherent subject/container/optional/value/owner/source/doc controls, usable canonical book/POD and actual native tables with focused metadata checks; commit before selector subjects.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.3`
+  Status: `pending`
+  Goal: `Qualify lowered selector-conflict target, RHS-family and assertion subjects.`
+  Acceptance: `Own exactly selector_conflict_target_entry_keys, selector_conflict_rhs_enable_family_entry_keys, selector_conflict_multi_value_assertion_keys and selector_conflict_same_value_assertion_keys. Bind target/nested family and distinct singular assertion subjects, complete ordered native values and dedicated owners. Preserve decision0111 compatible_fanin same-RHS policy versus different-value onehot0, and distinguish shared/standalone assertion contracts, legacy key presence, emitted obligations and observed execution. Qualify source/subject/container/policy/owner/omission/value/doc controls, canonical book/POD/native tables and focused checks; commit before standalone-DT subjects.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.4`
+  Status: `pending`
+  Goal: `Qualify lowered standalone-DT multi-drive target and assertion subjects.`
+  Acceptance: `Own exactly standalone_dt_multi_drive_target_entry_keys and standalone_dt_multi_drive_assertion_keys. Bind lowered standalone_dt_multi_drive_targets[] and singular multi_drive_assertion, complete native values and LoweredRTLIRContract ownership; preserve the separate composition-child mirror, source/query availability and standalone selector/assertion/runtime contracts. Qualify wrong-tier/subject/container/owner/value/omission/source/doc controls, canonical book/POD/native tables and focused checks; commit before the final combined join.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6.5`
+  Status: `pending`
+  Goal: `Close lowered drive/control cohorts against current sources and combined guides.`
+  Acceptance: `Join all partition-owned fields/values/types/order and every originally unselected/deeper delegation to unchanged original cohorts, explicit current comparison roles and actual canonical source/doc identities. Compare selected grouped projections by actual native/source map membership without closing broader .8 maps or deeper models. Preserve pulse/compatible-fanin/onehot0 and source/execution boundaries; reject coherent cohort/field/owner/policy/value/source/doc losses, qualify actual native pages, focused contracts and required gates; close parent .6 and resume .7 structural families after commit.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.7`
@@ -2438,3 +2474,17 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 ### Shared closure final-gate containment correction
 
 - shared-closure-final-gates.json/log.gz retain the complete first final run: current-source/native/acceptance and all other doctrines pass; LIVE-DOCUMENT-SIZE and its README wrapper refuse only the focused_documents maximum-line allowance. The expanded active-index status row is 880 bytes against baseline 790 plus growth 72. Shorten only this slice's duplicated frontier phrasing in docs/TASK_TREE.md; the exact source/guide/native evidence stays complete in its owning task and retained packets. No recorded fact, source packet, Knowledge Map question or allowance is removed or widened. Finalize this task text, remeasure task totals, then regenerate inventory and refresh only affected source/native/index/staged/doctrine gates. Earlier qualified contract and schema/native control results retain for unchanged inputs.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.2.2.6.1 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub normalized_semantic_lowered_rtl_ir_selector_conflict_same_value_assertion_keys' identifies 0f7f657c9 as the selector-target key-family introduction. The committed shared closure leaves eight non-shared lowered entry families. Their output-drive/RHS, selector target/RHS/assertion and standalone-DT target/assertion subjects have distinct pulse/compatibility/exclusivity contracts; decision0111 forbids treating a selector same-value descriptor as the shared-family onehot0 policy. A single broad guide would hide these independent obligations. Existing canonical cards and native/source custody establish exact allocation inputs without another source/compiler epoch.
+- [x] **ADDRESSED (verified)** — Refine parent .6 into exact allocation .1, output-drive .2, selector .3, standalone-DT .4 and final current-source/grouped join .5. partition_lowered_control.py compares the complete remaining lowered prefix with independently enumerated suffix cohorts. All eight original native values/types/order match dedicated source literals, allocate 2/4/2 disjointly and preserve all forty-two unselected/deeper delegations. Eight coherent omission/duplicate/misallocation/value-order/deeper/closure-owner/input/instrument controls reject. Source, policy, model and execution obligations remain explicit in the guide/final-join acceptances; no public runtime behavior or guide meaning closes through task allocation.
+- [x] **NO REGRESSION** — The complete qualified shared predecessor and original native/source custody replay without modification. Python 3.9 grammar passes for the new partition/capture tools. knowledge-map: OK and required staged/normal scripts/check_doctrines.sh qualify unchanged facts/questions and the exact new task/observer slice. Final native mdBook/POD, current source/index/copied-byte and task acceptance checks cover updated continuity assets. Unchanged public runtime and product prose need no repeated compiler/backend or metadata test epoch; full CI/publication and whole-manual visual QA remain separately owned.
+
+### Lowered drive/control partition evidence and continuation
+
+- Re-derivation: lowered-control-partition.json.gz binds shared-closure-qualified.json.gz and model-roots-qualified.json.gz by complete hashes. Its complete remaining-field prefix census selects the eight non-shared lowered families, after prior base/optional/shared closure. Independent suffix cohorts allocate two output-drive, four selector and two standalone-DT fields. Every selected original native value/type/order joins the dedicated LoweredRTLIRContract literal; every originally unselected field/deeper owner remains exact. The complete original predecessor remains recoverable through its input identity rather than being relabeled current.
+- Falsification: explicit suffix allocation is separate from the complete remaining-prefix census. Eight coherent omission/duplicate/misallocation/value-order/deeper-owner/closure-owner/input/instrument interventions refuse at their intended invariants. This establishes allocation and retained value/source custody; it does not establish full field meanings, nullable pulse cases, selector compatible_fanin versus onehot0 semantics, standalone assertion policy, source-query applicability or execution. The exact successor acceptances retain those distinctions, decision0111 and all deeper owners.
+- Durability: partition_lowered_control.py retains its complete source in the packet and refuses to overwrite an existing capture. lowered-control-partition-checks.json/log.gz retain guarded commands, complete streams, consumed statuses, raw/normalized digests and the full capture harness source. Replay scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/partition_lowered_control.py without --write. The capture tool inherits unchanged default guard limits; all project data stays repository-derived and same-volume. Installed Python remains a read-only toolchain input resolved at runtime.
+- Current product prose/POD, original runtime/source/compiler/backend epochs and every Knowledge Map fact/question/evidence remain unchanged. Book/source/index delivery refreshes only current copied continuity assets; maintained-reference authority and all Knowledge Map allowances retain exactly. Task-evidence totals use measured actual plus their own ratchet with unchanged baseline/target/ceiling. No separate DEVELOPMENT_NOTES entry is warranted: task topology and evidence already own this rationale. Final staged/hook doctrines precede commit, then .6.2 output-drive/RHS subject guidance starts.
