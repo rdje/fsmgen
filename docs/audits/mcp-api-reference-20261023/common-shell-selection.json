@@ -1,0 +1,369 @@
+{
+  "capture": "docs/audits/mcp-api-reference-20261023/model-roots-qualified.json.gz",
+  "capture_head": "684ca68bb25bde673f6570065b3e5ab52e9e2edb",
+  "capture_sha256": "e76f7bf24cd5dde4b6ad6a9ed2a46924ce5d10db2f70644a55c90862588d8a33",
+  "cohorts": {
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.1": "Complete root manifest shell and ProducerContract/ProducerSection semantics, including their maps, list elements, identity/version distinctions and exact current documentation.",
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2": "Common identity/entrypoint/key-family/guidance patterns at each selected contract record, with owner-specific status/shape/absence/extension distinctions and explicit deeper delegation.",
+    "PERL-POD-API-REFERENCE.6.1.2.3.2.1.3": "Join root/producer/shared patterns, aliases, semantic evidence and exact documentation gaps to complete common-shell census."
+  },
+  "contract_records": [
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::BackendValidationContract",
+      "pointer": "/backend_validation/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::HDLExternalValidationContract",
+      "pointer": "/backend_validation/systemverilog_external",
+      "status": "optional_when_tools_installed"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::CheckDiagnosticsContract",
+      "pointer": "/diagnostics/check_json",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::DiagnosticsContract",
+      "pointer": "/diagnostics/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::DiagnosticCodeRegistryContract",
+      "pointer": "/diagnostics/stable_code_registry",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::DocumentationContract",
+      "pointer": "/documentation/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::CompositionReportContract",
+      "pointer": "/embedding/composition_report",
+      "status": "bounded_public_json_fragment"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process",
+        "manifest"
+      ],
+      "owner": "FSM::Support::DebugRuntimeContract",
+      "pointer": "/embedding/debug_runtime",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process",
+        "manifest"
+      ],
+      "owner": "FSM::Support::HDLGeneratorFacadeContract",
+      "pointer": "/embedding/hdl_generator_facade",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::HDLGeneratorResultContract",
+      "pointer": "/embedding/hdl_generator_result",
+      "status": "bounded_top_level_presence"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "in_process",
+        "manifest"
+      ],
+      "owner": "FSM::Support::ISFPublicInterfaceContract",
+      "pointer": "/embedding/isf_public_interface",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::EmbeddingContract",
+      "pointer": "/embedding/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process"
+      ],
+      "owner": "FSM::Support::SerializableGenerationResultSnapshot",
+      "pointer": "/embedding/serializable_generation_result_snapshot",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::SerializablePlanReportContract",
+      "pointer": "/embedding/serializable_plan_reports",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process"
+      ],
+      "owner": "FSM::Support::SerializableCompositionPlanSnapshot",
+      "pointer": "/embedding/serializable_plan_reports/composition_plan_snapshot_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process"
+      ],
+      "owner": "FSM::Support::SerializableDiagnosticSummary",
+      "pointer": "/embedding/serializable_plan_reports/diagnostic_summary_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "in_process"
+      ],
+      "owner": "FSM::Support::SerializableGenerationResultSnapshot",
+      "pointer": "/embedding/serializable_plan_reports/generation_result_snapshot_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli_config_files",
+        "cli_modules",
+        "programmatic_config_files",
+        "programmatic_modules",
+        "programmatic_objects"
+      ],
+      "owner": "FSM::Support::ExtensionContract",
+      "pointer": "/embedding/typed_extensions",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::HIALVIALBridgeContract",
+      "pointer": "/language_surface/hial_vial_bridge",
+      "status": "shipped_private_in_process"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::LanguageSurfaceContract",
+      "pointer": "/language_surface/surface_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALExecutionContract",
+      "pointer": "/language_surface/vial_execution",
+      "status": "shipped_public_verilator_execution_result_and_ahb_parity"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALNativeUVMEmissionContract",
+      "pointer": "/language_surface/vial_native_uvm_emission",
+      "status": "shipped_private_selected_matrix_and_review_workflow"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALToolingContract",
+      "pointer": "/language_surface/vial_tooling",
+      "status": "shipped_public_verilator_execution_result_and_ahb_parity"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALArchitectureScaleRegressionContract",
+      "pointer": "/language_surface/vial_tooling/architecture_scale_regression",
+      "status": "shipped_bounded_regression_gate"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALVHDLEmissionContract",
+      "pointer": "/language_surface/vial_vhdl_emission",
+      "status": "shipped_private_portable_and_osvvm_qualified_profiles"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::CapabilityManifestContract",
+      "pointer": "/manifest_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::ProducerContract",
+      "pointer": "/producer/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::NormalizedSemanticReportContract",
+      "pointer": "/semantic_exports/normalized_semantic_json",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::SemanticExportsContract",
+      "pointer": "/semantic_exports/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process",
+        "mcp_adapter"
+      ],
+      "owner": "FSM::Support::SemanticIntrospectionContract",
+      "pointer": "/semantic_introspection",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALToolingContract",
+      "pointer": "/semantic_introspection/contract_surface_map/vial_source_file_check/file_query_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "capabilities",
+        "cli",
+        "filesystem",
+        "portable"
+      ],
+      "owner": "FSM::Support::VIALToolingContract",
+      "pointer": "/semantic_introspection/contract_surface_map/vial_source_inspection/inspection_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process",
+        "mcp_adapter"
+      ],
+      "owner": "FSM::Support::SemanticIntrospectionContract",
+      "pointer": "/semantic_introspection/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [],
+      "owner": "FSM::Support::VIALToolingContract",
+      "pointer": "/semantic_introspection/section_contract/contract_surface_map/vial_source_file_check/file_query_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "capabilities",
+        "cli",
+        "filesystem",
+        "portable"
+      ],
+      "owner": "FSM::Support::VIALToolingContract",
+      "pointer": "/semantic_introspection/section_contract/contract_surface_map/vial_source_inspection/inspection_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::SupportAccountingContract",
+      "pointer": "/support_accounting",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "cli_aliases",
+        "in_process"
+      ],
+      "owner": "FSM::Support::SupportAccountingContract",
+      "pointer": "/support_accounting/section_contract",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "in_process"
+      ],
+      "owner": "FSM::Support::VerificationOutputsContract",
+      "pointer": "/verification_outputs",
+      "status": "bounded_public"
+    },
+    {
+      "entrypoint_labels": [
+        "cli",
+        "in_process"
+      ],
+      "owner": "FSM::Support::VerificationOutputsContract",
+      "pointer": "/verification_outputs/section_contract",
+      "status": "bounded_public"
+    }
+  ],
+  "evidence_legs": {
+    "durability": "This source-hashed selection, exact retained capture/root graph/reader and task/Git. Full field and documentation controls remain successor obligations.",
+    "falsify": "Inspect actual per-record owner/status and entrypoint label/value variation; entrypoints are absent on some candidates and not uniformly scalar CLI plus list API labels. Existing full root/owner reader qualified parent membership.",
+    "rederive": "Structural traversal of the existing source/runtime-qualified full native manifest with explicit candidate predicate."
+  },
+  "owned_gaps": [
+    {
+      "description": "Book list omits semantic_introspection although the qualified actual map includes it.",
+      "impact": "P2 documentation discovery omission",
+      "repair_owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.1",
+      "reproduce": "Compare the complete top_level_contract_source_map to the Capability Manifest Discovery chapter list."
+    }
+  ],
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.4",
+  "schema": "fsmgen.common_shell_selection.v1",
+  "scope": "Bounded cohort selection only; no semantic completion or new runtime/source epoch. Contract-record candidates require explicit contract_source/schema_version/status in the existing qualified manifest; narrower nonconforming/specialized records remain delegated to .3.2.2-.4/.3.3/.3.4.",
+  "selection_head": "e22b551694facc11b8e69f21161104712aacc06c"
+}

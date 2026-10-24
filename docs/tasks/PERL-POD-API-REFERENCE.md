@@ -318,9 +318,38 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1`
   Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.3`
   Goal: `Inventory manifest shell, producer and common contract-record field semantics and documentation gaps.`
   Acceptance: `Use the qualified root capture and canonical producer/manifest contracts. Inventory every root-shell, producer and common identity/entrypoint/key-family/guidance field, including dynamic map/list element rules, version distinctions, ordering, requiredness, extension policy and best-effort provenance. Map semantic evidence and exact POD/book coverage; mark genuinely undefined meaning rather than inventing it or counting names/test-status prose as sufficient. Keep captured build identity distinct from operational protocol/version authority. Independently join fields/patterns to source-bound actual shapes and test missing/extra/wrong-meaning/documentation controls. Commit the bounded census and synchronized interpretation guidance before other metadata families.`
-  Verification: `pending common-shell census from qualified model roots`
+  Verification: `Selection .4 binds the existing qualified metadata and explicit per-contract candidates. Root/producer .1 is first, common records .2 and complete join .3 follow; semantic completion remains pending.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.4`
+  Status: `done`
+  Goal: `Select exact root/producer and shared-record common-metadata census cohorts.`
+  Acceptance: `Inspect the qualified native manifest and canonical root/producer sources, distinguish root maps/identity from heterogeneous common contract records, preserve every shared-pattern and deeper delegation obligation, and name exact field-census successors before implementation. Retain source-hashed selection and any demonstrated documentation omission under a repair owner; commit selection first.`
+  Verification: `Source-bound selection retains all explicit contract_source/schema_version/status candidate paths, owners, statuses and entrypoint labels. Entrypoint records vary by owner and some are absent; this is not a uniform closed universal record. Root/producer, shared patterns and final joined closure now have exact successors. The reproduced missing semantic_introspection book owner-list entry is P2-owned by immediate .1. No new metadata/source runtime, schema or user behavior change.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.4: scope common metadata census cohorts`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.1`
+  Status: `active`
+  Goal: `Qualify the complete manifest-root and producer field semantics/documentation census.`
+  Acceptance: `Join every root field, manifest_contract field, producer field and ProducerContract field, nested maps/list elements, identity flags and entrypoint shapes to complete qualified actual values and canonical sources. Explain required presence, ordering, deliberate extension and build/schema/protocol distinctions; state undefined meaning rather than inventing it. Record exact POD/book coverage and owned gaps; fix the demonstrated semantic_introspection owner-list omission. Verify omission/extra/wrong-meaning/stale-doc/source controls, synchronize interpretation guidance and commit before shared-record work.`
+  Verification: `pending root/producer semantic census; book discovery omission is owned P2`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2`
+  Status: `pending`
+  Goal: `Qualify shared metadata-record identity, entrypoint, key-family and guidance semantics.`
+  Acceptance: `Use the retained complete candidate path list and root graph, plus canonical owner contracts. Inventory common field occurrences and dynamic map/list-element rules while preserving owner-specific status, version, absent-field, order and extension distinctions; supplement or delegate nonconforming/specialized records explicitly. Map exact semantic evidence and POD/book gaps without promoting advertised APIs into MCP operations. Exercise missing/extra/wrong-owner/meaning/documentation controls and commit the bounded census.`
+  Verification: `pending root/producer cohort`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.3`
+  Status: `pending`
+  Goal: `Close the full common-shell census and retain every documentation obligation.`
+  Acceptance: `Join root/producer and shared-record populations/patterns to complete actual shape, canonical evidence, aliases and exact documentation repair owners. Prove no dropped or duplicate field family, preserve genuinely undefined/partial semantics and deeper metadata/VIAL/report delegation, run coherent gap/source/wrong-meaning controls and commit closure before .3.2.2.`
+  Verification: `pending both semantic cohorts`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.2`
@@ -1571,3 +1600,12 @@ The next complete gate also identifies task_evidence total line/byte transition 
 - [x] **NO REGRESSION** — Focused task integrity and exact source identity/equality checks pass; knowledge-map: OK is enforced by final staged/normal doctrine gates. Only current task-evidence line/byte warning-debt allowances are measured per the documented actual-plus-own-step procedure; baseline, target, ceilings, ownership and every retained fact remain unchanged. No original source epoch, compiler, simulation or publication gate repeats.
 
 Re-derivation, falsification and durability are named in the dated record. Template identity is a dated observation, not a current-state shadow; later source changes require another explicit review. The next executable work is the unchanged .6.1.2.3.2.1 manifest/producer/common-shell field census.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.4
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'build_producer_contract' -- perl/FSM/Support/ProducerContract.pm` locates the dedicated producer boundary. Qualified native contract records expose differing status and entrypoint shapes, including absent entrypoints; interpreting every common field as one universal closed record would conflate distinct owners. Root manifest and producer source/POD/book were reviewed before selecting exact cohorts.
+- [x] **ADDRESSED (verified)** — Source-hashed common-shell-selection.json retains each explicit contract-record candidate and all three exact successor scopes. Root/producer .1 starts first; shared record .2 and complete join .3 preserve every parent obligation. The actual semantic_introspection entry omitted from the book's top-level owner list is reproduced and owned by immediate .1, with no schema-only completeness claim or new execution.
+- [x] **NO REGRESSION** — Task integrity and claim-inventory/disposition checks pass; knowledge-map: OK remains part of final staged/normal doctrine gates. Selection changes task/evidence/resume state only; current manual and runtime behavior remain unchanged. Existing qualified captures are read as evidence, never rerun, and all publication/history/HIAL limits retain.
+
+The selection packet names re-derivation, falsification and durability, and states its structural predicate and exclusions. Full field meaning, actual adverse controls and semantic documentation signoff are expressly successors, not properties inferred from this planning census.
