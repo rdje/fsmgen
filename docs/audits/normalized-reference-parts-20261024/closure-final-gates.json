@@ -1,0 +1,86 @@
+{
+  "commands": [
+    {
+      "command": [
+        "scripts/check_claim_verification_inventory.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/normalized-reference-parts-20261024/closure.py",
+        "docs/audits/normalized-reference-parts-20261024/closure-qualified.json.gz",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "grammar": "Python 3.9 parse passed before commands.",
+  "log": "docs/audits/normalized-reference-parts-20261024/closure-final-gates.log.gz",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "3424e9b42eae5f7b9707006c754a01b290939863581f90e77d79c8f2be54b132",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.3",
+  "retained_log_sha256": "1653080d1583bf7a79568a77113947d4e8f6c030fcc8f320652706d0ba1730b9",
+  "scope": "Focused semantic-part preservation and final current source/native/index/doctrine delivery; not full CI."
+}

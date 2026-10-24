@@ -1,0 +1,56 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/normalized-reference-parts-20261024/closure.py",
+    "docs/audits/normalized-reference-parts-20261024/closure-qualified.json.gz",
+    "--write",
+    "--current",
+    "--build",
+    "docs/book/book"
+  ],
+  "exit_status": 0,
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "6f4efc2a3ebd0a3f03a593c4baece995aee35be473ea10f1963e447a807d51bd",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.3",
+  "result": {
+    "blocks": 9,
+    "bridge": {
+      "canonical_blocks": 9,
+      "legacy_oracles": [
+        "baseline",
+        "composition",
+        "envelope",
+        "shared_candidate",
+        "shared_drive",
+        "symbols"
+      ],
+      "limits": "Selected canonical migration/current-source/content proof only. No original source/compiler/backend epoch, full expression models, publication or whole-manual browser signoff.",
+      "source_files": 28
+    },
+    "examples": 2,
+    "knowledge_files": 1260,
+    "limits": "Reference partition closes only; runtime/model/source/HIAL/publication and broad visual obligations remain open.",
+    "native_sha256": {
+      "11-extensions-and-embedding.html": "77b485bf92d877e6c14bbdf9ac355bef3d09098f5841a79dd34a09f988b10048",
+      "11a-perl-api-reference.html": "8c494d147572cdf4b9bb34f78c26c175d20f70ce931e300470dbf5795be11b29"
+    },
+    "rejected_controls": {
+      "borrowed_origin": "independent complete source-origin join",
+      "changed_native_cell": "independent every native table cell: normalized-report-envelope-families",
+      "duplicate_block": "independent unique section: Normalized report-envelope families",
+      "lost_deeper_owner": "independent all field/deeper-owner leaves: shared_drive",
+      "lost_native_example": "independent every native code example: normalized-composition-grouped-lookups",
+      "misrouted_block": "independent complete compatibility route",
+      "omitted_block": "independent unique section: Normalized report-envelope families",
+      "stale_live_source": "closure current source/doc identity: docs/book/src/11a-perl-api-reference.md",
+      "wrong_legacy_mode": "independent saved-only legacy role",
+      "wrong_native_route": "independent real old route"
+    },
+    "scope": "Complete moved native tables/examples/authored links and stable routes; no whole-manual visual signoff.",
+    "tables": 16
+  },
+  "retained_log_sha256": "6f4efc2a3ebd0a3f03a593c4baece995aee35be473ea10f1963e447a807d51bd"
+}

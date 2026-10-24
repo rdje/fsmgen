@@ -1,0 +1,22 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/normalized-reference-parts-20261024/closure.py",
+    "docs/audits/normalized-reference-parts-20261024/closure-qualified.json.gz",
+    "--write",
+    "--current",
+    "--build",
+    "docs/book/book"
+  ],
+  "diagnosis": "All seven differing cells preserve words and differ only by rendered curly apostrophe. Source byte conservation passed; compare selected table prose with explicit typography normalization.",
+  "exit_status": 1,
+  "normalization": "Only dynamic repository-root prefixes removed. Original observer source is in the packet.",
+  "original_log_sha256": "4391d4bced4ab3416085d89fc88a94e8b824a3e2f5d2e9d06cf6af510962f783",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.3",
+  "packet": "docs/audits/normalized-reference-parts-20261024/closure-first-refused.json.gz",
+  "packet_sha256": "d1e7dce8ca0977665a5561430e1c3e1aed0c45c42b8be998a0a2107e35820908",
+  "retained_log_sha256": "4e3f2aa4aa68339c253e04dfec83729e42949c2d1248b5886a72f5bb2026525f"
+}

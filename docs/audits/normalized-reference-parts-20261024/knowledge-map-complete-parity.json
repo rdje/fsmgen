@@ -1,0 +1,34 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "5868b635d70534fb58bbb98c64bd0861780b8324",
+    "--",
+    "docs/knowledge",
+    "docs/decisions",
+    "KNOWLEDGE_MAP.md",
+    "knowledge-map/generated"
+  ],
+  "exit_status": 0,
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.3",
+  "scope": "Exact byte parity of every canonical knowledge/decision source and generated root/shard versus original pre-split baseline. File counts in closure.py refer to docs/knowledge files, not the combined fact population.",
+  "stderr": "",
+  "stdout": "",
+  "untracked_check": {
+    "command": [
+      "git",
+      "ls-files",
+      "--others",
+      "--exclude-standard",
+      "--",
+      "docs/knowledge",
+      "docs/decisions",
+      "KNOWLEDGE_MAP.md",
+      "knowledge-map/generated"
+    ],
+    "exit_status": 0,
+    "stderr": "",
+    "stdout": ""
+  }
+}
