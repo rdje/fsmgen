@@ -561,6 +561,55 @@ Standalone-DT child entries, `shared_datapath_candidates`, parameter-override
 extensions, deeper value models and grouped-map closure retain their dedicated
 contracts. These metadata families do not establish execution or backend support.
 
+### Normalized composition parameter-override aliases
+
+Within `semantic_exports.normalized_semantic_json`, append a suffix from the
+second table to a prefix from the first. Each complete name describes an
+element of the corresponding child's `parameter_overrides` array, rather than
+the child itself or every structural instance in the design.
+
+| Metadata prefix | Payload subject |
+| --- | --- |
+| `composition_child_parameter_override_` | `semantic.composition.children[].parameter_overrides[]` |
+| `composition_generated_child_parameter_override_` | `semantic.composition.generated_children[].parameter_overrides[]` |
+| `success_forward_ir_intent_hir_composition_child_parameter_override_` | `semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]` |
+| `success_forward_ir_intent_hir_composition_generated_child_parameter_override_` | `semantic.forward_ir.intent_hir.composition_generated_children[].parameter_overrides[]` |
+
+| Metadata suffix | Advertised keys | Interpretation |
+| --- | --- | --- |
+| `entry_keys` | `name`, `origin_kind`, `raw_value_ast`, `value_kind`, `value_payload`, `value_text` | Core entry keys. |
+| `raw_value_extension_keys` | `raw_value` | Optional authored-token extension. |
+| `value_metadata_extension_keys` | `declaration_default_value_kind`, `declaration_default_value_width`, `value_type_spec`, `value_width` | Optional resolver/declaration metadata. |
+
+`FSM::Support::NormalizedSemanticCompositionContract` owns the child aliases.
+Its ordinary/generated helpers delegate to
+`FSM::Support::NormalizedSemanticStructuralRTLIRContract`: append the same
+suffix to `normalized_semantic_structural_rtl_ir_instance_parameter_override_`
+for the dedicated value-family function. These reuse the structural
+`semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`
+schemas. Root payload/report and flattened intent-HIR/forward-IR metadata
+republish the corresponding aliases without merging their payload subjects.
+
+For example, `composition_generated_child_parameter_override_entry_keys`
+describes `semantic.composition.generated_children[i].parameter_overrides[j]`.
+The HIR counterpart adds `success_forward_ir_intent_hir_` to that metadata
+name and applies at the flattened `intent_hir.composition_generated_children`
+location. Follow the [shallow child guide](#normalized-composition-envelope-and-shallow-children)
+for optional collection checks and child identity before indexing either array.
+
+The core list advertises value representations, not a complete `raw_value_ast`
+or `value_payload` model. `raw_value` is optional: a single authored token must
+survive validation for that extension to apply. Do not require it on a compound
+expression. The value resolver and matched child/interface declaration provide
+the optional type, packed-width and declaration-default metadata. Membership
+in that extension family does not require every extension key on every entry.
+
+These aliases establish neither equal ordinary/generated override populations
+nor unconditional source availability. They introduce no standalone-DT
+parameter-override alias family. Detailed expression/type/value semantics,
+grouped-map closure and source/backend qualification remain separately owned;
+discovering an alias does not run generation or validation.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

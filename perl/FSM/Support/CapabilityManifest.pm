@@ -311,6 +311,33 @@ or unconditional source availability. Guard optional objects/collections before
 reading an element. Standalone-DT, shared-datapath, grouped-map and deeper value
 models remain separately owned; metadata does not promise execution or backend support.
 
+=head2 Normalized composition parameter-override aliases
+
+The book's matching tables pair the C<composition_child_parameter_override_>
+and C<composition_generated_child_parameter_override_> prefixes with
+C<semantic.composition.children[].parameter_overrides[]> and
+C<semantic.composition.generated_children[].parameter_overrides[]>.
+Their C<success_forward_ir_intent_hir_> counterparts describe the flattened
+C<semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]>
+and C<composition_generated_children[].parameter_overrides[]> locations.
+
+Append C<entry_keys>, C<raw_value_extension_keys> or
+C<value_metadata_extension_keys>. CompositionContract owns these aliases and
+delegates to StructuralRTLIRContract's
+C<normalized_semantic_structural_rtl_ir_instance_parameter_override_>
+functions with the same suffix. Report/payload/forward-IR/HIR helpers preserve
+the distinct child subjects while republishing those structural value families.
+
+Core keys are C<name>, C<origin_kind>, C<raw_value_ast>, C<value_kind>,
+C<value_payload>, C<value_text>. This is not a complete nested AST/value model.
+The optional C<raw_value> extension requires a single authored token surviving
+validation. The resolver and matched child/interface declaration provide optional
+C<declaration_default_value_kind>, C<declaration_default_value_width>,
+C<value_type_spec> and C<value_width> metadata; do not require every extension
+key on every entry. Equal schemas establish neither matching populations nor
+unconditional source availability. No standalone-DT parameter-override alias
+is introduced; deeper models, grouped closure and execution remain separate.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

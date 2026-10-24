@@ -1,0 +1,18 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_doctrines.sh"
+  ],
+  "date": "2026-10-24T16:54:32.229513+00:00",
+  "exit_status": 0,
+  "guard_source_sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541",
+  "log": "docs/audits/mcp-api-reference-20261023/composition-overrides-doctrine-retry.log.gz",
+  "normalization": "Only dynamic repository-root prefixes become repository-relative; all other stream bytes retain.",
+  "original_log_sha256": "0347db1dd513d42d3584c8d83f910fbfe8298702247b2b0daee3cc990dbec993",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.2",
+  "prior_interruption": "docs/audits/mcp-api-reference-20261023/composition-overrides-ram-interruption.json",
+  "retained_log_sha256": "0347db1dd513d42d3584c8d83f910fbfe8298702247b2b0daee3cc990dbec993",
+  "schema": "fsmgen.owned_verification_retry.v1",
+  "scope": "Complete fresh staged doctrine retry under default continuous guard. Earlier completed native/focused checks remain in their original packet; no original compiler/source/backend capture repeats."
+}

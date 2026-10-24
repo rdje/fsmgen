@@ -1,0 +1,42 @@
+{
+  "admission_probe": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "/usr/bin/true"
+    ],
+    "exit_status": 0,
+    "output": "ram-guard: PID 54660; host 86.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+  },
+  "completed_checks": {
+    "path": "docs/audits/mcp-api-reference-20261023/composition-overrides-final-checks.json.gz",
+    "sha256": "e8f746113eaa368fb280d6e45a3f11ebd72264a61b42b000b7a0faca2ec9c6fc"
+  },
+  "date": "2026-10-24T16:33:20.377467+00:00",
+  "evidence_legs": {
+    "durability": "Track exact terminal observations, command/phase, source identity and completed-check digest; a separately named bounded retry retains its own outcome.",
+    "falsify": "An empty-workload invocation of the same default guard subsequently admits; this distinguishes a permanent admission refusal from the retained transient trip without attributing host pressure.",
+    "rederive": "Retain the actual supervisor outcome and exact prior completed-check packet; no full-doctrine pass is inferred."
+  },
+  "exit_status": 137,
+  "gaps": [
+    "Interrupted driver stdout/stderr was still inside the killed harness and is unavailable; the packet retains every earlier completed native/focused check. No partial driver result is counted as green.",
+    "Host-pressure causality is not established; no blame is assigned to FSMGen or another application."
+  ],
+  "guard_source_sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541",
+  "next_action": "One bounded full-doctrine retry under unchanged default guard; if refused or interrupted again, preserve the resource blocker and request a host-memory change.",
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.2",
+  "phase": [
+    "scripts/check_doctrines.sh"
+  ],
+  "revision": "2f15c8596fb219351cdd621dcbc2ea3b202856a7",
+  "schema": "fsmgen.owned_verification_resource_interruption.v1",
+  "supervised_command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "-"
+  ],
+  "terminal_output": "ram-guard: host memory 88.6% reached cutoff 88%\nram-guard: terminating PID tree: 33509 41260 41892 43103 43104 50584 50585 52765 \n"
+}
