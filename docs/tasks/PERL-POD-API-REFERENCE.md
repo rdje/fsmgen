@@ -340,10 +340,10 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2`
   Status: `active`
-  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.5, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.6`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.5, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.6, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.7`
   Goal: `Qualify shared metadata-record identity, entrypoint, key-family and guidance semantics.`
   Acceptance: `Use the retained complete candidate path list and root graph, plus canonical owner contracts. Inventory common field occurrences and dynamic map/list-element rules while preserving owner-specific status, version, absent-field, order and extension distinctions; supplement or delegate nonconforming/specialized records explicitly. Map exact semantic evidence and POD/book gaps without promoting advertised APIs into MCP operations. Exercise missing/extra/wrong-owner/meaning/documentation controls and commit the bounded census.`
-  Verification: `Root/producer cohort .1 and exact shared-record selection .2.1 are complete. Section-shell semantic census .2.2 is first; enriched records, embedding variants, specialized VIAL and joined closure follow with every candidate retained.`
+  Verification: `Root/producer, exact shared-record selection .2.1 and section-shell census .2.2 are qualified. Enriched common records .2.3 are next, followed by embedding variants, specialized VIAL and joined closure; every candidate and deeper obligation remains owned.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.1`
@@ -364,7 +364,7 @@ HIAL, claim, locality, or source-feature signoff gates.
   Status: `pending`
   Goal: `Qualify common fields in enriched diagnostic, query, support, verification and validation records.`
   Acceptance: `Follow the exact selected paths, including repeated section projections, and dedicated owner contracts. Preserve optional-tool status, report versus manifest entrypoints, registry key-family labels, MCP adapter routes, common-field absence and extension boundaries. Record complete common-field semantics and exact deeper delegations, source-bound values and POD/book gaps; exercise coherent adverse controls and commit.`
-  Verification: `pending section-shell qualification`
+  Verification: `Unstarted enriched-record qualification; section-shell prerequisite is committed at 3c4f11367.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4`
@@ -387,6 +387,13 @@ HIAL, claim, locality, or source-feature signoff gates.
   Acceptance: `Join all selected candidates and prior root/producer exclusions to qualified common fields or exact specialized delegation. Prove unique complete membership, preserve absent/nonconforming records, owner-specific meaning and every deeper documentation obligation. Reject dropped/duplicate/wrong-owner/meaning/stale-document cohorts and commit before the parent common-shell closure.`
   Verification: `pending all shared-record cohorts`
   Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.7`
+  Status: `done`
+  Goal: `Synchronize inherited precursor descriptions with the completed section-shell child.`
+  Acceptance: `The final committed handoff review finds the parent verification still selecting .2.2 and the next leaf still referring to pending section-shell qualification. Correct those descriptions against the done child and current Memory/index, preserve exact next-action ownership, verify integrity and doctrine gates, and commit the continuity repair. No implementation or manual behavior changes.`
+  Verification: `Exact parent/successor descriptions now agree with the done section-shell child and the unchanged Memory/index .2.3 frontier. Task integrity and final staged/normal doctrine gates validate this continuity-only repair. Runtime, saved evidence, book and publication boundaries are unchanged.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.7: synchronize section-shell completion pointers`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.3`
   Status: `pending`
@@ -1699,3 +1706,10 @@ The first staged checkpoint gate rejects task_evidence total-line/byte allowance
 Session health: this source-heavy review has accumulated substantial context, including corrected draft/instrument assumptions. Decision0116 authorizes a clean refresh to protect signoff quality before the enriched-record cohort. Finish this verified slice, consume every job, clear the brief and verify clean Git; the next .6.1.2.3.2.1.2.3 action is fully recoverable from committed cohorts and the bounded pointer.
 
 The first section-shell staged doctrine gate refuses a verbose audit-front-door addition at rollover pressure. Its complete stream retains in section-shell-doctrines-first-refusal.log.gz. Keep the original audit facts/commands and a compact shell-reader route at that bounded landing; the full new interpretation remains in the canonical book and exact census packet. The guide returns to normal pressure without changing its allowance or ceiling.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.7
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'pending section-shell qualification' -1 -- docs/tasks/PERL-POD-API-REFERENCE.md` identifies a5b9d2153's precursor descriptions. The completed .2.2 child and Memory/index advanced at 3c4f11367, while two inherited descriptions retained their earlier prerequisite wording. This could confuse a fresh reader despite correct authoritative statuses and next-action pointer.
+- [x] **ADDRESSED (verified)** — Parent verification explicitly names the qualified shell census and selects enriched .2.3; the unstarted successor names the committed prerequisite. Exact targeted checks reject the former descriptions and agree with the done child and unchanged Memory/index. This small owned handoff repair changes no implementation or manual behavior and requires no ceremonial book edit.
+- [x] **NO REGRESSION** — Focused task integrity passes; knowledge-map: OK and complete staged/normal doctrine gates remain required before the clean commit. Prior native field controls, source conservation, contract tests and book/POD qualification are unchanged. No producer, source epoch, backend, full CI or publication repeats.
