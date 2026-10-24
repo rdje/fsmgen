@@ -255,6 +255,7 @@ Owner namespaces and IR-tier discovery do not execute simulation or validation,
 expose live compiler objects or establish whole-export stability.
 The normalized builder preserves C<JSON::PP::Boolean> values, including false
 inside nested hashes and arrays, while filtering private/unsupported references.
+This preserves value kinds without changing the advertised field families.
 Direct-helper controls qualify this repair; native source reachability stays separate.
 This is not a closed schema for nested values; deliberate widening and deeper
 symbol/composition/control/structural/grouped-model owners remain required.

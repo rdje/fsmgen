@@ -446,7 +446,8 @@ source/language applicability separate.
 
 The normalized report builder preserves JSON Boolean metadata, including false
 values inside nested hashes and arrays. Private objects and unsupported references
-remain filtered. Direct public-builder controls qualify this value preservation;
+remain filtered. This preserves value kinds without changing the advertised field
+families. Direct public-builder controls qualify this value preservation;
 native DSL/CLI/MCP source reachability and complete source-report models retain
 their separate qualification owners.
 
