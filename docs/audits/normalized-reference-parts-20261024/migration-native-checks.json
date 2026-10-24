@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "mdbook",
+      "build",
+      "docs/book"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/generate_pod_reference.py",
+      "--check"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/normalized-reference-parts-20261024/bridge.py",
+      "docs/audits/normalized-reference-parts-20261024/migration-qualified.json.gz",
+      "--current",
+      "--build",
+      "docs/book/book"
+    ],
+    "exit_status": 0
+  }
+]

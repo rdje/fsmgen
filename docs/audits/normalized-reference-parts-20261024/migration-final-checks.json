@@ -1,0 +1,81 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.2",
+  "commands": [
+    {
+      "command": [
+        "scripts/check_claim_verification_inventory.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "first_failure": "migration-final-first-checks.json",
+  "scope": "Affected inventory/task/source-assets/doctrine refresh; prior unchanged source/native semantic controls retain.",
+  "log": "docs/audits/normalized-reference-parts-20261024/migration-final-checks.log.gz",
+  "original_log_sha256": "71007d1cf9139f2a7b233c346be3aee97deb28840ecac1ec887070d93cde34a8",
+  "retained_log_sha256": "348fd0337145f487f36fad5ac46b34a3c4ad5fb6777d07b36131770e61f424be",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "selected_native_conservation": {
+    "selected_native_bytes_conserved": {
+      "11-extensions-and-embedding.html": "77b485bf92d877e6c14bbdf9ac355bef3d09098f5841a79dd34a09f988b10048",
+      "11a-perl-api-reference.html": "8c494d147572cdf4b9bb34f78c26c175d20f70ce931e300470dbf5795be11b29",
+      "perl-api/FSM/Support/CapabilityManifest.html": "f1315ca0c0de2dc729ba9ce4bd178f6f111e40c62eba4cf59731f434296f39bc"
+    }
+  }
+}

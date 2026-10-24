@@ -1,0 +1,8 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.2",
+  "consumed_exit_status": 0,
+  "log": "docs/audits/normalized-reference-parts-20261024/normalized-reference-migration-native.log.gz",
+  "original_log_sha256": "b6b3a28e12ceacf32a632f4d69c01ce3ad0e2dcb5b358c720e82ab2c617115e8",
+  "retained_log_sha256": "b5f3eca3bb076766a7ef83cb20bab95172e8770bccd37f2bfb3937226ec26d35",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}

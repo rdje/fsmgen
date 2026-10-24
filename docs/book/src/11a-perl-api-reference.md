@@ -1,4 +1,6 @@
-# Perl API Reference
+# API and Model Reference
+
+## Perl API Reference
 
 The [generated API index](perl-api/index.html) renders the POD embedded in
 FSMGen's Perl modules. Start with the selected entry points below. The
@@ -15,10 +17,10 @@ and identifies missing POD explicitly; it also has a
 | [MCP adapter](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html) | Host the bounded read-only local MCP service |
 | [VIAL tooling](perl-api/FSM/VIAL/Tool.html) | Check/inspect VIAL source or use the versioned tooling lifecycle |
 
-POD documents the Perl bindings. The language-neutral request/result schemas,
-support boundaries and tutorials remain in
-[Extensions and Embedding](11-extensions-and-embedding.md) and the
-[VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md).
+POD documents the Perl bindings. The normalized semantic field reference below
+complements [Extensions and Embedding](11-extensions-and-embedding.md) for
+discovery, support boundaries and tutorials, and the
+[VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md) for versioned VIAL models.
 The selected guides describe signatures, options, return values, exceptions,
 effects and stability, with runnable examples. This list is a starting set of
 guides, not an exhaustive list of every supported interface.
@@ -127,6 +129,465 @@ messages use the generic fallback; a nonempty zero-valued reason remains a
 string. See
 [error messages](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#ERROR_MESSAGES)
 for the string-recognition boundary and structured-report guidance.
+
+## Normalized Semantic Metadata Reference
+
+Use each field family with its payload subject, dedicated owner, optional or
+variant rule, and qualification limits. Begin with
+[capability discovery](11-extensions-and-embedding.md#capability-manifest-discovery)
+for the containing manifest and query workflow.
+
+### Normalized report-envelope families
+
+`semantic_exports.normalized_semantic_json` advertises the normalized report
+contract. Its common family lists describe the native report, rather than the
+capability record or the outer MCP tool envelope. Required presence does not
+imply a non-null value. Use the published source-query applicability before
+requesting a report; reading capability metadata alone performs no source query.
+
+| Metadata field | Subject and condition |
+| --- | --- |
+| `public_top_level_presence_keys` | Normalized report on either outcome: schema version, producer, command, source, success, diagnostics, diagnostic summary, report-level support accounting and generated-output marker. |
+| `success_only_top_level_keys` | Success-only `semantic` and `generation_result_snapshot`. These are not the check report's `result` field. Failure reports omit both. |
+| `command_presence_keys` | The report's `command` object on either outcome; its mode is `semantic_export`. |
+| `generated_output_presence_keys` | The report's `generated_output` object; the report invocation retains `emitted: false`. A serializable generation snapshot does not itself emit HDL. |
+| `producer_presence_keys` | Shared `producer` fields `name` and `report_source` on either outcome. |
+| `producer_extra_presence_keys` | The normalized producer's additive `semantic_layers` field, also on failures. It advertises public projection names; its presence does not mean a failed report carries partial semantics. |
+| `source_presence_keys` | Base `source` fields `input` and `resolved_path` on either outcome. Their values retain the source-identity contract; they do not describe the metadata record. |
+| `source_optional_fields` | The shared name-to-contract object for optional source declarations. Qualifying successful source reports can carry these declarations according to their dedicated contracts; the failure producer uses the base source object. This is not an array of universally required fields. |
+| `support_accounting_presence_keys` | Base fields of report-level `support_accounting` on success and failure; currently `matched`. Unmatched sources/failures retain `matched: false`. |
+| `matched_success_support_accounting_presence_keys` | Additional report-level support fields when a successful source has a corpus match; includes source-kind and strict-support identity. |
+| `matched_failure_support_accounting_presence_keys` | Additional report-level fields for a matched failure; includes diagnostic-code and migration-hint identity. This differs from matched-success additions. |
+| `failure_diagnostic_presence_keys` | Base fields of each failure `diagnostics[]` element. These reuse the check-diagnostic contract, including nested support accounting. Unclassified diagnostics retain `code: null`. |
+| `matched_failure_diagnostic_presence_keys` | Additional corpus identity fields on each matched failure diagnostic. |
+| `failure_diagnostic_optional_artifact_keys` | Optional extracted artifact fields of each diagnostic; absent/unavailable path data must not be treated as a usable path, and the current producer can emit null values. |
+| `failure_diagnostic_support_accounting_presence_keys` | Base fields of each diagnostic's nested `support_accounting`; currently `matched`. |
+| `matched_failure_diagnostic_support_accounting_presence_keys` | Matched-failure additions inside that nested support object. The advertised field list equals the report-level matched-failure family, but the objects occupy different paths. |
+
+A normalized failure keeps **report-level** support accounting as well as the
+support object inside its diagnostic. The current failure producer takes the
+report-level match from the first diagnostic's support object when available,
+otherwise it uses an unmatched object. Check failures instead place their support
+match only inside the diagnostic. Select the family for the actual object path;
+matching field names do not make the report and diagnostic interchangeable.
+
+The corresponding shared `*_contract_source` fields name these dedicated owners:
+
+| Shared subject | Owner under `FSM::Support` |
+| --- | --- |
+| `command` | `ReportCommandContract` |
+| `generated_output` | `ReportGeneratedOutputContract` |
+| `producer` | `ReportProducerContract` |
+| `source` | `ReportSourceContract` |
+| `support_accounting` | `SupportAccountingMatchContract` |
+| `failure_diagnostic` | `CheckFailureDiagnosticContract` |
+| `diagnostic_summary` | `SerializableDiagnosticSummary` |
+| `generation_result_snapshot` | `SerializableGenerationResultSnapshot` |
+
+These are owner identities, not commands or MCP tools. The snapshot owner names
+a serializable result projection, rather than the live generator object.
+The common report `producer` is also distinct from manifest build provenance.
+`normalized_semantic_schema_version` identifies the report schema; do not confuse
+it with the advertised contract's `schema_version`, tool/build identity, MCP
+protocol or VIAL language version.
+
+This is not a closed schema for every nested value. Preserve array order in
+observations without inferring family priority; objects use named lookup.
+The bounded named families coexist with `full_export_stable: false` and deliberate
+regression-backed widening. Semantic payload children, IR tiers, grouped-map
+members, snapshots, optional declaration models and classifier policy retain
+their dedicated contracts and the detailed references below.
+
+
+### Normalized payload and IR baseline families
+
+The normalized contract also advertises the baseline shapes below. These lists
+name fields of a particular payload or entry, rather than the contract record.
+Read the enclosing report outcome and each object's availability before applying
+a nested family. The source-query/report-variant coverage and complete nested
+value models remain with their dedicated contracts.
+
+| Metadata field | Subject and meaning |
+| --- | --- |
+| `public_layers` | Advertised public layer-name values: `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`. This is a value family; the similarly valued forward-IR list below names object fields. Neither establishes executed simulation or validation. |
+| `success_semantic_presence_keys` | Base keys of success-only `semantic`: `module`, `system_contract`, `explicit_system_contract`, `signal_analysis`, `forward_ir`. Key presence does not require a non-null object. |
+| `success_semantic_optional_child_presence_keys` | Optional `semantic` children: `composition`, `protocol_intent_bundle`, `symbol_contract`. Their presence depends on available source/projection data; they are not mandatory on every success. |
+| `success_module_presence_keys` | Core fields of `semantic.module`: module/root/language identity and state, signal, parameter and implicit-system-port summaries. These describe the exported module summary, not the full compiler module. |
+| `success_module_optional_metric_keys` | Additional module metric fields for applicable output-drive, standalone-DT and composition projections. Discover these separately from the core fields; do not require every metric for every source. |
+| `success_explicit_system_contract_presence_keys` | Authored clock/reset fields of `semantic.explicit_system_contract` when an explicit object is preserved. The parent key can hold `null` when no authored contract is preserved. |
+| `success_signal_analysis_presence_keys` | Bucket names in `semantic.signal_analysis`: `inputs`, `multi_bit`, `outputs`, `single_bit`. These are views of signal metadata; the family list does not promise a disjoint partition. |
+| `success_signal_analysis_entry_presence_keys` | Core fields of each bucket's signal entry: `direction`, `name`, `signed`, `width`. This names entry fields, not bucket names; broader typed extensions remain separately owned. |
+| `success_system_contract_presence_keys` | Effective clock/reset and `declare_ports`/`implicit` behavior fields in `semantic.system_contract`. This differs from the authored explicit-system object, whose family omits those effective-behavior fields. |
+| `success_symbol_contract_presence_keys` | Baseline fields of optional `semantic.symbol_contract`: constants, enums, types, package imports and their summaries/projections. Dynamic names and nested values retain their detailed contracts. |
+| `success_forward_ir_presence_keys` | Child field names of `semantic.forward_ir`: `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`. These are sanitized projections, not live compiler objects. |
+| `success_forward_ir_intent_hir_presence_keys` | Base fields of the intent-HIR projection: module/state/signal/parameter/system/symbol and standalone-DT intent summaries. Apply it to that tier, not the outer `forward_ir` container. |
+| `success_forward_ir_intent_hir_optional_composition_keys` | Additional intent-HIR fields when composition data is projected, including child/generated-child/standalone-DT summaries and records. These are optional tier fields, not the root `semantic.composition` field. |
+| `success_forward_ir_lowered_rtl_ir_presence_keys` | Base fields of the lowered-RTL projection, including output-drive, selector-conflict and standalone-DT multi-drive summaries/collections. Detailed entries retain their specific families. |
+| `success_forward_ir_lowered_rtl_ir_optional_composition_keys` | Additional lowered-RTL composition fields: auxiliary-assignment, shared-datapath, instance and internal-net metadata. The subject is the lowered tier, not a child entry or the root composition object. |
+| `success_forward_ir_structural_rtl_ir_presence_keys` | Base fields of the structural-RTL projection: assignment, auxiliary-assignment, instance, port, net and declared/resolved-link collections and summaries, plus identity. Typed entries and extensions remain separately owned. |
+
+For example, a present `semantic.explicit_system_contract: null` satisfies parent
+key presence without providing an authored-system object to inspect. Conversely,
+an omitted `semantic.composition` is permitted by the optional-child family.
+The current public report factory keeps those states distinct: it always writes
+the explicit-system key, then adds each optional child only when its public value
+is defined. Reading an advertised nested family does not establish availability
+of its object or complete population of an arbitrary raw in-process result.
+
+The scalar owner fields use their emitted names; do not construct a field name
+by appending a suffix to an object label:
+
+| Owner field | Namespace under `FSM::Support` |
+| --- | --- |
+| `semantic_contract_source` | `NormalizedSemanticPayloadContract` |
+| `module_contract_source` | `NormalizedSemanticModuleContract` |
+| `explicit_system_contract_source` | `NormalizedSemanticExplicitSystemContract` |
+| `signal_analysis_contract_source` | `NormalizedSemanticSignalAnalysisContract` |
+| `system_contract_source` | `NormalizedSemanticSystemContract` |
+| `symbol_contract_source` | `NormalizedSemanticSymbolContract` |
+| `forward_ir_contract_source` | `NormalizedSemanticForwardIRContract` |
+| `composition_contract_source` | `NormalizedSemanticCompositionContract` |
+| `forward_ir_intent_hir_contract_source` | `NormalizedSemanticIntentHIRContract` |
+| `forward_ir_lowered_rtl_ir_contract_source` | `NormalizedSemanticLoweredRTLIRContract` |
+| `forward_ir_structural_rtl_ir_contract_source` | `NormalizedSemanticStructuralRTLIRContract` |
+
+Each namespace identifies a dedicated contract, not a callable tool. The layer
+names and tier containers describe inspectable compilation representations;
+metadata discovery supplies no lifecycle execution, temporal observation or
+external-tool validation result. Keep report schema, contract version and
+source/language applicability separate.
+
+The normalized report builder preserves JSON Boolean metadata, including false
+values inside nested hashes and arrays. Private objects and unsupported references
+remain filtered. This preserves value kinds without changing the advertised field
+families. Direct public-builder controls qualify this value preservation;
+native DSL/CLI/MCP source reachability and complete source-report models retain
+their separate qualification owners.
+
+This is not a closed schema for every nested payload. Preserve emitted arrays
+in evidence without inferring priority, and use named lookup for objects.
+Detailed symbol values, composition entries, shared datapath/control records,
+structural entries and grouped-map projections retain their own family guides
+and deeper model contracts. Unknown extensions are not promoted to stable API
+merely because a sanitized object currently carries them.
+
+### Normalized symbol family subjects
+
+Within `semantic_exports.normalized_semantic_json`, each suffix below has two
+metadata names. Append it to the appropriate prefix and apply its family to the
+corresponding payload root. These are metadata names, not literal keys to add
+inside a symbol value. The symbol object remains optional on symbol-poor sources.
+
+| Metadata prefix | Payload root |
+| --- | --- |
+| `symbol_contract_` | `semantic.symbol_contract` |
+| `success_forward_ir_intent_hir_symbol_contract_` | `semantic.forward_ir.intent_hir.symbol_contract` |
+
+The dedicated owner is `FSM::Support::NormalizedSemanticSymbolContract`.
+Intent-HIR delegates the matching families to that owner; forward-IR, payload,
+report and capability surfaces republish them. Equal family values do not make
+the root and intent-HIR payload locations interchangeable.
+
+| Metadata suffix | Subject relative to payload root | Advertised value | Interpretation |
+| --- | --- | --- | --- |
+| `constant_value_entry_keys` | `constants.<name>` | `kind` | Core key on every advertised constant value, including recursive list elements. |
+| `constant_scalar_value_extension_keys` | `constants.<name>` | `payload` | Additional key for a scalar constant value. It is not required on a list value. |
+| `constant_list_value_extension_keys` | `constants.<name>` | `items` | Additional key for a list constant value; its ordered elements reuse the value-entry schema. |
+| `enum_entry_value_kinds` | `enums.<name>` | `member_payload_map` | Kind label for each enum's member map. It is not a literal member-name key. |
+| `enum_member_value_kinds` | `enums.<name>.<member>` | `scalar_payload` | Kind label for values under dynamic enum member names. |
+| `type_entry_keys` | `types.<name>` | `kind`, `signed`, `width` | Core keys on advertised recursive type entries. |
+| `type_scalar_value_kinds` | `types.<name>` | `bit`, `bits` | Scalar type-kind labels, rather than entry field names. |
+| `type_aggregate_value_kinds` | `types.<name>` | `list`, `record` | Aggregate type-kind labels. Their extensions are described separately below. |
+| `type_state_model_extension_keys` | `types.<name>` | `state_model` | Scalar extension for explicit two-state/four-state intent; do not require it on every scalar entry. |
+| `type_list_extension_keys` | `types.<name>` | `items` | List extension containing recursive type entries. |
+| `type_record_extension_keys` | `types.<name>` | `member_order`, `members` | Record extensions: deterministic member order and recursively typed members. |
+| `package_import_entry_value_kinds` | `package_imports[]` | `scalar_package_name` | Kind label for an authored package-name string, not a package object. |
+| `package_import_entry_value_meaning` | `package_imports[]` | `authored package-import package-name string` | Scalar meaning text on the individual metadata field. |
+
+For example, `symbol_contract_type_entry_keys` describes root type entries;
+`success_forward_ir_intent_hir_symbol_contract_type_entry_keys` describes the
+same schema at the intent-HIR location. A list type adds `items`; a record type
+adds `member_order` and `members`. Both reuse the recursive core keys. Names in
+the `constants`, `enums` and `types` maps come from the design, so a family of
+value keys or kind labels is not a fixed list of those dynamic names.
+
+In `presence_key_family_map`, look up the same full metadata names. In
+`semantic_presence_key_family_map`, remove the leading `success_` from the
+intent-HIR name; the root symbol name is unchanged. Both maps preserve list
+families as arrays. The two `package_import_entry_value_meaning` fields are
+strings individually and single-element arrays in these grouped maps, containing
+the same meaning string. Keep that distinction when comparing discovery output.
+
+See the [type and package payload examples](#normalized-symbol-payload-examples)
+below for payload context. Package-name metadata exposes no package-spec object
+graph, AST or package symbol table. This is not a closed schema for arbitrary
+nested values or a source-availability, simulation or backend-execution promise.
+The baseline field guide still owns symbol-object availability and core keys;
+complete payload/source models and the remaining grouped-map closure stay with
+their dedicated contracts.
+
+### Normalized composition envelope and shallow children
+
+Use these fields of `semantic_exports.normalized_semantic_json` to select the
+right composition object or child element. The function column names the
+dedicated `FSM::Support::NormalizedSemanticCompositionContract` function;
+report/payload contracts republish its values, with forward-IR and intent-HIR
+delegation for the flattened HIR locations.
+
+| Metadata field | Payload subject | Dedicated function |
+| --- | --- | --- |
+| `composition_child_entry_keys` | `semantic.composition.children[]` | `normalized_semantic_composition_child_entry_keys` |
+| `composition_generated_child_entry_keys` | `semantic.composition.generated_children[]` | `normalized_semantic_composition_generated_child_entry_keys` |
+| `composition_presence_keys` | `semantic.composition` | `normalized_semantic_composition_presence_keys` |
+| `success_forward_ir_intent_hir_composition_child_entry_keys` | `semantic.forward_ir.intent_hir.composition_children[]` | `normalized_semantic_composition_child_entry_keys` |
+| `success_forward_ir_intent_hir_composition_generated_child_entry_keys` | `semantic.forward_ir.intent_hir.composition_generated_children[]` | `normalized_semantic_composition_generated_child_entry_keys` |
+
+The envelope advertises these keys, in emitted family order:
+`lane`, `child_count`, `children`, `net_count`, `resolved_link_count`, `generated_child_count`, `generated_children`, `standalone_dt_child_count`, `standalone_dt_children`, `shared_datapath_candidate_count`, `shared_datapath_candidates`, `plan_snapshot`, `provenance_report`.
+Counts describe their named summaries or collections; envelope membership does
+not describe every entry inside those collections. `plan_snapshot` delegates
+to `FSM::Support::SerializableCompositionPlanSnapshot`, and the sanitized
+`provenance_report` delegates to `FSM::Support::CompositionReportContract`.
+
+Both ordinary and generated child families advertise the same shallow keys:
+`kind`, `instance_name`, `module_name`, `source_name`, `source_root_kind`, `regular_state_count`, `standalone_dt_count`, `output_drive_family_count`, `standalone_dt_multi_drive_target_count`, `parameter_override_count`, `parameter_overrides`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`.
+The identity fields identify the child instance/module and its source/root;
+the count fields summarize its state, DT, output-drive, multi-drive-target
+and parameter-override data. Read `parameter_overrides` as a collection with
+its own structural parameter-override alias contract. The child `intent_hir`,
+`lowered_rtl_ir` and `structural_rtl_ir` objects retain their dedicated IR
+contracts; this shallow list does not recursively define them.
+
+For example, select `composition_child_entry_keys` when reading
+`report.semantic.composition.children[0]`; select
+`success_forward_ir_intent_hir_composition_generated_child_entry_keys` when
+reading `report.semantic.forward_ir.intent_hir.composition_generated_children[0]`.
+Guard the optional composition object or HIR collection, and check that the
+array has an element before indexing. A HIR collection is flattened under
+`intent_hir`; it is not `intent_hir.composition.generated_children`.
+
+Identical key lists do not establish equal child populations, matching array
+indices, or unconditional source availability. Keep ordinary and generated
+collections distinct, and preserve source-provided array order without treating
+it as priority. The baseline guide owns optional object/tier availability.
+Standalone-DT child entries, `shared_datapath_candidates`, parameter-override
+extensions, deeper value models and grouped-map closure retain their dedicated
+contracts. These metadata families do not establish execution or backend support.
+
+### Normalized composition parameter-override aliases
+
+Within `semantic_exports.normalized_semantic_json`, append a suffix from the
+second table to a prefix from the first. Each complete name describes an
+element of the corresponding child's `parameter_overrides` array, rather than
+the child itself or every structural instance in the design.
+
+| Metadata prefix | Payload subject |
+| --- | --- |
+| `composition_child_parameter_override_` | `semantic.composition.children[].parameter_overrides[]` |
+| `composition_generated_child_parameter_override_` | `semantic.composition.generated_children[].parameter_overrides[]` |
+| `success_forward_ir_intent_hir_composition_child_parameter_override_` | `semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[]` |
+| `success_forward_ir_intent_hir_composition_generated_child_parameter_override_` | `semantic.forward_ir.intent_hir.composition_generated_children[].parameter_overrides[]` |
+
+| Metadata suffix | Advertised keys | Interpretation |
+| --- | --- | --- |
+| `entry_keys` | `name`, `origin_kind`, `raw_value_ast`, `value_kind`, `value_payload`, `value_text` | Core entry keys. |
+| `raw_value_extension_keys` | `raw_value` | Optional authored-token extension. |
+| `value_metadata_extension_keys` | `declaration_default_value_kind`, `declaration_default_value_width`, `value_type_spec`, `value_width` | Optional resolver/declaration metadata. |
+
+`FSM::Support::NormalizedSemanticCompositionContract` owns the child aliases.
+Its ordinary/generated helpers delegate to
+`FSM::Support::NormalizedSemanticStructuralRTLIRContract`: append the same
+suffix to `normalized_semantic_structural_rtl_ir_instance_parameter_override_`
+for the dedicated value-family function. These reuse the structural
+`semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[]`
+schemas. Root payload/report and flattened intent-HIR/forward-IR metadata
+republish the corresponding aliases without merging their payload subjects.
+
+For example, `composition_generated_child_parameter_override_entry_keys`
+describes `semantic.composition.generated_children[i].parameter_overrides[j]`.
+The HIR counterpart adds `success_forward_ir_intent_hir_` to that metadata
+name and applies at the flattened `intent_hir.composition_generated_children`
+location. Follow the [shallow child guide](#normalized-composition-envelope-and-shallow-children)
+for optional collection checks and child identity before indexing either array.
+
+The core list advertises value representations, not a complete `raw_value_ast`
+or `value_payload` model. `raw_value` is optional: a single authored token must
+survive validation for that extension to apply. Do not require it on a compound
+expression. The value resolver and matched child/interface declaration provide
+the optional type, packed-width and declaration-default metadata. Membership
+in that extension family does not require every extension key on every entry.
+
+These aliases establish neither equal ordinary/generated override populations
+nor unconditional source availability. They introduce no standalone-DT
+parameter-override alias family. Detailed expression/type/value semantics,
+grouped-map closure and source/backend qualification remain separately owned;
+discovering an alias does not run generation or validation.
+
+### Normalized composition standalone-DT children
+
+Within `semantic_exports.normalized_semantic_json`, combine a prefix below
+with a suffix from the next table. The payload root is an element of the
+standalone-DT child collection, distinct from ordinary/generated children.
+
+| Metadata prefix | Payload root |
+| --- | --- |
+| `composition_standalone_dt_` | `semantic.composition.standalone_dt_children[]` |
+| `success_forward_ir_intent_hir_composition_standalone_dt_` | `semantic.forward_ir.intent_hir.composition_standalone_dt_children[]` |
+
+| Metadata suffix | Subject relative to child entry | Advertised keys |
+| --- | --- | --- |
+| `child_entry_keys` | `(child entry)` | `instance_name`, `module_name`, `source_name`, `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, `standalone_dt_module_enable_family`, `standalone_dt_multi_drive_target_count`, `standalone_dt_multi_drive_targets`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir` |
+| `enable_family_entry_keys` | `standalone_dt_enable_families[]` | `dt_name`, `enable_signal` |
+| `module_enable_family_keys` | `standalone_dt_module_enable_family` | `dt_names`, `enable_signals` |
+| `multi_drive_target_entry_keys` | `standalone_dt_multi_drive_targets[]` | `dt_enable_signals`, `dt_names`, `lhs_enable_signals`, `multi_drive_assertion`, `multiplexer_type`, `rhs_values`, `signal_name` |
+| `multi_drive_assertion_keys` | `standalone_dt_multi_drive_targets[].multi_drive_assertion` | `input_count`, `input_enable_signals`, `kind`, `target_signal` |
+
+`FSM::Support::NormalizedSemanticCompositionContract` directly owns the child,
+per-DT enable and module-enable key lists. Its target/assertion functions
+delegate to `FSM::Support::NormalizedSemanticLoweredRTLIRContract` functions
+with the `normalized_semantic_lowered_rtl_ir_standalone_dt_` prefix and matching
+suffix. Report/payload and forward-IR/intent-HIR helpers republish the
+corresponding families at the distinct root and flattened HIR locations.
+
+The child collection, per-DT enable families and multi-drive targets are
+arrays. The singular `standalone_dt_module_enable_family` and each target's
+`multi_drive_assertion` are objects. The module summary contains arrays of
+DT names and enable signals; each per-DT entry advertises its own
+`dt_name`/`enable_signal` pair. Keep these container subjects distinct when
+selecting a schema; an assertion family does not describe the entire target.
+
+For example, `composition_standalone_dt_multi_drive_assertion_keys` applies
+at `report.semantic.composition.standalone_dt_children[0].standalone_dt_multi_drive_targets[0].multi_drive_assertion`.
+Guard optional composition/HIR collections and check array contents before
+indexing. HIR uses `intent_hir.composition_standalone_dt_children`, with no
+intermediate HIR composition object. Equal metadata lists do not establish
+equal populations or matching indices across tiers.
+
+Child `intent_hir`, `lowered_rtl_ir` and `structural_rtl_ir` remain shallow
+delegations to their own bounded IR contracts. These advertised families
+contain no standalone-DT parameter-override aliases. Enable/assertion metadata
+does not establish execution, emitted/checked HDL assertions, verified
+arbitration or unconditional source availability. Deeper value models,
+broader grouped-map closure and source/backend qualification retain their owners.
+
+### Normalized composition grouped lookups
+
+Within `semantic_exports.normalized_semantic_json`, the report
+`presence_key_family_map` and the `semantic_presence_key_family_map` expose
+selected composition key families through different names. The report map
+uses the complete advertised metadata field name. For the flattened intent-HIR
+child families, the semantic map omits the report's leading `success_`:
+
+| Report `presence_key_family_map` key | Semantic `semantic_presence_key_family_map` key |
+| --- | --- |
+| `composition_presence_keys` | absent |
+| `composition_child_entry_keys` | `composition_child_entry_keys` |
+| `success_forward_ir_intent_hir_composition_child_entry_keys` | `forward_ir_intent_hir_composition_child_entry_keys` |
+
+The envelope `composition_presence_keys` is present in the report map; the
+semantic map omits it. Do not infer an entry merely by transforming its name.
+The ordinary/generated-child, parameter-override and standalone-DT families
+documented above use the same root versus intent-HIR naming rule. Their grouped
+values are the corresponding complete ordered key arrays, with the same
+dedicated owners, optional extensions and payload subjects as the individual
+fields. A map entry advertises a schema; it does not establish a child instance
+or source availability.
+
+For example, compare the root child family with its flattened intent-HIR family:
+
+```sh
+./bin/fsmgen --capability-manifest | python3 -c 'import json,sys; n=json.load(sys.stdin)["semantic_exports"]["normalized_semantic_json"]; print(n["presence_key_family_map"]["composition_child_entry_keys"]); print(n["semantic_presence_key_family_map"]["forward_ir_intent_hir_composition_child_entry_keys"])'
+```
+
+Equal lists do not prove equal child populations or matching indices. This
+selected composition join leaves broader grouped-map/model closure,
+shared-datapath subjects and source/backend qualification with their owners.
+
+### Normalized shared-datapath candidate and contributor subjects
+
+Under `semantic_exports.normalized_semantic_json`, combine either prefix with
+one suffix below to obtain the exact metadata field. Each prefix describes a
+different payload location:
+
+| Metadata prefix | Candidate payload subject |
+| --- | --- |
+| `composition_shared_datapath_` | `semantic.composition.shared_datapath_candidates[]` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_` | `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]` |
+
+| Suffix | Subject relative to the candidate | Family rule | Complete ordered keys |
+| --- | --- | --- | --- |
+| `candidate_entry_keys` | `(candidate entry)` | `core` | `signal_name`, `width`, `interface_type`, `storage_class`, `reset_value`, `contributor_count`, `contributors`, `top_output_signals`, `peer_input_count`, `peer_input_endpoints`, `default_lifted_visibility`, `planned_reexport_top_output_signals`, `loopback_allowed`, `lifted_runtime_kind`, `lifted_runtime_signal`, `lifted_runtime_next_signal`, `lifted_runtime_reset_value`, `lifted_runtime_reset_active_level`, `lifted_runtime_reset_kind`, `lifted_runtime_reset_keyword`, `aggregate_target_enable_signal`, `multi_value_conflict_signal`, `multi_value_assertion`, `aggregate_enable_family_count`, `aggregate_enable_families` |
+| `candidate_declared_type_extension_keys` | `(candidate entry)` | `optional_extension` | `declared_type_name`, `declared_type_spec` |
+| `candidate_contributor_entry_keys` | `contributors[]` | `core` | `kind`, `instance_name`, `module_name`, `source_name`, `endpoint`, `bound_signal`, `bound_signals`, `bound_connection_expr`, `output_drive_family`, `drive_intent`, `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir` |
+| `candidate_contributor_declared_type_extension_keys` | `contributors[]` | `optional_extension` | `declared_type_name`, `declared_type_spec` |
+
+For example, `composition_shared_datapath_candidate_contributor_entry_keys`
+describes each root candidate's `contributors[]` element; it does not describe
+the candidate itself. The longer prefix selects the corresponding contributor
+subject inside the lowered-RTL candidate collection. These families use the
+lowered tier; do not substitute an intent-HIR prefix.
+
+`FSM::Support::NormalizedSemanticLoweredRTLIRContract` owns all four suffix
+lists through `normalized_semantic_lowered_rtl_ir_composition_shared_datapath_`
+plus the suffix. Root composition aliases delegate through
+`FSM::Support::NormalizedSemanticCompositionContract`; the lowered metadata
+delegates through the forward-IR contract. Payload/report contracts and the
+manifest republish those lists rather than defining another candidate schema.
+
+The declared-type extensions apply to their respective candidate or contributor
+objects. `declared_type_name` and `declared_type_spec` are independently optional:
+the builder emits each only when its corresponding resolved value is defined.
+Check the keys separately. The extension list does not promise both keys on
+every entry, and `declared_type_spec` does not close the deeper type/value model.
+Core families advertise shallow schema members; they do not make every value
+non-null or establish unconditional candidate/source availability.
+
+Contributor `intent_hir`, `lowered_rtl_ir` and `structural_rtl_ir` remain bounded
+delegates. Binding expressions, drive intent, aggregate-enable families and the
+two assertion contexts retain their own nested contracts. Equal root/lowered
+lists do not establish equal populations, matching indices, execution or
+verified arbitration. Preserve arrays without inferring priority, and inspect
+optional collections before indexing.
+
+### Normalized shared-datapath binding and drive-intent subjects
+
+Use either metadata prefix with one suffix below. Relative subjects begin at the corresponding candidate, and include the contributor collection explicitly:
+
+| Metadata prefix | Candidate payload subject |
+| --- | --- |
+| `composition_shared_datapath_` | `semantic.composition.shared_datapath_candidates[]` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_` | `semantic.forward_ir.lowered_rtl_ir.composition_shared_datapath_candidates[]` |
+
+| Suffix | Subject relative to the candidate | Family rule | Complete ordered advertised keys |
+| --- | --- | --- | --- |
+| `bound_connection_expr_keys` | `contributors[].bound_connection_expr` | `signal_ref_variant` | `kind`, `signal_name` |
+| `candidate_contributor_drive_intent_entry_keys` | `contributors[].drive_intent` | `object` | `default_value`, `driver_blocks`, `driver_count`, `driver_enable_signals`, `family_enable_signals`, `multiplexer_type`, `reset_value`, `rhs_enable_families`, `rhs_values` |
+| `candidate_contributor_drive_intent_rhs_enable_family_entry_keys` | `contributors[].drive_intent.rhs_enable_families[]` | `array_element` | `driver_blocks`, `driver_enable_signals`, `family_enable_signal`, `rhs_value` |
+
+The binding is a nullable object. The `signal_ref_variant` rule means the advertised two-key list describes `kind: "signal_ref"`; it is not the complete
+expression grammar. The public structured-IR builder also preserves compound nodes, such as this observed contributor binding:
+
+```json
+{
+  "kind": "concat",
+  "operands": [
+    {"kind": "signal_ref", "signal_name": "left_hi"},
+    {"kind": "signal_ref", "signal_name": "left_lo"}
+  ]
+}
+```
+
+Inspect `kind` and preserve the nested data. Applying the two-key list as a universal closed-object validator would reject or discard valid compound data. This
+direct public-builder example does not establish native source availability or complete support for every expression kind in every query. The structural
+connection-expression owner retains the complete expression grammar and its deeper kind-dependent fields.
+
+`drive_intent` is a singular object; `rhs_enable_families` and its driver-list members are arrays. The helper returns an empty drive object when no valid
+output-drive family is available. Guard contents before indexing, and do not infer priority from array order. Default/reset/RHS values and nested expression
+semantics retain their dedicated deeper models.
+
+`FSM::Support::NormalizedSemanticLoweredRTLIRContract` owns these families. Its shared drive-intent RHS-family helper delegates to
+`normalized_semantic_lowered_rtl_ir_output_drive_rhs_enable_family_entry_keys`. Composition aliases and forward/payload/report contracts republish the
+corresponding root/lowered metadata. Equal key lists do not establish equal populations, actual execution, verified arbitration or source/backend support.
 
 ## Build and preview
 

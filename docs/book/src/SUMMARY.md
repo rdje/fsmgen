@@ -11,7 +11,7 @@
 - [Errors, Strict Mode, and Troubleshooting](10-errors-strict-mode-and-troubleshooting.md)
   - [Downstream Issue Reporting](10a-downstream-issue-reporting.md)
 - [Extensions and Embedding](11-extensions-and-embedding.md)
-  - [Perl API Reference](11a-perl-api-reference.md)
+  - [API and Model Reference](11a-perl-api-reference.md)
 - [Cookbook](12-cookbook.md)
 - [Intent Scheduling (ISF)](13-intent-scheduling.md)
   - [Actor and Interface](13a-actor-interface.md)
