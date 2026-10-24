@@ -370,6 +370,7 @@ sub _json_ready_value {
     my ($value) = @_;
 
     return (1, undef) unless defined $value;
+    return (1, $value) if JSON::PP::is_bool($value);
     return (1, $value) unless ref($value);
 
     if (ref($value) eq 'HASH') {

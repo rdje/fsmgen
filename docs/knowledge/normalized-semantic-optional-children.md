@@ -12,7 +12,7 @@ date: 2026-10-24
 status: current
 tags: [normalized-semantic-json, capability-manifest, embedding, public-api]
 evidence: perl/FSM/Support/NormalizedSemanticPayloadContract.pm; perl/FSM/Support/NormalizedSemanticReportContract.pm; perl/FSM/Support/NormalizedSemanticReport.pm; t/330-normalized-semantic-payload-contract.t; t/311-normalized-semantic-report-contract.t; t/442-normalized-semantic-payload-contract-defensive-copy-boundary-audit.t; t/443-normalized-semantic-report-contract-defensive-copy-boundary-audit.t; t/297-capability-manifest.t; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; docs/tasks/BACKEND-API-VALIDATION-FRONTIER.md; docs/tasks/PERL-POD-API-REFERENCE.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/verify_normalized_baseline.py docs/audits/mcp-api-reference-20261023/normalized-baseline-census-qualified.json.gz --current
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/330-normalized-semantic-payload-contract.t t/2105-normalized-semantic-json-booleans.t
 ---
 
 `semantic.composition` and `semantic.symbol_contract` are optional success

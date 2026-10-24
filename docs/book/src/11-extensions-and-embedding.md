@@ -444,12 +444,11 @@ metadata discovery supplies no lifecycle execution, temporal observation or
 external-tool validation result. Keep report schema, contract version and
 source/language applicability separate.
 
-Current direct-builder limitation: a retained synthetic call with JSON Boolean
-metadata loses `declare_ports`, `implicit` and signal `signed` fields in the
-normalized builder. Its reference filter drops `JSON::PP::Boolean` objects.
-This P2 direct-helper defect has an immediate tracked repair; native DSL/CLI/MCP
-source reachability is separately unqualified. The field families above state
-the intended bounded model, not a successful value-preservation qualification.
+The normalized report builder preserves JSON Boolean metadata, including false
+values inside nested hashes and arrays. Private objects and unsupported references
+remain filtered. Direct public-builder controls qualify this value preservation;
+native DSL/CLI/MCP source reachability and complete source-report models retain
+their separate qualification owners.
 
 This is not a closed schema for every nested payload. Preserve emitted arrays
 in evidence without inferring priority, and use named lookup for objects.

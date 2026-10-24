@@ -253,9 +253,9 @@ C<system_contract_source> and C<symbol_contract_source>. Appending
 C<_contract_source> to every object label invents unsupported field names.
 Owner namespaces and IR-tier discovery do not execute simulation or validation,
 expose live compiler objects or establish whole-export stability.
-A retained synthetic direct-builder probe currently loses JSON Boolean system
-and signal fields because the reference filter drops C<JSON::PP::Boolean>.
-The immediate tracked repair does not claim native DSL/CLI/MCP reachability.
+The normalized builder preserves C<JSON::PP::Boolean> values, including false
+inside nested hashes and arrays, while filtering private/unsupported references.
+Direct-helper controls qualify this repair; native source reachability stays separate.
 This is not a closed schema for nested values; deliberate widening and deeper
 symbol/composition/control/structural/grouped-model owners remain required.
 
