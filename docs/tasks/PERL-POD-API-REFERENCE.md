@@ -480,11 +480,48 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.4: close composition metadata source and guide join`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.5`
   Goal: `Qualify normalized shared-datapath family subjects and lowered mirrors.`
   Acceptance: `Cover composition_shared_datapath_* and success_forward_ir_lowered_rtl_ir_composition_shared_datapath_* families. Preserve candidate/contributor/declared-type/drive-intent/enable-family/aggregate/assertion/bound-expression subjects and root-versus-lowered context. Use canonical nested owners and original complete values, not names alone; refine further where needed. Join exact optional/extension rules and deeper .3.2.3/.3.3/.6.4 delegation, exercise missing/wrong-record/owner/value/doc controls, synchronize book/POD and commit.`
-  Verification: `pending predecessor qualification`
+  Verification: `The exact saved-data partition at .1 allocates 20 shared-datapath metadata fields into 8 shallow/type slots, 6 drive/bound-expression slots and 6 aggregate/assertion slots, preserving 50 unselected deeper delegations. Distinct subjects, optional extensions and assertion contexts require separate current-source guides before final .5 closure. No shared-datapath family meaning closes through task allocation alone.`
   Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.1`
+  Status: `done`
+  Goal: `Partition shared-datapath metadata before separate subject guides.`
+  Acceptance: `Derive exact selected root-composition and lowered-RTL metadata populations from the qualified composition predecessor. Compare prefix census with independently enumerated candidate/contributor/type, drive/bound-expression and aggregate/assertion cohorts; preserve every selected original native value and all remaining/deeper delegations. Bind input/instrument identity, exercise omission/misallocation/value/remaining/join-owner controls and commit before subject implementation.`
+  Verification: `Independent suffix cohorts agree with the complete remaining-field prefix census: 20 original native fields allocate as 8/6/6 without omission or overlap, and all 50 unselected/deeper delegations conserve. Five coherent field/misallocation/value-order/delegation/join-owner controls reject. Original composition predecessor and source/native custody replay; Python 3.9 grammar passes. Native book/source/index/current copied-byte, Knowledge Map and staged/hook doctrines qualify commit; no current subject/runtime/source epoch is claimed.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.1: partition shared-datapath metadata subject cohorts`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.2`
+  Status: `pending`
+  Goal: `Qualify shared-datapath candidate/contributor shallow and declared-type subjects.`
+  Acceptance: `Own root/lowered candidate_entry_keys, candidate_declared_type_extension_keys, candidate_contributor_entry_keys and candidate_contributor_declared_type_extension_keys only. Bind each to exact candidate or contributors[] subjects and dedicated lowered owner plus composition alias chains; distinguish optional declared-type metadata, child IR delegates, candidate availability and equal schemas versus equal populations. Preserve selected/deeper owners, qualify current/source/subject/extension/owner/value/omission controls, usable book/POD/native rendering and focused metadata regressions, then commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3`
+  Status: `pending`
+  Goal: `Qualify shared-datapath bound-expression and contributor drive-intent subjects.`
+  Acceptance: `Own root/lowered bound_connection_expr_keys, candidate_contributor_drive_intent_entry_keys and candidate_contributor_drive_intent_rhs_enable_family_entry_keys. Distinguish singular contributor bound_connection_expr/drive_intent objects from nested rhs_enable_families[] elements, bind exact lowered helpers and output-drive RHS-family delegation, preserve bounded expression/deeper IR/value/source owners and avoid promises of execution. Qualify current/source/container/owner/omission/value controls, usable book/POD/native rendering and relevant metadata regressions, then commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4`
+  Status: `pending`
+  Goal: `Qualify shared-datapath aggregate-enable and assertion subjects.`
+  Acceptance: `Own root/lowered aggregate_enable_family_entry_keys, aggregate_enable_contributor_entry_keys and assertion_keys. Bind exact candidate aggregate_enable_families[], family contributors[], candidate multi_value_assertion and family same_value_assertion subjects; distinguish the two assertion contexts, their bounded metadata and conditional availability from verified arbitration/execution. Preserve all deeper owners, qualify exact source/container/subject/value/owner/omission controls, usable book/POD/native rendering and metadata regressions, then commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.5`
+  Status: `pending`
+  Goal: `Close the shared-datapath partition against current sources and combined guides.`
+  Acceptance: `Join all three qualified subject cohorts against exact partition-owned native fields/values/types/order, current source/producer/doc identities and every originally unselected/deeper delegation. Compare selected root/lowered subjects and grouped projections using actual map membership, preserve optional extension/source/structural/deeper model boundaries, refresh legitimate guide epochs without relabeling old packets and reject coherent cohort/field/value/source/doc losses. Complete native rendering/current contracts and required gates, close parent .5 and resume .6 lowered drive/control subjects.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.6`
   Status: `pending`
@@ -2174,3 +2211,18 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 - Replay: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/verify_composition_closure.py docs/audits/mcp-api-reference-20261023/composition-final-qualified.json.gz --current. Use --current-contracts for live runtime-prefix fact replay with dated guides, or --build docs/book/book for selected actual rendered-content joins. Final native/check streams retain separately. This does not close broader grouped maps, nested value/IR models, shared datapath, original source reachability/HIAL causality, full CI/publication or whole-book browser review.
 - composition-closure-card-edit.json.gz retains complete invertible old/new card bytes, unchanged original questions/evidence and a preserved-meaning map. The historical strict source audit remains dated rather than being rerun as a consequence of fact lookup. The new grouped question is added without a new card or allowance growth. No distinct DEVELOPMENT_NOTES rationale entry is warranted.
 - The selected map asymmetry is now explicit in book/POD and the canonical fact route; it is not a runtime defect or a promise of generic map equivalence. Parent .4 closes after this commit; the next bounded owner is .3.2.2.5 shared-datapath subjects. Book aggregate authority covers only this selected guide addition. Task evidence is contained to actual totals plus its own ratchet, with unchanged baselines/targets/ceilings; Knowledge Map authority does not grow.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.2.2.5.1 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'normalized_semantic_composition_shared_datapath_candidate_entry_keys' identifies 44881d6af, the published composition-side alias. CompositionContract delegates all selected shared-datapath families to LoweredRTLIRContract; the nested drive-intent RHS enable family further delegates to the output-drive RHS family. Existing canonical cards and book separate shallow candidate/type, contributor binding/drive and aggregate/assertion subjects, while the qualified predecessor retains their complete original native values and deeper owners. A single broad subject closure would obscure these independent optional/container/assertion obligations.
+- [x] **ADDRESSED (verified)** — Refine parent .5 into a partition leaf, candidate/contributor/type guide, drive/bound-expression guide, aggregate/assertion guide and final source/document/grouped join. partition_shared_datapath.py compares an exact original remaining-field prefix census with independently enumerated suffix cohorts. All twenty selected native values/types/order conserve, with eight/six/six disjoint allocation and fifty unselected deeper delegations. Five coherent omission/misallocation/value-order/delegation/join-owner controls reject; no runtime code, API capability, original source epoch or family semantics changes.
+- [x] **NO REGRESSION** — knowledge-map: OK and required staged/normal scripts/check_doctrines.sh qualify unchanged canonical facts and the new task/observer slice. Original native custody and the complete qualified composition predecessor replay; Python 3.9 grammar passes. Native book/POD, complete selected source/index/copied-byte checks include the updated task/resume assets. Current runtime behavior and user-facing family guides are unchanged, so original compiler/backend epochs and another metadata contract run are not needed for this partition-only commit. Full CI/publication and whole-manual browser QA remain owned.
+
+### Shared-datapath partition evidence and continuation
+
+- Re-derivation: shared-datapath-partition.json.gz projects exact original native values from composition-final-qualified.json.gz/model-roots-qualified.json.gz and preserves every unselected field/deeper delegation. It retains exact input hashes and its complete instrument source. Prefixes select root composition and lowered-RTL mirrors only; no intent-HIR counterpart is invented. Counts concern selected metadata slots, not candidates, execution, source support or complete nested models.
+- Falsification: explicit suffix allocations are independently compared with the complete remaining-field prefix census. Missing fields, wrong cohort, reversed native value order, lost remaining ownership and wrong final-join owner all refuse. The completed predecessor's saved source/doc/native oracles remain unchanged; this new partition does not relabel their dated guides current. Subject/container/declared-type/assertion availability obligations stay explicit in the new guide acceptances.
+- Durability: replay scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mcp-api-reference-20261023/partition_shared_datapath.py without --write. The write command refuses existing evidence. shared-datapath-partition-checks.json and checks.log.gz retain the consumed successful command, complete streams, original/normalized stream digests and Python grammar result. Final native/doctrine streams follow separately. No new Knowledge Map fact/question or allowance is introduced; this is task topology, not a new runtime fact.
+- The first guide .5.2 owns candidate/contributor shallow lists and optional declared-type extensions. .5.3 owns singular bound-expression/drive-intent and nested RHS enable subjects; .5.4 owns aggregate and two assertion contexts; .5.5 joins all current sources/docs and selected grouped projections. Existing deeper .3.2.3/.3.3/.6.4, structural type/value and source/backend/HIAL/publication/whole-book obligations remain unchanged. Commit the partition before implementing .5.2.
+- Task-evidence authority follows current actual totals plus its existing ratchet, without baseline/target/ceiling growth. The user-facing behavior prose is unchanged; native delivery refreshes the linked task and resume source assets. No separate DEVELOPMENT_NOTES rationale record is warranted.

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/mcp-api-reference-20261023/partition_shared_datapath.py",
+    "--write"
+  ],
+  "exit_status": 0,
+  "python_39_grammar": "PASS",
+  "result": {
+    "cohort_fields": {
+      "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.2": 8,
+      "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.3": 6,
+      "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.4": 6
+    },
+    "limits": "Task partition only; no shared-datapath subject/model/source/execution qualification closes here.",
+    "rejected_controls": {
+      "lost_remaining": "remaining delegation conservation",
+      "misallocated_field": "exact separate cohort allocation",
+      "missing_field": "exact separate cohort allocation",
+      "wrong_join_owner": "final current-source join owner",
+      "wrong_value_order": "complete native value/type/order"
+    },
+    "remaining_fields": 50,
+    "selected_fields": 20
+  },
+  "log": "docs/audits/mcp-api-reference-20261023/shared-datapath-partition-checks.log.gz",
+  "original_log_sha256": "4b825fa274c8fdae2e8f21ec6a96c8dd5509f6676a75771768c6cf928f006002",
+  "retained_log_sha256": "4b825fa274c8fdae2e8f21ec6a96c8dd5509f6676a75771768c6cf928f006002",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}

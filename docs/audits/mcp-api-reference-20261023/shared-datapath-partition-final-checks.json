@@ -1,0 +1,69 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5.1",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/partition_shared_datapath.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "scope": "Saved-data task partition and native current source-asset delivery; no new shared-datapath guide or source/runtime epoch.",
+  "log": "docs/audits/mcp-api-reference-20261023/shared-datapath-partition-final-checks.log.gz",
+  "original_log_sha256": "d66471494ebe2c9761299f32e63a849bef94513e8cfd91061ae7fcdaa1301bcb",
+  "retained_log_sha256": "be9d249a8e55abf0bd966e5aa7932133912ba8f36783650d5b9f4a1e9eefd13c",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}
