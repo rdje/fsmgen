@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3`
-- next_action: Qualify common fields of the selected enriched diagnostic/query/support/verification/validation records, preserving owner-specific shapes, exact semantic evidence, deeper delegation and POD/book coverage.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.1`
+- next_action: Qualify identity, status, entrypoint and guidance fields across the selected enriched records at .3.1, preserving explicit absence, report/manifest routes, source evidence and exact family/deeper owners.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

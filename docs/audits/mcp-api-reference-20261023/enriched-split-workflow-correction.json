@@ -1,0 +1,9 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.5",
+  "initial_acceptance_exit": 1,
+  "initial_acceptance_output": "no staged task file independently satisfies the current-slice checklist: fresh checked NO REGRESSION box with box-scoped no_regression signature",
+  "cause": "The added configuration declaration activated the implementation gate; the signature was placed in a later paragraph, outside the NO REGRESSION box.",
+  "correction": "Put the actual prior knowledge-map success in the current NO REGRESSION box; inspect acceptance before launching the dependent complete gate.",
+  "premature_dependent_gate": "Own session 26992 interrupted through its execution handle, final exit 130; no success inferred.",
+  "durability": "Full original first complete refusal retains separately; partial second gate stream is retained as interrupted, never a final result."
+}

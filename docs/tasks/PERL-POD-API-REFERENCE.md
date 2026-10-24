@@ -361,11 +361,48 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.2: qualify section-shell fields and nested map subjects`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.1, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.3, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.4, PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.5`
   Goal: `Qualify common fields in enriched diagnostic, query, support, verification and validation records.`
   Acceptance: `Follow the exact selected paths, including repeated section projections, and dedicated owner contracts. Preserve optional-tool status, report versus manifest entrypoints, registry key-family labels, MCP adapter routes, common-field absence and extension boundaries. Record complete common-field semantics and exact deeper delegations, source-bound values and POD/book gaps; exercise coherent adverse controls and commit.`
-  Verification: `Unstarted enriched-record qualification; section-shell prerequisite is committed at 3c4f11367.`
+  Verification: `Exact selected enriched paths require separate identity/routes, report/registry families, query/support/verification families and final joined closure. Identity/routes .3.1 is first; all deeper obligations preserve. Section-shell prerequisite is committed at 3c4f11367.`
   Commit: `pending`
+
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.1`
+  Status: `pending`
+  Goal: `Qualify identity, status, entrypoint and guidance fields across every selected enriched record.`
+  Acceptance: `Join all ten selected native paths and repeated projections to dedicated owners. Census schema_version, status, contract_source, report_source, entrypoints, mcp_adapter_entrypoints and guidance, including explicit absence. Preserve report versus manifest routes, optional external-tool status, list/string shapes, ordered retained values and deliberate extension boundaries. Bind exact source and book/POD meanings with omission, type, wrong-owner/route/status, projection and freshness controls; no runtime/source epoch replay. Delegate every other field by exact path to .3.2 or .3.3, commit before family semantics.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2`
+  Status: `pending`
+  Goal: `Qualify enriched check, normalized-report, registry and external-validation key-family subjects.`
+  Acceptance: `Follow /diagnostics/check_json, /diagnostics/stable_code_registry, /semantic_exports/normalized_semantic_json and /backend_validation/systemverilog_external from .3.1. Explain common presence/key/value-family maps, exact subject and conditional-success/failure/optional/extension meanings with canonical owner evidence. Preserve all remaining field/deeper payload delegation to .3.2.2-.4 and .6.3-.6.4, test coherent wrong-subject/value-versus-key/omission controls, synchronize book/POD and commit.`
+  Verification: `pending identity/routes qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.3`
+  Status: `pending`
+  Goal: `Qualify enriched query, support and verification key-family subjects and repeated projections.`
+  Acceptance: `Follow semantic_introspection, support_accounting and verification_outputs plus their section_contract projections from .3.1. Preserve absent common fields, manifest versus contract subjects, query name/value families, catalog required/optional fields, artifact and inert-validation boundaries. Bind grouped families to dedicated contracts and canonical documents; retain exact deeper .3.2.2-.4, .6.3-.6.6 owners, reject coherent wrong-subject/availability/omission controls and commit.`
+  Verification: `pending preceding enriched report/registry family qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.4`
+  Status: `pending`
+  Goal: `Close the joined enriched common-record census and every deeper field delegation.`
+  Acceptance: `Independently join .3.1-.3 identity and family records to all selected native paths, owners, repeated projections, absent common fields, source-bound values and exact documentation routes. Prove each field has qualified common meaning or an exact deeper owner, reject missing/duplicate/wrong-owner/meaning/stale-document joins and commit before embedding .2.4.`
+  Verification: `pending all enriched cohorts`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.5`
+  Status: `done`
+  Goal: `Separate enriched identity/routes from heterogeneous family semantics before implementation.`
+  Acceptance: `Preserve all original selected paths and parent obligations; give each child a bounded concrete scope, independent checks and exact successor. Recheck selected source/canonical contracts, current policy identities, Git/task integrity, and commit this decomposition before implementing .3.1.`
+  Verification: `Selected saved cohort has ten exact paths under seven dedicated owners. Source review confirms optional_when_tools_installed versus bounded_public, report versus manifest entrypoints, registry labels, repeated projections and absent guidance. These require separately reviewable identity and heterogeneous family cohorts. All selected startup policy hashes and read-only sibling template match the retained review; cleanup is current. Final integrity/doctrine gates qualify this documentation-only split, with no manual behavior change.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.5: separate enriched identity and family qualification`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.4`
   Status: `pending`
@@ -1713,3 +1750,12 @@ The first section-shell staged doctrine gate refuses a verbose audit-front-door 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'pending section-shell qualification' -1 -- docs/tasks/PERL-POD-API-REFERENCE.md` identifies a5b9d2153's precursor descriptions. The completed .2.2 child and Memory/index advanced at 3c4f11367, while two inherited descriptions retained their earlier prerequisite wording. This could confuse a fresh reader despite correct authoritative statuses and next-action pointer.
 - [x] **ADDRESSED (verified)** — Parent verification explicitly names the qualified shell census and selects enriched .2.3; the unstarted successor names the committed prerequisite. Exact targeted checks reject the former descriptions and agree with the done child and unchanged Memory/index. This small owned handoff repair changes no implementation or manual behavior and requires no ceremonial book edit.
 - [x] **NO REGRESSION** — Focused task integrity passes; knowledge-map: OK and complete staged/normal doctrine gates remain required before the clean commit. Prior native field controls, source conservation, contract tests and book/POD qualification are unchanged. No producer, source epoch, backend, full CI or publication repeats.
+
+
+## Acceptance Checklist — .6.1.2.3.2.1.2.3.5
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'mcp_adapter_entrypoints' -1 -- perl/FSM/Support/SemanticIntrospectionContract.pm` locates 129cfae08's adapter discovery boundary. Dedicated source review and the retained common-record-cohorts.json expose different report/manifest routes and heterogeneous family subjects; the incoming leaf combines identity with substantially deeper check/normalized/query/catalog/artifact schemas. No universal record interpretation is valid.
+- [x] **ADDRESSED (verified)** — The parent now has explicit identity/routes, report/registry families, query/support/verification families and joined closure leaves. The existing ten selected paths and every original acceptance obligation remain owned. Identity .3.1 starts first; no implementation or user-visible manual behavior changes.
+- [x] **NO REGRESSION** — knowledge-map: OK in the first complete staged gate; task integrity passes, and staged/normal doctrine gates must qualify this planning change; prior source/native evidence remains sealed. Startup policy inputs and selected read-only external template are byte-identical to the retained review; no adoption change or cleanup is due. No source epoch, backend, full CI or publication is run.
+
+The split's first complete staged gate refused task_evidence total-line/byte transition allowance exhaustion. Full output retains in docs/audits/mcp-api-reference-20261023/enriched-split-doctrines-first-refusal.log.gz. Apply only the documented warning-debt actual-plus-own-step declaration for those totals after recording this evidence; preserve baseline, ceilings, targets and owner. The required implementation acceptance now covers that declaration; the initial gate already reports knowledge-map: OK, and all final gates must be rerun.
