@@ -43,6 +43,11 @@ list determines callable operations. See
 [result contract discovery](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DISCOVERING_RESULT_CONTRACTS)
 for the ownership joins and the distinct tool/resource envelopes.
 
+Keep identity layers separate: manifest/record schema versions, authored-language
+versions and the negotiated MCP protocol describe different contracts. Producer
+version and best-effort Git revision identify the reporting build; they do not
+establish a package release or replay identity.
+
 For `fsmgen_check`, `fsmgen_semantic_introspect` and
 `fsmgen_schedule_preview`, supply `source_id` or `source_path`. Discovery
 expresses this alternative with `anyOf`; both may be supplied. Every supplied

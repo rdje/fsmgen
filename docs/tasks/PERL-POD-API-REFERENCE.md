@@ -303,9 +303,52 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.2`
   Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.3.2.6, PERL-POD-API-REFERENCE.6.1.2.3.2.1, PERL-POD-API-REFERENCE.6.1.2.3.2.2, PERL-POD-API-REFERENCE.6.1.2.3.2.3, PERL-POD-API-REFERENCE.6.1.2.3.2.4, PERL-POD-API-REFERENCE.6.1.2.3.2.5`
   Goal: `Inventory nested manifest/capability/support/diagnostic/documentation model families and public ownership.`
   Acceptance: `Refine from .3.1. Follow all public metadata owner/key-family/schema maps and catalog compact/full variants. Inventory field families and dynamic-map/array element models with meaning/version/optionality/order/identity/extension boundaries and canonical prose/evidence. Separate metadata advertising another API from operations the MCP server actually offers. Record every semantic-doc gap and exact successor; retain full source/graph custody and commit bounded cohorts without declaring names or schema keys sufficient.`
-  Verification: `pending root topology`
+  Verification: `Root topology is qualified at 1757aa395. Selection .6 is complete; the common-shell field census .1 is first, followed by the remaining exact metadata cohorts.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.6`
+  Status: `done`
+  Goal: `Select bounded metadata field-census cohorts from the qualified root graph.`
+  Acceptance: `Use the qualified public root/owner graph and canonical contracts to separate common shell/provenance, discovery/catalog/diagnostic/documentation, export/embedding, language/backend/verification and final metadata closure obligations. Preserve delegated specialized VIAL coverage and every model/doc debt; select the first exact active field census without altering shipped behavior.`
+  Verification: `Five exact child cohorts now own all metadata categories, with .3.2.1 first. Canonical manifest/producer contracts and builders, current guide/POD and qualified root data were reviewed. Tool/build/version/revision provenance is distinct from schema/protocol authority; best-effort git_commit may be unknown and is not a release/replay identity. No runtime change or source query. This planning checkpoint declares no field-interpretation completion.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.3.2.6: select bounded metadata field-census cohorts`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.1`
+  Status: `active`
+  Goal: `Inventory manifest shell, producer and common contract-record field semantics and documentation gaps.`
+  Acceptance: `Use the qualified root capture and canonical producer/manifest contracts. Inventory every root-shell, producer and common identity/entrypoint/key-family/guidance field, including dynamic map/list element rules, version distinctions, ordering, requiredness, extension policy and best-effort provenance. Map semantic evidence and exact POD/book coverage; mark genuinely undefined meaning rather than inventing it or counting names/test-status prose as sufficient. Keep captured build identity distinct from operational protocol/version authority. Independently join fields/patterns to source-bound actual shapes and test missing/extra/wrong-meaning/documentation controls. Commit the bounded census and synchronized interpretation guidance before other metadata families.`
+  Verification: `pending common-shell census from qualified model roots`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.2`
+  Status: `pending`
+  Goal: `Inventory introspection discovery, diagnostic, support/catalog and documentation metadata field families.`
+  Acceptance: `Refine exact leaves before work. Cover discovery tool/family/domain/resource/source-kind/owner maps, diagnostic registry and report-advertisement metadata, support aggregates and compact/full/catalog/discovery variants, and grouped documentation paths/contracts. Preserve all dynamic identifiers, optional diagnostic fields, ordering, counts/units, enum/default/version/extension semantics and query/limit scope. Join dedicated owners and actual data to complete semantic descriptions and exact documentation gaps; schedule every omission and commit bounded cohorts.`
+  Verification: `pending common shell`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.3`
+  Status: `pending`
+  Goal: `Inventory semantic-export and embedding contract advertisements without promoting raw/private payloads.`
+  Acceptance: `Refine nested cohorts from actual graph owners. Map normalized report, serializable snapshot/plan, facade/result, composition, debug-runtime and extension metadata families, separating descriptive contracts from results obtainable through MCP and separately owned in-process APIs. Explain all public field-family, copy/stability/safety/identity/optional/version/extension records and source/IR branch relationships, mark private/live hash exclusions and incomplete documentation, then commit bounded cohorts.`
+  Verification: `pending root/common shell and dedicated owner reads`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.4`
+  Status: `pending`
+  Goal: `Inventory language/backend/verification capability metadata with exact delegated VIAL coverage.`
+  Acceptance: `Refine bounded families from the graph. Cover public language/file/feature/status metadata, external validation descriptors, verification target/artifact/signal/observation/source/validation metadata and contract-family maps. Explain availability versus advertised separate execution APIs, dynamic IDs, units, versions, extension/stability boundaries and source evidence. Delegate specialized VIAL tooling/inspection/execution-schema descriptions explicitly to .3.4 while retaining every owning metadata path and gap obligation; no schema-name-only completion. Commit each bounded census.`
+  Verification: `pending metadata cohorts`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3.2.5`
+  Status: `pending`
+  Goal: `Close the full metadata field-family inventory and preserve every documentation obligation.`
+  Acceptance: `Join .3.2.1-.4 fields/patterns, root aliases and delegated VIAL rows to actual producer/contract data and exact .6.2-.6.6 documentation owners. Prove no omitted/duplicate/dropped field family, keep partial/absent semantics explicit and include coherent wrong-owner/meaning/stale-doc controls. Record the bounded public versus merely observed extension distinction; commit the complete metadata census before source-report and final gap-matrix closure.`
+  Verification: `pending full metadata field census`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3.3`
@@ -1449,3 +1492,41 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   stays .6.6.1 before final signoff. Historical source/CI/push gates retain.
 - Complete normal staged/commit gates, clear the brief and verify clean state;
   then refine .6.1.2.3.2 from the qualified graph before its first implementation.
+
+
+### .6.1.2.3.2.6 selection checkpoint
+
+- The root graph's complete actual metadata is the census input; root names,
+  owner links, schema labels and existing test-status prose do not by
+  themselves document field semantics. The five child cohorts retain dynamic
+  map/list members, version/order/requiredness/extension meaning and exact
+  prose gaps, including explicit delegation of specialized VIAL metadata.
+- Common-shell preparation read the complete CapabilityManifestContract,
+  ProducerContract, ProducerSection and capability facade, the qualified
+  manifest/producer values, and relevant current book/POD. Producer version
+  is tool/build metadata; git_commit is a best-effort short hash or unknown,
+  and the producer contract explicitly disclaims release-management meaning.
+  These existing contract facts remain inputs to .3.2.1, not a new field audit.
+- No code or runtime source changes. Book guidance now distinguishes the
+  identity/version layers while full model interpretation remains pending.
+  Complete normal doctrine/commit workflow and resume .3.2.1 from the committed
+  selection alone; no process or uncommitted implementation is required.
+
+
+## Acceptance Checklist — .6.1.2.3.2.6
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'PERL-POD-API-REFERENCE.6.1.2.3.2' -1 -- docs/tasks/PERL-POD-API-REFERENCE.md` identifies 1757aa395's qualified topology and still-unsplit metadata census. Its roots span common identity, discovery/catalog/diagnostic, embedding/export and language/backend/verification contracts; one undivided field inventory would not be a bounded signoff slice. The reviewed producer/manifest contracts explicitly separate build provenance from schema authority and release-management promises.
+- [x] **ADDRESSED (verified)** — Five exact child cohorts now own every metadata category and final closure, with specialized VIAL delegation explicit and .3.2.1 selected first. The bounded Memory/task index name that exact first action. Book guidance distinguishes schema/language/protocol/build identities; no runtime code or field-completion status changes. The initial staged refusal is retained: book authority metadata is an implementation-classified path and therefore requires these fresh acceptance boxes even for this planning activity.
+- [x] **NO REGRESSION** — knowledge-map: OK. The staged task-tree integrity check passes for the new topology; native mdBook/source/copied-byte/link checks pass. This is selection and documentation only, with all runtime source unchanged. No source query, backend, simulation, full CI or push is introduced. The next field census is unstarted and can resume from committed records alone.
+
+- Session health: the director's section 11 applies after this long run; focus
+  is slipping. Finish and commit this checkpoint before requesting fresh context
+  for the unstarted field census. No implementation or process must depend on
+  conversation-only state. The first acceptance refusal preserves separately;
+  complete final staging/inventory refresh and rerun all normal gates.
+
+- The initial checkpoint ID used a zero component, which the task-tree grammar
+  rejects. Both original gate refusals retain. Rename that planning checkpoint
+  to the valid unused positive child .3.2.6, preserve the five census cohorts
+  and .3.2.1 resume target, and run focused integrity before the full final
+  gate. No field census or runtime work has begun.
