@@ -1,7 +1,7 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **109** uniquely owned question entries.
+> **26** facts · **110** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="are structural_rtl_ir instance parameter overrides entry keys advertised?" · facts=[normalized-semantic-structural-instance-parameter-override-entry-schema](../../docs/knowledge/normalized-semantic-structural-instance-parameter-override-entry-schema.md)
 - q="are structural_rtl_ir instance port bindings entry keys advertised?" · facts=[normalized-semantic-structural-instance-port-binding-entry-schema](../../docs/knowledge/normalized-semantic-structural-instance-port-binding-entry-schema.md)
 - q="are symbol-contract package imports public package internals?" · facts=[normalized-semantic-symbol-package-import-name-list](../../docs/knowledge/normalized-semantic-symbol-package-import-name-list.md)
+- q="can semantic.explicit_system_contract be null?" · facts=[normalized-semantic-optional-children](../../docs/knowledge/normalized-semantic-optional-children.md)
 - q="does composition child parameter_overrides reuse structural instance parameter override schemas?" · facts=[normalized-semantic-composition-child-parameter-override-alias-schema](../../docs/knowledge/normalized-semantic-composition-child-parameter-override-alias-schema.md)
 - q="does composition generated_children parameter_overrides reuse structural instance parameter override schemas?" · facts=[normalized-semantic-generated-child-parameter-override-alias-schema](../../docs/knowledge/normalized-semantic-generated-child-parameter-override-alias-schema.md)
 - q="does intent_hir composition_children reuse composition child schemas?" · facts=[normalized-semantic-intent-hir-composition-child-alias-schema](../../docs/knowledge/normalized-semantic-intent-hir-composition-child-alias-schema.md)
@@ -170,7 +171,7 @@ _Normalized semantic lowered RTL advertises selector-conflict metadata_
 
 _Normalized semantic JSON advertises optional semantic children explicitly_
 
-- **date:** 2026-06-05 · **status:** current
+- **date:** 2026-10-24 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-optional-children.md`](../../docs/knowledge/normalized-semantic-optional-children.md)
 
 ### normalized-semantic-output-drive-entry-schema

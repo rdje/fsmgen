@@ -385,6 +385,79 @@ regression-backed widening. Semantic payload children, IR tiers, grouped-map
 members, snapshots, optional declaration models and classifier policy retain
 their dedicated contracts and the detailed references below.
 
+
+### Normalized payload and IR baseline families
+
+The normalized contract also advertises the baseline shapes below. These lists
+name fields of a particular payload or entry, rather than the contract record.
+Read the enclosing report outcome and each object's availability before applying
+a nested family. The source-query/report-variant coverage and complete nested
+value models remain with their dedicated contracts.
+
+| Metadata field | Subject and meaning |
+| --- | --- |
+| `public_layers` | Advertised public layer-name values: `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`. This is a value family; the similarly valued forward-IR list below names object fields. Neither establishes executed simulation or validation. |
+| `success_semantic_presence_keys` | Base keys of success-only `semantic`: `module`, `system_contract`, `explicit_system_contract`, `signal_analysis`, `forward_ir`. Key presence does not require a non-null object. |
+| `success_semantic_optional_child_presence_keys` | Optional `semantic` children: `composition`, `protocol_intent_bundle`, `symbol_contract`. Their presence depends on available source/projection data; they are not mandatory on every success. |
+| `success_module_presence_keys` | Core fields of `semantic.module`: module/root/language identity and state, signal, parameter and implicit-system-port summaries. These describe the exported module summary, not the full compiler module. |
+| `success_module_optional_metric_keys` | Additional module metric fields for applicable output-drive, standalone-DT and composition projections. Discover these separately from the core fields; do not require every metric for every source. |
+| `success_explicit_system_contract_presence_keys` | Authored clock/reset fields of `semantic.explicit_system_contract` when an explicit object is preserved. The parent key can hold `null` when no authored contract is preserved. |
+| `success_signal_analysis_presence_keys` | Bucket names in `semantic.signal_analysis`: `inputs`, `multi_bit`, `outputs`, `single_bit`. These are views of signal metadata; the family list does not promise a disjoint partition. |
+| `success_signal_analysis_entry_presence_keys` | Core fields of each bucket's signal entry: `direction`, `name`, `signed`, `width`. This names entry fields, not bucket names; broader typed extensions remain separately owned. |
+| `success_system_contract_presence_keys` | Effective clock/reset and `declare_ports`/`implicit` behavior fields in `semantic.system_contract`. This differs from the authored explicit-system object, whose family omits those effective-behavior fields. |
+| `success_symbol_contract_presence_keys` | Baseline fields of optional `semantic.symbol_contract`: constants, enums, types, package imports and their summaries/projections. Dynamic names and nested values retain their detailed contracts. |
+| `success_forward_ir_presence_keys` | Child field names of `semantic.forward_ir`: `intent_hir`, `lowered_rtl_ir`, `structural_rtl_ir`. These are sanitized projections, not live compiler objects. |
+| `success_forward_ir_intent_hir_presence_keys` | Base fields of the intent-HIR projection: module/state/signal/parameter/system/symbol and standalone-DT intent summaries. Apply it to that tier, not the outer `forward_ir` container. |
+| `success_forward_ir_intent_hir_optional_composition_keys` | Additional intent-HIR fields when composition data is projected, including child/generated-child/standalone-DT summaries and records. These are optional tier fields, not the root `semantic.composition` field. |
+| `success_forward_ir_lowered_rtl_ir_presence_keys` | Base fields of the lowered-RTL projection, including output-drive, selector-conflict and standalone-DT multi-drive summaries/collections. Detailed entries retain their specific families. |
+| `success_forward_ir_lowered_rtl_ir_optional_composition_keys` | Additional lowered-RTL composition fields: auxiliary-assignment, shared-datapath, instance and internal-net metadata. The subject is the lowered tier, not a child entry or the root composition object. |
+| `success_forward_ir_structural_rtl_ir_presence_keys` | Base fields of the structural-RTL projection: assignment, auxiliary-assignment, instance, port, net and declared/resolved-link collections and summaries, plus identity. Typed entries and extensions remain separately owned. |
+
+For example, a present `semantic.explicit_system_contract: null` satisfies parent
+key presence without providing an authored-system object to inspect. Conversely,
+an omitted `semantic.composition` is permitted by the optional-child family.
+The current public report factory keeps those states distinct: it always writes
+the explicit-system key, then adds each optional child only when its public value
+is defined. Reading an advertised nested family does not establish availability
+of its object or complete population of an arbitrary raw in-process result.
+
+The scalar owner fields use their emitted names; do not construct a field name
+by appending a suffix to an object label:
+
+| Owner field | Namespace under `FSM::Support` |
+| --- | --- |
+| `semantic_contract_source` | `NormalizedSemanticPayloadContract` |
+| `module_contract_source` | `NormalizedSemanticModuleContract` |
+| `explicit_system_contract_source` | `NormalizedSemanticExplicitSystemContract` |
+| `signal_analysis_contract_source` | `NormalizedSemanticSignalAnalysisContract` |
+| `system_contract_source` | `NormalizedSemanticSystemContract` |
+| `symbol_contract_source` | `NormalizedSemanticSymbolContract` |
+| `forward_ir_contract_source` | `NormalizedSemanticForwardIRContract` |
+| `composition_contract_source` | `NormalizedSemanticCompositionContract` |
+| `forward_ir_intent_hir_contract_source` | `NormalizedSemanticIntentHIRContract` |
+| `forward_ir_lowered_rtl_ir_contract_source` | `NormalizedSemanticLoweredRTLIRContract` |
+| `forward_ir_structural_rtl_ir_contract_source` | `NormalizedSemanticStructuralRTLIRContract` |
+
+Each namespace identifies a dedicated contract, not a callable tool. The layer
+names and tier containers describe inspectable compilation representations;
+metadata discovery supplies no lifecycle execution, temporal observation or
+external-tool validation result. Keep report schema, contract version and
+source/language applicability separate.
+
+Current direct-builder limitation: a retained synthetic call with JSON Boolean
+metadata loses `declare_ports`, `implicit` and signal `signed` fields in the
+normalized builder. Its reference filter drops `JSON::PP::Boolean` objects.
+This P2 direct-helper defect has an immediate tracked repair; native DSL/CLI/MCP
+source reachability is separately unqualified. The field families above state
+the intended bounded model, not a successful value-preservation qualification.
+
+This is not a closed schema for every nested payload. Preserve emitted arrays
+in evidence without inferring priority, and use named lookup for objects.
+Detailed symbol values, composition entries, shared datapath/control records,
+structural entries and grouped-map projections retain their own family guides
+and deeper model contracts. Unknown extensions are not promoted to stable API
+merely because a sanitized object currently carries them.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public

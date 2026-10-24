@@ -230,6 +230,35 @@ They do not add callable tools or expose a live generator object. Report schema,
 contract schema, build, protocol and language versions are distinct. This is not a closed schema
 for all nested values; deeper payload/IR/maps/snapshot meanings retain their owners.
 
+
+=head2 Normalized payload and IR baseline families
+
+The book's C<Normalized payload and IR baseline families> guide distinguishes
+C<public_layers> name values from the child keys of C<semantic.forward_ir>.
+C<success_semantic_presence_keys> names the success payload's base fields;
+C<success_semantic_optional_child_presence_keys> separately names optional
+C<composition>, C<protocol_intent_bundle> and C<symbol_contract> children.
+The required C<explicit_system_contract> key can contain null when no authored
+system object is preserved. A nested object's advertised fields do not establish
+that the object is available or non-null on every report.
+
+Module core/optional metrics, signal buckets/entry fields and effective versus
+authored system contracts retain distinct subjects. Intent-HIR and lowered-RTL
+optional composition fields belong to their tier, not to a child entry or the
+root composition object. Structural fields describe sanitized collections and
+summaries; richer entry/value semantics retain their own contracts.
+
+Use the emitted owner labels, including C<explicit_system_contract_source>,
+C<system_contract_source> and C<symbol_contract_source>. Appending
+C<_contract_source> to every object label invents unsupported field names.
+Owner namespaces and IR-tier discovery do not execute simulation or validation,
+expose live compiler objects or establish whole-export stability.
+A retained synthetic direct-builder probe currently loses JSON Boolean system
+and signal fields because the reference filter drops C<JSON::PP::Boolean>.
+The immediate tracked repair does not claim native DSL/CLI/MCP reachability.
+This is not a closed schema for nested values; deliberate widening and deeper
+symbol/composition/control/structural/grouped-model owners remain required.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs
