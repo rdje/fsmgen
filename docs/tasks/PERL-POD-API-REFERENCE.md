@@ -66,7 +66,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 - ID: `PERL-POD-API-REFERENCE`
   Status: `active`
   Goal: `Deliver a reproducible POD API reference through the native mdBook workflow.`
-  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5, PERL-POD-API-REFERENCE.6, PERL-POD-API-REFERENCE.7`
+  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5, PERL-POD-API-REFERENCE.6, PERL-POD-API-REFERENCE.7, PERL-POD-API-REFERENCE.8`
 
 - ID: `PERL-POD-API-REFERENCE.1`
   Status: `done`
@@ -722,6 +722,25 @@ HIAL, claim, locality, or source-feature signoff gates.
   Acceptance: `Read the named local policy/guide and read-only sibling claim template. Compare neutral normative contracts to the locally adopted authorities and retained prior review; preserve meaningful differences and source identities, adopt only necessary local changes under exact ownership, or record why none is required. Never write outside this Git repository. Commit review before resuming the selected common metadata census.`
   Verification: `Complete selected sibling claim bytes equal the retained 2026-09-23 reviewed template; existing decision0104 adaptation remains applicable. Canonical local README policy and complete containment bridge match adopted authority/lifecycle/derived-state/pressure/retrieval contracts. Dated source identities, dispositions and evidence legs retain in docs/audits/startup-policy-review-20261024.json. No policy, runtime, mdBook behavior, ceiling or external repository write required.`
   Commit: `PERL-POD-API-REFERENCE.7.2: verify startup policy-source adoption`
+
+- ID: `PERL-POD-API-REFERENCE.8`
+  Status: `done`
+  Goal: `Preserve the director's DBIQNP private OpenAI-plugin discussion without changing the active documentation frontier.`
+  Children: `PERL-POD-API-REFERENCE.8.1, PERL-POD-API-REFERENCE.8.2`
+
+- ID: `PERL-POD-API-REFERENCE.8.1`
+  Status: `done`
+  Goal: `Record the private-plugin proposal, current integration facts and explicit no-pivot boundary.`
+  Acceptance: `Preserve the director's corrected private-use scope, distinguish current read-only FSMGen capabilities from proposed write/generation operations, date official OpenAI source observations, and retain a future evaluation owner without changing selected work or claiming compatibility.`
+  Verification: `Official plugin quickstart and connection guide were fetched on 2026-10-24; existing FSMGen transport card and .17 public integration decision establish local read-only stdio. The discussion below records the proposed private workflow and the director's correction. No installation, connection, implementation or authenticated host compatibility was tested. Current documentation frontier and product behavior remain unchanged; required doctrine/commit checks qualify this discussion/containment record.`
+  Commit: `PERL-POD-API-REFERENCE.8.1: record private OpenAI plugin discussion without pivot`
+
+- ID: `PERL-POD-API-REFERENCE.8.2`
+  Status: `deferred`
+  Goal: `Evaluate a private OpenAI plugin over the existing FSMGen semantic MCP adapter when selected.`
+  Acceptance: `If selected later, qualify exact host/account/tunnel prerequisites, tool discovery/selection, structured result and refusal fidelity against a local instance through published interfaces. Start with existing inspection operations and separately specify any requested validation/generation/artifact effects. Refine safe leaves before implementation; preserve all existing workspace, execution, locality and contract boundaries.`
+  Verification: `Deferred because the director explicitly tagged this as DBIQNP discussion; no implementation pivot or access/setup action is authorized by it. Resume only after a later selection consistent with current documentation and required feature-delivery priority. Private personal use is the requested scope; distribution work is outside it.`
+  Commit: `pending later selection; discussion retained under .8.1`
 
 ## Decisions
 
@@ -2059,3 +2078,19 @@ The split's first complete staged gate refused task_evidence total-line/byte tra
 - The existing child-entry Knowledge Map card still preserves every original fact/question and routes to the updated canonical manual; no card/allowance growth is needed. Selected startup policy inputs remain byte-identical to the committed 2026-10-24 review, including the read-only sibling template. Cleanup remains within the recorded daily interval. No separate engineering rationale requires DEVELOPMENT_NOTES. Current task-evidence allowance uses actual plus its own ratchet only; book aggregate authority names this exact guide delta.
 - The first full doctrine run refused the expanded task-index sentence: focused_documents max line bytes 874 exceeded baseline 790 plus growth 72. Copy-editing only redundant frontier wording returns that line to 858 bytes; no focused-document allowance grows and no task facts are removed. The required corrected gate follows.
 - Commit before ordinary/generated parameter aliases .4.2. The standalone-DT cohort .4.3 and final current-source/grouped selected join .4.4 remain open. Original source reachability, HIAL causality, full CI/publication and broader browser obligations retain their existing owners.
+
+
+## DBIQNP private OpenAI-plugin discussion — .8.1
+
+- Director request, 2026-10-24: give an opinion on using an OpenAI plugin to drive the director's own FSMGen instance. The director explicitly corrected the scope to private use. This is discussion only; the active composition-documentation frontier and required delivery priorities stay unchanged.
+- Engineering view: an MCP-backed personal plugin is a promising interface for inspecting capabilities, sources, diagnostics and semantic results. Reuse the existing semantic API/adapter and add workflow instructions. FSMGen remains authoritative for validation and results. Any future write, generation, artifact or execution operation needs an explicit bounded effect contract; the shipped adapter does not gain those abilities through packaging. Optional diagrams or lowering views may help later, but no UI is selected or required by this discussion.
+- Dated external observation: the official [OpenAI plugin quickstart](https://developers.openai.com/plugins/quickstart), fetched 2026-10-24, describes plugins with skills, MCP tools and optional UI for supported ChatGPT/Codex surfaces. The [connection guide](https://developers.openai.com/plugins/deploy/connect-chatgpt), fetched the same day, documents private stdio/HTTP server access through Secure MCP Tunnel. These are external product-doc observations, not proven FSMGen compatibility or account entitlement. Recheck the official sources before implementation.
+- Existing FSMGen boundary: the canonical semantic-introspection MCP fact card and SEMANTIC-INTROSPECTION-MCP-FRONTIER.17 retain the published local stdio/read-only contract. A future feasibility check should first test the private connection, actual tool selection and result/refusal fidelity. Do not create another compiler authority or expose a generic shell as a substitute for typed FSMGen operations.
+- Ownership: .8.2 retains the optional evaluation and explicit deferred reason. This note neither selects that evaluation nor changes transport, tooling, authentication, capabilities, the mdBook's shipped behavior or the current MEMORY.md pointer. No distribution work is requested. The prior composition slice is cleanly committed at f3ff00122 before this record begins.
+
+
+## Acceptance Checklist — .8.1 (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.17: keep MCP transport local stdio' against the exact 67f97296a commit locates the shipped local-stdio decision in its owning task record. The director's DBIQNP request and explicit private-use correction call for a durable proposal, with current read-only operations distinguished from future effects. Fetched official OpenAI plugin/connection guidance establishes an integration route, while host/account/FSMGen compatibility remains untested and deferred.
+- [x] **ADDRESSED (verified)** — .8.1 records the exact discussion scope, official source URLs and observation date, existing adapter boundary and suggested private inspection workflow. .8.2 owns later feasibility with an explicit DBIQNP deferral. MEMORY.md and the active index remain byte-identical to f3ff00122; no installation, external connection, product behavior or implementation selection occurs. The first gate's complete stream is retained in private-plugin-discussion-first-doctrines.log.gz; its acceptance refusal correctly requires fresh boxes for the paired containment declaration, supplied here.
+- [x] **NO REGRESSION** — knowledge-map: OK and every other doctrine in the first staged run passes, including task-tree, source-index, claim, locality and containment checks. The fresh discussion checklist and exact task-evidence actual-plus-ratchet declaration require the final staged and hook scripts/check_doctrines.sh passes before commit. No runtime/source feature changed, so no new runtime regression or native book build is needed; current product documentation and resume pointers remain unchanged.
