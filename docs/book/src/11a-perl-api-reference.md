@@ -635,6 +635,37 @@ or execution. Use the separate backend/runtime contracts for those guarantees.
 RHS/default/reset values, full expression and deeper IR models,
 source availability, and source-query applicability remain separately qualified.
 
+### Normalized shared-datapath grouped lookups
+
+The shared families above also appear in
+`semantic_exports.normalized_semantic_json.presence_key_family_map` and
+`semantic_presence_key_family_map`. Use the full advertised metadata name in
+the report map. In the semantic map, root composition names stay the same and
+lowered-RTL names omit the leading `success_`:
+
+| Report `presence_key_family_map` key | Semantic `semantic_presence_key_family_map` key |
+| --- | --- |
+| `composition_shared_datapath_candidate_entry_keys` | `composition_shared_datapath_candidate_entry_keys` |
+| `success_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys` | `forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys` |
+
+The same naming rule applies to the documented contributor, declared-type,
+bound-expression, drive-intent and aggregate families. Each grouped value is the
+complete ordered key array from the corresponding individual field. Its
+payload subject, dedicated owner and container/variant rule remain those in
+the tables above. For example:
+
+```sh
+./bin/fsmgen --capability-manifest | python3 -c 'import json,sys; n=json.load(sys.stdin)["semantic_exports"]["normalized_semantic_json"]; print(n["presence_key_family_map"]["composition_shared_datapath_candidate_entry_keys"]); print(n["semantic_presence_key_family_map"]["forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys"])'
+```
+
+Grouped lookup preserves optional declared-type extensions, nullable bindings,
+the bounded `signal_ref` variant, singular drive/assertion objects and nested
+family arrays. The assertion list still has distinct candidate multi-value and
+family same-value contexts. A schema lookup establishes neither candidate or
+source availability nor equal populations, matching indices, execution or
+verified arbitration. Full expression/value/deeper IR models, other grouped
+maps and source/backend qualification retain their separate contracts.
+
 ## Build and preview
 
 Normal HTML builds and previews generate and validate the reference

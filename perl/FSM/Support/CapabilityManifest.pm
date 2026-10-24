@@ -458,6 +458,25 @@ candidate/IR availability still applies. Metadata alone does not prove emitted
 assertions, arbitration or execution. Complete values/expression/deeper IR models,
 source availability and source-query applicability remain separately qualified.
 
+=head2 Normalized shared-datapath grouped lookups
+
+The documented shared families also appear in C<presence_key_family_map> and
+C<semantic_presence_key_family_map>. The report map uses the full advertised
+metadata name. The semantic map preserves root composition names and drops
+the leading C<success_> from lowered-RTL names. Thus the report key
+C<success_forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys>
+corresponds to semantic key
+C<forward_ir_lowered_rtl_ir_composition_shared_datapath_assertion_keys>.
+Each grouped value is the complete ordered array from its individual field,
+with the same payload subject, dedicated owner and container/variant rule.
+
+These lookups preserve optional declared-type extensions, nullable bindings,
+the bounded C<signal_ref> variant, singular drive/assertion objects and nested
+arrays. Candidate multi-value and family same-value assertion contexts remain
+distinct. A schema lookup proves neither source availability nor equal populations,
+matching indices, execution or verified arbitration. Full expression/value/deeper
+IR models, broader grouped maps and source/backend qualification remain separate.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

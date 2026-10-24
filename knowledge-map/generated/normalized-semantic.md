@@ -1,7 +1,7 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **115** uniquely owned question entries.
+> **26** facts · **116** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -101,6 +101,7 @@
 - q="where are semantic.symbol_contract.types entry keys advertised?" · facts=[normalized-semantic-symbol-type-entry-schema](../../docs/knowledge/normalized-semantic-symbol-type-entry-schema.md)
 - q="where are shared-datapath aggregate enable and assertion metadata keys advertised?" · facts=[normalized-semantic-shared-datapath-candidate-entry-schema](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
 - q="where are shared-datapath contributor drive-intent rhs_enable_families keys advertised?" · facts=[normalized-semantic-shared-datapath-candidate-entry-schema](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
+- q="where are shared-datapath grouped lookups?" · facts=[normalized-semantic-composition-shared-datapath-alias-schema](../../docs/knowledge/normalized-semantic-composition-shared-datapath-alias-schema.md)
 - q="where are standalone-DT multi-drive assertion metadata keys advertised?" · facts=[normalized-semantic-standalone-dt-multi-drive-entry-schema](../../docs/knowledge/normalized-semantic-standalone-dt-multi-drive-entry-schema.md)
 - q="where are standalone_dt_multi_drive_targets entry keys advertised?" · facts=[normalized-semantic-standalone-dt-multi-drive-entry-schema](../../docs/knowledge/normalized-semantic-standalone-dt-multi-drive-entry-schema.md)
 - q="where are structural RTL net entry keys advertised?" · facts=[normalized-semantic-structural-net-entry-schema](../../docs/knowledge/normalized-semantic-structural-net-entry-schema.md)
@@ -141,7 +142,7 @@ _Normalized semantic composition advertises child parameter-override alias schem
 
 _Normalized semantic composition advertises shared-datapath candidate alias schemas_
 
-- **date:** 2026-10-24 · **status:** current
+- **date:** 2026-10-25 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-composition-shared-datapath-alias-schema.md`](../../docs/knowledge/normalized-semantic-composition-shared-datapath-alias-schema.md)
 
 ### normalized-semantic-composition-standalone-dt-child-entry-schema
