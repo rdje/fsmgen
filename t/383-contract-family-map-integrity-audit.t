@@ -11,6 +11,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::ReportSourceContract qw(report_source_optional_fields);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 
@@ -89,6 +90,24 @@ sub assert_family_map_integrity {
             my $values = $map->{$family};
             my $family_path = "$path.$family";
 
+            # These two report contracts mirror an optional-declaration object.
+            # Every other grouped family retains the scalar-array contract.
+            if ($entry->{name} eq 'presence_key_family_map'
+                && $family eq 'source_optional_fields'
+                && ($parent->{contract_source} // '') =~ /\AFSM::Support::(?:CheckDiagnosticsContract|NormalizedSemanticReportContract)\z/) {
+                is_deeply(
+                    $values,
+                    report_source_optional_fields(),
+                    "$family_path matches the dedicated optional-source contract",
+                );
+                is_deeply(
+                    $values,
+                    $parent->{$family},
+                    "$family_path matches sibling $family",
+                );
+                next;
+            }
+
             ok(ref($values) eq 'ARRAY', "$family_path is an array");
             next unless ref($values) eq 'ARRAY';
 
@@ -132,6 +151,7 @@ sub collect_family_maps {
 
             if (is_grouped_discovery_map_name($key)) {
                 push @maps, {
+                    name => $key,
                     path => $child_path,
                     value => $value->{$key},
                     parent => $value,

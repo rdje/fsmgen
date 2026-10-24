@@ -164,6 +164,42 @@ observed array order without inferring positional priority. Named bounded
 families require deliberate documented regression-backed widening; deeper key,
 query, catalog, artifact and payload semantics remain with their owners.
 
+
+=head2 Diagnostic report and registry families
+
+The book's C<Diagnostic report and registry families> guide binds the check
+metadata lists to report envelopes, success results, failure C<diagnostics[]>
+elements and nested objects. C<public_top_level_presence_keys> covers either
+outcome; C<success_only_top_level_keys> adds report-level result/support fields
+only on success. Failures put support matches inside each diagnostic.
+C<matched_success_support_accounting_presence_keys> and
+C<matched_failure_diagnostic_support_accounting_presence_keys> are distinct
+conditional additions, used only for the corresponding C<matched: true> object.
+Unclassified failures retain C<code: null>; required presence is not non-nullness.
+
+C<nested_contract_source_map> identifies dedicated nested owners; the scalar
+C<*_contract_source> fields repeat them. C<nested_presence_key_map> uses those
+subject labels for base field-name lists. C<failure_diagnostic> means a
+C<diagnostics[]> element, not a top-level field. Its C<support_accounting> label
+shows the success base family; consult the named failure/matched additions.
+C<presence_key_family_map> mirrors same-named check families, including the
+object-valued C<source_optional_fields>. That optional-declaration map is not an
+array or a guarantee that every source carries every declaration. Optional
+artifact fields may carry C<null> when no path was extracted.
+
+C<DiagnosticCodeRegistryContract> instead describes parent diagnostics-section
+siblings and each manifest C<stable_codes> entry. C<public_sibling_keys> is not
+the contract record's own field list; C<entry_presence_keys> describes catalog
+entries. C<key_family_map> mirrors those lists. C<bounded_value_family_map>
+mirrors allowed severity, stability and family values, not keys. Those enums do
+not classify unregistered diagnostic reports. The manifest catalog is sorted by
+code; objects use named lookup, and family-list order promises no priority.
+
+These named families are not a closed schema for all nested report values.
+Full diagnostic-schema stability is false; deliberate documented regression-backed
+widening remains required. This is a family-subject guide, not complete payload
+semantics or an added MCP operation. Deeper fields retain their dedicated owners.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs

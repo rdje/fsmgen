@@ -243,6 +243,86 @@ deliberate documentation and regression-backed widening; identity, status and
 entrypoint metadata alone do not close deeper objects or establish complete
 MCP operating-reference coverage.
 
+
+### Diagnostic report and registry families
+
+Read `diagnostics.check_json` as an advertisement of the native check report,
+not as the report itself. Its owner is `CheckDiagnosticsContract`. The lists
+below name fields of the stated subject; they do not list metadata-record keys.
+Required presence does not imply a non-null value or recursively close an object.
+
+| Check metadata field | Subject and condition |
+| --- | --- |
+| `public_top_level_presence_keys` | Check-report envelope on success and failure: version, producer, command, source, success flag, diagnostics, summary and generated-output marker. |
+| `success_only_top_level_keys` | Additional report-level `result` and `support_accounting` on success. A failure puts its support match inside each diagnostic. |
+| `command_presence_keys` | The report's `command` object on either outcome. |
+| `producer_presence_keys` | The report's `producer` object on either outcome. |
+| `source_presence_keys` | The report's `source` object on either outcome. |
+| `generated_output_presence_keys` | The report's `generated_output` object; check reports retain `emitted: false`. |
+| `source_optional_fields` | A name-to-contract **object** for optional `source` declarations (`reset_provenance`, `interface_ports`, `reductions`), not an array of required fields. Each declaration retains its own source applicability. |
+| `success_result_presence_keys` | Fields of the success-only `result` object, including module identity and summary counts. |
+| `success_support_accounting_presence_keys` | Base fields of successful report-level `support_accounting`; currently `matched`, even for an uncatalogued source. |
+| `matched_success_support_accounting_presence_keys` | Additional fields when that success match has `matched: true`; these include source kind and strict-support identity. |
+| `failure_diagnostic_presence_keys` | Base fields of each failure `diagnostics[]` element, including its nested support match. An unclassified failure keeps `code: null`. |
+| `matched_failure_diagnostic_presence_keys` | Additional corpus identity fields on a diagnostic with a matched expected failure. |
+| `failure_diagnostic_optional_artifact_keys` | Extracted artifact-path fields of a failure diagnostic. Optional metadata does not promise a usable path; the current producer can emit `null` when extraction finds none. |
+| `failure_diagnostic_support_accounting_presence_keys` | Base fields of each failure diagnostic's `support_accounting`; currently `matched`. |
+| `matched_failure_diagnostic_support_accounting_presence_keys` | Additional fields of a matched failure's nested support object, including diagnostic-code and migration-hint identity. These differ from matched-success additions. |
+
+`nested_contract_source_map` maps subject labels to dedicated owner namespaces;
+its corresponding `*_contract_source` fields repeat those owners.
+`nested_presence_key_map` uses the same labels to expose base field-name lists.
+The label `failure_diagnostic` means a `diagnostics[]` element; it does not name
+a top-level report field. The `support_accounting` label exposes the success
+base family, so consult the separately named matched-success and failure families
+before interpreting conditional additions.
+
+| Nested label | Dedicated owner under `FSM::Support` |
+| --- | --- |
+| `command` | `ReportCommandContract` |
+| `diagnostic_summary` | `SerializableDiagnosticSummary` |
+| `failure_diagnostic` | `CheckFailureDiagnosticContract` |
+| `generated_output` | `ReportGeneratedOutputContract` |
+| `producer` | `ReportProducerContract` |
+| `result` | `CheckResultContract` |
+| `source` | `ReportSourceContract` |
+| `support_accounting` | `SupportAccountingMatchContract` |
+
+`presence_key_family_map` mirrors the same-named individual check families,
+including the object-valued `source_optional_fields`. It omits the separate
+`public_top_level_presence_keys` and nested maps. For example, use the value
+of `matched_success_support_accounting_presence_keys` only after a successful
+report's support object says `matched: true`; adding those names to every
+failure diagnostic would validate the wrong subject.
+
+The sibling `diagnostics.stable_code_registry` advertises the manifest-facing
+registry contract owned by `DiagnosticCodeRegistryContract`:
+
+| Registry metadata field | Subject and meaning |
+| --- | --- |
+| `public_sibling_keys` | Fields of the parent `diagnostics` section: `registry_source`, `stable_codes`, `stable_code_registry`. This is a bounded subset of that section, not fields required inside this contract record. |
+| `entry_presence_keys` | Fields of each manifest `stable_codes[]` entry: `code`, `severity`, `stability`, `family`, `summary`. The in-process registry instead keys its metadata objects by code. |
+| `key_family_map` | Mirrors `public_sibling_keys` and `entry_presence_keys` by name. |
+| `bounded_severity_values` | Allowed registry-entry severity values; currently `error`. |
+| `bounded_stability_values` | Allowed registry-entry stability values; currently `stable`. |
+| `bounded_family_values` | Allowed registry-entry family labels: `strict_mode`, `language_contract`, `direct_generation_contract`, `composition_contract`. |
+| `bounded_value_family_map` | Mirrors the preceding allowed-value lists. Its elements are values, not field names. |
+| `code_shape` | Published code pattern `FSMGEN_[A-Z0-9_]+`; matching its shape does not establish registry membership. |
+
+The manifest's `stable_codes` array is sorted by code; JSON object members have
+no positional meaning. Retain emitted family-list order in captured evidence,
+but do not infer priority from it. Registry enums describe registered entries,
+not every possible failed report: an unclassified diagnostic can have a null
+code and `unclassified` family/stability without becoming a registry entry.
+
+These named families are not a closed schema for every nested report value.
+`full_diagnostic_schema_stable: false` preserves the bounded named promises
+while leaving broader diagnostic structure unfrozen. Widening requires deliberate
+owner-backed documentation and regressions. This guide qualifies family subjects;
+full diagnostic meanings, optional declaration models, classifier policies and
+source-report payload semantics retain their dedicated references below. Reading
+this metadata through MCP performs no source check and enables no execution tool.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public
@@ -2617,8 +2697,9 @@ package-name entry metadata for `semantic.symbol_contract.package_imports` and
 string` on the top-level contract surface. Inside grouped
 `presence_key_family_map` discovery maps, the corresponding
 `*_package_import_entry_value_meaning` entries are single-element arrays
-containing that same meaning string, preserving the invariant that every
-grouped family-map value is array-valued. It does not expose raw
+containing that same meaning string, preserving scalar-list discovery for
+these package-import meaning families. The separate `source_optional_fields`
+family remains an object as described above. It does not expose raw
 `FSM::Package::Spec` internals, package source AST, package symbols, VHDL
 package declaration/emission, or full normalized semantic export
 stabilization.
@@ -3700,7 +3781,11 @@ walks direct contracts plus manifest outputs and requires maps such as
 `presence_key_family_map`, `nested_presence_key_map`,
 `constructor_option_family_map`, `name_family_map`, and `family_map` to stay
 hashes of non-empty unique scalar lists, aligned with same-named sibling lists
-when the sibling exists.
+when the sibling exists. In the check and normalized semantic report contracts,
+`presence_key_family_map.source_optional_fields` instead mirrors the exact
+optional-declaration object from `ReportSourceContract` and its same-named
+sibling. This object admission is restricted to those owners, map and field;
+other grouped families retain the scalar-list checks.
 
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
