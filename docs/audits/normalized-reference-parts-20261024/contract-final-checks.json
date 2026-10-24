@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/normalized-reference-parts-20261024/refresh_final.py"
+    ],
+    "exit_status": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/normalized-reference-parts-20261024/verify.py",
+      "docs/audits/normalized-reference-parts-20261024/partition-contract-final-qualified.json.gz",
+      "--current-inputs"
+    ],
+    "exit_status": 0
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/normalized-reference-parts-20261024/plan.py",
+      "docs/audits/normalized-reference-parts-20261024/partition-contract.json.gz"
+    ],
+    "exit_status": 0
+  }
+]

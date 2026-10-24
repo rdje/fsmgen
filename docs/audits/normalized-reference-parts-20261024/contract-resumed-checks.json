@@ -1,0 +1,59 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.1",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/normalized-reference-parts-20261024/verify.py",
+    "docs/audits/normalized-reference-parts-20261024/partition-contract-qualified.json.gz",
+    "--current-inputs"
+  ],
+  "exit_status": 0,
+  "result": {
+    "baseline_consumer_rows": 933,
+    "candidate_lines": {
+      "docs/book/src/11-extensions-and-embedding.md": 4311,
+      "docs/book/src/11a-perl-api-reference.md": 667,
+      "docs/book/src/SUMMARY.md": 64
+    },
+    "limits": "Plan only. Candidate block/link/source conservation is not migrated native delivery, full grammar/source availability, original compiler/backend execution or whole-book browser signoff.",
+    "moved_blocks": 9,
+    "oracle_profiles": 6,
+    "rejected_controls": {
+      "changed_block": "exact complete original block/span",
+      "changed_completed_producer": "completed producer packet identity",
+      "duplicate_canonical": "complete existing API anchor preservation",
+      "instrument_change": "exact contract instrument identity",
+      "lost_anchor": "complete existing API anchor preservation",
+      "lost_api": "complete existing API anchor preservation",
+      "lost_block": "complete block order/population",
+      "lost_consumer": "complete independently enumerated baseline consumers",
+      "lost_core": "entire unmoved core conserves",
+      "lost_navigation_meaning": "exact reviewed new semantic navigation meaning",
+      "lost_reader": "complete immutable guide-oracle profiles",
+      "lost_repair_bridge": "no relabeled current source or native proof",
+      "lost_summary_entry": "complete fixed navigation membership/order",
+      "misroute": "exact stable old/new routes",
+      "source_change": "committed complete baseline bytes",
+      "wrong_reader_role": "exact reader role/slot identity"
+    },
+    "streaming_controls": {
+      "cases": [
+        "binary",
+        "both_stems",
+        "crlf",
+        "cross_chunk",
+        "empty",
+        "long_line",
+        "no_final_lf"
+      ],
+      "max_fixture_read_bytes": 17,
+      "production_chunk_bytes": 65536
+    }
+  },
+  "log": "docs/audits/normalized-reference-parts-20261024/contract-resumed.log.gz",
+  "original_log_sha256": "b80b96b1c8006b06d2400816123c24631f278d4b4c3589bb2f9ea12378c8b00f",
+  "retained_log_sha256": "b80b96b1c8006b06d2400816123c24631f278d4b4c3589bb2f9ea12378c8b00f",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}

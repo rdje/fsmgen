@@ -1,0 +1,8 @@
+{
+  "log": "docs/audits/normalized-reference-parts-20261024/contract-final.log.gz",
+  "original_log_sha256": "d5532e1914eeb1005163ca6bcfd3186f15b5641511c0801cd671574cc2af8a99",
+  "retained_log_sha256": "d5532e1914eeb1005163ca6bcfd3186f15b5641511c0801cd671574cc2af8a99",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "python_39_grammar": "PASS",
+  "limits": "No live book migration yet; complete prospective preservation and reader-role contract only."
+}

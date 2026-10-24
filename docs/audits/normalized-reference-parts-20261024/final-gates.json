@@ -1,0 +1,73 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.10.1",
+  "commands": [
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "knowledge-map/scripts/check_knowledge_map.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "scope": "Contract/observer and unchanged live-book source-asset delivery; no migration or original source/compiler/backend execution.",
+  "log": "docs/audits/normalized-reference-parts-20261024/final-gates.log.gz",
+  "original_log_sha256": "c77128ac3327007a75075eb8ce4ead1b0da35c5189b9aaba3f36784f61bcfa1a",
+  "retained_log_sha256": "9a90b6204295cc64f98e3da9adbc990ca7a0758762d629de12d8bb7275effa0e",
+  "normalization": "Only dynamic repository-root prefixes removed."
+}

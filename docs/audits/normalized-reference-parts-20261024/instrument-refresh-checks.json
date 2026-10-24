@@ -1,0 +1,7 @@
+{
+  "exit_status": 0,
+  "original_log_sha256": "b79c9e0baedd11d7cf0d4601844e963568df5a989215d19c5afae57530163440",
+  "retained_log_sha256": "b79c9e0baedd11d7cf0d4601844e963568df5a989215d19c5afae57530163440",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "scope": "Seven stream boundary cases, Python grammar and explicit verifier-only refresh; completed plan data is unchanged."
+}
