@@ -1,0 +1,6 @@
+{
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "6420b0c2bee2330ea9557b78369ca66d79ea699dd38064d2e3b3716fb889cfdf",
+  "retained_log_sha256": "6420b0c2bee2330ea9557b78369ca66d79ea699dd38064d2e3b3716fb889cfdf",
+  "log": "docs/audits/mcp-api-reference-20261023/composition-closure-final-qualification.log.gz"
+}

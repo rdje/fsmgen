@@ -655,7 +655,40 @@ delegations to their own bounded IR contracts. These advertised families
 contain no standalone-DT parameter-override aliases. Enable/assertion metadata
 does not establish execution, emitted/checked HDL assertions, verified
 arbitration or unconditional source availability. Deeper value models,
-grouped-map closure and source/backend qualification retain their owners.
+broader grouped-map closure and source/backend qualification retain their owners.
+
+### Normalized composition grouped lookups
+
+Within `semantic_exports.normalized_semantic_json`, the report
+`presence_key_family_map` and the `semantic_presence_key_family_map` expose
+selected composition key families through different names. The report map
+uses the complete advertised metadata field name. For the flattened intent-HIR
+child families, the semantic map omits the report's leading `success_`:
+
+| Report `presence_key_family_map` key | Semantic `semantic_presence_key_family_map` key |
+| --- | --- |
+| `composition_presence_keys` | absent |
+| `composition_child_entry_keys` | `composition_child_entry_keys` |
+| `success_forward_ir_intent_hir_composition_child_entry_keys` | `forward_ir_intent_hir_composition_child_entry_keys` |
+
+The envelope `composition_presence_keys` is present in the report map; the
+semantic map omits it. Do not infer an entry merely by transforming its name.
+The ordinary/generated-child, parameter-override and standalone-DT families
+documented above use the same root versus intent-HIR naming rule. Their grouped
+values are the corresponding complete ordered key arrays, with the same
+dedicated owners, optional extensions and payload subjects as the individual
+fields. A map entry advertises a schema; it does not establish a child instance
+or source availability.
+
+For example, compare the root child family with its flattened intent-HIR family:
+
+```sh
+./bin/fsmgen --capability-manifest | python3 -c 'import json,sys; n=json.load(sys.stdin)["semantic_exports"]["normalized_semantic_json"]; print(n["presence_key_family_map"]["composition_child_entry_keys"]); print(n["semantic_presence_key_family_map"]["forward_ir_intent_hir_composition_child_entry_keys"])'
+```
+
+Equal lists do not prove equal child populations or matching indices. This
+selected composition join leaves broader grouped-map/model closure,
+shared-datapath subjects and source/backend qualification with their owners.
 
 ### Section-specific capability interpretation
 

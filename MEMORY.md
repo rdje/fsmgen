@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.4`
-- next_action: Join the qualified composition cohorts against current sources, combined guides and selected grouped projections at .3.2.2.4.4; preserve every deeper obligation.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.5`
+- next_action: Qualify shared-datapath family subjects at .3.2.2.5; partition distinct candidate/drive/aggregate/assertion owners before implementation and preserve all deeper obligations.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

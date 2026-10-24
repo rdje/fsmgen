@@ -1,0 +1,94 @@
+{
+  "owner": "PERL-POD-API-REFERENCE.6.1.2.3.2.1.2.3.2.2.4.4",
+  "commands": [
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/mcp-api-reference-20261023/verify_composition_closure.py",
+        "docs/audits/mcp-api-reference-20261023/composition-final-qualified.json.gz",
+        "--current",
+        "--build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "knowledge-map/scripts/check_knowledge_map.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_acceptance.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "bash",
+        "-c",
+        "./bin/fsmgen --capability-manifest | python3 -c 'import json,sys; n=json.load(sys.stdin)[\"semantic_exports\"][\"normalized_semantic_json\"]; print(n[\"presence_key_family_map\"][\"composition_child_entry_keys\"]); print(n[\"semantic_presence_key_family_map\"][\"forward_ir_intent_hir_composition_child_entry_keys\"])'"
+      ],
+      "exit_status": 0,
+      "typed_result_join": "Both exact published child-family arrays; metadata discovery only."
+    }
+  ],
+  "limits": "Selected source/native content and doctrine checks; no full CI/push, original source epoch or whole-manual browser signoff.",
+  "log": "docs/audits/mcp-api-reference-20261023/composition-closure-final-checks.log.gz",
+  "original_log_sha256": "0e6703cda22c4c1ec29d9274a93ca82833a070e4bfb33b696a62e05ec9ec0580",
+  "retained_log_sha256": "217b866145cbc82ef1eb0fc426648deb3deaa4d1f3f52798faa0367576794f3c",
+  "normalization": "Only dynamic repository-root prefixes removed; all other stream bytes retained."
+}

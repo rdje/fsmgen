@@ -364,7 +364,25 @@ are flattened rather than nested under an HIR composition object.
 There are no standalone-DT parameter-override aliases in these families.
 Child IR contracts and deeper models stay delegated. Metadata does not prove
 execution, emitted/checked assertions, verified arbitration or unconditional
-source availability. Full source/backend and grouped-map closure remain separate.
+source availability. Full source/backend and broader grouped-map closure remain separate.
+
+=head2 Normalized composition grouped lookups
+
+Under C<semantic_exports.normalized_semantic_json>, the report
+C<presence_key_family_map> uses complete metadata field names. For the
+documented flattened intent-HIR composition child families,
+C<semantic_presence_key_family_map> omits the leading C<success_>.
+Root child-family names are unchanged. The report map includes the envelope
+C<composition_presence_keys>; the semantic map omits that entry. Check exact
+membership rather than assuming the two maps are interchangeable.
+
+The selected child, parameter-override and standalone-DT grouped values retain
+their individual ordered key arrays, subjects, dedicated owners and optional
+extension rules. They advertise schemas rather than child instances or
+source availability. The book gives exact lookup examples and a runnable discovery
+command. Equal lists imply neither equal populations nor matching indices;
+broader grouped-map/model, shared-datapath and source/backend qualification
+remain separate.
 
 =head1 ERRORS AND EFFECTS
 

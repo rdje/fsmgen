@@ -1,7 +1,7 @@
 # Knowledge Map: `normalized-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **26** facts · **111** uniquely owned question entries.
+> **26** facts · **112** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -74,6 +74,7 @@
 - q="where are composition shared-datapath candidate alias keys advertised?" · facts=[normalized-semantic-composition-shared-datapath-alias-schema](../../docs/knowledge/normalized-semantic-composition-shared-datapath-alias-schema.md)
 - q="where are composition standalone-DT child entry keys advertised?" · facts=[normalized-semantic-composition-standalone-dt-child-entry-schema](../../docs/knowledge/normalized-semantic-composition-standalone-dt-child-entry-schema.md)
 - q="where are composition_shared_datapath_candidates entry keys advertised?" · facts=[normalized-semantic-shared-datapath-candidate-entry-schema](../../docs/knowledge/normalized-semantic-shared-datapath-candidate-entry-schema.md)
+- q="where are grouped composition child key families advertised?" · facts=[normalized-semantic-composition-child-entry-schema](../../docs/knowledge/normalized-semantic-composition-child-entry-schema.md)
 - q="where are intent-HIR composition child alias keys advertised?" · facts=[normalized-semantic-intent-hir-composition-child-alias-schema](../../docs/knowledge/normalized-semantic-intent-hir-composition-child-alias-schema.md)
 - q="where are lowered RTL selector conflict keys advertised?" · facts=[normalized-semantic-lowered-rtl-selector-conflicts](../../docs/knowledge/normalized-semantic-lowered-rtl-selector-conflicts.md)
 - q="where are normalized semantic optional children advertised?" · facts=[normalized-semantic-optional-children](../../docs/knowledge/normalized-semantic-optional-children.md)
@@ -123,7 +124,7 @@
 
 _Normalized semantic composition advertises child entry schemas_
 
-- **date:** 2026-06-06 · **status:** current
+- **date:** 2026-10-24 · **status:** current
 - **source and verification:** [`docs/knowledge/normalized-semantic-composition-child-entry-schema.md`](../../docs/knowledge/normalized-semantic-composition-child-entry-schema.md)
 
 ### normalized-semantic-composition-child-parameter-override-alias-schema
