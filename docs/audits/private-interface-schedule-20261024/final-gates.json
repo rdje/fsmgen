@@ -1,0 +1,74 @@
+{
+  "commands": [
+    {
+      "command": [
+        "scripts/check_claim_verification_inventory.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 0
+    }
+  ],
+  "log": "docs/audits/private-interface-schedule-20261024/final-gates.log.gz",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "0de8c170d2bdb7f8a2564550b162a681fb568801aa96e5551090e63a276aad2d",
+  "owner": "PERL-POD-API-REFERENCE.8.4",
+  "retained_log_sha256": "25b447cc093b68b36c024fec90d410846aa83ef21f0043cbe849f30da94d4cca",
+  "schedule_review": "Exact recorded input hashes and retained review program passed before gate execution.",
+  "scope": "Affected final task/inventory/current-source/index/doc/doctrine refresh plus exact retained schedule review; no runtime implementation or full CI."
+}

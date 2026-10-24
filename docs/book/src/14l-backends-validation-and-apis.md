@@ -342,20 +342,30 @@ and regression-backed.
 
 ## Embedding And Public APIs
 
-### Private Conversational And Graphical Interface (Proposed)
+### Private Conversational And Graphical Interface (Scheduled)
 
-`FSMGEN-CONVERSATIONAL-INTERFACE` tracks a proposed private plugin for operating
-the user's own FSMGen instance through conversation and a graphical interface.
+[`FSMGEN-CONVERSATIONAL-INTERFACE`](../../tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md)
+tracks scheduled private integration for operating the user's own FSMGen instance
+through conversation and a graphical interface. It is not implemented yet.
 The OpenAI host handles conversation; FSMGen supplies authoritative structured
 operations and results. Graphical views and conversational tools use those same
 APIs. Initial inspection/diagnostic workflows and useful state, source or
 lowering views will be selected against actual available data.
 
-The proposal is not active implementation. Host connection and embedded-UI
-compatibility must be qualified early, including the exact target Codex surface.
-Any new core source-write, generation or server-transport capability retains
-the existing MCP horizon owner. The shipped read-only adapter is described in
-the [embedding reference](11-extensions-and-embedding.md).
+The schedule follows complete MCP operating-reference delivery and required
+SPECFORGE delivery/publication/feedback. It begins with actual private host,
+structured-tool connection and embedded-UI qualification, including the exact
+target Codex surface. Then come workflow/API mapping, packaging and connection
+lifecycle, conversational workflows, graphical design/views/actions,
+synchronization/accessibility, end-to-end checks and setup/recovery guidance.
+Each activity has an owning task and predecessor; qualified completion releases
+the next accepted activity without a new blanket activation request.
+
+This scheduling does not start an installation or connection. New read-only
+server transport retains the semantic MCP owner; new core source-write or
+generation capabilities retain the separately selected MCP write horizon.
+The shipped read-only adapter is described in the
+[embedding reference](11-extensions-and-embedding.md).
 
 ### Semantic Introspection And MCP Adapter
 

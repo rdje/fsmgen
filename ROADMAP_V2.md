@@ -165,6 +165,9 @@ Direction:
 - keep capability, diagnostic, source-discovery, support, semantic, schedule,
   and validation queries aligned;
 - keep MCP an adapter over the semantic API rather than a second authority;
+- provide a private conversational and graphical client over those same
+  authoritative structured operations, with host/tool/UI qualification owned by
+  [FSMGEN-CONVERSATIONAL-INTERFACE](docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md);
   and
 - introduce mutation or service transports only under explicit later owners.
 

@@ -53,6 +53,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER` | `active` | `R13 / semantic API and MCP` | Initial POD delivery is committed; director-selected complete MCP operating documentation precedes resuming required SPECFORGE delivery under 0121. Unary R1 is done; generic widths/groups remain. .93 retains historical query attribution; .60 owns durations/timers/remaining ports. Prior reader-route and HIAL/full-CI obligations retain. | [task](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md) |
 | `ISF-REDUCTION-DELIVERY` | `active` | `R14 / R13` | Actor/direct-formal/generated declaration and scoped-environment IR preservation are qualified; daily census `.18` is done; reusable constructors `.2.3.2.4.2` and complete instance joins remain. `.16` owns interruption causality before publication. Decision0121 defers independent runtime/diagnostic/inversion work until required handoff unless proven blocking. Publication gates retain. | [task](docs/tasks/ISF-REDUCTION-DELIVERY.md) |
+| `FSMGEN-CONVERSATIONAL-INTERFACE` | `active` | `R13 / private client integration and user interface` | Scheduled private host/tool/UI qualification starts at `.1.1.1` after complete MCP reference delivery and required SPECFORGE publication/feedback under 0121; accepted successors have explicit prerequisite gates. Optional effects remain separately selected. | [task](docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Historical frontier retirement .10.13 is complete with exact retrieval and preserved live nodes. Native .11.6 is complete; .11.7 owns the next genuinely required HDL observation. Historical native causality remains P1-open. Independent guard qualification now permits its detached activation successor. Complete ACCEPT and original root/nested release are qualified; bounded stream delivery remains pending. Director API/MCP coverage follow-up precedes starting that implementation. Fair composition, routing and full qualification remain open; original startup, Linux and full-CI/push gates stay unchanged. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `active` | `rendered readability` | `.5.1` retains HTML candidates; browser access is established by the POD review; `.5.2` actual review and `.5.3` resulting repair remain pending behind required delivery | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `MDBOOK-LEGACY-SOURCE-LINKS` | `active` | `R13 / documentation quality` | P2 scheduled after required delivery: census and repair existing native t/perl source hyperlinks; POD links remain qualified. | [task](docs/tasks/MDBOOK-LEGACY-SOURCE-LINKS.md) |
@@ -69,7 +70,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `FSMGEN-CONVERSATIONAL-INTERFACE` | `proposed` | `R13 / private client integration and user interface` | `.1.1` qualifies the private host, structured-tool connection and graphical UI support; DBIQNP capture only, with no active-priority change | [task](docs/tasks/FSMGEN-CONVERSATIONAL-INTERFACE.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |
 | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` | `proposed` | `HIAL/VIAL native semantics` | `.1/.8` select IASIM authority and NEXSIM checkpoints without runtime activation | [task](docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md) |
@@ -249,7 +249,7 @@ criteria.
 | `Intent Scheduling Format` | `covered by the R14 ISF objective coverage table above for shipped surfaces and by completed ISF-REMAINING-BROAD-FRONTIER for broad remaining deferred ISF behavior; ISF extraction remains deferred until a stable family is identified by an exact owner` |
 | `Verification Code Generation` | `completed IAL1-VERIFICATION-CODE-GENERATION-FRONTIER owns the first-class verification-generation lane; .3 selected actor-level passive observation metadata, ISF-VERIFICATION-OBSERVATION-METADATA.1 shipped it, .4 selected a passive UVM monitor skeleton package, .7 selected the public CLI/artifact/report/support-accounting surface, .8 shipped the inert UVM output mode, .5 deferred VHDL artifact selection behind validation-substrate selection, .9 selected shape-only inert-artifact validation, .10 selected an inert VHDL observation package, .11 shipped it, and .6 selected no direct .ppif verification-output route for the current lane` |
 | `Backends And Validation` | `completed BACKEND-API-VALIDATION-FRONTIER tree owns the exhausted active VHDL/backend-validation/API frontier through .132; future behavior-bearing backend work still requires a new exact active owner leaf` |
-| `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER owns the prior normalized-export/API frontier through .132; proposed FSMGEN-CONVERSATIONAL-INTERFACE owns private conversational/graphical client integration; new core MCP effects retain SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON; behavior-bearing work requires a selected active leaf` |
+| `Embedding And Public APIs` | `completed BACKEND-API-VALIDATION-FRONTIER owns the prior normalized-export/API frontier through .132; scheduled FSMGEN-CONVERSATIONAL-INTERFACE owns private conversational/graphical client integration behind named priority gates; new core MCP effects retain SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON; behavior-bearing work requires a selected active leaf` |
 | `Architecture` | `completed ARCHITECTURE-DEBT-FRONTIER tree through .3; direct-backend StructuralRTLIR internal declaration nets shipped, ISF parser/lowerer extraction remains deferred until a stable family has a future exact owner, and broad extraction/refactor work remains gated by exact leaves` |
 
 ## ISF Task-Tree Rule
@@ -479,6 +479,13 @@ Rules:
   list; when it disagrees, the node list wins.
 
 ## PNT Selection Rules
+
+Task-tree newly identified actionable activities, including DBIQNP discussions,
+and record owners, prerequisites and feasible selection/release conditions.
+DBIQNP preserves execution focus; it does not prevent durable planning or
+scheduling. Accepted future work can be scheduled behind existing priorities
+without an immediate implementation pivot. Keep conditional, unselected
+capabilities explicitly proposed or deferred with their selection trigger.
 
 When PNT is asked to continue and at least one active task tree exists:
 

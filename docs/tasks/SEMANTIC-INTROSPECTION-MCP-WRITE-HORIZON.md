@@ -107,10 +107,12 @@ work.
   first. Beyond-read-only MCP remains an independent proposed trust-boundary
   decision and is not required for verification-intent architecture.
 
-- `2026-10-24`: The private client/conversation/UI proposal is captured separately
+- `2026-10-24`: Private client/conversation/UI delivery is scheduled separately
   in [FSMGEN-CONVERSATIONAL-INTERFACE](FSMGEN-CONVERSATIONAL-INTERFACE.md).
-  Core effects/transport selection remains here. Current work priority is read
-  from MEMORY.md and the active index rather than copied into this future tree.
+  It waits behind the named current-reference/required-handoff gates; this core
+  effects horizon remains proposed. New read-only transport decisions retain
+  SEMANTIC-INTROSPECTION-MCP-FRONTIER. Current priority is read from MEMORY.md and
+  the active index rather than copied into this future tree.
 
 ## Open Questions
 

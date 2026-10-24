@@ -1,0 +1,74 @@
+{
+  "commands": [
+    {
+      "command": [
+        "scripts/check_claim_verification_inventory.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_task_tree_integrity.pl"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/generate_pod_reference.py",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_doctrines.sh"
+      ],
+      "exit_status": 1
+    }
+  ],
+  "diagnosis": "All selected checks pass except TASK-ACCEPTANCE: the fresh no-regression box lacks a declared success signature. The actual same stream contains knowledge-map: OK; cite that real result, leaving all checker rules unchanged.",
+  "log": "docs/audits/private-interface-schedule-20261024/first-final-gates.log.gz",
+  "normalization": "Only dynamic repository-root prefixes removed.",
+  "original_log_sha256": "640ab055c225e3c19532e841ced6ab8c90873cf650106d79c3e88cfadc172f8a",
+  "owner": "PERL-POD-API-REFERENCE.8.4",
+  "retained_log_sha256": "524064856a3d660ce9d6952a4973020adfd55f9f53061a4e1b0d6f187ab138ac",
+  "scope": "Dependency planning, task/native/source/index/current docs and staged doctrine qualification only; no plugin implementation or full CI."
+}
