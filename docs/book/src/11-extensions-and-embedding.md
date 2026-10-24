@@ -458,6 +458,61 @@ structural entries and grouped-map projections retain their own family guides
 and deeper model contracts. Unknown extensions are not promoted to stable API
 merely because a sanitized object currently carries them.
 
+### Normalized symbol family subjects
+
+Within `semantic_exports.normalized_semantic_json`, each suffix below has two
+metadata names. Append it to the appropriate prefix and apply its family to the
+corresponding payload root. These are metadata names, not literal keys to add
+inside a symbol value. The symbol object remains optional on symbol-poor sources.
+
+| Metadata prefix | Payload root |
+| --- | --- |
+| `symbol_contract_` | `semantic.symbol_contract` |
+| `success_forward_ir_intent_hir_symbol_contract_` | `semantic.forward_ir.intent_hir.symbol_contract` |
+
+The dedicated owner is `FSM::Support::NormalizedSemanticSymbolContract`.
+Intent-HIR delegates the matching families to that owner; forward-IR, payload,
+report and capability surfaces republish them. Equal family values do not make
+the root and intent-HIR payload locations interchangeable.
+
+| Metadata suffix | Subject relative to payload root | Advertised value | Interpretation |
+| --- | --- | --- | --- |
+| `constant_value_entry_keys` | `constants.<name>` | `kind` | Core key on every advertised constant value, including recursive list elements. |
+| `constant_scalar_value_extension_keys` | `constants.<name>` | `payload` | Additional key for a scalar constant value. It is not required on a list value. |
+| `constant_list_value_extension_keys` | `constants.<name>` | `items` | Additional key for a list constant value; its ordered elements reuse the value-entry schema. |
+| `enum_entry_value_kinds` | `enums.<name>` | `member_payload_map` | Kind label for each enum's member map. It is not a literal member-name key. |
+| `enum_member_value_kinds` | `enums.<name>.<member>` | `scalar_payload` | Kind label for values under dynamic enum member names. |
+| `type_entry_keys` | `types.<name>` | `kind`, `signed`, `width` | Core keys on advertised recursive type entries. |
+| `type_scalar_value_kinds` | `types.<name>` | `bit`, `bits` | Scalar type-kind labels, rather than entry field names. |
+| `type_aggregate_value_kinds` | `types.<name>` | `list`, `record` | Aggregate type-kind labels. Their extensions are described separately below. |
+| `type_state_model_extension_keys` | `types.<name>` | `state_model` | Scalar extension for explicit two-state/four-state intent; do not require it on every scalar entry. |
+| `type_list_extension_keys` | `types.<name>` | `items` | List extension containing recursive type entries. |
+| `type_record_extension_keys` | `types.<name>` | `member_order`, `members` | Record extensions: deterministic member order and recursively typed members. |
+| `package_import_entry_value_kinds` | `package_imports[]` | `scalar_package_name` | Kind label for an authored package-name string, not a package object. |
+| `package_import_entry_value_meaning` | `package_imports[]` | `authored package-import package-name string` | Scalar meaning text on the individual metadata field. |
+
+For example, `symbol_contract_type_entry_keys` describes root type entries;
+`success_forward_ir_intent_hir_symbol_contract_type_entry_keys` describes the
+same schema at the intent-HIR location. A list type adds `items`; a record type
+adds `member_order` and `members`. Both reuse the recursive core keys. Names in
+the `constants`, `enums` and `types` maps come from the design, so a family of
+value keys or kind labels is not a fixed list of those dynamic names.
+
+In `presence_key_family_map`, look up the same full metadata names. In
+`semantic_presence_key_family_map`, remove the leading `success_` from the
+intent-HIR name; the root symbol name is unchanged. Both maps preserve list
+families as arrays. The two `package_import_entry_value_meaning` fields are
+strings individually and single-element arrays in these grouped maps, containing
+the same meaning string. Keep that distinction when comparing discovery output.
+
+See the [type and package payload examples](#normalized-symbol-payload-examples)
+below for payload context. Package-name metadata exposes no package-spec object
+graph, AST or package symbol table. This is not a closed schema for arbitrary
+nested values or a source-availability, simulation or backend-execution promise.
+The baseline field guide still owns symbol-object availability and core keys;
+complete payload/source models and the remaining grouped-map closure stay with
+their dedicated contracts.
+
 ### Section-specific capability interpretation
 
 The `language_surface.file_surfaces` section advertises the shipped public
@@ -2838,6 +2893,8 @@ family remains an object as described above. It does not expose raw
 `FSM::Package::Spec` internals, package source AST, package symbols, VHDL
 package declaration/emission, or full normalized semantic export
 stabilization.
+
+#### Normalized symbol payload examples
 
 For example, capability-manifest and report-contract consumers can discover
 the package-import list shape without traversing package internals:

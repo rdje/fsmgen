@@ -260,6 +260,30 @@ Direct-helper controls qualify this repair; native source reachability stays sep
 This is not a closed schema for nested values; deliberate widening and deeper
 symbol/composition/control/structural/grouped-model owners remain required.
 
+=head2 Normalized symbol family subjects
+
+The book's C<Normalized symbol family subjects> table pairs each
+C<symbol_contract_> suffix with its
+C<success_forward_ir_intent_hir_symbol_contract_> counterpart. Apply the former
+to C<semantic.symbol_contract> and the latter to
+C<semantic.forward_ir.intent_hir.symbol_contract>. Both delegate to
+C<FSM::Support::NormalizedSemanticSymbolContract>; equal family values do not
+make their payload locations interchangeable.
+
+Constant value keys distinguish C<kind>, scalar C<payload> and recursive list
+C<items>. Enum kind labels C<member_payload_map> and C<scalar_payload> describe
+values under dynamic names. Recursive types distinguish core keys, scalar and
+aggregate kind labels, optional C<state_model>, list C<items> and record
+C<member_order>/C<members>. Package imports use C<scalar_package_name> values,
+not package-spec objects.
+
+Package-import meaning fields are scalar strings individually and single-element arrays
+in grouped maps. The report presence map uses full field names; the semantic
+presence map removes the leading C<success_> for intent-HIR counterparts.
+This is not a closed schema for arbitrary nested values. Optional object
+availability, source models, remaining grouped closure and actual execution
+retain their dedicated contracts.
+
 =head1 ERRORS AND EFFECTS
 
 Construction errors propagate as Perl exceptions. This function constructs
