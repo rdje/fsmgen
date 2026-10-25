@@ -11,11 +11,12 @@ answers:
   - "why is library source preservation blocked on nested aggregate normalization?"
   - "where does IAL0 retain authored scalar width expressions?"
   - "where are original transaction parameter defaults retained for width binding?"
-date: 2026-10-25
+  - "where are canonical parameter default reference bindings retained?"
+date: 2026-10-26
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
 evidence: t/2100-isf-direct-formal-width-ir.t; docs/audits/domain-width-ir-20261025.json.gz; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/50-language-contract-size-section-boundary.t t/2108-isf-width-parameter-default-sources.t t/2101-isf-generated-width-ir.t t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/50-language-contract-size-section-boundary.t t/2108-isf-width-parameter-default-sources.t t/2109-isf-width-default-bindings.t t/2101-isf-generated-width-ir.t t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -135,7 +136,7 @@ name/value/lexical-owner source lists before resolution; selected alias/nested/d
 Actor module IR now owns detached `_width_declarations` keyed by actual ports
 and storage signals, with declaration identity, token/kind/owner and lexical
 scope. Bank indices are explicit; no equal-width or generated-name inference.
-Canonical `_width_scopes` separate actor and transaction environments, including authored aliases and resolved values; `module_parameters` explicitly identifies the actual constructor parameter owner independently of equal lists or physical module renames. `parameter_default_sources` retains original ordered transaction default tokens beside the intentionally literalized canonical environment; binding and emission remain pending.
+Canonical `_width_scopes` separate actor and transaction environments, including authored aliases and resolved values; `module_parameters` explicitly identifies the actual constructor parameter owner independently of equal lists or physical module renames. `parameter_default_sources` retains original ordered transaction default tokens beside the intentionally literalized canonical environment; `parameter_default_bindings` records literal/list/reference kinds from actual canonical resolution in the enclosing lexical scope. Scalar-name allocation and carrier emission remain pending.
 `_width_static_uses` separately snapshots
 watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides

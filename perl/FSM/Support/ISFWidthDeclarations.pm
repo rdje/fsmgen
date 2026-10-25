@@ -13,6 +13,9 @@ sub capture_actor_width_metadata {
     my %args = @_;
     my $actor = $args{actor};
     my $owner = $actor->{_width_source_actor_name} // $actor->{actor_name};
+    confess "Width scopes lack canonical default bindings\n"
+        unless ref($args{actor_default_bindings}) eq 'HASH'
+            && ref($args{transaction_default_bindings}) eq 'HASH';
     my $scope = {kind => 'actor', owner => $owner};
     my (%declarations, %depths, %overrides, %transactions);
 
@@ -59,6 +62,8 @@ sub capture_actor_width_metadata {
     for my $name (keys %{$args{transaction_params}}) {
         my $tx = $source_transactions{$name};
         confess "Width scope '$name' lacks its source transaction\n" unless $tx;
+        confess "Width scope '$name' lacks canonical default bindings\n"
+            unless ref($args{transaction_default_bindings}{$name}) eq 'HASH';
         my ($params_clause) = grep {
             ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'params'
         } @{$tx->{clauses} || []};
@@ -69,7 +74,8 @@ sub capture_actor_width_metadata {
             ? map { {name => $_->[0], value => _copy($_->[1])} } @{$params_clause}[1 .. $#$params_clause]
             : ();
         $transactions{$name} = {owner => $name, actor => $owner,
-            params => _copy($args{transaction_params}{$name}), parameter_default_sources => \@sources};
+            params => _copy($args{transaction_params}{$name}), parameter_default_sources => \@sources,
+            parameter_default_bindings => _copy($args{transaction_default_bindings}{$name})};
     }
     my %instances;
     for my $instance (@{$args{generated_instances} || []}) {
@@ -96,6 +102,7 @@ sub capture_actor_width_metadata {
         _width_scopes => {
             module_parameters => _copy($scope),
             actor => {owner => $owner, params => _copy($args{params}), constants => _copy($args{constants}),
+                parameter_default_bindings => _copy($args{actor_default_bindings}),
                 package_imports => _copy($actor->{package_imports} || []),
                 package_constants => _copy(($actor->{constant_symbols} || {})->{packages} || {}),
                 enum_symbols => _copy($actor->{enum_symbols} || {local => {}, packages => {}})},

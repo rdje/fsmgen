@@ -168,7 +168,8 @@ subtest 'domain selection preserves lexical widths across independent defaults' 
                 {kind => 'actor', owner => 'domain_widths'}, 'domain module params keep the original actor owner');
             is_deeply($ir->{_width_scopes}{transactions}, {$tx => {owner => $tx, actor => 'domain_widths',
                 params => [{name => 'W', value => $local_width}],
-                parameter_default_sources => [{name => 'W', value => $local_width}]}},
+                parameter_default_sources => [{name => 'W', value => $local_width}],
+                parameter_default_bindings => {W => {kind => 'literal', token => $local_width}}}},
                 'only local transaction environment and original defaults are retained');
             is_deeply($ir->{_width_scopes}{actor}{params}, [{name => 'W', value => '8'},
                 {name => 'ALIAS', value => 'W', resolved_value => '8'}], 'actor alias and defaults remain lexical');

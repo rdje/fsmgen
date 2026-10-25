@@ -69,7 +69,14 @@ subtest 'actor and selected transaction environments remain distinct from child 
         '[{"name":"W","value":"8"},{"name":"ACTOR_ALIAS","resolved_value":"8","value":"W"},{"name":"OTHER","value":"8"}]',
         'inherited declarations keep actor aliases and defaults even though child W is four');
     is($json->encode($child->{_width_scopes}{transactions}),
-        '{"worker":{"actor":"generated_width_ir","owner":"worker","parameter_default_sources":[{"name":"W","value":"4"},{"name":"ALIAS","value":"W"},{"name":"OTHER","value":"4"}],"params":[{"name":"W","value":"4"},{"name":"ALIAS","resolved_value":"4","value":"W"},{"name":"OTHER","value":"4"}]}}',
+        $json->encode({worker => {actor => 'generated_width_ir', owner => 'worker',
+            params => [{name => 'W', value => '4'}, {name => 'ALIAS', value => 'W', resolved_value => '4'},
+                {name => 'OTHER', value => '4'}],
+            parameter_default_sources => [{name => 'W', value => '4'}, {name => 'ALIAS', value => 'W'},
+                {name => 'OTHER', value => '4'}],
+            parameter_default_bindings => {W => {kind => 'literal', token => '4'},
+                ALIAS => {kind => 'transaction_parameter', token => 'W'},
+                OTHER => {kind => 'literal', token => '4'}}}}),
         'child has only the selected transaction environment with exact aliases and kinds');
     is($json->encode($child->{params}), $json->encode($child->{_width_scopes}{transactions}{worker}{params}),
         'executable child params keep their established local semantics');

@@ -600,6 +600,7 @@ sub _formal_pruned_repeat_paths {
 # --- Child IR (separate module) ---
 
 sub _build_child_ir($self, $tx, $actor, $cname) {
+    my %width_transaction_default_bindings;
     my %point_bindings;   # ISF-TRIGGER-ANCHOR.5
     my ($states, $ctrs, $dts, $do_children, $spawn_refs, $contracts, $signal_widths, $storage_roles, $bank_accesses, $reset_values, $asserts) =
         $self->_build_transaction($tx, $actor, 0, undef, \%point_bindings);
@@ -651,7 +652,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         type_declarations => _actor_type_declarations($actor),
         enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
-        params     => _transaction_param_declarations($tx, $actor),
+        params     => _transaction_param_declarations($tx, $actor, \%width_transaction_default_bindings),
         ports      => $ports,
         states     => $states,
         dt_blocks  => $dts,
@@ -726,10 +727,14 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     # width source while inherited actor ports still use that original source.
     my $width_actor = _clone_isf_value($actor);
     my ($width_tx) = grep { $_->{name} eq $tx->{name} } @{$width_actor->{transactions}};
+    my %width_actor_default_bindings;
+    my $width_actor_params = _actor_param_declarations($width_actor, \%width_actor_default_bindings);
     my $width_metadata = capture_generated_width_metadata(actor => $width_actor,
-        transaction => $width_tx, params => _actor_param_declarations($width_actor),
+        transaction => $width_tx, params => $width_actor_params,
         constants => _actor_constant_declarations($width_actor),
         transaction_params => {$tx->{name} => $ir->{params}},
+        actor_default_bindings => \%width_actor_default_bindings,
+        transaction_default_bindings => {$tx->{name} => \%width_transaction_default_bindings},
         ports => $ir->{ports});
     $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
@@ -1621,6 +1626,7 @@ sub _atl_reset_signature {
 # --- Parent IR (composition top, non-spawned transactions only) ---
 
 sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = undef) {
+    my %width_actor_default_bindings;
     my @ports  = @{$self->_build_ports($actor)};
     my %ctrs;
     my @states;
@@ -1777,7 +1783,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         type_declarations => _actor_type_declarations($actor),
         enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
-        params     => _actor_param_declarations($actor),
+        params     => _actor_param_declarations($actor, \%width_actor_default_bindings),
         actor_network => _actor_network_for_ir($actor),
         ports      => \@ports,
         # +size carries width, not interface ownership. Keep authored ports
@@ -1818,12 +1824,17 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     # Canonical resolvers may inspect scalar flags. Keep their lexical snapshot
     # detached from the caller and from the executable IR parameter records.
     my $width_actor = _clone_isf_value($actor);
-    my %width_transaction_params = map {
-        $_->{name} => _transaction_param_declarations($_, $width_actor)
-    } @{$width_actor->{transactions} || []};
+    my (%width_transaction_params, %width_transaction_default_bindings);
+    for my $tx (@{$width_actor->{transactions} || []}) {
+        my $bindings = {};
+        $width_transaction_params{$tx->{name}} = _transaction_param_declarations($tx, $width_actor, $bindings);
+        $width_transaction_default_bindings{$tx->{name}} = $bindings;
+    }
     my $width_metadata = capture_actor_width_metadata(actor => $width_actor,
         params => $ir->{params}, constants => $ir->{constants},
         transaction_params => \%width_transaction_params, direct_formals => \@width_direct_formals,
+        actor_default_bindings => \%width_actor_default_bindings,
+        transaction_default_bindings => \%width_transaction_default_bindings,
         generated_instances => $ir->{spawn_instances});
     # Move private constructor context out of executable activation records.
     delete $_->{_width_activation_context} for @{$ir->{spawn_instances}};
@@ -4701,7 +4712,7 @@ sub _transaction_port_binding_timing {
 }
 
 sub _actor_param_declarations {
-    my ($actor) = @_;
+    my ($actor, $bindings) = @_;
     return [] unless ref($actor) eq 'HASH';
 
     my $actor_name = $actor->{actor_name} // 'unknown';
@@ -4718,6 +4729,7 @@ sub _actor_param_declarations {
             if $seen{$name}++;
         my $value = $param->{value};
         my %resolved_value;
+        my $binding;
         if (ref($value)
             || (!ref($value) && defined($value) && (_is_hdl_identifier($value) || _is_enum_member_reference($value) || _is_package_constant_path_reference_shape($value))))
         {
@@ -4726,6 +4738,7 @@ sub _actor_param_declarations {
                 "Actor '$actor_name': parameter '$name'",
                 $actor,
                 \%earlier_scalar_param_values,
+                $bindings ? \$binding : undef,
             );
             %resolved_value = (resolved_value => _clone_isf_value($resolved))
                 if $has_static_leaf;
@@ -4734,7 +4747,9 @@ sub _actor_param_declarations {
                 $value,
                 "Actor '$actor_name': parameter '$name'",
             );
+            _observe_param_default_binding(\$binding, 'literal', $value) if $bindings;
         }
+        $bindings->{$name} = $binding if $bindings;
         my $entry = {
             name  => $name,
             value => _clone_isf_value($value),
@@ -4747,13 +4762,24 @@ sub _actor_param_declarations {
     return \@params;
 }
 
+# Optional observations record the canonical branch without changing resolver
+# results, admission or evaluation. Reference ownership is the lexical scope
+# envelope; qualified package constants also retain their selected package.
+sub _observe_param_default_binding {
+    my ($output, $kind, $token, %extra) = @_;
+    return unless $output;
+    $$output = {kind => $kind, token => _clone_isf_value($token), %extra};
+}
+
 sub _resolve_actor_param_default_value {
-    my ($value, $context, $actor, $earlier_scalar_param_values) = @_;
+    my ($value, $context, $actor, $earlier_scalar_param_values, $binding_output) = @_;
     $earlier_scalar_param_values ||= {};
 
     if (!ref($value)) {
-        return (_clone_isf_value($value), 0)
-            if defined($value) && _is_numeric_or_exact_width_literal($value);
+        if (defined($value) && _is_numeric_or_exact_width_literal($value)) {
+            _observe_param_default_binding($binding_output, 'literal', $value);
+            return (_clone_isf_value($value), 0);
+        }
 
         if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
             my ($package_name, $constant_name, $suffix) = @$package_constant;
@@ -4768,6 +4794,7 @@ sub _resolve_actor_param_default_value {
                     unless defined($resolved_value)
                         && !ref($resolved_value)
                         && _is_numeric_or_exact_width_literal($resolved_value);
+                _observe_param_default_binding($binding_output, 'package_constant', $value, owner => $package_name);
                 return (_clone_isf_value($resolved_value), 1);
             }
 
@@ -4781,6 +4808,7 @@ sub _resolve_actor_param_default_value {
                 unless defined($resolved_value) && !ref($resolved_value);
             confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
                 unless defined _non_negative_integer_from_literal($resolved_value);
+            _observe_param_default_binding($binding_output, 'enum_member', $value);
             return (_clone_isf_value($resolved_value), 1);
         }
         if (_is_hdl_identifier($value)) {
@@ -4790,11 +4818,13 @@ sub _resolve_actor_param_default_value {
                     unless defined($resolved_value)
                         && !ref($resolved_value)
                         && _is_numeric_or_exact_width_literal($resolved_value);
+                _observe_param_default_binding($binding_output, 'actor_constant', $value);
                 return (_clone_isf_value($resolved_value), 1);
             }
 
             if (_actor_param_by_name($actor, $value)) {
                 if (exists $earlier_scalar_param_values->{$value}) {
+                    _observe_param_default_binding($binding_output, 'actor_parameter', $value);
                     return (_clone_isf_value($earlier_scalar_param_values->{$value}), 1);
                 }
                 confess "$context actor parameter '$value' must reference an earlier scalar actor parameter default; forward, self, cyclic, and non-scalar actor-parameter defaults remain deferred\n";
@@ -4816,19 +4846,23 @@ sub _resolve_actor_param_default_value {
     confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
-    my @resolved;
+    my (@resolved, @bindings);
     my $has_static_leaf = 0;
     for my $item (@$value) {
+        my $binding;
         my ($resolved_item, $item_has_static_leaf) = _resolve_actor_param_default_value(
             $item,
             $context,
             $actor,
             $earlier_scalar_param_values,
+            $binding_output ? \$binding : undef,
         );
         push @resolved, $resolved_item;
+        push @bindings, $binding if $binding_output;
         $has_static_leaf ||= $item_has_static_leaf;
     }
 
+    $$binding_output = {kind => 'list', items => \@bindings} if $binding_output;
     return (\@resolved, $has_static_leaf);
 }
 
@@ -6785,7 +6819,7 @@ sub _validate_sync_clause {
 }
 
 sub _transaction_param_declarations {
-    my ($tx, $actor) = @_;
+    my ($tx, $actor, $bindings) = @_;
     return [] unless ref($tx) eq 'HASH';
 
     my $tx_name = $tx->{name} // 'unknown';
@@ -6820,13 +6854,16 @@ sub _transaction_param_declarations {
             unless _is_hdl_identifier($name);
         confess "Transaction '$tx_name': duplicate parameter '$name'\n"
             if $seen{$name}++;
+        my $binding;
         my ($published_value, $resolved_value, $has_resolved_value) = _resolve_transaction_param_default_value(
             $value,
             "Transaction '$tx_name': parameter '$name'",
             $actor,
             \%declared_transaction_params,
             \%earlier_scalar_transaction_param_values,
+            $bindings ? \$binding : undef,
         );
+        $bindings->{$name} = $binding if $bindings;
         my %param = (
             name  => $name,
             value => _clone_isf_value($published_value),
@@ -7595,7 +7632,7 @@ sub _validate_transaction_param_value {
 }
 
 sub _resolve_transaction_param_default_value {
-    my ($value, $context, $actor, $transaction_param_names, $earlier_scalar_transaction_params) = @_;
+    my ($value, $context, $actor, $transaction_param_names, $earlier_scalar_transaction_params, $binding_output) = @_;
     $transaction_param_names ||= {};
     $earlier_scalar_transaction_params ||= {};
 
@@ -7603,8 +7640,10 @@ sub _resolve_transaction_param_default_value {
         confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, earlier scalar transaction parameter, actor constant, actor scalar parameter, scalar enum member, and qualified package scalar constant literals only\n"
             unless defined($value);
 
-        return (_clone_isf_value($value), _clone_isf_value($value), 0)
-            if defined($value) && _is_numeric_or_exact_width_literal($value);
+        if (defined($value) && _is_numeric_or_exact_width_literal($value)) {
+            _observe_param_default_binding($binding_output, 'literal', $value);
+            return (_clone_isf_value($value), _clone_isf_value($value), 0);
+        }
 
         if (my $package_constant = _actor_package_constant_reference($actor, $value)) {
             my ($package_name, $constant_name, $suffix) = @$package_constant;
@@ -7619,6 +7658,7 @@ sub _resolve_transaction_param_default_value {
                     unless defined($resolved_value)
                         && !ref($resolved_value)
                         && _is_numeric_or_exact_width_literal($resolved_value);
+                _observe_param_default_binding($binding_output, 'package_constant', $value, owner => $package_name);
                 return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
             }
 
@@ -7632,12 +7672,14 @@ sub _resolve_transaction_param_default_value {
                 unless defined($resolved_value) && !ref($resolved_value);
             confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
                 unless defined _non_negative_integer_from_literal($resolved_value);
+            _observe_param_default_binding($binding_output, 'enum_member', $value);
             return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
         }
 
         if (_is_hdl_identifier($value)) {
             if (exists $earlier_scalar_transaction_params->{$value}) {
                 my $resolved_value = $earlier_scalar_transaction_params->{$value};
+                _observe_param_default_binding($binding_output, 'transaction_parameter', $value);
                 return (_clone_isf_value($value), _clone_isf_value($resolved_value), 1);
             }
 
@@ -7650,6 +7692,7 @@ sub _resolve_transaction_param_default_value {
                     unless defined($resolved_value)
                         && !ref($resolved_value)
                         && _is_numeric_or_exact_width_literal($resolved_value);
+                _observe_param_default_binding($binding_output, 'actor_constant', $value);
                 return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
             }
 
@@ -7659,6 +7702,7 @@ sub _resolve_transaction_param_default_value {
                     unless defined($resolved_value)
                         && !ref($resolved_value)
                         && _is_numeric_or_exact_width_literal($resolved_value);
+                _observe_param_default_binding($binding_output, 'actor_parameter', $value);
                 return (_clone_isf_value($resolved_value), _clone_isf_value($resolved_value), 1);
             }
 
@@ -7676,8 +7720,10 @@ sub _resolve_transaction_param_default_value {
 
     my @published;
     my @resolved;
+    my @bindings;
     my $has_resolved_leaf = 0;
     for my $item (@$value) {
+        my $binding;
         my ($published_item, $resolved_item, $item_has_resolved_leaf) =
             _resolve_transaction_param_default_value(
                 $item,
@@ -7685,12 +7731,15 @@ sub _resolve_transaction_param_default_value {
                 $actor,
                 $transaction_param_names,
                 $earlier_scalar_transaction_params,
+                $binding_output ? \$binding : undef,
             );
         push @published, $published_item;
         push @resolved, $resolved_item;
+        push @bindings, $binding if $binding_output;
         $has_resolved_leaf ||= $item_has_resolved_leaf;
     }
 
+    $$binding_output = {kind => 'list', items => \@bindings} if $binding_output;
     return (\@published, \@resolved, $has_resolved_leaf);
 }
 

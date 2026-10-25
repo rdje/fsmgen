@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-25`
+- Last updated: `2026-10-26`
 - Owner: repo-local workflow
 
 ## Goal
@@ -734,10 +734,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=16 for T2108/T2100/T2101/T2107; the support module is syntax OK. Complete selected old IR, carriers, reports and caller products are conserved. Book build/source checks and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Generic, runtime and full public/profile matrices remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind width references and parameter-default dependencies to collision-safe canonical scalar symbols.`
   Acceptance: `After .1, use explicit module owners, actual raw default sources and canonical resolved environments to produce detached binding plans. Preserve each lexical alias chain, actor versus transaction source and selected instance relation; constants/packages/types cannot acquire parameter provenance from equal defaults. Select admitted supporting declarations and forwarding obligations without silently freezing a dependency. Split if consumer semantics grow; actual emission stays .2.3.3.4 and full qualification stays deferred.`
-  Verification: `pending original default source preservation`
+  Verification: `Original default sources are committed at 3035a689f. Before allocating symbols, retain reference kinds at the canonical default resolver's actual successful branches. Local transaction aliases shadow actor constants/parameters; source ownership cannot be inferred from equal values or a separate evaluator. Split semantic default binding from later scalar-name allocation and forwarding.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.1, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.1`
+  Status: `done`
+  Goal: `Retain canonical parameter-default reference bindings without introducing another resolver.`
+  Acceptance: `Extend only private canonical actor/transaction default resolution and width-scope capture to retain literal/list versus actor-parameter, transaction-parameter, actor-constant, package-constant and enum-member bindings at their actual successful branches. Store detached maps in explicitly owned actor/transaction environments; preserve raw tokens, selected scope membership and all existing executable values/refusals. Preserve the exact existing resolver return tuples; optional internal observations must not change any caller context. Qualify actual equal-default/shadow/alias/nested/package/enum controls, copies and unchanged complete selected old products with focused checks. Names, carrier emission, public schema and generic HDL remain later work.`
+  Verification: `Optional scalar-reference observations at the canonical successful branches retain literal/list, actor/transaction parameter, actor constant, package constant and enum reference trees without changing original return tuples or admission. Constructors collect the actual actor/module/transaction decisions; private parameter_default_bindings maps live in explicit lexical envelopes, with qualified package owners where selected. Call-site census remains list/void and no return tuple is extended. Unchanged T2109 fails at line48 before observation and passes after it: equal-default distinct kinds, transaction BASE/SHADOW shadowing actor names/constants, local and actor aliases, nested arrays, local/package enum members, package constants, direct/generated membership and physical renames. Parent/child/source/raw-default/executable/fresh data remain detached; canonical forward/self refusals stay intact. Complete normalized selected source/physical/IR/carrier/report products equal their before-edit captures after removal of only six enumerated new binding maps. The fixed T2109 source is immutable; existing scope expectations include the new private fields, and T2108 projects both source and binding extensions only for its prior-resolved-IR counterfactual. Final guarded All tests successful Files=5 Tests=19 for T2109/T2108/T2100/T2101/T2107; both changed modules are syntax OK. Full producing snapshots, exact before-Git source joins, normalized products, raw-stream hashes and logs retain in docs/audits/canonical-default-bindings-20261026.json.gz. Re-derive: actual successful canonical branches and actual source/IR environments. Falsify: fixed RED/GREEN, independent kind/token tables, equal defaults/shadows/nested references/refusals and isolation. Durability: tracked code/test/fixtures/book/fact/task and packet. Exact checkout-root normalization is declared; full loaded footprint and raw-root reconstruction are unclaimed. No new evaluator, syntax, symbol allocation, carrier change, public schema, generic HDL or runtime/profile/transport qualification. Public sync scope is private binding groundwork and book/canonical fact/task continuity. Full joins remain deferred. The first book-source check catches a copied Memory pointer made stale by the final non-blocking VIAL clarification flag; rebuild after all continuity edits, then qualify current copied bytes. This is an asset-order correction, not a code failure. Mandatory staged doctrines gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.1: retain canonical default bindings`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2109-isf-width-default-bindings.t line 48 identifies absent canonical default-reference bindings. The existing resolver branches choose local aliases, actor names, constants, packages and enum members before publishing defaults; numeric values and raw token spelling alone do not preserve the selected namespace.
+  - [x] **ADDRESSED (verified)** — The unchanged T2109 regression changes RED to GREEN through optional observations of the actual successful branches, with original return tuples unchanged. Independent kind/token/nested tables, shadow and equal-default controls, canonical refusals and detached actual environments pass. Complete selected old products differ only at six new private maps.
+  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=19 for focused binding/source/scope consumers; LoweringIR and ISFWidthDeclarations are syntax OK. Complete selected source, executable IR, carriers and reports are conserved. Book build/source checks and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Full generic/runtime/public/profile qualification remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2`
+  Status: `pending`
+  Goal: `Allocate canonical scalar symbols and supporting-declaration/forwarding plans from retained semantic bindings.`
+  Acceptance: `After .1, use actual width declarations, module owners and canonical default binding trees to allocate collision-safe scalar names, preserve local/actor/package/type namespaces and alias/override relations, and identify required cross-scope forwarding. No inference from resolved values, second evaluator, frozen dependency or HDL replacement. Split module-local and imported-scope consumers if needed; emission stays .2.3.3.4 and complete verification stays deferred.`
+  Verification: `pending canonical default bindings`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4`

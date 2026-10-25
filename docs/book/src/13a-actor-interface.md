@@ -604,7 +604,8 @@ authored symbolic width associations separately from resolved defaults. Private
 module IR now binds actor ports and storage elements to those declarations and
 keeps actor and transaction parameter environments separate. Transaction scopes
 also retain original parameter-default tokens privately, including actor-backed
-defaults whose executable form is currently literalized;
+defaults whose executable form is currently literalized. Canonical resolution
+also retains private literal/list/reference bindings within each lexical scope;
 carriers and public width reports still use the resolved numbers. Equal numeric
 widths do not establish a shared dependency. Named scalar types keep their
 separate type references. Generic width propagation and library shape

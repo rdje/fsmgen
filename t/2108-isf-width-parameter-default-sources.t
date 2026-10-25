@@ -70,9 +70,15 @@ subtest 'equal actor and constant defaults do not establish a common dependency'
     my $left = $json->decode($json->encode($products{actor}{ir}));
     my $right = $json->decode($json->encode($products{constant}{ir}));
     for my $ir ($left, $right) {
-        delete $_->{parameter_default_sources} for values %{$ir->{_width_scopes}{transactions}};
-        delete $_->{parameter_default_sources}
-            for values %{$ir->{children}{worker}{_width_scopes}{transactions}};
+        # Project only the original-source and semantic-binding extensions to
+        # compare the prior resolved IR; T2109 qualifies the new binding maps.
+        for my $module ($ir, $ir->{children}{worker}) {
+            delete $module->{_width_scopes}{actor}{parameter_default_bindings};
+            for my $scope (values %{$module->{_width_scopes}{transactions}}) {
+                delete $scope->{parameter_default_sources};
+                delete $scope->{parameter_default_bindings};
+            }
+        }
     }
     is($json->encode($left), $json->encode($right), 'complete old IR cannot distinguish the two source dependencies');
     is($json->encode($products{actor}{files}), $json->encode($products{constant}{files}),
