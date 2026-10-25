@@ -406,6 +406,11 @@ The review files appear because this example starts at IAL2. A direct IAL1
 route generates only its IAL0 review file. A direct IAL0 input is referenced by
 identity and digest rather than copied as a generated review artifact.
 
+Generated review files contain the exact bytes from the current public HIAL
+lowering route. The tool manifest's digest and byte count describe each file's
+content. Public planning checks compare those bytes with current lowering,
+alongside the complete artifact graph and deterministic publication checks.
+
 Without `--outdir`, the CLI chooses a content-addressed root below
 `.artifacts/vial/` using the fixture slug and complete plan digest. Every
 persisted path remains repository-root-relative and on the repository volume.

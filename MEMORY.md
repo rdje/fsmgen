@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: After .16 commits clean, inspect exclusive full6 slots and current capacity, then launch capture_live.py local-full-ci-6 with fresh FSMGEN_T296_CHECKPOINT=.artifacts/t296/push-readiness-20261025-full6.json, no outer guard and durable console; read its journal before any resume.
-- in_flight_uncommitted: Derive exact paths with git status --short; .16 owns its focused report repair/evidence/docs until committed.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.17.2`
+- next_action: After .17.1 commits, reproduce/classify representative default execution/checking/backend-foundation gates and remaining22 exact scan candidates; create small causal repair children before source changes. Full6 has not launched.
+- in_flight_uncommitted: Derive exact paths with git status --short; .17.1 owns its planning repair/intake/docs until committed.
 - in_flight_background: Focused/fact/book jobs are complete and consumed. Derive staged/commit jobs from exclusive receipts/consoles.
-- blockers: .13 complete fresh guarded full CI is required before authorized push/exact-SHA hosted success and post-push macOS review. Retain88/4096; no unrelated process action. .12.3 owns confirmed complete PPlugin/legacy grammar retirement and a self-contained competing test grammar.
+- blockers: .17.2 remaining identity diagnosis/repairs then .13 complete fresh guarded full CI are required before authorized push/exact-SHA hosted success and post-push macOS review. Retain88/4096; no unrelated process action. .12.3 owns confirmed complete PPlugin/legacy grammar retirement and a self-contained competing test grammar.

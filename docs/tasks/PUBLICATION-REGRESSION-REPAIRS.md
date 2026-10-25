@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -195,11 +195,33 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Original canonical reverify failure remains retained. Public reference evaluation and an observational pass-through capture both original Builder calls; current report hash equals240db972. Exact own-Git97dda historical public replay reproducesa4565d40. Complete typed JSON comparison finds exactly four changed fields: generated-IAL0 source/artifact SHA and source byte/line counts. The generated FSM has the established intended +interface addition; every other report field is unchanged. Independent Python canonical encoding equals the original Perl bytes, and masking only those four values yields complete byte-equal historical/current contract64946a80. T1602 now independently assembles the explicit public AHB route, requires whole current report/manifest parity, validates raw generated source provenance, freezes every remaining contract field and rejects an altered protocol role. All prior anchor/forgery/profile/axes/limits/bypass checks remain; default large qualification opt-in stays skipped and is not credited. Syntax and focused T1602/T1551 pass Files2 Tests12. The exact full declared canonical reverify now returns0, including its subsequent decision/source references. Final native book/POD/current-source/index/KMap all return0. Current card retains all prior questions/scale facts and names the four derived fields within unchanged collection limits. Complete recipes/source/archive commitments/raw gzip reports/FSMs/field differences and separate evidence legs are in docs/audits/bridge-reference-identity-20261025/diagnosis.json. Production modules/grammar/seed remain unchanged; normal staged/commit gates qualify this slice before .13 fresh full6/checkpoint.`
   Commit: `This work-unit commit.`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17`
+  Status: `active`
+  Goal: `Classify and repair remaining uses of the proven stale AHB byte/report identities before full6.`
+  Acceptance: `P1 after .16 clean commit. A targeted exact-literal scan finds remaining uses in VIAL planning/execution/checking tests, so do not spend a fresh full run on known unresolved candidates. Preserve complete command/membership. Classify actual current assertions versus intentional historical/negative data; reproduce each affected public gate under its documented default/explicit flags without native opt-in or guard weakening. Split into bounded children before source changes. Reuse the established exact interface-only source and four-provenance-field report diagnosis where the same public identity is proved; do not blindly replace literals or weaken anchor/profile/limits/forgery/behavior checks. Prefer one explicit test-only current AHB reference authority that preserves the frozen contract and raw provenance, rather than repeating whole historical byte locks; choose only after caller/test contracts are understood. Commit each safe repair/check slice with live docs/book, then return .13 for clean exclusive full6/checkpoint, authorized push and every expected exact-SHA hosted result.`
+  Verification: `Exact scan aftereb9c722c finds23 rows in23 test files for the four known old hashes; this is membership, not23 reproduced failures or a complete stale-oracle census. .17.1 reproduces and repairs the unconditional T1556 current review artifact oracle. .17.2 owns the remaining22 candidate files; representative default runtime/stage classification remains pending. No full6 is launched or named slot reused.`
+  Commit: `pending`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.17.1, PUBLICATION-REGRESSION-REPAIRS.17.2`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.1`
+  Status: `done`
+  Goal: `Repair the public planning review-artifact historical byte oracle.`
+  Acceptance: `First bounded slice: reproduce T1556 default public planning path, compare returned generated review artifacts against an independent current public PPIF generation, preserve exact artifact graph/manifest/determinism/immutability/path/cleanup assertions and meaningful adverse controls. The old 3d8 generated-FSM hash has an established exact interface-only cause, but require this actual public result before repair. Sync public planning book/current fact when applicable, focused checks and ordinary commit before moving to downstream scale identities.`
+  Verification: `vial1556-planning-red returns expected1/Files1 Tests6 at line82: actual generated review SHA6f58 differs from historical3d8, the established intended interface-only source change. Only that source-byte oracle changes: compare the exact planner artifact against a fresh public PPIF generation from the same source. The literal IAL1 hash, complete graph, raw digest/byte inventory, three review routes, defensive mutations, repeated determinism, malformed requests and filesystem publication/cleanup checks remain. Syntax and T1556/T1555 return0 with All tests successful Files2 Tests11. All five native book/POD/current-source/index/KMap commands return0. Production modules/grammar/fixtures are unchanged; current public planning book explains raw review bytes/metadata. Exact initial scan, original RED/current GREEN recipes/logs and separate evidence legs are retained. No downstream scale/full CI or hosted qualification is credited.`
+  Commit: `This work-unit commit.`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2`
+  Status: `pending`
+  Goal: `Classify and repair downstream scale content-identity expectations in safe causal slices.`
+  Acceptance: `After .17.1 commits, classify all other exact scan matches and reproduce representative default execution/checking/backend-foundation gates before selecting bounded repair children. Existing source also freezes dependent semantic/plan/execution/evaluation/rerun identities, so changing only bridge constants is insufficient without field-level causal diagnosis. Preserve meaningful exact identities and quantitative/resource/profile/negative checks; no wholesale refresh or unsafe large/native flag. Use complete public stage recipes and current/historical comparisons to distinguish legitimate provenance propagation from real producer defects, then own each repair and qualify scope before .13 full6.`
+  Verification: `Initial reads identify live report constants across execution topology/fibers/source-maps/random/plan/qualification/limits and checking/backend foundations. Only source-maps/total-operation-limit declare an extra FSMGEN_VIAL_SCALE_EXACT branch; other current defaults still need runtime classification. No downstream repair is selected.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | After .16 commits, inspect exclusive full6 slots/current capacity and launch complete guarded full CI with a fresh checkpoint. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2` | `pending` | After .17.1 commits, reproduce/classify remaining downstream stage-identity expectations and own small repair children before full6. |
 
 ## Decisions
 
@@ -208,7 +230,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 now verifies exact contract identity with current provenance and restores the full canonical field to green; .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
+- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 now verifies exact contract identity with current provenance and restores the full canonical field to green; Remaining exact-literal preflight finds further VIAL candidates; .17 owns classification/repairs before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
 
 ## Acceptance Checklist — `.1`
 
@@ -323,3 +345,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Original canonical gate reports at t/1602-vial-architecture-scale-bridge-fanout.t line 162:240db972 differs froma4565d40. Actual git log -S a4565d405 identifies97dda148; its exact public historical generator reproduces the frozen report. Typed whole-report comparison finds only four generated-IAL0 provenance fields changed by the intended interface addition. All remaining fields match exactly.
 - [x] **ADDRESSED (verified)** — Independently assembled public AHB route matches complete scale report/manifest identity. Raw generated-FSM SHA, byte/line counts and artifact digest are checked before normalizing exactly four fields. Complete normalized contract remains64946a80; a changed protocol role breaks it. Python canonical/whole-report witnesses independently confirm the four-field boundary. No source anchor, profile/gate/limit/bypass assertion is removed.
 - [x] **NO REGRESSION** — bridge1602-repair-focused reports All tests successful, Files=2, Tests=12, syntax0. Exact original canonical reverify now returns0 with the same two tests plus decision/source references. bridge1602-repair-docs returns0 for all five native book/POD/current-source/index/KMap checks. Default explicit-large skip remains unqualified. Complete fresh local full CI and exact-SHA hosted qualification are still required.
+
+## Acceptance Checklist — `.17.1` public planning review bytes
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual guarded RED reports at t/1556-vial-public-planning-artifacts.t line 82: historical3d8 differs from actual6f58. The published review artifact has the same exact interface-only evolution already retained by .14/.16. The test froze old generated bytes while its contract is to return the current reviewed lowering. Exact23-file membership is retained separately from runtime defect claims.
+- [x] **ADDRESSED (verified)** — Replace only the stale IAL0 oracle with exact artifact/current public PPIF byte equality. Retain the original IAL1 literal and every artifact/manifest/route/determinism/defensive mutation/refusal/cleanup check. Guarded syntax0 and public source/planning GREEN0 follow the preserved RED1. No production module or fixture changes.
+- [x] **NO REGRESSION** — vial1556-planning-green reports All tests successful, Files=2, Tests=11. vial1556-planning-docs returns0 for native book/POD/current-source/index/KMap. Remaining22 downstream candidate files stay owned by .17.2, with no unrun full/hosted or native qualification claim. Ordinary staged/commit gates remain mandatory.

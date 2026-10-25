@@ -1,0 +1,22 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17",
+  "revision": "eb9c722cb27524b90247611e0f1b7a8a78b7c077",
+  "command": [
+    "rg",
+    "-n",
+    "-F",
+    "-e",
+    "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf",
+    "-e",
+    "a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca",
+    "-e",
+    "95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c",
+    "-e",
+    "ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa",
+    "t"
+  ],
+  "exit_status": 0,
+  "stdout": "t/1556-vial-public-planning-artifacts.t:82:    is(sha256_hex($artifact{'review/ahb_lite_subordinate.fsm'}{content}), '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf', 'generated IAL0 review hash is preserved');\nt/1629-vial-architecture-scale-checking-foundation.t:34:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1617-vial-architecture-scale-execution-scenario-limit.t:36:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1618-vial-architecture-scale-execution-scenario-over-limit.t:30:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1616-vial-architecture-scale-execution-scenario-qualification.t:39:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1620-vial-architecture-scale-execution-operation-limit.t:31:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1625-vial-architecture-scale-execution-total-fiber-limit.t:22:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1607-vial-architecture-scale-execution-source-maps.t:54:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1613-vial-architecture-scale-execution-random-qualification.t:55:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1645-vial-architecture-scale-backend-emission-foundation.t:286:            'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1626-vial-architecture-scale-execution-total-operation-limit.t:23:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1615-vial-architecture-scale-execution-random-over-limit.t:36:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1604-vial-architecture-scale-execution-topology.t:55:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1608-vial-architecture-scale-execution-random-replay.t:56:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1609-vial-architecture-scale-execution-plan-bytes.t:56:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1623-vial-architecture-scale-execution-fiber-qualification.t:61:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1622-vial-architecture-scale-execution-total-operation-qualification.t:33:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1619-vial-architecture-scale-execution-operation-qualification.t:41:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1614-vial-architecture-scale-execution-random-limit.t:59:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1605-vial-architecture-scale-execution-fibers.t:52:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1610-vial-architecture-scale-execution-plan-qualification.t:57:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1624-vial-architecture-scale-execution-live-fiber-limit.t:22:    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\nt/1611-vial-architecture-scale-execution-plan-limit.t:62:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\n",
+  "stderr": "",
+  "scope": "Exact literal membership only, not a reproduced defect or complete stale-oracle census."
+}

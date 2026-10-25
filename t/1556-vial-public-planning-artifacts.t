@@ -79,7 +79,10 @@ subtest 'virtual API returns one closed deterministic target-neutral artifact gr
     my %artifact = map { $_->{relpath} => $_ } @$sink;
     like($artifact{'source/vial-normal.vial'}{content}, qr{\A\(vial\n  \(version 1\)}, 'source artifact is canonical normal VIAL');
     is(sha256_hex($artifact{'review/ahb_lite_subordinate.isf'}{content}), 'b0f3446874367787d0dd134701ff9e89a3b24af6ef9c03d6eb9dc484093f9e4c', 'generated IAL1 review hash is preserved');
-    is(sha256_hex($artifact{'review/ahb_lite_subordinate.fsm'}{content}), '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf', 'generated IAL0 review hash is preserved');
+    my $current_ial2 = FSM::Adapter::IAL2::PPIF->new()->parse_source($hial_text, $hial_id);
+    is($artifact{'review/ahb_lite_subordinate.fsm'}{content},
+        $current_ial2->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'},
+        'public planning preserves exact current PPIF-generated IAL0 review bytes');
     is(JSON::PP->new->decode($artifact{'hial-vial-bridge.json'}{content})->{manifest_id}, $result->{bridge_manifest}{manifest_id}, 'bridge artifact is the exact public projection');
     is(JSON::PP->new->decode($artifact{'vial-plan.json'}{content})->{plan_id}, $result->{plan}{plan_id}, 'plan artifact is the exact public projection');
     is_deeply(
