@@ -1,0 +1,31 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.4",
+  "producer_introduction": "9dca2caa38964e07767112ce2765e7b28ab86fea",
+  "tests": [
+    {
+      "path": "t/139-composition-shared-datapath-candidate-metadata.t",
+      "before_sha256": "30b912542f8f3fd0ed4833e18f71f978f14a63e807c788abd55857f27d1b4086",
+      "after_sha256": "9d95fad716164225896f0a931e6a95fd35958f7e2f125a88a078dba6629962d0",
+      "only_delta": "literal pulse_delay_cycles => undef in complete expected output-drive family objects"
+    },
+    {
+      "path": "t/140-composition-shared-datapath-drive-intent-metadata.t",
+      "before_sha256": "9ae10259898611fb59dc9213f9ee3adaba002bd060e32de79fdcd20f2eadac8e",
+      "after_sha256": "82e1d134110c53996e253412a905c30b1d2549f26fed56bd0080976ee02fa987",
+      "only_delta": "literal pulse_delay_cycles => undef in complete expected output-drive family objects"
+    }
+  ],
+  "unchanged_producers": {
+    "perl/FSM/IR/LoweredRTLIRBuilder.pm": "97b80c3cc99a97db9a9a34dcf0be38b9024b9d0da1210b01f60398fdb38d084b",
+    "perl/FSM/Composition/SharedDatapathCandidateBuilder.pm": "eacbe449d1fdcd28aabcc0fa33f293658100f751b3c186a3432496591810ed88"
+  },
+  "collector_failure": "shared-dto-actual.json retains first unsupported name accessor error and exact recipe; no complete DTO observation from that attempt. Public instance_name POD accessor corrects only collector; qualified distinct slot succeeds.",
+  "rederive": "Complete byte-exact existing fixtures and captured public candidate/realized-child metadata, plus introducing source and canonical delayed-completion meaning.",
+  "falsify": "Original full2 strong comparisons reject the additional null field. Literal-only golden diff preserves every other field and full equality; structural-binding and cache-mutation tests independently cover adjacent consumers. Delayed-pulse exclusion producer remains byte-identical; no fresh native runtime claim.",
+  "durability": "Tracked exact inputs, failed collector/error, distinct complete qualified observation/recipe, focused/book/gate receipts, live task/book and task-scoped commit.",
+  "staged_gate": {
+    "receipt": "docs/audits/push-readiness-20261025/shared-dto-staged.json",
+    "exit_status": 0,
+    "normal_hook": "Rechecks final commit stage."
+  }
+}

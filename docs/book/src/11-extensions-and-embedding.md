@@ -2174,6 +2174,8 @@ A delayed-pulse entry in `output_drive_families[]` carries the integer
 holding-register and combinational entries carry JSON null. Composition candidate
 inference uses this timing distinction to preserve independent event channels;
 the public key manifest advertises the nullable field.
+Candidate contributors retain that field in `output_drive_family`, including
+explicit null; their separate `drive_intent` projection keeps its existing keys.
 
 Direct-generation lowered summaries such as `output_drive_families`,
 `selector_conflict_targets`, and `standalone_dt_multi_drive_targets` are audited

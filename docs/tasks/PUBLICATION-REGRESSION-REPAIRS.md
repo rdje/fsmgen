@@ -59,11 +59,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.3: check private local-do binding dataflow`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Refresh exact shared-datapath DTO goldens for nullable pulse delay.`
-  Acceptance: `After .3 commits, inspect the complete public DTO/schema. Update T139/T140 exact full-object expectations for intentionally added pulse_delay_cycles null, preserving all contributor/binding/drive-intent fields and delayed-pulse sharing exclusion. Verify adjacent structural-binding and defensive-copy consumers. Keep producer fields and strong equality assertions.`
-  Verification: `P1 pre-push;9dca2caa38964e07767112ce2765e7b28ab86fea adds nullable drive-family delay. Normalized semantic output-drive schema and generated-child named-completion cards own meaning. Both actual failures are retained in full2 and the queue receipt.`
-  Commit: `pending`
+  Acceptance: `After .3 commits, inspect the complete public DTO/schema. Before changing goldens, capture the complete tested candidate metadata and realized-child output-drive families from byte-exact existing fixtures through the public HDLGenerator API; exclude only the same three delegated forward-IR keys as the existing tests, with no new field filtering. Update T139/T140 exact full-object expectations for intentionally added pulse_delay_cycles null, preserving all contributor/binding/drive-intent fields and delayed-pulse sharing exclusion. Verify adjacent structural-binding and defensive-copy consumers. Keep producer fields and strong equality assertions.`
+  Verification: `Before golden edits, byte-exact original T139/T140 fixtures produce complete candidate and child-family DTOs through the public HDLGenerator API. The first collector used an unsupported name accessor and failed; its error/recipe remains intact. Public documented instance_name corrects the collector in a separate qualified slot. Actual families carry pulse_delay_cycles null; drive_intent retains its distinct existing shape. Five literal undef additions are the only test delta; no field filtering or equality weakening. Introducing9dca2caa389 and unchanged producer hashes retain the delayed-pulse sharing exclusion without a fresh native runtime claim. Guarded four-file metadata/structural/cache band reports All tests successful, Files=4 Tests=8. Native mdBook/POD/current source/index checks all pass. Exact inputs, failed/qualified observations, recipes, before/after test hashes, unchanged producer identities and distinct re-derivation/falsification/durability legs are in publication-regression-repairs-20261025/shared-dto-repair.json and referenced receipts. Fresh metadata/reference/claim and staged/normal doctrines precede commit; full CI/push remain separate.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.4: retain nullable delay in exact shared DTO goldens`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.5`
   Status: `pending`
@@ -90,7 +90,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.4` | `pending` | After .3 commits, align the exact shared-datapath DTO goldens with the already-qualified nullable pulse delay. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.5` | `pending` | After .4 commits clean, durably route the already-completed GH cache migration before full CI/push. |
 
 ## Decisions
 
@@ -99,7 +99,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- No external blocker for .4 after .3 commits. Full CI/push/hosted qualification remain pending, not successful.
+- No external blocker for .5 after .4 commits. Full CI/push/hosted qualification remain pending, not successful.
 
 ## Acceptance Checklist — `.1`
 
@@ -124,3 +124,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual full2 diagnostic at t/1388-isf-when-body-local-do.t line 86 shows the private carrier assignment where the stale regex expects raw addr. git log -S separates scoped plan32642d54c from production activation57b6495f8; current FormalIdentityPlan/production cards require private executable storage and authored report names. Exact native .7 source/report independently confirms the intended addr<-req row; no current producer fault is inferred.
 - [x] **ADDRESSED (verified)** — Bounded parent_do and worker_update state bodies now prove req assignment and worker consumption through this fixture's private carrier. Exact internal/non-public declaration, eight-bit width and start/done handshake assertions remain explicit; public binding provenance stays parent/worker/input/addr/req/8. No assertion is removed to conceal the binding. The comment/book distinguish source lowering/artifact checks from separately qualified runtime and private names from authored endpoints.
 - [x] **NO REGRESSION** — All tests successful in guarded T1388/T1243/T1961 (Files=3, Tests=14) and the final T1388 done-signal check (Files=1, Tests=6). Native mdBook/POD/current copied source/index pass; git diff --check is clean. Exact retained receipts and unchanged producer/source hashes scope the result. Fresh claim/reference/ceiling and complete staged/normal scripts/check_doctrines.sh gates precede commit; full CI is not claimed.
+
+## Acceptance Checklist — `.4`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual full2 mismatch at t/139-composition-shared-datapath-candidate-metadata.t line 84 and t/140-composition-shared-datapath-drive-intent-metadata.t line 95 identifies the additional nullable pulse_delay_cycles family field. git log -S identifies intentional9dca2caa389 producer adoption. Complete public DTO capture from exact unchanged fixtures confirms explicit null in family objects and unchanged separate drive-intent keys; no producer defect is inferred.
+- [x] **ADDRESSED (verified)** — Only the five expected family hashes gain literal pulse_delay_cycles => undef. Every original complete-object comparison, contributor/binding/drive-intent field and the three pre-existing forward-IR exclusions remain intact. Qualified captures and exact before/after identities retain the full shape; production timing/admission code is byte-identical. The book explicitly distinguishes contributor family nulls from the existing drive-intent projection. The failed collector accessor is retained and corrected through its public documented accessor in a separate slot.
+- [x] **NO REGRESSION** — All tests successful, Files=4 Tests=8 for guarded T139/T140/T168/T551, preserving independent structural leaf binding and cache mutation controls. Native mdBook/POD/current built source/index checks pass. Complete focused/book receipts and saved full DTO/fixture identities retain; git diff --check and fresh metadata/reference/claim plus complete staged/normal scripts/check_doctrines.sh are required before commit. No native runtime or full-suite success is claimed.

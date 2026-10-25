@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.4",
+  "baseline_revision": "b3e8637c63370272d6f003d06129a875e1c28dbd",
+  "cases": {
+    "candidate": {
+      "test": "t/139-composition-shared-datapath-candidate-metadata.t",
+      "test_sha256": "30b912542f8f3fd0ed4833e18f71f978f14a63e807c788abd55857f27d1b4086",
+      "filename": "shared_datapath_candidate_top.fsm",
+      "source": "(?top:shared_datapath_candidate_top\n  (?ports:public_io\n    clk\n    rstn\n    left_status>8\n    right_status>8\n  )\n  (?fsmc:left left_src)\n  (?fsmc:right right_src)\n  (?wiring:wiring\n    /left.status_bus/left_status/\n    /right.status_bus/right_status/\n  )\n)\n\n(?fsm:left_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-state0\n    (status_bus> <= 8'1)\n  )\n  (+size\n    (status_bus 8)\n  )\n)\n\n(?fsm:right_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-state0\n    (status_bus> <= 8'2)\n  )\n  (+size\n    (status_bus 8)\n  )\n)\n",
+      "source_sha256": "dbeaec8af321657b7a436c0defa53b0e292626c946748cf54aecdd9f7ffa6395"
+    },
+    "drive_intent": {
+      "test": "t/140-composition-shared-datapath-drive-intent-metadata.t",
+      "test_sha256": "9ae10259898611fb59dc9213f9ee3adaba002bd060e32de79fdcd20f2eadac8e",
+      "filename": "shared_datapath_drive_intent_top.fsm",
+      "source": "(?top:shared_datapath_drive_intent_top\n  (?ports:public_io\n    clk\n    rstn\n    select\n    left_status>8\n    right_status>8\n  )\n  (?fsmc:left left_src)\n  (?fsmc:right right_src)\n  (?wiring:wiring\n    /select/left.select/\n    /select/right.select/\n    /left.status_bus/left_status/\n    /right.status_bus/right_status/\n  )\n)\n\n(?fsm:left_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-path_a\n    (<select==1'b0\n      (status_bus> <= 8'1)\n    )\n  )\n  (-path_b\n    (<select==1'b1\n      (status_bus> <= 8'2)\n    )\n  )\n  (+size\n    (select 1)\n    (status_bus 8)\n  )\n)\n\n(?fsm:right_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-path_a\n    (<select==1'b0\n      (status_bus> <= 8'3)\n    )\n  )\n  (-path_b\n    (<select==1'b1\n      (status_bus> <= 8'4)\n    )\n  )\n  (+size\n    (select 1)\n    (status_bus 8)\n  )\n)\n",
+      "source_sha256": "25eccb8ddddac1281e6e254beb3e6c071dadbe67d9299880c1b88763be6d0a6c"
+    }
+  },
+  "scope": "Exact first existing public pipeline fixtures before oracle changes. Capture complete tested candidates/realized child drive families, excluding only the pre-existing intent_hir/lowered_rtl_ir/structural_rtl_ir forward objects. Retain every binding, drive-intent and new pulse-delay field."
+}

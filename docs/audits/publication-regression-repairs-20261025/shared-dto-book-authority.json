@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.4",
+  "before": {
+    "files": 65,
+    "lines_total": 73965,
+    "bytes_total": 4142687
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73967,
+    "bytes_total": 4142845
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 2,
+    "bytes_total": 158
+  },
+  "rederive": "Whole current book source membership/bytes/LF counts before and after the narrow clarification.",
+  "falsify": "Independent staged reference-authority gate derives complete member delta; ceilings unchanged.",
+  "durability": "Tracked authority/source/book receipts and unit commit."
+}

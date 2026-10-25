@@ -92,6 +92,7 @@ FSM
         $left_info->{output_drive_families},
         [
             {
+                pulse_delay_cycles => undef,
                 signal_name => 'status_bus',
                 width => 8,
                 multiplexer_type => 'flop',
@@ -151,6 +152,7 @@ FSM
                             signal_name => 'left_status',
                         },
                         output_drive_family => {
+                            pulse_delay_cycles => undef,
                             signal_name => 'status_bus',
                             width => 8,
                             multiplexer_type => 'flop',
@@ -226,6 +228,7 @@ FSM
                             signal_name => 'right_status',
                         },
                         output_drive_family => {
+                            pulse_delay_cycles => undef,
                             signal_name => 'status_bus',
                             width => 8,
                             multiplexer_type => 'flop',

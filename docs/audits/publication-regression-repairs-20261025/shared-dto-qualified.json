@@ -1,0 +1,832 @@
+{
+   "inputs" : {
+      "baseline_revision" : "b3e8637c63370272d6f003d06129a875e1c28dbd",
+      "cases" : {
+         "candidate" : {
+            "filename" : "shared_datapath_candidate_top.fsm",
+            "source" : "(?top:shared_datapath_candidate_top\n  (?ports:public_io\n    clk\n    rstn\n    left_status>8\n    right_status>8\n  )\n  (?fsmc:left left_src)\n  (?fsmc:right right_src)\n  (?wiring:wiring\n    /left.status_bus/left_status/\n    /right.status_bus/right_status/\n  )\n)\n\n(?fsm:left_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-state0\n    (status_bus> <= 8'1)\n  )\n  (+size\n    (status_bus 8)\n  )\n)\n\n(?fsm:right_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-state0\n    (status_bus> <= 8'2)\n  )\n  (+size\n    (status_bus 8)\n  )\n)\n",
+            "source_sha256" : "dbeaec8af321657b7a436c0defa53b0e292626c946748cf54aecdd9f7ffa6395",
+            "test" : "t/139-composition-shared-datapath-candidate-metadata.t",
+            "test_sha256" : "30b912542f8f3fd0ed4833e18f71f978f14a63e807c788abd55857f27d1b4086"
+         },
+         "drive_intent" : {
+            "filename" : "shared_datapath_drive_intent_top.fsm",
+            "source" : "(?top:shared_datapath_drive_intent_top\n  (?ports:public_io\n    clk\n    rstn\n    select\n    left_status>8\n    right_status>8\n  )\n  (?fsmc:left left_src)\n  (?fsmc:right right_src)\n  (?wiring:wiring\n    /select/left.select/\n    /select/right.select/\n    /left.status_bus/left_status/\n    /right.status_bus/right_status/\n  )\n)\n\n(?fsm:left_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-path_a\n    (<select==1'b0\n      (status_bus> <= 8'1)\n    )\n  )\n  (-path_b\n    (<select==1'b1\n      (status_bus> <= 8'2)\n    )\n  )\n  (+size\n    (select 1)\n    (status_bus 8)\n  )\n)\n\n(?fsm:right_src\n  (+system\n    (clock clk)\n    (sreset rstn)\n  )\n  (-path_a\n    (<select==1'b0\n      (status_bus> <= 8'3)\n    )\n  )\n  (-path_b\n    (<select==1'b1\n      (status_bus> <= 8'4)\n    )\n  )\n  (+size\n    (select 1)\n    (status_bus 8)\n  )\n)\n",
+            "source_sha256" : "25eccb8ddddac1281e6e254beb3e6c071dadbe67d9299880c1b88763be6d0a6c",
+            "test" : "t/140-composition-shared-datapath-drive-intent-metadata.t",
+            "test_sha256" : "9ae10259898611fb59dc9213f9ee3adaba002bd060e32de79fdcd20f2eadac8e"
+         }
+      },
+      "owner" : "PUBLICATION-REGRESSION-REPAIRS.4",
+      "scope" : "Exact first existing public pipeline fixtures before oracle changes. Capture complete tested candidates/realized child drive families, excluding only the pre-existing intent_hir/lowered_rtl_ir/structural_rtl_ir forward objects. Retain every binding, drive-intent and new pulse-delay field."
+   },
+   "observations" : {
+      "candidate" : {
+         "candidates" : [
+            {
+               "aggregate_enable_families" : [
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d1_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-state0"
+                           ],
+                           "driver_enable_signals" : [
+                              "state0_status_bus__8_d1_en"
+                           ],
+                           "endpoint" : "left.status_bus",
+                           "family_enable_signal" : "status_bus__8_d1_en",
+                           "source_enable_signal" : "left_status_bus__8_d1_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd1",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "left_status_bus__8_d1_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d1_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d1_multi_src_conflict"
+                  },
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d2_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-state0"
+                           ],
+                           "driver_enable_signals" : [
+                              "state0_status_bus__8_d2_en"
+                           ],
+                           "endpoint" : "right.status_bus",
+                           "family_enable_signal" : "status_bus__8_d2_en",
+                           "source_enable_signal" : "right_status_bus__8_d2_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd2",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "right_status_bus__8_d2_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d2_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d2_multi_src_conflict"
+                  }
+               ],
+               "aggregate_enable_family_count" : 2,
+               "aggregate_target_enable_signal" : "status_bus_shared_en",
+               "contributor_count" : 2,
+               "contributors" : [
+                  {
+                     "bound_connection_expr" : {
+                        "kind" : "signal_ref",
+                        "signal_name" : "left_status"
+                     },
+                     "bound_signal" : "left_status",
+                     "bound_signals" : [
+                        "left_status"
+                     ],
+                     "drive_intent" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-state0"
+                        ],
+                        "driver_count" : 1,
+                        "driver_enable_signals" : [
+                           "state0_status_bus__8_d1_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d1_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-state0"
+                              ],
+                              "driver_enable_signals" : [
+                                 "state0_status_bus__8_d1_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d1_en",
+                              "rhs_value" : "8'd1"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd1"
+                        ]
+                     },
+                     "endpoint" : "left.status_bus",
+                     "instance_name" : "left",
+                     "kind" : "fsmc",
+                     "module_name" : "left_src",
+                     "output_drive_family" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-state0"
+                        ],
+                        "driver_count" : 1,
+                        "driver_enable_signals" : [
+                           "state0_status_bus__8_d1_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d1_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "pulse_delay_cycles" : null,
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-state0"
+                              ],
+                              "driver_enable_signals" : [
+                                 "state0_status_bus__8_d1_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d1_en",
+                              "rhs_value" : "8'd1"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd1"
+                        ],
+                        "signal_name" : "status_bus",
+                        "width" : 8
+                     },
+                     "source_name" : "left_src"
+                  },
+                  {
+                     "bound_connection_expr" : {
+                        "kind" : "signal_ref",
+                        "signal_name" : "right_status"
+                     },
+                     "bound_signal" : "right_status",
+                     "bound_signals" : [
+                        "right_status"
+                     ],
+                     "drive_intent" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-state0"
+                        ],
+                        "driver_count" : 1,
+                        "driver_enable_signals" : [
+                           "state0_status_bus__8_d2_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d2_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-state0"
+                              ],
+                              "driver_enable_signals" : [
+                                 "state0_status_bus__8_d2_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d2_en",
+                              "rhs_value" : "8'd2"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd2"
+                        ]
+                     },
+                     "endpoint" : "right.status_bus",
+                     "instance_name" : "right",
+                     "kind" : "fsmc",
+                     "module_name" : "right_src",
+                     "output_drive_family" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-state0"
+                        ],
+                        "driver_count" : 1,
+                        "driver_enable_signals" : [
+                           "state0_status_bus__8_d2_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d2_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "pulse_delay_cycles" : null,
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-state0"
+                              ],
+                              "driver_enable_signals" : [
+                                 "state0_status_bus__8_d2_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d2_en",
+                              "rhs_value" : "8'd2"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd2"
+                        ],
+                        "signal_name" : "status_bus",
+                        "width" : 8
+                     },
+                     "source_name" : "right_src"
+                  }
+               ],
+               "default_lifted_visibility" : "top_output",
+               "interface_type" : "data",
+               "lifted_runtime_kind" : "registered_shared_public_fanout",
+               "lifted_runtime_next_signal" : "status_bus_shared_next",
+               "lifted_runtime_reset_active_level" : 1,
+               "lifted_runtime_reset_keyword" : "sreset",
+               "lifted_runtime_reset_kind" : "sync",
+               "lifted_runtime_reset_value" : "8'h00",
+               "lifted_runtime_signal" : "status_bus_shared_q",
+               "loopback_allowed" : 0,
+               "multi_value_assertion" : {
+                  "input_count" : 2,
+                  "input_enable_signals" : [
+                     "status_bus__8_d1_shared_en",
+                     "status_bus__8_d2_shared_en"
+                  ],
+                  "kind" : "onehot0",
+                  "result_signal" : "status_bus_multi_value_conflict"
+               },
+               "multi_value_conflict_signal" : "status_bus_multi_value_conflict",
+               "peer_input_count" : 0,
+               "peer_input_endpoints" : [],
+               "planned_reexport_top_output_signals" : [],
+               "reset_value" : "8'h00",
+               "signal_name" : "status_bus",
+               "storage_class" : "registered",
+               "top_output_signals" : [
+                  "left_status",
+                  "right_status"
+               ],
+               "width" : 8
+            }
+         ],
+         "children" : [
+            {
+               "instance_name" : "left",
+               "output_drive_families" : [
+                  {
+                     "default_value" : "status_bus",
+                     "driver_blocks" : [
+                        "-state0"
+                     ],
+                     "driver_count" : 1,
+                     "driver_enable_signals" : [
+                        "state0_status_bus__8_d1_en"
+                     ],
+                     "family_enable_signals" : [
+                        "status_bus__8_d1_en"
+                     ],
+                     "multiplexer_type" : "flop",
+                     "pulse_delay_cycles" : null,
+                     "reset_value" : "8'h00",
+                     "rhs_enable_families" : [
+                        {
+                           "driver_blocks" : [
+                              "-state0"
+                           ],
+                           "driver_enable_signals" : [
+                              "state0_status_bus__8_d1_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d1_en",
+                           "rhs_value" : "8'd1"
+                        }
+                     ],
+                     "rhs_values" : [
+                        "8'd1"
+                     ],
+                     "signal_name" : "status_bus",
+                     "width" : 8
+                  }
+               ]
+            },
+            {
+               "instance_name" : "right",
+               "output_drive_families" : [
+                  {
+                     "default_value" : "status_bus",
+                     "driver_blocks" : [
+                        "-state0"
+                     ],
+                     "driver_count" : 1,
+                     "driver_enable_signals" : [
+                        "state0_status_bus__8_d2_en"
+                     ],
+                     "family_enable_signals" : [
+                        "status_bus__8_d2_en"
+                     ],
+                     "multiplexer_type" : "flop",
+                     "pulse_delay_cycles" : null,
+                     "reset_value" : "8'h00",
+                     "rhs_enable_families" : [
+                        {
+                           "driver_blocks" : [
+                              "-state0"
+                           ],
+                           "driver_enable_signals" : [
+                              "state0_status_bus__8_d2_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d2_en",
+                           "rhs_value" : "8'd2"
+                        }
+                     ],
+                     "rhs_values" : [
+                        "8'd2"
+                     ],
+                     "signal_name" : "status_bus",
+                     "width" : 8
+                  }
+               ]
+            }
+         ]
+      },
+      "drive_intent" : {
+         "candidates" : [
+            {
+               "aggregate_enable_families" : [
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d1_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_a"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_a_status_bus__8_d1_en"
+                           ],
+                           "endpoint" : "left.status_bus",
+                           "family_enable_signal" : "status_bus__8_d1_en",
+                           "source_enable_signal" : "left_status_bus__8_d1_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd1",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "left_status_bus__8_d1_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d1_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d1_multi_src_conflict"
+                  },
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d2_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_b"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_b_status_bus__8_d2_en"
+                           ],
+                           "endpoint" : "left.status_bus",
+                           "family_enable_signal" : "status_bus__8_d2_en",
+                           "source_enable_signal" : "left_status_bus__8_d2_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd2",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "left_status_bus__8_d2_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d2_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d2_multi_src_conflict"
+                  },
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d3_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_a"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_a_status_bus__8_d3_en"
+                           ],
+                           "endpoint" : "right.status_bus",
+                           "family_enable_signal" : "status_bus__8_d3_en",
+                           "source_enable_signal" : "right_status_bus__8_d3_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd3",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "right_status_bus__8_d3_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d3_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d3_multi_src_conflict"
+                  },
+                  {
+                     "aggregate_enable_signal" : "status_bus__8_d4_shared_en",
+                     "contributor_count" : 1,
+                     "contributors" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_b"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_b_status_bus__8_d4_en"
+                           ],
+                           "endpoint" : "right.status_bus",
+                           "family_enable_signal" : "status_bus__8_d4_en",
+                           "source_enable_signal" : "right_status_bus__8_d4_src_en"
+                        }
+                     ],
+                     "rhs_value" : "8'd4",
+                     "same_value_assertion" : {
+                        "input_count" : 1,
+                        "input_enable_signals" : [
+                           "right_status_bus__8_d4_src_en"
+                        ],
+                        "kind" : "onehot0",
+                        "result_signal" : "status_bus__8_d4_multi_src_conflict"
+                     },
+                     "same_value_conflict_signal" : "status_bus__8_d4_multi_src_conflict"
+                  }
+               ],
+               "aggregate_enable_family_count" : 4,
+               "aggregate_target_enable_signal" : "status_bus_shared_en",
+               "contributor_count" : 2,
+               "contributors" : [
+                  {
+                     "bound_connection_expr" : {
+                        "kind" : "signal_ref",
+                        "signal_name" : "left_status"
+                     },
+                     "bound_signal" : "left_status",
+                     "bound_signals" : [
+                        "left_status"
+                     ],
+                     "drive_intent" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-path_a",
+                           "-path_b"
+                        ],
+                        "driver_count" : 2,
+                        "driver_enable_signals" : [
+                           "path_a_status_bus__8_d1_en",
+                           "path_b_status_bus__8_d2_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d1_en",
+                           "status_bus__8_d2_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-path_a"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_a_status_bus__8_d1_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d1_en",
+                              "rhs_value" : "8'd1"
+                           },
+                           {
+                              "driver_blocks" : [
+                                 "-path_b"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_b_status_bus__8_d2_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d2_en",
+                              "rhs_value" : "8'd2"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd1",
+                           "8'd2"
+                        ]
+                     },
+                     "endpoint" : "left.status_bus",
+                     "instance_name" : "left",
+                     "kind" : "fsmc",
+                     "module_name" : "left_src",
+                     "output_drive_family" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-path_a",
+                           "-path_b"
+                        ],
+                        "driver_count" : 2,
+                        "driver_enable_signals" : [
+                           "path_a_status_bus__8_d1_en",
+                           "path_b_status_bus__8_d2_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d1_en",
+                           "status_bus__8_d2_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "pulse_delay_cycles" : null,
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-path_a"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_a_status_bus__8_d1_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d1_en",
+                              "rhs_value" : "8'd1"
+                           },
+                           {
+                              "driver_blocks" : [
+                                 "-path_b"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_b_status_bus__8_d2_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d2_en",
+                              "rhs_value" : "8'd2"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd1",
+                           "8'd2"
+                        ],
+                        "signal_name" : "status_bus",
+                        "width" : 8
+                     },
+                     "source_name" : "left_src"
+                  },
+                  {
+                     "bound_connection_expr" : {
+                        "kind" : "signal_ref",
+                        "signal_name" : "right_status"
+                     },
+                     "bound_signal" : "right_status",
+                     "bound_signals" : [
+                        "right_status"
+                     ],
+                     "drive_intent" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-path_a",
+                           "-path_b"
+                        ],
+                        "driver_count" : 2,
+                        "driver_enable_signals" : [
+                           "path_a_status_bus__8_d3_en",
+                           "path_b_status_bus__8_d4_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d3_en",
+                           "status_bus__8_d4_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-path_a"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_a_status_bus__8_d3_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d3_en",
+                              "rhs_value" : "8'd3"
+                           },
+                           {
+                              "driver_blocks" : [
+                                 "-path_b"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_b_status_bus__8_d4_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d4_en",
+                              "rhs_value" : "8'd4"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd3",
+                           "8'd4"
+                        ]
+                     },
+                     "endpoint" : "right.status_bus",
+                     "instance_name" : "right",
+                     "kind" : "fsmc",
+                     "module_name" : "right_src",
+                     "output_drive_family" : {
+                        "default_value" : "status_bus",
+                        "driver_blocks" : [
+                           "-path_a",
+                           "-path_b"
+                        ],
+                        "driver_count" : 2,
+                        "driver_enable_signals" : [
+                           "path_a_status_bus__8_d3_en",
+                           "path_b_status_bus__8_d4_en"
+                        ],
+                        "family_enable_signals" : [
+                           "status_bus__8_d3_en",
+                           "status_bus__8_d4_en"
+                        ],
+                        "multiplexer_type" : "flop",
+                        "pulse_delay_cycles" : null,
+                        "reset_value" : "8'h00",
+                        "rhs_enable_families" : [
+                           {
+                              "driver_blocks" : [
+                                 "-path_a"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_a_status_bus__8_d3_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d3_en",
+                              "rhs_value" : "8'd3"
+                           },
+                           {
+                              "driver_blocks" : [
+                                 "-path_b"
+                              ],
+                              "driver_enable_signals" : [
+                                 "path_b_status_bus__8_d4_en"
+                              ],
+                              "family_enable_signal" : "status_bus__8_d4_en",
+                              "rhs_value" : "8'd4"
+                           }
+                        ],
+                        "rhs_values" : [
+                           "8'd3",
+                           "8'd4"
+                        ],
+                        "signal_name" : "status_bus",
+                        "width" : 8
+                     },
+                     "source_name" : "right_src"
+                  }
+               ],
+               "default_lifted_visibility" : "top_output",
+               "interface_type" : "data",
+               "lifted_runtime_kind" : "registered_shared_public_fanout",
+               "lifted_runtime_next_signal" : "status_bus_shared_next",
+               "lifted_runtime_reset_active_level" : 1,
+               "lifted_runtime_reset_keyword" : "sreset",
+               "lifted_runtime_reset_kind" : "sync",
+               "lifted_runtime_reset_value" : "8'h00",
+               "lifted_runtime_signal" : "status_bus_shared_q",
+               "loopback_allowed" : 0,
+               "multi_value_assertion" : {
+                  "input_count" : 4,
+                  "input_enable_signals" : [
+                     "status_bus__8_d1_shared_en",
+                     "status_bus__8_d2_shared_en",
+                     "status_bus__8_d3_shared_en",
+                     "status_bus__8_d4_shared_en"
+                  ],
+                  "kind" : "onehot0",
+                  "result_signal" : "status_bus_multi_value_conflict"
+               },
+               "multi_value_conflict_signal" : "status_bus_multi_value_conflict",
+               "peer_input_count" : 0,
+               "peer_input_endpoints" : [],
+               "planned_reexport_top_output_signals" : [],
+               "reset_value" : "8'h00",
+               "signal_name" : "status_bus",
+               "storage_class" : "registered",
+               "top_output_signals" : [
+                  "left_status",
+                  "right_status"
+               ],
+               "width" : 8
+            }
+         ],
+         "children" : [
+            {
+               "instance_name" : "left",
+               "output_drive_families" : [
+                  {
+                     "default_value" : "status_bus",
+                     "driver_blocks" : [
+                        "-path_a",
+                        "-path_b"
+                     ],
+                     "driver_count" : 2,
+                     "driver_enable_signals" : [
+                        "path_a_status_bus__8_d1_en",
+                        "path_b_status_bus__8_d2_en"
+                     ],
+                     "family_enable_signals" : [
+                        "status_bus__8_d1_en",
+                        "status_bus__8_d2_en"
+                     ],
+                     "multiplexer_type" : "flop",
+                     "pulse_delay_cycles" : null,
+                     "reset_value" : "8'h00",
+                     "rhs_enable_families" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_a"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_a_status_bus__8_d1_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d1_en",
+                           "rhs_value" : "8'd1"
+                        },
+                        {
+                           "driver_blocks" : [
+                              "-path_b"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_b_status_bus__8_d2_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d2_en",
+                           "rhs_value" : "8'd2"
+                        }
+                     ],
+                     "rhs_values" : [
+                        "8'd1",
+                        "8'd2"
+                     ],
+                     "signal_name" : "status_bus",
+                     "width" : 8
+                  }
+               ]
+            },
+            {
+               "instance_name" : "right",
+               "output_drive_families" : [
+                  {
+                     "default_value" : "status_bus",
+                     "driver_blocks" : [
+                        "-path_a",
+                        "-path_b"
+                     ],
+                     "driver_count" : 2,
+                     "driver_enable_signals" : [
+                        "path_a_status_bus__8_d3_en",
+                        "path_b_status_bus__8_d4_en"
+                     ],
+                     "family_enable_signals" : [
+                        "status_bus__8_d3_en",
+                        "status_bus__8_d4_en"
+                     ],
+                     "multiplexer_type" : "flop",
+                     "pulse_delay_cycles" : null,
+                     "reset_value" : "8'h00",
+                     "rhs_enable_families" : [
+                        {
+                           "driver_blocks" : [
+                              "-path_a"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_a_status_bus__8_d3_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d3_en",
+                           "rhs_value" : "8'd3"
+                        },
+                        {
+                           "driver_blocks" : [
+                              "-path_b"
+                           ],
+                           "driver_enable_signals" : [
+                              "path_b_status_bus__8_d4_en"
+                           ],
+                           "family_enable_signal" : "status_bus__8_d4_en",
+                           "rhs_value" : "8'd4"
+                        }
+                     ],
+                     "rhs_values" : [
+                        "8'd3",
+                        "8'd4"
+                     ],
+                     "signal_name" : "status_bus",
+                     "width" : 8
+                  }
+               ]
+            }
+         ]
+      }
+   },
+   "owner" : "PUBLICATION-REGRESSION-REPAIRS.4",
+   "recipe" : "#!/usr/bin/env perl\nuse strict;\nuse warnings;\nuse Cwd qw(abs_path);\nuse Digest::SHA qw(sha256_hex);\nuse File::Spec;\nuse File::Temp qw(tempdir);\nuse FindBin;\nuse JSON::PP;\nuse lib \"$FindBin::Bin/../../../perl\";\nuse FSM::Pipeline::HDLGenerator;\n\nmy $root = abs_path(\"$FindBin::Bin/../../..\");\nchdir $root or die \"chdir repository: $!\";\nmy $base = 'docs/audits/publication-regression-repairs-20261025';\nmy $output = \"$base/shared-dto-qualified.json\";\nmy $json = JSON::PP->new->canonical->pretty;\nmy $inputs = $json->decode(read_file(\"$base/shared-dto-inputs.json\"));\n\nsub metadata {\n    my ($value) = @_;\n    return [map { metadata($_) } @$value] if ref($value) eq 'ARRAY';\n    return {map { $_ => metadata($value->{$_}) }\n        grep { $_ ne 'intent_hir' && $_ ne 'lowered_rtl_ir' && $_ ne 'structural_rtl_ir' }\n        sort keys %$value} if ref($value) eq 'HASH';\n    return $value;\n}\n\nsub read_file {\n    open my $fh, '<:raw', $_[0] or die \"read $_[0]: $!\";\n    local $/;\n    my $raw = <$fh>;\n    close $fh or die \"close $_[0]: $!\";\n    return $raw;\n}\n\nif (@ARGV == 1 && $ARGV[0] eq '--capture') {\n    die \"RAM guard required\\n\" unless ($ENV{FSMGEN_RAM_GUARD_ACTIVE} // '') eq '1';\n    die \"retained DTO inspection already exists\\n\" if -e $output;\n    my $dir = tempdir(CLEANUP => 1);\n    my $record = {owner => $inputs->{owner}, inputs => $inputs,\n        recipe => read_file(__FILE__), observations => {}};\n    my $ok = eval {\n        for my $kind (sort keys %{$inputs->{cases}}) {\n            my $case = $inputs->{cases}{$kind};\n            die \"fixture identity\\n\" unless sha256_hex($case->{source}) eq $case->{source_sha256};\n            my $path = File::Spec->catfile($dir, $case->{filename});\n            open my $fh, '>:raw', $path or die \"write fixture: $!\";\n            print {$fh} $case->{source} or die \"write fixture bytes: $!\";\n            close $fh or die \"close fixture: $!\";\n            my $pipeline = FSM::Pipeline::HDLGenerator->new(\n                target_language => 'systemverilog', debug_level => 0, quiet => 1);\n            my $result = $pipeline->generate_hdl_from_file($path);\n            $record->{observations}{$kind} = {\n                candidates => metadata($result->{module_info}{composition_shared_datapath_candidates}),\n                children => [map { +{instance_name => $_->instance_name,\n                    output_drive_families => metadata($_->module_info->{output_drive_families})} }\n                    @{$result->{composition_plan}->instances}],\n            };\n        }\n        1;\n    };\n    my $error = $@;\n    $record->{error} = $error if !$ok;\n    $record->{recipe_sha256} = sha256_hex($record->{recipe});\n    my $raw = $json->encode($record);\n    $raw =~ s/\\Q$root\\E/<repository>/g;\n    open my $fh, '>:raw', $output or die \"write inspection: $!\";\n    print {$fh} $raw or die \"write inspection bytes: $!\";\n    close $fh or die \"close inspection: $!\";\n    die $error unless $ok;\n} elsif (@ARGV) {\n    die \"usage: perl inspect_shared_dto.pl [--capture]\\n\";\n}\n\nmy $record = $json->decode(read_file($output));\ndie \"capture programme changed\\n\" unless $record->{recipe} eq read_file(__FILE__)\n    && sha256_hex($record->{recipe}) eq $record->{recipe_sha256};\ndie \"incomplete actual inspection\\n\" if $record->{error}\n    || join(',', sort keys %{$record->{observations}}) ne 'candidate,drive_intent';\nfor my $kind (sort keys %{$record->{observations}}) {\n    my $actual = $record->{observations}{$kind};\n    die \"expected shared candidate\\n\" unless @{$actual->{candidates}} == 1 && @{$actual->{children}} == 2;\n    for my $family ((map { @{$_->{output_drive_families}} } @{$actual->{children}}),\n                    (map { $_->{output_drive_family} } @{$actual->{candidates}[0]{contributors}})) {\n        die \"nullable family delay missing/wrong\\n\"\n            unless exists($family->{pulse_delay_cycles}) && !defined($family->{pulse_delay_cycles});\n    }\n    for my $contributor (@{$actual->{candidates}[0]{contributors}}) {\n        die \"unadvertised drive-intent field\\n\" if exists $contributor->{drive_intent}{pulse_delay_cycles};\n    }\n}\nprint \"Complete tested DTO metadata retains nullable delay and unchanged drive-intent shape\\n\";\n",
+   "recipe_sha256" : "8fe4e05873d9b97e2fdf3a1b445381f9be3a7785e2f1834d06b54377670e0f2b"
+}
