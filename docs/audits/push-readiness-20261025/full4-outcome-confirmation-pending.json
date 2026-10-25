@@ -1,0 +1,11 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "condition": "Post-full4 precommit confirmation. This is not an original at-cutoff observation.",
+  "receipt": "docs/audits/push-readiness-20261025/full4-outcome-docs.json",
+  "result": "Knowledge Map0, mdbook guard137 at occupied capacity88.0/cutoff88; subsequent planned checks not executed in that packet.",
+  "current_observation": "Read-only ps listed rustc20580 (parent87489) at2653184 KiB RSS in a later point; lsof reported both compiler and cargo cwd under the separate stitchcad project. OS pressure query was1/normal. None is attributed to the earlier full4 cutoff.",
+  "action": "No unrelated process stopped and no other repository read beyond necessary cwd/executable process metadata, modified or used as a build dependency. Current admission follow-up .13 owns scoped measurements and a safe path under unchanged limits.",
+  "commit_rule": "Commit the settled full4 evidence after mandatory staged/normal gates, recording native book-render confirmation pending; do not hold verified evidence behind the confirmatory build.",
+  "missing": "No per-process allocation or kernel-pressure reading at either cutoff. The current process point is not a global memory-allocation census, and memory_pressure free percentage is not inverse Stats capacity.",
+  "durability": "Tracked first interrupted confirmation receipt/log and this scope; task/MEMORY and normal gated outcome commit."
+}

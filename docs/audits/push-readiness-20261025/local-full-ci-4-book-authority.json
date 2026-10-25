@@ -1,0 +1,20 @@
+{
+  "before": {
+    "files": 65,
+    "bytes_total": 4146111,
+    "lines_total": 74031
+  },
+  "after": {
+    "files": 65,
+    "bytes_total": 4146346,
+    "lines_total": 74034
+  },
+  "delta": {
+    "files": 0,
+    "bytes_total": 235,
+    "lines_total": 3
+  },
+  "rederive": "Exact complete HEAD/current shallow book member/byte/LF census.",
+  "falsify": "Independent staged authority gate under unchanged ceilings.",
+  "durability": "Tracked book/authority and native/staged/normal gates."
+}

@@ -604,6 +604,9 @@ A receipt marked `complete` records all listed command outcomes. Qualification
 also requires successful command statuses and a complete suite result.
 A focused pass qualifies its selected tests; qualify the complete suite separately. Preserve
 an interrupted log, use focused diagnosis, and retain both cutoffs for the retry.
+A host-capacity cutoff can occur before any assertion fails. It does not identify
+which process allocated the memory or establish kernel memory pressure; check
+current host capacity and scoped process evidence before choosing a retry.
 
 Local full CI qualifies a push. The push starts hosted CI runs whose exact
 revision and results must be checked. Follow the task’s stated order for an

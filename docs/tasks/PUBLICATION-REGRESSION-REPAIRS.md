@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -166,11 +166,18 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `No removal attempted. Retained-helper candidates are also owned here after current-caller classification: Lispish::grep scalar branch uses \@$mo while its list result is @mo; a minimal future witness compares both contexts over two matching raw nodes, with possible missing-match impact if retained. Runtime behavior is not yet verified. The file-reader refusal also says does not exit rather than exist. Resolve by verified removal of unused helpers or focused repair of retained behavior/wording; neither is blamed for current provider/resource issues.`
   Commit: `pending`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.13`
+  Status: `pending`
+  Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
+  Acceptance: `P1 immediately after settled full4 outcome commits clean, before any full5 or push. Full4 from26c0282b4 exits137 at host occupied capacity88.1 against88 while T1436 remains active;494 earlier files pass, with no T1436/full-suite/VIAL/book/checkpoint outcome. Reproduce from the retained exact command/log; no test assertion or producer fault is inferred. Query canonical memory cards, then retain bounded dated current OS-counter/kernel-pressure and executable-only process-RSS observations under an explicit current-admission contract. Current post-stop measurements cannot reconstruct original at-cutoff allocation or pressure. Establish a genuinely changed safe current path under unchanged88/4096 limits; separate scoped product reproduction from unrelated host load. Terminate only independently authenticated own jobs, never unrelated processes; no cache deletion, guard relaxation, source-filter narrowing, stale native/main replay or unsupported causal repair. If capacity requires access/authority unavailable to this project, preserve the owned blocker and ask for that specific input only after committing the outcome/diagnosis. Any real small product defect needs its own causal repair and meaningful controls; no fix is selected from a host aggregate. Declare a new exclusive journal/checkpoint only after disposition, then fresh full CI, authorized push and exact-SHA hosted qualification; macOS relevance remains post-push.`
+  Verification: `Pending clean handoff. full4-disposition owns complete current evidence and missing scope. full4-outcome-docs records Knowledge Map0 then native book-build guard137 at88.0; native render confirmation is owned here when capacity permits. Later read-only process/cwd metadata shows a compiler in separate stitchcad, without attribution to either cutoff; no unrelated process is touched. Known full4 recorder/guard/CI/prove/test/final child identities are absent. No current memory culprit or leak is identified. Current-admission diagnosis must not recycle the older full3 cause or claim the parser replacement fixed allocation.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.12.3` | `pending` | Provider .12.2 is verified; SEM .69.3 owns full4/push/hosted/macOS/worktree before .6/.10 and this general retirement. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `pending` | After full4 outcome commits clean, diagnose current capacity/admission before a new qualifying full run; publication still precedes macOS/worktree and .6/.10/.12.3/.11. |
 
 ## Decisions
 
@@ -179,7 +186,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full3 remains interrupted; complete unchanged T1437 focus passes under fixed guards. After its observation commit, .8.3 owns safe retry disposition. Full CI/push/hosted success remains unqualified; historical native causality imposes no blanket hold. .6/.10 and director provider/retirement .12 precede applicable callback .11 and POD return.
+- Full4 is interrupted137 by host occupied capacity88.1 reaching88 while T1436 is active. PUBLICATION .13 owns the immediate capacity/admission follow-up after the outcome commit. Provider .12.2 remains independently verified; no complete local full-CI, push or hosted success is claimed. Historical native causality imposes no blanket hold.
 
 ## Acceptance Checklist — `.1`
 
