@@ -1,0 +1,20 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.2",
+  "baseline": "447d076901de04975bd15cea07dcaa23e04c8cca",
+  "sources": {
+    "perl/Lispish.pm": "67e825a8207a9fa41bf33f15c4c7815ef0cbecdfb6417cf1b674633f5df7f559",
+    "perl/LinkedSpec.pm": "2b91c3703ec02dadd491138cf2c65d9b112abb29614403e9ed830fa9a5e7def9",
+    "perl/PathSearch.pm": "2b3d20d53f2ee93ea2b25f72995c5433fe826d2080c9d31423cf7a0f32edff8d",
+    "specs/Lispish.spec": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+    "t/2106-lispish-parser-provider.t": "745cb4416a43cf7e243d3de4145d0051ab3f4d8affb17334222206b7a2bc4318",
+    "t/lib/FSM/Test/LispishProviderRuntime.pm": "6840994402849b334649b811785af3ab0032fcbb3ceeaf8f5d01b6e6e926a508"
+  },
+  "contract": "docs/audits/lispish-provider-contract-20261025/contract.json",
+  "expected": "Current t2106 literal products agree with the independent pre-change canonical grammar fixtures; grammar bytes unchanged. Module installation root, not cwd/discovery, owns resource selection. Each factory closure owns its root.",
+  "rederive": "Current fixed-purpose supervised provider tests exercise complete literal AST/API/CWD/error/stability products and typed JSON equality; adjacent public consumers exercise their own contracts.",
+  "falsify": "Pre-change red-2 refuses actual PPlugin import. Missing and outside copied-bundle grammars refuse; a decoy cwd cannot supply them. Import hook and traversal trap fail any use; compiling pplugin between calls detects shared-root regression. Existing unexpected-close stdout/status is literal.",
+  "durability": "Tracked source/tests, complete red/green/compatibility/pending capacity receipts and logs, native book, Knowledge Map and normal staged/commit gates. No full-CI or original memory/native-cause credit.",
+  "first_red_attempt": "parser-provider-red records guard process-inspection refusal before a test; red-2 is the actual executed RED.",
+  "limits": "60-second/1MiB supervised child; unchanged outer88-percent/4096-MiB guard; current output/status and child/group settlement asserted. Runtime roots are derived, fixture/temp outputs stay project-local; OS Perl and standard libraries remain required read-only external dependencies.",
+  "capacity_status": "running; tool session79420, no result or full-suite credit"
+}

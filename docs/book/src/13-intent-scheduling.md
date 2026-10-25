@@ -317,15 +317,35 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
     └──► Emitter::JSON  → schedule report
 ```
 
-FSM `.fsm`, ISF `.isf`, and IAL2 `.ppif` readers currently use `Lispish::multi`.
-`Lispish::single` obtains and caches its parser through legacy `PPlugin`
-dispatch. This parser-provider dependency is separate from the explicit public
-extension contract described by the embedding API.
+FSM `.fsm`, ISF `.isf`, and IAL2 `.ppif` readers use `Lispish::multi`.
+`Lispish::single` compiles and caches the canonical `specs/Lispish.spec`
+with `LinkedSpec::Get`. The grammar belongs to the loaded Lispish installation:
+the module binds its physical installation root when loaded, including through
+a relative Perl include path. Later working-directory changes and same-named
+files in the caller's directory cannot select a different grammar. Missing or
+outside-installation grammar resources fail explicitly; there is no search fallback.
+Keep `perl/` and `specs/` together when moving the installation.
 
-The current factory discovers grammars through a recursive module-tree search.
-Returned parsers also share a top-rule selection: compiling another grammar can
-invalidate an earlier parser. Bounded provider witnesses retain these defects
-and the passing direct canonical-grammar fixtures.
+This core parser path neither loads `PPlugin`, `Global`, or `HUtils` nor walks
+the repository through `PathSearch`. Other legacy callers remain separately
+owned; this change does not retire their modules or the public extension API.
+Each compiled parser retains its own entry rule, so compiling a different
+grammar cannot change an existing parser's entry point.
+
+The grammar and AST contract are unchanged: forms are `[head, arguments]`,
+`(only)` produces `["only", null]`, and `()` produces `[null]` in JSON.
+Numbers remain strings; quoted text and bracket/brace fragments keep the
+established grammar semantics. For example:
+
+```sh
+perl -Iperl -MLispish -MJSON::PP -e 'my $s = q{(node "two words" 007)}; print JSON::PP->new->encode(scalar Lispish::multi(\$s)), "\n";'
+# [["node",["two words","007"]]]
+```
+
+`single` reads successive forms from a scalar reference; `multi` accepts a
+scalar reference or a filename and returns forms as a list or array reference
+according to context. An unexpected closing `)` retains the diagnostic
+`(Lispish) -E- Syntax Error` and failure exit status.
 
 ### Schedule Report
 

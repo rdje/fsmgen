@@ -28,9 +28,8 @@ ISF is IAL-1 (`R14`); HLL sugar desugars into it (see `isf-abstraction-layering`
 `FSM::Scheduler::ISF::Emitter::JSON` (see [[isf-schedule-report-additive-keys]]).
 Book: `docs/book/src/13-intent-scheduling.md`.
 
-Provider intake, 2026-10-25: FSM/ISF/PPIF use `Lispish::multi`; `single` caches
-`PPlugin->_get_parser('Lispish')` via AUTOLOAD/exec and `LinkedSpec::get_parser`.
-Lookup reaches root-wide `PathSearch`; direct `LinkedSpec::Get` of
-`specs/Lispish.spec` passes literal ASTs without discovery. Shared `top_rule`
-breaks a first parser after another grammar compiles. PUBLICATION .12.2 owns
-both repairs; full3 allocation remains unknown.
+Provider, 2026-10-25: FSM/ISF/PPIF use `Lispish::multi`; `single` caches
+`LinkedSpec::Get` of module-origin `specs/Lispish.spec`, without PPlugin or discovery. Relative imports survive chdir; missing/escaped grammar
+refuses. Parsers retain their roots across compilations.
+PUBLICATION .12.2 tests AST/API/CWD/error/stability; .12.1 retains the old RED
+causes. Legacy retirement is separate; full3 allocation remains unknown.

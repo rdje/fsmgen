@@ -8,9 +8,35 @@ package Lispish;
 
 use 5.010;
 
-use PPlugin;
+use Cwd ();
+use File::Basename ();
+use File::Spec ();
+use LinkedSpec ();
 
-sub single  {state $code = PPlugin->_get_parser('Lispish'); $code->($_[0])}
+# Resolve while a relative @INC entry still refers to the loaded module.
+# Grammar ownership follows this installation, never the caller's cwd.
+my $module_root = File::Basename::dirname(
+    File::Basename::dirname(Cwd::abs_path(__FILE__)));
+
+sub _parser {
+    my $resource = 'specs/Lispish.spec';
+    my $path = Cwd::abs_path(File::Spec->catfile($module_root, 'specs', 'Lispish.spec'));
+    die "$resource: missing canonical grammar\n" unless defined($path) && -f $path;
+    my $relative = File::Spec->abs2rel($path, $module_root);
+    die "$resource: canonical grammar is outside its installation\n"
+        if File::Spec->file_name_is_absolute($relative)
+        || $relative eq File::Spec->updir()
+        || $relative =~ m{\A\.\.(?:/|\\)}
+        || (stat($path))[0] != (stat($module_root))[0];
+    open my $stream, '<:raw', $path or die "$resource: cannot open grammar: $!\n";
+    my $grammar = do { local $/; <$stream> };
+    close $stream or die "$resource: cannot close grammar: $!\n";
+    my $parser = LinkedSpec::Get(\$grammar);
+    die "$resource: compilation produced no parser\n" unless ref($parser) eq 'CODE';
+    return $parser;
+}
+
+sub single  {state $code = _parser(); $code->($_[0])}
 sub multi   {my $hread = shift;
 
  unless (ref $hread) {

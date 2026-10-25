@@ -10,7 +10,6 @@ use 5.010;
 use re 'eval';
 use Data::Dumper;
 
-use PPlugin; 
 use LinkedRE;
 
 # UVM-style verbosity levels
@@ -719,7 +718,9 @@ sub Get {
      # Parser generation completed successfully
      log_output(DUMP_LOW, "Parser generation completed successfully", "Returning functional parser for execution");
 
- return sub {&{$final_descr->{spec}{$top_rule}{handler}}($final_descr, $_[0])}
+ # Later grammar compilations must not change this parser's entry rule.
+ my $compiled_top_rule = $top_rule;
+ return sub {&{$final_descr->{spec}{$compiled_top_rule}{handler}}($final_descr, $_[0])}
 }
 
 sub spec_descr {
@@ -1222,6 +1223,6 @@ my ($label, $code) = @_;
 
 sub get_parser {use PathSearch; my $p = PathSearch->go($_[0], 'spec'); die "No spec $_[0]" unless $p; open(my $f, '<', $p) or die "Can't open $p: $!"; local $/; my $o = <$f>; Get(\$o)}
 
-sub AUTOLOAD   {PPlugin->exec($AUTOLOAD, @_)}
+sub AUTOLOAD   {require PPlugin; PPlugin->exec($AUTOLOAD, @_)}
 
 1;

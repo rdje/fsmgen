@@ -1,0 +1,11 @@
+{
+  "metrics": {
+    "files": 1260,
+    "bytes_total": 3879661,
+    "lines_total": 53039
+  },
+  "questions": "Complete pipeline-card id/title/answers prefix unchanged; generator retains1273 facts/7061 questions/7238 answers.",
+  "rederive": "Complete current knowledge file/byte/LF census and unchanged question prefix against HEAD.",
+  "falsify": "Knowledge Map complete source/projection parity and independent staged collection budget; no allowance increase.",
+  "durability": "Tracked existing card and all generated source/projection gates."
+}

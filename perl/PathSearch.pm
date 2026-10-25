@@ -13,8 +13,6 @@ use File::Spec;
 use File::Find;
 use Cwd;
 
-use Global;
-
 # Bind the loaded module's location while relative include paths still resolve.
 # Keep directory enumeration lazy so the first search retains its caller's cwd.
 my $module_top_dir = Cwd::realpath(File::Spec->catdir(
