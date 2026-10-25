@@ -1,0 +1,489 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.2",
+  "source_commit": "2f62e76db0c00a3197feeb492879d803295659d2",
+  "launch_condition": "Started on baseline447d076901 with the declared provider source edits uncommitted; these exact source hashes were subsequently committed2f62e76db. Documentation commits during the run do not imply a clean launch. No source/test/grammar change during the run.",
+  "input_proof": "docs/audits/push-readiness-20261025/parser-provider-proof.json",
+  "input_conservation": "Every declared source hash still matches; T1437 bytes equal baseline447d076901.",
+  "test_sha256": "d89f7d87fd70db3736bb8489c8448cefb05987eeb985411c1fc1e1ea03abf693",
+  "receipt": "docs/audits/push-readiness-20261025/parser-provider-capacity.json",
+  "retained_log_sha256": "da0781fc48417be02ba14f85f097d22751045bd8a5372602fd29091b71bf6e43",
+  "outer_cases": [
+    {
+      "number": 1,
+      "label": "AXI manager capacity/status generator emits reviewable IAL1 before IAL0"
+    },
+    {
+      "number": 2,
+      "label": "generated capacity matrix captures acceptance, full, decrement, slots, and same-cycle behavior"
+    },
+    {
+      "number": 3,
+      "label": "report publishes capacity, status outputs, source anchors, artifacts, and residue"
+    },
+    {
+      "number": 4,
+      "label": "optional ID-family metadata is report-only and statically validated"
+    },
+    {
+      "number": 5,
+      "label": "optional transaction-envelope metadata emits concrete ID assertions"
+    },
+    {
+      "number": 6,
+      "label": "dynamic transaction-ID metadata reports selected user ownership without generated behavior"
+    },
+    {
+      "number": 7,
+      "label": "dynamic same-ID reject policy reports selected-not-generated metadata without generated behavior"
+    },
+    {
+      "number": 8,
+      "label": "dynamic same-ID issue-order queue policy reports selected-not-generated metadata without generated behavior"
+    },
+    {
+      "number": 9,
+      "label": "dynamic same-ID reject policy coexists with concrete same-ID policy metadata"
+    },
+    {
+      "number": 10,
+      "label": "dynamic same-ID issue-order queue policy coexists with concrete same-ID policy metadata"
+    },
+    {
+      "number": 11,
+      "label": "single-active dynamic write response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "number": 12,
+      "label": "single-active dynamic read response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "number": 13,
+      "label": "single-active dynamic read burst-last response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "number": 14,
+      "label": "one-dynamic mixed write response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "number": 15,
+      "label": "one-dynamic mixed read response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "number": 16,
+      "label": "one-dynamic mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "number": 17,
+      "label": "three-static mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "number": 18,
+      "label": "multiple dynamic write response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "number": 19,
+      "label": "multiple dynamic read burst-last response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "number": 20,
+      "label": "dynamic write response-demux captures AWID and matches BID"
+    },
+    {
+      "number": 21,
+      "label": "multiple dynamic write response-demux captures AWID and matches BID"
+    },
+    {
+      "number": 22,
+      "label": "dynamic write same-ID issue-order queue captures AWID slots and matches BID by issue order"
+    },
+    {
+      "number": 23,
+      "label": "mixed dynamic/static write same-ID issue-order queue captures AWID and static ID slots"
+    },
+    {
+      "number": 24,
+      "label": "mixed dynamic/static write multi-static same-ID issue-order queue captures AWID and static ID slots"
+    },
+    {
+      "number": 25,
+      "label": "mixed dynamic/static read same-ID issue-order queue captures ARID and static ID slots"
+    },
+    {
+      "number": 26,
+      "label": "mixed dynamic/static read burst-last same-ID issue-order queue dequeues only on RLAST"
+    },
+    {
+      "number": 27,
+      "label": "mixed dynamic/static read same-ID issue-order queue read-data captures scalar payloads"
+    },
+    {
+      "number": 28,
+      "label": "mixed dynamic/static read burst-last same-ID issue-order queue read-data captures scalar last payloads"
+    },
+    {
+      "number": 29,
+      "label": "mixed dynamic/static read burst-last same-ID issue-order queue read-data captures report-only raw ARLEN"
+    },
+    {
+      "number": 30,
+      "label": "mixed dynamic/static read burst-last same-ID issue-order queue read-data validates runtime raw ARLEN"
+    },
+    {
+      "number": 31,
+      "label": "mixed dynamic/static read burst-last same-ID issue-order queue read-data multi-beat emits output banks"
+    },
+    {
+      "number": 32,
+      "label": "dynamic write depth-3 same-ID issue-order queue captures third AWID slot and matches BID by issue order"
+    },
+    {
+      "number": 33,
+      "label": "dynamic read same-ID issue-order queue captures ARID slots and matches RID by issue order"
+    },
+    {
+      "number": 34,
+      "label": "dynamic read depth-3 same-ID issue-order queue captures third ARID slot and matches RID by issue order"
+    },
+    {
+      "number": 35,
+      "label": "dynamic read burst-last same-ID issue-order queue dequeues only on RLAST"
+    },
+    {
+      "number": 36,
+      "label": "dynamic read burst-last depth-3 same-ID issue-order queue captures third ARID slot and dequeues only on RLAST"
+    },
+    {
+      "number": 37,
+      "label": "dynamic read burst-last depth-3 same-ID issue-order queue read-data captures r2 last payload"
+    },
+    {
+      "number": 38,
+      "label": "dynamic read burst-last depth-3 same-ID issue-order queue read-data burst-length captures r2 raw ARLEN"
+    },
+    {
+      "number": 39,
+      "label": "dynamic read burst-last depth-3 same-ID issue-order queue read-data runtime burst-length validates r2 beats"
+    },
+    {
+      "number": 40,
+      "label": "dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat emits r2 output banks"
+    },
+    {
+      "number": 41,
+      "label": "mixed dynamic/static write response-demux captures AWID and matches static BID"
+    },
+    {
+      "number": 42,
+      "label": "mixed dynamic/static read response-demux captures ARID and matches static RID"
+    },
+    {
+      "number": 43,
+      "label": "mixed dynamic/static read burst-last response-demux gates completion with RLAST"
+    },
+    {
+      "number": 44,
+      "label": "dynamic read response-demux captures ARID and matches single-beat RID"
+    },
+    {
+      "number": 45,
+      "label": "multiple dynamic read response-demux captures ARID and matches single-beat RID"
+    },
+    {
+      "number": 46,
+      "label": "multiple dynamic read response-demux captures ARID and completes on burst-last RID/RLAST"
+    },
+    {
+      "number": 47,
+      "label": "dynamic read response-demux captures ARID and matches burst-last RID/RLAST"
+    },
+    {
+      "number": 48,
+      "label": "dynamic read-data contract consumes generated dynamic single-beat read demux"
+    },
+    {
+      "number": 49,
+      "label": "dynamic last-beat read-data contract consumes generated dynamic RLAST read demux"
+    },
+    {
+      "number": 50,
+      "label": "multiple dynamic read-data contract consumes generated dynamic single-beat read demux"
+    },
+    {
+      "number": 51,
+      "label": "multiple dynamic last-beat read-data contract consumes generated dynamic RLAST read demux"
+    },
+    {
+      "number": 52,
+      "label": "multiple dynamic report-only burst-length read-data contract captures ARLEN per transaction"
+    },
+    {
+      "number": 53,
+      "label": "multiple dynamic runtime burst-length read-data contract validates each transaction"
+    },
+    {
+      "number": 54,
+      "label": "multiple dynamic multi-beat read-data contract emits output banks for each transaction"
+    },
+    {
+      "number": 55,
+      "label": "transaction event dispatch fans per-transaction events into capacity rules"
+    },
+    {
+      "number": 56,
+      "label": "same-ID reject policy reports static concrete-ID reuse selection without generated queue behavior"
+    },
+    {
+      "number": 57,
+      "label": "same-ID issue-order queue policy generates admitted request pulses without generated queue behavior"
+    },
+    {
+      "number": 58,
+      "label": "same-ID issue-order queue admitted request pulses assert selected request mutual exclusion"
+    },
+    {
+      "number": 59,
+      "label": "same-ID queue-head response-demux generates read queue state and completion demux"
+    },
+    {
+      "number": 60,
+      "label": "same-ID queue-head response-demux generates multiple read burst-last queue groups"
+    },
+    {
+      "number": 61,
+      "label": "same-ID queue-head response-demux generates read single-beat queue state and completion demux"
+    },
+    {
+      "number": 62,
+      "label": "same-ID queue-head response-demux generates read single-beat depth-3 queue state and completion demux"
+    },
+    {
+      "number": 63,
+      "label": "same-ID queue-head response-demux generates read single-beat multiple depth-3 queue state and completion demux"
+    },
+    {
+      "number": 64,
+      "label": "same-ID queue-head response-demux generates read single-beat mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "number": 65,
+      "label": "same-ID queue-head response-demux generates read burst-last depth-3 queue state and completion demux"
+    },
+    {
+      "number": 66,
+      "label": "same-ID queue-head response-demux generates read burst-last multiple depth-3 queue state and completion demux"
+    },
+    {
+      "number": 67,
+      "label": "same-ID queue-head response-demux generates read burst-last mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "number": 68,
+      "label": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux"
+    },
+    {
+      "number": 69,
+      "label": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux with raw ARLEN burst-length capture"
+    },
+    {
+      "number": 70,
+      "label": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux with runtime ARLEN beat-count validation"
+    },
+    {
+      "number": 71,
+      "label": "read-data contract generates depth-3 queue-head multi-beat output-bank payload behavior"
+    },
+    {
+      "number": 72,
+      "label": "read-data contract consumes generated read single-beat depth-3 same-ID queue-head demux"
+    },
+    {
+      "number": 73,
+      "label": "same-ID queue-head response-demux generates read single-beat multi-group queue state and completion demux"
+    },
+    {
+      "number": 74,
+      "label": "same-ID queue-head response-demux generates write queue state and completion demux"
+    },
+    {
+      "number": 75,
+      "label": "same-ID queue-head response-demux generates write depth-3 queue state and completion demux"
+    },
+    {
+      "number": 76,
+      "label": "same-ID queue-head response-demux generates write multiple depth-3 queue state and completion demux"
+    },
+    {
+      "number": 77,
+      "label": "same-ID queue-head response-demux generates write mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "number": 78,
+      "label": "same-ID queue-head response-demux generates write multi-group queue state and completion demux"
+    },
+    {
+      "number": 79,
+      "label": "auto-ID lifecycle generates bounded request-ID drive behavior"
+    },
+    {
+      "number": 80,
+      "label": "response-demux contract generates bounded write BID demux behavior"
+    },
+    {
+      "number": 81,
+      "label": "read response-demux contract generates bounded read RID demux behavior"
+    },
+    {
+      "number": 82,
+      "label": "burst-last read response-demux generates RLAST-gated completion behavior"
+    },
+    {
+      "number": 83,
+      "label": "read-data contract generates single-beat capture behavior"
+    },
+    {
+      "number": 84,
+      "label": "read-data contract consumes generated read single-beat same-ID queue-head demux"
+    },
+    {
+      "number": 85,
+      "label": "read-data contract consumes generated read single-beat multi-group same-ID queue-head demux"
+    },
+    {
+      "number": 86,
+      "label": "read-data contract consumes generated read single-beat multiple depth-3 same-ID queue-head demux"
+    },
+    {
+      "number": 87,
+      "label": "read-data contract consumes generated read single-beat mixed depth-3/depth-2 same-ID queue-head demux"
+    },
+    {
+      "number": 88,
+      "label": "read-data contract consumes generated read burst-last same-ID queue-head demux"
+    },
+    {
+      "number": 89,
+      "label": "read-data multi-group queue-head last-beat contract generates scalar capture behavior"
+    },
+    {
+      "number": 90,
+      "label": "read-data contract consumes generated read burst-last multiple depth-3 same-ID queue-head demux"
+    },
+    {
+      "number": 91,
+      "label": "read-data contract consumes generated read burst-last mixed depth-3/depth-2 same-ID queue-head demux"
+    },
+    {
+      "number": 92,
+      "label": "read-data burst-last multi-depth-3 queue-head contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "number": 93,
+      "label": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "number": 94,
+      "label": "read-data burst-last multi-depth-3 queue-head contract generates runtime beat-count validation"
+    },
+    {
+      "number": 95,
+      "label": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates runtime beat-count validation"
+    },
+    {
+      "number": 96,
+      "label": "read-data burst-last multi-depth-3 queue-head contract generates multi-beat output-bank behavior"
+    },
+    {
+      "number": 97,
+      "label": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates multi-beat output-bank behavior"
+    },
+    {
+      "number": 98,
+      "label": "read-data multi-group queue-head last-beat contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "number": 99,
+      "label": "read-data multi-group queue-head last-beat contract generates beat-count and RLAST runtime validation"
+    },
+    {
+      "number": 100,
+      "label": "read-data queue-head last-beat contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "number": 101,
+      "label": "read-data queue-head last-beat contract generates beat-count and RLAST runtime validation"
+    },
+    {
+      "number": 102,
+      "label": "read-data queue-head multi-beat contract generates output-bank payload behavior"
+    },
+    {
+      "number": 103,
+      "label": "read-data multi-group queue-head multi-beat contract generates output-bank payload behavior"
+    },
+    {
+      "number": 104,
+      "label": "last-beat read-data contract generates capture behavior"
+    },
+    {
+      "number": 105,
+      "label": "burst-length metadata generates raw ARLEN capture on last-beat read-data contracts"
+    },
+    {
+      "number": 106,
+      "label": "runtime-assertion burst-length metadata generates beat-count and RLAST validation"
+    },
+    {
+      "number": 107,
+      "label": "multi-beat read-data contract generates output-bank payload behavior"
+    },
+    {
+      "number": 108,
+      "label": "multi-beat read-data without scalar aggregation remains valid"
+    },
+    {
+      "number": 109,
+      "label": "mixed read/write response-demux keeps write behavior and adds read behavior"
+    },
+    {
+      "number": 110,
+      "label": "mixed auto-ID and same-ID queue-head response-demux combines generated families"
+    },
+    {
+      "number": 111,
+      "label": "mixed auto-ID and same-ID queue-head read-data consumes combined completions"
+    },
+    {
+      "number": 112,
+      "label": "mixed auto-ID and same-ID queue-head multi-beat read-data generates output-bank behavior"
+    },
+    {
+      "number": 113,
+      "label": "schedule report and HDL expose generated storage and status surface"
+    },
+    {
+      "number": 114,
+      "label": "single-slot capacity remains representable"
+    },
+    {
+      "number": 115,
+      "label": "malformed contract objects fail closed and no direct lower-to-fsm entrypoint is exposed"
+    }
+  ],
+  "normal_result": {
+    "files": 1,
+    "tests": 115,
+    "status": 0,
+    "skips": 0
+  },
+  "settlement": {
+    "method": "ps over the five previously observed owned recorder/guard/time/prove/test PIDs after consuming tool session79420",
+    "status": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "Known process identities absent; no original kernel-birth attribution or independent census of all descendants is claimed."
+  },
+  "rederive": "Full fresh log, exact normal status/plan, contiguous literal outer cases, unchanged declared input hashes and baseline test bytes.",
+  "falsify": "Reject noninteger or nonzero status, missing/duplicated outer case, skip/not-ok/absent normal summary, changed input identity and observed surviving known PID. Literal provider tests separately discriminate discovery, dependency, CWD/resource and shared-root regressions.",
+  "durability": "Complete compressed fresh log/recipe/normal OS report, tracked outcome and input proof, task/book/Knowledge Map and normal staged/commit gates.",
+  "limits": "Focused changed-source capacity verification only. No complete full-CI, full3 allocation-cause repair, historical native-startup repair or hosted/push success. Raw OS resource fields retain their literal scopes without cross-field conversion or performance claims."
+}

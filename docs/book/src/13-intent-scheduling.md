@@ -347,6 +347,13 @@ scalar reference or a filename and returns forms as a list or array reference
 according to context. An unexpected closing `)` retains the diagnostic
 `(Lispish) -E- Syntax Error` and failure exit status.
 
+Check the parser's resource selection, syntax, AST/API compatibility and
+independence from legacy discovery with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2106-lispish-parser-provider.t
+```
+
 ### Schedule Report
 
 The schedule report is generated from the same IR as the `.fsm` text.

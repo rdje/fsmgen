@@ -1,0 +1,20 @@
+{
+  "before": {
+    "files": 65,
+    "bytes_total": 4145898,
+    "lines_total": 74024
+  },
+  "after": {
+    "files": 65,
+    "bytes_total": 4146111,
+    "lines_total": 74031
+  },
+  "delta": {
+    "files": 0,
+    "bytes_total": 213,
+    "lines_total": 7
+  },
+  "rederive": "Exact complete HEAD/current shallow book Markdown member/byte/LF census.",
+  "falsify": "Independent staged aggregate-authority gate, unchanged ceilings.",
+  "durability": "Tracked book/authority, native checks and normal gated commit."
+}

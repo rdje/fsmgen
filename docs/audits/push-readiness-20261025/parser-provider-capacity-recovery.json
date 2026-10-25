@@ -1,0 +1,10 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.2",
+  "interruption": "Daemon recovery invalidated unified tool session90122. Existing recorder64463 survived with parent1, then was absent; parser-provider-capacity-staged.json/log.gz were not published.",
+  "scope": "No original staged-gate status is available and no pass is inferred. Complete successful capacity receipt/log/outcome remain intact and are not rerun. Git index/source state preserved.",
+  "next": "Fresh exclusive parser-provider-capacity-staged-recovery required gate; its stdout/stderr are directed to .artifacts/push-readiness-20261025/parser-provider-capacity-staged-recovery-console.log so recorder publication does not depend on the disconnected tool output. Do not overwrite original or recovery evidence.",
+  "cause_limit": "The restart lost the tool handle and no original gate outcome is observable. No specific signal or Python exception is claimed without its original diagnostic.",
+  "rederive": "Git status/index, original receipt absence and original owned recorder observed alive then absent after the restart.",
+  "falsify": "Do not accept absent status/receipt as success; require a fresh exact staged gate and normal commit hooks.",
+  "durability": "This tracked recovery scope plus fresh final receipt/log and local durable console."
+}
