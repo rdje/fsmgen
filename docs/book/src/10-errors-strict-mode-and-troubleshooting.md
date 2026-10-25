@@ -604,6 +604,11 @@ A receipt marked `complete` records all listed command outcomes. Qualification
 also requires successful command statuses and a complete suite result. Preserve
 an interrupted log, use focused diagnosis, and retain both cutoffs for the retry.
 
+Local full CI qualifies a push. The push starts hosted CI runs whose exact
+revision and results must be checked. Follow the task’s stated order for an
+open historical platform investigation, keeping its causal status separate
+from observed failures in those runs.
+
 Earlier guard versions discarded stdin when launching their background child.
 A program supplied on stdin could consequently exit zero without executing.
 The regression retains that exact committed version as an independent failure

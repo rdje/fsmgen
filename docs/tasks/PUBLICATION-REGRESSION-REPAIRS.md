@@ -87,10 +87,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.7: qualify normal publication query observations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Diagnose and resolve the current T1437 memory interruption without weakening guards or coverage.`
   Acceptance: `P1 pre-push. Full3 at88a0834fdf records guard137 after occupied host capacity89.2 reaches fixed88 while T1437 is active; original per-process allocation at that instant is missing, so do not blame the test or other apps without evidence. After the full3 outcome commit and due cleanup .9, inspect canonical AXI contracts/code/tests/book and declare exact focused input/programme, progress/memory observations and distinguishing controls before any collector/source change. Use focused checks under unchanged88/4096, retain first outcomes and separate occupied capacity from kernel pressure. Fix a reproduced current cause at the correct production/test boundary, preserving every assertion/case and public behavior; do not mask a leak by dropping coverage. If the cause does not reproduce, retain the original attribution gap and qualify a safe current path explicitly. Commit each completed slice before fresh clean full CI; no broad retry or higher cap merely to seek a pass. Full4 needs its own live journal and explicit t296 checkpoint.`
   Verification: `Owned current resource constraint, distinct from historical native startup. Full3 reports prior repaired test files and T1436 successful, but no T1437/full-suite/VIAL/book/checkpoint outcome. The guard named only the occupied-capacity trigger. No current allocation-cause diagnosis or fix is claimed.`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.8.1, PUBLICATION-REGRESSION-REPAIRS.8.2, PUBLICATION-REGRESSION-REPAIRS.8.3`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.9`
@@ -107,11 +108,32 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Read-only workflow inspection sees origin/main selected as base, followed by git log base..HEAD. Current observation does not prove event checkout behavior; source/next-step note is retained in commit-subject-range-review.json. No guard change, failure classification or new blocker is inferred.`
   Commit: `pending`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.8.1`
+  Status: `done`
+  Goal: `Commit the exact focused memory study contract and correct superseded live publication wording.`
+  Acceptance: `From clean6c07ae16d, declare unfiltered T1437 input/code identities and the exact existing capture_live programme before execution. Select /usr/bin/time -l prove -lv -Iperl t/1437-axi-ial2-manager-capacity-status-generator.t under the unchanged existing88/4096 guard, without native runtime opt-in. Keep complete verbose TAP/resource output, original guard137 and current attribution gaps. Authenticate unchanged input against full3 revision88a0834fdf; profiler smoke check and saved-plan validation qualify only the instrument/preflight, not T1437. Declare passive owned PID/parent/RSS/VSZ and raw host vm_stat/sysctl samples, with observation-time scope and no causal blame from those samples alone. Reuse existing capture_live self-retention and unique journal; no new collector or broad retry. Correct the hosted task-index startup-hold projection using exact history/user authorization and explain the actual local-full/push/hosted sequence in the book. Native book/source and normal gates precede a clean commit and .8.2 execution.`
+  Verification: `Exact test/generator/frontend/HDL/guard/capture identities equal the failed full3 revision88a0834fdf; plan.json declares the complete unfiltered command, unchanged bounds, absent native opt-in, normal-result predicates and passive observation limits. Existing /usr/bin/time -l accepts its true smoke command; this qualifies reporting only. Source/plan validation and Knowledge Map pass, as do native book/POD/current source/index checks in t1437-preflight.json/log.gz. git log -S identifies the old live-index wording at0af0842ab1224b208cff8adf1c7cfc62989b52a5, superseded by director authorization54ac5589bc7a18e7e33d676d4f3acf29103b9732. The live hosted row and book now state the real local-full/push/exact-SHA hosted sequence and separate historical causality. No focused run, memory cause/fix, full-suite or push outcome is claimed. Final metadata and staged/normal doctrine gates precede this clean preflight commit and .8.2 launch.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.8.1: qualify focused memory study contract`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.8.2`
+  Status: `pending`
+  Goal: `Observe the complete unchanged T1437 focused run under fixed memory guards.`
+  Acceptance: `After .8.1 commits clean, inspect the exclusive t1437-focused-1 journal before launching its declared exact command through capture_live.py; never replay a nonterminal run. Retain complete first outcome/TAP/resource report and passive owned-process/host observations with UTC and scope. Every assertion/case remains enabled, no native opt-in or changed limit. Consume command status, distinguish interrupted versus normal test outcome and observed RSS from original full3 allocation attribution. Commit all finished observations before repair or full retry.`
+  Verification: `Not launched.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.8.3`
+  Status: `pending`
+  Goal: `Resolve a reproduced current memory cause or qualify a safe current retry path.`
+  Acceptance: `Use .8.2 evidence before choosing a source fix. A reproduced defect requires exact public contract/history/code diagnosis, an owned small causal repair and meaningful regression checks retaining all existing coverage. If it does not reproduce, retain missing original allocation attribution explicitly, require a safe current path and do not claim a leak fixed. Commit completed units before a new clean full4 with its own journal and t296 checkpoint. Original historical macOS causality remains a post-push review, not a renewed blanket publication hold.`
+  Verification: `Awaiting focused observations; no cause/fix/full4 outcome claimed.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.8` | `pending` | Cleanup .9 qualifies its dated no-removal census; after its clean commit, diagnose current memory before any full retry. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.8.2` | `pending` | After .8.1 commits clean, inspect the declared journal and launch/consume the complete unchanged focused test. |
 
 ## Decisions
 
@@ -163,3 +185,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S of the prior latest-only cleanup summary identifies its Oct24 source record; the current receipt authenticates those exact Git bytes and a UTC interval over24h. Maintenance is due. No artifact is assumed disposable from its suffix or size.
 - [x] **ADDRESSED (verified)** — Reuse the authenticated published collector with only the declared new boundary/owner/output wrapper; complete independent regular log/bin membership and root/Rust locations pass. No candidate is removed. Latest-only UTC record and book saved-reader link are refreshed; metadata-only scope and all excluded boundaries remain explicit. The first staged gate rejects a zero-delta reference-authority refresh; restoring the prior unchanged authority corrects that metadata error without changing a ceiling.
 - [x] **NO REGRESSION** — Saved census and existing adverse membership/path/type/removal controls pass; knowledge-map: OK and native book/POD/current source/index checks qualify the documentation. Claim/reference/containment metadata and full staged/normal scripts/check_doctrines.sh gates precede commit. No runtime/test/guard or evidence-custody change.
+
+## Acceptance Checklist — `.8.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full3 records occupied capacity89.2 reaching88 and guarded status137, without T1437 or full-suite outcome/allocation attribution. git log -S startup/full-CI gates identifies the stale hosted-index projection at0af0842ab1224b208cff8adf1c7cfc62989b52a5; director ordering recorded54ac5589bc7a18e7e33d676d4f3acf29103b9732 supersedes that blanket hold. The remaining resource constraint needs focused observation, not an inferred native-startup cause.
+- [x] **ADDRESSED (verified)** — Commit an exact unchanged unfiltered T1437 input/instrument contract, normal-result predicates and observation scope before launch. OS reporter smoke and native source hashes qualify preflight only. Correct the live hosted row and explain local-full/push/hosted sequencing in the book; original interrupted outcome and historical causal gaps remain. No collector, producer, test assertion or memory limit changes.
+- [x] **NO REGRESSION** — knowledge-map: OK; exact native source/plan checks and OS reporter smoke pass in t1437-preflight.json/log.gz. Native mdBook/POD/current source/index pass. Fresh claim/reference/containment and complete staged/normal scripts/check_doctrines.sh gates precede commit. T1437 itself remains unrun until the next clean phase.

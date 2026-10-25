@@ -1,0 +1,93 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.8.1",
+  "input_revision": "6c07ae16dcf8d611000d5e00a0eda52559c28842",
+  "original_full_revision": "88a0834fdf5e3f3df58bf5df82a36f1dfb74267f",
+  "inputs": {
+    "t/1437-axi-ial2-manager-capacity-status-generator.t": {
+      "sha256": "d89f7d87fd70db3736bb8489c8448cefb05987eeb985411c1fc1e1ea03abf693",
+      "bytes": 805116
+    },
+    "perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm": {
+      "sha256": "e69db6b93198f9a8cb9d2355cacb0d5034c2b6c13298c4d84f195359185f07d0",
+      "bytes": 511586
+    },
+    "perl/FSM/Pipeline/SourceFrontend.pm": {
+      "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512",
+      "bytes": 35424
+    },
+    "perl/FSM/HDL/FlattenedDT.pm": {
+      "sha256": "eb9c8055065fab1e38c3a28d3df285de58dd3342a3e314036fdb3489b0f42f71",
+      "bytes": 12084
+    },
+    "perl/FSM/Adapter/FSMGenFull.pm": {
+      "sha256": "954822476d0d087585a83bc3eff750056301265be1eadbd5dd0deff8754ef19e",
+      "bytes": 4125
+    },
+    "perl/FSM/IR/IntentHIRBuilder.pm": {
+      "sha256": "37227c78c07c947cacfc81aae0dd65bd6b0a80731a9d72fe5bae3e188dedc8b6",
+      "bytes": 20045
+    },
+    "perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm": {
+      "sha256": "2f6a3710dc0c43bc98c32ec1c58d2898e274aa4f4098ae9acc774363ade96ec8",
+      "bytes": 18977
+    },
+    "perl/FSM/Adapter/ISF.pm": {
+      "sha256": "ee2f942e9ea8465a13b6917c9f7e1c42b71ba063218c53e7b5a4ffcf5126fb3e",
+      "bytes": 5416
+    },
+    "perl/FSM/Scheduler/ISF.pm": {
+      "sha256": "fe706d1f3f4c4f7936856f5422422cb02d054595f431e360d936b0b74ed33603",
+      "bytes": 24853
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541",
+      "bytes": 10663
+    },
+    "scripts/project_data_locality_env.sh": {
+      "sha256": "188e19b30d312f97289b2e6634555fc294075910eb56f981b00bd191d648584b",
+      "bytes": 3052
+    },
+    "docs/audits/push-readiness-20261025/capture_live.py": {
+      "sha256": "41faf90828676ff3bd1df8c7fd1c60e81baf68d8e76774dc50090f3e247a3f7e",
+      "bytes": 4225
+    }
+  },
+  "command": [
+    "/usr/bin/time",
+    "-l",
+    "prove",
+    "-lv",
+    "-Iperl",
+    "t/1437-axi-ial2-manager-capacity-status-generator.t"
+  ],
+  "capture": [
+    "python3",
+    "-B",
+    "docs/audits/push-readiness-20261025/capture_live.py",
+    "t1437-focused-1"
+  ],
+  "journal": ".artifacts/push-readiness-20261025/t1437-focused-1.state.json",
+  "limits": {
+    "host_occupied_pct": 88,
+    "per_descendant_rss_MiB": 4096,
+    "poll_seconds": 2
+  },
+  "selection": "Complete unchanged test file; no subtest filtering, assertion edits, sharding or opt-in native/compiler run.",
+  "result_predicates": [
+    "guarded command integer status0",
+    "complete normal prove result All tests successful and Files=1",
+    "no guard trip",
+    "retain entire verbose TAP and OS resource report; report OS measurements without treating them as independently captured per-process peaks",
+    "owned recorder/guard/command/test process settlement"
+  ],
+  "passive_samples": {
+    "scope": "Observation-time owned PID/parent/RSS/VSZ only; raw whole-host vm_stat, hw.memsize and kern.memorystatus_vm_pressure_level may be retained. ps RSS/VSZ are KiB; do not infer allocation causality or historical cutoff values from later samples.",
+    "timing": "UTC and monotonic stamps on each sample; no signals, sampling profiler, unrelated argv/environment capture or host-policy change."
+  },
+  "claims": {
+    "rederive": "Exact current/native Git source identity and canonical AXI generated contracts; whole test remains its own unchanged oracle.",
+    "falsify": "Retain full3 original137 and missing outcome; focused failure/guard trip cannot satisfy normal predicates. Later success cannot prove original allocation cause or historical macOS startup repair.",
+    "durability": "Tracked plan and source identities, existing self-retained instrument/journal/full output/status, sample observations, task/book and normal gated commit."
+  },
+  "status": "preflight only; not launched"
+}
