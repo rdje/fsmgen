@@ -1,0 +1,28 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.1",
+  "baseline": "1946fd3537b01f7ae50e9cfff042fd6a3dc0136d",
+  "before_sha256": {
+    "t/1259-isf-aggregate-storage-type-aliases.t": "c06234d950f6b5231b6eb9ef8d55ff0551c53bbd9d8f5013ab18c9f7245b7e75",
+    "docs/book/src/13j-type-enum-aggregate.md": "e13ea31ef80d68015b48c1e630957dfc520c9fb27a665019416f9b9f57479bce"
+  },
+  "introduced_contract": "008e629ced1b7d1bd2ff1f56e39ff7e793721179",
+  "test_last_update": "25c01f0127144922ade78951b91439e1d9221c08",
+  "before_receipt": "docs/audits/push-readiness-20261025/aggregate-alias-before.json",
+  "before_outcome": "Only T1259 fails; current T2033 record positives and list/formal refusal controls pass. Original output retained without deleting any assertions.",
+  "scope": "Test/clarifying documentation only; parser/scheduler/public API/DSL/corpus/manifest/MCP behavior unchanged.",
+  "after_sha256": {
+    "t/1259-isf-aggregate-storage-type-aliases.t": "0fdffee760da87f8756be134984a8cc45e3ef54b4a9eb05e6da776c80c05c67c",
+    "docs/book/src/13j-type-enum-aggregate.md": "30e212b2c8896e6c4c15dba6dbbfab0ee025f54a820eae0eb153171fec34a689"
+  },
+  "rederive": "Git explicitly changes output record admission and diagnostic from actor inputs to actor ports. Current source resolver confirms only record kind receives actor-port admission. Native source T2033 independently qualifies supported records and still-closed lists/formals; literal same-width list fixture preserves T1259 negative boundary.",
+  "falsify": "The unmodified T1259 fails while independently admitted T2033 sources pass in the before receipt. Updated list/transaction/bank inputs must still refuse precisely; record-output positives/writer overlap refusals in adjacent existing tests must pass. No producer mutation or weakened comparison.",
+  "durability": "Exact Git baseline and source hashes, retained RED/green command/output/status, canonical record card, current book and owning task commit; full-CI/hosted qualification remains SEM .69.3.",
+  "focused_receipt": "docs/audits/push-readiness-20261025/aggregate-alias-focused.json",
+  "book_receipt": "docs/audits/push-readiness-20261025/aggregate-alias-book.json",
+  "staged_gate": {
+    "exit_status": 0,
+    "log": "aggregate-staged-doctrines.log.gz",
+    "fresh_acceptance": "root=perl_diagnostic, no-regression=prove_summary",
+    "normal_hook": "Repeats against final commit stage; no bypass."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "path": "docs/TASK_TREE_README.md",
+  "reproduce": "rg -n 'latest.commit|HEAD|MEMORY.md' docs/TASK_TREE_README.md",
+  "loci": [
+    81,
+    160,
+    270
+  ],
+  "observed": "The setup guide tells adopters to overwrite/name latest commit in Memory, conflicting with current derive-on-read COMMIT.md and decisions0067/0068. Existing startup instructions themselves use the correct derived accessor.",
+  "priority": "P2 documentation workflow; does not block push.",
+  "schedule": "Create a precise publication-follow-up tree leaf before implementation; repair after hosted qualification/macOS review and worktree compatibility, before saved POD return.",
+  "plan": "Align the live adoption-guide pointer to active leaf/next action with exact Git accessor, preserve historical task evidence, review guide consumers and current book references, run focused docs/doctrine checks and commit."
+}

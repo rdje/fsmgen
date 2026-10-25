@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.1",
+  "before": {
+    "files": 65,
+    "lines_total": 73947,
+    "bytes_total": 4141632
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73949,
+    "bytes_total": 4141760
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 2,
+    "bytes_total": 128
+  },
+  "rederive": "Glob current unique book source members and byte/newline dimensions; before captured from exact unchanged committed source before the narrow book edit.",
+  "falsify": "Reference-authority gate independently derives staged before/after source scope and requires exact declared delta; ceiling gate forbids unauthorized increases.",
+  "durability": "Tracked authority, source hashes, focused/native book/source receipts and unit commit."
+}

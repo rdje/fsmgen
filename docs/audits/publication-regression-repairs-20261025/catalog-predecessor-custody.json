@@ -1,0 +1,8 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "primary_commit": "1946fd3537b01f7ae50e9cfff042fd6a3dc0136d",
+  "worktree": ".artifacts/worktrees/ci-schedule-report-repair",
+  "verification": "Every isolated file equals its captured initial transfer hash; exact tracked working patch equals the committed gzip archive; each isolated untracked file already equals its committed primary blob. Resetting only this branch to main preserves all source custody.",
+  "other_worktrees": "Untouched.",
+  "post_reset": "Our isolated branch reset to1946fd353; primary and isolated git status --short both empty. Other locked worktrees unchanged."
+}

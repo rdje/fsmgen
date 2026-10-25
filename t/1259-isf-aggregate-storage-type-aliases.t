@@ -107,15 +107,15 @@ subtest 'aggregate storage carrier diagnostics fail closed outside the slice' =>
         <<'ISF',
 (actor aggregate_interface_port
   (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
+    (type frame_t (list (bits 2) bit)))
   (clock clk)
   (reset rst)
   (interface
     (output frame (type frame_t)))
   (transaction main))
 ISF
-        qr/interface port 'frame' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs/,
-        'aggregate aliases are still rejected on output ports',
+        qr/interface port 'frame' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports/,
+        'packed list aliases are rejected on actor output ports',
     );
 
     assert_parse_rejected(
@@ -131,7 +131,7 @@ ISF
     (ports
       (input payload (type frame_t)))))
 ISF
-        qr/transaction 'main' port 'payload' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs/,
+        qr/transaction 'main' port 'payload' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports/,
         'aggregate aliases are still rejected on transaction ports',
     );
 
@@ -148,7 +148,7 @@ ISF
     (bank frames (type frame_t) (depth 2)))
   (transaction main))
 ISF
-        qr/storage 'frames' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor inputs/,
+        qr/storage 'frames' references aggregate type 'frame_t'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports/,
         'aggregate aliases are still rejected on storage banks',
     );
 

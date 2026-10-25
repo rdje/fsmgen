@@ -80,7 +80,9 @@ the same declaration. Unknown aliases fail before lowering.
 ## Aggregate Storage Carriers
 
 Packed `list` and `record` aliases are accepted on actor-owned storage variables.
-Packed records also support actor input ports, as described below.
+Packed records also support actor input and output ports, as described below.
+Packed list actor ports, aggregate transaction ports and aggregate storage banks
+remain outside the admitted subset.
 
 Record-output declarations and exact-type whole copies are now source-admitted.
 Their complete public/generated/backend execution qualification remains open.
