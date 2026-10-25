@@ -662,10 +662,51 @@ do not start broad suites between implementation slices.
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve width dependencies through unambiguous canonical IAL0 and its semantic declarations.`
   Acceptance: `After .1/.2, reuse the qualified IAL0 expression/static/type contracts to preserve actual scoped width dependencies and resolved defaults. Qualify type/parameter names, direct transaction versus module scopes, aliases and constants without numeric guessing or HDL text replacement. If existing syntax cannot safely carry a selected relation, choose an explicit bounded contract under this owner before admitting it. Preserve all default/type/reset semantics and literal controls, actual strict carriers and sanitized semantic boundaries; generic HDL propagation remains .3. Commit before parent qualification.`
-  Verification: `pending physical propagation`
+  Verification: `Individual private source/IR prerequisites have focused checks; broad joined verification remains deferred. The existing IAL0 parser resolves +size to numeric/type contracts, while ISF emission uses resolved physical widths. Actor/local generated scopes and same-named types require explicit binding; bare token copying is not sufficient. Split source retention, scoped binding and emission before implementation. No source syntax, public shape or HDL behavior changes in this preparation.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.1, ISF-REDUCTION-DELIVERY.2.3.3.2, ISF-REDUCTION-DELIVERY.2.3.3.3, ISF-REDUCTION-DELIVERY.2.3.3.4, ISF-REDUCTION-DELIVERY.2.3.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.1`
+  Status: `done`
+  Goal: `Bound canonical IAL0 width preservation into source, binding and emission slices.`
+  Acceptance: `Reuse decision119 namespace/static facts and inspect the actual IAL0 +size parser, Signal/SignalManager contracts, ISF size/parameter emitter and focused size tests. Record exact dependency order, preserved defaults/types/resets, detached ownership and deferred qualification before implementation. Update task/Memory pointers and pass mandatory commit gates. Public sync scope is task continuity only: the book already states IAL0/generic propagation remains pending and no shipped boundary changes.`
+  Verification: `resolve_declared_width_contract returns evaluated width plus existing type facts. parse_size_section registers only that contract, including already-created rm/mr auxiliaries; numeric width alone cannot retain authored expressions. The ISF emitter selects type references or numeric physical widths, while direct-formal and generated actor/local scopes can shadow. Source retention must precede explicit lexical binding and actual emission. The existing constant evaluator and named-type precedence remain authoritative; no new evaluator or HDL text substitution is selected. Child .2 owns exact bounded source-record representation after focused consumer review, .3 binds actual scoped declarations, .4 emits admitted carriers, and .5 closes small representative source/carrier checks. Initial integrity checking rejects an uncommitted zero-suffixed child; positive numbering corrects it without renumbering any committed node. Full matrices remain .2.3.2.6/.2.3.4/.6 after feature implementation. Existing public source/IR/carrier observations remain evidence, not a new run or generic-width claim. Task integrity and mandatory doctrines gate this plan before .1.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.1: split canonical width source and carrier propagation`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S resolve_declared_width_contract -- perl/FSM/Adapter/FSMGenFull/Parser.pm and the current parser registration show evaluated width/type contracts without authored expression retention. The existing emitter's width-token selection is type-or-number; decision119 retains the actual namespace collision evidence.
+  - [x] **ADDRESSED (verified)** — Exact executable children separate IAL0 source retention, scoped binding, carrier emission and focused source/carrier closure. The new first leaf has declaration/auxiliary/type/reset/isolation boundaries, and each later leaf reuses canonical evaluators and actual lexical sources. No implementation or generic-width support is claimed.
+  - [x] **NO REGRESSION** — Source, tests, configuration semantics and book behavior are unchanged. Task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate the planning slice. Broad verification stays deferred under the director's instruction.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.2`
+  Status: `pending`
+  Goal: `Retain authored scalar +size expressions separately from resolved IAL0 widths.`
+  Acceptance: `Inspect exact parser/Signal/SignalManager declaration, re-registration, auxiliary and copy/export consumers before selecting a bounded private source record. Preserve actual authored expression tokens/primitive kinds and resolved defaults without inferring parameter dependencies from equal values. Named types keep their existing identity/specification; literal and inferred widths gain no invented parameter association. Snapshot before resolution, isolate caller/Signal/sibling/auxiliary/returned records, preserve reset markers and current width/admission rules, and qualify exact unchanged public/default HDL behavior with the smallest meaningful parser/declaration check. No ISF carrier spelling change, new expression grammar, generic HDL or public inventory in this foundation. Record the selected representation in the existing contract/task without expanding saturated surfaces; commit before binding.`
+  Verification: `pending source-record implementation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3`
+  Status: `pending`
+  Goal: `Bind authored ISF widths to explicit canonical IAL0 scalar namespaces and lexical environments.`
+  Acceptance: `After .2, use actual width declarations/scopes and existing constant/parameter resolution to bind actor ports/storage, direct formals and generated inherited/local declarations. Separate actor, transaction and selected instance environments; never borrow a same-named type or equal-default declaration. Select bounded collision-safe supporting aliases/declarations only where needed, with preserved override/default semantics and original source identities. Qualify literal/type/constant/package/alias and shadow controls plus detached caller/results. Split growing consumers before emission changes; full joins remain deferred.`
+  Verification: `pending source retention`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4`
+  Status: `pending`
+  Goal: `Emit admitted canonical IAL0 width relations through actual declarations and bound environments.`
+  Acceptance: `After .2/.3, emit unambiguous +size expressions and selected supporting declarations for owned physical ports/storage/formals/generated/reusable/domain modules. Use canonical expression syntax and real source identities, retaining named types, constants, resets and literal/default controls. Do not post-process HDL or relabel unchanged default numbers as generic support. Replay the smallest representative actual strict carrier cases and source metadata checks; split constructor-specific emission if needed. Generic HDL and public dependency inventories retain their later owners.`
+  Verification: `pending lexical binding`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.5`
+  Status: `pending`
+  Goal: `Close focused canonical source/carrier preservation before advancing generic-width implementation.`
+  Acceptance: `After .2-.4, use small representative actual-source/IAL0 checks for changed boundaries, with independently expected owner/token/namespace/default relations and meaningful wrong-binding controls. Preserve caller/result kinds, type/reset independence and explicit incomplete generic/specialization/public-report boundaries. Synchronize book/downstream/current scope and commit. Complete cross-scope/public/corpus matrices remain deferred to .2.3.4/.6 after required feature implementation; this leaf is not permission for a broad verification campaign.`
+  Verification: `pending canonical carrier implementation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.4`
