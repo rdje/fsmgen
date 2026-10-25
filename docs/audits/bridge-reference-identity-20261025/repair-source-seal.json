@@ -1,0 +1,39 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.16",
+  "baseline_revision": "905440adb9add3c5b423a49ce0608899bc443d12",
+  "inputs": [
+    {
+      "path": "t/1602-vial-architecture-scale-bridge-fanout.t",
+      "sha256": "f36d77b01bf5943793d001e8050bbe13d15d8cbbbc10b9320976594b8143680c",
+      "equal_to_head": false
+    },
+    {
+      "path": "perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm",
+      "sha256": "46cd08111bb3d1b4451d4ceb9f12f60633508101036fac764c3bcd1f4c5c9dd8",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/HIAL/VIALBridge/Builder.pm",
+      "sha256": "1044c94f4068e2eaa4bbe1501f50689defcd6e94e0679ff83fbb1ce36a410ace",
+      "equal_to_head": true
+    },
+    {
+      "path": "specs/Lispish.spec",
+      "sha256": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+      "equal_to_head": true
+    },
+    {
+      "path": "ppif/ahb_lite_subordinate.ppif",
+      "sha256": "9a1d7a591d3ec9a3419b07f05bc83aefa2b213b2cae45f5332f9349ffa27056c",
+      "equal_to_head": true
+    },
+    {
+      "path": "vial/ahb_subordinate_base_output_arbitration.vial",
+      "sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+      "equal_to_head": true
+    }
+  ],
+  "focused": "docs/audits/push-readiness-20261025/bridge1602-repair-focused.json",
+  "exact_fact": "docs/audits/push-readiness-20261025/bridge1602-repair-fact.json",
+  "native_docs": "docs/audits/push-readiness-20261025/bridge1602-repair-docs.json"
+}

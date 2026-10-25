@@ -14,6 +14,7 @@ answers:
   - "how does the architecture scale bridge fanout generator work?"
   - "which bridge scale limits are reached exactly?"
   - "does bridge construction preserve HDL?"
+  - "why does the AHB report hash change after lowering updates?"
 date: 2026-10-25
 status: current
 tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb, scale]
@@ -51,11 +52,12 @@ Default proof: frozen AHB and every gate axis. Explicit RAM-guarded proof:
 qualification, exact boundaries and excess. Canonical manifests reach exactly
 1 MiB, 4 MiB and 16 MiB. Source-map gate: 8,192 records; larger valid shapes
 stop at the earlier 16-MiB manifest cap. Scale IAL2 bypass is rejected, direct
-IAL1 retains `IAL1 -> IAL0`. AHB report identity preservation remains required;
-its current T1602 hash fails. PUBLICATION-REGRESSION-REPAIRS.16 owns diagnosis;
-the complete declared reverify remains red.
+IAL1 retains `IAL1 -> IAL0`. Four generated-IAL0 provenance fields can vary:
+source/artifact SHA, source byte/line counts. T1602 checks raw bytes
+and freezes every other AHB report field.
 
 T1551 compares HDL before/after bridge construction (only SV date normalized)
 and IAL0 with/without its annotation. A changed storage reset must change both
 HDL outputs/reset values. SV policy/VHDL typing repairs supersede old byte
-locks; .15 retains exact proofs and current interface/selector/type checks.
+locks; PUBLICATION-REGRESSION-REPAIRS.15 retains exact proofs and
+interface/selector/type checks.

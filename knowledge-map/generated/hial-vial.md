@@ -1,7 +1,7 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **49** uniquely owned question entries.
+> **2** facts · **50** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -52,6 +52,7 @@
 - q="which VIAL backend profiles have compile runtime result parity maturity?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="which bridge IDs bind the AHB VIAL fixture?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="which bridge scale limits are reached exactly?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
+- q="why does the AHB report hash change after lowering updates?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="why is mixed-language qualification not active?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="will VIAL have VIAL0 VIAL1 and VIAL2 layers?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 

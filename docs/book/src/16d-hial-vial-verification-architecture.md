@@ -356,10 +356,6 @@ comparison results:
 scripts/run_with_ram_guard.sh -- prove -Iperl t/1551-hial-vial-bridge-manifest.t
 ```
 
-Full architecture-scale qualification remains pending while the
-[report-identity task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md)
-resolves its failing reference checksum.
-
 ### Using the shipped private producer
 
 The implementation has three closed entrypoints, one for each canonical HIAL
@@ -2198,8 +2194,14 @@ The private annotation is closed to this exact identity:
 It publishes only
 `hial_vial.bridge_qualification.architecture_scale_v1`. Attempting to carry
 that annotation through the IAL2 route fails with
-`HIAL_VIAL_BRIDGE_ANNOTATION_ERROR`; the checked AHB IAL2-via-IAL1 report stays
-byte-identical. Every accepted candidate records exactly the `IAL1 -> IAL0`
+`HIAL_VIAL_BRIDGE_ANNOTATION_ERROR`. The checked AHB IAL2-via-IAL1 report matches
+the complete current public AHB route. Its contract identity freezes every
+field except four generated-FSM byte-provenance values: the source and artifact
+digests, and the source byte and line counts. Those values are checked against
+current raw FSM bytes, so legitimate lowering changes update their provenance
+while protocol facts, IDs, endpoints, types, maps and all other fields stay
+frozen. A changed protocol role must break the contract identity.
+Every accepted candidate records exactly the `IAL1 -> IAL0`
 review route, while the AHB reference records `IAL2 -> IAL1 -> IAL0`.
 
 The generator uses reachable semantic structure for each axis: parameters for

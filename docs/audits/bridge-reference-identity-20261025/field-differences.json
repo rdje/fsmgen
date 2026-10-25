@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/review_artifacts/2/content_sha256",
+    "old": "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf",
+    "current": "6f58afbe5abe2373a86e1d0a99858fa6fe7e158343d26076ea176d8360457740"
+  },
+  {
+    "path": "/sources/2/byte_length",
+    "old": 5854,
+    "current": 6319
+  },
+  {
+    "path": "/sources/2/line_count",
+    "old": 213,
+    "current": 235
+  },
+  {
+    "path": "/sources/2/content_sha256",
+    "old": "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf",
+    "current": "6f58afbe5abe2373a86e1d0a99858fa6fe7e158343d26076ea176d8360457740"
+  }
+]

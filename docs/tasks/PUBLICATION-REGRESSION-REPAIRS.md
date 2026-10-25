@@ -189,17 +189,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.16`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose and repair the architecture-scale frozen AHB report identity check.`
   Acceptance: `P1 immediately after .15 commits, before .13 fresh full CI. Exact canonical bridge reverify runs T1551 successfully, then T1602 line162 rejects report checksum240db972 againsta4565d40. Preserve its complete first failure/status. Reproduce public bridge-fanout reference generation, compare exact report fields/identities/provenance to the selected historical baseline, and classify intended evolution versus real producer regression before repair. Preserve profile limits, all gate axes, reference semantics, no IAL2 bypass and meaningful positive/adverse controls. Keep the canonical card honest about its current red full reverify. Focused checks/book/docs/normal commit, then complete fresh qualification; no blind checksum refresh, hashcheck omission or claimed current full success.`
-  Verification: `Original complete command/TAP/status: docs/audits/push-readiness-20261025/bridge1551-repair-fact.json and .log.gz, integer1. No report comparison or repair attempted yet.`
-  Commit: `pending`
+  Verification: `Original canonical reverify failure remains retained. Public reference evaluation and an observational pass-through capture both original Builder calls; current report hash equals240db972. Exact own-Git97dda historical public replay reproducesa4565d40. Complete typed JSON comparison finds exactly four changed fields: generated-IAL0 source/artifact SHA and source byte/line counts. The generated FSM has the established intended +interface addition; every other report field is unchanged. Independent Python canonical encoding equals the original Perl bytes, and masking only those four values yields complete byte-equal historical/current contract64946a80. T1602 now independently assembles the explicit public AHB route, requires whole current report/manifest parity, validates raw generated source provenance, freezes every remaining contract field and rejects an altered protocol role. All prior anchor/forgery/profile/axes/limits/bypass checks remain; default large qualification opt-in stays skipped and is not credited. Syntax and focused T1602/T1551 pass Files2 Tests12. The exact full declared canonical reverify now returns0, including its subsequent decision/source references. Final native book/POD/current-source/index/KMap all return0. Current card retains all prior questions/scale facts and names the four derived fields within unchanged collection limits. Complete recipes/source/archive commitments/raw gzip reports/FSMs/field differences and separate evidence legs are in docs/audits/bridge-reference-identity-20261025/diagnosis.json. Production modules/grammar/seed remain unchanged; normal staged/commit gates qualify this slice before .13 fresh full6/checkpoint.`
+  Commit: `This work-unit commit.`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.16` | `pending` | After .15 commits, diagnose the architecture-scale AHB report checksum; then .13 complete fresh full qualification. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | After .16 commits, inspect exclusive full6 slots/current capacity and launch complete guarded full CI with a fresh checkpoint. |
 
 ## Decisions
 
@@ -208,7 +208,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 report-identity failure requires diagnosis/repair before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
+- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 now verifies exact contract identity with current provenance and restores the full canonical field to green; .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
 
 ## Acceptance Checklist — `.1`
 
@@ -317,3 +317,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Original four assertions fail at t/1551-hial-vial-bridge-manifest.t lines300/301/305/312. Actual git log -S ab668d31 identifiesa6c670d7 VHDL lock; own-Git public historical generators reproduce that lock and July SV95db exactly. Whole-output witnesses reduce SV drift solely to decision0111 compatible-fan-in assertions and VHDL drift solely to965b541 typed inequality emission. Interface-only IAL0 drift is already exact. No checksum is blindly refreshed.
 - [x] **ADDRESSED (verified)** — T1551 compares complete current lowering with/without annotation, provided-source immutability and SV/VHDL before/after bridge construction. A changed hardware storage reset must change both outputs and contain independently expected values. Current interface ownership, different-value assertion policy and typed VHDL comparison are retained; historical packets and failed fixture/layout attempts remain durable.
 - [x] **NO REGRESSION** — bridge1551-repair-focused reports All tests successful, Files=3, Tests=12, syntax0. bridge1551-repair-docs-2 returns0 for five native book/POD/current-source/index/KMap commands, including current new question parity. Full canonical reverify remains red at T1602 line162, owned by .16; no full-CI or scale-reference qualification is claimed. Ordinary staged/normal gates remain mandatory.
+
+## Acceptance Checklist — `.16` AHB report identity
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original canonical gate reports at t/1602-vial-architecture-scale-bridge-fanout.t line 162:240db972 differs froma4565d40. Actual git log -S a4565d405 identifies97dda148; its exact public historical generator reproduces the frozen report. Typed whole-report comparison finds only four generated-IAL0 provenance fields changed by the intended interface addition. All remaining fields match exactly.
+- [x] **ADDRESSED (verified)** — Independently assembled public AHB route matches complete scale report/manifest identity. Raw generated-FSM SHA, byte/line counts and artifact digest are checked before normalizing exactly four fields. Complete normalized contract remains64946a80; a changed protocol role breaks it. Python canonical/whole-report witnesses independently confirm the four-field boundary. No source anchor, profile/gate/limit/bypass assertion is removed.
+- [x] **NO REGRESSION** — bridge1602-repair-focused reports All tests successful, Files=2, Tests=12, syntax0. Exact original canonical reverify now returns0 with the same two tests plus decision/source references. bridge1602-repair-docs returns0 for all five native book/POD/current-source/index/KMap checks. Default explicit-large skip remains unqualified. Complete fresh local full CI and exact-SHA hosted qualification are still required.

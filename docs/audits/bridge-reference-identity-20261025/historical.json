@@ -1,0 +1,42 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.16",
+  "revision": "97dda148d54a1329eaef03a6b5aae9f37a95a219",
+  "archive_command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "97dda148d54a1329eaef03a6b5aae9f37a95a219",
+    "perl",
+    "specs",
+    "plugin",
+    "README.md",
+    "bin/fsmgen",
+    "ppif/ahb_lite_subordinate.ppif",
+    "vial/ahb_subordinate_base_output_arbitration.vial"
+  ],
+  "archive_sha256": "d3dbd909774b7fe8c9392c3024958ab79ac7e7507f47c7f243480bb952658bdd",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1602-intake/historical",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "../capture.pl",
+    "../historical-output"
+  ],
+  "exit_status": 0,
+  "outputs": [
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/historical-output/report.json",
+      "sha256": "a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/historical-output/generated.fsm",
+      "sha256": "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/historical-output/evaluation.json",
+      "sha256": "cc764637d6146d0013500aa51d28a452487de56b000bd2ff8b1269d345d5532a"
+    }
+  ]
+}

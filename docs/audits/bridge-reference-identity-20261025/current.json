@@ -1,0 +1,28 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.16",
+  "revision": "905440adb9add3c5b423a49ce0608899bc443d12",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    ".artifacts/push-readiness-20261025/bridge1602-intake/capture.pl",
+    ".artifacts/push-readiness-20261025/bridge1602-intake/current"
+  ],
+  "exit_status": 0,
+  "instrument": "use strict; use warnings;\nuse FSM::VIAL::ArchitectureScaleBridgeFanout;\nuse FSM::HIAL::VIALBridge::Builder;\nuse Digest::SHA qw(sha256_hex);\nuse JSON::PP;\nmy $json=JSON::PP->new->canonical(1)->utf8(1);\nsub read_raw { open my $f,'<:raw',$_[0] or die $!; local $/; return <$f>; }\nsub write_raw { open my $f,'>:raw',$_[0] or die $!; print {$f} $_[1]; close $f or die $!; }\nmy $construction=FSM::VIAL::ArchitectureScaleBridgeFanout->construct({primary_axis=>'selected_units',level=>'reference_v1',reference_hial_text=>read_raw('ppif/ahb_lite_subordinate.ppif'),reference_vial_text=>read_raw('vial/ahb_subordinate_base_output_arbitration.vial')});\nmy $build=FSM::HIAL::VIALBridge::Builder->can('build_ial2_via_ial1');\nmy @reports;\nmy $evaluation;\n{\n no warnings 'redefine';\n local *FSM::HIAL::VIALBridge::Builder::build_ial2_via_ial1=sub {\n  my $r=$build->(@_); die $json->encode($r->{diagnostics}) unless $r->{ok};\n  push @reports,$json->encode($r->{report});\n  write_raw(\"$ARGV[0]/generated.fsm\",$_[1]{generated_ial0}{text});\n  return $r;\n };\n $evaluation=FSM::VIAL::ArchitectureScaleBridgeFanout->evaluate({construction=>$construction});\n}\ndie $json->encode($evaluation) unless $evaluation->{ok};\ndie 'Missing independent reports' unless @reports==2 && $reports[0] eq $reports[1];\ndie 'Captured report hash disagrees' unless sha256_hex($reports[0]) eq $evaluation->{report_sha256};\nwrite_raw(\"$ARGV[0]/report.json\",$reports[0]);\nwrite_raw(\"$ARGV[0]/evaluation.json\",$json->encode($evaluation));\nprint $evaluation->{report_sha256},\"\\n\";\n",
+  "outputs": [
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/current/report.json",
+      "sha256": "240db97278ae5a9c6c1b45cba4eca602afb171e0177740108743ebf208a6cd44"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/current/generated.fsm",
+      "sha256": "6f58afbe5abe2373a86e1d0a99858fa6fe7e158343d26076ea176d8360457740"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1602-intake/current/evaluation.json",
+      "sha256": "64cee5b34e9ae8b808569f58250b0298a8e644bffcb7a0f2bdde2f83f44de1e9"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1273** facts · **7063** unique questions · **7240** answer occurrences · **190** topic shards.
+> **1273** facts · **7064** unique questions · **7241** answer occurrences · **190** topic shards.
 
 Query first:
 
@@ -67,7 +67,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `generation-result` | 1 | 5 | [`generation-result.md`](knowledge-map/generated/generation-result.md) |
 | `generic-fifo` | 1 | 5 | [`generic-fifo.md`](knowledge-map/generated/generic-fifo.md) |
 | `hdl-validation` | 1 | 4 | [`hdl-validation.md`](knowledge-map/generated/hdl-validation.md) |
-| `hial-vial` | 2 | 49 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
+| `hial-vial` | 2 | 50 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
 | `hosted-perl` | 1 | 10 | [`hosted-perl.md`](knowledge-map/generated/hosted-perl.md) |
 | `ial-contracts` | 1 | 14 | [`ial-contracts.md`](knowledge-map/generated/ial-contracts.md) |
 | `ial0-ahb` | 3 | 14 | [`ial0-ahb.md`](knowledge-map/generated/ial0-ahb.md) |
