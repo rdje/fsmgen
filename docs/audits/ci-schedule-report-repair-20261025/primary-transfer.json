@@ -1,0 +1,6 @@
+{
+  "source": ".artifacts/worktrees/ci-schedule-report-repair",
+  "target": "primary checkout",
+  "staged_tree_equal": "8ec5e5acdf0f17069fa19cfc08a43d5412681685",
+  "patch_sha256": "67f28b6423872bb0569294a3ae9e58d97af536f4a7155294fcfdf3ccc5d53f0e"
+}

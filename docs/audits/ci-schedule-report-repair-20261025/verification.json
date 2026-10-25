@@ -1,0 +1,30 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "baseline": "db65cd407ff9624be1b167eb99f19449216f3399",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1106-isf-schedule-json-counter-storage.t",
+    "t/1128-isf-public-multifile-schedule-report-audit.t",
+    "t/1148-isf-public-storage-metadata-audit.t",
+    "t/1158-isf-public-report-dt-kind-metadata-audit.t",
+    "t/1167-isf-public-actor-shell-drive-shape-audit.t",
+    "t/1255-isf-schedule-report-golden-matrix.t",
+    "t/1315-isf-generated-composition-fixture-coverage.t",
+    "t/1964-isf-generated-report-enumerations.t"
+  ],
+  "exit_status": 0,
+  "evidence": "verified.log.gz",
+  "source_sha256": {
+    "t/1106-isf-schedule-json-counter-storage.t": "9b2bfb4736f8a3b51d6e42f48430c538c3ab8d36463a316268f89f26fd1bf1f2",
+    "t/1128-isf-public-multifile-schedule-report-audit.t": "b61c2d17e116e73b3aabd55801c5b7c89ba0bfd8b14bcd54712d5a2f4d500013",
+    "t/1167-isf-public-actor-shell-drive-shape-audit.t": "cb359834a203e7a0952a89bfcfcb27f2b81977602c4be1f6441dbd8f7fcf9c7b",
+    "t/1255-isf-schedule-report-golden-matrix.t": "af9e5b5545c8722a5e01eff1eaaadabdf891d7811727609a6d4501901d10aa9d"
+  },
+  "rederive": "Exact guarded prove invocation and retained full output; public schedule reports reproduce current drive/completion/reduction metadata.",
+  "falsify": "Original mismatches retained; authored scheduled-FSM declarations bind the complete parent DT inventory independently of report JSON, public drive bindings select actual storage entries, literal unary fixture oracle binds complete owner/context/operator/operand/width/order. Intermediate regex and optional-shell refusals are retained. CLI/in-process equality alone is not called independent.",
+  "durability": "Changed test instruments, original source revision, intermediate test sources/logs, interrupted first full-CI log/state and final focused output are committed together. Current tests fail if their exact fixtures or public contracts change without corresponding expectations.",
+  "limits": "Focused report tests qualify this test-only repair, not complete CI, runtime, push or historical macOS cause. No peak RSS, timing guarantee or causal claim about bounded Git cache knobs is made."
+}

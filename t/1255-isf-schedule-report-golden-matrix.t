@@ -34,6 +34,7 @@ subtest 'schedule-report golden matrix owns advertised branches' => sub {
         assert_branch_present(
             schedule_report_top_level_keys => $in_process_report,
             "$case->{name} top-level shell",
+            $case->{optional_top_level_keys} || [],
         );
 
         for my $branch (@{$case->{covers}}) {
@@ -86,6 +87,12 @@ sub golden_matrix_cases {
                   schedule_report_compile_issues_success_shape
                 )
             ],
+        },
+        {
+            name => 'unary_reductions',
+            fixture => 'isf/unary_reductions.isf',
+            optional_top_level_keys => ['reductions'],
+            covers => ['schedule_report_reductions'],
         },
         {
             name => 'typed_storage',
@@ -421,12 +428,13 @@ sub reports_for_case {
 }
 
 sub assert_branch_present {
-    my ($branch, $report, $label) = @_;
+    my ($branch, $report, $label, $optional_top_level_keys) = @_;
 
     if ($branch eq 'schedule_report_top_level_keys') {
         is_deeply(
             sorted([keys %$report]),
-            sorted($contract->{schedule_report_top_level_keys}),
+            sorted([@{$contract->{schedule_report_top_level_keys}},
+                @{$optional_top_level_keys || []}]),
             "$label exposes the advertised top-level keys",
         );
         return;
@@ -469,6 +477,37 @@ sub assert_branch_present {
             ok(grep($_ eq $port->{direction}, @{$contract->{$branch}{direction_values}}),
                 "$label has a declared direction");
         }
+        return;
+    }
+    if ($branch eq 'schedule_report_reductions') {
+        my $metadata = $contract->{$branch};
+        my $entries = $report->{reductions};
+        ok(ref($entries) eq 'ARRAY' && @$entries, "$label has reduction metadata");
+        return unless ref($entries) eq 'ARRAY';
+        for my $entry (@$entries) {
+            assert_entry_keys($entry, $metadata->{entry_keys}, "$label reduction keys");
+            for my $field (qw(owner_kind kind operator)) {
+                ok(grep($_ eq $entry->{$field}, @{$metadata->{"${field}_values"}}),
+                    "$label reduction $field is advertised");
+            }
+        }
+        # Independently bind the shipped source's owner, spelling, widths and
+        # authored order; CLI/in-process equality alone could share a defect.
+        my @expected = map {
+            my ($owner, $operator, $operand, $width) = @$_;
+            +{owner_kind => 'rule', owner => $owner,
+              context => "rule '$owner' action[0] RHS", kind => 'unary',
+              operator => $operator, operand => $operand,
+              operand_width => $width, result_width => 1};
+        } (
+            ['xor_check', '^', 'data', 8],
+            ['all_check', '&', 'data', 8],
+            ['any_check', '|', 'data', 8],
+            ['odd_check', '^', 'data', 8],
+            ['slice_check', '^', 'data[7:4]', 4],
+            ['bit_check', '&', 'data[3]', 1],
+        );
+        is_deeply($entries, \@expected, "$label retains the authored reduction inventory");
         return;
     }
     if ($branch eq 'schedule_report_reset_provenance') {

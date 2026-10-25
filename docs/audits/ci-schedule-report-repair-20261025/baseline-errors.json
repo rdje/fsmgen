@@ -1,0 +1,35 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "baseline_revision": "db65cd407ff9624be1b167eb99f19449216f3399",
+  "baseline_run": "Primary checkout local-full-ci-1 remains running; no primary source edits.",
+  "primary_accessor": "Parent of git rev-parse --path-format=absolute --git-common-dir",
+  "worktree": ".artifacts/worktrees/ci-schedule-report-repair",
+  "source_paths": [
+    "t/1106-isf-schedule-json-counter-storage.t",
+    "t/1128-isf-public-multifile-schedule-report-audit.t",
+    "isf/apb_requester.isf",
+    "isf/spawn_parent.isf"
+  ],
+  "partial_log_scope": "Exact captured prefix during the unchanged ongoing baseline, not its complete/final result.",
+  "original_prefix_sha256": "91ecb1769649fbf0013f2833c03646c43f55a3a7da9a1e629b4eee615c51a9d6",
+  "retained_prefix_sha256": "91ecb1769649fbf0013f2833c03646c43f55a3a7da9a1e629b4eee615c51a9d6",
+  "reproductions": [
+    [
+      "./bin/fsmgen",
+      "--quiet",
+      "--emit-schedule-json",
+      "isf/apb_requester.isf"
+    ],
+    [
+      "./bin/fsmgen",
+      "--quiet",
+      "--emit-schedule-json",
+      "isf/spawn_parent.isf"
+    ]
+  ],
+  "causes": [
+    "t1106 still names penable_start from the old parameterized APB drive, removed by 0bf795cf0; current generated drive-request metadata remains present in spawn_parent.",
+    "t1128 assumes the authored rdata DT is the complete parent list, predating legitimate retained child_completion DTs introduced by 2738ea530 and described by existing enum qualification."
+  ],
+  "repair_contract": "Preserve watchdog/latency/error checks; exercise actual generated one-bit drive-request counters. Compare the complete reported DT names against independently read parent scheduled-FSM DT declarations and retain authored/generated kind assertions."
+}

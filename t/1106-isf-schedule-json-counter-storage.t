@@ -34,14 +34,38 @@ subtest 'schedule JSON reports assigned counters with inferred widths' => sub {
     is($latency_counter->{role},  'latency_counter', 'latency storage reports its scheduler role');
     is($latency_counter->{width}, 5,         'latency storage keeps the max-bound inferred width');
 
-    my $drive_start = entry_by_name($storage, 'penable_start');
-    is($drive_start->{kind},  'counter', 'combinational drive start still comes from the counter table');
-    is($drive_start->{role},  'drive_request', 'combinational drive start reports its role');
-    is($drive_start->{width}, 1,         'combinational drive start keeps its counter-table width');
-
     my $last_error = entry_by_name($storage, 'last_error');
     is($last_error->{kind}, 'register', 'ordinary flopped output remains register storage');
     is($last_error->{width}, 1, 'ordinary register storage reports its known width');
+};
+
+subtest 'generated named-drive requests retain counter metadata' => sub {
+    my $path = File::Spec->catfile($FindBin::Bin, '..', 'isf', 'spawn_parent.isf');
+    my $actor = FSM::Adapter::ISF->new()->parse_file($path);
+    my $report = JSON::PP->new->decode(FSM::Scheduler::ISF->new()->report($actor));
+    my @instances = @{$report->{generated_composition}{instances} || []};
+
+    is_deeply([map { $_->{instance} } @instances], [qw(w0 w1 w2)],
+        'fixture exposes each generated child instance');
+    for my $instance (@instances) {
+        my $label = $instance->{instance};
+        my ($handoff) = grep { $_->{drive} eq 'rdata' }
+            @{$instance->{drive_handoffs} || []};
+        ok($handoff, "$label exposes its named-drive handoff");
+        next unless $handoff;
+
+        # Follow the public binding instead of assuming an allocated signal name.
+        my $name = $handoff->{request}{parent_port};
+        ok(defined($name) && length($name), "$label names its parent request signal");
+        next unless defined($name) && length($name);
+        my $entry = entry_by_name($report->{inferred_storage}, $name);
+        ok($entry, "$label request appears in inferred storage");
+        next unless $entry;
+
+        is($entry->{kind}, 'counter', "$label request retains its counter-table kind");
+        is($entry->{role}, 'drive_request', "$label request reports its drive role");
+        is($entry->{width}, 1, "$label request retains its one-bit counter-table width");
+    }
 };
 
 done_testing();

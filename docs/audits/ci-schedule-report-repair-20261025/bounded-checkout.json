@@ -1,0 +1,24 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "-c",
+    "core.packedGitWindowSize=32m",
+    "-c",
+    "core.packedGitLimit=256m",
+    "worktree",
+    "add",
+    "--relative-paths",
+    ".artifacts/worktrees/ci-schedule-report-repair",
+    "ci-schedule-report-repair"
+  ],
+  "exit_status": 0,
+  "revision": "db65cd407ff9624be1b167eb99f19449216f3399",
+  "worktree_clean_before_edits": true,
+  "git_link": "gitdir: ../../../.git/worktrees/ci-schedule-report-repair\n",
+  "guard_limits": "Unchanged defaults; no observed trip on the bounded-cache attempt.",
+  "source": "https://git-scm.com/docs/git-config/2.54.0",
+  "limits": "Both documented mapping settings changed together; no individual-knob, peak-RSS, speed or historical macOS startup attribution is claimed."
+}

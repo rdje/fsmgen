@@ -1,0 +1,8 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "exit_status": 1,
+  "cause": "exact_history target directory .git is absent because linked worktrees use a gitfile, despite valid shared Git history.",
+  "evidence": "linked-worktree-doctrine-refusal.log.gz",
+  "recovery": "Transfer exact staged blobs to the unchanged primary checkout, prove index tree equality, run unchanged primary gates.",
+  "followup": "Owned by .69.3; fix supported linked-worktree history resolution after hosted qualification and macOS assessment, before the saved documentation return."
+}

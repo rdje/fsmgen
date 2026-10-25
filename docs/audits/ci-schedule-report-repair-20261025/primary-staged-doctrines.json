@@ -1,0 +1,12 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_doctrines.sh"
+  ],
+  "exit_status": 0,
+  "log": "primary-staged-doctrines.log.gz",
+  "sha256": "81390a1cc53423ba9920c2a84144485324d7b105bccc33b6125f281957ab74e1",
+  "scope": "Primary staged repair; linked-worktree refusal is separately retained, not classified as passed. Normal commit hook must pass the final staged tree."
+}

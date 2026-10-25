@@ -1,0 +1,20 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "boundary": "db65cd407 unchanged producer inputs versus test-repair working tree",
+  "checks": [
+    {
+      "fixture": "apb",
+      "exact_report_equal": true,
+      "before": "apb-before.json",
+      "after": "apb-after.json"
+    },
+    {
+      "fixture": "spawn",
+      "exact_report_equal": true,
+      "before": "spawn-before.json",
+      "after": "spawn-after.json"
+    }
+  ],
+  "producer_receipt": "docs/audits/push-readiness-20261025/repair-doc-checks.json",
+  "limit": "Equality establishes unchanged observed reports for these fixtures, not universal runtime behavior."
+}

@@ -1,0 +1,269 @@
+{
+  "actor_constants": [],
+  "actor_network": null,
+  "actor_params": [],
+  "actor_phases": [],
+  "actor_stages": [],
+  "bank_accesses": [],
+  "clock": "clk",
+  "clock_domains": [],
+  "compatible_fanin_groups": [
+    {
+      "domain": "data",
+      "kind": "same_target_value",
+      "operator": "<-",
+      "rhs": "0",
+      "sources": [
+        {
+          "domain": "data",
+          "operator": "<-",
+          "owner": "done_phase",
+          "owner_kind": "drive",
+          "rhs": "0",
+          "source_kind": "drive_body",
+          "target": "PENABLE"
+        },
+        {
+          "domain": "data",
+          "operator": "<-",
+          "owner": "setup_phase",
+          "owner_kind": "drive",
+          "rhs": "0",
+          "source_kind": "drive_body",
+          "target": "PENABLE"
+        }
+      ],
+      "target": "PENABLE"
+    },
+    {
+      "domain": "pulse",
+      "kind": "pulse",
+      "operator": "<1",
+      "rhs": "1",
+      "sources": [
+        {
+          "domain": "pulse",
+          "operator": "<1",
+          "owner": "apb_transfer",
+          "owner_kind": "transaction",
+          "rhs": 1,
+          "source_kind": "complete_pulse",
+          "target": "done"
+        },
+        {
+          "domain": "pulse",
+          "operator": "<1",
+          "owner": "apb_transfer",
+          "owner_kind": "transaction",
+          "rhs": 1,
+          "source_kind": "timeout_pulse",
+          "target": "done"
+        }
+      ],
+      "target": "done"
+    }
+  ],
+  "compile_issues": [],
+  "crossings": [],
+  "dt_blocks": [
+    {
+      "assignments": 1,
+      "kind": "latency_counter",
+      "name": "apb_transfer_cc_inc"
+    },
+    {
+      "assignments": 1,
+      "kind": "drive",
+      "name": "access_phase"
+    },
+    {
+      "assignments": 4,
+      "kind": "drive",
+      "name": "done_phase"
+    },
+    {
+      "assignments": 5,
+      "kind": "drive",
+      "name": "setup_phase"
+    }
+  ],
+  "generated_composition": null,
+  "inferred_storage": [
+    {
+      "kind": "counter",
+      "name": "apb_transfer_cc",
+      "role": "latency_counter",
+      "width": 5
+    },
+    {
+      "kind": "counter",
+      "name": "apb_transfer_wd",
+      "role": "watchdog_counter",
+      "width": 17
+    },
+    {
+      "kind": "register",
+      "name": "addr",
+      "role": "sample_alias",
+      "width": 32
+    },
+    {
+      "kind": "register",
+      "name": "is_write",
+      "role": "sample_alias",
+      "width": 1
+    },
+    {
+      "kind": "register",
+      "name": "wdata",
+      "role": "sample_alias",
+      "width": 32
+    },
+    {
+      "kind": "register",
+      "name": "rdata",
+      "role": "sample_alias",
+      "width": 32
+    },
+    {
+      "kind": "register",
+      "name": "slverr",
+      "role": "sample_alias",
+      "width": 1
+    },
+    {
+      "kind": "register",
+      "name": "done",
+      "role": "completion_pulse",
+      "width": 1
+    },
+    {
+      "kind": "register",
+      "name": "last_error",
+      "role": "scheduler_error_status",
+      "width": 1
+    }
+  ],
+  "inputs": 7,
+  "interface_ports": [
+    {
+      "direction": "input",
+      "name": "start",
+      "width": 1
+    },
+    {
+      "direction": "input",
+      "name": "req_write",
+      "width": 1
+    },
+    {
+      "direction": "input",
+      "name": "req_addr",
+      "width": 32
+    },
+    {
+      "direction": "input",
+      "name": "req_wdata",
+      "width": 32
+    },
+    {
+      "direction": "input",
+      "name": "PREADY",
+      "width": 1
+    },
+    {
+      "direction": "input",
+      "name": "PRDATA",
+      "width": 32
+    },
+    {
+      "direction": "input",
+      "name": "PSLVERR",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "done",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "last_read_data",
+      "width": 32
+    },
+    {
+      "direction": "output",
+      "name": "last_error",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "PADDR",
+      "width": 32
+    },
+    {
+      "direction": "output",
+      "name": "PWRITE",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "PWDATA",
+      "width": 32
+    },
+    {
+      "direction": "output",
+      "name": "PSEL",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "PENABLE",
+      "width": 1
+    }
+  ],
+  "library_uses": [],
+  "loop_early_exits": [],
+  "outputs": 8,
+  "port_count": 15,
+  "priority_resolutions": [],
+  "reset": {
+    "kind": "async",
+    "name": "rst_n",
+    "polarity": "active_low"
+  },
+  "reset_provenance": [
+    {
+      "domain": null,
+      "origin": "explicit"
+    }
+  ],
+  "resource_arbitration": [],
+  "scheduled_fsm": "apb_requester.fsm",
+  "schema_version": 1,
+  "source": "apb_requester.isf",
+  "state_count": 7,
+  "temporal_contracts": [],
+  "transaction_loops": [],
+  "transaction_port_bindings": [],
+  "transaction_stages": [],
+  "transaction_waits": [],
+  "transactions": [
+    {
+      "count": 7,
+      "name": "apb_transfer",
+      "states": [
+        "apb_transfer_idle_0",
+        "apb_transfer_drive_1",
+        "apb_transfer_drive_2",
+        "apb_transfer_await_3",
+        "apb_transfer_drive_4",
+        "apb_transfer_done_5",
+        "apb_transfer_timeout"
+      ]
+    }
+  ],
+  "verification_bridge": null,
+  "verification_observations": [],
+  "watchdog": "65536"
+}

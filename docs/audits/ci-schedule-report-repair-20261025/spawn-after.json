@@ -1,0 +1,306 @@
+{
+  "actor_constants": [],
+  "actor_network": null,
+  "actor_params": [],
+  "actor_phases": [],
+  "actor_stages": [],
+  "bank_accesses": [],
+  "clock": "clk",
+  "clock_domains": [],
+  "compatible_fanin_groups": [],
+  "compile_issues": [],
+  "crossings": [],
+  "dt_blocks": [
+    {
+      "assignments": 3,
+      "kind": "drive",
+      "name": "rdata"
+    },
+    {
+      "assignments": 3,
+      "kind": "child_completion",
+      "name": "isf_completion_w0_seen"
+    },
+    {
+      "assignments": 3,
+      "kind": "child_completion",
+      "name": "isf_completion_w1_seen"
+    },
+    {
+      "assignments": 3,
+      "kind": "child_completion",
+      "name": "isf_completion_w2_seen"
+    }
+  ],
+  "generated_composition": {
+    "children": [
+      {
+        "module": "child_worker",
+        "parameters": [],
+        "scheduled_fsm": "child_worker.fsm",
+        "transaction": "child_worker"
+      }
+    ],
+    "instances": [
+      {
+        "activation_kind": "spawn",
+        "child": "child_worker",
+        "done": {
+          "child_port": "done",
+          "parent_port": "w0_done"
+        },
+        "drive_handoffs": [
+          {
+            "drive": "rdata",
+            "payloads": [
+              {
+                "child_port": "rdata_val",
+                "parameter": "val",
+                "parent_port": "w0_rdata_val",
+                "width": "32"
+              }
+            ],
+            "request": {
+              "child_port": "rdata_start",
+              "parent_port": "w0_rdata_start"
+            }
+          }
+        ],
+        "instance": "w0",
+        "parameter_bindings": [],
+        "start": {
+          "child_port": "start",
+          "parent_port": "w0_start"
+        }
+      },
+      {
+        "activation_kind": "spawn",
+        "child": "child_worker",
+        "done": {
+          "child_port": "done",
+          "parent_port": "w1_done"
+        },
+        "drive_handoffs": [
+          {
+            "drive": "rdata",
+            "payloads": [
+              {
+                "child_port": "rdata_val",
+                "parameter": "val",
+                "parent_port": "w1_rdata_val",
+                "width": "32"
+              }
+            ],
+            "request": {
+              "child_port": "rdata_start",
+              "parent_port": "w1_rdata_start"
+            }
+          }
+        ],
+        "instance": "w1",
+        "parameter_bindings": [],
+        "start": {
+          "child_port": "start",
+          "parent_port": "w1_start"
+        }
+      },
+      {
+        "activation_kind": "spawn",
+        "child": "child_worker",
+        "done": {
+          "child_port": "done",
+          "parent_port": "w2_done"
+        },
+        "drive_handoffs": [
+          {
+            "drive": "rdata",
+            "payloads": [
+              {
+                "child_port": "rdata_val",
+                "parameter": "val",
+                "parent_port": "w2_rdata_val",
+                "width": "32"
+              }
+            ],
+            "request": {
+              "child_port": "rdata_start",
+              "parent_port": "w2_rdata_start"
+            }
+          }
+        ],
+        "instance": "w2",
+        "parameter_bindings": [],
+        "start": {
+          "child_port": "start",
+          "parent_port": "w2_start"
+        }
+      }
+    ],
+    "kind": "spawn_generated_top",
+    "parent": {
+      "module": "spawn_parent",
+      "scheduled_fsm": "spawn_parent.fsm"
+    },
+    "top_fsm": "spawn_parent_top.fsm",
+    "top_module": "spawn_parent_top"
+  },
+  "inferred_storage": [
+    {
+      "kind": "register",
+      "name": "done",
+      "role": "completion_pulse",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w0_ready",
+      "role": "child_completion_view",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w0_seen",
+      "role": "child_completion_seen",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w1_ready",
+      "role": "child_completion_view",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w1_seen",
+      "role": "child_completion_seen",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w2_ready",
+      "role": "child_completion_view",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "isf_completion_w2_seen",
+      "role": "child_completion_seen",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w0_done",
+      "role": "activation_done_handoff",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w0_rdata_start",
+      "role": "drive_request",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w0_rdata_val",
+      "role": "drive_payload",
+      "width": 32
+    },
+    {
+      "kind": "counter",
+      "name": "w1_done",
+      "role": "activation_done_handoff",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w1_rdata_start",
+      "role": "drive_request",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w1_rdata_val",
+      "role": "drive_payload",
+      "width": 32
+    },
+    {
+      "kind": "counter",
+      "name": "w2_done",
+      "role": "activation_done_handoff",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w2_rdata_start",
+      "role": "drive_request",
+      "width": 1
+    },
+    {
+      "kind": "counter",
+      "name": "w2_rdata_val",
+      "role": "drive_payload",
+      "width": 32
+    }
+  ],
+  "inputs": 10,
+  "interface_ports": [
+    {
+      "direction": "input",
+      "name": "trigger",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "done",
+      "width": 1
+    },
+    {
+      "direction": "output",
+      "name": "rdata",
+      "width": 32
+    }
+  ],
+  "library_uses": [],
+  "loop_early_exits": [],
+  "outputs": 5,
+  "port_count": 15,
+  "priority_resolutions": [],
+  "reset": {
+    "kind": "async",
+    "name": "rst_n",
+    "polarity": "active_low"
+  },
+  "reset_provenance": [
+    {
+      "domain": null,
+      "origin": "explicit"
+    }
+  ],
+  "resource_arbitration": [],
+  "scheduled_fsm": "spawn_parent.fsm",
+  "schema_version": 1,
+  "source": "spawn_parent.isf",
+  "state_count": 6,
+  "temporal_contracts": [],
+  "transaction_loops": [],
+  "transaction_port_bindings": [],
+  "transaction_stages": [],
+  "transaction_waits": [],
+  "transactions": [
+    {
+      "count": 6,
+      "name": "parent_main",
+      "states": [
+        "parent_main_idle_0",
+        "parent_main_spawn_1",
+        "parent_main_spawn_2",
+        "parent_main_spawn_3",
+        "parent_main_await_all_4",
+        "parent_main_done_5"
+      ]
+    }
+  ],
+  "verification_bridge": null,
+  "verification_observations": [],
+  "watchdog": "65536"
+}

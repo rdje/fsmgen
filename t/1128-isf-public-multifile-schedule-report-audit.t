@@ -42,11 +42,22 @@ subtest 'multi-file ISF report is parent-scoped with generated composition metad
         [qw(parent_main)],
         'report transaction summary is parent-scoped',
     );
+    # Read the fixed parent's output-table declarations independently of JSON.
+    # A transition begins with ->; table headers put an identifier after '-'.
+    my @parent_dt_names = $lowered->{files}{'spawn_parent.fsm'}
+        =~ /^\s*\(-([A-Za-z_][A-Za-z0-9_]*)(?=\s|\))/mg;
     is_deeply(
-        [map { $_->{name} } @{$report->{dt_blocks}}],
-        [qw(rdata)],
-        'report DT summary is parent-scoped',
+        sorted([map { $_->{name} } @{$report->{dt_blocks}}]),
+        sorted(\@parent_dt_names),
+        'report DT summary contains exactly the parent scheduled-FSM tables',
     );
+    is_deeply(
+        [map { $_->{name} } grep { $_->{kind} eq 'drive' } @{$report->{dt_blocks}}],
+        [qw(rdata)],
+        'report retains the authored parent drive table',
+    );
+    is(scalar(grep { $_->{kind} eq 'child_completion' } @{$report->{dt_blocks}}), 3,
+        'report retains completion tables for all three generated child joins');
     is($report->{generated_composition}{kind}, 'spawn_generated_top', 'report exposes generated composition kind');
     is($report->{generated_composition}{top_module}, 'spawn_parent_top', 'report exposes generated top module');
     is($report->{generated_composition}{top_fsm}, 'spawn_parent_top.fsm', 'report exposes generated top file');

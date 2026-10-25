@@ -49,12 +49,17 @@ subtest 'manifest ISF actor-shell drive metadata is exact' => sub {
 };
 
 subtest 'public parser facades return advertised actor drive shape' => sub {
-    my $path = File::Spec->catfile($FindBin::Bin, '..', 'isf', 'apb_requester.isf');
-    my $source = slurp($path);
     my $adapter = FSM::Adapter::ISF->new();
-
-    assert_drive_shape($adapter->parse_file($path), 'parse_file actor shell');
-    assert_drive_shape($adapter->parse_source($source, 'inline-apb-requester.isf'), 'parse_source actor shell');
+    for my $case (
+        ['apb_requester.isf', { setup_phase => [], access_phase => [], done_phase => [] }],
+        ['spawn_parent.isf', { rdata => ['val'] }],
+    ) {
+        my ($fixture, $expected) = @$case;
+        my $path = File::Spec->catfile($FindBin::Bin, '..', 'isf', $fixture);
+        assert_drive_shape($adapter->parse_file($path), "parse_file $fixture", $expected);
+        assert_drive_shape($adapter->parse_source(slurp($path), "inline-$fixture"),
+            "parse_source $fixture", $expected);
+    }
 };
 
 subtest 'public parser rejects drives that cannot satisfy the advertised shell shape' => sub {
@@ -109,12 +114,12 @@ sub assert_drive_metadata {
 }
 
 sub assert_drive_shape {
-    my ($actor, $label) = @_;
+    my ($actor, $label, $expected) = @_;
     my $drives = $actor->{drives};
 
     ok(ref($drives) eq 'HASH', "$label drives is a hash reference");
-    ok(exists($drives->{psel}), "$label includes parameterized psel drive");
-    ok(exists($drives->{setup_phase}), "$label includes simple setup_phase drive");
+    is_deeply([sort keys %$drives], [sort keys %$expected],
+        "$label includes exactly the fixture's drive declarations");
 
     for my $name (sort keys %$drives) {
         my $drive = $drives->{$name};
@@ -127,8 +132,10 @@ sub assert_drive_shape {
         }
     }
 
-    is_deeply($drives->{psel}{params}, ['val'], "$label parameterized psel drive keeps scalar param list");
-    is_deeply($drives->{setup_phase}{params}, [], "$label simple setup_phase drive has empty params list");
+    for my $name (sort keys %$expected) {
+        is_deeply($drives->{$name}{params}, $expected->{$name},
+            "$label drive '$name' keeps its declared parameter list");
+    }
 }
 
 sub slurp {
