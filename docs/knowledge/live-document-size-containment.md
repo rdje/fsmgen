@@ -56,49 +56,47 @@ answers:
   - how are repeated task-tree acceptance checklists contained?
   - should integration tests hard-code the live-document surface count?
   - why can T1554 hang in a core verifier before startup?
-date: 2026-10-05
+  - how is the ISF focused-test catalog kept synchronized?
+  - why did T1250 fail after adding ISF tests?
+date: 2026-10-25
 status: current
 tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]
 evidence: >-
+  docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md; docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md; docs/audits/isf-focused-index-refresh-20261025/derivation.json; t/1250-isf-spec-focused-test-index-audit.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/derived_state_contracts.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl;
   scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md;
   docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; scripts/check_task_tree_integrity.pl; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1549-task-tree-integrity-doctrine.t; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
   doctrine/live_document_size/isf_reference_partitions.jsonl; scripts/check_isf_reference_partitions.pl; scripts/focused_document_index.pl; docs/index/FOCUSED_DOCUMENTS.md; t/1569-focused-document-containment.t
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
+  scripts/run_with_ram_guard.sh -- bash -c 'python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py && scripts/check_live_document_size.sh && prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1569-focused-document-containment.t'
 ---
 
-`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` owns the doctrine. Its reusable body is
-project- and harness-neutral; FSMGen authority, 80/90/100 milestones, locality,
-measurements, paths, and migration owners belong in the adoption fence, audit,
-and JSONL registries.
+`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is project- and harness-neutral. FSMGen
+authority, 80/90/100 milestones, locality, measurements, paths and migration
+owners belong in its adoption fence, audit and JSONL registries.
 
-Bounded live views address durable stores: overwrite current state, partition
-user references by topic, shard projections from canonical cards, rotate and
-archive ledgers, and retrieve immutable old evidence through query terminals
-with digest proof. Sharded collections still need file-count/aggregate transitions.
+Live views overwrite state, partition references, shard canonical-card
+projections, rotate/archive ledgers and retrieve immutable evidence through
+query terminals with digest proof. Shards still need file-count/aggregate transitions.
 
-The common checker alone owns the registered-surface count. Integration tests
-assert its stable success phrase and numeric shape; only fixed synthetic
-registries justify exact counts. T1553/T1554 enforce this distinction.
+Only the checker owns surface counts. T1553/T1554 require integration tests
+to assert stable success/numeric shape; exact counts need fixed synthetic registries.
 
-Decision `0054` requires `derive_on_read` to forbid the stored marker and put
-the exact accessor in the reader's path. A `verified_copy` needs a named
-authority, recomputation, and executed verifier for its contract/baseline/projection.
-`doctrine/live_document_size/derived_state_contracts.jsonl` is the bounded
-registry; the neutral core neither names project fields nor guesses from dates,
-numbers, or prose.
+Decision `0054`: `derive_on_read` forbids stored markers and puts the exact
+accessor in the reader path; `verified_copy` needs authority, recomputation and
+an executed contract/baseline/projection verifier. The bounded registry is
+`doctrine/live_document_size/derived_state_contracts.jsonl`; neutral core
+names no project fields and infers nothing from dates/numbers/prose.
 
-`git log -1 --format='%H %s'` derives revision/subject; neither Memory nor its
-template stores HEAD. `scripts/check_task_tree_integrity.pl` verifies the copied
-active frontier, and maps check canonical-input freshness. Task/decision
-measurements bound to revisions or invocations remain historical evidence.
+`git log -1 --format='%H %s'` derives revision/subject; Memory/template store no
+HEAD. `scripts/check_task_tree_integrity.pl` verifies copied active frontier;
+maps check canonical-input freshness. Revision/invocation-bound task/decision
+measurements remain historical evidence.
 
-`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` is the downstream
-entry point, updated with every portable doctrine revision. It routes to the
-doctrine/checker and keeps donor paths, fields, measurements, thresholds, and
-migration decisions outside the portable body.
+`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` routes downstream to
+doctrine/checker, updating with each portable revision. Donor paths, fields,
+measurements, thresholds and migration decisions stay outside portable prose.
 
 ## Current enforcement and reader contracts
 
@@ -118,13 +116,11 @@ axis. Source inventory includes the README landing page. Coverage proves
 classification, not health. The root doctrine's Registry and mechanical
 enforcement section and the public checker contract own these rules.
 
-Declared `core:` verifiers execute and must succeed. Local `adapter:` verifiers
-earn exact registry-derived proofs; missing, duplicate and unused proofs fail.
-`external:` contracts expose degradation and cannot produce green. Currency is
-lifecycle-specific and opt-in; size compliance does not prove currency or
-semantic truth. There is no global age, newest-date or distinct-date heuristic.
-The root doctrine's Boundedness, currency, and truth section and the declared
-registry contracts own the current behavior.
+`core:` verifiers execute successfully; `adapter:` verifiers earn exact
+registry-derived proofs (missing/duplicate/unused fail). `external:` exposes
+degradation, never green. Currency is lifecycle-specific/opt-in; size proves
+neither currency nor truth. No global age/newest-date/distinct-date heuristic.
+Root doctrine: Boundedness, currency, and truth; declared registry contracts.
 
 Author-overflow and reader-navigation routes have different destinations.
 Overflow may not append to immutable history. A complete collection front door
@@ -133,12 +129,11 @@ query. Fenced evidence-map paths and staged/worktree identity are checked.
 The root doctrine's Core invariant section and
 `scripts/check_live_document_resulting_tree.pl` own these contracts.
 
-Migration evidence separately proves complete-source identity, semantic
-closure, live working-set dimensions and unretained residue. These products
-may overlap; do not add them as disjoint line counts. Version objects require
-a named retention owner, reachability or backup guarantee, and shallow-history
-or rewrite recovery. File archives are digest checked. Read the root doctrine's
-Atomic partition, rollover, and archive protocol and Archive descriptor contract.
+Migration proves complete-source identity, semantic closure, live dimensions
+and unretained residue separately; overlapping products are not disjoint line
+counts. Version objects need a retention owner, reachability/backup and shallow-
+history/rewrite recovery; file archives need digest checks. Root doctrine:
+Atomic partition, rollover, and archive protocol; Archive descriptor contract.
 
 `maintained_reference` governs unique maintained product prose with semantic
 parts, bounded complete mandatory navigation, per-part limits and exact fresh
@@ -168,29 +163,33 @@ activation reconstruction is a separate historical property. Current task
 owners and family lifecycle state are read from `docs/TASK_TREE.md` and the
 adoption tree, rather than copied completion counts.
 
-Utility review precedes containment. Retention, merge, supersession, archive,
-deletion or re-form needs source identity, classified consumers, named current
-homes and genuine orphan controls. Decisions 0046-0049 and COMMIT.md own the
-retired journals and live authority; no replacement status board is created.
-The bounded review front door is `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`.
-Detailed adoption outcomes, external-review dispositions and exact historical
-measurements remain in the adoption task tree, decision records and the complete
-retained predecessor below.
+T1250 compares `docs/isf-spec/04-reports-fixtures-deferrals.md` focused tests
+with exact lexical `t/*-isf-*.t` membership. The reusable ISF checklist requires
+sync on additions/renames/removals, preserving attached annotations.
+`ISF-SPEC-TEST-INDEX-SYNC.4` retains omission/duplicate/order controls.
 
-The predecessor's T1554 `_dyld_start` observations are historical evidence,
-not a current OS diagnosis or probe authorization. Current native/startup
-qualification and full CI remain owned and gated by the HIAL/VIAL task tree.
-Use that tree's live frontier before executing a historical recipe.
+Utility review precedes containment: retention/merge/supersession/archive/
+deletion/re-form needs source identity, classified consumers, current homes
+and genuine orphan controls. Decisions0046-0049/COMMIT.md own retired journals
+and live authority; no replacement board. Bounded review front door:
+`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`. Adoption outcomes, external
+review and historical measurements remain in the adoption tree, decisions
+and complete predecessor below.
 
-Every original question and the complete predecessor, including the adoption
-chronology and superseded file-ceiling claim, remain retrievable without Git
-history. From the repository root, run:
+Historical T1554 `_dyld_start` observations neither diagnose the current OS
+nor authorize probes; HIAL/VIAL owns their cause. Director-ordered SEM .69.3
+CI/push/exact-SHA hosted qualification precedes macOS relevance review,
+superseding the old blanket hold. Read its live owner before historical recipes.
+
+Original questions and the complete predecessor (adoption chronology and
+superseded file-ceiling claim included) remain retrievable without Git history:
 
 ```sh
 python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py live-document-size-containment
 ```
 
-The bounded source catalog names the exact captured revision and digest.
-The archive-descriptor registry verifies each retained file; the rollover
-reader verifies source, question, current-rule, collection and retrieval closure.
-Historical statements retain their capture boundary and do not authorize writes.
+The bounded catalog names capture revision/digest. Archive descriptors verify
+retained files; the rollover reader checks source/question/current-rule/collection/
+retrieval closure. Historical statements retain capture boundaries, authorizing no writes.
+The reverify command preserves the original rollover proof in historical mode;
+normal containment and focused audits qualify current live evolution.

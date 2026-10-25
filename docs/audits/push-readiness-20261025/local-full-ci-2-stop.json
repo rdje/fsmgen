@@ -1,0 +1,47 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "revision": "bff84006b341491539bb7e6aa06915944693c1fe",
+  "reason": "Administrative termination of already-failed diagnostic census to commit owned repairs; not a startup failure or normal complete-suite result.",
+  "recorder_preserved": 63296,
+  "guard_preserved": 63299,
+  "targets": [
+    {
+      "pid": 47487,
+      "ppid": 19089,
+      "birth": "Sun Oct 25 05:00:18 2026",
+      "command": "/usr/bin/perl ./bin/fsmgen --strict --emit-semantic-json <repository>/t/../ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif",
+      "identity_matches": true,
+      "signal": "SIGTERM"
+    },
+    {
+      "pid": 19089,
+      "ppid": 63462,
+      "birth": "Sun Oct 25 04:03:28 2026",
+      "command": "/usr/bin/perl t/1436-ial2-ppif-parser-cli.t",
+      "identity_matches": true,
+      "signal": "SIGTERM"
+    },
+    {
+      "pid": 63462,
+      "ppid": 63365,
+      "birth": "Sun Oct 25 02:26:32 2026",
+      "command": "/usr/bin/perl /usr/bin/prove -I perl t",
+      "identity_matches": true,
+      "signal": "SIGTERM"
+    },
+    {
+      "pid": 63365,
+      "ppid": 63299,
+      "birth": "Sun Oct 25 02:26:32 2026",
+      "command": "bash ./bin/ci-regression full",
+      "identity_matches": false,
+      "signal": "not signaled: exited or identity mismatch"
+    }
+  ],
+  "post_stop_census": {
+    "same_pids_present": false,
+    "recorder_final_state": "finished",
+    "guard_exit_status": 143,
+    "source": "Verified ps -p recorder/guard/all signaled descendant IDs produced no rows; recorder session exited1 with retained guarded command status143."
+  }
+}

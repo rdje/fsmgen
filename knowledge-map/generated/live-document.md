@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **5** facts · **97** uniquely owned question entries.
+> **5** facts · **99** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -43,6 +43,7 @@
 - q="how is a multi-class collection's bytes_each derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how is an enforcement ceiling increase authorized?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how is the ISF focused-test catalog kept synchronized?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the decision identity and consumer census reverified?" · facts=[live-document-decision-identity-capacity](../../docs/decisions/current/continuity/0108-decision-records-seal-originals-with-stable-retrieval.md)
@@ -91,6 +92,7 @@
 - q="who owns a live-document transition allowance?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why can T1554 hang in a core verifier before startup?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why did T1250 fail after adding ISF tests?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why did T1569 fail after a maintained ISF reference edit?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why did raising the allowance to the actual not unblock the next write?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why did root_documents allow 12000 lines per root markdown file?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -116,7 +118,7 @@ _Decision identity rollover preserves finite compatibility paths and current can
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-10-05 · **status:** current
+- **date:** 2026-10-25 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)
 
 ### live-document-surface-growth-procedure

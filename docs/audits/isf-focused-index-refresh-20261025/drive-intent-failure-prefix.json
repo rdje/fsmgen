@@ -1,0 +1,6 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "baseline": "bff84006b341491539bb7e6aa06915944693c1fe",
+  "retained_prefix_sha256": "810830746ca2abd1e94f04c64d0ea8d07a832d985404e68ac5c6663b0b620bfc",
+  "scope": "Ongoing diagnostic census prefix includes the related T140 nullable-field failure. No full-CI completion or repair result inferred."
+}

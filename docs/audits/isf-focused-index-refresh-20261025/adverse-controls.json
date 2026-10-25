@@ -1,0 +1,32 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1250-isf-spec-focused-test-index-audit.t"
+  ],
+  "results": [
+    {
+      "control": "omitted",
+      "exit_status": 1,
+      "mutated_doc_sha256": "d57177d129265409d8be5a847c879082f6e6c853522452195e61a28ee997f0ec",
+      "log": "omitted-control.log.gz"
+    },
+    {
+      "control": "duplicate",
+      "exit_status": 1,
+      "mutated_doc_sha256": "881e25d9115fecfdf476c19392eb13f28434c336d7a959e74b8d32cc731eba67",
+      "log": "duplicate-control.log.gz"
+    },
+    {
+      "control": "reordered",
+      "exit_status": 1,
+      "mutated_doc_sha256": "3ea174d3f14472e2562636a716ed66712902f8544db8e970bcab7c805ccc24ab",
+      "log": "reordered-control.log.gz"
+    }
+  ],
+  "repaired_doc_restored_sha256": "db7f87763ccb3ff5c3e46f57ea555a66bde6a7119dc9e1c8b3e7c3eb3c95beec",
+  "scope": "Observed missing/duplicate/reordered entries reject with the existing unmodified audit; only the isolated documentation input was mutated."
+}

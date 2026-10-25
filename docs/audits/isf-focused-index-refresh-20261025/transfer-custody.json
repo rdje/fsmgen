@@ -1,0 +1,270 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "baseline": "bff84006b341491539bb7e6aa06915944693c1fe",
+  "worktree": ".artifacts/worktrees/ci-schedule-report-repair",
+  "patch_sha256": "d0b78bcade27b163ef2e3ae98ebe0fc62a93cb22129789f2a80f2c097efd8907",
+  "files": [
+    {
+      "path": "KNOWLEDGE_MAP.md",
+      "bytes": 18079,
+      "sha256": "298f8aa29203fe660872f45e69f1bc5df47baa23c22f7a2d2d91c5078e2faf45",
+      "untracked": false
+    },
+    {
+      "path": "MEMORY.md",
+      "bytes": 1266,
+      "sha256": "d9e609bd324dc461ab468c4a3b7946fb722234d83ccb1ce3ded7a04e9c6274cf",
+      "untracked": false
+    },
+    {
+      "path": "docs/TASK_TREE.md",
+      "bytes": 42706,
+      "sha256": "06d055b6a5d3d6b9c2b92ab96d56ae1142b69e52a083147fd2302e951de237da",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/adjacent-green.log.gz",
+      "bytes": 294,
+      "sha256": "8783b75ea4b5bc67b0fd01bde357720ab2033a76ec79eaf401aa159f6adbe41d",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/adverse-controls.json",
+      "bytes": 1066,
+      "sha256": "8348f4ef3bac9f24487ce475e27e0e771909a428eec988d01e5c053070c183d5",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/annotation-reader-control.log.gz",
+      "bytes": 321,
+      "sha256": "59a4163b525e39e7cfc7f177444598aeb1e95e3d9b6e82464b547587adb9a48a",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/baseline-prefix.log.gz",
+      "bytes": 4876,
+      "sha256": "b9c66843367b513bb71f98420eebfd85780f27b9ad7b193f47587ba4b0f091a8",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/baseline.json",
+      "bytes": 988,
+      "sha256": "4b69827e8e427ee40a04961a40e6c4b1b0a326b2af7e3b423702de3cd092de86",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/binding-metadata-failure-prefix.json",
+      "bytes": 376,
+      "sha256": "36b967775233b6d6fea182144d309fab0fe6a5c649086b1614e5fa50628f3184",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/binding-metadata-failure-prefix.log.gz",
+      "bytes": 8358,
+      "sha256": "e7d8940c36b5ecf42e2078b99c88b9c61dd6c55a6090b6be032c35a44a114214",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/checks.json",
+      "bytes": 2404,
+      "sha256": "015191263050642744dad774bdedec38fa1fff00858d12e6ff9a1e5d546d52c2",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/derivation.json",
+      "bytes": 115284,
+      "sha256": "66599af9496b83d3a35db72f8980039bcbf9508668ccb87cbca0b677548f81c2",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/drive-intent-failure-prefix.json",
+      "bytes": 358,
+      "sha256": "0177d154920af102c41d02b6818d35f1608a3f17f496c6d086d8ce84cb9082bc",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/drive-intent-failure-prefix.log.gz",
+      "bytes": 8358,
+      "sha256": "e7d8940c36b5ecf42e2078b99c88b9c61dd6c55a6090b6be032c35a44a114214",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/duplicate-control.log.gz",
+      "bytes": 469,
+      "sha256": "e74f7e145c2e171555945f4e3ee06965ec4ec70a1d9156886bc233ad8183def7",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/focused-green.log.gz",
+      "bytes": 250,
+      "sha256": "fd94c6925b3ae75ab76566ef21c061c76db9eeceadf9c305e2607d12970ed10e",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/followup-prefix.log.gz",
+      "bytes": 4990,
+      "sha256": "16036a950f6802baae49c6e31c4b7f55f1ad29df675dd6e3c207f39bcea07be3",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/knowledge-green.log.gz",
+      "bytes": 194,
+      "sha256": "90fbd9457f3773ed95e1e1f62001a6f6e16c3f1186728bfbfc65bc3ebf32d1e6",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/knowledge-routing.json",
+      "bytes": 524,
+      "sha256": "cd3e99f2c475ecffd5ae454c24623fac062b6918184f5bde2aea65e3d716c4c7",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/noncatalog-reader-control.log.gz",
+      "bytes": 299,
+      "sha256": "ea63b760b3d6e2f3b73ad65389dbe9a42631f2744156422f7a0690f3ad526554",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/omitted-control.log.gz",
+      "bytes": 469,
+      "sha256": "2ba742a05b47ce38c7d2db6ea673d2acfdae7beffbd8edd3c1801c3a4b72e641",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/publication-followups.json",
+      "bytes": 6564,
+      "sha256": "40865edcd5030f40131bceb18e41a417df36d721dc5ddb96a1e1db264f35667a",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/quiet-failure-prefix.json",
+      "bytes": 346,
+      "sha256": "2b94007c83ff1797a53abb98e98714ac7ceee07c4c9ca3264bfa22c877e0b9a2",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/quiet-failure-prefix.log.gz",
+      "bytes": 6096,
+      "sha256": "b4b54e891d40fe8a61dd259277c9b9fa69be279774ba972c66362edfc4ee329e",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/reader-controls.json",
+      "bytes": 1398,
+      "sha256": "d24db77bfc93cfec34252ef0069d82bca14ce2336b543413ceea7a6900b52cb9",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/reader-green.log.gz",
+      "bytes": 160,
+      "sha256": "c92108f64c4fa895180817c6e1187554e73c234a496d3b9b8ef1c464ea4ee34a",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/reader-initial-green.log.gz",
+      "bytes": 160,
+      "sha256": "21b116d40e04d9f4da0cedf28b5375bcb6fe9f9f2a069a3b0e23c34f69cebfe3",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/reordered-control.log.gz",
+      "bytes": 467,
+      "sha256": "88fc1b7de1ba4dc6d8f1d456df442a9fd2b28010a0b6362bc9f6e0bcc15ead02",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/isf-focused-index-refresh-20261025/verify.py",
+      "bytes": 3816,
+      "sha256": "5d5e9169ba460246eea21cb361c1bbb699ba24c3dd3f6195a5901304d9b80830",
+      "untracked": false
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-book-preflight-process-access.json",
+      "bytes": 4152,
+      "sha256": "3066670a0ecab80f98991f89f08db9294f54d013492501f1355d021dab76ae71",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-book-preflight-process-access.log.gz",
+      "bytes": 466,
+      "sha256": "ec09a4cf2035db5b5475ca7b0b70290d01908223c29bef1a20edff539352e5f2",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-book-preflight.json",
+      "bytes": 3581,
+      "sha256": "c4e2f293a8b66a38a01d025a12618fc893f04cb7b9fed4020901ce7b353c45ea",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-book-preflight.log.gz",
+      "bytes": 153,
+      "sha256": "be8b640e2ee9a93a953b17ca4e06ce5c9f7d3224faa0bcd8a77875d0f54b5e25",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-preflight-metadata.json",
+      "bytes": 4408,
+      "sha256": "9c805379e32ddf252cf28f88d1accbf1c2524e1224202c0bf037a423445607d8",
+      "untracked": true
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/index-preflight-metadata.log.gz",
+      "bytes": 793,
+      "sha256": "c135947c2defa68af46f32e1ac6b1247d0323c62bcc67e8d6aefd2c2478925c5",
+      "untracked": true
+    },
+    {
+      "path": "docs/isf-spec/04-reports-fixtures-deferrals.md",
+      "bytes": 125245,
+      "sha256": "db7f87763ccb3ff5c3e46f57ea555a66bde6a7119dc9e1c8b3e7c3eb3c95beec",
+      "untracked": false
+    },
+    {
+      "path": "docs/knowledge/live-document-size-containment.md",
+      "bytes": 13975,
+      "sha256": "0a9526f538c49d7e6da3502dbcdcea7ce224355291cac7729293ec733ff37eb0",
+      "untracked": false
+    },
+    {
+      "path": "docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md",
+      "bytes": 24661,
+      "sha256": "68f717b5b36f52c92b46eaa4b7ec98c65f7851c353d9c16988c72d83a40649f1",
+      "untracked": false
+    },
+    {
+      "path": "docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md",
+      "bytes": 19323,
+      "sha256": "54bf7e203d831bbd55918dd9b380e4e04ed88aba294d0fe2e013163f97e1de0b",
+      "untracked": false
+    },
+    {
+      "path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+      "bytes": 1813933,
+      "sha256": "6e86f0858eeee21902cd9322b74531018631f51e3ac40da855e8fd814db33487",
+      "untracked": false
+    },
+    {
+      "path": "doctrine/claim_verification/inventory.jsonl",
+      "bytes": 3275196,
+      "sha256": "05659849ba64ef33b0116aa3b081db086d6e7ae64d1a807df9b604e205df5776",
+      "untracked": false
+    },
+    {
+      "path": "doctrine/live_document_size/surfaces.jsonl",
+      "bytes": 43470,
+      "sha256": "4d5324df7c4350b3808bf5da014a9b7cb205cebe9f6c37397390c551d4ea6d56",
+      "untracked": false
+    },
+    {
+      "path": "knowledge-map/generated/live-document.md",
+      "bytes": 19358,
+      "sha256": "515005d44e915eab8f027195d35aa6f63062b850917b5ba4adbaf1bae500d656",
+      "untracked": false
+    }
+  ],
+  "policy": "Apply exact working snapshots to primary only after diagnostic CI stopped and no owned descendants remain. Existing primary audit outputs are separate and preserved.",
+  "primary_verified_all_files": true,
+  "scope": "Hashes bind the exact transferred preparation before primary continuity/status updates; those subsequent task/memory/receipt edits are intentionally outside preparation identity. No isolated duplicate is deleted before committed-source custody verifies.",
+  "retained_preparation_patch": "preparation.patch.gz"
+}

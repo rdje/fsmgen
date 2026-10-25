@@ -1,0 +1,14 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-rollover-kinds-20261005/verify.py",
+    "--current"
+  ],
+  "exit_status": 1,
+  "observed_failure": "verify.py line124: assert Path(path).read_text() == row['after'], 'current qualified card reader route'; AssertionError: current qualified card reader route",
+  "source": "First primary command output retained from the tool result; the original command completed the first two historical proof messages before this current-card equality failure. No fabricated rerun receipt.",
+  "root_cause": "This slice deliberately extends the Oct5 live card; the old --current reader requires byte equality to its dated transformation. Its unchanged default subsequently passes all original proofs (index-card-current-reverify.log.gz), separating historical qualification from intended live evolution.",
+  "repair": "Reverify retains original historical mode plus existing normal current containment/catalog audits. Card compaction preserves all baseline questions/facts and original source retrieval; collection allowance unchanged."
+}

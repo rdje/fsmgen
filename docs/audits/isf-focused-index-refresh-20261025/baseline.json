@@ -1,0 +1,10 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "publication_owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "revision": "bff84006b341491539bb7e6aa06915944693c1fe",
+  "scope": "Exact prefix of ongoing primary local-full-ci-2; T1250 fails at line32. This is not a completed full-CI result.",
+  "prefix_sha256": "80ff3c690839b629fb58480c1552ae05fbd74d0a8bc4419830e29c3c56d1a213",
+  "checkpoint_gap": "Current diagnostic failing census has no FSMGEN_T296_CHECKPOINT; the next qualifying full run must explicitly set its documented repository-local path.",
+  "current_contract_difference": "eb2b8f2a1babfb81ec66622ad71c41590d6b37ab separates ordinary live reference checks from historical activation equality in an isolated fixture. Preserve sealed source and manifest; do not add current catalog entries as historical activation rewrites.",
+  "pending": "Prepare current catalog repair here; consume primary census before integration/gates. Historical macOS review remains after push."
+}

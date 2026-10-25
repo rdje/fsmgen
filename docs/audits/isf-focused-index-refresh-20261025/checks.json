@@ -1,0 +1,66 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "scope": "Catalog repair verified by primary focused/native book/source checks; staged/normal doctrines and commit are mandatory delivery gates.",
+  "commands": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1120-isf-public-live-document-path-audit.t",
+        "t/1250-isf-spec-focused-test-index-audit.t",
+        "t/1414-docs-relative-paths-audit.t",
+        "t/1569-focused-document-containment.t"
+      ],
+      "exit_status": 0,
+      "log": "adjacent-green.log.gz"
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "knowledge-map/scripts/check_knowledge_map.sh"
+      ],
+      "exit_status": 0,
+      "log": "knowledge-green.log.gz"
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/isf-focused-index-refresh-20261025/verify.py"
+      ],
+      "exit_status": 0,
+      "log": "reader-green.log.gz"
+    }
+  ],
+  "rederive": "Exact before Git source and baseline test membership, current document identities and unchanged sealed manifest are verified by the hashed reader; direct and rg file populations are retained in derivation.json.",
+  "falsify": "Existing unmodified T1250 rejects actual omission/duplicate/order mutations; the independent preservation reader rejects modified annotations and noncatalog text even with adjusted whole-document hashes. Full controls/restore identities retain.",
+  "durability": "Track the before revision, complete path populations/block identities, reader source and identity, control recipes/results and complete focused logs together. Future live drift fails identity/membership; --revision accepts only an exact Git SHA for this historical boundary.",
+  "limits": "Focused reference correctness only. Primary full2 remains a failing diagnostic census; no full CI, push, hosted success or macOS causal repair is claimed.",
+  "book_source_checks": {
+    "receipt": "docs/audits/push-readiness-20261025/index-book-preflight-process-access.json",
+    "all_exit_statuses": 0,
+    "earlier_attempt": "index-book-preflight.json retains guard refusal before checks because sandbox process inspection was unavailable; the explicit process-access run preserves the same guard and commands."
+  },
+  "primary_transfer": "Exact patch plus untracked copies matched preparation hashes before final continuity updates. Full2 administratively ended143 and owned descendants absent before primary integration; no T1436 result or full-suite completion inferred.",
+  "primary_checks": "docs/audits/push-readiness-20261025/index-primary-validation.json",
+  "staged_gate": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "bash",
+      "scripts/check_doctrines.sh"
+    ],
+    "exit_status": 0,
+    "log": "final-staged-doctrines.log.gz",
+    "scope": "Complete registered staged gate passes, including fresh task acceptance; normal commit hook repeats against final stage."
+  },
+  "final_card_reverify": "docs/audits/push-readiness-20261025/index-card-staged-reverify.json",
+  "final_book_and_knowledge": "docs/audits/push-readiness-20261025/index-final-book.json",
+  "retained_intermediate_failures": "index-card-current-reverify records pre-ratchet task debt; index-card-current-verified records staged/worktree mismatch before final matching stage. No failed attempt is called successful."
+}

@@ -1,0 +1,77 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "baseline": "bff84006b341491539bb7e6aa06915944693c1fe",
+  "observed_failure": "t/1259-isf-aggregate-storage-type-aliases.t fails admission/diagnostic expectations for output ports, transaction ports and banks.",
+  "reproduce": [
+    "prove",
+    "-Iperl",
+    "t/1259-isf-aggregate-storage-type-aliases.t"
+  ],
+  "impact": "Blocks pre-push full CI; root cause must be verified against current aggregate port contracts before changing assertions.",
+  "priority": "P1 publication repair after index .4 commits, before next qualifying full CI.",
+  "other_pending": "Archive/reroute GitHub log-locality receipt from primary .artifacts/push-readiness-20261025/gh-log-locality.json; qualify push/workflows, assess macOS then repair worktree gate.",
+  "scope": "Interrupted diagnostic census only: administrative SIGTERM after known failures, guard exit143, complete output to interruption retained. T1436 was active; no result is attributed to it. Later files were not reached.",
+  "root_cause": "T1259 still expects record actor outputs to refuse, predating intentional admission008e629ced1b7d1bd2ff1f56e39ff7e793721179. Its transaction/bank diagnostic regexes retain actor inputs where the current Parser says packed record actor ports.",
+  "canonical_evidence": [
+    "docs/knowledge/isf-record-output-source-admission.md",
+    "t/2033-isf-record-output-source-admission.t",
+    "perl/FSM/Adapter/ISF/Parser.pm:2925",
+    "t/1259-isf-aggregate-storage-type-aliases.t:104"
+  ],
+  "repair_plan": "After .4 commits, verify a non-record aggregate output still refuses through the public parser; preserve that unsupported output-role control alongside transaction/bank controls with current diagnostics. Run adjacent storage and record-output source audits. No producer behavior change is intended or yet made.",
+  "additional_failures": [
+    {
+      "path": "t/1330-isf-atl-resolved-child-fixture-coverage.t",
+      "impact": "P1 pre-push regression failure; queue after the index slice and aggregate-alias expectation repair.",
+      "observed": "Strict outdir commands explicitly pass --quiet yet assert stdout contains Wrote; observed stdout is empty. Reported success/stderr/file-domain assertions have not failed in the captured cases.",
+      "root_cause": "Already-qualified quiet-output repair intentionally suppresses informational notices, including Wrote. The stale test expectations conflict with that current contract.",
+      "canonical_evidence": [
+        "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md#quiet-intent-generation-and-traced-reports",
+        "t/2088-cli-quiet-intent-progress.t",
+        "bin/fsmgen",
+        "t/1330-isf-atl-resolved-child-fixture-coverage.t:1500"
+      ],
+      "repair_plan": "After preceding slice commits, align every quiet strict-outdir fixture stdout assertion with quiet semantics while retaining complete generated-file/success/stderr checks; include nonquiet progress and T2088 in focused validation. Do not reintroduce progress under --quiet."
+    },
+    {
+      "path": "t/1388-isf-when-body-local-do.t",
+      "priority": "P1 after preceding index/expectation slices commit, before new full CI",
+      "observed": "Bound local do emits (= (isf_port_worker_addr req)) and child update reads that same allocated input, but the test still requires literal (addr req).",
+      "canonical_evidence": [
+        "docs/knowledge/isf-formal-source-binding-reports.md",
+        "docs/knowledge/isf-production-formal-scope.md",
+        "perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm:70"
+      ],
+      "root_cause": "Production formal projection intentionally gives executable bindings private physical names while public authored reports retain source identity. The literal raw-formal regex is stale.",
+      "repair_plan": "Inspect current public binding and artifact contracts; retain strict req-to-worker.addr dataflow, width and conditional-do handshake checks through allocated storage. Avoid simply deleting the binding assertion or treating private spellings as authored endpoints."
+    },
+    {
+      "path": "t/139-composition-shared-datapath-candidate-metadata.t",
+      "priority": "P1 after preceding slices commit, before new full CI",
+      "observed": "Actual contributor.output_drive_family has pulse_delay_cycles undef; expected full hash omits that key.",
+      "canonical_evidence": [
+        "docs/knowledge/normalized-semantic-output-drive-entry-schema.md",
+        "docs/knowledge/isf-generated-child-named-completion.md",
+        "perl/FSM/IR/LoweredRTLIRBuilder.pm:195",
+        "9dca2caa38964e07767112ce2765e7b28ab86fea"
+      ],
+      "root_cause": "The qualified named-completion repair adds nullable pulse delay to drive families; holding-register/combinational records carry null, and delayed-pulse families are excluded from sharing.",
+      "repair_plan": "Inspect the complete public pipeline DTO and current schema before updating exact golden records; retain all contributor/binding/drive-intent checks. Do not strip the current semantic field or weaken the object comparison.",
+      "related_failing_paths": [
+        "t/140-composition-shared-datapath-drive-intent-metadata.t"
+      ],
+      "related_observation": "T140 independently fails both realized-child drive-family and nested candidate goldens at the same nullable pulse_delay_cycles field.",
+      "adjacent_verification_candidates": [
+        "t/168-structural-binding-leaf-consumers.t",
+        "t/551-shared-datapath-candidate-cache-defensive-copy-boundary-audit.t"
+      ]
+    }
+  ],
+  "policy_attribution_correction": {
+    "earlier_source": "docs/audits/push-readiness-20261025/authorization.json:dependency_explanation",
+    "correction": "The pre-push full-CI requirement comes from the director startup CI policy section 16. COMMIT.md governs push cadence and mandatory exact-SHA hosted qualification but does not itself state that full local CI is required before every push. The earlier authorization receipt attributes that requirement imprecisely.",
+    "dependency": "The historical HIAL leaf held local full CI; the director pre-push full-CI policy consequently held push; without push no new GitHub push-event run could start. Git transport and Linux GitHub runners have no direct dependency on macOS startup. The director publication-before-assessment order supersedes that blanket hold, without claiming the historical cause repaired.",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+    "disposition": "Preserve the original receipt and attach this explicit attribution correction in the next publication-continuity commit."
+  }
+}

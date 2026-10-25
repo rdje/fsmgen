@@ -256,6 +256,10 @@ intentionally unchanged.
   respect to code, tests, live docs, the book, and manifest metadata.
 - Update `docs/ISF_SPEC.md` when source syntax, accepted values, lowering
   semantics, diagnostics, report shape, or explicit deferrals change.
+- When adding, renaming, or removing `t/*-isf-*.t`, synchronize `Focused tests`
+  in `docs/isf-spec/04-reports-fixtures-deferrals.md` in lexical path order,
+  retaining attached annotations. Run
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t` in that slice.
 - Update the relevant `docs/book/src/13*.md` chapter when a user-visible ISF
   behavior, generated artifact, or review workflow changes.
 - Update `docs/book/src/13i-downstream-integration.md` only to keep its

@@ -1,0 +1,35 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/isf-focused-index-refresh-20261025/verify.py"
+  ],
+  "results": [
+    {
+      "control": "annotation",
+      "exit_status": 1,
+      "rejected_at": "annotation block changed",
+      "mutated_doc_sha256": "dbdc0d3d10f4c5a92518c8908812c7735ba5697812bef8ff11dcfea7f7b96c9a",
+      "identity_covariation": "after hash was updated to the changed document so semantic preservation, not only whole-source identity, must reject",
+      "mutation": {
+        "old": "  qualifies detached explicit parser origins without changing production scheduling.",
+        "new": "  controlled incorrect annotation."
+      }
+    },
+    {
+      "control": "noncatalog",
+      "exit_status": 1,
+      "rejected_at": "noncatalog content changed",
+      "mutated_doc_sha256": "a8548fc0361f986eb4d74395bfd9024427b36304759cd817012b3e7237c766df",
+      "identity_covariation": "after hash was updated to the changed document so semantic preservation, not only whole-source identity, must reject",
+      "mutation": {
+        "prefix": "Controlled noncatalog change.\n"
+      }
+    }
+  ],
+  "restored_doc_sha256": "db7f87763ccb3ff5c3e46f57ea555a66bde6a7119dc9e1c8b3e7c3eb3c95beec",
+  "restored_record_sha256": "66599af9496b83d3a35db72f8980039bcbf9508668ccb87cbca0b677548f81c2"
+}

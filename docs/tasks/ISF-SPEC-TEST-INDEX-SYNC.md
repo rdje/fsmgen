@@ -6,13 +6,13 @@
 - Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
-- Last updated: `2026-09-07`
+- Last updated: `2026-10-25`
 - Owner: repo-local workflow
 
 ## Goal
 
-Keep the focused ISF test index in `docs/ISF_SPEC.md` synchronized with the
-repo's `t/*-isf-*.t` regression files.
+Keep the focused test index in `docs/isf-spec/04-reports-fixtures-deferrals.md`,
+reachable from `docs/ISF_SPEC.md`, synchronized with `t/*-isf-*.t`.
 
 ## Non-Goals
 
@@ -22,7 +22,7 @@ repo's `t/*-isf-*.t` regression files.
 
 ## Acceptance Criteria
 
-- `docs/ISF_SPEC.md` lists every current `t/*-isf-*.t` regression.
+- `docs/isf-spec/04-reports-fixtures-deferrals.md` lists every current `t/*-isf-*.t` regression.
 - A focused audit prevents future ISF tests from being added without updating
   the spec's focused-test index.
 - Focused validation passes.
@@ -34,7 +34,7 @@ repo's `t/*-isf-*.t` regression files.
 - ID: `ISF-SPEC-TEST-INDEX-SYNC`
   Status: `active`
   Goal: `Synchronize and audit the ISF spec focused-test index`
-  Children: `ISF-SPEC-TEST-INDEX-SYNC.1, ISF-SPEC-TEST-INDEX-SYNC.2, ISF-SPEC-TEST-INDEX-SYNC.3`
+  Children: `ISF-SPEC-TEST-INDEX-SYNC.1, ISF-SPEC-TEST-INDEX-SYNC.2, ISF-SPEC-TEST-INDEX-SYNC.3, ISF-SPEC-TEST-INDEX-SYNC.4`
 
 - ID: `ISF-SPEC-TEST-INDEX-SYNC.1`
   Status: `done`
@@ -66,18 +66,27 @@ repo's `t/*-isf-*.t` regression files.
   Commit: `ISF-SPEC-TEST-INDEX-SYNC.3.1: reconcile committed repair frontier`
 
 - ID: `ISF-SPEC-TEST-INDEX-SYNC.3.2`
-  Status: `blocked`
-  Goal: `Complete the existing guarded-CI qualification obligation after the startup blocker is resolved.`
-  Acceptance: `Preserve the parent .3 requirements: resolve the owned startup findings first, enable the repository-local t/296 checkpoint contract, then consume complete guarded CI under the normal host and descendant cutoffs before tree closure or push. Attribute and task-own every failed result without retry-to-green or gate weakening.`
-  Verification: `The parent repair at f3e7f94dc333fc624fb0d05a0227bd8fdf489460 is committed and .3.1 verifies its current source identity and focused checks. The historical complete-CI timeout and host-cutoff results remain unqualified; no complete-CI retry is part of the continuity reconciliation.`
+  Status: `pending`
+  Goal: `Consume complete guarded-CI qualification under the director publication order.`
+  Acceptance: `Preserve prior failures and normal resource cutoffs. SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3 now owns the director-ordered qualified push and hosted CI before macOS relevance review, superseding the old blanket startup hold for that workflow. After current index repair .4, explicitly enable FSMGEN_T296_CHECKPOINT at a safe .artifacts/t296/<safe-name>.json path, run complete guarded CI from clean committed inputs, own every failure and consume the exact-SHA hosted result. Historical causality is not inferred from a later pass.`
+  Verification: `The f3e7f94dc repair and earlier failure history retain. At bff84006b the live catalog has since evolved and T1250 fails; .4 owns current synchronization. Primary local-full-ci-2 was administratively stopped after known failures, without the required t296 checkpoint; guard status143 and the incomplete output are retained. All owned descendants are verified absent. No completed full-CI or push qualification is claimed. Next qualifying run must use the documented checkpoint; publication remains owned by SEM .69.3.`
   Commit: `pending complete-CI qualification`
-  Blocked by: `Unresolved startup causal repair and wire qualification in HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2; director-approved inactive endpoint implementation does not waive these gates.`
+
+- ID: `ISF-SPEC-TEST-INDEX-SYNC.4`
+  Status: `done`
+  Goal: `Refresh the evolved focused-test catalog without losing annotations or archived source.`
+  Acceptance: `Before editing the catalog, retain the bff84006b T1250 failure and enumerate current paths, missing/extra entries, duplicates and order independently. Reorder complete existing entry blocks with their annotations and insert every missing current t/*-isf-*.t member in exact lexical order. Preserve all noncatalog bytes, tests, runtime, source behavior and sealed activation records. Current T1569 separates bounded live edits from exact historical fixture reconstruction (eb2b8f2a1); follow that established contract rather than rewriting history. Add the matching-test/index focused check to the existing reusable ISF synchronization checklist, refresh bounded maintained-reference authority with no ceiling increase, and route catalog/current-publication facts through the existing Knowledge Map card while preserving every old question. The prior card reverify --current freezes whole Oct5 cards and rejects this intended extension; preserve its original historical proof and select normal current containment/catalog checks for live facts. Compact wording inside the unchanged card allowance; qualify current catalog, adverse controls, source/reference/book and staged/normal gates. Commit this narrow repair before the separate .3.2 full-CI qualification; keep primary runtime/test inputs unchanged during its ongoing census.`
+  Verification: `Prepared in the isolated worktree. docs/audits/isf-focused-index-refresh-20261025 retains the exact bff84006b failure prefix and complete before/after membership/block identities. Every existing annotation block and all noncatalog bytes are preserved; no test, runtime or sealed manifest changes. Guarded adjacent T1120/T1250/T1414/T1569 pass (All tests successful, Files=4 Tests=17); Knowledge Map validation/direct new-question routing and the hashed source reader pass. Actual omission/duplicate/order controls reject through T1250; reader controls reject changed annotation and noncatalog bytes even after whole-source hash covariation, then restore exact source/receipt. checks.json names distinct re-derivation, falsification and durability legs and limits. The reusable ISF checklist now selects T1250 for matching-test additions/renames/removals. Current native publication ownership is routed accurately without closing historical causality. Primary full2 was administratively stopped after verified failures, with no checkpoint or suite completion; status143, exact termination ownership and absent-descendant census retain in push-readiness-20261025/local-full-ci-2*. publication-followups.json schedules every observed follow-up and corrects the CI-policy attribution. Exact preparation bytes transferred to primary after termination and compare equal. Native mdBook/POD/source-index and exact built source-byte checks pass in the isolated worktree; the first sandbox guard refusal and successful process-access retry both retain under push-readiness-20261025/index-book-preflight*. Primary guarded adjacent tests, preservation reader, native mdBook/POD, exact built source bytes and source index repeat successfully in index-primary-validation.json. The first staged gate rejects knowledge-card debt; wording is compacted without changing its allowance or dropping questions/facts. The old card --current reader also rejects intended live evolution; its historical default passes, and current normal containment/catalog checks now supplement that proof. First failures retain. Task transition allowance is remeasured after final owner text. Staged/normal gates are required before this commit; the linked-worktree .git-file gate defect is not bypassed.`
+  Commit: `ISF-SPEC-TEST-INDEX-SYNC.4: preserve annotations while refreshing focused catalog`
+  - [x] **ROOT CAUSE (WHY + WHERE)** — The retained bff84006b diagnostic says at t/1250-isf-spec-focused-test-index-audit.t line 32: index292 is t/2043 where current domain requires t/1397. The before-source catalog diverges from independent glob/rg and Git test populations. derivation.json records exact missing paths/order and annotation-block identities; current T1569/eb2b8f2a1 permits bounded live evolution independently of immutable activation reconstruction.
+  - [x] **ADDRESSED (verified)** — Exact current lexical membership is restored by moving complete existing blocks and inserting missing members. The hashed verify.py re-derives exact before/after source/domain, old annotations, noncatalog bytes and unchanged manifest. Actual omitted/duplicate/order controls fail T1250; independent altered-annotation/noncatalog controls still fail after whole-source hash covariation. All controls restore exact bytes. Existing synchronization checklist and Knowledge Map now route the focused audit without dropping old questions or raising ceilings.
+  - [x] **NO REGRESSION** — All tests successful for guarded T1120/T1250/T1414/T1569; knowledge-map: OK and direct new-question routing preserve the existing card. Native mdBook/POD, built source-byte and source-index checks pass in preparation; primary checks also pass after exact transfer. Staged/normal scripts/check_doctrines.sh remain mandatory before commit. Full CI remains .3.2 and is not claimed by these focused checks.
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3.2` | `blocked` | The exact transformation is committed at `f3e7f94dc`; complete guarded-CI qualification remains required after the HIAL startup blocker is resolved. `.3.1` is done and records the corrected implementation/commit pointer. |
+| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3.2` | `pending` | Current catalog repair .4 is verified; resolve SEM .69.3 publication follow-ups, then qualify complete guarded CI with the documented t296 checkpoint and exact-SHA hosted result. |
 
 ## Decisions
 
@@ -87,13 +96,15 @@ repo's `t/*-isf-*.t` regression files.
 - `2026-08-25`: Reopen the exact synchronization tree rather than weaken t/1250 or absorb its failure into HIAL/VIAL runtime measurement. Commit `8b2a66979` added one matching ISF test without the authoritative mdBook source link; `.3` owns only that drift and the complete-gate retry.
 - `2026-08-25`: Preserve the sealed pre-partition source identity. Register the new t/1639 list entry through the existing bounded rewrite mechanism instead of replacing the archived source, weakening exact-content verification, or teaching the checker a one-off exception.
 
+- `2026-10-25`: Current live reference edits follow eb2b8f2a1: ordinary checks allow bounded evolution; exact activation equality is proved in an isolated historical fixture. Current catalog repair .4 preserves annotations and sealed manifests. Director publication ordering supersedes the old blanket hold, not checkpoint/resource or result qualification.
+
 ## Open Questions
 
 - None.
 
 ## Blockers
 
-- Complete guarded-CI qualification remains blocked by the unresolved HIAL startup incident and wire qualification recorded in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`, leaf `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`. The exact-content transformation repair is already committed and freshly verified; neither the independent RAM-guard fixture repair nor these focused checks qualifies complete CI. Preserve the prior timeout and host-cutoff findings, the repository-local t/296 checkpoint requirement, normal resource cutoffs, and the push gate. The director-approved inactive endpoint implementation remains separate from these qualification gates.
+- Current T1250 catalog drift is owned by .4. The director's publication-before-macOS-review order is recorded by SEM .69.3; the former blanket startup hold no longer controls this workflow. Complete guarded CI, the repository-local t296 checkpoint and exact-SHA hosted qualification remain required. The uncheckpointed current failing census provides no reconstructable t296 batch credit. Historical native causality and original failures remain separately owned.
 
 ## Verification Log
 

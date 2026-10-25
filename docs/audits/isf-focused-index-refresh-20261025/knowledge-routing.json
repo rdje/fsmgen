@@ -1,0 +1,11 @@
+{
+  "owner": "ISF-SPEC-TEST-INDEX-SYNC.4",
+  "path": "docs/knowledge/live-document-size-containment.md",
+  "before_sha256": "5b3a58d9b0150c1118105cef9afd6c9c4185801d2e6c44358f4cb525d285df9e",
+  "after_sha256": "0a9526f538c49d7e6da3502dbcdcea7ce224355291cac7729293ec733ff37eb0",
+  "all_prior_questions_retained": true,
+  "scope": "Add existing catalog/audit route, retain current-versus-historical reference distinction and align publication ownership with the director override. Historical causal uncertainty stays open.",
+  "prepared_card_sha256": null,
+  "current_card_sha256": "607a1414c0033912cf3e8ecf409ad3bc621e045481366c2dac7c9437d5982b80",
+  "current_reverify_roles": "Original rollover reader runs unchanged without --current for historical proof; normal live containment plus T1250/T1569 qualify evolving current facts. The old --current whole-Oct5-card identity rejects the intended extension, so no historical claim is silently reclassified."
+}
