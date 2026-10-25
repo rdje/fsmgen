@@ -238,6 +238,18 @@ The generated `.isf` keeps those values as actor-level output metadata, and
 the generated `.fsm` keeps them as `+size` reset metadata plus idle output
 assignments.
 
+The generated `.fsm` also preserves declared ports and private storage in
+`+interface`. The checked base subordinate's generated IAL1 carries a
+`verification-bridge` annotation for verification reports; that annotation
+does not change the generated FSM. The regression compares current lowering
+with and without exactly that annotation, while a changed output reset must
+change the emitted FSM. This keeps the metadata check valid as shared lowering
+evolves and retains explicit interface ownership:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1475-ial2-ahb-subordinate.t
+```
+
 ## Guided PPIF Byte-Lane Subordinate
 
 Run the shipped byte-lane/narrow-transfer subordinate through the same review

@@ -1,0 +1,56 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.14",
+  "baseline_revision": "3b3bd67219f99158e67a65b3529c4e5e5c09d512",
+  "production_inputs": [
+    {
+      "path": "perl/Lispish.pm",
+      "sha256": "67e825a8207a9fa41bf33f15c4c7815ef0cbecdfb6417cf1b674633f5df7f559",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/LinkedSpec.pm",
+      "sha256": "2b91c3703ec02dadd491138cf2c65d9b112abb29614403e9ed830fa9a5e7def9",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/PathSearch.pm",
+      "sha256": "2b3d20d53f2ee93ea2b25f72995c5433fe826d2080c9d31423cf7a0f32edff8d",
+      "equal_to_head": true
+    },
+    {
+      "path": "specs/Lispish.spec",
+      "sha256": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm",
+      "sha256": "940c5d00b22152404cb9b577e9977ee7ef6ba0f0442706f0cbe5f6d3557a69f4",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/Scheduler/ISF/Emitter/FSM.pm",
+      "sha256": "f2c2ac0b704bccaff7f9c7e859055c4796e0d1e7552eab45eb9c77d36e7850ac",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/Scheduler/ISF/LoweringIR.pm",
+      "sha256": "54989ca9e6262a6da684477c9b3eefd91c4f612323bc9e80dc2950c7c14ffc63",
+      "equal_to_head": true
+    }
+  ],
+  "rederive": "Complete full5 diagnostic and exact interface-only byte difference establish the stale historical oracle. Current public parse/lower compares complete generated file maps differing only in one removed verification annotation.",
+  "falsify": "Source and parsed-actor annotation absence prevent vacuous equality. A distinct changed output reset must alter emitted bytes and the reset declaration; explicit ownership and all earlier literal protocol/report/output checks remain.",
+  "durability": "Committed original full5/current-output/history packets plus exact focused/fact/native-book command/status/log receipts, repaired test, current fact/book and normal staged/commit gates.",
+  "checks": {
+    "initial_adjacent": "ahb1475-repair-focused.json: syntax0; four-file prove1, T1551 four historical-byte failures owned by .15.",
+    "current_fact": "ahb1475-repair-green.json: exact reverify0, Files3 Tests17, strict CLI/schedule/reference checks0.",
+    "native_docs": "ahb1475-repair-docs.json: five commands0."
+  },
+  "missing": [
+    "T1551 repaired qualification",
+    ".13 complete fresh full CI",
+    "push and exact-SHA hosted success",
+    "post-push macOS relevance review"
+  ],
+  "next": "Commit .14, repair .15, resume .13 full qualification."
+}

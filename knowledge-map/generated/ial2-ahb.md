@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **159** facts · **844** uniquely owned question entries.
+> **159** facts · **845** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -249,6 +249,7 @@
 - q="how does the shipped exact-two AHB BUSY counter work?" · facts=[ial2-ahb-requester-exact-two-busy-event-behavior](../../docs/knowledge/ial2-ahb-requester-exact-two-busy-event-behavior.md)
 - q="how does two-window exact-four appear in semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-four-paired-busy-composition-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-four-paired-busy-composition-behavior.md)
 - q="how is AHB HBURST SEQ profile alias support-accounted?" · facts=[ial2-ahb-hburst-length-wrap-seq-profile-alias-behavior](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-profile-alias-behavior.md)
+- q="how is AHB bridge metadata invariance checked?" · facts=[ial2-ahb-subordinate-ppif-behavior](../../docs/knowledge/ial2-ahb-subordinate-ppif-behavior.md)
 - q="how is AHB byte-lane SEQ profile alias support-accounted?" · facts=[ial2-ahb-byte-lane-seq-profile-alias-behavior](../../docs/knowledge/ial2-ahb-byte-lane-seq-profile-alias-behavior.md)
 - q="how is AHB completion-edge phase recapture verified?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how is a drifting BUSY-then-SEQ resume fail-closed?" · facts=[ial2-ahb-subordinate-busy-park-contract-selection](../../docs/knowledge/ial2-ahb-subordinate-busy-park-contract-selection.md)
@@ -1752,7 +1753,7 @@ _AHB subordinate generated substrate audit blocks on output defaults_
 
 _AHB subordinate PPIF behavior ships through generated IAL1 and IAL0_
 
-- **date:** 2026-07-23 · **status:** current
+- **date:** 2026-10-25 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-subordinate-ppif-behavior.md`](../../docs/knowledge/ial2-ahb-subordinate-ppif-behavior.md)
 
 ### ial2-ahb-subordinate-profile-alias-behavior

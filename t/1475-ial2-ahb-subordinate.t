@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 use Test::More;
-use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -12,6 +11,8 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_verification_bridge_event_keys
     isf_public_interface_schedule_report_verification_bridge_keys
@@ -66,7 +67,31 @@ subtest 'adapter parses the selected AHB subordinate PPIF shape' => sub {
         'AHB subordinate adapter exposes generated AHB IAL0 .fsm file map',
     );
     my $fsm = $result->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'};
-    is(sha256_hex($fsm), '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf', 'additive generated IAL1 metadata leaves generated IAL0 bytes unchanged');
+    my $without_bridge = $isf;
+    is(
+        scalar($without_bridge =~ s/^  \(verification-bridge\n.*?^  \)\n\n//msg),
+        1,
+        'remove exactly the generated actor-level verification bridge block',
+    );
+    unlike($without_bridge, qr/\(verification-bridge\b/, 'comparison source has no verification bridge annotation');
+    my $plain_actor = FSM::Adapter::ISF->new()->parse_source($without_bridge, 'ahb_lite_subordinate.isf');
+    ok(!defined($plain_actor->{verification_bridge}), 'comparison actor has no parsed verification bridge metadata');
+    my $plain_files = FSM::Scheduler::ISF->new()->lower($plain_actor)->{files};
+    is_deeply($plain_files, $result->{generated_ial0}{files}, 'additive generated IAL1 metadata leaves current generated IAL0 bytes unchanged');
+    like($fsm, qr/\(\+interface\n.*?\(input HSEL\).*?\(output HREADYOUT\).*?\(internal reg_data_q\)/s,
+        'current generated IAL0 preserves explicit port and storage ownership');
+
+    my $changed_reset = $without_bridge;
+    is(
+        scalar($changed_reset =~ s/\(output HREADYOUT \(reset 1\)/(output HREADYOUT (reset 0)/g),
+        1,
+        'adverse control changes exactly the ready-output reset value',
+    );
+    my $changed_actor = FSM::Adapter::ISF->new()->parse_source($changed_reset, 'ahb_lite_subordinate.isf');
+    my $changed_files = FSM::Scheduler::ISF->new()->lower($changed_actor)->{files};
+    isnt($changed_files->{'ahb_lite_subordinate.fsm'}, $fsm, 'behavior-changing reset control changes generated IAL0 bytes');
+    like($changed_files->{'ahb_lite_subordinate.fsm'}, qr/\(HREADYOUT 1 \(reset 0\)\)/,
+        'adverse control reaches the emitted reset metadata');
     like($fsm, qr/\(\?fsm:ahb_lite_subordinate\b/, 'generated AHB subordinate IAL0 names the subordinate FSM');
     like($fsm, qr/\(HREADYOUT 1 \(reset 1\)\)/, 'generated AHB subordinate IAL0 carries HREADYOUT reset metadata');
     like($fsm, qr/\(HRESP 1 \(reset 0\)\)/, 'generated AHB subordinate IAL0 carries HRESP reset metadata');
