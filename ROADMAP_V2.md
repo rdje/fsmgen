@@ -195,6 +195,10 @@ Direction:
   constraints, scheduling, and generated schedule reports;
 - use IAL2 for higher protocol/platform intent that lowers through IAL1 and
   IAL0 rather than bypassing them;
+- require every HIAL and VIAL construct to lower through the adjacent layers
+  IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL, preserving specified semantics
+  and source provenance. Hardware and verification keep distinct semantics;
+  this is the completeness goal, not current target-parity qualification;
 - lower multi-actor IAL2 intent into reviewable ATL networks within IAL1,
   including the required instances, bindings and orchestration before IAL0;
   `IAL2-ATL-LOWERING-INTEGRATION` owns the current composition gap and

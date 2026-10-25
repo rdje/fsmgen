@@ -31,6 +31,10 @@ efficient Lispish/S-expression form without useless verbosity.
 
 - Each layer can serve as an authoring entry point for a complete digital chip,
   with explicit composition/refinement and faithful IAL2 -> IAL1 -> IAL0 lowering.
+- Every HIAL and VIAL construct has a defined, reviewable path through
+  IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL. Each adjacent lowering preserves
+  its specified semantics and source identity; no upper-layer feature can be
+  complete while its required lower-layer realization remains missing.
 - Every design feature has a complete Lispish/S-expression authoring surface:
   concise common cases, consistent vocabulary and scope, composable reusable
   forms, and readable detailed control. Required semantics remain explicit.
@@ -58,7 +62,7 @@ efficient Lispish/S-expression form without useless verbosity.
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON`
   Status: `proposed`
   Goal: `Deliver complete digital-chip source authoring through both IAL1 and IAL2, with initial VIAL verification.`
-  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10`
+  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10, FULL-CHIP-SOURCE-AUTHORING-HORIZON.11`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1`
   Status: `done`
@@ -129,6 +133,13 @@ efficient Lispish/S-expression form without useless verbosity.
   Acceptance: `Preserve the director's latest DBIQNP requirement in the goal, feature acceptance/decomposition, roadmap and book. Require concise, composable and semantically precise source forms with no useless verbosity, plus semantic API/MCP source parity. Keep operational tools distinct from design-language constructs. Record the requirement without implementing new syntax or changing required delivery priority. Validate docs and mandatory staged doctrines, then commit cleanly.`
   Verification: `The director's requirement is preserved in the goal, acceptance criteria, IAL1/IAL2 decomposition, roadmap, book and discussion record. Both layers require complete Lispish design surfaces, concise/composable real examples and precise semantics, with equivalent API/MCP capabilities and semantic source round trips. Operational tools are not invented as HDL constructs. No syntax is admitted, host capability promoted or implementation lane activated. The implementation frontier remains ISF-REDUCTION-DELIVERY.2.3.3. Documentation and mandatory staged gates qualify this planning slice.`
   Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.10: require expressive Lispish design surfaces`
+
+- ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.11`
+  Status: `done`
+  Goal: `Reaffirm complete adjacent-layer lowering for every HIAL and VIAL construct through both HDL targets.`
+  Acceptance: `Record the director's DBIQNP clarification in this proposed horizon, roadmap and book. Require explicit IAL2-to-IAL1-to-IAL0-to-SystemVerilog/VHDL paths, semantic preservation and source provenance for hardware and verification constructs. Distinguish synthesizable hardware from verification behavior, expansion from one-to-one syntax translation, and the goal from current backend/profile coverage. Keep active implementation ownership unchanged; validate docs and commit without starting a compiler redesign.`
+  Verification: `The director explicitly requires every construct at each IAL to lower cleanly to the next, through HDL, for both HIAL and VIAL. Canonical scope now records that requirement and its semantic/evidence criteria. The same abstraction ladder applies to both domains, without requiring verification constructs to synthesize or claim identical native HDL syntax. Existing target gaps remain owned work; no unsupported profile is promoted and no feature is implemented. MEMORY.md remains at ISF-REDUCTION-DELIVERY.2.3.3.3.2. Book/task/mandatory doctrines qualify this discussion record.`
+  Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.11: require complete HIAL and VIAL lowering paths`
 
 ## Acceptance Checklist (enforced)
 
@@ -216,6 +227,37 @@ work or changing the required delivery frontier.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'complete digital-chip source-authoring' -- ROADMAP_V2.md identifies ee7cb1660, which records the full-chip goal but lacks the later universal Lispish-language quality criterion. The director explicitly adds that requirement during DBIQNP while required width implementation continues.
 - [x] **ADDRESSED (verified)** — The proposed horizon, IAL1/IAL2 future decomposition, roadmap and book now require complete, concise and expressive Lispish surfaces, semantically precise composition and equivalent actionable API/MCP coverage. This records scope without implementing a language feature or changing the active implementation pointer.
 - [x] **NO REGRESSION** — Source grammar, lowering and public capability behavior are unchanged. The book build, task integrity and scripts/check_doctrines.sh with knowledge-map: OK and normal hooks qualify the documentation slice; no full-chip implementation or runtime completeness is claimed.
+
+### Complete lowering for hardware and verification
+
+The director reaffirms that every IAL2 feature/construct lowers cleanly to IAL1,
+every IAL1 feature/construct to IAL0, and every IAL0 feature/construct to HDL
+(SystemVerilog and VHDL), for both HIAL and VIAL. This is the central completeness
+contract, not just a route for selected convenient constructs. Source authors
+may start at any layer; compilation from an upper layer retains every adjacent
+lowering obligation.
+
+Clean lowering means explicit semantics, legal lower-layer constructs, preserved
+source provenance and independent preservation checks at each edge. Expansion
+into several constructs is valid. Preserve the specified timing, sampling,
+concurrency, widths/types, reset/clock and verification-observation relationships;
+do not silently approximate unsupported semantics. HIAL hardware and VIAL checks,
+monitors, stimulus and models share the abstraction ladder while keeping their
+distinct meanings. Verification source need not be synthesizable. Target-native
+syntax may differ when it implements the same defined contract.
+
+Each future feature's acceptance must cover its full required lowering path,
+diagnostics and inspectable source/API/MCP products. Missing target realizations
+remain owned gaps and fail closed until implemented and qualified; emitting text
+alone cannot establish preservation. No current target-parity, formal equivalence
+proof or complete runtime coverage is inferred from this discussion. Existing
+VIAL substrate decisions and required delivery priority remain unchanged.
+
+## Layered lowering acceptance (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'faithful IAL2 -> IAL1 -> IAL0 lowering' -- docs/tasks/FULL-CHIP-SOURCE-AUTHORING-HORIZON.md identifies the earlier source-authoring objective. The director now explicitly extends the universal adjacent-layer obligation through SystemVerilog/VHDL to both HIAL and VIAL.
+- [x] **ADDRESSED (verified)** — Proposed horizon, roadmap and book record the full ladder, semantic/source preservation, hardware/verification distinction and expansion semantics. The active implementation Memory pointer remains unchanged. No compiler redesign or source construct is activated by DBIQNP.
+- [x] **NO REGRESSION** — Source grammar, compiler behavior and public capability contracts are unchanged. Book build, task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate this documentation-only clarification. Current backend/profile limits remain explicit.
 
 ## Blockers
 
