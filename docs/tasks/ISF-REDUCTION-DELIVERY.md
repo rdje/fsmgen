@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-23`
+- Last updated: `2026-10-25`
 - Owner: repo-local workflow
 
 ## Goal
@@ -30,7 +30,11 @@ Director instruction, 2026-10-23: implement POD-based FSMGen API reference
 generation now, following the HTMLBatch/mdBook discussion. This explicitly
 selects the documentation task ahead of the saved .2.3.2.4.2 implementation;
 SPECFORGE priorities and publication gates resume afterward. The constructor
-checkpoint is committed before activating that task.
+checkpoint is committed before activating that task. The 2026-10-25 instruction
+returns exclusive priority to required SPECFORGE implementation; the prior POD
+detour is complete. After each feature slice use only small focused checks and
+mandatory commit doctrines. Defer full verification to publication readiness;
+do not start broad suites between implementation slices.
 
 ## Non-Goals
 
@@ -44,8 +48,10 @@ checkpoint is committed before activating that task.
 - Preserve accepted binary expressions and existing logical negation.
 - Keep authored dependencies distinct from resolved defaults; prove actual HDL
   width and group behavior under parameter overrides and short final groups.
-- Each completed source slice has corpus and native/API/MCP coverage, focused
-  checks, independent semantics, synchronized book and feedback, and its own commit.
+- Each completed source slice has a small focused check, synchronized book and
+  task evidence, and its own commit. Full corpus/native/API/MCP and broad
+  regression qualification are deferred to publication readiness under the
+  director's 2026-10-25 instruction; feature completeness remains the priority.
 - Full CI and exact-SHA hosted results qualify publication under SEM `.69`.
 - Task integrity and all required doctrines pass without relaxed safety limits.
 
@@ -612,11 +618,17 @@ checkpoint is committed before activating that task.
   - [x] **NO REGRESSION** — All tests successful Files=23 Tests=283 across width, storage, domain, formal and origin checks; book/task checks pass Files=2 Tests=50. Both changed modules are syntax OK. Complete selected public products conserve. Native book/source/index/task/decision checks, scripts/check_doctrines.sh and normal hooks gate this source-only metadata commit; publication and remaining constructor obligations retain their owners.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify reusable library and ATL constructor source/default/override environments.`
   Acceptance: `Use independent actual library and ATL instances; preserve source export owner, module/instance identity, original override expressions and actual constructor-selected parameter records separately from source defaults. Copy the existing library metadata producer: default alias expressions are not relabeled as recomputed resolved values. ATL has default-only selections under its existing grammar; admit no new override syntax. Keep reusable-formal refusal and specialization ownership; prove exact old products, detached records and sibling isolation before commit. Private metadata only: no public/corpus admission, carrier, generic HDL or evaluator change.`
-  Verification: `Preparation checkpoint at 3994e966e: actual library and ATL constructors clone source actors and delegate to _build_parent_ir; _library_instance_metadata selects overrides beside raw default alias expressions. Parser ATL resolutions have no override fields under current grammar. No implementation or source epoch has started. The refined acceptance preserves these boundaries for resumption after the director-requested POD API reference. This checkpoint closes preparation only; implementation remains pending.`
-  Commit: `pending`
+  Verification: `Library and ATL constructors now retain a detached instance scope beside source defaults. The existing metadata producer supplies selected default/override records without reevaluating aliases; original LIMIT and selected16 remain distinct. Actual two-instance library and ATL cases prove lexical export/module/instance identity, source defaults, unchanged fixed shapes and caller/executable/sibling/fresh-result isolation. Fixed T2107 first fails only missing scopes on corrected fixtures, then passes with adjacent T2101: All tests successful Files=2 Tests=5. Complete selected actors/IR conserve after removing only new instance scopes. The first unsupported two-instance ATL fixture refusal is preserved, then replaced with the existing supported two-child data pipeline. Re-derive: actual constructors and selected products. Falsify: literal expected scope records, mutation/isolation and complete old-product comparison. Durability: t/2107 and docs/audits/reusable-width-ir-20261025.json.gz with source snapshots, initial refusal and RED/GREEN outputs. Per the director, full carriers/native/API/MCP/corpus and broad verification are deferred to publication readiness; this private prerequisite does not deliver generic shapes or grouped reductions. The first doctrine run rejects stale decision119 catalog dimensions and its prose-growth allowance; refresh the authenticated catalog and compact equivalent existing rationale, preserving questions and facts without allowance growth. Mandatory staged doctrines and normal hooks gate the commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.2.4.2: preserve reusable instance width scopes`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected fixed test diagnostics at t/2107-isf-reusable-width-ir.t line 31 expose absent instance scopes: library and ATL constructors delegate source defaults to _build_parent_ir but discard selected parameter context. The original unsupported ATL fixture refusal remains in the dated receipt.
+  - [x] **ADDRESSED (verified)** — Both constructors now snapshot selected records through the existing producer, preserving raw aliases, source owner, module/instance identity and original versus resolved overrides. Fixed source assertions and actual sibling/caller/result mutation checks pass; complete selected old IR and actors conserve after removing only new scopes.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=5 for T2107 and adjacent T2101. Full qualification is explicitly deferred to publication readiness by the director; scripts/check_doctrines.sh and normal hooks remain mandatory. Source syntax is checked in the focused commit gate.
+
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.3`
   Status: `pending`

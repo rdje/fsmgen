@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.4.2`
-- next_action: After current PUBLICATION .17.2.1 commits and Git is clean, activate the saved required grouped-reduction constructor leaf .2.3.2.4.2. Continue required .12/.10/.7/.8 in checked dependency order under decision0121; no further independent CI cleanup before required implementation.
-- in_flight_uncommitted: Derive exact paths with git status --short; PUBLICATION .17.2.1 owns the verified helper/topology repair and priority handoff until committed.
-- in_flight_background: Final focused four-file/syntax jobs are complete/consumed. Derive final docs/staged/commit jobs from their exclusive receipts/consoles.
-- blockers: Remaining four requests block SPECFORGE. Complete required implementation and focused qualification, then full CI/authorized push/every exact-SHA hosted result and post-push macOS review. Existing publication defects remain owned for demonstrated required validation/publication; no full6 or push has launched.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.4.3`
+- next_action: After .4.2 commits cleanly, join actual generated/reusable instance context in .2.3.2.4.3 with small focused checks; continue required grouped reductions and .10/.7/.8 in checked dependency order. Full verification is deferred to publication readiness by the director's 2026-10-25 instruction.
+- in_flight_uncommitted: Derive exact paths with git status --short; Reduction .2.3.2.4.2 owns completed constructor changes until committed.
+- in_flight_background: None; prior repair commit and its checks are complete and consumed.
+- blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.

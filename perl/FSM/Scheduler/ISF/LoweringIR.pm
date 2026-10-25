@@ -750,6 +750,7 @@ sub _build_library_child_ir($self, $use, $parent_actor) {
         instance       => $use->{instance},
         library_source => $use->{library_source},
     };
+    $ir->{_width_scopes}{instance} = _reusable_width_instance_scope($use, $parent_actor, 'library_use');
     return $ir;
 }
 
@@ -768,6 +769,7 @@ sub _build_resolved_atl_child_ir($self, $resolution, $parent_actor) {
         library_source => $resolution->{library_source},
         usage          => 'atl_static_instance',
     };
+    $ir->{_width_scopes}{instance} = _reusable_width_instance_scope($resolution, $parent_actor, 'atl_static_instance');
     return $ir;
 }
 
@@ -4923,6 +4925,23 @@ sub _verification_bridge_declaration {
     my ($actor) = @_;
     return undef unless ref($actor) eq 'HASH' && ref($actor->{verification_bridge}) eq 'HASH';
     return _clone_isf_value($actor->{verification_bridge});
+}
+
+# Keep the constructor selection beside source-default scopes. In particular,
+# a default alias remains an expression; it is not an override-resolved value.
+# Reuse the existing instance producer rather than introducing a resolver here.
+sub _reusable_width_instance_scope {
+    my ($source, $parent_actor, $kind) = @_;
+    my $metadata = _library_instance_metadata($source);
+    return {
+        kind => $kind,
+        parent_actor => $parent_actor->{actor_name},
+        owner => $source->{actor}{_width_source_actor_name} // $source->{actor}{actor_name},
+        (map {$_ => _clone_isf_value($source->{$_})} qw(library library_source export instance module)),
+        parameters => $metadata->{parameters},
+        parameter_overrides => $metadata->{parameter_overrides},
+        parameter_override_sources => _clone_isf_value($source->{_parameter_override_sources} || []),
+    };
 }
 
 sub _library_instance_metadata {

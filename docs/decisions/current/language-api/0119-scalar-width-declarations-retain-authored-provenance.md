@@ -12,7 +12,7 @@ answers:
 date: 2026-10-23
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
-evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
+evidence: t/2107-isf-reusable-width-ir.t; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
 reverify: python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
@@ -59,14 +59,12 @@ retain separate required owners under `.3`, `.4` and SEM `.32.3`.
 
 ## Consequences and evidence
 
-The initial slice changes no source admission, carrier or public report schema.
-Every later propagation boundary needs an independent declaration oracle and
-caller/result isolation; transport agreement alone cannot establish provenance.
-The audit's literal source/scope/carrier oracles and hostile association records
-qualify its observed baseline, not future implementation. Exact selected Git
-source joins, tracked producer/receipt/verifier and missing footprint/raw-stream/
-HDL/API legs are recorded in the companion audit. Required reductions and
-publication remain open until their actual behavior is qualified.
+Initial preservation changes no admission, carrier or public schema. Each
+propagation boundary needs independent declaration oracles and caller/result
+isolation; transport agreement cannot establish provenance. Literal scope/carrier
+oracles and hostile associations qualify only the observed baseline. The audit
+records exact Git source joins, producer/receipt/verifier and missing footprint,
+raw-stream, HDL and API legs. Required reductions and publication stay open.
 
 This bounded record owns the new fact/question without growing the rollover-
 debt Knowledge Map card collection or the saturated decision 0117. Both original
@@ -81,15 +79,14 @@ parameters retain their transaction owner, and library clones retain the source
 export owner. Literal/default widths and named types gain no invented parameter
 dependency. Aliases keep their authored token, with numeric defaults unchanged.
 
-The unchanged strengthened regression fails through an exactly observed
-predecessor parser and passes currently, including package/constant storage,
-transaction shadows and detached library clones. Complete native check/semantic/
-schedule products and carrier bytes match the committed baseline after only
-fixture-directory normalization. The parsed actors differ solely by the exact
-independently expected private records. Historical audit qualification remains
-available through `scalar-width-foundation-verify-20261022.py`; current retained
-products are checked by `scalar-width-declarations-verify-20261022.py` in
-`docs/audits/`. Public inventory, carrier propagation and generic HDL remain open.
+The fixed regression fails on the observed predecessor and passes currently:
+package/constant storage, transaction shadows and detached library clones.
+Complete native check/semantic/schedule and carrier bytes match the baseline
+with only fixture-directory normalization; parsed actors differ solely by
+independently expected private records. Saved audit readers in `docs/audits/`:
+`scalar-width-foundation-verify-20261022.py` (historical) and
+`scalar-width-declarations-verify-20261022.py` (current). Public inventory,
+carrier propagation and generic HDL remain open.
 
 ## Carrier namespace and static-use prerequisites
 
@@ -142,7 +139,7 @@ watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides
 remain separate from source defaults. Literal/type/reset declarations stay
 exact. Direct formals retain original names, plan identities and isolated lexical scopes. Generated formal/inherited/storage-read ports retain actor and selected transaction sources.
-Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable/domain and IAL0 qualification remain.
+Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable children retain detached source defaults and selected instance scopes, including raw aliases and original override expressions. Domain/IAL0 propagation and full public qualification remain.
 Nested heads now normalize recursively under `.2.3.2.1.2.2`; original diagnosis: `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained

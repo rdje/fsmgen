@@ -362,6 +362,14 @@ keeps these lexical environments separate; scheduled carriers and public reports
 still describe their fixed resolved defaults. This does not provide generic
 HDL resizing or library shape specialization.
 
+Reusable library and ATL child modules also retain a private instance scope
+beside source defaults. For `(params (WIDTH LIMIT))`, the original `LIMIT`
+expression and selected value remain separate; a default alias such as
+`ALIAS=WIDTH` stays an expression. Source export names remain distinct from
+physical module and instance names. These records do not resize library ports;
+ATL retains its existing default-only parameter syntax. Focused constructor
+checks pass; complete carrier and public qualification remains pending.
+
 The connected scope example includes independent four-bit and six-bit children:
 
 ```bash

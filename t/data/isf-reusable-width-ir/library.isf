@@ -1,0 +1,11 @@
+(library widths (exports (actor child))
+  (actor child (clock clk) (params (WIDTH 8) (ALIAS WIDTH) (OTHER 8))
+    (interface (input data (width WIDTH)) (output result (width ALIAS)))
+    (rule copy 1 (result data))))
+(actor library_widths (clock clk) (params (LIMIT 16))
+  (imports (library widths as lib))
+  (interface (input data (width 8)) (output result (width 8)) (output other (width 8)))
+  (use lib.child as first (params (WIDTH LIMIT))
+    (bind (clock clk) (input data data) (output result result)))
+  (use lib.child as second
+    (bind (clock clk) (input data data) (output result other))))
