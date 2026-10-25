@@ -1,0 +1,89 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.2",
+  "baseline": "dfa52208b9989e1453125352f823ed60c0cd75d0",
+  "source_before_sha256": "030503d7f0a9162e5ba683826e7e354253506ad7c3d77e3a29c6823515f1b4e5",
+  "full2_test_bytes_equal": true,
+  "failure_receipt": "docs/audits/push-readiness-20261025/local-full-ci-2.log.gz",
+  "contract_commit": "8e5dd7f34623f8b0dd792628d31a80ff6e36daf9",
+  "original_notice_assertions": [
+    {
+      "pattern": ".*atl_resolved_child_pipeline_top\\.fsm",
+      "label": "strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_ingress_pipeline_top\\.fsm",
+      "label": "pin-ingress strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_ingress_vector_pipeline_top\\.fsm",
+      "label": "pin-ingress vector strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_ingress_vector_multi_pipeline_top\\.fsm",
+      "label": "pin-ingress vector multi-route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_ingress_mixed_pipeline_top\\.fsm",
+      "label": "pin-ingress mixed route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_ingress_multi_pipeline_top\\.fsm",
+      "label": "pin-ingress multi-route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_egress_pipeline_top\\.fsm",
+      "label": "pin-egress strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_egress_vector_pipeline_top\\.fsm",
+      "label": "pin-egress vector strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_egress_vector_multi_pipeline_top\\.fsm",
+      "label": "pin-egress vector multi-route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_egress_mixed_pipeline_top\\.fsm",
+      "label": "pin-egress mixed route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_resolved_child_pin_egress_multi_pipeline_top\\.fsm",
+      "label": "pin-egress multi-route strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_two_child_pipeline_top\\.fsm",
+      "label": "two-child strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_two_child_trigger_batch_pipeline_top\\.fsm",
+      "label": "two-child trigger-batch strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_two_child_data_pipeline_top\\.fsm",
+      "label": "two-child data strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_two_child_vector_data_pipeline_top\\.fsm",
+      "label": "two-child vector data strict outdir lowering reports the written generated top"
+    },
+    {
+      "pattern": ".*atl_two_child_multi_data_pipeline_top\\.fsm",
+      "label": "two-child multi-data strict outdir lowering reports the written generated top"
+    }
+  ],
+  "scope": "Test/stdout expectation and existing ATL book guidance only; quiet predicate, producers, all success/stderr/file-domain assertions and machine-report cases unchanged.",
+  "source_after_sha256": "8e1add4afa4960386c82b0d391e1ccb499912f503a44e4398df22a2032ba7944",
+  "preserved_nonquiet_control": "strict outdir lowering reports the written generated top",
+  "rederive": "Exact bff/current T1330 source identity binds the retained full2 failure to current tests. Decision0117 and bin/fsmgen show_progress predicate define quiet suppression; current T2088 independently checks quiet aliases and complete artifacts/reports.",
+  "falsify": "Retained full2 output shows actual empty quiet stdout failing Wrote expectations, while success/stderr/file-domain checks pass. The first case now removes quiet and must still show the generated-top notice; remaining quiet cases must be empty and retain exact complete file-domain checks. T2088 exercises separate current sources and quiet/nonquiet products.",
+  "durability": "Exact source identity/assertion domain, Git contract object, complete focused/native book receipts, unchanged limits and owning unit commit. No full-CI or historical-native claim.",
+  "focused_receipt": "docs/audits/push-readiness-20261025/quiet-fixture-focused.json",
+  "book_receipt": "docs/audits/push-readiness-20261025/quiet-fixture-book.json",
+  "focused_exit_status": 0,
+  "staged_gate": {
+    "exit_status": 0,
+    "log": "quiet-staged-doctrines.log.gz",
+    "scope": "All registered staged-index doctrines pass; normal commit hook rechecks final stage."
+  },
+  "final_source_view_receipt": "docs/audits/push-readiness-20261025/quiet-final-source-view.json"
+}

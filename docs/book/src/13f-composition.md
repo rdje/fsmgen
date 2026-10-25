@@ -833,8 +833,9 @@ These checked-in sources exercise different boundaries:
 
 The first exposes a temporary trigger association; the second exposes a
 cycle-bound data route with external handoffs. The resolved-child example
-emits the scheduled parent, resolved child and generated top. Inspect the
-reported boundary for each source: metadata or a parent handoff alone does
+emits the scheduled parent, resolved child and generated top. Use `--quiet`
+for generation with no progress notices; omit that option to see `Wrote:`
+announcements. Inspect the reported boundary for each source: metadata or a parent handoff alone does
 not establish child execution or a complete generated network. The examples
 below explain source forms, timing, generated names and fail-closed limits.
 

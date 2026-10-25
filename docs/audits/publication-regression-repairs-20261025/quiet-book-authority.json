@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.2",
+  "before": {
+    "files": 65,
+    "lines_total": 73949,
+    "bytes_total": 4141760
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73950,
+    "bytes_total": 4141863
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 1,
+    "bytes_total": 103
+  },
+  "rederive": "Exact current unique book member byte/newline dimensions before and after the narrow ATL explanation.",
+  "falsify": "Normal maintained-reference authority independently derives staged original/final aggregate and requires this exact delta; ceiling gate preserves limits.",
+  "durability": "Tracked authority, source/receipt/task and unit commit."
+}

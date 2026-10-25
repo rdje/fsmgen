@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -45,16 +45,16 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.1: retain precise aggregate alias refusal boundaries`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair quiet strict-outdir fixture stdout expectations.`
   Acceptance: `After .1 commits, T1330 quiet fixtures must expect empty stdout while retaining success/stderr/complete file-domain assertions. Keep one existing nonquiet generation case as a positive Wrote control. Follow decision0117 quiet semantics and8e5dd7f34623f8b0dd792628d31a80ff6e36daf9; run T1330 and T2088 plus applicable book/gates. Do not change producer quiet behavior.`
-  Verification: `P1 pre-push; exact failures, canonical references and repair plan are in docs/audits/isf-focused-index-refresh-20261025/publication-followups.json.`
-  Commit: `pending`
+  Verification: `Exact T1330 bytes equal the retained bff84006b full2 source, binding its empty-stdout failures to the current file. Decision0117 and8e5dd7f identify the intentional quiet-output predicate. One existing outdir case now omits quiet and retains its generated-top Wrote positive check; remaining quiet cases assert empty stdout, with every success/stderr/complete file-domain and machine-report assertion preserved. Guarded T1330/T2088 report All tests successful, Files=2 Tests=69, with complete output/status in quiet-fixture-focused.json/log.gz. Native mdBook/POD/current built source/index pass in quiet-fixture-book.json; ATL guidance now explains the existing flag behavior. quiet-expectations.json retains exact source hashes/assertion domain and distinct re-derivation/falsification/durability legs; the book authority records the exact narrow delta with no ceiling change. No producer/API/source grammar or support change. Staged/normal doctrine gates are required before commit. Next .7 observes genuinely required .3 contract intakes under the already-existing SEM .93/ISF-REDUCTION .16 before-publication conditions; no original timeout causality is inferred.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.2: align quiet fixture stdout expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.3`
   Status: `pending`
   Goal: `Preserve conditional local-do dataflow assertions through physical formal allocation.`
-  Acceptance: `After .2 commits, inspect current public authored binding and emitted artifact contracts for T1388. Preserve req-to-worker.addr dataflow, width and conditional start/done handshake through the allocated physical signal. Replace the stale raw addr literal without dropping the binding assertion or treating private names as authored endpoints; update stale test commentary and qualify focused formal/local-do cases.`
+  Acceptance: `After .2 and its required intake observation .7 commit, inspect current public authored binding and emitted artifact contracts for T1388. Preserve req-to-worker.addr dataflow, width and conditional start/done handshake through the allocated physical signal. Replace the stale raw addr literal without dropping the binding assertion or treating private names as authored endpoints; update stale test commentary and qualify focused formal/local-do cases.`
   Verification: `P1 pre-push; actual (= (isf_port_worker_addr req)) and matching worker read conflict with the stale raw-formal regex. Canonical isf-formal-source-binding-reports and isf-production-formal-scope cards plus FormalIdentityPlan own the current boundary; complete queue receipt retains.`
   Commit: `pending`
 
@@ -79,11 +79,18 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Read-only discovery at docs/TASK_TREE_README.md lines81/160/270 directs overwriting/naming latest commit in Memory, conflicting with current derive-on-read policy. Reproduce with rg -n latest.commit. Current startup instructions themselves derive revision correctly. This documentation defect does not block push; ownership/schedule are explicit.`
   Commit: `pending`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.7`
+  Status: `pending`
+  Goal: `Observe the next required binding-contract intakes and preserve explicit historical query dispositions.`
+  Acceptance: `After .2 commits clean, use the Knowledge Map and actual public CLI fixture inspection genuinely needed for .3 binding diagnosis, with bounded process/UTC/monotonic/trace/stream/settlement evidence. Authenticate any reused helper and invoke only its selected capture function for new needed inputs; never run old native diagnostic mains, original spent sources or invalid startup controls. Preserve the existing sixty-second query bounds and RAM88/4096. Before new audit code/source, record exact inputs, literal expected semantic/route scope and saved-reader verification/control requirements. Retain complete actual products and first failures; saved replay defaults must not relaunch queries. Name the precise original execution-service/host lifecycle/stop/partial-stream authority available or unavailable; a new success cannot attribute the spent intervals. Update SEM .93 and ISF-REDUCTION .16 with current before-publication observation/disposition while retaining original failures and causal gaps. Verify literal binding/route predicates, source/program/trace/settlement identity and meaningful adverse saved-record controls, native book/source and staged/normal gates, then commit before .3 code repair. This satisfies existing qualification requirements, without a new historical startup investigation, host-policy/auth change or feature/corpus/API/MCP expansion.`
+  Verification: `Both existing task owners explicitly require the next normally required observed query before publication. Their acceptance permits retaining the historical gap and flagging unavailable original authority; later success is not a causal repair. The .3 Knowledge Map/formal-binding and public fixture inspection provide that normal intake. Candidate existing library-source-interruption-20261022.py run(argv, timeout) captures PID, UTC/monotonic interval, reaped status and streams; its main includes a spent original source and invalid startup control and must not execute. Selection remains pending until .2 commits.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.2` | `pending` | After .1 commit, align quiet strict-outdir expectations while retaining a nonquiet progress control. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.7` | `pending` | After .2 commits, observe required .3 contract intake and record the older incidents' causal dispositions, then repair binding assertions under .3. |
 
 ## Decisions
 
@@ -92,10 +99,16 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- No external blocker for .2 after .1 commits. Full CI/push/hosted qualification remain pending, not successful.
+- No external blocker for .7 after .2 commits. Full CI/push/hosted qualification remain pending, not successful.
 
 ## Acceptance Checklist — `.1`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual before output at t/1259-isf-aggregate-storage-type-aliases.t line 170 shows the formerly forbidden record output is accepted; line171 retains obsolete actor-inputs diagnostic expectations. Git source008e629ced explicitly admits record outputs and changes that suffix to actor ports; the unchanged independent T2033 passes supported record sources and still-closed list/formal cases. No current producer defect is inferred from a stale negative assertion.
 - [x] **ADDRESSED (verified)** — The obsolete record-output negative now uses a declared packed list with the same packed width, retaining a real unsupported actor-port boundary. All three exact diagnostic suffixes match the current contract; transaction and bank refusals and original storage/parser/lowering/CLI assertions remain. Existing independent record-output positives and overlap refusals pass. The book clarifies those existing kinds, without changing runtime or support.
 - [x] **NO REGRESSION** — All tests successful for the guarded eight-file scalar/storage/record-writer/source band, with exact command/status/complete output retained in aggregate-alias-focused.json/log.gz. Native mdBook/POD/current source-byte/index checks pass; git diff --check is clean. Fresh claim/reference/ceiling and complete staged/normal scripts/check_doctrines.sh gates are required before commit. Full CI remains a separate checkpointed publication qualification.
+
+## Acceptance Checklist — `.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full2 reports empty stdout at t/1330-isf-atl-resolved-child-fixture-coverage.t line 1516 while the command explicitly requests --quiet; current source equals that failed source. The intentional8e5dd7f predicate suppresses informational notices, as decision0117 and the CLI book explain. The stale Wrote expectations conflict with that current behavior; no producer defect is inferred.
+- [x] **ADDRESSED (verified)** — One existing resolved-child case runs nonquiet and retains its concrete generated-top Wrote assertion; all remaining quiet outdir cases require empty stdout. Every success/stderr/exact generated file-domain and machine-report assertion remains. Exact before/after identities and the complete old assertion domain retain; existing ATL guidance explains the same quiet/nonquiet behavior.
+- [x] **NO REGRESSION** — All tests successful, Files=2, Tests=69 for guarded T1330/T2088. The independent quiet/trace suite qualifies both aliases, ISF/single/bundle paths, unchanged products and traced/untraced machine reports. Native mdBook/POD/current source-byte/index checks pass, and git diff --check is clean. Fresh inventory/reference/ceiling plus complete staged/normal scripts/check_doctrines.sh gates precede commit; full CI remains separate.

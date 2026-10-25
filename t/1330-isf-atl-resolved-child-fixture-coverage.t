@@ -1498,13 +1498,12 @@ subtest 'ATL two-child multi-data fixture strict schedule JSON matches the in-pr
     );
 };
 
-subtest 'ATL resolved-child fixture strict outdir lowering writes the generated top' => sub {
+subtest 'ATL resolved-child fixture nonquiet strict outdir lowering writes the generated top' => sub {
     my $dir = tempdir(CLEANUP => 1);
     my ($success, $stdout, $stderr) = run_cli(
         [
             './bin/fsmgen',
             '--strict',
-            '--quiet',
             '--outdir',
             $dir,
             $isf_file,
@@ -1541,8 +1540,7 @@ subtest 'ATL pin-ingress fixture strict outdir lowering writes the generated top
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_pipeline_top\.fsm/,
-        'pin-ingress strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-ingress quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-ingress strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1566,8 +1564,7 @@ subtest 'ATL pin-ingress vector fixture strict outdir lowering writes the genera
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress vector fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_vector_pipeline_top\.fsm/,
-        'pin-ingress vector strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-ingress vector quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-ingress vector strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1591,8 +1588,7 @@ subtest 'ATL pin-ingress vector multi-route fixture strict outdir lowering write
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress vector multi-route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_vector_multi_pipeline_top\.fsm/,
-        'pin-ingress vector multi-route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-ingress vector multi-route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-ingress vector multi-route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1616,8 +1612,7 @@ subtest 'ATL pin-ingress mixed route fixture strict outdir lowering writes the g
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress mixed route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_mixed_pipeline_top\.fsm/,
-        'pin-ingress mixed route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-ingress mixed route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-ingress mixed route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1641,8 +1636,7 @@ subtest 'ATL pin-ingress multi-route fixture strict outdir lowering writes the g
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-ingress multi-route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_ingress_multi_pipeline_top\.fsm/,
-        'pin-ingress multi-route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-ingress multi-route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-ingress multi-route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1666,8 +1660,7 @@ subtest 'ATL pin-egress fixture strict outdir lowering writes the generated top'
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-egress fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_egress_pipeline_top\.fsm/,
-        'pin-egress strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-egress quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-egress strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1691,8 +1684,7 @@ subtest 'ATL pin-egress vector fixture strict outdir lowering writes the generat
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-egress vector fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_egress_vector_pipeline_top\.fsm/,
-        'pin-egress vector strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-egress vector quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-egress vector strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1716,8 +1708,7 @@ subtest 'ATL pin-egress vector multi-route fixture strict outdir lowering writes
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-egress vector multi-route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_egress_vector_multi_pipeline_top\.fsm/,
-        'pin-egress vector multi-route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-egress vector multi-route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-egress vector multi-route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1741,8 +1732,7 @@ subtest 'ATL pin-egress mixed route fixture strict outdir lowering writes the ge
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-egress mixed route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_egress_mixed_pipeline_top\.fsm/,
-        'pin-egress mixed route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-egress mixed route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-egress mixed route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1766,8 +1756,7 @@ subtest 'ATL pin-egress multi-route fixture strict outdir lowering writes the ge
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL pin-egress multi-route fixture');
-    like($stdout, qr/Wrote: .*atl_resolved_child_pin_egress_multi_pipeline_top\.fsm/,
-        'pin-egress multi-route strict outdir lowering reports the written generated top');
+    is($stdout, '', 'pin-egress multi-route quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'pin-egress multi-route strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1791,8 +1780,7 @@ subtest 'ATL two-child fixture strict outdir lowering writes the generated top' 
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL two-child fixture');
-    like($stdout, qr/Wrote: .*atl_two_child_pipeline_top\.fsm/,
-        'two-child strict outdir lowering reports the written generated top');
+    is($stdout, '', 'two-child quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'two-child strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1816,8 +1804,7 @@ subtest 'ATL two-child trigger-batch fixture strict outdir lowering writes the g
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL two-child trigger-batch fixture');
-    like($stdout, qr/Wrote: .*atl_two_child_trigger_batch_pipeline_top\.fsm/,
-        'two-child trigger-batch strict outdir lowering reports the written generated top');
+    is($stdout, '', 'two-child trigger-batch quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'two-child trigger-batch strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1841,8 +1828,7 @@ subtest 'ATL two-child data fixture strict outdir lowering writes the generated 
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL two-child data fixture');
-    like($stdout, qr/Wrote: .*atl_two_child_data_pipeline_top\.fsm/,
-        'two-child data strict outdir lowering reports the written generated top');
+    is($stdout, '', 'two-child data quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'two-child data strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1866,8 +1852,7 @@ subtest 'ATL two-child vector data fixture strict outdir lowering writes the gen
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL two-child vector data fixture');
-    like($stdout, qr/Wrote: .*atl_two_child_vector_data_pipeline_top\.fsm/,
-        'two-child vector data strict outdir lowering reports the written generated top');
+    is($stdout, '', 'two-child vector data quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'two-child vector data strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
@@ -1891,8 +1876,7 @@ subtest 'ATL two-child multi-data fixture strict outdir lowering writes the gene
     );
 
     ok($success, 'strict outdir lowering succeeds for the ATL two-child multi-data fixture');
-    like($stdout, qr/Wrote: .*atl_two_child_multi_data_pipeline_top\.fsm/,
-        'two-child multi-data strict outdir lowering reports the written generated top');
+    is($stdout, '', 'two-child multi-data quiet strict outdir lowering suppresses progress notices');
     is($stderr, '', 'two-child multi-data strict outdir lowering keeps stderr clean');
     is_deeply(
         sorted([fsm_basenames_in($dir)]),
