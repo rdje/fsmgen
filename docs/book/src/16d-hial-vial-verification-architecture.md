@@ -7,6 +7,11 @@ profiles, review or experiment evidence, unavailable profiles, and future
 work. The capability manifest remains the machine authority when status can
 change.
 
+For a progressive explanation of the layers and their preservation obligations,
+read the [hardware and verification lowering annex](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification).
+It distinguishes the full-chip goal and pending future-layer question from the
+current single-language VIAL topology documented here.
+
 ## Current availability at a glance
 
 | Availability | Current meaning | Continue with |

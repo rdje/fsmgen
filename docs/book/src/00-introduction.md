@@ -18,15 +18,18 @@ natural, and detailed control readable, with no useless verbosity. Source and
 API/MCP operations must preserve the same hardware meaning. These are feature
 acceptance requirements for the full-chip goal, not claims of current completeness.
 
-The intended lowering contract applies to every construct in both HIAL and VIAL:
-**IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL**. Each adjacent step must preserve
-the construct's specified meaning and source provenance. A construct may expand
-into several lower-level constructs; clean lowering does not require matching
-syntax. HIAL produces synthesizable hardware; VIAL produces verification behavior,
-such as checks, monitors and stimulus, which need not be synthesizable. Timing,
-sampling, widths, clock/reset behavior and hardware-to-verification bindings need
-explicit semantics and independent checks. Complete paths to both HDL targets
-are the goal; present target/profile limitations remain explicit below.
+HIAL's complete lowering goal is **IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL**.
+Every adjacent step must preserve specified meaning and source provenance;
+expansion into several lower-level constructs is valid. VIAL must provide the
+same preservation discipline for verification behavior, such as checks, monitors
+and stimulus, which need not be synthesizable. Current VIAL uses one `.vial`
+language and private semantic/execution stages. A literal numbered VIAL ladder
+remains a future architecture clarification, not a shipped topology.
+
+The [lowering-contract reference](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification)
+explains the layers, both domains, timing/types/configuration, source identity,
+worked examples, API/MCP access and qualification. Start there for the full
+explanation, then use the current target/profile boundaries below.
 
 Today, the primary backend is SystemVerilog, with Verilog compatibility through
 the existing path. FSMGen also ships bounded VHDL generation for documented

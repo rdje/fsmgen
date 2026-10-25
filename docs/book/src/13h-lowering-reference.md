@@ -1,8 +1,278 @@
 # Lowering Reference
 
-Every ISF construct maps to specific `.fsm` patterns.
+Supported ISF constructs map to specific `.fsm` patterns.
 
-This chapter shows the exact generated `.fsm` for each construct.
+This chapter first explains the compiler contract, then gives the generated
+`.fsm` patterns and current boundaries for individual constructs.
+
+## Lowering contract for hardware and verification
+
+Read this section before the detailed mappings if IAL, HIAL, VIAL or lowering
+are new to you. It explains the intended complete architecture alongside the
+current implementation. A design goal, accepted source, generated file and
+verified execution are different things.
+
+### What lowering means
+
+Lowering translates a design into a more explicit representation while
+preserving its specified meaning. A high-level transaction may become several
+scheduled operations; those operations may become states, registers and logic.
+The number of constructs and their spelling can change. Their required behavior
+must survive.
+
+For example, if an accepted request must eventually produce one response,
+lowering cannot lose the response, duplicate it or change which request it
+belongs to. If the specification permits a scheduler to choose a latency, the
+selected schedule must stay within those rules. Preserving meaning does not
+require a high-level source to specify every cycle prematurely.
+
+An **intent abstraction layer** (IAL) determines which choices the author makes
+and which choices the compiler makes explicit:
+
+| Layer | What the author describes | What the next step makes explicit |
+| --- | --- | --- |
+| IAL2 | Architectural, protocol or platform intent within a supported profile | Components, interfaces, transactions and orchestration in IAL1 |
+| IAL1 | Actors and scheduling intent: operations, transactions, rules, waits and resources | A concrete schedule, state/control structure and handoffs in IAL0 |
+| IAL0 | Explicit cycle-authored state machines, decision trees, assignments and composition | HDL processes, expressions, storage, interfaces and instances |
+| HDL | SystemVerilog or VHDL source implementing the selected target contract | An external tool consumes that source for its own workflow |
+
+**HDL** means hardware description language. Generating HDL source is separate
+from compiling it with an external tool, simulating it or manufacturing a chip.
+
+The full hardware-source goal is:
+
+```text
+IAL2 (.ppif) -> IAL1 (.isf) -> IAL0 (.fsm) -> SystemVerilog / VHDL
+```
+
+Authors may start at any supported layer. Starting with IAL1 omits the IAL2
+input, but IAL1 still has to lower through IAL0. An IAL2 feature cannot claim
+complete support by producing HDL through an undocumented shortcut that leaves
+its IAL1 or IAL0 meaning missing. Intermediate generated source must remain
+reviewable under the supported workflow.
+
+### HIAL and VIAL answer different questions
+
+**HIAL** means hardware intent: the circuit to build. **VIAL** means verification
+intent: how to stimulate, observe and check that circuit. The device being
+checked is the **DUT**, or design under test.
+
+| Concern | HIAL | VIAL |
+| --- | --- | --- |
+| Purpose | Define hardware behavior | Exercise hardware and decide whether observations meet expectations |
+| Typical declarations | Interfaces, storage, transactions, datapaths, clocks and resets | Stimulus, scenarios, observations, checks, models, scoreboards and coverage |
+| State | Hardware state such as registers and protocol progress | Verification state such as expected values, pending transactions and counters |
+| Output role | Synthesizable hardware source within the supported contract | Verification source and supporting artifacts; these need not synthesize |
+| A useful result | The circuit implements the defined behavior | A specific executed scenario produces evidence and a reported outcome |
+
+A **monitor** observes behavior. A **reference model** computes expected
+behavior. A **scoreboard** tracks and compares expected and observed items.
+**Coverage** records which selected situations occurred. None of these alone
+proves that every possible behavior is correct.
+
+Hardware and verification need the same rigorous lowering discipline. They do
+not require identical runtime mechanisms. A hardware wait may require retained
+control state; a verification wait may be implemented by a testbench scheduler.
+Both must preserve their own defined timing and termination rules.
+
+Hardware-side assertions and properties retain their documented HIAL path.
+VIAL reuses shared temporal meanings instead of creating a competing property
+language. A check's placement in a hardware source does not make the check
+synthesizable; each supported projection needs its own explicit contract.
+
+### Current VIAL topology and the future-layer question
+
+The current selected VIAL architecture has one public `.vial` language. It is
+not implemented as public VIAL2, VIAL1 and VIAL0 languages:
+
+```text
+.vial source
+    -> private SemanticIR: checked verification meaning
+    -> private ExecutionIR: bound, capability-checked execution plan
+    -> target verification artifacts
+    -> execution and normalized results, where the profile supports them
+```
+
+**IR** means intermediate representation. The private IR objects are compiler
+implementation boundaries, not public objects for clients to edit. Public tools
+provide documented, sanitized reports and artifacts.
+
+Binding uses a versioned HIAL/VIAL bridge: a documented description of the DUT's
+identities, types, interfaces, clock/reset domains and permitted observations.
+IAL2 hardware contributions remain reviewable through generated IAL1 before
+that bridge consumes them. VIAL does not obtain a hidden shortcut into raw DUT
+internals.
+
+The director's full-chip discussion requires complete lowering for both domains
+and describes the IAL2-to-IAL1-to-IAL0 ladder for both. Whether future VIAL should
+gain literal numbered source layers, or retain its existing topology with the
+same preservation guarantees, is an explicit pending architecture clarification.
+Neither interpretation changes the current contract. The
+[proposed horizon](../../../docs/tasks/FULL-CHIP-SOURCE-AUTHORING-HORIZON.md)
+owns that question. The
+[VIAL architecture overview](16d-hial-vial-verification-architecture.md#two-peer-intent-systems)
+explains the current topology and
+[the lifecycle reference](16dg-vial-public-lifecycle-reference.md) describes
+the actual public commands and results.
+
+### What each lowering step must preserve
+
+The complete-design goal requires explicit obligations at every adjacent step,
+rather than relying only on a final HDL file that looks plausible:
+
+| Obligation | What a reader should be able to establish |
+| --- | --- |
+| Values and types | Widths, signedness, encodings and unknown/high-impedance behavior retain their specified meaning |
+| Timing | Clock, reset, sampling phase, latency, ordering and concurrency follow the source contract and selected schedule |
+| Configuration | Defaults, aliases, legal overrides, optional structure and derived sizes remain consistent in the selected configuration |
+| Ownership | Each signal, transaction, storage object and observation still refers to the intended scope and instance |
+| Completion | Acceptance, progress, response, timeout and cancellation rules are preserved where the feature defines them |
+| Verification | Stimulus, expected behavior, checking and coverage keep their distinct meanings and hardware bindings |
+| Failure | Unsupported constructs or target capabilities produce a useful diagnostic instead of an approximate artifact presented as correct |
+| Traceability | Reports and diagnostics can connect generated objects and results back to the originating source |
+
+These are acceptance requirements, not a claim that every listed feature already
+ships. Target/profile support is a separate part of each feature's documented
+boundary.
+
+Timing includes **when** a value is observed. Sampling a registered output
+before a clock edge can give a different answer from sampling it after that
+edge. VIAL defines logical domain-cycle and phase ordering; a backend must
+implement that ordering rather than inheriting an accidental simulator event
+order. See [logical time](16d-hial-vial-verification-architecture.md#logical-time-and-reproducibility)
+for the current contract. Reset timing and observation validity also need their
+declared rules; changing a clocked observation into an arbitrary immediate read
+is not a harmless syntax translation.
+
+Three examples show why spelling or equal numbers are insufficient:
+
+- An actor parameter `W` and a transaction parameter `W` can have different
+  meanings. Even equal defaults do not make them the same dependency.
+- Two generated instances may share one source declaration while selecting
+  different legal configurations. Their observations need instance identity.
+- A verification Boolean can drive a known hardware logic value under an
+  explicit representation relation. That does not authorize discarding an
+  unknown hardware value when observing it in the opposite direction.
+
+See [parameter-sized interfaces](13a-actor-interface.md#interface) for current
+width limits, and the
+[type-binding boundary](16d-hial-vial-verification-architecture.md#current-type-binding-decision-boundary)
+for VIAL/HIAL representation rules.
+
+### Worked example: hardware protocol intent
+
+The checked source `ppif/ahb_lite_subordinate.ppif` describes a bounded AHB
+subordinate. This excerpt is part of its transfer declaration, not a standalone
+program:
+
+```lisp
+(unmapped-address error)
+(unsupported-size error)
+(unsupported-transfer error)
+(response (okay 1'b0) (error 1'b1))
+(error-completion two-cycle)
+```
+
+At IAL2 this declares protocol behavior. The IAL1 realization must express the
+accepted transfers, storage behavior and response orchestration. The IAL0
+realization must make the selected cycles, control and assignments explicit.
+HDL generation must implement that schedule and its reset/interface contracts.
+Changing an error response into an ordinary successful completion would violate
+the requirement even if the generated HDL compiled.
+
+From the repository root, check the complete source with:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/ahb_lite_subordinate.ppif
+```
+
+This is source checking, not a new simulation or proof of all protocol behavior.
+The [AHB tutorial](16dh-vial-ahb-end-to-end-tutorial.md) follows this actual design
+and its verification pair through the supported workflow.
+
+### Worked example: verification intent
+
+The paired source `vial/ahb_subordinate_base_output_arbitration.vial` names a
+successful transfer scenario and an unsupported-size scenario. Its exact source
+includes this check inside the successful scenario:
+
+```lisp
+(expect response_ok (same (sample response) #b0))
+```
+
+`response` is a typed bridge-bound observation of `HRESP`. `sample` reads it under
+the fixture's defined sampling rules. `same` asks for exact four-state equality;
+it must not silently treat an unknown value as a known zero. `response_ok`
+identifies the expectation so a result can report which source check succeeded
+or failed.
+
+The verification compiler checks that meaning, binds the observation to the
+reviewed DUT, plans when and how to evaluate it, and emits the selected target's
+verification implementation. A different target may use different processes or
+helper routines while preserving the defined observation and result.
+
+Check the complete verification source with:
+
+```bash
+./bin/fsmgen vial check --json vial/ahb_subordinate_base_output_arbitration.vial
+```
+
+Checking source does not run the fixture. The
+[tutorial](16dh-vial-ahb-end-to-end-tutorial.md) separately explains planning,
+execution and the bounded comparison with an independent handwritten oracle.
+
+### Source identity survives expansion
+
+Source identity means being able to answer: which authored declaration or action
+caused this generated object or observed result? It is richer than a generated
+signal name or a source line alone. Scope, instance, configuration and source
+location can all matter.
+
+One source action may produce several objects, and one generated object may
+implement several source obligations. The mapping therefore need not be
+one-to-one. Optimizing or renaming generated code must not make a failed check
+indistinguishable from a different source check. This is a required preservation
+property; each current report exposes only its documented identity fields.
+
+### How users and tools review the result
+
+Readable Lispish source is the authoring surface. Generated intermediate source,
+public semantic/schedule reports, diagnostics and result manifests provide
+different review views. An API client should use the documented public view
+appropriate to its question, rather than depending on private compiler objects.
+
+The long-term requirement is that the entire feature set be actionable through
+API/MCP, with ChatGPT/Claude plugins and graphical interfaces consuming those
+same authoritative capabilities. Current exposure is the advertised subset.
+An **API** is a programmatic interface; **MCP** (Model Context Protocol) gives AI
+clients a tool-access protocol. Neither replaces the compiler's language meaning.
+See [the API reference](11a-perl-api-reference.md) and
+[VIAL lifecycle](16dg-vial-public-lifecycle-reference.md) for actual operations;
+this explanation introduces no new command or effectful MCP capability.
+
+### What counts as evidence
+
+Parsing establishes that the source is admitted. Type checking establishes the
+selected static rules. Lowering checks establish legal intermediate artifacts.
+HDL compilation establishes acceptance by a particular tool/profile. Execution
+tests exercise selected behavior. Independent semantic oracles check meaning
+without merely repeating the implementation's assumptions. These obligations
+complement each other; passing an earlier one cannot substitute for a later one.
+
+The goal is to verify each feature's complete required path, including meaningful
+invalid cases and preservation at adjacent boundaries. Implementations use
+focused checks per slice, then complete verification after the feature set is
+implemented. Backend parity must name its supported semantics, configurations
+and profiles; similar generated text or a pair of successful builds is not a
+general equivalence proof.
+
+FSMGen's full-chip deliverable ends at a complete implementation-ready source
+tree. HDL emission belongs to that compilation. Downstream synthesis, physical
+implementation, fabrication and silicon signoff remain external responsibilities.
+Use the [feature matrix](13k-isf-feature-support-matrix.md),
+[VIAL availability](16d-hial-vial-verification-architecture.md#current-availability-at-a-glance)
+and [backend backlog](14l-backends-validation-and-apis.md) to distinguish today's
+supported paths from the complete-design goal.
 
 ## Generated storage and completion reports
 
