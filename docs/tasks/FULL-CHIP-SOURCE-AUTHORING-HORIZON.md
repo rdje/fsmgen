@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `R14 / long-term full-chip source authoring`
 - Created: `2026-10-25`
-- Last updated: `2026-10-25`
+- Last updated: `2026-10-26`
 - Owner: repo-local workflow
 
 ## Goal
@@ -34,9 +34,9 @@ efficient Lispish/S-expression form without useless verbosity.
 - Every HIAL construct has a defined, reviewable path through
   IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL, preserving specified semantics
   and source identity at each edge. VIAL has the same universal preservation
-  obligation. Literal future VIAL layer topology is pending clarification at
-  `.13`; the current single-language contract remains selected. No feature is
-  complete while its required lower-layer realization remains missing.
+  obligation through one public VIAL language and checked semantic/execution
+  stages, reaffirmed at `.13` under delegated engineering authority. No feature
+  is complete while its required lower-layer realization remains missing.
 - Every design feature has a complete Lispish/S-expression authoring surface:
   concise common cases, consistent vocabulary and scope, composable reusable
   forms, and readable detailed control. Required semantics remain explicit.
@@ -97,7 +97,7 @@ efficient Lispish/S-expression form without useless verbosity.
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.5`
   Status: `deferred`
   Goal: `Provide the VIAL initial functional-verification capabilities required by the selected complete designs.`
-  Acceptance: `After .2, coordinate existing HIAL/VIAL and simulator API owners. Select executable models, stimuli, assertions, scoreboards, coverage, temporal checks and actionable traces by actual design needs; preserve authored semantics separately from observed execution. Split gaps, qualify independent expected behavior and known-bad controls, and keep unsupported runtime/profile boundaries explicit.`
+  Acceptance: `After .2, coordinate existing HIAL/VIAL and simulator API owners. Retain one public VIAL language with checked SemanticIR/ExecutionIR and a versioned HIAL bridge. Select executable models, stimuli, assertions, scoreboards, coverage, temporal checks and actionable traces by actual design needs; preserve authored semantics separately from observed execution. Split gaps, qualify independent expected behavior and known-bad controls, and keep unsupported runtime/profile boundaries explicit.`
   Verification: `Deferred; this does not promote current generated verification artifacts to runtime proof.`
   Commit: `pending`
 
@@ -140,22 +140,22 @@ efficient Lispish/S-expression form without useless verbosity.
   Status: `done`
   Goal: `Reaffirm complete adjacent-layer lowering for every HIAL and VIAL construct through both HDL targets.`
   Acceptance: `Record the director's DBIQNP clarification in this proposed horizon, roadmap and book. Require explicit IAL2-to-IAL1-to-IAL0-to-SystemVerilog/VHDL paths, semantic preservation and source provenance for hardware and verification constructs. Distinguish synthesizable hardware from verification behavior, expansion from one-to-one syntax translation, and the goal from current backend/profile coverage. Keep active implementation ownership unchanged; validate docs and commit without starting a compiler redesign.`
-  Verification: `The director explicitly requires every construct at each IAL to lower cleanly to the next, through HDL, for both HIAL and VIAL. Canonical scope now records that requirement and its semantic/evidence criteria. The discussion requests the ladder in both domains without requiring verification constructs to synthesize or use identical native HDL syntax. Subsequent .12 identifies the unresolved interpretation of numbered VIAL source layers; .13 owns that clarification against current decision0032. Existing target gaps remain owned work; no unsupported profile is promoted and no feature is implemented. MEMORY.md remains at ISF-REDUCTION-DELIVERY.2.3.3.3.2. Book/task/mandatory doctrines qualify this discussion record.`
+  Verification: `The director explicitly requires every construct at each IAL to lower cleanly to the next, through HDL, for both HIAL and VIAL. Canonical scope now records that requirement and its semantic/evidence criteria. The discussion requests the ladder in both domains without requiring verification constructs to synthesize or use identical native HDL syntax. Subsequent .12 identifies the public-layer/topology distinction; .13 resolves it by delegated engineering selection consistent with decision0032. Existing target gaps remain owned work; no unsupported profile is promoted and no feature is implemented. MEMORY.md remains at ISF-REDUCTION-DELIVERY.2.3.3.3.2. Book/task/mandatory doctrines qualify this discussion record.`
   Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.11: require complete HIAL and VIAL lowering paths`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.12`
   Status: `done`
   Goal: `Teach the complete lowering contract in a linked mdBook reference annex without conflating intended and shipped topology.`
-  Acceptance: `The director requires thorough explanation accessible to any reader. Extend the existing Lowering Reference with progressive definitions, diagrams, hardware/verification comparisons, adjacent-edge obligations, concrete examples, source identity, timing/types/configuration, API/MCP review and qualification boundaries. Link the introduction and VIAL architecture overview. Reconcile decision0032's current single-language VIAL topology explicitly; preserve the director's literal ladder request while .13 owns its unresolved interpretation. Do not invent public VIAL layers or a current full-chip/backend-parity claim. Verify documented bounded commands, book links/rendering and mandatory doctrines; retain implementation Memory unchanged.`
-  Verification: `The existing Lowering Reference now opens with a progressive annex: terms and layer responsibilities, HIAL/VIAL comparison, current VIAL source/SemanticIR/ExecutionIR topology, preservation obligations, actual AHB source excerpts and checked commands, source identity, API/MCP review, evidence and downstream boundaries. Introduction and VIAL overview link directly to it; SUMMARY remains bounded and unchanged. The source-only HIAL strict check and VIAL check both exit0 with success:true; complete normalized products, source hashes and base revision retain in docs/audits/lowering-contract-annex-source-checks-20261025.json.gz. These are source checks, not new runtime or preservation proof. Decision0032/current overview explicitly contradict an assumption of numbered public VIAL layers; .13 owns the clarification, and the annex/intro/roadmap now distinguish that unresolved future interpretation from the current selected architecture. The earlier .11 discussion record is retained in Git; its universal lowering requirement remains, while topology is not asserted as settled. No compiler, source grammar, public schema, capability or implementation Memory change. Book rendering, links, task integrity and normal mandatory doctrines gate this documentation slice.`
+  Acceptance: `The director requires thorough explanation accessible to any reader. Extend the existing Lowering Reference with progressive definitions, diagrams, hardware/verification comparisons, adjacent-edge obligations, concrete examples, source identity, timing/types/configuration, API/MCP review and qualification boundaries. Link the introduction and VIAL architecture overview. Reconcile decision0032's current single-language VIAL topology explicitly; preserve the director's literal ladder request with .13 resolving its interpretation under delegated engineering authority. Do not invent public VIAL layers or a current full-chip/backend-parity claim. Verify documented bounded commands, book links/rendering and mandatory doctrines; retain implementation Memory unchanged.`
+  Verification: `The existing Lowering Reference now opens with a progressive annex: terms and layer responsibilities, HIAL/VIAL comparison, current VIAL source/SemanticIR/ExecutionIR topology, preservation obligations, actual AHB source excerpts and checked commands, source identity, API/MCP review, evidence and downstream boundaries. Introduction and VIAL overview link directly to it; SUMMARY remains bounded and unchanged. The source-only HIAL strict check and VIAL check both exit0 with success:true; complete normalized products, source hashes and base revision retain in docs/audits/lowering-contract-annex-source-checks-20261025.json.gz. These are source checks, not new runtime or preservation proof. Decision0032/current overview establish a single-language VIAL topology; this initial annex exposed the distinction from a literal numbered-layer interpretation. The earlier .11 discussion record is retained in Git; its universal lowering requirement remains. At this .12 checkpoint the topology choice was held open; subsequent .13 resolves it through delegated engineering selection. No compiler, source grammar, public schema, capability or implementation Memory change. Book rendering, links, task integrity and normal mandatory doctrines gate this documentation slice.`
   Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.12: explain hardware and verification lowering in the book`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.13`
-  Status: `deferred`
-  Goal: `Resolve whether the future VIAL lowering requirement means numbered public layers or semantic guarantees on the existing stages.`
-  Acceptance: `P1 documentation/architecture consistency: the director's DBIQNP says both HIAL and VIAL use IAL2-to-IAL1-to-IAL0-to-HDL. Decision0032 and the current book explicitly select one .vial language with private SemanticIR/ExecutionIR and reject public VIAL0/1/2 languages. A clarification is required before either interpretation becomes a settled future architecture. Record the director's answer, reconcile horizon/book/roadmap and identify any future supersession owner; never change current compiler topology or implementation priority merely from this discussion.`
-  Verification: `Reproduce by reading scripts/decision_records.py read 0032 and docs/book/src/16d-hial-vial-verification-architecture.md, section Two peer intent systems: one source/two private IRs, no numbered public VIAL languages. The earlier discussion record and introduction did not explain this distinction, risking readers mistaking the desired universal discipline for a selected VIAL redesign. Root cause is conflating a lowering guarantee with a public source-layer topology. Owner .12 documents the current topology immediately; this P1 follow-up is scheduled first when the pending director clarification arrives, before future VIAL layer selection. Async question asks to keep one language with the same guarantees or eventually add explicit VIAL2/VIAL1/VIAL0. No answer is inferred from elapsed time; current decision0032 remains authoritative.`
-  Commit: `pending director clarification`
+  Status: `done`
+  Goal: `Select the production-oriented VIAL topology under the director's delegated engineering authority.`
+  Acceptance: `Resolve the P1 ambiguity between the universal lowering requirement and decision0032's one-source/two-private-IR architecture. The director delegates the choice to the engineer. Select one coherent VIAL language with composable high-level and detailed verification constructs, typed semantic meaning, explicit DUT binding/execution planning and qualified target source. Keep HIAL's numbered source ladder and universal semantic/source-preservation obligations in both domains. Synchronize book/roadmap/horizon and clear the pending Memory flag; no compiler redesign, new runtime/profile or implementation-priority pivot.`
+  Verification: `The director answers the pending choice by explicitly delegating the state-of-the-art/signoff/production-quality design decision to the engineer. Chosen: one public VIAL S-expression language, private checked SemanticIR and ExecutionIR, a versioned HIAL bridge and explicit target verification lowering, consistent with existing decision0032. High-level and detailed verification concerns compose within that language. HIAL retains IAL2-to-IAL1-to-IAL0-to-HDL. Both domains require complete legal target routes, semantic/source preservation, independent oracles and profile-specific qualification. The earlier ambiguity was conflating compiler lowering rigor with a requirement for numbered public VIAL languages; the book now teaches the settled choice and its rationale. Official MLIR conversion, Accellera UVM reuse and OSVVM package documentation inform reference principles, not a certification or new dependency. Universal state-of-the-art, comparative performance, new backend coverage and whole-chip production signoff are not asserted. All original full-chip, expressive-language and API/MCP goals remain. The implementation pointer stays ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2; the separate pending-choice flag is cleared. Book rendering/links, task integrity and mandatory doctrines gate this documentation decision.`
+  Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.13: confirm one-language VIAL lowering`
 
 ## Acceptance Checklist (enforced)
 
@@ -249,8 +249,9 @@ work or changing the required delivery frontier.
 The director reaffirms that every IAL2 feature/construct lowers cleanly to IAL1,
 every IAL1 feature/construct to IAL0, and every IAL0 feature/construct to HDL
 (SystemVerilog and VHDL), for both HIAL and VIAL. This is the requested completeness
-contract; `.13` clarifies its literal future VIAL topology against decision0032.
-Universal semantic preservation applies regardless of that choice. Source authors
+contract. At `.13`, the director delegates topology selection to the engineer:
+one public VIAL language and explicit checked compiler stages remain selected
+under decision0032. Universal semantic preservation applies to both domains. Source authors
 may start at any layer; compilation from an upper layer retains every adjacent
 lowering obligation.
 
@@ -279,13 +280,37 @@ VIAL substrate decisions and required delivery priority remain unchanged.
 ## Explanatory annex acceptance (enforced)
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — scripts/decision_records.py read 0032 shows one public VIAL language and two private IRs; git log -S 'There are not three public VIAL0/VIAL1/VIAL2 languages' -- docs/book/src/16d-hial-vial-verification-architecture.md authenticates the existing explicit topology. The earlier short lowering paragraph conflated universal semantic preservation with a settled numbered VIAL topology and lacked a progressive explanation.
-- [x] **ADDRESSED (verified)** — A linked reference annex explains every layer, hardware versus verification, adjacent-edge preservation, timing/types/configuration, actual examples, source identity, API/MCP review and evidence. It corrects the ambiguity, records P1 ownership and leaves the director clarification pending. Both documented complete source checks pass with success:true; no execution result is inferred.
+- [x] **ADDRESSED (verified)** — A linked reference annex explains every layer, hardware versus verification, adjacent-edge preservation, timing/types/configuration, actual examples, source identity, API/MCP review and evidence. It records P1 ownership and held the director clarification pending at that checkpoint; .13 subsequently resolves it. Both documented complete source checks pass with success:true; no execution result is inferred.
 - [x] **NO REGRESSION** — Implementation Memory, grammar, compiler behavior, schemas and capabilities are unchanged. Book rendering/source-link checks, task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate this explanatory documentation slice.
 
-## Blockers
+## Delegated architecture selection — 2026-10-26
 
-Future VIAL layer topology awaits the director answer at `.13`; current decision0032
-remains selected. This does not block the independent required width work.
+The director delegates the VIAL topology choice to the engineer, asking for the
+state-of-the-art, signoff and production-quality option. Select the existing
+one-language architecture of decision0032 for the full-chip direction: one
+expressive S-expression language, checked semantic meaning, a versioned HIAL
+bridge, explicit bound execution planning and target verification source.
+High-level scenarios/models and detailed actions/timing compose within that
+language. HIAL retains its numbered public source layers.
+
+This preserves the same universal lowering rigor in both domains. Each feature
+needs specified semantics, traceable source identity, complete legal lowering,
+independent behavioral oracles, invalid-case controls and qualified target/profile
+behavior. API/MCP and client access remain required. Production-quality acceptance
+is earned through that evidence; architecture names alone establish no maturity,
+performance, backend parity or silicon signoff claim. External compiler and
+verification references linked in the book support principles, not FSMGen proof.
+No public VIAL0/1/2 languages, new backend dependency or compiler redesign is
+activated. The P1 documentation/topology ambiguity is resolved; required
+SPECFORGE delivery remains the implementation priority.
+
+## Delegated topology acceptance (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — scripts/decision_records.py read 0032 and git log -S 'Select one public, reviewable' -- docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md authenticate the existing one-source/two-private-IR selection. The discussion's universal ladder wording left public VIAL topology ambiguous; the director now explicitly delegates the engineering decision.
+- [x] **ADDRESSED (verified)** — One public VIAL language with explicit checked compiler stages is selected for the full-chip direction. Book, roadmap and proposed horizon explain the same preservation guarantees as HIAL, composable authoring and scoped production-acceptance criteria. The pending clarification flag is cleared, and the active code frontier stays unchanged.
+- [x] **NO REGRESSION** — No source grammar, compiler behavior, public schema, dependency or backend/profile support changes. Book build/source/link checks, task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate the documentation decision. No new full-chip, runtime, comparative-performance or signoff qualification is claimed.
+
+## Blockers
 
 This is proposed backlog. Decision0121 keeps required SPECFORGE delivery and
 publication ahead of activation. The current implementation pointer remains in

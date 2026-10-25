@@ -9,8 +9,8 @@ change.
 
 For a progressive explanation of the layers and their preservation obligations,
 read the [hardware and verification lowering annex](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification).
-It distinguishes the full-chip goal and pending future-layer question from the
-current single-language VIAL topology documented here.
+It explains the full-chip lowering goal and the selected single-language VIAL
+architecture documented here, with current qualification boundaries.
 
 ## Current availability at a glance
 
@@ -99,6 +99,21 @@ binding, scenarios, concurrency, checking, models, coverage, and methodology
 are orthogonal. One `.vial` language keeps those concerns composable; private
 compiler phases preserve strict boundaries without forcing users to choose an
 artificial source level.
+
+The full-chip direction retains this architecture. High-level verification
+intent and detailed execution control compose within one expressive VIAL
+language. Every supported construct needs a complete route through checked
+semantic meaning, explicit DUT binding and execution planning to its required
+SystemVerilog/VHDL verification implementation. HIAL retains its own reviewable
+IAL2 -> IAL1 -> IAL0 path. Both domains require semantic preservation and source
+traceability across their respective stages.
+
+Production-quality acceptance is earned per feature and backend/profile:
+explicit type/time/concurrency semantics, complete legal lowering, independent
+behavioral oracles, known-bad controls, reproducible results where claimed and
+documented public tooling. Choosing this architecture does not extend today's
+backend or runtime qualification; the availability table above remains the
+current boundary.
 
 ## Shipped bounded VIAL version-1 semantic frontend
 

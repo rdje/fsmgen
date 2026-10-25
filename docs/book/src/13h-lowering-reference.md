@@ -80,7 +80,9 @@ VIAL reuses shared temporal meanings instead of creating a competing property
 language. A check's placement in a hardware source does not make the check
 synthesizable; each supported projection needs its own explicit contract.
 
-### Current VIAL topology and the future-layer question
+<a id="current-vial-topology-and-the-future-layer-question"></a>
+
+### VIAL source and checked compiler stages
 
 The current selected VIAL architecture has one public `.vial` language. It is
 not implemented as public VIAL2, VIAL1 and VIAL0 languages:
@@ -103,17 +105,40 @@ IAL2 hardware contributions remain reviewable through generated IAL1 before
 that bridge consumes them. VIAL does not obtain a hidden shortcut into raw DUT
 internals.
 
-The director's full-chip discussion requires complete lowering for both domains
-and describes the IAL2-to-IAL1-to-IAL0 ladder for both. Whether future VIAL should
-gain literal numbered source layers, or retain its existing topology with the
-same preservation guarantees, is an explicit pending architecture clarification.
-Neither interpretation changes the current contract. The
-[proposed horizon](../../../docs/tasks/FULL-CHIP-SOURCE-AUTHORING-HORIZON.md)
-owns that question. The
+The selected full-chip architecture keeps this single public VIAL language and
+requires complete, checked lowering through its semantic and execution stages.
+Reusable high-level scenarios, transactions, models and checks compose with
+detailed actions and timing control in the same source language. Each construct
+must have a defined route to its required target verification implementation.
+The
 [VIAL architecture overview](16d-hial-vial-verification-architecture.md#two-peer-intent-systems)
-explains the current topology and
+explains these boundaries and
 [the lifecycle reference](16dg-vial-public-lifecycle-reference.md) describes
 the actual public commands and results.
+
+Public language levels and internal compiler stages serve different purposes.
+HIAL's named IAL levels let an author choose architectural, scheduling or
+cycle-authored control. VIAL's checks, scenarios, models, observations and
+concurrency are composable verification concerns. Its checked stages make
+binding and execution precise while preserving a coherent authoring language.
+Hardware-side properties keep their documented HIAL lowering path and shared
+temporal meanings.
+
+This is an engineering architecture choice. Relevant reference principles are
+explicit target legality and type conversion in
+[MLIR's conversion framework](https://mlir.llvm.org/docs/DialectConversion/),
+verification-component reuse in
+[Accellera UVM](https://www.accellera.org/downloads/standards/uvm), and
+transaction, coverage and scoreboard libraries in
+[OSVVM](https://osvvm.org/about-os-vvm). These references inform the design;
+FSMGen retains its own contracts and qualification obligations.
+
+Production-quality acceptance requires precise semantics, traceable source
+identities, legal complete target artifacts, independent behavioral oracles,
+meaningful invalid-case checks, reproducible execution where claimed, and
+qualification for each supported backend/profile. The public API/MCP must
+provide the documented review and operating capabilities. These requirements
+define the goal; the current support matrices describe what is qualified today.
 
 ### What each lowering step must preserve
 

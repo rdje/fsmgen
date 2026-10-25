@@ -197,9 +197,10 @@ Direction:
   IAL0 rather than bypassing them;
 - require complete HIAL lowering through IAL2 -> IAL1 -> IAL0 ->
   SystemVerilog/VHDL, with the same semantic/source-preservation discipline for
-  VIAL. The director's request for a ladder in both domains needs a future VIAL
-  topology clarification under horizon `.13`; today's one-language VIAL contract
-  remains selected. Complete target support is a goal, not current qualification;
+  VIAL. Keep one expressive VIAL language with checked semantic, DUT-binding and
+  execution stages before target verification source; horizon `.13` reaffirms
+  decision0032 for the full-chip direction. Complete target support and
+  production-quality qualification remain feature/profile obligations;
 - lower multi-actor IAL2 intent into reviewable ATL networks within IAL1,
   including the required instances, bindings and orchestration before IAL0;
   `IAL2-ATL-LOWERING-INTEGRATION` owns the current composition gap and

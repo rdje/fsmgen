@@ -11,4 +11,3 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None; prior repair commit and its checks are complete and consumed.
 - blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.
-  Separate director clarification: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.13` awaits the future VIAL topology choice; it does not block this frontier.

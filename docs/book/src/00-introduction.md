@@ -23,8 +23,10 @@ Every adjacent step must preserve specified meaning and source provenance;
 expansion into several lower-level constructs is valid. VIAL must provide the
 same preservation discipline for verification behavior, such as checks, monitors
 and stimulus, which need not be synthesizable. Current VIAL uses one `.vial`
-language and private semantic/execution stages. A literal numbered VIAL ladder
-remains a future architecture clarification, not a shipped topology.
+language and private semantic/execution stages; that architecture is also the
+selected full-chip direction. High-level scenarios and detailed verification
+control compose in the same language, with complete checked lowering required
+for every supported feature and target.
 
 The [lowering-contract reference](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification)
 explains the layers, both domains, timing/types/configuration, source identity,
