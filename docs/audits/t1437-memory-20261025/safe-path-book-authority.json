@@ -1,0 +1,20 @@
+{
+  "before": {
+    "files": 65,
+    "lines_total": 73998,
+    "bytes_total": 4144402
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73999,
+    "bytes_total": 4144486
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 1,
+    "bytes_total": 84
+  },
+  "rederive": "Complete previous/current book source member,byte,LF census.",
+  "falsify": "Independent staged aggregate gate; unchanged ceilings.",
+  "durability": "Tracked source/authority and normal gated commit."
+}

@@ -601,7 +601,8 @@ occupied capacity and 4096 MiB RSS per descendant. A cutoff stops the command
 tree and returns the guard's documented failure status.
 
 A receipt marked `complete` records all listed command outcomes. Qualification
-also requires successful command statuses and a complete suite result. Preserve
+also requires successful command statuses and a complete suite result.
+A focused pass qualifies its selected tests; qualify the complete suite separately. Preserve
 an interrupted log, use focused diagnosis, and retain both cutoffs for the retry.
 
 Local full CI qualifies a push. The push starts hosted CI runs whose exact

@@ -1,0 +1,23 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.8.3",
+  "observation_commit": "5ccc32d9d42dceb83f2a348204a79e60a95007f7",
+  "decision": "The complete unchanged T1437 path qualifies its focused test under the existing guard. No current source defect or original allocation cause is established; preserve the original interrupted full3 receipt.",
+  "next": "Director-requested independent Lispish provider .12.1/.12.2 now precedes the next full4. This is separately requested engineering, not a claimed memory fix. New provider inputs require fresh focused compatibility and a clean full run; the old115-case pass does not qualify changed code.",
+  "full_retry_contract": {
+    "journal": "local-full-ci-4",
+    "checkpoint": ".artifacts/t296/push-readiness-20261025-full4.json",
+    "command": [
+      "env",
+      "FSMGEN_T296_CHECKPOINT=.artifacts/t296/push-readiness-20261025-full4.json",
+      "./bin/ci-regression",
+      "full"
+    ],
+    "guard": "unchanged88% host/4096MiB per descendant,2s poll",
+    "prelaunch": "Commit implementation/focused checks and verify clean tree; inspect exclusive journal and current host state before launch; never replay a nonterminal run.",
+    "qualification": "Complete normal full result required before normal authorized push; every exact-SHA expected GitHub workflow/job must succeed before macOS relevance review."
+  },
+  "deferred": "General table/plugin retirement .12.3 follows required publication/macOS/worktree and .6/.10; .11 callback resolution follows removal/retention classification, before POD return.",
+  "rederive": "Exact complete original focused receipt/log/input identity and current saved-only source check.",
+  "falsify": "Retain full3 integer137 and absence of complete-suite credit; no current source change, no root-cause/peak-memory or full-suite inference from focused success.",
+  "durability": "Committed study packet plus this disposition, task/MEMORY/book and normal gated commit."
+}
