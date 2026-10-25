@@ -1380,10 +1380,10 @@
     },
     {
       "content": {
-        "bytes": 12433,
-        "lines": 165,
+        "bytes": 12771,
+        "lines": 166,
         "line_bytes": 774,
-        "sha256": "4db580d4cbedd24a89775ad40c9553cec3e02340eca3009bfa3ed7365acb603b"
+        "sha256": "9e0f8aae9a744469ad11e1b7d540b15ad8e2e313e2f023977f199db8008eb296"
       },
       "id": "0119",
       "metadata": {
@@ -1397,7 +1397,8 @@
           "which scopes must generated child width declarations preserve?",
           "where is library parameter override source provenance lost?",
           "why is library source preservation blocked on nested aggregate normalization?",
-          "where does IAL0 retain authored scalar width expressions?"
+          "where does IAL0 retain authored scalar width expressions?",
+          "where are original transaction parameter defaults retained for width binding?"
         ],
         "authority_status": [
           "- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending"

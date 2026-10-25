@@ -55,9 +55,21 @@ sub capture_actor_width_metadata {
         $overrides{$use->{instance}} = _copy($use->{_parameter_override_sources})
             if exists $use->{_parameter_override_sources};
     }
+    my %source_transactions = map { $_->{name} => $_ } @{$actor->{transactions} || []};
     for my $name (keys %{$args{transaction_params}}) {
+        my $tx = $source_transactions{$name};
+        confess "Width scope '$name' lacks its source transaction\n" unless $tx;
+        my ($params_clause) = grep {
+            ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'params'
+        } @{$tx->{clauses} || []};
+        # Canonical defaults deliberately literalize actor-backed references.
+        # Snapshot the already validated source clause independently so later
+        # binding can distinguish that relation from an equal literal default.
+        my @sources = $params_clause
+            ? map { {name => $_->[0], value => _copy($_->[1])} } @{$params_clause}[1 .. $#$params_clause]
+            : ();
         $transactions{$name} = {owner => $name, actor => $owner,
-            params => _copy($args{transaction_params}{$name})};
+            params => _copy($args{transaction_params}{$name}), parameter_default_sources => \@sources};
     }
     my %instances;
     for my $instance (@{$args{generated_instances} || []}) {

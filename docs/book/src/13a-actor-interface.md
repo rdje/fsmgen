@@ -602,7 +602,9 @@ For example, `wdata` above is fixed at 32 bits in the scheduled carrier;
 changing an emitted HDL parameter does not resize it. Source parsing preserves
 authored symbolic width associations separately from resolved defaults. Private
 module IR now binds actor ports and storage elements to those declarations and
-keeps actor and transaction parameter environments separate;
+keeps actor and transaction parameter environments separate. Transaction scopes
+also retain original parameter-default tokens privately, including actor-backed
+defaults whose executable form is currently literalized;
 carriers and public width reports still use the resolved numbers. Equal numeric
 widths do not establish a shared dependency. Named scalar types keep their
 separate type references. Generic width propagation and library shape
