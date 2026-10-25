@@ -1,0 +1,55 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "role": "informational native Git object-header census; not a completed hosted or push qualification",
+  "head": "88a0834fdf5e3f3df58bf5df82a36f1dfb74267f",
+  "upstream": "54ac1c22d5314943027494f4c270f9c612e62704",
+  "object_types": {
+    "commit": 914,
+    "tree": 12241,
+    "blob": 29092
+  },
+  "largest_new_blobs": [
+    {
+      "oid": "09de42c07670b5759b7acb379f77ede4af400d96",
+      "bytes": 93379242
+    },
+    {
+      "oid": "687e3631d4f34e13bd62a78e364cc87544298968",
+      "bytes": 93189281
+    },
+    {
+      "oid": "019ad7e05bd1910ca531520fc62dae0882cffcf2",
+      "bytes": 89342642
+    },
+    {
+      "oid": "8b911441dbf73eab4e8b71a2884838c640e446d7",
+      "bytes": 89335012
+    },
+    {
+      "oid": "0ce9521d681bdf53eadefe41455a829ab0d7aad4",
+      "bytes": 84795745
+    },
+    {
+      "oid": "af5806cb5ed85d5a8a8c75ba1d1e01b84b3a2c9b",
+      "bytes": 82368442
+    },
+    {
+      "oid": "c84b6cf12410473d046910a391b11fb271ef626b",
+      "bytes": 81715635
+    },
+    {
+      "oid": "f398001eca894b58fd7439b727b4f056a66b1178",
+      "bytes": 81714568
+    },
+    {
+      "oid": "616d8c09f98265c04cb5b1820f7e5f9ee97ae384",
+      "bytes": 76349512
+    },
+    {
+      "oid": "930061985ba4e96726667cb6e12224982f756dab",
+      "bytes": 74720066
+    }
+  ],
+  "method": "git rev-list --objects --no-object-names <upstream>..<head>, then typed ordered git cat-file --batch-check metadata; complete row and unique object closure checked",
+  "limitations": "Header metadata only; remote acceptance and exact pushed SHA remain mandatory."
+}

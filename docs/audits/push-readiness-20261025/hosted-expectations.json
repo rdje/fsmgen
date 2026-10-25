@@ -1,0 +1,673 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "event": "push",
+  "branch": "main",
+  "source_revision": "88a0834fdf5e3f3df58bf5df82a36f1dfb74267f",
+  "observed_at": "2026-10-25T06:06:52.778644+00:00",
+  "canonical_contract": "docs/knowledge/hosted-perl-regression-sharding.md",
+  "method": "Enumerate every tracked push/main workflow job and literal matrix coordinate. IDs include hyphens; reject unresolved name templates and duplicate expected names. Recheck source hashes before matching the exact pushed SHA. This is expected inventory, not a hosted outcome.",
+  "first_draft": "The initial job-ID pattern omitted hyphens and failed its complete-workflow count assertion before writing a plan; corrected pattern includes hyphens.",
+  "workflows": [
+    {
+      "path": ".github/workflows/knowledge-map-gate.yml",
+      "sha256": "19a45b99b8cfa8a3ca25910d8131158ce9701dee97a27206745fb402b54e7605",
+      "workflow": "knowledge-map-gate",
+      "required_jobs": [
+        {
+          "job_id": "knowledge-map",
+          "name": "knowledge-map"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "2c79b8b36dddf56608a56226639a7474ca8b2081f7738397e5aaaec35b0dd4f5",
+      "workflow": "Publish mdBook",
+      "required_jobs": [
+        {
+          "job_id": "build",
+          "name": "build"
+        },
+        {
+          "job_id": "deploy",
+          "name": "deploy"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/regression.yml",
+      "sha256": "bc71a70e525fc859d9f8862a7ee2fe6be2aadca9989062db201b520568fe58bf",
+      "workflow": "Perl FSM Regression",
+      "required_jobs": [
+        {
+          "job_id": "doctrines",
+          "name": "Doctrine enforcement"
+        },
+        {
+          "job_id": "book",
+          "name": "mdBook build"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 0/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 1/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 2/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 3/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 4/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 5/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 6/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 7/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 8/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 9/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 10/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 11/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 12/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 13/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 14/16"
+        },
+        {
+          "job_id": "perl_files",
+          "name": "Perl files 15/16"
+        },
+        {
+          "job_id": "perl_dedicated",
+          "name": "Perl dedicated 0/5"
+        },
+        {
+          "job_id": "perl_dedicated",
+          "name": "Perl dedicated 1/5"
+        },
+        {
+          "job_id": "perl_dedicated",
+          "name": "Perl dedicated 2/5"
+        },
+        {
+          "job_id": "perl_dedicated",
+          "name": "Perl dedicated 3/5"
+        },
+        {
+          "job_id": "perl_dedicated",
+          "name": "Perl dedicated 4/5"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 0/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 1/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 2/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 3/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 4/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 5/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 6/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 7/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 8/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 9/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 10/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 11/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 12/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 13/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 14/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 296 shard 15/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 0/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 1/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 2/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 3/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 4/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 5/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 6/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 7/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 8/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 9/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 10/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 11/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 12/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 13/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 14/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 301 shard 15/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 0/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 1/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 2/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 3/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 4/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 5/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 6/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 7/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 8/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 9/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 10/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 11/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 12/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 13/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 14/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 303 shard 15/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 0/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 1/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 2/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 3/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 4/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 5/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 6/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 7/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 8/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 9/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 10/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 11/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 12/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 13/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 14/16"
+        },
+        {
+          "job_id": "perl_corpus",
+          "name": "Perl corpus 1884 shard 15/16"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 0/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 1/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 2/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 3/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 4/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 5/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 6/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 7/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 8/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 9/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 10/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 11/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 12/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 13/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 14/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 15/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 16/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 17/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 18/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 19/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 20/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 21/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 22/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 23/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 24/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 25/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 26/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 27/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 28/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 29/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 30/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 31/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 32/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 33/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 34/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 35/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 36/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 37/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 38/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 39/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 40/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 41/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 42/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 43/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 44/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 45/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 46/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 47/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 48/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 49/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 50/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 51/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 52/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 53/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 54/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 55/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 56/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 57/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 58/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 59/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 60/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 61/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 62/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 63/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 64/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 65/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 66/68"
+        },
+        {
+          "job_id": "perl_dynamic",
+          "name": "Perl dynamic case 67/68"
+        },
+        {
+          "job_id": "vial_gate",
+          "name": "VIAL regression-promotion gate"
+        },
+        {
+          "job_id": "build",
+          "name": "build"
+        }
+      ]
+    }
+  ]
+}

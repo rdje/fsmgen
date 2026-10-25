@@ -600,6 +600,10 @@ the command's exit status is preserved. The memory cutoffs remain 88% of host
 occupied capacity and 4096 MiB RSS per descendant. A cutoff stops the command
 tree and returns the guard's documented failure status.
 
+A receipt marked `complete` records all listed command outcomes. Qualification
+also requires successful command statuses and a complete suite result. Preserve
+an interrupted log, use focused diagnosis, and retain both cutoffs for the retry.
+
 Earlier guard versions discarded stdin when launching their background child.
 A program supplied on stdin could consequently exit zero without executing.
 The regression retains that exact committed version as an independent failure

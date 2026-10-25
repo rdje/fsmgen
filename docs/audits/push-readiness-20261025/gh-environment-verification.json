@@ -1,0 +1,19 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "scope": "Reverify the existing GH environment guidance before post-push use; no correction or new setting is introduced.",
+  "installed_help": {
+    "command": [
+      "gh",
+      "help",
+      "environment"
+    ],
+    "exit_status": 0,
+    "documented_controls": [
+      "GH_TELEMETRY=0 disables telemetry",
+      "GH_NO_UPDATE_NOTIFIER disables CLI update notices",
+      "GH_NO_EXTENSION_UPDATE_NOTIFIER disables extension update notices"
+    ]
+  },
+  "primary_source": "https://cli.github.com/manual/gh_help_environment",
+  "limitations": "Documentation agreement, not a telemetry event/payload capture. No gh config mutation, token output or whole-environment dump."
+}

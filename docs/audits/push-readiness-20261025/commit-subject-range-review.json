@@ -1,0 +1,9 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "priority": "P2 review; not a publication hold",
+  "status": "unverified workflow-range hypothesis; confirm actual event/checkout refs before classification",
+  "source": ".github/workflows/regression.yml",
+  "observation": "The subject guard selects origin/main as base and scans base..HEAD. A main-push checkout may have origin/main==HEAD and therefore scan no subjects; PR synthetic merge selection also merits checking.",
+  "next": "Keep current full-CI inputs immutable. At the full-run evidence handoff, add tracked task ownership before any repair. Verify event/ref behavior through public checkout contracts and actual post-push refs; independently check the actual pre-push commit range. If confirmed, schedule a separate verified repair after hosted/macOS/worktree follow-up and before POD return.",
+  "boundary": "No current result proves the hypothesis; no changed workflow, new blocker, history rewrite, provider/source probe or other-repository write."
+}

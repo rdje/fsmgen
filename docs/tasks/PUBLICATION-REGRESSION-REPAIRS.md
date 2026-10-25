@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -86,11 +86,32 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Both genuinely required current intakes completed with integer0, no timeout, complete normalized stdout/stderr, actual wrapper/producer traces and absent owned sessions/groups under fixed60 and RAM88/4096. Before capture, contract.json declares the literal Knowledge Map route and exact Git-derived T1388 conditional-do source with the complete authored transaction_port_bindings row from canonical T1243 meanings. No old source/diagnostic main or startup control was replayed. observe.py preserves the actual programme, input/revision/hash, clocks/owned PID/session, products and trace; default saved checks do not launch queries. verify.py proves complete finite case closure and exact original fixture selection; genuine omitted/extra/covaried-fixture and wrong status/type/clock/recipe/settlement/covaried-product controls refuse. authority-disposition.json pins original failures, retains the missing defaults schedule slot and invalid diagnostic-parent outcome, and identifies original provider telemetry unavailable through current exec/session APIs without claiming global host-log absence. Original causes stay open in SEM .93/ISF-REDUCTION .16; their before-publication observed-query and explicit-disposition portion is met. normal-query-intake-focused.json retains saved/current Knowledge Map/locality checks, all status0. Book explains the separate claims and saved-only replay. Native book/POD/source/index and complete staged/normal gates are required before commit. No producer/API/DSL/corpus/MCP behavior change, historical causal repair, raw-root/full-environment or latency-distribution claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.7: qualify normal publication query observations`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.8`
+  Status: `pending`
+  Goal: `Diagnose and resolve the current T1437 memory interruption without weakening guards or coverage.`
+  Acceptance: `P1 pre-push. Full3 at88a0834fdf records guard137 after occupied host capacity89.2 reaches fixed88 while T1437 is active; original per-process allocation at that instant is missing, so do not blame the test or other apps without evidence. After the full3 outcome commit and due cleanup .9, inspect canonical AXI contracts/code/tests/book and declare exact focused input/programme, progress/memory observations and distinguishing controls before any collector/source change. Use focused checks under unchanged88/4096, retain first outcomes and separate occupied capacity from kernel pressure. Fix a reproduced current cause at the correct production/test boundary, preserving every assertion/case and public behavior; do not mask a leak by dropping coverage. If the cause does not reproduce, retain the original attribution gap and qualify a safe current path explicitly. Commit each completed slice before fresh clean full CI; no broad retry or higher cap merely to seek a pass. Full4 needs its own live journal and explicit t296 checkpoint.`
+  Verification: `Owned current resource constraint, distinct from historical native startup. Full3 reports prior repaired test files and T1436 successful, but no T1437/full-suite/VIAL/book/checkpoint outcome. The guard named only the occupied-capacity trigger. No current allocation-cause diagnosis or fix is claimed.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.9`
+  Status: `pending`
+  Goal: `Complete the due artifact cleanup before another long verification run.`
+  Acceptance: `P1 maintenance after the full3 outcome commits clean, before .8 long focused work. Read the latest cleanup record, canonical cleanup/locality procedures and relevant book. Census root/project-local generated artifacts and required Rust log/bin locations without crossing Git write boundaries or inspecting submodule implementations. Preserve all original evidence, current source/book, required caches and planned worktrees. Delete only exact provably disposable owned artifacts; a no-removal outcome is valid when authority is absent. Overwrite docs/ARTIFACT_CLEANUP.md with only the current date/one-line result, retain dated evidence with honest metadata-only versus byte/absence scope, run focused docs/book/doctrine checks and commit before .8.`
+  Verification: `Latest entry2026-10-24T08:30:52Z; the interrupted full3 ran beyond the next due date. No cleanup deletion has been attempted during that verification. No new long run should precede this owned maintenance slice.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.10`
+  Status: `pending`
+  Goal: `Verify and repair any main-push commit-subject range gap in CI.`
+  Acceptance: `P2 after hosted qualification, macOS review, worktree compatibility and .6 guide repair, before POD return. This is an unverified workflow-range hypothesis, not a publication hold. Inspect actual checkout/event before/head refs through published GitHub contracts and project-owned Git history; verify whether origin/main..HEAD is empty on main pushes and whether PR synthetic merges affect selection. Independently inspect the actual pre-push subject range. If a real gap is confirmed, own a separate causal repair with complete intended range/subject controls, current CI-selection tests, book and normal gates, without rewriting history or writing any other repository. If not confirmed, close the hypothesis with exact evidence.`
+  Verification: `Read-only workflow inspection sees origin/main selected as base, followed by git log base..HEAD. Current observation does not prove event checkout behavior; source/next-step note is retained in commit-subject-range-review.json. No guard change, failure classification or new blocker is inferred.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.6` | `pending` | Deferred until SEM .69.3 full CI/push/hosted/macOS/worktree qualification; return there after .5 commits. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.9` | `pending` | After SEM .69.3 commits the interrupted full3 outcome clean, complete due cleanup; then .8 focused memory diagnosis before any full retry. |
 
 ## Decisions
 
@@ -99,7 +120,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- .6 awaits the ordered SEM .69.3 publication/macOS/worktree follow-up. No external blocker for fresh full3 after .5 commits; full CI/push/hosted qualification remain pending.
+- Full3 is interrupted by the fixed host-capacity guard; .8 owns the current attribution/fix, after due cleanup .9. Full CI/push/hosted success is unqualified. .6/.10 remain ordered P2 follow-ups; historical native causality imposes no renewed blanket hold.
 
 ## Acceptance Checklist — `.1`
 

@@ -1,0 +1,21 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "before": {
+    "files": 65,
+    "lines_total": 73984,
+    "bytes_total": 4143608
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73988,
+    "bytes_total": 4143850
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 4,
+    "bytes_total": 242
+  },
+  "rederive": "Whole book source member/byte/LF counts from committed and current sources.",
+  "falsify": "Independent staged aggregate reference gate; unchanged ceilings.",
+  "durability": "Tracked source, authority and normal gated commit."
+}
