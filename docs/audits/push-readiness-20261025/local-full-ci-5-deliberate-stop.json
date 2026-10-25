@@ -1,0 +1,23 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "utc": "2026-10-25T17:55:45.538131+00:00",
+  "reason": "Deliberate stop after diagnosed t1475 stale historical byte oracle; repair before next complete qualification. Not a host-capacity or native-startup failure.",
+  "guard_birth": "Sun Oct 25 15:45:46 2026",
+  "identities": {
+    "96936": "96936 96868 Sun Oct 25 15:45:46 2026     bash",
+    "97010": "97010 96936 Sun Oct 25 15:45:46 2026     /usr/bin/perl",
+    "8364": "8364 97010 Sun Oct 25 18:54:00 2026     /usr/bin/perl",
+    "33920": "33920  8364 Sun Oct 25 18:55:33 2026     /usr/bin/perl"
+  },
+  "signals": [
+    {
+      "pid": 97010,
+      "signal": "TERM"
+    },
+    {
+      "pid": 33920,
+      "signal": "TERM"
+    }
+  ],
+  "after_term": {}
+}

@@ -1,0 +1,8 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.3",
+  "source": "Director clarification while full5 is running; explicitly confirmed in the conversation.",
+  "target": "Retire the PPlugin layer and specs/pplugin.spec after migrating any genuine remaining callers. The old grammar must not be retained merely as a regression witness.",
+  "test_followup": "Replace the current competing-grammar witness with a small self-contained test grammar before removing the old grammar. Preserve the parser-stability regression.",
+  "current_state": "Lispish already directly reads module-origin specs/Lispish.spec and compiles through LinkedSpec::Get, bypassing PPlugin.",
+  "continuity": "CI production/test/tracked-document inputs remain frozen. Apply this confirmed acceptance target to the existing .12.3 task at the next outcome/task commit before the turn ends. This sidecar is a queued continuity record, not task completion or full-CI credit."
+}

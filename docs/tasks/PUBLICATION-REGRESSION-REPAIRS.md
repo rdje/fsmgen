@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -161,8 +161,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.12.3`
   Status: `pending`
-  Goal: `Remove verified obsolete table/plugin code and explain any required remainder.`
-  Acceptance: `After provider decoupling and exact current-caller classification, remove unused TableScript/TableSort/PPlugin components in bounded verified slices. Retain only concrete current features and name their actual use. Update packaging/tests/book and close .11 by verified removal when its obsolete component disappears, or repair it if a current purpose retains it. Commit with focused checks; full CI before the next push.`
+  Goal: `Retire PPlugin and specs/pplugin.spec after migrating genuine remaining callers; remove obsolete table code.`
+  Acceptance: `Confirmed director target: retire the PPlugin layer and specs/pplugin.spec entirely after migrating any genuine remaining callers to explicit interfaces. Replace T2106 competing-grammar dependency with a small self-contained test grammar before removing the old grammar, preserving the parser-stability regression. The old grammar is a temporary test witness, never grounds for permanent retention. Classify current callers and remove obsolete TableScript/TableSort in bounded verified slices; name the concrete use of anything temporarily retained and schedule its migration/removal. Update packaging/tests/book and close .11 by verified removal when its obsolete component disappears, or repair any genuinely required interim behavior. Commit focused slices; full CI before publication. Current publication/macOS/worktree order is unchanged.`
   Verification: `No removal attempted. Retained-helper candidates are also owned here after current-caller classification: Lispish::grep scalar branch uses \@$mo while its list result is @mo; a minimal future witness compares both contexts over two matching raw nodes, with possible missing-match impact if retained. Runtime behavior is not yet verified. The file-reader refusal also says does not exit rather than exist. Resolve by verified removal of unused helpers or focused repair of retained behavior/wording; neither is blamed for current provider/resource issues.`
   Commit: `pending`
 
@@ -171,13 +171,21 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
   Acceptance: `P1 immediately after settled full4 outcome commits clean, before any full5 or push. Full4 from26c0282b4 exits137 at host occupied capacity88.1 against88 while T1436 remains active;494 earlier files pass, with no T1436/full-suite/VIAL/book/checkpoint outcome. Reproduce from the retained exact command/log; no test assertion or producer fault is inferred. Query canonical memory cards, then retain bounded dated current OS-counter/kernel-pressure and executable-only process-RSS observations under an explicit current-admission contract. Current post-stop measurements cannot reconstruct original at-cutoff allocation or pressure. Establish a genuinely changed safe current path under unchanged88/4096 limits; separate scoped product reproduction from unrelated host load. Terminate only independently authenticated own jobs, never unrelated processes; no cache deletion, guard relaxation, source-filter narrowing, stale native/main replay or unsupported causal repair. If capacity requires access/authority unavailable to this project, preserve the owned blocker and ask for that specific input only after committing the outcome/diagnosis. Any real small product defect needs its own causal repair and meaningful controls; no fix is selected from a host aggregate. Declare a new exclusive journal/checkpoint only after disposition, then fresh full CI, authorized push and exact-SHA hosted qualification; macOS relevance remains post-push.`
   Verification: `Current-admission contract and two complete dated points retain raw VM/physical/pressure/query and known external compiler/cargo metadata. Previously observed external PIDs20580/87489 are absent; no process is terminated. Counter-derived capacity is57.32275644938151 and57.54127502441406 percent, pressure1, and a separate awk parser agrees on both saved raw snapshots. This establishes changed current admission, not original at-cutoff allocation, global process absence or a future capacity guarantee; both parsers share the adopted formula/raw VM source. After headroom returned, current-admission-book-1 completes all five native book/POD/current-source/index/KMap commands with integer0, resolving the pending render. Every declared provider/source/test/grammar hash remains unchanged; no product memory fix or guard increase is claimed. disposition.json names distinct derivation/falsification/durability legs and missing original scope. Current intake commits before a new exclusive local-full-ci-5/checkpoint under unchanged88/4096, recorder outside guard and durable console. Keep .13 active until a complete fresh full run qualifies the candidate. If shared capacity interrupts again, preserve it and obtain specific coordination before another expensive replay.`
+  Outcome: `Full5 fromb6fde609 passes T1436/T1437/T1438 and552 files throughT1487, then is deliberately settled143 after diagnosed T1475 assertion failure. No host trip occurs in its retained log. Complete log/receipt/known-PID settlement and ahb1475 exact bytes/history are retained; no whole-suite/VIAL/book/checkpoint or hosted success exists. Current capacity admission permits these observations but guarantees no future capacity. .14 owns the immediate causal test repair before .13 resumes fresh full qualification. Confirmed legacy-retirement steering is now tracked under .12.3.`
+  Commit: `Current-admission intakeb6fde609; full5 outcome: this work-unit commit.`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.14`
+  Status: `pending`
+  Goal: `Repair the stale historical AHB metadata-invariance oracle without weakening behavior checks.`
+  Acceptance: `P1 next after settled full5 outcome commits. Reproduce t/1475-ial2-ahb-subordinate.t:69 mismatch; exact current output minus only +interface equals the frozen July hash. Preserve intended interface ownership and all existing protocol/report/reset/output assertions. Replace the frozen cross-history checksum with a same-revision public parse/lower comparison differing only in verification-bridge metadata; prove metadata is actually removed and the base behavior remains. Add an independent behavior-changing adverse control so a vacuous equality cannot pass. Review bridge contract and AHB book; focused T1475/bridge/interface checks, native book/current references and ordinary gates. Then return to .13 for complete fresh full CI and exact-SHA hosted qualification. Do not attribute this test drift to Lispish, resources or native startup.`
+  Verification: `Owned reproduction/impact/history and exact-byte witness: docs/audits/push-readiness-20261025/ahb1475-diagnosis.json. No repair attempted.`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Current points and native render0 qualify an intake candidate; after its clean commit, run exclusive full5 under unchanged limits. Complete local/hosted qualification still precedes macOS/worktree and later follow-ups. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.14` | `pending` | Commit settled full5 assertion-failure outcome, then repair the stale T1475 metadata oracle; return to .13 for complete guarded qualification. |
 
 ## Decisions
 
@@ -186,7 +194,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Complete local full-CI qualification is still absent after full4 guard137. Current .13 points show returned capacity and native book confirmation now passes; the candidate still requires a complete fresh full5. Original at-cutoff allocation/pressure remains unobserved. No historical native blanket hold or completed push/hosted claim is introduced.
+- Full5 is deliberately settled143 after the confirmed stale T1475 checksum; .14 owns its P1 repair before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
 
 ## Acceptance Checklist — `.1`
 
@@ -277,3 +285,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Full4 and first native book confirmation explicitly report host capacity reaching88, without a failing assertion or at-cutoff allocation/pressure attribution. Actual git log -S File-backed identifies30885823 as the already corrected historical capacity metric; that old bug is not recycled. Necessary read-only process/cwd metadata places the later observed compiler in separate stitchcad, without attributing either earlier cutoff to it or taking action there.
 - [x] **ADDRESSED (verified)** — Two declared dated points show lower counter-derived current capacity, pressure1 and known external compiler/cargo PID absence. An independent awk parser agrees with both retained VM snapshots while sharing the stated formula/source; original causes remain missing. Under the returned headroom, current-admission-book-1 completes the native render and all follow-up checks with0. Source hashes conserve; candidate full5 is exclusive and guarded, with no future capacity guarantee or code/leak fix claim.
 - [x] **NO REGRESSION** — knowledge-map: OK and all native book/POD/current-source/index checks pass in current-admission-book-1. Existing current provider and115-case focused compatibility keep their exact unchanged source scope. Complete local full CI and hosted qualification remain open; fresh metadata/staged/normal scripts/check_doctrines.sh gates precede this intake commit.
+
+## Acceptance Checklist — `.13` settled full5 outcome
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full5 says at t/1475-ial2-ahb-subordinate.t line 69: generated IAL0 checksum6f58 differs from frozen3d8. Current exact bytes minus only +interface reproduce3d8; git log -S explicit_internal_signals --reverse identifiesa929fe719 as intended internal ownership emission, alongside the retained input/output changes. This is stale test history, not a parser/resource/native diagnosis.
+- [x] **ADDRESSED (verified)** — Recorder completes integer143 after deliberate authenticated own-tree settlement; complete log/receipt/signal/diagnosis packets and all552 passing-file identities are durable. Known own PIDs are absent. New .14 owns the immediate test repair; no whole-suite success is credited. Confirmed .12.3 retirement direction is tracked without changing running inputs.
+- [x] **NO REGRESSION** — full5-outcome-docs returns integer0 for native mdBook, POD, current-source/build, source-index and Knowledge Map checks; knowledge-map: OK. Ordinary staged/commit doctrine gates remain mandatory. Complete fresh full CI still precedes push.

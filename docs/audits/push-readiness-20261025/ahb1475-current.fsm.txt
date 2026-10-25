@@ -1,0 +1,235 @@
+(?fsm:ahb_lite_subordinate
+
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+interface
+    (input HSEL)
+    (input HREADY)
+    (input HADDR)
+    (input HTRANS)
+    (input HWRITE)
+    (input HSIZE)
+    (input HWDATA)
+    (input wait_cycles)
+    (output HREADYOUT)
+    (output HRESP)
+    (output HRDATA)
+    (internal reg_data_q)
+    (internal ahb_access_done_q)
+    (internal ahb_phase_pending_q)
+    (internal next_addr_q)
+    (internal next_write_q)
+    (internal next_size_q)
+    (internal next_trans_q)
+    (internal next_wait_n)
+  )
+
+  (+size
+    (HSEL 1)
+    (HREADY 1)
+    (HADDR 32)
+    (HTRANS 2)
+    (HWRITE 1)
+    (HSIZE 3)
+    (HWDATA 32)
+    (wait_cycles 4)
+    (HREADYOUT 1 (reset 1))
+    (HRESP 1 (reset 0))
+    (HRDATA 32 (reset 0))
+    (reg_data_q 32 (reset 0))
+    (ahb_access_done_q 1 (reset 0))
+    (ahb_phase_pending_q 1 (reset 0))
+    (next_addr_q 32 (reset 0))
+    (next_write_q 1 (reset 0))
+    (next_size_q 3 (reset 0))
+    (next_trans_q 2 (reset 0))
+    (next_wait_n 4 (reset 0))
+    (ahb_lite_access_cnt 4)
+    (can_accept 1)
+    (enter_data_phase_start 1)
+    (error_complete_start 1)
+    (error_first_start 1)
+    (read_hit_start 1)
+    (write_hit_start 1)
+  )
+
+  (ahb_lite_access_idle_0
+    (<- (HRDATA> 0))
+    (<- (HREADYOUT> 1) <(& (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))
+    (<- (HRESP> 0) <(! (& HREADYOUT (== HRESP 1'b1))))
+    (= (can_accept 1))
+    (<= (addr_q next_addr_q) <ahb_phase_pending_q)
+    (<= (write_q next_write_q) <ahb_phase_pending_q)
+    (<= (size_q next_size_q) <ahb_phase_pending_q)
+    (<= (trans_q next_trans_q) <ahb_phase_pending_q)
+    (<= (wait_n next_wait_n) <ahb_phase_pending_q)
+    (<ahb_phase_pending_q
+      (-> ahb_lite_access_set_1)
+    )
+  )
+
+  (ahb_lite_access_set_1
+    (<- (ahb_phase_pending_q 0) <(! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))))
+    (-> ahb_lite_access_drive_2)
+  )
+
+  (ahb_lite_access_drive_2
+    (= (enter_data_phase_start 1))
+    (-> ahb_lite_access_repeat_init_3)
+  )
+
+  (ahb_lite_access_repeat_init_3
+    (<= (ahb_lite_access_cnt wait_n))
+    (-> ahb_lite_access_repeat_check_5)
+  )
+
+  (ahb_lite_access_wait_4
+    (-> ahb_lite_access_repeat_check_5)
+  )
+
+  (ahb_lite_access_repeat_check_5
+    (-- ahb_lite_access_cnt)
+    (?ahb_lite_access_cnt
+      (!=0 (-> ahb_lite_access_wait_4))
+      (=0 (-> ahb_lite_access_when_6))
+    )
+  )
+
+  (ahb_lite_access_when_6
+    (?(== trans_q 2'b11)
+      (=1 (-> ahb_lite_access_drive_7))
+      (=0 (-> ahb_lite_access_when_9))
+    )
+  )
+
+  (ahb_lite_access_drive_7
+    (= (error_first_start 1))
+    (-> ahb_lite_access_drive_8)
+  )
+
+  (ahb_lite_access_drive_8
+    (= (error_complete_start 1))
+    (-> ahb_lite_access_when_9)
+  )
+
+  (ahb_lite_access_when_9
+    (?(& (== trans_q 2'b10) (! (== size_q 2)))
+      (=1 (-> ahb_lite_access_drive_10))
+      (=0 (-> ahb_lite_access_when_12))
+    )
+  )
+
+  (ahb_lite_access_drive_10
+    (= (error_first_start 1))
+    (-> ahb_lite_access_drive_11)
+  )
+
+  (ahb_lite_access_drive_11
+    (= (error_complete_start 1))
+    (-> ahb_lite_access_when_12)
+  )
+
+  (ahb_lite_access_when_12
+    (?(& (== trans_q 2'b10) (== size_q 2) (! (== addr_q 0)))
+      (=1 (-> ahb_lite_access_drive_13))
+      (=0 (-> ahb_lite_access_when_15))
+    )
+  )
+
+  (ahb_lite_access_drive_13
+    (= (error_first_start 1))
+    (-> ahb_lite_access_drive_14)
+  )
+
+  (ahb_lite_access_drive_14
+    (= (error_complete_start 1))
+    (-> ahb_lite_access_when_15)
+  )
+
+  (ahb_lite_access_when_15
+    (?(& (== trans_q 2'b10) (== size_q 2) (== addr_q 0) write_q)
+      (=1 (-> ahb_lite_access_set_16))
+      (=0 (-> ahb_lite_access_when_18))
+    )
+  )
+
+  (ahb_lite_access_set_16
+    (<- (reg_data_q HWDATA))
+    (-> ahb_lite_access_drive_17)
+  )
+
+  (ahb_lite_access_drive_17
+    (= (write_hit_start 1))
+    (-> ahb_lite_access_when_18)
+  )
+
+  (ahb_lite_access_when_18
+    (?(& (== trans_q 2'b10) (== size_q 2) (== addr_q 0) (! write_q))
+      (=1 (-> ahb_lite_access_drive_19))
+      (=0 (-> ahb_lite_access_done_20))
+    )
+  )
+
+  (ahb_lite_access_drive_19
+    (= (read_hit_start 1))
+    (-> ahb_lite_access_done_20)
+  )
+
+  (ahb_lite_access_done_20
+    (<1 (ahb_access_done_q 1))
+    (-> ahb_lite_access_idle_0)
+  )
+
+  (-ahb_phase_capture <(& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))
+    (<- (ahb_phase_pending_q 1))
+    (<- (next_addr_q HADDR))
+    (<- (next_write_q HWRITE))
+    (<- (next_size_q HSIZE))
+    (<- (next_trans_q HTRANS))
+    (<- (next_wait_n wait_cycles))
+    (<- (HREADYOUT> 0))
+  )
+
+  (-ahb_phase_hold <ahb_phase_pending_q
+    (<- (HREADYOUT> 0))
+  )
+
+  (-ahb_error_retire <(& HREADYOUT (== HRESP 1'b1))
+    (<- (HREADYOUT> 1) <(& (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))
+    (<- (HRESP> 1'b0))
+  )
+
+  (-enter_data_phase
+    (<- (HREADYOUT> 0) <(& enter_data_phase_start (! (& HREADYOUT (== HRESP 1'b1) (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))))
+    (<- (HRESP> 1'b0) <enter_data_phase_start)
+    (<- (HRDATA> 0) <enter_data_phase_start)
+  )
+
+  (-error_complete
+    (<- (HREADYOUT> 1) <(& error_complete_start (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))
+    (<- (HRESP> 1'b1) <(& error_complete_start (! (& HREADYOUT (== HRESP 1'b1)))))
+    (<- (HRDATA> 0) <error_complete_start)
+  )
+
+  (-error_first
+    (<- (HREADYOUT> 0) <(& error_first_start (! (& HREADYOUT (== HRESP 1'b1) (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))))
+    (<- (HRESP> 1'b1) <(& error_first_start (! (& HREADYOUT (== HRESP 1'b1)))))
+    (<- (HRDATA> 0) <error_first_start)
+  )
+
+  (-read_hit
+    (<- (HREADYOUT> 1) <(& read_hit_start (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))
+    (<- (HRESP> 1'b0) <read_hit_start)
+    (<- (HRDATA> reg_data_q) <read_hit_start)
+  )
+
+  (-write_hit
+    (<- (HREADYOUT> 1) <(& write_hit_start (! (& (! ahb_phase_pending_q) HSEL HREADY (| (== HTRANS 2'b10) (== HTRANS 2'b11)))) (! ahb_phase_pending_q)))
+    (<- (HRESP> 1'b0) <write_hit_start)
+    (<- (HRDATA> 0) <write_hit_start)
+  )
+
+)

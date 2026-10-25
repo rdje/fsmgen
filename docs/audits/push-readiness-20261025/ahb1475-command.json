@@ -1,0 +1,12 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "-e",
+    "use FSM::Adapter::IAL2::PPIF;\nmy $r=FSM::Adapter::IAL2::PPIF->new->parse_file('ppif/ahb_lite_subordinate.ppif');\nprint $r->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'};\n"
+  ],
+  "purpose": "Read-only full5 failure intake; current producer output, no repair."
+}

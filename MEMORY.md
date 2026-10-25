@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: After the current-admission intake commits clean, inspect exclusive full5 slots/current admission, then launch capture_live.py local-full-ci-5 with FSMGEN_T296_CHECKPOINT=.artifacts/t296/push-readiness-20261025-full5.json, no outer guard and durable console. Read its journal before any resume.
-- in_flight_uncommitted: Derive exact paths with git status --short; .13 owns intake/book/metadata until committed.
-- in_flight_background: Native book confirmation21245 completed0 and consumed. Derive staged/commit jobs from their exclusive receipts/consoles; derive full5 from .artifacts/push-readiness-20261025/local-full-ci-5.state.json.
-- blockers: Complete local full CI is still required before authorized push/exact-SHA hosted success and post-push macOS review. Current-admission points are a candidate, not an original cause or future guarantee; retain88/4096 and do not touch unrelated processes.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.14`
+- next_action: After the settled full5 outcome commits clean, repair the T1475 historical checksum with a current metadata-invariance comparison and an independent adverse control; preserve all existing behavior checks.
+- in_flight_uncommitted: Derive exact paths with git status --short; .13 owns settled outcome intake until committed.
+- in_flight_background: Full5 journal says finished143; known own PIDs absent. Derive any staged/commit jobs from exclusive receipts/consoles.
+- blockers: .14 repair then complete fresh guarded full CI are required before authorized push/exact-SHA hosted success and post-push macOS review. Retain88/4096; no unrelated process action. .12.3 owns confirmed complete PPlugin/legacy grammar retirement and a self-contained competing test grammar.

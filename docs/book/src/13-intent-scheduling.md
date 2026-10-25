@@ -327,8 +327,10 @@ outside-installation grammar resources fail explicitly; there is no search fallb
 Keep `perl/` and `specs/` together when moving the installation.
 
 This core parser path neither loads `PPlugin`, `Global`, or `HUtils` nor walks
-the repository through `PathSearch`. Other legacy callers remain separately
-owned; this change does not retire their modules or the public extension API.
+the repository through `PathSearch`. Legacy callers remain temporarily. The
+planned migration retires the PPlugin layer and `specs/pplugin.spec` after
+moving genuine callers to explicit interfaces. Parser stability tests will use
+a self-contained competing grammar before the legacy grammar is removed.
 Each compiled parser retains its own entry rule, so compiling a different
 grammar cannot change an existing parser's entry point.
 

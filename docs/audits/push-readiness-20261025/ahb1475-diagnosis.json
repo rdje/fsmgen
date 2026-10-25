@@ -1,0 +1,33 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "observed_utc": "2026-10-25T17:55:12.169883+00:00",
+  "revision": "b6fde609d5c5f185562682ee0c08562d6b0d745f",
+  "defect": {
+    "reproduce": [
+      "prove",
+      "-Iperl",
+      "t/1475-ial2-ahb-subordinate.t"
+    ],
+    "impact": "Blocks complete local full-CI qualification and authorized publication.",
+    "failure_excerpt": "    #   Failed test 'additive generated IAL1 metadata leaves generated IAL0 bytes unchanged'\n    #   at t/1475-ial2-ahb-subordinate.t line 69.\n    #          got: '6f58afbe5abe2373a86e1d0a99858fa6fe7e158343d26076ea176d8360457740'\n    #     expected: '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf'\n    # Looks like you failed 1 test of 71.\n\n#   Failed test 'adapter parses the selected AHB subordinate PPIF shape'\n#   at t/1475-ial2-ahb-subordinate.t line 111.\n# Looks like you failed 1 test of 3.\nt/1475-ial2-ahb-subordinate.t ....................................................................... \nDubious, test returned 1 (wstat 256, 0x100)\nFailed 1/3 subtests \n"
+  },
+  "current_output": {
+    "path": ".artifacts/push-readiness-20261025/ahb1475-intake/current.fsm",
+    "sha256": "6f58afbe5abe2373a86e1d0a99858fa6fe7e158343d26076ea176d8360457740",
+    "guard_stderr": "ram-guard: PID 9384; host 64.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "exit_status": 0
+  },
+  "exact_difference_witness": {
+    "operation": "Delete exactly one complete +interface block from the current generated text; no other bytes changed.",
+    "removed_blocks": 1,
+    "result_sha256": "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf",
+    "equals_frozen_expected": true
+  },
+  "history": {
+    "frozen_oracle_introduction": "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+    "input_interface": "a7bf398ac",
+    "output_interface": "876b2c1d1",
+    "internal_storage_interface": "a929fe719b6202798f65413b36a1c07474ea7706"
+  },
+  "scope": "Current exact output and retained history establish a stale historical byte oracle after intended interface ownership emission. Metadata-invariance still requires its own current positive/adverse controls before a test repair."
+}
