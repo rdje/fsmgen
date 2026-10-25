@@ -1,0 +1,26 @@
+[
+  {
+    "id": "actor",
+    "source": "(actor parser_contract (clock clk))"
+  },
+  {
+    "id": "single-atom",
+    "source": "(only)"
+  },
+  {
+    "id": "empty",
+    "source": "()"
+  },
+  {
+    "id": "fragments",
+    "source": "(node \"two words\" x[3] {a + b})"
+  },
+  {
+    "id": "numbers",
+    "source": "(node 007 -2 0x2)"
+  },
+  {
+    "id": "multiple",
+    "source": "(first a)\n(second b)"
+  }
+]

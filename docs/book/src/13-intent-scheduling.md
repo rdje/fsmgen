@@ -322,6 +322,11 @@ FSM `.fsm`, ISF `.isf`, and IAL2 `.ppif` readers currently use `Lispish::multi`.
 dispatch. This parser-provider dependency is separate from the explicit public
 extension contract described by the embedding API.
 
+The current factory discovers grammars through a recursive module-tree search.
+Returned parsers also share a top-rule selection: compiling another grammar can
+invalidate an earlier parser. Bounded provider witnesses retain these defects
+and the passing direct canonical-grammar fixtures.
+
 ### Schedule Report
 
 The schedule report is generated from the same IR as the `.fsm` text.

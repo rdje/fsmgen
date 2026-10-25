@@ -1,0 +1,19 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.1",
+  "baseline": "7903e296e45cdd5c6bd546f61ef4b1e45b7fcfb9",
+  "observed": {
+    "imports": "Import-only public %INC includes Lispish, LinkedSpec, PPlugin, PathSearch, Global and HUtils; no table implementation was opened.",
+    "discovery": "The actual default Lispish::single path reaches File::Find::find with the repository root. The diagnostic trap stops before enumeration, with intentional93; this is not a successful parse.",
+    "canonical": "Direct LinkedSpec::Get over byte-exact canonical specs/Lispish.spec succeeds with recursive discovery trapped and all six literal AST fixtures, preserving source bytes. Positions remain observations, not a newly claimed public contract.",
+    "syntax": "The canonical parser retains the existing unexpected-close stdout and integer1 refusal.",
+    "stability": "The first returned parser produces the correct actor AST before compiling specs/pplugin.spec, then fails with undefined subroutine at perl/LinkedSpec.pm line722. Intentional71 records this RED; it is not accepted parser behavior."
+  },
+  "mechanism": "Get returns a closure over file-lexical top_rule, which spec_entry updates when another grammar compiles. Capture that root per returned parser. Current Lispish gets its cached parser via PPlugin AUTOLOAD/exec -> LinkedSpec::get_parser -> generic PathSearch discovery.",
+  "selected_change": "Use the unchanged canonical grammar and public LinkedSpec::Get, with explicit module-origin-derived resource loading. Remove the PPlugin parser dispatch, make remaining LinkedSpec legacy dispatch lazy, remove the unused PathSearch Global import, and bind each returned compiler root. Do not rewrite grammar or audit unrelated table/legacy implementations.",
+  "source_scope": "Only own tracked sources and required public OS/Perl metadata were inspected. No other repository was written, no submodule implementation/pin changed, no native-runtime opt-in or old diagnostic/main/source replay.",
+  "missing_authority": "These current bounded witnesses do not identify original full3 allocations, kernel pressure at its cutoff, or any historical native-startup cause.",
+  "verification": "All five records have exact programme/contract/native source identities, full normalized streams, actual guard statuses, bounded parent method clocks and absent owned sessions without forced cleanup. Saved status-kind/settlement/covaried-AST adverse controls refuse.",
+  "rederive": "Frozen exact source/grammar/input identities and declared public programmes, native source mechanism and complete actual packets.",
+  "falsify": "Canonical direct grammar passes with discovery blocked; default route stops at that boundary. The first parser succeeds before and fails only after the second grammar compiles, isolating mutable root capture. Adverse saved products also refuse.",
+  "durability": "Tracked contract, literal fixtures, complete compressed packets/instrument, first console, conservation map, task/book/Knowledge Map and normal gated commit."
+}

@@ -1,0 +1,20 @@
+{
+  "before": {
+    "files": 65,
+    "lines_total": 73999,
+    "bytes_total": 4144486
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 74004,
+    "bytes_total": 4144775
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 5,
+    "bytes_total": 289
+  },
+  "rederive": "Complete committed/current book member,byte,LF census.",
+  "falsify": "Independent staged reference-authority gate with unchanged ceilings.",
+  "durability": "Tracked book, authority, native checks and normal gated commit."
+}

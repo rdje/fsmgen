@@ -1,0 +1,184 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.12.1",
+  "baseline": "7903e296e45cdd5c6bd546f61ef4b1e45b7fcfb9",
+  "bound_seconds": 60,
+  "guard": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "inputs": {
+    "perl/Lispish.pm": "ddc817117ad77fe31b1a6a745aeeeafb4a8f0a1ce1d8a53dc1c56eda03bb8509",
+    "perl/PPlugin.pm": "6e8004e1e4f6149544203a27b94e7da34b85d3bda60761942a866d831d3c4ab8",
+    "perl/LinkedSpec.pm": "6fa2e2f1701a46bc7bdec03599fdaa5728272140cc43145fb0059661ecabc69f",
+    "perl/LinkedRE.pm": "f2f0bc0956c2b69a0a353046c01b2b8e718afb6ba3af1167d93f88dd89621031",
+    "perl/PathSearch.pm": "7668eed86c0a471748e7a9cfe4e7d7215d66f1350d009c05a87c566fbb6c7f32",
+    "perl/Global.pm": "c38e368ba85ac394733ae74de572a2105b8053d580faec9748f9be395e9670d9",
+    "perl/HUtils.pm": "d966a5cc3a4741767851f8a6f61711f921a87a5a74f97af27dd588a4bb897384",
+    "specs/Lispish.spec": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+    "specs/pplugin.spec": "bf38cdf3c208cd9cf5439b3fe7b5e8dbcb5cf4d0ea1f58fe9825538f930136e2",
+    "plugin/spec.plg": "554b9b0395ca67077d45b8b26bebbaa0c9cef8e39b086854f746094defcf715c",
+    "docs/audits/lispish-provider-contract-20261025/inputs.json": "e74d78f106c50d15ef1a87fe3770adec1af62f4946e091e86d554a9c8be1a31f"
+  },
+  "literal_fixtures": [
+    {
+      "id": "actor",
+      "source": "(actor parser_contract (clock clk))",
+      "expected": [
+        [
+          "actor",
+          [
+            "parser_contract",
+            [
+              "clock",
+              [
+                "clk"
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "single-atom",
+      "source": "(only)",
+      "expected": [
+        [
+          "only",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "empty",
+      "source": "()",
+      "expected": [
+        [
+          null
+        ]
+      ]
+    },
+    {
+      "id": "fragments",
+      "source": "(node \"two words\" x[3] {a + b})",
+      "expected": [
+        [
+          "node",
+          [
+            "two words",
+            "x[3]",
+            "a + b"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "numbers",
+      "source": "(node 007 -2 0x2)",
+      "expected": [
+        [
+          "node",
+          [
+            "007",
+            "-2",
+            "0x2"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "multiple",
+      "source": "(first a)\n(second b)",
+      "expected": [
+        [
+          "first",
+          [
+            "a"
+          ]
+        ],
+        [
+          "second",
+          [
+            "b"
+          ]
+        ]
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "imports",
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-e",
+        "use strict;\nuse warnings;\nuse JSON::PP ();\nuse Cwd ();\nour @discovery_roots;\nBEGIN {\n    require File::Find;\n    no warnings 'redefine';\n    *File::Find::find = sub {\n        my ($wanted, @roots) = @_;\n        @main::discovery_roots = @roots;\n        die \"PARSER_DISCOVERY_BOUNDARY\\n\";\n    };\n}\nmy $json = JSON::PP->new->canonical;\nrequire Lispish;\nprint $json->encode({pid=>0+$$, modules=>\\%INC}), \"\\n\";\n"
+      ],
+      "expected_returncode": 0,
+      "kind": "imports"
+    },
+    {
+      "id": "discovery",
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-e",
+        "use strict;\nuse warnings;\nuse JSON::PP ();\nuse Cwd ();\nour @discovery_roots;\nBEGIN {\n    require File::Find;\n    no warnings 'redefine';\n    *File::Find::find = sub {\n        my ($wanted, @roots) = @_;\n        @main::discovery_roots = @roots;\n        die \"PARSER_DISCOVERY_BOUNDARY\\n\";\n    };\n}\nmy $json = JSON::PP->new->canonical;\nmy $phase = 'import';\nmy $ok = eval {\n    require Lispish;\n    $phase = 'parse';\n    my $source = '(actor parser_contract (clock clk))';\n    Lispish::single(\\$source);\n    1;\n};\nmy $error = $@;\nmy $root = Cwd::getcwd();\nmy @roots = map {$_ eq $root ? '.' : $_} @discovery_roots;\nprint $json->encode({pid=>0+$$, phase=>$phase, roots=>\\@roots, error=>$error}), \"\\n\";\nexit(@roots && $error =~ /PARSER_DISCOVERY_BOUNDARY/ ? 93 : 0);\n"
+      ],
+      "expected_returncode": 93,
+      "kind": "discovery"
+    },
+    {
+      "id": "canonical",
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-e",
+        "use strict;\nuse warnings;\nuse JSON::PP ();\nuse Cwd ();\nour @discovery_roots;\nBEGIN {\n    require File::Find;\n    no warnings 'redefine';\n    *File::Find::find = sub {\n        my ($wanted, @roots) = @_;\n        @main::discovery_roots = @roots;\n        die \"PARSER_DISCOVERY_BOUNDARY\\n\";\n    };\n}\nmy $json = JSON::PP->new->canonical;\nrequire LinkedSpec;\nopen my $grammar, '<:raw', 'specs/Lispish.spec' or die $!;\nmy $spec = do {local $/; <$grammar>};\nclose $grammar or die $!;\nmy $parser = LinkedSpec::Get(\\$spec);\ndie \"Canonical grammar produced no parser\\n\" unless ref($parser) eq 'CODE';\nopen my $input, '<:raw', 'docs/audits/lispish-provider-contract-20261025/inputs.json' or die $!;\nmy $cases = $json->decode(do {local $/; <$input>});\nclose $input or die $!;\nmy @result;\nfor my $case (@$cases) {\n    my $source = $case->{source};\n    my @forms;\n    while (my $form = $parser->(\\$source)) {\n        push @forms, $form;\n        die \"Finite fixture exceeded its form envelope\\n\" if @forms > 32;\n    }\n    push @result, {id=>$case->{id}, forms=>\\@forms, source_after=>$source, pos=>pos($source)};\n}\nprint $json->encode({pid=>0+$$, cases=>\\@result}), \"\\n\";\n"
+      ],
+      "expected_returncode": 0,
+      "kind": "forms"
+    },
+    {
+      "id": "syntax",
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-e",
+        "use strict;\nuse warnings;\nuse JSON::PP ();\nuse Cwd ();\nour @discovery_roots;\nBEGIN {\n    require File::Find;\n    no warnings 'redefine';\n    *File::Find::find = sub {\n        my ($wanted, @roots) = @_;\n        @main::discovery_roots = @roots;\n        die \"PARSER_DISCOVERY_BOUNDARY\\n\";\n    };\n}\nmy $json = JSON::PP->new->canonical;\nrequire LinkedSpec;\nopen my $grammar, '<:raw', 'specs/Lispish.spec' or die $!;\nmy $spec = do {local $/; <$grammar>};\nclose $grammar or die $!;\nmy $parser = LinkedSpec::Get(\\$spec);\ndie \"Canonical grammar produced no parser\\n\" unless ref($parser) eq 'CODE';\nmy $source = ')';\n$parser->(\\$source);\ndie \"Unexpected close did not refuse\\n\";\n"
+      ],
+      "expected_returncode": 1,
+      "kind": "syntax"
+    },
+    {
+      "id": "stability",
+      "argv": [
+        "perl",
+        "-Iperl",
+        "-e",
+        "use strict;\nuse warnings;\nuse JSON::PP ();\nuse Cwd ();\nour @discovery_roots;\nBEGIN {\n    require File::Find;\n    no warnings 'redefine';\n    *File::Find::find = sub {\n        my ($wanted, @roots) = @_;\n        @main::discovery_roots = @roots;\n        die \"PARSER_DISCOVERY_BOUNDARY\\n\";\n    };\n}\nmy $json = JSON::PP->new->canonical;\nrequire LinkedSpec;\nopen my $grammar, '<:raw', 'specs/Lispish.spec' or die $!;\nmy $spec = do {local $/; <$grammar>};\nclose $grammar or die $!;\nmy $parser = LinkedSpec::Get(\\$spec);\ndie \"Canonical grammar produced no parser\\n\" unless ref($parser) eq 'CODE';\nmy $first_source = '(actor parser_contract (clock clk))';\nmy $before = $parser->(\\$first_source);\nopen my $other, '<:raw', 'specs/pplugin.spec' or die $!;\nmy $other_spec = do {local $/; <$other>};\nclose $other or die $!;\nmy $other_parser = LinkedSpec::Get(\\$other_spec);\ndie \"Second grammar produced no parser\\n\" unless ref($other_parser) eq 'CODE';\nmy $again = '(actor parser_contract (clock clk))';\nmy $after;\nmy $ok = eval {$after = $parser->(\\$again); 1};\nmy $error = $@;\nprint $json->encode({pid=>0+$$, before=>$before, after=>$after, error=>$error}), \"\\n\";\nexit(length($error) ? 71 : 0);\n"
+      ],
+      "expected_returncode": 71,
+      "kind": "stability"
+    }
+  ],
+  "scope": "New genuinely required provider witnesses. Every Perl programme traps File::Find::find before a repository walk. Capture parent is outside the RAM guard; it supervises one guarded owned session with a sixty-second bound and retains full streams/status on failure. No native-runtime opt-in, sampling, host-policy changes or historical diagnostic/main/source replay.",
+  "status_meanings": {
+    "discovery93": "Intentional boundary stop proves the default parser requests recursive discovery; it is not a successful parse.",
+    "syntax1": "Existing grammar intentional unexpected-close refusal.",
+    "stability71": "Declared source-level shared-top-rule hypothesis: a parser fails only after another grammar compiles. This is a proposed RED cause witness, not acceptance of broken behavior; desired behavior is the same literal AST before/after. Unexpected success disproves this hypothesis and must be retained."
+  },
+  "observation_scope": "Import-only full %INC is public metadata, not a legacy implementation audit. Positions/source-after are recorded whole; no new public position contract is inferred. OS Perl/stdlib are required read-only external dependencies; project input/output paths stay relative and same-volume. Parent start/launch/end clocks do not identify kernel birth/exec handoff.",
+  "expected_syntax_stdout": "(Lispish) -E- Syntax Error\n",
+  "desired_stability_ast": [
+    "actor",
+    [
+      "parser_contract",
+      [
+        "clock",
+        [
+          "clk"
+        ]
+      ]
+    ]
+  ]
+}
