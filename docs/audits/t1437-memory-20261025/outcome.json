@@ -1,0 +1,877 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.8.2",
+  "revision": "3bfccc35a014251f10219229c12e5abfaa16e034",
+  "result_receipt": "docs/audits/push-readiness-20261025/t1437-focused-1.json",
+  "command": {
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "prove",
+      "-lv",
+      "-Iperl",
+      "t/1437-axi-ial2-manager-capacity-status-generator.t"
+    ],
+    "exit_status": 0
+  },
+  "complete_file_result": "All tests successful; Files=1, Tests=115; Result: PASS",
+  "outer_tap_cases": [
+    {
+      "index": 1,
+      "name": "AXI manager capacity/status generator emits reviewable IAL1 before IAL0"
+    },
+    {
+      "index": 2,
+      "name": "generated capacity matrix captures acceptance, full, decrement, slots, and same-cycle behavior"
+    },
+    {
+      "index": 3,
+      "name": "report publishes capacity, status outputs, source anchors, artifacts, and residue"
+    },
+    {
+      "index": 4,
+      "name": "optional ID-family metadata is report-only and statically validated"
+    },
+    {
+      "index": 5,
+      "name": "optional transaction-envelope metadata emits concrete ID assertions"
+    },
+    {
+      "index": 6,
+      "name": "dynamic transaction-ID metadata reports selected user ownership without generated behavior"
+    },
+    {
+      "index": 7,
+      "name": "dynamic same-ID reject policy reports selected-not-generated metadata without generated behavior"
+    },
+    {
+      "index": 8,
+      "name": "dynamic same-ID issue-order queue policy reports selected-not-generated metadata without generated behavior"
+    },
+    {
+      "index": 9,
+      "name": "dynamic same-ID reject policy coexists with concrete same-ID policy metadata"
+    },
+    {
+      "index": 10,
+      "name": "dynamic same-ID issue-order queue policy coexists with concrete same-ID policy metadata"
+    },
+    {
+      "index": 11,
+      "name": "single-active dynamic write response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "index": 12,
+      "name": "single-active dynamic read response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "index": 13,
+      "name": "single-active dynamic read burst-last response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "index": 14,
+      "name": "one-dynamic mixed write response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "index": 15,
+      "name": "one-dynamic mixed read response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "index": 16,
+      "name": "one-dynamic mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "index": 17,
+      "name": "three-static mixed read burst-last response-demux maps dynamic same-ID reject to static-ID exclusion assertions"
+    },
+    {
+      "index": 18,
+      "name": "multiple dynamic write response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "index": 19,
+      "name": "multiple dynamic read burst-last response-demux maps dynamic same-ID reject to generated assertions"
+    },
+    {
+      "index": 20,
+      "name": "dynamic write response-demux captures AWID and matches BID"
+    },
+    {
+      "index": 21,
+      "name": "multiple dynamic write response-demux captures AWID and matches BID"
+    },
+    {
+      "index": 22,
+      "name": "dynamic write same-ID issue-order queue captures AWID slots and matches BID by issue order"
+    },
+    {
+      "index": 23,
+      "name": "mixed dynamic/static write same-ID issue-order queue captures AWID and static ID slots"
+    },
+    {
+      "index": 24,
+      "name": "mixed dynamic/static write multi-static same-ID issue-order queue captures AWID and static ID slots"
+    },
+    {
+      "index": 25,
+      "name": "mixed dynamic/static read same-ID issue-order queue captures ARID and static ID slots"
+    },
+    {
+      "index": 26,
+      "name": "mixed dynamic/static read burst-last same-ID issue-order queue dequeues only on RLAST"
+    },
+    {
+      "index": 27,
+      "name": "mixed dynamic/static read same-ID issue-order queue read-data captures scalar payloads"
+    },
+    {
+      "index": 28,
+      "name": "mixed dynamic/static read burst-last same-ID issue-order queue read-data captures scalar last payloads"
+    },
+    {
+      "index": 29,
+      "name": "mixed dynamic/static read burst-last same-ID issue-order queue read-data captures report-only raw ARLEN"
+    },
+    {
+      "index": 30,
+      "name": "mixed dynamic/static read burst-last same-ID issue-order queue read-data validates runtime raw ARLEN"
+    },
+    {
+      "index": 31,
+      "name": "mixed dynamic/static read burst-last same-ID issue-order queue read-data multi-beat emits output banks"
+    },
+    {
+      "index": 32,
+      "name": "dynamic write depth-3 same-ID issue-order queue captures third AWID slot and matches BID by issue order"
+    },
+    {
+      "index": 33,
+      "name": "dynamic read same-ID issue-order queue captures ARID slots and matches RID by issue order"
+    },
+    {
+      "index": 34,
+      "name": "dynamic read depth-3 same-ID issue-order queue captures third ARID slot and matches RID by issue order"
+    },
+    {
+      "index": 35,
+      "name": "dynamic read burst-last same-ID issue-order queue dequeues only on RLAST"
+    },
+    {
+      "index": 36,
+      "name": "dynamic read burst-last depth-3 same-ID issue-order queue captures third ARID slot and dequeues only on RLAST"
+    },
+    {
+      "index": 37,
+      "name": "dynamic read burst-last depth-3 same-ID issue-order queue read-data captures r2 last payload"
+    },
+    {
+      "index": 38,
+      "name": "dynamic read burst-last depth-3 same-ID issue-order queue read-data burst-length captures r2 raw ARLEN"
+    },
+    {
+      "index": 39,
+      "name": "dynamic read burst-last depth-3 same-ID issue-order queue read-data runtime burst-length validates r2 beats"
+    },
+    {
+      "index": 40,
+      "name": "dynamic read burst-last depth-3 same-ID issue-order queue read-data multi-beat emits r2 output banks"
+    },
+    {
+      "index": 41,
+      "name": "mixed dynamic/static write response-demux captures AWID and matches static BID"
+    },
+    {
+      "index": 42,
+      "name": "mixed dynamic/static read response-demux captures ARID and matches static RID"
+    },
+    {
+      "index": 43,
+      "name": "mixed dynamic/static read burst-last response-demux gates completion with RLAST"
+    },
+    {
+      "index": 44,
+      "name": "dynamic read response-demux captures ARID and matches single-beat RID"
+    },
+    {
+      "index": 45,
+      "name": "multiple dynamic read response-demux captures ARID and matches single-beat RID"
+    },
+    {
+      "index": 46,
+      "name": "multiple dynamic read response-demux captures ARID and completes on burst-last RID/RLAST"
+    },
+    {
+      "index": 47,
+      "name": "dynamic read response-demux captures ARID and matches burst-last RID/RLAST"
+    },
+    {
+      "index": 48,
+      "name": "dynamic read-data contract consumes generated dynamic single-beat read demux"
+    },
+    {
+      "index": 49,
+      "name": "dynamic last-beat read-data contract consumes generated dynamic RLAST read demux"
+    },
+    {
+      "index": 50,
+      "name": "multiple dynamic read-data contract consumes generated dynamic single-beat read demux"
+    },
+    {
+      "index": 51,
+      "name": "multiple dynamic last-beat read-data contract consumes generated dynamic RLAST read demux"
+    },
+    {
+      "index": 52,
+      "name": "multiple dynamic report-only burst-length read-data contract captures ARLEN per transaction"
+    },
+    {
+      "index": 53,
+      "name": "multiple dynamic runtime burst-length read-data contract validates each transaction"
+    },
+    {
+      "index": 54,
+      "name": "multiple dynamic multi-beat read-data contract emits output banks for each transaction"
+    },
+    {
+      "index": 55,
+      "name": "transaction event dispatch fans per-transaction events into capacity rules"
+    },
+    {
+      "index": 56,
+      "name": "same-ID reject policy reports static concrete-ID reuse selection without generated queue behavior"
+    },
+    {
+      "index": 57,
+      "name": "same-ID issue-order queue policy generates admitted request pulses without generated queue behavior"
+    },
+    {
+      "index": 58,
+      "name": "same-ID issue-order queue admitted request pulses assert selected request mutual exclusion"
+    },
+    {
+      "index": 59,
+      "name": "same-ID queue-head response-demux generates read queue state and completion demux"
+    },
+    {
+      "index": 60,
+      "name": "same-ID queue-head response-demux generates multiple read burst-last queue groups"
+    },
+    {
+      "index": 61,
+      "name": "same-ID queue-head response-demux generates read single-beat queue state and completion demux"
+    },
+    {
+      "index": 62,
+      "name": "same-ID queue-head response-demux generates read single-beat depth-3 queue state and completion demux"
+    },
+    {
+      "index": 63,
+      "name": "same-ID queue-head response-demux generates read single-beat multiple depth-3 queue state and completion demux"
+    },
+    {
+      "index": 64,
+      "name": "same-ID queue-head response-demux generates read single-beat mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "index": 65,
+      "name": "same-ID queue-head response-demux generates read burst-last depth-3 queue state and completion demux"
+    },
+    {
+      "index": 66,
+      "name": "same-ID queue-head response-demux generates read burst-last multiple depth-3 queue state and completion demux"
+    },
+    {
+      "index": 67,
+      "name": "same-ID queue-head response-demux generates read burst-last mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "index": 68,
+      "name": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux"
+    },
+    {
+      "index": 69,
+      "name": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux with raw ARLEN burst-length capture"
+    },
+    {
+      "index": 70,
+      "name": "read-data contract consumes generated read burst-last depth-3 same-ID queue-head demux with runtime ARLEN beat-count validation"
+    },
+    {
+      "index": 71,
+      "name": "read-data contract generates depth-3 queue-head multi-beat output-bank payload behavior"
+    },
+    {
+      "index": 72,
+      "name": "read-data contract consumes generated read single-beat depth-3 same-ID queue-head demux"
+    },
+    {
+      "index": 73,
+      "name": "same-ID queue-head response-demux generates read single-beat multi-group queue state and completion demux"
+    },
+    {
+      "index": 74,
+      "name": "same-ID queue-head response-demux generates write queue state and completion demux"
+    },
+    {
+      "index": 75,
+      "name": "same-ID queue-head response-demux generates write depth-3 queue state and completion demux"
+    },
+    {
+      "index": 76,
+      "name": "same-ID queue-head response-demux generates write multiple depth-3 queue state and completion demux"
+    },
+    {
+      "index": 77,
+      "name": "same-ID queue-head response-demux generates write mixed depth-3/depth-2 queue state and completion demux"
+    },
+    {
+      "index": 78,
+      "name": "same-ID queue-head response-demux generates write multi-group queue state and completion demux"
+    },
+    {
+      "index": 79,
+      "name": "auto-ID lifecycle generates bounded request-ID drive behavior"
+    },
+    {
+      "index": 80,
+      "name": "response-demux contract generates bounded write BID demux behavior"
+    },
+    {
+      "index": 81,
+      "name": "read response-demux contract generates bounded read RID demux behavior"
+    },
+    {
+      "index": 82,
+      "name": "burst-last read response-demux generates RLAST-gated completion behavior"
+    },
+    {
+      "index": 83,
+      "name": "read-data contract generates single-beat capture behavior"
+    },
+    {
+      "index": 84,
+      "name": "read-data contract consumes generated read single-beat same-ID queue-head demux"
+    },
+    {
+      "index": 85,
+      "name": "read-data contract consumes generated read single-beat multi-group same-ID queue-head demux"
+    },
+    {
+      "index": 86,
+      "name": "read-data contract consumes generated read single-beat multiple depth-3 same-ID queue-head demux"
+    },
+    {
+      "index": 87,
+      "name": "read-data contract consumes generated read single-beat mixed depth-3/depth-2 same-ID queue-head demux"
+    },
+    {
+      "index": 88,
+      "name": "read-data contract consumes generated read burst-last same-ID queue-head demux"
+    },
+    {
+      "index": 89,
+      "name": "read-data multi-group queue-head last-beat contract generates scalar capture behavior"
+    },
+    {
+      "index": 90,
+      "name": "read-data contract consumes generated read burst-last multiple depth-3 same-ID queue-head demux"
+    },
+    {
+      "index": 91,
+      "name": "read-data contract consumes generated read burst-last mixed depth-3/depth-2 same-ID queue-head demux"
+    },
+    {
+      "index": 92,
+      "name": "read-data burst-last multi-depth-3 queue-head contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "index": 93,
+      "name": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "index": 94,
+      "name": "read-data burst-last multi-depth-3 queue-head contract generates runtime beat-count validation"
+    },
+    {
+      "index": 95,
+      "name": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates runtime beat-count validation"
+    },
+    {
+      "index": 96,
+      "name": "read-data burst-last multi-depth-3 queue-head contract generates multi-beat output-bank behavior"
+    },
+    {
+      "index": 97,
+      "name": "read-data burst-last mixed depth-3/depth-2 queue-head contract generates multi-beat output-bank behavior"
+    },
+    {
+      "index": 98,
+      "name": "read-data multi-group queue-head last-beat contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "index": 99,
+      "name": "read-data multi-group queue-head last-beat contract generates beat-count and RLAST runtime validation"
+    },
+    {
+      "index": 100,
+      "name": "read-data queue-head last-beat contract generates raw ARLEN burst-length capture"
+    },
+    {
+      "index": 101,
+      "name": "read-data queue-head last-beat contract generates beat-count and RLAST runtime validation"
+    },
+    {
+      "index": 102,
+      "name": "read-data queue-head multi-beat contract generates output-bank payload behavior"
+    },
+    {
+      "index": 103,
+      "name": "read-data multi-group queue-head multi-beat contract generates output-bank payload behavior"
+    },
+    {
+      "index": 104,
+      "name": "last-beat read-data contract generates capture behavior"
+    },
+    {
+      "index": 105,
+      "name": "burst-length metadata generates raw ARLEN capture on last-beat read-data contracts"
+    },
+    {
+      "index": 106,
+      "name": "runtime-assertion burst-length metadata generates beat-count and RLAST validation"
+    },
+    {
+      "index": 107,
+      "name": "multi-beat read-data contract generates output-bank payload behavior"
+    },
+    {
+      "index": 108,
+      "name": "multi-beat read-data without scalar aggregation remains valid"
+    },
+    {
+      "index": 109,
+      "name": "mixed read/write response-demux keeps write behavior and adds read behavior"
+    },
+    {
+      "index": 110,
+      "name": "mixed auto-ID and same-ID queue-head response-demux combines generated families"
+    },
+    {
+      "index": 111,
+      "name": "mixed auto-ID and same-ID queue-head read-data consumes combined completions"
+    },
+    {
+      "index": 112,
+      "name": "mixed auto-ID and same-ID queue-head multi-beat read-data generates output-bank behavior"
+    },
+    {
+      "index": 113,
+      "name": "schedule report and HDL expose generated storage and status surface"
+    },
+    {
+      "index": 114,
+      "name": "single-slot capacity remains representable"
+    },
+    {
+      "index": 115,
+      "name": "malformed contract objects fail closed and no direct lower-to-fsm entrypoint is exposed"
+    }
+  ],
+  "limits": "Existing88% host/4096MiB per-descendant RSS guard, unchanged; no trip. No native-runtime opt-in.",
+  "input_identity": "All declared test/generator/frontend/HDL/guard/capture inputs equal full3 and current committed source; no production/test modification.",
+  "current_disposition": "The complete unchanged focused test passes. No current test defect or allocation cause is reproduced; this is not a leak repair or full-suite qualification. .8.3 must choose the safe next full-run path after this observation commit.",
+  "original_gap": "Full3 starts at recorded host66.3 and stops89.2 against88. Current focus starts58.4. Those differing observation-time capacities do not identify the original allocator, original T1437 peak or kernel pressure at the cutoff.",
+  "report_scope": "The full OS report and all point snapshots are retained as distinct observations; no field is treated as independent proof of every descendant peak or original allocation cause.",
+  "samples": [
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-1.json",
+      "utc": "2026-10-25T10:31:14.483531+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 209104,
+          "vsz_KiB": 488796080
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-2.json",
+      "utc": "2026-10-25T10:32:16.214241+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 373808,
+          "vsz_KiB": 488797104
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-3.json",
+      "utc": "2026-10-25T10:33:22.227356+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 447616,
+          "vsz_KiB": 488797104
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-4.json",
+      "utc": "2026-10-25T10:34:51.547271+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 496496,
+          "vsz_KiB": 488823088
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-5.json",
+      "utc": "2026-10-25T10:36:06.696361+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 677504,
+          "vsz_KiB": 488824128
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-6.json",
+      "utc": "2026-10-25T10:37:46.378650+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 734944,
+          "vsz_KiB": 488828752
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-7.json",
+      "utc": "2026-10-25T10:38:47.095641+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 855472,
+          "vsz_KiB": 488829264
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-8.json",
+      "utc": "2026-10-25T10:40:26.594586+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 907184,
+          "vsz_KiB": 488829776
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-9.json",
+      "utc": "2026-10-25T10:41:37.852332+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1008016,
+          "vsz_KiB": 488843328
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-10.json",
+      "utc": "2026-10-25T10:42:43.467312+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1025168,
+          "vsz_KiB": 488843328
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-11.json",
+      "utc": "2026-10-25T10:44:00.553329+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1082128,
+          "vsz_KiB": 488848624
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-12.json",
+      "utc": "2026-10-25T10:46:18.520225+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1215664,
+          "vsz_KiB": 488854256
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-13.json",
+      "utc": "2026-10-25T10:49:47.487439+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1414160,
+          "vsz_KiB": 488864800
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-14.json",
+      "utc": "2026-10-25T10:51:48.537409+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1538080,
+          "vsz_KiB": 488870560
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-15.json",
+      "utc": "2026-10-25T10:54:04.505034+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1621632,
+          "vsz_KiB": 488881584
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    },
+    {
+      "receipt": "docs/audits/push-readiness-20261025/t1437-memory-sample-16.json",
+      "utc": "2026-10-25T10:56:51.860555+00:00",
+      "scope": "Observation-time owned guard descendants only; RSS/VSZ KiB; no peak or allocation causality claim. Host counters and kernel pressure remain separate.",
+      "test_process_rows": [
+        {
+          "birth": "Sun Oct 25 11:30:31 2026    ",
+          "pid": 69121,
+          "ppid": 69104,
+          "rss_KiB": 1870608,
+          "vsz_KiB": 488882608
+        }
+      ],
+      "kernel_pressure_observation": {
+        "command": [
+          "sysctl",
+          "-n",
+          "kern.memorystatus_vm_pressure_level"
+        ],
+        "status": 0,
+        "stderr": "",
+        "stdout": "1\n"
+      }
+    }
+  ],
+  "open_file_metadata": "t1437-open-files.json/log.gz retains read-only owned metadata; an open plugin descriptor does not identify execution location. Own PPlugin/Lispish source confirms a current parser dependency only; no legacy plugin is blamed for resource usage.",
+  "settlement": "The saved outcome-focused receipt verifies exact known owned process birth identities no longer present and recorder absent after normal completion.",
+  "director_steering": "PUBLICATION .12 owns explicit robust Lispish provider independent of PPlugin, preserving parser contract; obsolete TableScript/TableSort/PPlugin removal is conditioned on current purpose. Legacy callback .11 follows retirement review and may close by verified removal.",
+  "knowledge_routing": "knowledge-routing.json retains conserved guard/pipeline facts and old questions, plus a dated dependency question in the existing pipeline card. The first standalone-file/container-status refusal is retained; all collection limits remain unchanged.",
+  "rederive": "Exact current/native Git inputs, complete guarded command/self-retained programme/log/status, every outer TAP case and raw point resource snapshots.",
+  "falsify": "Original full3 integer137 remains incomplete; current115 sequential outer cases/normal prove status with unchanged code show non-reproduction without explaining the spent allocation. No descriptor-to-stack inference or table-utility justification.",
+  "durability": "Tracked complete compressed log, exact instrument/command, raw samples/recipes, settlement/saved-reader checks, task/book/Knowledge Map and gated commit."
+}

@@ -16,23 +16,19 @@ evidence: scripts/run_with_ram_guard.sh; README.md; COMMIT.md; docs/tasks/AGENT-
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t t/1811-ram-guard-fixture-runtime.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
 ---
 
-Heavy local commands (especially Perl/`prove`/`fsmgen`) require
-`scripts/run_with_ram_guard.sh` or equivalent monitoring. Defaults stop at
-88% host memory or 4096 MiB per descendant, below the user's 90% danger zone.
-On trips, stop broad work, log the resource caveat in its task and use focused
-checks unless the user authorizes another cap.
+Heavy Perl/prove/fsmgen needs `scripts/run_with_ram_guard.sh` or equivalent; defaults:
+88% host/4096 MiB per descendant, below the user's 90% danger zone. Trips stop
+broad work: log the caveat and use focused checks; another cap requires the user.
 
-Child stdin inherits exact pipe/file bytes, EOF, interpreter programs and
-independent descriptors. Bare asynchronous Bash previously used `/dev/null`,
-permitting zero exit without execution. T2011 recovers
-ce4d0029028a3e25f517ea93632cf50f2712354a and reproduces empty success; the repair
-passes identical inputs. Cutoff/telemetry/signal/cleanup controls stay qualified.
+Stdin preserves pipe/file bytes, EOF, interpreter programs and independent fds.
+Bare asynchronous Bash used `/dev/null`, allowing zero exit without execution.
+T2011 recovers ce4d0029028a3e25f517ea93632cf50f2712354a as independent
+failure control; identical repaired inputs
+pass alongside cutoff/telemetry/signal/cleanup controls.
 
-The fixed-revision audit covers tracked root-repository basename references
-and explicit continued stdin recipes. Earlier empty captures were rejected
-and replaced with named-script evidence. It cannot establish that all historical
-ephemeral/dynamic invocations were unaffected; scope/reviewed interfaces retain.
-
-Inventory diagnostic: control encoding stops; structural/branch-copy/streamed
-repair passes all fixed inputs under the same guard. Original-process allocation
-is unobserved; no runtime role/permission is granted.
+The fixed-revision audit covers tracked root-repository basename references and explicit
+continued stdin recipes. Rejected empty captures use named-script evidence.
+Historical ephemeral/dynamic impacts remain unknown; reviewed scope/interfaces
+remain. Inventory control encoding stops; structural/branch-copy/streamed repair
+passes all fixed inputs under the same guard. Original allocation is unobserved;
+no runtime role/permission is granted.

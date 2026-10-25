@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -116,11 +116,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.8.1: qualify focused memory study contract`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Observe the complete unchanged T1437 focused run under fixed memory guards.`
-  Acceptance: `After .8.1 commits clean, inspect the exclusive t1437-focused-1 journal before launching its declared exact command through capture_live.py; never replay a nonterminal run. Retain complete first outcome/TAP/resource report and passive owned-process/host observations with UTC and scope. Every assertion/case remains enabled, no native opt-in or changed limit. Consume command status, distinguish interrupted versus normal test outcome and observed RSS from original full3 allocation attribution. Commit all finished observations before repair or full retry.`
-  Verification: `Not launched.`
-  Commit: `pending`
+  Acceptance: `After .8.1 commits clean, inspect the exclusive t1437-focused-1 journal before launching its declared exact command through capture_live.py; never replay a nonterminal run. Retain complete first outcome/TAP/resource report and passive owned-process/host observations with UTC and scope. Every assertion/case remains enabled, no native opt-in or changed limit. Consume command status, distinguish interrupted versus normal test outcome and observed RSS from original full3 allocation attribution. Because the live verbose file still contains only its header while the owned Perl process is CPU-active, admit a read-only /usr/sbin/lsof -a -p 69121 -F ftns metadata intake to distinguish open source/stdio state; retain complete observation with its recipe, inspect no dependency implementation bytes and infer no stack location from an open descriptor alone. No signals or stack/sampling profiler. Commit all finished observations before repair or full retry.`
+  Verification: `The exact complete test/profiler programme from clean3bfccc35a finishes integer0 with All tests successful, Files=1 Tests=115 and all115 sequential outer TAP cases, without a guard trip or altered assertion/input/limit. Complete739037-byte normalized output, self-retained programme/source identity, sixteen passive process/host observations and read-only FD metadata remain tracked. No current allocation cause is reproduced; full3 original137/cutoff allocation/kernel-pressure gaps remain and no leak repair/full-suite success is claimed. Saved integrity/source checks, known owned birth-identity settlement and recorder absence pass in t1437-outcome-focused; Knowledge Map generation/parity and the new PPlugin question route pass. Open descriptors do not identify execution location; current native source shows only the required Lispish provider coupling. Director .12 now requires robust provider lookup independent of PPlugin and removal of obsolete modules absent current purpose; .11 callback review follows retirement. The dependency question/datelined fact joins the existing pipeline card, retaining its original body/questions; two guard cards compact semantically with exact original headers/questions/routes/facts. First staged gate locates the collection file-count cap and a pending container status; folding the standalone draft into the related card and setting container .12 active correct both without any allowance increase. Two earlier oversized byte-budget drafts wrote no cards. Native book/source plus fresh reference/claim/containment and staged/normal doctrines gate the observation commit before .8.3 current-safe-path decision.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.8.2: retain complete focused memory observation`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8.3`
   Status: `pending`
@@ -129,11 +129,47 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Awaiting focused observations; no cause/fix/full4 outcome claimed.`
   Commit: `pending`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.11`
+  Status: `pending`
+  Goal: `Verify and repair the legacy yes_no negative ARRAY-callback dispatch defect.`
+  Acceptance: `P2 after required publication/macOS/worktree and .6/.10 follow-ups, then the director-ordered legacy retirement review .12, before POD return. If the component is verified obsolete and removed, close this issue by verified removal instead of repairing dead code; if retained for a concrete current purpose, reproduce and repair it. The read-only owned-FD intake led to tracked plugin/yesno.plg: its no branch tests ref of the Yes callback at index1 before invoking the No ARRAY callback at index2. First establish the published plugin-loading/callback interface and reproduce No plus an ARRAY callback with an absent/non-ARRAY Yes callback. If reproduced, fix the selector at the correct boundary with meaningful yes/no CODE/ARRAY/absent callback and stdin behavior checks, book and normal gates. Preserve existing behavior outside the defect; inspect no other Git repository implementation. This finding does not explain T1437 allocation or create a new publication hold.`
+  Verification: `Source index mismatch is observed; public-interface reproduction and impact verification are pending. Ownership/schedule are explicit; no fix or runtime diagnosis is claimed.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.12`
+  Status: `active`
+  Goal: `Replace Lispish parser lookup through PPlugin and retire obsolete legacy modules.`
+  Acceptance: `Director steering2026-10-25: these old modules should normally be removed; inspection needs a specific current purpose, and retained code needs an explanation of useful for what. The follow-up explicitly requires a robust Lispish parser lookup without the PPlugin layer. Keep .8.2 running and commit its outcome before any task pivot or removal. Schedule after required publication/macOS/worktree and .6/.10, before the legacy callback .11 and saved POD return. Use targeted own tracked callers, public entrypoints/contracts, packaging/tests/book and a bounded dynamic-dispatch review; source age or zero static hits alone is insufficient. Remove obsolete code with meaningful current feature checks and book/docs sync. Retain only evidenced current behavior, naming the concrete feature/caller; do not retain an obsolete cluster merely because its members refer to each other. Current FSM/ISF/PPIF frontends call Lispish::multi, and Lispish::single obtains its parser through PPlugin->_get_parser. Replace that required lookup with an explicit provider independent of PPlugin, with repository-derived paths and no ambient-CWD or legacy discovery dependency. Preserve actual supported syntax, AST values/shapes, diagnostics and file/scalar-reference entrypoints, including current FSM/ISF/PPIF consumers; inspect the grammar and public parser contract before choosing direct grammar compilation versus a replacement reader. Do not implement against guesses or assume LinkedSpec is independent without checking the owned caller chain. Keep input/source identities and meaningful compatibility/error/CWD controls. If this is proven causal to .8 memory diagnosis, integrate the necessary fix there; otherwise it follows the required publication sequence without adding a new hold. Inspect no other repository implementation or submodule internals. Stage each safe inventory/removal/replacement slice and commit normally. Route the newly established dependency fact without increasing Knowledge Map limits. The .8.2 evidence handoff may extend the existing isf-lowering-pipeline card with one parser-provider question and a separately dated fact, funded by semantic compaction of agent-runtime-ram-guard and ram-guard-macos-host-metric-over-reports; preserve their exact front matter, original questions, numeric/datetime facts, policy meanings and verification routes, with whole-collection bytes not increased beyond the existing allowance. No removal has been attempted.`
+  Verification: `Specific .8.2 FD intake justified reading PPlugin; TableScript/TableSort were search-result matches, not opened implementation reviews. SourceFrontend.pm uses Lispish::multi for .fsm; ISF/Parser.pm and IAL2/PPIF.pm do so for their current inputs; Lispish.pm line13 requests PPlugin->_get_parser(Lispish), with PPlugin AUTOLOAD dispatch. Thus there is a current parser dependency, not evidence all legacy plugins/table tools are useful. No present product use for TableScript/TableSort has been established; complete caller/contract classification is pending. The director defaults obsolete components to removal, with concrete current-purpose evidence for retention. Legacy no-ARRAY callback .11 is subordinate to this retirement decision.`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.12.1, PUBLICATION-REGRESSION-REPAIRS.12.2, PUBLICATION-REGRESSION-REPAIRS.12.3`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.12.1`
+  Status: `pending`
+  Goal: `Establish the bounded current parser contract and legacy caller inventory.`
+  Acceptance: `After the current clean handoff and required publication ordering, inspect own grammar/provider entrypoints and canonical parser cards/tests/book, including scalar/file inputs, AST/diagnostic and CWD contracts. Record targeted current product callers and dynamic-dispatch boundaries for the named legacy modules. Define exact compatibility witnesses before source changes; do not audit unrelated old implementations.`
+  Verification: `Current direct source chain is retained in the parent; full contract inventory pending.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.12.2`
+  Status: `pending`
+  Goal: `Implement robust Lispish parser lookup independent of PPlugin.`
+  Acceptance: `Use .12.1 evidence to choose the smallest clear provider, resolve project data from repository-relative ownership, eliminate legacy plugin discovery from this parser path and preserve the verified current contract. Qualify meaningful direct parser and FSM/ISF/PPIF positive/negative/CWD controls, update book/Knowledge Map and commit each safe slice. Do not claim PPlugin retired until current parser loads independently.`
+  Verification: `Not implemented.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.12.3`
+  Status: `pending`
+  Goal: `Remove verified obsolete table/plugin code and explain any required remainder.`
+  Acceptance: `After provider decoupling and exact current-caller classification, remove unused TableScript/TableSort/PPlugin components in bounded verified slices. Retain only concrete current features and name their actual use. Update packaging/tests/book and close .11 by verified removal when its obsolete component disappears, or repair it if a current purpose retains it. Commit with focused checks; full CI before the next push.`
+  Verification: `No removal attempted.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.8.2` | `pending` | After .8.1 commits clean, inspect the declared journal and launch/consume the complete unchanged focused test. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.8.3` | `pending` | After the passing complete .8.2 observation commits clean, qualify the next safe full-run path without claiming original allocation attribution. |
 
 ## Decisions
 
@@ -142,7 +178,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full3 is interrupted by the fixed host-capacity guard; .8 owns the current attribution/fix, after completed cleanup .9 commits clean. Full CI/push/hosted success is unqualified. .6/.10 remain ordered P2 follow-ups; historical native causality imposes no renewed blanket hold.
+- Full3 remains interrupted; complete unchanged T1437 focus passes under fixed guards. After its observation commit, .8.3 owns safe retry disposition. Full CI/push/hosted success remains unqualified; historical native causality imposes no blanket hold. .6/.10 and director provider/retirement .12 precede applicable callback .11 and POD return.
 
 ## Acceptance Checklist — `.1`
 
@@ -191,3 +227,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Full3 records occupied capacity89.2 reaching88 and guarded status137, without T1437 or full-suite outcome/allocation attribution. git log -S startup/full-CI gates identifies the stale hosted-index projection at0af0842ab1224b208cff8adf1c7cfc62989b52a5; director ordering recorded54ac5589bc7a18e7e33d676d4f3acf29103b9732 supersedes that blanket hold. The remaining resource constraint needs focused observation, not an inferred native-startup cause.
 - [x] **ADDRESSED (verified)** — Commit an exact unchanged unfiltered T1437 input/instrument contract, normal-result predicates and observation scope before launch. OS reporter smoke and native source hashes qualify preflight only. Correct the live hosted row and explain local-full/push/hosted sequencing in the book; original interrupted outcome and historical causal gaps remain. No collector, producer, test assertion or memory limit changes.
 - [x] **NO REGRESSION** — knowledge-map: OK; exact native source/plan checks and OS reporter smoke pass in t1437-preflight.json/log.gz. Native mdBook/POD/current source/index pass. Fresh claim/reference/containment and complete staged/normal scripts/check_doctrines.sh gates precede commit. T1437 itself remains unrun until the next clean phase.
+
+## Acceptance Checklist — `.8.2`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full3 guard137 records the capacity trigger, without an allocation cause. The unchanged complete focused file now passes, so no T1437 producer fault or leak fix is inferred. git log -S PPlugin->_get_parser identifies the existing source dependency behind the director’s useful-for-what question; native Lispish/consumer/PPlugin source explains parser lookup only, while FD metadata cannot locate current execution.
+- [x] **ADDRESSED (verified)** — Retain the complete normal guarded outcome, every sequential outer case, exact input/programme identities, passive resource/FD observations and settled process identities. Preserve the original full3 attribution gap. Route the newly established parser dependency inside existing Knowledge Map limits, conserving old guard facts/questions, and own the director’s robust-provider/removal instruction before any implementation. The first staged file-count/container-status failures are retained; consolidate the fact into the existing pipeline card and correct the container, without changing limits. No source/test/guard changes.
+- [x] **NO REGRESSION** — All tests successful, Files=1, Tests=115 for the complete unchanged focused test; saved outcome/source/settlement checks and knowledge-map: OK pass. Native book/POD/current source/index and fresh claim/reference/containment plus complete staged/normal scripts/check_doctrines.sh gates precede this evidence commit. Full CI/push and historical macOS diagnosis remain separate.

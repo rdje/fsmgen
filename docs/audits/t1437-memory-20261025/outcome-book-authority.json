@@ -1,0 +1,20 @@
+{
+  "before": {
+    "files": 65,
+    "lines_total": 73993,
+    "bytes_total": 4144117
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73998,
+    "bytes_total": 4144402
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 5,
+    "bytes_total": 285
+  },
+  "rederive": "Whole native HEAD/current source membership, bytes and LF counts.",
+  "falsify": "Independent staged reference authority and unchanged ceiling gate.",
+  "durability": "Tracked source, authority, native book checks and normal gated commit."
+}

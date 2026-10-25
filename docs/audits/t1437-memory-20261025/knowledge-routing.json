@@ -1,0 +1,40 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.8.2",
+  "directive_owner": "PUBLICATION-REGRESSION-REPAIRS.12",
+  "new_fact": "docs/knowledge/isf-lowering-pipeline.md",
+  "collection_delta": -79,
+  "headers_questions_tags_evidence_reverify": "Both compacted cards retain byte-exact front matter.",
+  "conserved_resource_meanings": [
+    "heavy-command/equivalent scope;88/4096/90; stop broad/log/focused after trip; alternate cap requires user",
+    "stdin bytes/EOF/program/fds; historical async /dev/null zero-without-execution; exact T2011 control and identical repaired/adjacent guard controls",
+    "same fixed-revision root basename/continued-recipe audit, rejected empty captures and named-script replacements",
+    "historical ephemeral/dynamic uncertainty; reviewed scope/interfaces retained",
+    "same inventory control and structural/branch-copy/streamed repair over all fixed inputs/same guard, missing original allocation and no runtime role/permission"
+  ],
+  "conserved_metric_meanings": "Only capacity/pressure paragraph compacts; all other body bytes, formulas, dated/version/measurement facts and guard outcomes remain exact. Kernel1/2/4, Apple free/wired/cache/swap-rate efficiency, free-percent distinction and interval movement versus accumulated occupancy meanings remain.",
+  "source_identities": {
+    "docs/knowledge/agent-runtime-ram-guard.md": {
+      "before_sha256": "677e2a26a57274630bc98592c5c93186538c707876909d4b2021bff445e80fa7",
+      "after_sha256": "9701dcce1cb81a20490158968cf3aaa0f1bab221e5e651db33e67e47c146e156"
+    },
+    "docs/knowledge/ram-guard-macos-host-metric-over-reports.md": {
+      "before_sha256": "6bb973375d2b4154e4c257682cd0037c2e84b0ef9f1b417795f482ab33b8222a",
+      "after_sha256": "7b90c1825541403f55630b3112d37862f4529ce9843a1b600898fe3f472547b0"
+    },
+    "docs/knowledge/isf-lowering-pipeline.md": {
+      "before_sha256": "4f580fe53ec0711c903525816fa61648acaf487291d2aa169065cb863754e17f",
+      "after_sha256": "53c661bf4b1dbd733fee9666aea90876730bc550380f522f6dfd8d05340ad6c8"
+    }
+  },
+  "preparation": "Two byte-budget drafts wrote no cards. The first staged gate refused a standalone-file addition and a pending container. Fold the fact into the existing pipeline card and correct the container; no file/byte allowance changes.",
+  "rederive": "Current Lispish/PPlugin and FSM/ISF/PPIF source call sites.",
+  "falsify": "Exact original question/header equality and complete Knowledge Map parity/containment checks; parser coupling does not justify unrelated table modules or identify current execution location.",
+  "durability": "Tracked fact/conservation record, generated routes, task and normal gated commit.",
+  "superseded_standalone_draft": {
+    "text": "---\nid: lispish-pplugin\ntitle: PPlugin supplies Lispish\nanswers:\n  - \"why is PPlugin still needed?\"\ndate: 2026-10-25\nstatus: current\ntags: [parser]\nevidence: perl/Lispish.pm; perl/PPlugin.pm\nreverify: git grep -n -E 'Lispish::multi|PPlugin->_get_parser' -- perl\n---\n\nCurrent FSM/ISF/PPIF frontends use Lispish::multi. Lispish::single caches\nPPlugin->_get_parser('Lispish'), dispatched through PPlugin AUTOLOAD/exec.\n",
+    "sha256": "db5218fe5aa5c45a6b9b5a6fad3da2038000b6804e5793f16245245393f6088a",
+    "reason": "Staged file-count cap refuses an additional card file; fold into the existing related pipeline card."
+  },
+  "pipeline_conservation": "Original questions/evidence/body retained; original body is an exact prefix, and only the new dependency fact is dated Oct25. Prior Jun3 fact date is not refreshed.",
+  "file_delta": 0
+}

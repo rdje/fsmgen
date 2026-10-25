@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-lowering`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="where does ISF lowering happen?" · facts=[isf-lowering-pipeline](../../docs/knowledge/isf-lowering-pipeline.md)
 - q="where is the .fsm text produced from an ISF actor?" · facts=[isf-lowering-pipeline](../../docs/knowledge/isf-lowering-pipeline.md)
 - q="which module parses ISF / lowers ISF / emits the schedule report?" · facts=[isf-lowering-pipeline](../../docs/knowledge/isf-lowering-pipeline.md)
+- q="why is PPlugin still needed?" · facts=[isf-lowering-pipeline](../../docs/knowledge/isf-lowering-pipeline.md)
 
 ## Facts
 

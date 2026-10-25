@@ -317,6 +317,11 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
     └──► Emitter::JSON  → schedule report
 ```
 
+FSM `.fsm`, ISF `.isf`, and IAL2 `.ppif` readers currently use `Lispish::multi`.
+`Lispish::single` obtains and caches its parser through legacy `PPlugin`
+dispatch. This parser-provider dependency is separate from the explicit public
+extension contract described by the embedding API.
+
 ### Schedule Report
 
 The schedule report is generated from the same IR as the `.fsm` text.

@@ -40,15 +40,11 @@ For `vm_stat`, `Pages occupied by compressor` supplies `compressed` and
 display was about 47%; later samples moved to 54.4% and 59.2%. The matching
 source is Stats' `Modules/RAM/readers.swift`.
 
-Capacity and safety are separate readings. Report the Stats-compatible
-percentage for capacity, and report
-`kern.memorystatus_vm_pressure_level` independently as normal (`1`), warning
-(`2`), or critical (`4`). Apple's Activity Monitor documentation describes
-memory pressure as a combined efficiency signal influenced by free memory,
-swap rate, wired memory, and cached files; `memory_pressure -Q`'s free
-percentage is therefore not the inverse of Stats usage. Treat swap *movement*
-over a sampling interval as useful supporting evidence, not accumulated swap
-occupancy as immediate pressure.
+Report capacity separately from `kern.memorystatus_vm_pressure_level`: normal
+(`1`), warning (`2`), critical (`4`). Apple's Activity Monitor pressure combines
+free/wired/cached memory and swap rate as an efficiency signal. The free percent
+from `memory_pressure -Q` is not inverse Stats usage. Interval swap movement
+supports pressure evidence; accumulated occupancy alone is not immediate pressure.
 
 Since 2026-08-08 the guard uses that Stats-compatible capacity formula on
 Darwin, retains the `88%` host and `4096 MiB` descendant cutoffs, and fails

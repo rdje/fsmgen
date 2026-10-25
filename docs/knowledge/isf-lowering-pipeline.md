@@ -8,11 +8,12 @@ answers:
   - "which module parses ISF / lowers ISF / emits the schedule report?"
   - "where is the .fsm text produced from an ISF actor?"
   - "how does report() / the JSON schedule report get built?"
+  - "why is PPlugin still needed?"
 date: 2026-06-03
 status: current
 tags: [isf, architecture, pipeline, lowering]
-evidence: perl/FSM/Adapter/ISF.pm; perl/FSM/Scheduler/ISF.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; docs/book/src/13-intent-scheduling.md
-reverify: grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF*
+evidence: perl/Lispish.pm; perl/PPlugin.pm; perl/FSM/Adapter/ISF.pm; perl/FSM/Scheduler/ISF.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl/FSM/Backend/GeneratedModuleEmitter.pm; docs/book/src/13-intent-scheduling.md
+reverify: grep -rln "package FSM::Scheduler::ISF" perl/FSM/Scheduler/ISF* && git grep -n -E 'Lispish::multi|PPlugin->_get_parser' -- perl
 ---
 
 The ISF lane (`R14`) lowers in stages, each in its own module:
@@ -30,3 +31,7 @@ report** via `FSM::Scheduler::ISF::Emitter::JSON` (see
 [[isf-schedule-report-additive-keys]]). The narrative home is the book chapter
 `docs/book/src/13-intent-scheduling.md`. ISF is the IAL-1 layer; HLL sugar
 desugars *into* ISF (see the `isf-abstraction-layering` memory).
+
+Parser dependency, reverified 2026-10-25: current FSM/ISF/PPIF readers use
+`Lispish::multi`. `Lispish::single` caches `PPlugin->_get_parser('Lispish')`,
+dispatched through `PPlugin` AUTOLOAD/exec.
