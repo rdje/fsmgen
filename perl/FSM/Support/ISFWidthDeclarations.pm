@@ -82,6 +82,7 @@ sub capture_actor_width_metadata {
     return {
         _width_declarations => \%declarations,
         _width_scopes => {
+            module_parameters => _copy($scope),
             actor => {owner => $owner, params => _copy($args{params}), constants => _copy($args{constants}),
                 package_imports => _copy($actor->{package_imports} || []),
                 package_constants => _copy(($actor->{constant_symbols} || {})->{packages} || {}),
@@ -104,6 +105,12 @@ sub capture_generated_width_metadata {
     my $tx = $args{transaction};
     my $owner = $actor->{_width_source_actor_name} // $actor->{actor_name};
     my $metadata = capture_actor_width_metadata(%args, direct_formals => []);
+    # The generated constructor emits transaction parameters. Inherited actor
+    # widths still resolve in the separate actor scope, even if both parameter
+    # lists have exactly the same names, values and aliases.
+    $metadata->{_width_scopes}{module_parameters} = {
+        kind => 'transaction', actor => $owner, owner => $tx->{name},
+    };
     my $declarations = $metadata->{_width_declarations};
     for my $pair (['inputs', 'input'], ['outputs', 'output']) {
         for my $port (@{($tx->{ports} || {})->{$pair->[0]} || []}) {

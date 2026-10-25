@@ -96,7 +96,7 @@ same-named parameter sixteen. ISF selects the parameter; bare IAL0 `+size`
 selects the type. IAL0 `(+ word_t 0)` selects the scalar parameter through the
 existing integer evaluator. Preserve the chosen namespace and expression, not
 just token spelling: current IAL0 still resolves that expression numerically.
-This default check establishes neither generic HDL nor override legality. Core Signals retain `{signal, expression, resolved_width}` through the detached `declared_width_source` accessor; it preserves scalar expression source without classifying parameter dependencies or changing default HDL/public reports. ISF binding and carrier emission remain pending.
+This default check establishes neither generic HDL nor override legality. Core Signals retain `{signal, expression, resolved_width}` through the detached `declared_width_source` accessor; it preserves scalar expression source without classifying parameter dependencies or changing default HDL/public reports. IAL0 scalar lookup checks constants before params, while parameter aliases resolve in their parameter graph; constants cannot reference params. Scoped binding and carrier emission remain pending.
 
 At parameter default two, changing only bank `(depth 2)` to `(depth W)`, or only
 `(watchdog 2)` to `(watchdog W)`, yields exactly identical complete parsed actors,
@@ -134,8 +134,8 @@ name/value/lexical-owner source lists before resolution; selected alias/nested/d
 Actor module IR now owns detached `_width_declarations` keyed by actual ports
 and storage signals, with declaration identity, token/kind/owner and lexical
 scope. Bank indices are explicit; no equal-width or generated-name inference.
-Canonical `_width_scopes` separate actor and transaction environments, including
-authored aliases and resolved values. `_width_static_uses` separately snapshots
+Canonical `_width_scopes` separate actor and transaction environments, including authored aliases and resolved values; `module_parameters` explicitly identifies the actual constructor parameter owner independently of equal lists or physical module renames.
+`_width_static_uses` separately snapshots
 watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides
 remain separate from source defaults. Literal/type/reset declarations stay

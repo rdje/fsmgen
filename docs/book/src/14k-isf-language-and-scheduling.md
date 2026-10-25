@@ -696,6 +696,12 @@ closed. The normalized public transaction shell has `ports.inputs[]` and
 declaration is not a scheduler body clause; behavior comes from transaction
 states/rules that use the port and activation sites that bind it.
 
+The compiler retains actor and transaction width sources separately from
+resolved defaults. Private module metadata also identifies which scope owns
+the emitted parameter list, including renamed and generated modules. This
+prepares dependency propagation; generic port widths and override-driven shape
+specialization remain pending.
+
 Shipped binding shape:
 
 ```lisp

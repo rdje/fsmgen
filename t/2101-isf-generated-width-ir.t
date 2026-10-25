@@ -77,6 +77,49 @@ subtest 'actor and selected transaction environments remain distinct from child 
         'sibling scope retains its independent default');
 };
 
+subtest 'module parameter ownership comes from constructors even when parameter lists coincide' => sub {
+    my $root = $products->{generated}{ir};
+    is_deeply($root->{_width_scopes}{module_parameters},
+        {kind => 'actor', owner => 'generated_width_ir'}, 'parent parameters belong to the source actor');
+    is_deeply($root->{children}{worker}{_width_scopes}{module_parameters},
+        {kind => 'transaction', actor => 'generated_width_ir', owner => 'worker'},
+        'generated module parameters belong to the selected transaction');
+    is_deeply($root->{children}{sibling}{_width_scopes}{module_parameters},
+        {kind => 'transaction', actor => 'generated_width_ir', owner => 'sibling'},
+        'sibling parameters have their own lexical owner');
+
+    open my $in, '<', 't/data/isf-generated-width-ir/generated.isf' or die $!;
+    my $source = do {local $/; <$in>};
+    close $in or die $!;
+    $source =~ s/ACTOR_ALIAS/ALIAS/g;
+    $source =~ s/\(transaction worker \(params \(W 4\) \(ALIAS W\) \(OTHER 4\)\)/
+        (transaction worker (params (W 8) (ALIAS W) (OTHER 8))/;
+    $source =~ s/\(output result \(width 4\)\)/(output result (width 8))/;
+    my $actor = FSM::Adapter::ISF->new->parse_source($source, 'coincident-width-owners.isf');
+    $actor->{actor_name} = 'renamed_equal_width_module';
+    my $before = $json->encode($actor);
+    my $lowerer = FSM::Scheduler::ISF->new->{ir};
+    my $ir = $lowerer->build_module($actor);
+    is($ir->{params}[0]{value}, '8', 'actor parameter has the selected equal default');
+    is($ir->{children}{worker}{params}[0]{value}, '8', 'transaction parameter has the same default');
+    is($json->encode($ir->{params}), $json->encode($ir->{children}{worker}{params}),
+        'complete executable parameter lists and scalar kinds coincide');
+    is_deeply($ir->{_width_scopes}{module_parameters}, {kind => 'actor', owner => 'generated_width_ir'},
+        'renamed actor parameters retain their original lexical owner');
+    is_deeply($ir->{children}{worker}{_width_scopes}{module_parameters},
+        {kind => 'transaction', actor => 'generated_width_ir', owner => 'worker'},
+        'equal parameter lists cannot change transaction ownership');
+    my $saved = $json->encode($lowerer->build_module($actor));
+    if (ref($ir->{children}{worker}{_width_scopes}{module_parameters}) eq 'HASH') {
+        $ir->{children}{worker}{_width_scopes}{module_parameters}{owner} = 'WRONG';
+        is($ir->{_width_scopes}{module_parameters}{owner}, 'generated_width_ir', 'parent ownership is detached');
+        is($ir->{children}{sibling}{_width_scopes}{module_parameters}{owner}, 'sibling',
+            'sibling ownership is detached');
+        is($json->encode($actor), $before, 'ownership cannot mutate source callers or scalar kinds');
+        is($json->encode($lowerer->build_module($actor)), $saved, 'fresh ownership remains exact');
+    }
+};
+
 subtest 'all generated metadata is isolated from inputs, siblings and executable records' => sub {
     for my $case (qw(generated plain)) {
         ok($products->{$case}{caller_unchanged}, "$case preserves complete source callers and kinds");
@@ -93,6 +136,11 @@ subtest 'all generated metadata is isolated from inputs, siblings and executable
     my $child = $first->{children}{worker};
     is($json->encode($child->{_width_declarations}), $json->encode(expected_worker()),
         'physical parent rename preserves original lexical identities');
+    is_deeply($first->{_width_scopes}{module_parameters},
+        {kind => 'actor', owner => 'generated_width_ir'}, 'renamed parent keeps its source parameter owner');
+    is_deeply($child->{_width_scopes}{module_parameters},
+        {kind => 'transaction', actor => 'generated_width_ir', owner => 'worker'},
+        'renamed parent cannot rename child lexical ownership');
     $child->{_width_declarations}{data}{source}{owner} = 'WRONG';
     $child->{_width_declarations}{payload}{declaration}{identity}[3] = 'WRONG';
     $child->{_width_scopes}{actor}{params}[0]{value} = '99';

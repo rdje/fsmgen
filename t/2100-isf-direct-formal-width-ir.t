@@ -164,6 +164,8 @@ subtest 'domain selection preserves lexical widths across independent defaults' 
             is_deeply($ir->{_width_declarations}, \%expected,
                 "$domain complete source inventory excludes sibling declarations and physical-owner guesses");
             is($ir->{actor_name}, "domain_widths__domain_$domain", 'physical module retains distinct domain identity');
+            is_deeply($ir->{_width_scopes}{module_parameters},
+                {kind => 'actor', owner => 'domain_widths'}, 'domain module params keep the original actor owner');
             is_deeply($ir->{_width_scopes}{transactions}, {$tx => {owner => $tx, actor => 'domain_widths',
                 params => [{name => 'W', value => $local_width}]}}, 'only local transaction environment is retained');
             is_deeply($ir->{_width_scopes}{actor}{params}, [{name => 'W', value => '8'},

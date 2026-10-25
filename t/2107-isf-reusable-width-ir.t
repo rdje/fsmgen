@@ -21,6 +21,8 @@ for my $case (qw(library atl)) {
             my $source = $sources[$index];
             my $child = $ir->{children}{$source->{module}};
             my $scope = $child->{_width_scopes}{instance};
+            is_deeply($child->{_width_scopes}{module_parameters}, {kind => 'actor', owner => 'child'},
+                'reusable module parameters belong to the source export, independent of selected instances');
             my $overridden = $case eq 'library' && $index == 0;
             is_deeply($scope, {
                 kind => $case eq 'library' ? 'library_use' : 'atl_static_instance',
