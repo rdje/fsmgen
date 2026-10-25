@@ -71,6 +71,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `FULL-CHIP-SOURCE-AUTHORING-HORIZON` | `proposed` | `R14 / long-term source authoring` | `.2` defines complete-chip source contracts and a capability/gap matrix after required SPECFORGE delivery/publication/feedback or explicit activation; both IAL entry points and initial VIAL verification are goals, with backend excluded. | [task](docs/tasks/FULL-CHIP-SOURCE-AUTHORING-HORIZON.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |
 | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` | `proposed` | `HIAL/VIAL native semantics` | `.1/.8` select IASIM authority and NEXSIM checkpoints without runtime activation | [task](docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md) |

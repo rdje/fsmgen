@@ -183,6 +183,13 @@ cycles while keeping the resulting schedule explicit and reviewable.
 Direction:
 
 - keep `.fsm` as the explicit cycle-accurate design layer;
+- make both IAL1 and IAL2 complete digital-chip source-authoring entry points
+  for real CPU, DSP, MCU, ASIC and SoC designs, with VIAL for initial functional
+  verification; the end product is implementation-ready source and the backend
+  remains downstream. Proposed `FULL-CHIP-SOURCE-AUTHORING-HORIZON` owns this
+  long-term objective, including complete actionable API/MCP coverage and
+  ChatGPT/Claude plugin/UI clients, without
+  changing required SPECFORGE implementation priority;
 - use `.isf`/IAL1 for actors, transactions, rules, resources, phases,
   constraints, scheduling, and generated schedule reports;
 - use IAL2 for higher protocol/platform intent that lowers through IAL1 and

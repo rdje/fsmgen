@@ -1,8 +1,8 @@
 # FSMGen
 
-FSMGen compiles Lisp-like state-machine and intent specifications into
-synthesizable HDL with explicit semantics, reviewable lowering, machine-readable
-diagnostics, and inspectable output.
+FSMGen targets full digital-chip source authoring through IAL1/IAL2.
+It compiles bounded state-machine and intent sources to synthesizable HDL
+with explicit semantics and reviewable lowering.
 
 For exact current coverage, use the [mdBook](docs/book/src/SUMMARY.md) and
 capability manifest; parser acceptance alone does not imply support.

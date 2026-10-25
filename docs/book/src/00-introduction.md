@@ -1,6 +1,16 @@
 # Introduction
 
-FSMGen compiles Lisp-like `.fsm` sources into synthesizable HDL.
+FSMGen compiles state-machine and intent specifications into synthesizable HDL.
+
+The long-term goal is complete digital-chip source authoring: real CPU, DSP,
+MCU, ASIC and SoC designs from either IAL1 or IAL2, with VIAL for initial
+functional verification. The end product is a complete implementation-ready
+source tree; synthesis and physical implementation remain downstream. This goal requires
+future capabilities and qualification beyond today's documented subsets.
+The [proposed horizon](../../../docs/tasks/FULL-CHIP-SOURCE-AUTHORING-HORIZON.md)
+records the objective, including access to the full feature set through API/MCP
+and ChatGPT/Claude plugins and UI. Current exposure remains bounded by the
+published capabilities. Required delivery priority is unchanged.
 
 Today, the primary backend is SystemVerilog, with Verilog compatibility through
 the existing path. FSMGen also ships bounded VHDL generation for documented
