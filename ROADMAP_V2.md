@@ -188,7 +188,8 @@ Direction:
   verification; the end product is implementation-ready source and the backend
   remains downstream. Proposed `FULL-CHIP-SOURCE-AUTHORING-HORIZON` owns this
   long-term objective, including complete actionable API/MCP coverage and
-  ChatGPT/Claude plugin/UI clients, without
+  ChatGPT/Claude plugin/UI clients, and beautiful, concise, expressive Lispish
+  source forms for every IAL1/IAL2 design feature, without
   changing required SPECFORGE implementation priority;
 - use `.isf`/IAL1 for actors, transactions, rules, resources, phases,
   constraints, scheduling, and generated schedule reports;

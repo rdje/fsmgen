@@ -12,6 +12,12 @@ records the objective, including access to the full feature set through API/MCP
 and ChatGPT/Claude plugins and UI. Current exposure remains bounded by the
 published capabilities. Required delivery priority is unchanged.
 
+Every IAL1 and IAL2 design feature must ultimately have an elegant, expressive
+Lispish/S-expression authoring form. Common designs should be concise, composition
+natural, and detailed control readable, with no useless verbosity. Source and
+API/MCP operations must preserve the same hardware meaning. These are feature
+acceptance requirements for the full-chip goal, not claims of current completeness.
+
 Today, the primary backend is SystemVerilog, with Verilog compatibility through
 the existing path. FSMGen also ships bounded VHDL generation for documented
 direct single-FSM and exact composition subsets. VHDL is not yet a full-parity

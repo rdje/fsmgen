@@ -16,6 +16,8 @@ for complete real digital CPU, DSP, MCU, ASIC and SoC designs. Both IAL1 and IAL
 are intended entry points with the necessary capability for that outcome. The
 end product is complete implementation-ready source code. VIAL supports initial
 functional verification. The director's DBIQNP clarifications below own the objective.
+Every IAL1 and IAL2 design feature must have a beautiful, elegant, expressive,
+efficient Lispish/S-expression form without useless verbosity.
 
 ## Non-Goals
 
@@ -29,6 +31,17 @@ functional verification. The director's DBIQNP clarifications below own the obje
 
 - Each layer can serve as an authoring entry point for a complete digital chip,
   with explicit composition/refinement and faithful IAL2 -> IAL1 -> IAL0 lowering.
+- Every design feature has a complete Lispish/S-expression authoring surface:
+  concise common cases, consistent vocabulary and scope, composable reusable
+  forms, and readable detailed control. Required semantics remain explicit.
+- Representative real source examples demonstrate language quality. Repeated
+  boilerplate and unnecessary verbosity need a design reason, not acceptance
+  merely because the parser handles them. Concision cannot hide timing, width,
+  clock/reset, ownership or configuration meaning.
+- API/MCP operations cover the same design capabilities and can materialize
+  readable source with semantic round-trip fidelity. A design feature exposed
+  only through an API does not satisfy language completeness. Operational tool
+  calls remain separate from design-language constructs.
 - Design semantics, source expressiveness, compiler correctness, ergonomics,
   source-quality qualification and verification maturity have separate evidence.
 - Representative complete designs, independent semantic oracles and invalid
@@ -45,7 +58,7 @@ functional verification. The director's DBIQNP clarifications below own the obje
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON`
   Status: `proposed`
   Goal: `Deliver complete digital-chip source authoring through both IAL1 and IAL2, with initial VIAL verification.`
-  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9`
+  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1`
   Status: `done`
@@ -64,14 +77,14 @@ functional verification. The director's DBIQNP clarifications below own the obje
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.3`
   Status: `deferred`
   Goal: `Develop complete IAL1 hardware authoring semantics from the selected gap matrix.`
-  Acceptance: `After .2 selection, split required control, datapath/arithmetic, pipeline/hazard, memory/register-file, hierarchy, parameter/type, clock/reset and interface capabilities into independently executable feature trees. Preserve precise timing, resource and configuration semantics, diagnostics and backend-neutral contracts. Qualify complete source and independent behavioral expectations before closing a capability; no automatic admission of an unspecified construct.`
+  Acceptance: `After .2 selection, split required control, datapath/arithmetic, pipeline/hazard, memory/register-file, hierarchy, parameter/type, clock/reset and interface capabilities into independently executable feature trees. Each feature needs an elegant, concise and expressive Lispish authoring form, precise timing/resource/configuration semantics, diagnostics, backend-neutral contracts and API/MCP applicability. Qualify realistic readable source, independent behavior and semantic source/API round trips before closure; no automatic admission of an unspecified construct.`
   Verification: `Deferred; no IAL1 completeness or current absence claim.`
   Commit: `pending`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.4`
   Status: `deferred`
   Goal: `Develop complete IAL2 architectural/system authoring with explicit IAL1 refinement.`
-  Acceptance: `After .2 and required lower-layer dependencies, select bounded architectural, component, memory-map, interconnect, protocol and composition requirements. Every supported detailed behavior remains reachable through explicit refinement/composition into IAL1; no IAL2 bypass or silent loss. Qualify representative complete designs authored from either layer against independent semantics; identical vocabulary is not required.`
+  Acceptance: `After .2 and required lower-layer dependencies, select architectural, component, memory-map, interconnect, protocol and composition requirements with elegant, concise and expressive Lispish forms. Every detailed behavior remains reachable through explicit refinement/composition into IAL1; no bypass, silent loss or API-only design feature. Qualify realistic complete source from either layer, semantic API/MCP round trips and independent behavior. Distinct layer vocabulary remains valid when meaning is clear and composition is efficient.`
   Verification: `Deferred; existing bounded profiles remain the shipped contract.`
   Commit: `pending`
 
@@ -109,6 +122,13 @@ functional verification. The director's DBIQNP clarifications below own the obje
   Acceptance: `After explicit activation and applicable capability contracts, coordinate FSMGEN-CONVERSATIONAL-INTERFACE and SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON instead of duplicating them. Every delivered feature needs authoritative API behavior, MCP access, complete input/result/error/effect contracts and consumer applicability evidence. ChatGPT/Claude plugins and UI invoke those same capabilities. Qualify each host's tool access and actual UI separately; preserve source identity, permissions, artifact/effect boundaries and reproducibility. Current read-only MCP coverage is not full actionable parity. Split implementation by feature and host; no connection or effectful tool is activated by this discussion.`
   Verification: `Deferred; the existing client owner and effectful MCP horizon retain implementation ownership. No host parity or complete current exposure is claimed.`
   Commit: `pending`
+
+- ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.10`
+  Status: `done`
+  Goal: `Record complete, elegant and expressive Lispish/S-expression authoring as a core requirement for every IAL1/IAL2 design feature.`
+  Acceptance: `Preserve the director's latest DBIQNP requirement in the goal, feature acceptance/decomposition, roadmap and book. Require concise, composable and semantically precise source forms with no useless verbosity, plus semantic API/MCP source parity. Keep operational tools distinct from design-language constructs. Record the requirement without implementing new syntax or changing required delivery priority. Validate docs and mandatory staged doctrines, then commit cleanly.`
+  Verification: `The director's requirement is preserved in the goal, acceptance criteria, IAL1/IAL2 decomposition, roadmap, book and discussion record. Both layers require complete Lispish design surfaces, concise/composable real examples and precise semantics, with equivalent API/MCP capabilities and semantic source round trips. Operational tools are not invented as HDL constructs. No syntax is admitted, host capability promoted or implementation lane activated. The implementation frontier remains ISF-REDUCTION-DELIVERY.2.3.3. Documentation and mandatory staged gates qualify this planning slice.`
+  Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.10: require expressive Lispish design surfaces`
 
 ## Acceptance Checklist (enforced)
 
@@ -178,6 +198,24 @@ Methodology references distinguish source/design verification from physical flow
 [OpenTitan development stages](https://opentitan.org/book/doc/project_governance/development_stages.html)
 and [OpenROAD flow](https://openroad-flow-scripts.readthedocs.io/en/latest/mainREADME.html).
 These inform scope; no FSMGen integration or backend capability is claimed.
+
+### Complete language surface and language quality
+
+The director further requires **every feature of both IAL1 and IAL2** to be
+expressed beautifully, elegantly, expressively and efficiently in the existing
+Lispish/S-expression language, without useless verbosity. This is a core product
+requirement. Language design must make common intent concise, composition natural
+and detailed control readable. Each feature needs representative realistic source
+examples and precise semantics; parser acceptance alone cannot establish quality.
+API/MCP access must preserve that same language meaning and support materializing
+readable source. This clarifies the proposed horizon without activating syntax
+work or changing the required delivery frontier.
+
+## Language requirement acceptance (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'complete digital-chip source-authoring' -- ROADMAP_V2.md identifies ee7cb1660, which records the full-chip goal but lacks the later universal Lispish-language quality criterion. The director explicitly adds that requirement during DBIQNP while required width implementation continues.
+- [x] **ADDRESSED (verified)** — The proposed horizon, IAL1/IAL2 future decomposition, roadmap and book now require complete, concise and expressive Lispish surfaces, semantically precise composition and equivalent actionable API/MCP coverage. This records scope without implementing a language feature or changing the active implementation pointer.
+- [x] **NO REGRESSION** — Source grammar, lowering and public capability behavior are unchanged. The book build, task integrity and scripts/check_doctrines.sh with knowledge-map: OK and normal hooks qualify the documentation slice; no full-chip implementation or runtime completeness is claimed.
 
 ## Blockers
 
