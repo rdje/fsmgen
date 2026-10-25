@@ -1,0 +1,27 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "purpose": "Resolve historical VHDL checksum mismatch by running the exact original test context; isolated VHDL output has not reproduced its frozen checksum.",
+  "revision": "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+  "added_archive_command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+    "isf/verification_observation_metadata.isf",
+    "ppif/ahb_lite_subordinate.ppif",
+    "vial/ahb_subordinate_base_output_arbitration.vial",
+    "t/1551-hial-vial-bridge-manifest.t"
+  ],
+  "added_archive_sha256": "c05cb8eeb04595324c424fc9d462b2c188ed338c4fa96d8cadeeb2ddaa63c67e",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1551-intake/historical",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-v",
+    "-Iperl",
+    "t/1551-hial-vial-bridge-manifest.t"
+  ],
+  "exit_status": 0,
+  "log": ".artifacts/push-readiness-20261025/bridge1551-intake/historical-original-test.log"
+}

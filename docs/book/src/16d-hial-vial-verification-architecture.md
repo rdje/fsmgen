@@ -343,6 +343,23 @@ file. Public CLI/API and `hial-vial-bridge.json` discovery remain owned by
 simulation, and parity remain later leaves. See the complete
 [bridge v1 contract](../../HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md).
 
+Bridge construction preserves the supplied review-source bytes and generated
+HDL. The regression checks the current SystemVerilog and VHDL outputs before
+and after bridge construction; only SystemVerilog's date header is normalized.
+It also compares lowering with and without the generated verification annotation.
+A changed storage reset must change both HDL outputs and their reset values.
+These comparisons preserve current lowering and backend contracts, including
+interface ownership, compatible same-value selector fan-in and typed VHDL
+comparison results:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1551-hial-vial-bridge-manifest.t
+```
+
+Full architecture-scale qualification remains pending while the
+[report-identity task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md)
+resolves its failing reference checksum.
+
 ### Using the shipped private producer
 
 The implementation has three closed entrypoints, one for each canonical HIAL

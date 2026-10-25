@@ -1,0 +1,40 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "purpose": "Reproduce the actual August VHDL checksum baseline, distinct from the July SV checksum introduction. July original test passes with its own a82 checksum; there is no observed context-sensitive old VHDL defect.",
+  "revision": "a6c670d7d4fb1d8e7bff5e881227cfae8645b85b",
+  "archive_command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "a6c670d7d4fb1d8e7bff5e881227cfae8645b85b",
+    "perl",
+    "specs",
+    "plugin",
+    "README.md",
+    "bin/fsmgen",
+    "fsm/ahb_lite_subordinate.fsm"
+  ],
+  "archive_sha256": "9f6c414bcb6e3eec3116f583a0a935ef12cde7cd3b1f79fa0e171979f43b472e",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1551-intake/vhdl-baseline",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "../generate.pl",
+    "../vhdl-baseline-output"
+  ],
+  "outputs": [
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/vhdl-baseline-output/systemverilog.txt",
+      "bytes": 22799,
+      "sha256": "95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/vhdl-baseline-output/vhdl.txt",
+      "bytes": 18392,
+      "sha256": "ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa"
+    }
+  ],
+  "exit_status": 0
+}

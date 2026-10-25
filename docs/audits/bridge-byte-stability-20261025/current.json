@@ -1,0 +1,25 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    ".artifacts/push-readiness-20261025/bridge1551-intake/generate.pl",
+    ".artifacts/push-readiness-20261025/bridge1551-intake"
+  ],
+  "exit_status": 0,
+  "instrument": "use strict; use warnings;\nuse FSM::Pipeline::HDLGenerator;\nuse File::Spec;\nuse Cwd qw(getcwd);\nmy $path=File::Spec->catfile(getcwd(),'t','..','fsm','ahb_lite_subordinate.fsm');\nfor my $language (qw(systemverilog vhdl)) {\n my $result=FSM::Pipeline::HDLGenerator->new(debug_level=>0,target_language=>$language,quiet=>1,strict_mode=>1)->generate_hdl_from_file($path);\n my $text=$result->{hdl_code};\n $text =~ s{^// Date: .*\\n}{// Date: <normalized>\\n}m if $language eq 'systemverilog';\n open my $out,'>:raw',\"$ARGV[0]/$language.txt\" or die $!;\n print {$out} $text; close $out or die $!;\n}\n",
+  "outputs": [
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/systemverilog.txt",
+      "bytes": 20777,
+      "sha256": "b81de5bd654199415241dfb50ce28524ec2d9e4d7a79716bdf85384a586367e2"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/vhdl.txt",
+      "bytes": 18410,
+      "sha256": "b55383f048feeb1ad9ff0b66141639f42a1d42b8c7fa8c4699e8f0f299bfb4ab"
+    }
+  ]
+}

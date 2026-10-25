@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -182,17 +182,24 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.15`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose and repair the adjacent bridge determinism/behavior historical byte expectations.`
   Acceptance: `P1 immediately after .14 commits, before another expensive full run. Adjacent capture ahb1475-repair-focused returns1: T1551 lines300/301/305/312 reject generated IAL0 length/checksum and direct SV/VHDL checksums. The AHB IAL0 mismatch has the exact already diagnosed interface-only cause; direct HDL drift remains unclassified. Reproduce via prove -Iperl t/1551-hial-vial-bridge-manifest.t, trace each expected/current byte difference through canonical contract/history/public APIs, and repair stale expectations only when intended changes are proved. Preserve real deterministic/immutable/behavior-invariance coverage with independent positive/adverse controls; never blindly refresh checksums or weaken production behavior. Sync bridge/AHB book and current facts as needed, focused checks and ordinary commit, then return to .13 fresh guarded full CI, authorized push and exact-SHA hosted qualification.`
-  Verification: `Original complete TAP/status retained in docs/audits/push-readiness-20261025/ahb1475-repair-focused.json and .log.gz. Same run passes T1475, T1903 and T1983; no production source is changed by .14. No T1551 repair attempted.`
+  Verification: `Original four failures remain retained. Exact own-Git public historical generator witnesses reproduce the July SV95db checksum and actual Augusta6c VHDLab668 checksum; the unchanged input FSM is identical. Complete current SV differs only by compatible_fanin assertion removals authorized by decision0111/69ae18454; complete current VHDL differs only by the typed size_q inequality assignment repaired by965b541d3. Initial snapshot marker/descriptor refusals are retained without result credit. July original test passes its earliera82 VHDL hash, correcting the initial wrong baseline assumption; no context-sensitive old defect is inferred. T1551 now compares annotation/no-annotation current file maps, source immutability and before/after-bridge SV/VHDL, retaining current selector/typed-comparison checks. Changed storage reset must alter both HDLs with independent expected reset literals. Syntax and focused T1551/T1475/T1211 pass Files3 Tests12. Exact canonical field then passes T1551 but exposes T1602 report identity failure, immediately owned by .16; original field remains red and unweakened. Final native book/POD/current-source/index/KMap commands all return0, and the card preserves all prior questions/scale facts within existing limits while naming its red full reverify. Complete recipes/source commitments/outputs/diffs and separate evidence legs are in docs/audits/bridge-byte-stability-20261025/diagnosis.json. Production modules/grammar/seed remain unchanged; normal staged/commit gates qualify the slice.`
+  Commit: `This work-unit commit.`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.16`
+  Status: `pending`
+  Goal: `Diagnose and repair the architecture-scale frozen AHB report identity check.`
+  Acceptance: `P1 immediately after .15 commits, before .13 fresh full CI. Exact canonical bridge reverify runs T1551 successfully, then T1602 line162 rejects report checksum240db972 againsta4565d40. Preserve its complete first failure/status. Reproduce public bridge-fanout reference generation, compare exact report fields/identities/provenance to the selected historical baseline, and classify intended evolution versus real producer regression before repair. Preserve profile limits, all gate axes, reference semantics, no IAL2 bypass and meaningful positive/adverse controls. Keep the canonical card honest about its current red full reverify. Focused checks/book/docs/normal commit, then complete fresh qualification; no blind checksum refresh, hashcheck omission or claimed current full success.`
+  Verification: `Original complete command/TAP/status: docs/audits/push-readiness-20261025/bridge1551-repair-fact.json and .log.gz, integer1. No report comparison or repair attempted yet.`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.15` | `pending` | After .14 commits, diagnose the bridge test historical IAL0/SV/VHDL byte expectations; then .13 fresh full qualification. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.16` | `pending` | After .15 commits, diagnose the architecture-scale AHB report checksum; then .13 complete fresh full qualification. |
 
 ## Decisions
 
@@ -201,7 +208,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures require diagnosis/repair before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
+- Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 report-identity failure requires diagnosis/repair before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
 
 ## Acceptance Checklist — `.1`
 
@@ -304,3 +311,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Original full5 reports at t/1475-ial2-ahb-subordinate.t line 69 that the historical checksum differs. Exact current bytes with only +interface removed match the July hash; actual git log -S explicit_internal_signals --reverse identifiesa929fe719 intended storage ownership. Frozen cross-history bytes tested unrelated lowering evolution instead of annotation invariance.
 - [x] **ADDRESSED (verified)** — T1475 compares complete same-revision file maps after removing exactly one annotation, verifies parsed/source absence and preserves interface assertions. A changed HREADYOUT reset independently changes emitted bytes and the reset declaration. Current fact reverify returns0; original failure remains retained. Production modules/grammar are unchanged.
 - [x] **NO REGRESSION** — ahb1475-repair-green reports All tests successful, Files=3, Tests=17, then strict CLI/schedule/reference checks0. ahb1475-repair-docs returns0 for all five native book/POD/current-source/index/KMap commands. Earlier adjacent T1551 fails four historical byte expectations and stays owned by .15; no claim that this broader gate or full CI passed. Normal staged/commit gates remain required.
+
+## Acceptance Checklist — `.15` bridge byte invariance
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original four assertions fail at t/1551-hial-vial-bridge-manifest.t lines300/301/305/312. Actual git log -S ab668d31 identifiesa6c670d7 VHDL lock; own-Git public historical generators reproduce that lock and July SV95db exactly. Whole-output witnesses reduce SV drift solely to decision0111 compatible-fan-in assertions and VHDL drift solely to965b541 typed inequality emission. Interface-only IAL0 drift is already exact. No checksum is blindly refreshed.
+- [x] **ADDRESSED (verified)** — T1551 compares complete current lowering with/without annotation, provided-source immutability and SV/VHDL before/after bridge construction. A changed hardware storage reset must change both outputs and contain independently expected values. Current interface ownership, different-value assertion policy and typed VHDL comparison are retained; historical packets and failed fixture/layout attempts remain durable.
+- [x] **NO REGRESSION** — bridge1551-repair-focused reports All tests successful, Files=3, Tests=12, syntax0. bridge1551-repair-docs-2 returns0 for five native book/POD/current-source/index/KMap commands, including current new question parity. Full canonical reverify remains red at T1602 line162, owned by .16; no full-CI or scale-reference qualification is claimed. Ordinary staged/normal gates remain mandatory.

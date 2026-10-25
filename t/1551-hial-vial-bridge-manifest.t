@@ -19,6 +19,7 @@ use FSM::HIAL::VIALBridge::Builder;
 use FSM::HIAL::VIALBridge::Manifest;
 use FSM::HIAL::VIALBridge::Report;
 use FSM::Pipeline::HDLGenerator;
+use FSM::ProjectDataLocality qw(create_project_tempdir);
 use FSM::Scheduler::ISF;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::HIALVIALBridgeContract qw(
@@ -45,6 +46,12 @@ my $ial0_hdl = FSM::Pipeline::HDLGenerator->new(
     quiet => 1,
     strict_mode => 1,
 )->generate_hdl_from_file($ial0_path);
+my $ial0_vhdl = FSM::Pipeline::HDLGenerator->new(
+    debug_level => 0,
+    target_language => 'vhdl',
+    quiet => 1,
+    strict_mode => 1,
+)->generate_hdl_from_file($ial0_path)->{hdl_code};
 
 my $isf_adapter = FSM::Adapter::ISF->new();
 my $scheduler = FSM::Scheduler::ISF->new();
@@ -297,19 +304,60 @@ subtest 'generation remains deterministic, immutable, and behavior-preserving' =
 
     is(bytes::length($generated_ial1_text), 4174, 'generated IAL1 additive annotation has the selected byte length');
     is(sha256_hex($generated_ial1_text), 'b0f3446874367787d0dd134701ff9e89a3b24af6ef9c03d6eb9dc484093f9e4c', 'generated IAL1 annotation is byte deterministic');
-    is(bytes::length($generated_ial0_text), 5854, 'generated IAL0 byte length is unchanged');
-    is(sha256_hex($generated_ial0_text), '3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf', 'generated IAL0 bytes are unchanged by metadata');
+    my $without_bridge = $generated_ial1_text;
+    is(scalar($without_bridge =~ s/^  \(verification-bridge\n.*?^  \)\n\n//msg), 1,
+        'comparison removes exactly the generated verification annotation');
+    my $plain_actor = $isf_adapter->parse_source($without_bridge, 'ahb_lite_subordinate.isf');
+    ok(!defined($plain_actor->{verification_bridge}), 'comparison actor has no bridge annotation');
+    is_deeply(FSM::Scheduler::ISF->new()->lower($plain_actor)->{files},
+        $ial2_result->{generated_ial0}{files}, 'annotation leaves current generated IAL0 bytes unchanged');
+    is($ial2_route->{generated_ial0}{text}, $generated_ial0_text, 'bridge construction preserves its provided IAL0 source bytes');
 
     my $sv = $ial0_hdl->{hdl_code};
     $sv =~ s{^// Date: .*\n}{// Date: <normalized>\n}m;
-    is(sha256_hex($sv), '95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c', 'direct SystemVerilog HIAL output is semantically stable after date normalization');
+    my $after_sv = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+        strict_mode => 1,
+    )->generate_hdl_from_file($ial0_path)->{hdl_code};
+    $after_sv =~ s{^// Date: .*\n}{// Date: <normalized>\n}m;
+    is($after_sv, $sv, 'bridge construction preserves current SystemVerilog bytes after date normalization');
+    like($sv, qr/selector multi-value conflict: HREADYOUT/, 'current SystemVerilog retains different-value exclusivity checks');
+    unlike($sv, qr/selector same-value conflict:/, 'compatible same-value fan-in does not gain exclusivity checks');
     my $vhdl = FSM::Pipeline::HDLGenerator->new(
         debug_level => 0,
         target_language => 'vhdl',
         quiet => 1,
         strict_mode => 1,
     )->generate_hdl_from_file($ial0_path)->{hdl_code};
-    is(sha256_hex($vhdl), 'ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa', 'direct VHDL HIAL output is byte stable');
+    is($vhdl, $ial0_vhdl, 'bridge construction preserves current VHDL bytes');
+    like($vhdl, qr/\Qsize_q_ne_const_2 <= '1' when size_q \/= "010" else '0';\E/,
+        'current VHDL comparison produces a typed logic value');
+
+    my $changed_source = $ial0_text;
+    is(scalar($changed_source =~ s/\Q(:= (reg_data_q 32'h00000000))\E/(:= (reg_data_q 32'h00000001))/g), 1,
+        'adverse control changes exactly the storage reset value');
+    my $control_dir = create_project_tempdir(purpose => 'hial-bridge-hdl-control');
+    my $control_path = File::Spec->catfile($control_dir, 'changed.fsm');
+    open my $control, '>:raw', $control_path or die "Cannot write $control_path: $!";
+    print {$control} $changed_source;
+    close $control or die "Cannot close $control_path: $!";
+    for my $language (qw(systemverilog vhdl)) {
+        my $changed = FSM::Pipeline::HDLGenerator->new(
+            debug_level => 0,
+            target_language => $language,
+            quiet => 1,
+            strict_mode => 1,
+        )->generate_hdl_from_file($control_path)->{hdl_code};
+        $changed =~ s{^// Date: .*\n}{// Date: <normalized>\n}m if $language eq 'systemverilog';
+        isnt($changed, $language eq 'systemverilog' ? $sv : $vhdl,
+            "$language output changes for the changed hardware reset");
+        like($changed, $language eq 'systemverilog'
+            ? qr/\breg_data_q <= 32'h1;/
+            : qr/\breg_data_q <= "00000000000000000000000000000001";/,
+            "$language output contains the independent expected reset value");
+    }
 };
 
 subtest 'malformed routes and annotations fail closed with sanitized diagnostics' => sub {

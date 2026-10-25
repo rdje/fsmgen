@@ -1,0 +1,102 @@
+--- historical/vhdl
++++ current/vhdl
+@@ -57,7 +57,7 @@
+   signal addr_q_haddr_en : std_logic;
+   signal error_complete_addr_q_haddr_en : std_logic;
+   signal error_complete_en : std_logic;
+-  signal error_complete_hrdata__32_h0_en : std_logic;
++  signal error_complete_hrdata_32_h0_en : std_logic;
+   signal error_complete_hreadyout_1_en : std_logic;
+   signal error_complete_hresp_1_en : std_logic;
+   signal error_complete_next_state_access_en : std_logic;
+@@ -66,7 +66,7 @@
+   signal error_complete_size_q_hsize_en : std_logic;
+   signal error_complete_wait_ctr_wait_cycles_en : std_logic;
+   signal error_complete_write_q_hwrite_en : std_logic;
+-  signal hrdata__32_h0_en : std_logic;
++  signal hrdata_32_h0_en : std_logic;
+   signal hrdata_reg_data_q_en : std_logic;
+   signal hreadyout_0_en : std_logic;
+   signal hreadyout_1_en : std_logic;
+@@ -74,7 +74,7 @@
+   signal hresp_1_en : std_logic;
+   signal idle_addr_q_haddr_en : std_logic;
+   signal idle_en : std_logic;
+-  signal idle_hrdata__32_h0_en : std_logic;
++  signal idle_hrdata_32_h0_en : std_logic;
+   signal idle_hreadyout_1_en : std_logic;
+   signal idle_hresp_0_en : std_logic;
+   signal idle_next_state_access_en : std_logic;
+@@ -89,7 +89,7 @@
+   signal reg_data_q_hwdata_en : std_logic;
+   signal size_q_hsize_en : std_logic;
+   signal unsupported_en : std_logic;
+-  signal unsupported_hrdata__32_h0_en : std_logic;
++  signal unsupported_hrdata_32_h0_en : std_logic;
+   signal unsupported_hreadyout_0_en : std_logic;
+   signal unsupported_hresp_1_en : std_logic;
+   signal unsupported_next_state_error_complete_en : std_logic;
+@@ -142,9 +142,9 @@
+   HSEL_and_not_HREADY <= HSEL and not HREADY;
+   HTRANS_eq_const_2b10 <= '1' when HTRANS = "10" else '0';
+   HTRANS_eq_const_2b11 <= '1' when HTRANS = "11" else '0';
+-  size_q_eq_const_2 <= '1' when size_q = 2 else '0';
+-  size_q_ne_const_2 <= size_q != 2;
+-  HSEL_and_HREADY_and_HTRANS <= '1' when HSEL_and_HREADY and (HTRANS = "01") else '0';
++  size_q_eq_const_2 <= '1' when size_q = "010" else '0';
++  size_q_ne_const_2 <= '1' when size_q /= "010" else '0';
++  HSEL_and_HREADY_and_HTRANS <= '1' when (HSEL_and_HREADY = '1') and (HTRANS = "01") else '0';
+   HSEL_and_HREADY_and_not_HTRANS <= HSEL_and_HREADY and (not fsmgen_direct_vhdl_reduce_or(HTRANS));
+   HSEL_and_HREADY_and_HTRANS_eq_const_2b10 <= HSEL_and_HREADY and HTRANS_eq_const_2b10;
+   HSEL_and_HREADY_and_HTRANS_eq_const_2b11 <= HSEL_and_HREADY and HTRANS_eq_const_2b11;
+@@ -160,7 +160,7 @@
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_write_q <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q and (write_q);
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL and HREADY;
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_not_HREADY <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL and not HREADY;
+-  not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS <= '1' when not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY and (HTRANS = "01") else '0';
++  not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS <= '1' when (not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY = '1') and (HTRANS = "01") else '0';
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10 <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY and HTRANS_eq_const_2b10;
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11 <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY and HTRANS_eq_const_2b11;
+   not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_not_HTRANS <= not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY and (not fsmgen_direct_vhdl_reduce_or(HTRANS));
+@@ -177,7 +177,7 @@
+   access_wait_ctr_wait_ctr_1_en <= access_en and (fsmgen_direct_vhdl_reduce_or(wait_ctr));
+   access_wait_ctr_wait_cycles_en <= access_en and ((not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10 or not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11));
+   access_write_q_hwrite_en <= access_en and not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+-  error_complete_hrdata__32_h0_en <= error_complete_en;
++  error_complete_hrdata_32_h0_en <= error_complete_en;
+   error_complete_hreadyout_1_en <= error_complete_en;
+   error_complete_hresp_1_en <= error_complete_en;
+   error_complete_addr_q_haddr_en <= error_complete_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+@@ -187,7 +187,7 @@
+   error_complete_size_q_hsize_en <= error_complete_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+   error_complete_wait_ctr_wait_cycles_en <= error_complete_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;
+   error_complete_write_q_hwrite_en <= error_complete_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+-  idle_hrdata__32_h0_en <= idle_en;
++  idle_hrdata_32_h0_en <= idle_en;
+   idle_hreadyout_1_en <= idle_en;
+   idle_hresp_0_en <= idle_en;
+   idle_addr_q_haddr_en <= idle_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+@@ -196,12 +196,12 @@
+   idle_size_q_hsize_en <= idle_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+   idle_wait_ctr_wait_cycles_en <= idle_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;
+   idle_write_q_hwrite_en <= idle_en and HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+-  unsupported_hrdata__32_h0_en <= unsupported_en;
++  unsupported_hrdata_32_h0_en <= unsupported_en;
+   unsupported_hreadyout_0_en <= unsupported_en;
+   unsupported_hresp_1_en <= unsupported_en and (not fsmgen_direct_vhdl_reduce_or(wait_ctr));
+   unsupported_next_state_error_complete_en <= unsupported_en and (not fsmgen_direct_vhdl_reduce_or(wait_ctr));
+   unsupported_wait_ctr_wait_ctr_1_en <= unsupported_en and (fsmgen_direct_vhdl_reduce_or(wait_ctr));
+-  hrdata__32_h0_en <= (error_complete_hrdata__32_h0_en or idle_hrdata__32_h0_en) or unsupported_hrdata__32_h0_en;
++  hrdata_32_h0_en <= (error_complete_hrdata_32_h0_en or idle_hrdata_32_h0_en) or unsupported_hrdata_32_h0_en;
+   hrdata_reg_data_q_en <= access_hrdata_reg_data_q_en;
+   hreadyout_0_en <= unsupported_hreadyout_0_en;
+   hreadyout_1_en <= (access_hreadyout_1_en or error_complete_hreadyout_1_en) or idle_hreadyout_1_en;
+@@ -228,7 +228,7 @@
+ 
+   process(all) begin
+     HRDATA <= "00000000000000000000000000000000";
+-    if hrdata__32_h0_en = '1' then
++    if hrdata_32_h0_en = '1' then
+       HRDATA <= "00000000000000000000000000000000";
+     end if;
+     if hrdata_reg_data_q_en = '1' then

@@ -1,0 +1,457 @@
+//=============================================================================
+// Flattened Decision Tree FSM: ahb_lite_subordinate
+// Generated using Enable-based Methodology with WEN/EN Signals
+// Date: <normalized>
+// 
+// This implementation uses:
+// - Flattened decision tree approach
+// - Enable-based logic with assign statements
+// - Write Enable (WEN) and Enable (EN) signals for each LHS
+// - Flat Boolean expressions from DT traversal
+//=============================================================================
+
+module ahb_lite_subordinate (
+  input  wire clk,
+  input  wire rst_n,
+  input  wire [31:0] HADDR,
+  input  wire HREADY,
+  input  wire HSEL,
+  input  wire [2:0] HSIZE,
+  input  wire [1:0] HTRANS,
+  input  wire [31:0] HWDATA,
+  input  wire HWRITE,
+  input  wire [3:0] wait_cycles,
+  output reg  [31:0] HRDATA,
+  output reg  HREADYOUT,
+  output reg  HRESP
+);
+
+  // State encoding
+  localparam IDLE = 3'd0;
+  localparam ACCESS = 3'd1;
+  localparam UNSUPPORTED = 3'd2;
+  localparam ERROR_COMPLETE = 3'd3;
+
+  // State registers
+  reg [2:0] current_state, next_state;
+
+  // State sequential logic
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      current_state <= IDLE;
+    end else begin
+      current_state <= next_state;
+    end
+  end
+
+  // Internal signal declarations
+  reg [31:0] addr_q;
+  reg [31:0] reg_data_q;
+  reg [2:0] size_q;
+  reg [3:0] wait_ctr;
+  reg write_q;
+  // Internal mux helper registers
+  reg [31:0] addr_q_next;
+  reg [31:0] reg_data_q_next;
+  reg [2:0] size_q_next;
+  reg [3:0] wait_ctr_next;
+  reg write_q_next;
+  // Generated enable wires
+  wire access_addr_q_haddr_en;
+  wire access_en;
+  wire access_hrdata_reg_data_q_en;
+  wire access_hreadyout_1_en;
+  wire access_hresp_1_en;
+  wire access_next_state_access_en;
+  wire access_next_state_error_complete_en;
+  wire access_next_state_idle_en;
+  wire access_next_state_unsupported_en;
+  wire access_reg_data_q_hwdata_en;
+  wire access_size_q_hsize_en;
+  wire access_wait_ctr_wait_ctr_1_en;
+  wire access_wait_ctr_wait_cycles_en;
+  wire access_write_q_hwrite_en;
+  wire addr_q_haddr_en;
+  wire error_complete_addr_q_haddr_en;
+  wire error_complete_en;
+  wire error_complete_hrdata__32_h0_en;
+  wire error_complete_hreadyout_1_en;
+  wire error_complete_hresp_1_en;
+  wire error_complete_next_state_access_en;
+  wire error_complete_next_state_idle_en;
+  wire error_complete_next_state_unsupported_en;
+  wire error_complete_size_q_hsize_en;
+  wire error_complete_wait_ctr_wait_cycles_en;
+  wire error_complete_write_q_hwrite_en;
+  wire hrdata__32_h0_en;
+  wire hrdata_reg_data_q_en;
+  wire hreadyout_0_en;
+  wire hreadyout_1_en;
+  wire hresp_0_en;
+  wire hresp_1_en;
+  wire idle_addr_q_haddr_en;
+  wire idle_en;
+  wire idle_hrdata__32_h0_en;
+  wire idle_hreadyout_1_en;
+  wire idle_hresp_0_en;
+  wire idle_next_state_access_en;
+  wire idle_next_state_unsupported_en;
+  wire idle_size_q_hsize_en;
+  wire idle_wait_ctr_wait_cycles_en;
+  wire idle_write_q_hwrite_en;
+  wire next_state_access_en;
+  wire next_state_error_complete_en;
+  wire next_state_idle_en;
+  wire next_state_unsupported_en;
+  wire reg_data_q_hwdata_en;
+  wire size_q_hsize_en;
+  wire unsupported_en;
+  wire unsupported_hrdata__32_h0_en;
+  wire unsupported_hreadyout_0_en;
+  wire unsupported_hresp_1_en;
+  wire unsupported_next_state_error_complete_en;
+  wire unsupported_wait_ctr_wait_ctr_1_en;
+  wire wait_ctr_expr_en;
+  wire wait_ctr_wait_cycles_en;
+  wire write_q_hwrite_en;
+
+  // State and DT Enable Conditions
+  assign access_en = current_state == ACCESS;
+  assign error_complete_en = current_state == ERROR_COMPLETE;
+  assign idle_en = current_state == IDLE;
+  assign unsupported_en = current_state == UNSUPPORTED;
+
+  // Consolidated intermediate signals (AST factorization + pre-scan)
+  wire HSEL_and_HREADY;
+  wire HSEL_and_not_HREADY;
+  wire HTRANS_eq_const_2b10;
+  wire HTRANS_eq_const_2b11;
+  wire size_q_eq_const_2;
+  wire size_q_ne_const_2;
+  wire HSEL_and_HREADY_and_HTRANS;
+  wire HSEL_and_HREADY_and_not_HTRANS;
+  wire HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+  wire HSEL_and_HREADY_and_HTRANS_eq_const_2b11;
+  wire not_wait_ctr_and_size_q_eq_const_2;
+  wire not_wait_ctr_and_size_q_ne_const_2;
+  wire HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_addr_q;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q;
+  wire not_wait_ctr_and_size_q_ne_const_2_or_not_wait_ctr_and_size_q_eq_const_2_and_addr_q;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_HSEL;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_write_q;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_write_q;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_not_HREADY;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;
+  wire not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_not_HTRANS;
+
+  assign HSEL_and_HREADY = HSEL & HREADY; // Source: ast_factorization
+  assign HSEL_and_not_HREADY = HSEL & !HREADY; // Source: ast_factorization
+  assign HTRANS_eq_const_2b10 = HTRANS == 2'b10; // Source: ast_factorization
+  assign HTRANS_eq_const_2b11 = HTRANS == 2'b11; // Source: ast_factorization
+  assign size_q_eq_const_2 = size_q == 2; // Source: ast_factorization
+  assign size_q_ne_const_2 = size_q != 2; // Source: ast_factorization
+  assign HSEL_and_HREADY_and_HTRANS = HSEL_and_HREADY & (HTRANS == 2'b1); // Source: ast_factorization
+  assign HSEL_and_HREADY_and_not_HTRANS = HSEL_and_HREADY & (~|HTRANS); // Source: ast_factorization
+  assign HSEL_and_HREADY_and_HTRANS_eq_const_2b10 = HSEL_and_HREADY & HTRANS_eq_const_2b10; // Source: ast_factorization
+  assign HSEL_and_HREADY_and_HTRANS_eq_const_2b11 = HSEL_and_HREADY & HTRANS_eq_const_2b11; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2 = (~|wait_ctr) & size_q_eq_const_2; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_ne_const_2 = (~|wait_ctr) & size_q_ne_const_2; // Source: ast_factorization
+  assign HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11 = HSEL_and_HREADY_and_HTRANS_eq_const_2b10 | HSEL_and_HREADY_and_HTRANS_eq_const_2b11; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_addr_q = not_wait_ctr_and_size_q_eq_const_2 & (|addr_q); // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q = not_wait_ctr_and_size_q_eq_const_2 & (~|addr_q); // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_ne_const_2_or_not_wait_ctr_and_size_q_eq_const_2_and_addr_q = not_wait_ctr_and_size_q_ne_const_2 | not_wait_ctr_and_size_q_eq_const_2_and_addr_q; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q & HSEL; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_HSEL = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q & !HSEL; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_write_q = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q & (~|write_q); // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_write_q = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q & (|write_q); // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL & HREADY; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_not_HREADY = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL & !HREADY; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY & (HTRANS == 2'b1); // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10 = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY & HTRANS_eq_const_2b10; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11 = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY & HTRANS_eq_const_2b11; // Source: ast_factorization
+  assign not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_not_HTRANS = not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY & (~|HTRANS); // Source: ast_factorization
+
+  // Unified WEN/EN Signal Generation from Phase 1 Analysis
+  // DT-Specific Enable Signals from Unified Analysis
+
+
+  // === DT: access ===
+  // HRDATA
+  assign access_hrdata_reg_data_q_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_write_q;  // HRDATA <- reg_data_q
+  // HREADYOUT
+  assign access_hreadyout_1_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q;  // HREADYOUT <- 1
+  // HRESP
+  assign access_hresp_1_en = access_en & not_wait_ctr_and_size_q_ne_const_2_or_not_wait_ctr_and_size_q_eq_const_2_and_addr_q;  // HRESP <- 1
+  // addr_q
+  assign access_addr_q_haddr_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // addr_q <- HADDR
+  // next_state
+  assign access_next_state_access_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // next_state <- ACCESS
+  assign access_next_state_error_complete_en = access_en & not_wait_ctr_and_size_q_ne_const_2_or_not_wait_ctr_and_size_q_eq_const_2_and_addr_q;  // next_state <- ERROR_COMPLETE
+  assign access_next_state_idle_en = access_en & ((((not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_not_HSEL | not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_not_HREADY) | not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_not_HTRANS) | not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS));  // next_state <- IDLE
+  assign access_next_state_unsupported_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;  // next_state <- UNSUPPORTED
+  // reg_data_q
+  assign access_reg_data_q_hwdata_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_write_q;  // reg_data_q <- HWDATA
+  // size_q
+  assign access_size_q_hsize_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // size_q <- HSIZE
+  // wait_ctr
+  assign access_wait_ctr_wait_ctr_1_en = access_en & (|wait_ctr);  // wait_ctr <- wait_ctr - 1
+  assign access_wait_ctr_wait_cycles_en = access_en & ((not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10 | not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b11));  // wait_ctr <- wait_cycles
+  // write_q
+  assign access_write_q_hwrite_en = access_en & not_wait_ctr_and_size_q_eq_const_2_and_not_addr_q_and_HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // write_q <- HWRITE
+
+
+  // === DT: error_complete ===
+  // HRDATA
+  assign error_complete_hrdata__32_h0_en = error_complete_en;  // HRDATA <- 32'h0
+  // HREADYOUT
+  assign error_complete_hreadyout_1_en = error_complete_en;  // HREADYOUT <- 1
+  // HRESP
+  assign error_complete_hresp_1_en = error_complete_en;  // HRESP <- 1
+  // addr_q
+  assign error_complete_addr_q_haddr_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // addr_q <- HADDR
+  // next_state
+  assign error_complete_next_state_access_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // next_state <- ACCESS
+  assign error_complete_next_state_idle_en = error_complete_en & ((((!HSEL | HSEL_and_not_HREADY) | HSEL_and_HREADY_and_not_HTRANS) | HSEL_and_HREADY_and_HTRANS));  // next_state <- IDLE
+  assign error_complete_next_state_unsupported_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b11;  // next_state <- UNSUPPORTED
+  // size_q
+  assign error_complete_size_q_hsize_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // size_q <- HSIZE
+  // wait_ctr
+  assign error_complete_wait_ctr_wait_cycles_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;  // wait_ctr <- wait_cycles
+  // write_q
+  assign error_complete_write_q_hwrite_en = error_complete_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // write_q <- HWRITE
+
+
+  // === DT: idle ===
+  // HRDATA
+  assign idle_hrdata__32_h0_en = idle_en;  // HRDATA <- 32'h0
+  // HREADYOUT
+  assign idle_hreadyout_1_en = idle_en;  // HREADYOUT <- 1
+  // HRESP
+  assign idle_hresp_0_en = idle_en;  // HRESP <- 0
+  // addr_q
+  assign idle_addr_q_haddr_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // addr_q <- HADDR
+  // next_state
+  assign idle_next_state_access_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // next_state <- ACCESS
+  assign idle_next_state_unsupported_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b11;  // next_state <- UNSUPPORTED
+  // size_q
+  assign idle_size_q_hsize_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // size_q <- HSIZE
+  // wait_ctr
+  assign idle_wait_ctr_wait_cycles_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10_or_HSEL_and_HREADY_and_HTRANS_eq_const_2b11;  // wait_ctr <- wait_cycles
+  // write_q
+  assign idle_write_q_hwrite_en = idle_en & HSEL_and_HREADY_and_HTRANS_eq_const_2b10;  // write_q <- HWRITE
+
+
+  // === DT: unsupported ===
+  // HRDATA
+  assign unsupported_hrdata__32_h0_en = unsupported_en;  // HRDATA <- 32'h0
+  // HREADYOUT
+  assign unsupported_hreadyout_0_en = unsupported_en;  // HREADYOUT <- 0
+  // HRESP
+  assign unsupported_hresp_1_en = unsupported_en & (~|wait_ctr);  // HRESP <- 1
+  // next_state
+  assign unsupported_next_state_error_complete_en = unsupported_en & (~|wait_ctr);  // next_state <- ERROR_COMPLETE
+  // wait_ctr
+  assign unsupported_wait_ctr_wait_ctr_1_en = unsupported_en & (|wait_ctr);  // wait_ctr <- wait_ctr - 1
+
+  // LHS-Level Enable Signals from Unified Analysis
+
+  // LHS-level enables for: HRDATA
+  assign hrdata__32_h0_en = (error_complete_hrdata__32_h0_en | idle_hrdata__32_h0_en) | unsupported_hrdata__32_h0_en;
+  assign hrdata_reg_data_q_en = access_hrdata_reg_data_q_en;
+
+  // LHS-level enables for: HREADYOUT
+  assign hreadyout_0_en = unsupported_hreadyout_0_en;
+  assign hreadyout_1_en = (access_hreadyout_1_en | error_complete_hreadyout_1_en) | idle_hreadyout_1_en;
+
+  // LHS-level enables for: HRESP
+  assign hresp_0_en = idle_hresp_0_en;
+  assign hresp_1_en = (access_hresp_1_en | error_complete_hresp_1_en) | unsupported_hresp_1_en;
+
+  // LHS-level enables for: addr_q
+  assign addr_q_haddr_en = (access_addr_q_haddr_en | error_complete_addr_q_haddr_en) | idle_addr_q_haddr_en;
+
+  // LHS-level enables for: next_state
+  assign next_state_access_en = (access_next_state_access_en | error_complete_next_state_access_en) | idle_next_state_access_en;
+  assign next_state_error_complete_en = access_next_state_error_complete_en | unsupported_next_state_error_complete_en;
+  assign next_state_idle_en = access_next_state_idle_en | error_complete_next_state_idle_en;
+  assign next_state_unsupported_en = (access_next_state_unsupported_en | error_complete_next_state_unsupported_en) | idle_next_state_unsupported_en;
+
+  // LHS-level enables for: reg_data_q
+  assign reg_data_q_hwdata_en = access_reg_data_q_hwdata_en;
+
+  // LHS-level enables for: size_q
+  assign size_q_hsize_en = (access_size_q_hsize_en | error_complete_size_q_hsize_en) | idle_size_q_hsize_en;
+
+  // LHS-level enables for: wait_ctr
+  assign wait_ctr_expr_en = access_wait_ctr_wait_ctr_1_en | unsupported_wait_ctr_wait_ctr_1_en;
+  assign wait_ctr_wait_cycles_en = (access_wait_ctr_wait_cycles_en | error_complete_wait_ctr_wait_cycles_en) | idle_wait_ctr_wait_cycles_en;
+
+  // LHS-level enables for: write_q
+  assign write_q_hwrite_en = (access_write_q_hwrite_en | error_complete_write_q_hwrite_en) | idle_write_q_hwrite_en;
+
+  // Unified Multiplexer Logic from Phase 1 Analysis
+
+  // Unified Multiplexer for LHS: HRDATA
+  // Unified combinational mux for: HRDATA
+  always_comb begin
+    HRDATA = 32'b00000000000000000000000000000000;  // Default value
+    if (hrdata__32_h0_en) begin
+      HRDATA = 32'h0;
+    end
+    if (hrdata_reg_data_q_en) begin
+      HRDATA = reg_data_q;
+    end
+  end
+
+  // Unified Multiplexer for LHS: HREADYOUT
+  // Unified combinational mux for: HREADYOUT
+  always_comb begin
+    HREADYOUT = 1'b0;  // Default value
+    if (hreadyout_0_en) begin
+      HREADYOUT = 0;
+    end
+    if (hreadyout_1_en) begin
+      HREADYOUT = 1;
+    end
+  end
+
+  // Unified Multiplexer for LHS: HRESP
+  // Unified combinational mux for: HRESP
+  always_comb begin
+    HRESP = 1'b0;  // Default value
+    if (hresp_0_en) begin
+      HRESP = 0;
+    end
+    if (hresp_1_en) begin
+      HRESP = 1;
+    end
+  end
+
+  // Unified Multiplexer for LHS: addr_q
+  // Unified flop with mux for: addr_q (register_out assignment)
+  always_comb begin
+    addr_q_next = addr_q;  // Default value
+    if (addr_q_haddr_en) begin
+      addr_q_next = HADDR;
+    end
+  end
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      addr_q <= 32'h0;
+    end else begin
+      addr_q <= addr_q_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: next_state
+  // Unified combinational mux for: next_state
+  always_comb begin
+    next_state = current_state;  // Default value
+    if (next_state_access_en) begin
+      next_state = ACCESS;
+    end
+    if (next_state_error_complete_en) begin
+      next_state = ERROR_COMPLETE;
+    end
+    if (next_state_idle_en) begin
+      next_state = IDLE;
+    end
+    if (next_state_unsupported_en) begin
+      next_state = UNSUPPORTED;
+    end
+  end
+
+  // Unified Multiplexer for LHS: reg_data_q
+  // Unified flop with mux for: reg_data_q (register_out assignment)
+  always_comb begin
+    reg_data_q_next = reg_data_q;  // Default value
+    if (reg_data_q_hwdata_en) begin
+      reg_data_q_next = HWDATA;
+    end
+  end
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      reg_data_q <= 32'h0;
+    end else begin
+      reg_data_q <= reg_data_q_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: size_q
+  // Unified flop with mux for: size_q (register_out assignment)
+  always_comb begin
+    size_q_next = size_q;  // Default value
+    if (size_q_hsize_en) begin
+      size_q_next = HSIZE;
+    end
+  end
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      size_q <= 3'b10;
+    end else begin
+      size_q <= size_q_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: wait_ctr
+  // Unified flop with mux for: wait_ctr (register_out assignment)
+  always_comb begin
+    wait_ctr_next = wait_ctr;  // Default value
+    if (wait_ctr_expr_en) begin
+      wait_ctr_next = wait_ctr - 1;
+    end
+    if (wait_ctr_wait_cycles_en) begin
+      wait_ctr_next = wait_cycles;
+    end
+  end
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      wait_ctr <= 4'h0;
+    end else begin
+      wait_ctr <= wait_ctr_next;
+    end
+  end
+
+  // Unified Multiplexer for LHS: write_q
+  // Unified flop with mux for: write_q (register_out assignment)
+  always_comb begin
+    write_q_next = write_q;  // Default value
+    if (write_q_hwrite_en) begin
+      write_q_next = HWRITE;
+    end
+  end
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      write_q <= 0;
+    end else begin
+      write_q <= write_q_next;
+    end
+  end
+
+  `ifndef SYNTHESIS
+  always_comb begin
+    assert ($onehot0({error_complete_hrdata__32_h0_en, idle_hrdata__32_h0_en, unsupported_hrdata__32_h0_en})) else $error("selector same-value conflict: HRDATA 32'h0");
+    assert ($onehot0({hrdata__32_h0_en, hrdata_reg_data_q_en})) else $error("selector multi-value conflict: HRDATA");
+    assert ($onehot0({access_hreadyout_1_en, error_complete_hreadyout_1_en, idle_hreadyout_1_en})) else $error("selector same-value conflict: HREADYOUT 1");
+    assert ($onehot0({hreadyout_0_en, hreadyout_1_en})) else $error("selector multi-value conflict: HREADYOUT");
+    assert ($onehot0({access_hresp_1_en, error_complete_hresp_1_en, unsupported_hresp_1_en})) else $error("selector same-value conflict: HRESP 1");
+    assert ($onehot0({hresp_0_en, hresp_1_en})) else $error("selector multi-value conflict: HRESP");
+    assert ($onehot0({access_addr_q_haddr_en, error_complete_addr_q_haddr_en, idle_addr_q_haddr_en})) else $error("selector same-value conflict: addr_q HADDR");
+    assert ($onehot0({access_next_state_access_en, error_complete_next_state_access_en, idle_next_state_access_en})) else $error("selector same-value conflict: next_state ACCESS");
+    assert ($onehot0({access_next_state_error_complete_en, unsupported_next_state_error_complete_en})) else $error("selector same-value conflict: next_state ERROR_COMPLETE");
+    assert ($onehot0({access_next_state_idle_en, error_complete_next_state_idle_en})) else $error("selector same-value conflict: next_state IDLE");
+    assert ($onehot0({access_next_state_unsupported_en, error_complete_next_state_unsupported_en, idle_next_state_unsupported_en})) else $error("selector same-value conflict: next_state UNSUPPORTED");
+    assert ($onehot0({next_state_access_en, next_state_error_complete_en, next_state_idle_en, next_state_unsupported_en})) else $error("selector multi-value conflict: next_state");
+    assert ($onehot0({access_size_q_hsize_en, error_complete_size_q_hsize_en, idle_size_q_hsize_en})) else $error("selector same-value conflict: size_q HSIZE");
+    assert ($onehot0({access_wait_ctr_wait_ctr_1_en, unsupported_wait_ctr_wait_ctr_1_en})) else $error("selector same-value conflict: wait_ctr wait_ctr - 1");
+    assert ($onehot0({access_wait_ctr_wait_cycles_en, error_complete_wait_ctr_wait_cycles_en, idle_wait_ctr_wait_cycles_en})) else $error("selector same-value conflict: wait_ctr wait_cycles");
+    assert ($onehot0({wait_ctr_expr_en, wait_ctr_wait_cycles_en})) else $error("selector multi-value conflict: wait_ctr");
+    assert ($onehot0({access_write_q_hwrite_en, error_complete_write_q_hwrite_en, idle_write_q_hwrite_en})) else $error("selector same-value conflict: write_q HWRITE");
+  end
+  `endif
+endmodule

@@ -1,0 +1,11 @@
+--- august-baseline/vhdl
++++ current/vhdl
+@@ -143,7 +143,7 @@
+   HTRANS_eq_const_2b10 <= '1' when HTRANS = "10" else '0';
+   HTRANS_eq_const_2b11 <= '1' when HTRANS = "11" else '0';
+   size_q_eq_const_2 <= '1' when size_q = "010" else '0';
+-  size_q_ne_const_2 <= size_q /= "010";
++  size_q_ne_const_2 <= '1' when size_q /= "010" else '0';
+   HSEL_and_HREADY_and_HTRANS <= '1' when (HSEL_and_HREADY = '1') and (HTRANS = "01") else '0';
+   HSEL_and_HREADY_and_not_HTRANS <= HSEL_and_HREADY and (not fsmgen_direct_vhdl_reduce_or(HTRANS));
+   HSEL_and_HREADY_and_HTRANS_eq_const_2b10 <= HSEL_and_HREADY and HTRANS_eq_const_2b10;

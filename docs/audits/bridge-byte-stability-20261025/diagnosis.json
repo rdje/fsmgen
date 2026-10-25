@@ -1,0 +1,34 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "current_revision": "c847dd89e9edb8bf0772f37d4f85f88b9823cc9b",
+  "frozen_expectations": {
+    "IAL0": "July checksum/length predates intended +interface; exact current-output removal witness already retained by .13/.14.",
+    "SystemVerilog": {
+      "revision": "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+      "expected_sha256": "95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c",
+      "reproduced": true,
+      "exact_difference": "Deleting only selector same-value conflict assertion lines from normalized historical HDL equals current complete normalized HDL.",
+      "policy": "Decision0111 and69ae18454c52a51079da17edd7c31c423ef66bb5 permit compatible fan-in; all different-value checks/data logic remain."
+    },
+    "VHDL": {
+      "revision": "a6c670d7d4fb1d8e7bff5e881227cfae8645b85b",
+      "expected_sha256": "ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa",
+      "reproduced": true,
+      "exact_difference": "Only size_q_ne_const_2 assignment now converts its Boolean comparison to std_logic with typed one/zero.",
+      "policy": "965b541d3a06e3558683b357374aa84be736f6a5 repairs typed comparisons; current canonical vhdl-unsigned-comparison-literals card names focused controls."
+    }
+  },
+  "initial_scope_corrections": [
+    "First historical layout omitted public root markers; status2 retained.",
+    "Second omitted old public descriptor data; status2 retained; no current provider code is changed.",
+    "July original bridge test passes its original a82 VHDL checksum. A draft capture insertion refused before execution because it wrongly used current ab668 as its July anchor; no instrumented test was created/run. Git pickaxe then identifies the actual August baseline, which reproduces ab668. No historical context-sensitive VHDL defect is inferred."
+  ],
+  "rederive": "Retain exact current public generation and own-Git historical public generation commands, successful original test, source archive commitments and complete outputs/diffs. No foreign repository/submodule implementation is used.",
+  "falsify": "Whole-output equality after only the named SV removals or single VHDL-line replacement rejects unexplained additional drift. Current repaired tests compare before/after bridge production and require changed storage reset to alter both HDL outputs with independent literal values.",
+  "durability": "This tracked complete evidence packet plus .15 test/task/book/fact and ordinary staged/commit gates. Root prefix alone normalized in host logs; SV date header alone normalized in both compared HDL generations.",
+  "missing": [
+    "Complete fresh full CI",
+    "push and exact-SHA hosted result",
+    "post-push macOS relevance review"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "baseline_revision": "c847dd89e9edb8bf0772f37d4f85f88b9823cc9b",
+  "inputs": [
+    {
+      "path": "t/1551-hial-vial-bridge-manifest.t",
+      "sha256": "78892fd2921a636dba8d1f708c3f8d520652612d39c8e82b3f3c63d8620e44f0",
+      "equal_to_head": false
+    },
+    {
+      "path": "perl/FSM/HIAL/VIALBridge/Builder.pm",
+      "sha256": "1044c94f4068e2eaa4bbe1501f50689defcd6e94e0679ff83fbb1ce36a410ace",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/Backend/GeneratedModuleEmitter.pm",
+      "sha256": "79f3094b802338ba0a2262325c5d6cb3e1913fcc6602618aef2475637eb9eab2",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm",
+      "sha256": "d35df7c93fb26a7ddf6f02eebd1b17c01a9f30371e2ca189e72b637fa91466f9",
+      "equal_to_head": true
+    },
+    {
+      "path": "perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm",
+      "sha256": "940c5d00b22152404cb9b577e9977ee7ef6ba0f0442706f0cbe5f6d3557a69f4",
+      "equal_to_head": true
+    },
+    {
+      "path": "fsm/ahb_lite_subordinate.fsm",
+      "sha256": "edc7e83aec4cfa94c8e4acef1d667ec2d0cee099657805aa9a992b5231faa4f9",
+      "equal_to_head": true
+    },
+    {
+      "path": "specs/Lispish.spec",
+      "sha256": "00e5f3738d439ed4d04e4d170fe7664047fca7f8ca1bbb10694846905f6d0e6c",
+      "equal_to_head": true
+    }
+  ],
+  "focused": "docs/audits/push-readiness-20261025/bridge1551-repair-focused.json",
+  "canonical_gap": "docs/audits/push-readiness-20261025/bridge1551-repair-fact.json: T1602 failing checksum remains owned by .16.",
+  "final_docs": "docs/audits/push-readiness-20261025/bridge1551-repair-docs-2.json"
+}

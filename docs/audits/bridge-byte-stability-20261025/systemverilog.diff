@@ -1,0 +1,26 @@
+--- historical/systemverilog
++++ current/systemverilog
+@@ -435,23 +435,11 @@
+ 
+   `ifndef SYNTHESIS
+   always_comb begin
+-    assert ($onehot0({error_complete_hrdata__32_h0_en, idle_hrdata__32_h0_en, unsupported_hrdata__32_h0_en})) else $error("selector same-value conflict: HRDATA 32'h0");
+     assert ($onehot0({hrdata__32_h0_en, hrdata_reg_data_q_en})) else $error("selector multi-value conflict: HRDATA");
+-    assert ($onehot0({access_hreadyout_1_en, error_complete_hreadyout_1_en, idle_hreadyout_1_en})) else $error("selector same-value conflict: HREADYOUT 1");
+     assert ($onehot0({hreadyout_0_en, hreadyout_1_en})) else $error("selector multi-value conflict: HREADYOUT");
+-    assert ($onehot0({access_hresp_1_en, error_complete_hresp_1_en, unsupported_hresp_1_en})) else $error("selector same-value conflict: HRESP 1");
+     assert ($onehot0({hresp_0_en, hresp_1_en})) else $error("selector multi-value conflict: HRESP");
+-    assert ($onehot0({access_addr_q_haddr_en, error_complete_addr_q_haddr_en, idle_addr_q_haddr_en})) else $error("selector same-value conflict: addr_q HADDR");
+-    assert ($onehot0({access_next_state_access_en, error_complete_next_state_access_en, idle_next_state_access_en})) else $error("selector same-value conflict: next_state ACCESS");
+-    assert ($onehot0({access_next_state_error_complete_en, unsupported_next_state_error_complete_en})) else $error("selector same-value conflict: next_state ERROR_COMPLETE");
+-    assert ($onehot0({access_next_state_idle_en, error_complete_next_state_idle_en})) else $error("selector same-value conflict: next_state IDLE");
+-    assert ($onehot0({access_next_state_unsupported_en, error_complete_next_state_unsupported_en, idle_next_state_unsupported_en})) else $error("selector same-value conflict: next_state UNSUPPORTED");
+     assert ($onehot0({next_state_access_en, next_state_error_complete_en, next_state_idle_en, next_state_unsupported_en})) else $error("selector multi-value conflict: next_state");
+-    assert ($onehot0({access_size_q_hsize_en, error_complete_size_q_hsize_en, idle_size_q_hsize_en})) else $error("selector same-value conflict: size_q HSIZE");
+-    assert ($onehot0({access_wait_ctr_wait_ctr_1_en, unsupported_wait_ctr_wait_ctr_1_en})) else $error("selector same-value conflict: wait_ctr wait_ctr - 1");
+-    assert ($onehot0({access_wait_ctr_wait_cycles_en, error_complete_wait_ctr_wait_cycles_en, idle_wait_ctr_wait_cycles_en})) else $error("selector same-value conflict: wait_ctr wait_cycles");
+     assert ($onehot0({wait_ctr_expr_en, wait_ctr_wait_cycles_en})) else $error("selector multi-value conflict: wait_ctr");
+-    assert ($onehot0({access_write_q_hwrite_en, error_complete_write_q_hwrite_en, idle_write_q_hwrite_en})) else $error("selector same-value conflict: write_q HWRITE");
+   end
+   `endif
+ endmodule

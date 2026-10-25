@@ -1,0 +1,35 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "predecessor": "historical-intake-2.json",
+  "correction": "Add exact historical published plugin descriptor data needed by that old public frontend. No legacy implementation inspection/change; current provider remains direct. Prior layout refusals remain unqualified.",
+  "added_archive_command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+    "plugin"
+  ],
+  "added_archive_sha256": "0fe3c4be55105edf02cf42ccda007ea69c34bb09bf8a45be3e931e3bc90c03b3",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1551-intake/historical",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "../generate.pl",
+    "../historical-output-3"
+  ],
+  "outputs": [
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/historical-output-3/systemverilog.txt",
+      "bytes": 22799,
+      "sha256": "95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/bridge1551-intake/historical-output-3/vhdl.txt",
+      "bytes": 18380,
+      "sha256": "a82f42e0015b662d432df842633854d16c73cc7805f355d84a902bf553f77e62"
+    }
+  ],
+  "exit_status": 0
+}

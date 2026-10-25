@@ -1,0 +1,25 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "predecessor": "historical-intake.json",
+  "correction": "Complete the documented historical root layout with exact README.md and bin/fsmgen, required by historical ProjectDataLocality. First refusal retained; no result credited to it.",
+  "added_archive_command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+    "README.md",
+    "bin/fsmgen"
+  ],
+  "added_archive_sha256": "81dc959e5fe71e219b74b5227c29680d1ea80f6f79e11584878b1cd8b4aab245",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1551-intake/historical",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "../generate.pl",
+    "../historical-output-2"
+  ],
+  "outputs": [],
+  "exit_status": 2
+}

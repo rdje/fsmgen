@@ -1,0 +1,23 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.15",
+  "purpose": "Exact own-repository historical public HDLGenerator witness for the checksum-introduction revision; no foreign repository, submodule or legacy implementation inspection.",
+  "revision": "51434a2ae489a2e918b9d53fd1c38aa0159eef5a",
+  "archived_paths": [
+    "perl",
+    "specs",
+    "fsm/ahb_lite_subordinate.fsm"
+  ],
+  "archive_sha256": "b60bf3a436c9590a6aa42c31d51acaf2a69829234f058e5d4eeacec35e0c1735",
+  "cwd": ".artifacts/push-readiness-20261025/bridge1551-intake/historical",
+  "command": [
+    "../../../../scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "-Iperl",
+    "../generate.pl",
+    "../historical-output"
+  ],
+  "guard": "Current unchanged project RAM guard; shared read-only OS Perl/toolchain.",
+  "outputs": [],
+  "exit_status": 2
+}
