@@ -1,0 +1,38 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "condition": "Current admission and completed native book confirmation; full5 is not yet run.",
+  "checks": [
+    {
+      "point": "point-1.json",
+      "awk_pct": 57.322756449382,
+      "python_pct": 57.32275644938151,
+      "kernel_pressure_level": 1,
+      "known_external_pids_absent": true
+    },
+    {
+      "point": "point-2.json",
+      "awk_pct": 57.541275024414,
+      "python_pct": 57.54127502441406,
+      "kernel_pressure_level": 1,
+      "known_external_pids_absent": true
+    }
+  ],
+  "current_native_book_confirmation": "docs/audits/push-readiness-20261025/current-admission-book-1.json",
+  "source_conservation": "Every declared provider/source/test/grammar hash from parser-provider-proof.json is unchanged. Existing focused compatibility remains scoped to those sources.",
+  "next_run": {
+    "name": "local-full-ci-5",
+    "journal": ".artifacts/push-readiness-20261025/local-full-ci-5.state.json",
+    "checkpoint": ".artifacts/t296/push-readiness-20261025-full5.json",
+    "command": [
+      "env",
+      "FSMGEN_T296_CHECKPOINT=.artifacts/t296/push-readiness-20261025-full5.json",
+      "./bin/ci-regression",
+      "full"
+    ],
+    "condition": "Commit this intake clean, check exclusive slots/current admission, retain88/4096, recorder outside guard and durable console. No source filter or native opt-in. Guard continues to enforce the cap; these points do not guarantee future capacity."
+  },
+  "rederive": "Complete dated raw OS streams/statuses and counter-derived capacity, independently parsed from retained VM text by awk; complete normal native book/POD/source/index/KMap0 and unchanged declared input hashes.",
+  "falsify": "Pressure1 and memory_pressure free percentage are separate quantities, not inverse capacity. Known compiler/cargo PID absence is not a global absence or original cause. No at-cutoff allocation/pressure data is invented; no unrelated process action or claimed code/leak fix. Independent parser shares the adopted formula/raw VM source and does not supply a second Mach sampler.",
+  "durability": "Tracked contract/both complete points/current book receipt/disposition, owning task/book/Memory and normal staged/commit gates.",
+  "remaining": "Full4 and the first book cutoff remain exactly retained. Original causes stay unclosed; .13 remains active until a fresh complete full run qualifies the candidate path. If shared capacity interrupts again, preserve it and seek specific capacity coordination rather than silently relaxing limits or repeating without a changed condition."
+}

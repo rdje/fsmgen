@@ -167,17 +167,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
   Acceptance: `P1 immediately after settled full4 outcome commits clean, before any full5 or push. Full4 from26c0282b4 exits137 at host occupied capacity88.1 against88 while T1436 remains active;494 earlier files pass, with no T1436/full-suite/VIAL/book/checkpoint outcome. Reproduce from the retained exact command/log; no test assertion or producer fault is inferred. Query canonical memory cards, then retain bounded dated current OS-counter/kernel-pressure and executable-only process-RSS observations under an explicit current-admission contract. Current post-stop measurements cannot reconstruct original at-cutoff allocation or pressure. Establish a genuinely changed safe current path under unchanged88/4096 limits; separate scoped product reproduction from unrelated host load. Terminate only independently authenticated own jobs, never unrelated processes; no cache deletion, guard relaxation, source-filter narrowing, stale native/main replay or unsupported causal repair. If capacity requires access/authority unavailable to this project, preserve the owned blocker and ask for that specific input only after committing the outcome/diagnosis. Any real small product defect needs its own causal repair and meaningful controls; no fix is selected from a host aggregate. Declare a new exclusive journal/checkpoint only after disposition, then fresh full CI, authorized push and exact-SHA hosted qualification; macOS relevance remains post-push.`
-  Verification: `Pending clean handoff. full4-disposition owns complete current evidence and missing scope. full4-outcome-docs records Knowledge Map0 then native book-build guard137 at88.0; native render confirmation is owned here when capacity permits. Later read-only process/cwd metadata shows a compiler in separate stitchcad, without attribution to either cutoff; no unrelated process is touched. Known full4 recorder/guard/CI/prove/test/final child identities are absent. No current memory culprit or leak is identified. Current-admission diagnosis must not recycle the older full3 cause or claim the parser replacement fixed allocation.`
+  Verification: `Current-admission contract and two complete dated points retain raw VM/physical/pressure/query and known external compiler/cargo metadata. Previously observed external PIDs20580/87489 are absent; no process is terminated. Counter-derived capacity is57.32275644938151 and57.54127502441406 percent, pressure1, and a separate awk parser agrees on both saved raw snapshots. This establishes changed current admission, not original at-cutoff allocation, global process absence or a future capacity guarantee; both parsers share the adopted formula/raw VM source. After headroom returned, current-admission-book-1 completes all five native book/POD/current-source/index/KMap commands with integer0, resolving the pending render. Every declared provider/source/test/grammar hash remains unchanged; no product memory fix or guard increase is claimed. disposition.json names distinct derivation/falsification/durability legs and missing original scope. Current intake commits before a new exclusive local-full-ci-5/checkpoint under unchanged88/4096, recorder outside guard and durable console. Keep .13 active until a complete fresh full run qualifies the candidate. If shared capacity interrupts again, preserve it and obtain specific coordination before another expensive replay.`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `pending` | After full4 outcome commits clean, diagnose current capacity/admission before a new qualifying full run; publication still precedes macOS/worktree and .6/.10/.12.3/.11. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Current points and native render0 qualify an intake candidate; after its clean commit, run exclusive full5 under unchanged limits. Complete local/hosted qualification still precedes macOS/worktree and later follow-ups. |
 
 ## Decisions
 
@@ -186,7 +186,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full4 is interrupted137 by host occupied capacity88.1 reaching88 while T1436 is active. PUBLICATION .13 owns the immediate capacity/admission follow-up after the outcome commit. Provider .12.2 remains independently verified; no complete local full-CI, push or hosted success is claimed. Historical native causality imposes no blanket hold.
+- Complete local full-CI qualification is still absent after full4 guard137. Current .13 points show returned capacity and native book confirmation now passes; the candidate still requires a complete fresh full5. Original at-cutoff allocation/pressure remains unobserved. No historical native blanket hold or completed push/hosted claim is introduced.
 
 ## Acceptance Checklist — `.1`
 
@@ -271,3 +271,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S of my $compiled_top_rule identifies source2f62e76db; the earlier unchanged-source T1437 pass cannot qualify this changed provider. Fresh capacity verification is required; no additional producer defect or historical allocation cause is inferred.
 - [x] **ADDRESSED (verified)** — parser-provider-capacity-outcome.json joins complete fresh integer0 status, contiguous outer cases and normal TAP plan/summary to unchanged declared source hashes and baseline test bytes. No skip or guard-trip credit replaces the normal result. Tool79420 is consumed and all five previously observed owned PIDs are absent. Exact source/launch scope and resource-field limits remain explicit.
 - [x] **NO REGRESSION** — All tests successful; Files=1, Tests=115 in parser-provider-capacity. Existing current provider/adjacent compatibility and fact-command checks remain green, source hashes unchanged. Native book/source and staged/normal gates qualify this outcome commit; full4 and exact-SHA hosted qualification remain open.
+
+## Acceptance Checklist — `.13` current-admission intake
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full4 and first native book confirmation explicitly report host capacity reaching88, without a failing assertion or at-cutoff allocation/pressure attribution. Actual git log -S File-backed identifies30885823 as the already corrected historical capacity metric; that old bug is not recycled. Necessary read-only process/cwd metadata places the later observed compiler in separate stitchcad, without attributing either earlier cutoff to it or taking action there.
+- [x] **ADDRESSED (verified)** — Two declared dated points show lower counter-derived current capacity, pressure1 and known external compiler/cargo PID absence. An independent awk parser agrees with both retained VM snapshots while sharing the stated formula/source; original causes remain missing. Under the returned headroom, current-admission-book-1 completes the native render and all follow-up checks with0. Source hashes conserve; candidate full5 is exclusive and guarded, with no future capacity guarantee or code/leak fix claim.
+- [x] **NO REGRESSION** — knowledge-map: OK and all native book/POD/current-source/index checks pass in current-admission-book-1. Existing current provider and115-case focused compatibility keep their exact unchanged source scope. Complete local full CI and hosted qualification remain open; fresh metadata/staged/normal scripts/check_doctrines.sh gates precede this intake commit.

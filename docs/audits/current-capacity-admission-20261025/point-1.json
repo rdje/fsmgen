@@ -1,0 +1,118 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "contract": "docs/audits/current-capacity-admission-20261025/contract.json",
+  "kind": "current post-stop admission point; not at-cutoff",
+  "commands": [
+    {
+      "command": [
+        "vm_stat"
+      ],
+      "start_utc": "2026-10-25T14:35:17.376185+00:00",
+      "end_utc": "2026-10-25T14:35:17.379633+00:00",
+      "elapsed_monotonic_seconds": 0.0033447081223130226,
+      "status": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    33986.\nPages active:                                 576518.\nPages inactive:                               550973.\nPages speculative:                             61591.\nPages throttled:                                   0.\nPages wired down:                             251082.\nPages purgeable:                                4679.\n\"Translation faults\":                   194510631423.\nPages copy-on-write:                     26198497623.\nPages zero filled:                       54702626560.\nPages reactivated:                        4155105057.\nPages purged:                              171032718.\nFile-backed pages:                            598791.\nAnonymous pages:                              590291.\nPages stored in compressor:                   142934.\nPages occupied by compressor:                  64915.\nDecompressions:                           3981822952.\nCompressions:                             4559551510.\nPageins:                                  1888674470.\nPageouts:                                     843098.\nSwapins:                                    50341030.\nSwapouts:                                   68950975.\n",
+      "stderr": "",
+      "raw_stdout_sha256": "9a3113265e703778ce19cc251fe09bb2def9c21d1186f502dda2c851b4cbac54",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "start_utc": "2026-10-25T14:35:17.379691+00:00",
+      "end_utc": "2026-10-25T14:35:17.382327+00:00",
+      "elapsed_monotonic_seconds": 0.002655582968145609,
+      "status": 0,
+      "stdout": "25769803776\n",
+      "stderr": "",
+      "raw_stdout_sha256": "e15b6050a0ee6ea43f29cb46cec0ddcc207f00fe520854aeecfdceb86a9ea799",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "kern.memorystatus_vm_pressure_level"
+      ],
+      "start_utc": "2026-10-25T14:35:17.382376+00:00",
+      "end_utc": "2026-10-25T14:35:17.385138+00:00",
+      "elapsed_monotonic_seconds": 0.002778375055640936,
+      "status": 0,
+      "stdout": "1\n",
+      "stderr": "",
+      "raw_stdout_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "memory_pressure",
+        "-Q"
+      ],
+      "start_utc": "2026-10-25T14:35:17.385183+00:00",
+      "end_utc": "2026-10-25T14:35:17.389123+00:00",
+      "elapsed_monotonic_seconds": 0.003960500005632639,
+      "status": 0,
+      "stdout": "The system has 25769803776 (1572864 pages with a page size of 16384).\nSystem-wide memory free percentage: 79%\n",
+      "stderr": "",
+      "raw_stdout_sha256": "5a555f302d141e42066eb479406769a0fb4465c89a366e828ac35d5c76d8abca",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "ps",
+        "-p",
+        "20580,87489",
+        "-o",
+        "pid=,ppid=,rss=,etime=,lstart=,comm="
+      ],
+      "start_utc": "2026-10-25T14:35:17.389172+00:00",
+      "end_utc": "2026-10-25T14:35:17.406879+00:00",
+      "elapsed_monotonic_seconds": 0.017737374873831868,
+      "status": 1,
+      "stdout": "",
+      "stderr": "",
+      "raw_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "lsof",
+        "-a",
+        "-p",
+        "20580,87489",
+        "-d",
+        "cwd",
+        "-Fn"
+      ],
+      "start_utc": "2026-10-25T14:35:17.406950+00:00",
+      "end_utc": "2026-10-25T14:35:17.412096+00:00",
+      "elapsed_monotonic_seconds": 0.005174874793738127,
+      "status": 1,
+      "stdout": "",
+      "stderr": "",
+      "raw_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "capacity": {
+    "page_bytes": 16384,
+    "physical_bytes": 25769803776,
+    "counters": {
+      "Pages active": 576518,
+      "Pages inactive": 550973,
+      "Pages speculative": 61591,
+      "Pages wired down": 251082,
+      "Pages occupied by compressor": 64915,
+      "Pages purgeable": 4679,
+      "File-backed pages": 598791
+    },
+    "used_bytes": 14771961856,
+    "used_pct": 57.32275644938151
+  },
+  "kernel_pressure_level": 1,
+  "normalization": "Dynamic repository-parent prefix only; raw hashes retained. No project path dependency on external compiler locations.",
+  "limits": "No global process census, allocation culprit, future safe-window guarantee or historical cause is inferred."
+}

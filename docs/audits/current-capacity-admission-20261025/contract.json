@@ -1,0 +1,15 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "purpose": "Current admission only after settled full4, not reconstruction of either previous cutoff.",
+  "observations": "Bounded dated vm_stat, physical memory and kernel pressure/query, plus metadata for only the previously observed external compiler20580 and cargo87489. No process manipulation or foreign implementation/file inspection.",
+  "scope": "One point per exclusive named packet; parent UTC/monotonic intervals. Known-process absence does not establish global absence. RSS is not summed into Stats capacity. Current compiler presence is not an original cutoff cause.",
+  "formula": "(active+inactive+speculative+wired+compressor-purgeable-file_backed)*page_size/physical_bytes*100; canonical adopted card and30885823.",
+  "unchanged_limits": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "decision": "A point does not guarantee future capacity. Retain pressure separately, finish pending lightweight/render confirmation when headroom is available, and require a changed safe path before expensive full retry. External capacity coordination may require the director; no cap increase or killing another project.",
+  "rederive": "Retain complete dated command/status/stdout/stderr packets; recompute capacity from original VM counters.",
+  "falsify": "No old at-cutoff promotion, inverse memory_pressure percentage, inferred RSS allocation census or PID-only ownership/action. Independently distinguish counter-derived capacity from pressure and current external identity.",
+  "durability": "Tracked contract/points and .13 task with normal gated commitment."
+}
