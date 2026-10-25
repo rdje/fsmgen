@@ -1,0 +1,24 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.3",
+  "before_sha256": "b13f5f98625a14f33869d2b95a5797646d4d7baee997db0eeb7316b959b878b2",
+  "after_sha256": "66020f28b09156d88ad27b1a98bc028072bd39b234bc6c5033695aa2e9415586",
+  "baseline_full2": "docs/audits/push-readiness-20261025/local-full-ci-2.log.gz",
+  "qualified_intake": "docs/audits/publication-query-intake-20261025/contract.json",
+  "scope": "Test/current artifact and book clarification only; no production or support/API/DSL/corpus change. The private carrier is a fixture expectation, not an authored endpoint stability promise.",
+  "rederive": "Canonical formal source/production cards, actual retained emitted FSM and independently literal native authored-binding row identify physical storage versus logical source provenance. Scoped state checks retain req-to-carrier-to-worker dataflow, width and start/done behavior.",
+  "falsify": "Original full2 assertion fails because addr req is absent while the actual private carrier receives req. Updated test must still reject missing/wrong carrier assignment/consumption, wrong width/public exposure/handshake and renamed public provenance. Existing formal-report tests independently cover authored projection.",
+  "durability": "Exact original/current test identities, qualified native intake and fixture origin, introducing history, complete focused/book/gate receipts, live ownership/book and unit Git commit.",
+  "before_test_bytes_equal_full2": true,
+  "plan_introduction": "32642d54c4763a78e916f65c1c019e64bb99d0d4",
+  "production_adoption": "57b6495f8d39095e9e53d0e982669de597917695",
+  "focused_receipt": "docs/audits/push-readiness-20261025/local-do-focused.json",
+  "final_state_check": "docs/audits/push-readiness-20261025/local-do-final-state-check.json",
+  "book_receipt": "docs/audits/push-readiness-20261025/local-do-book.json",
+  "staged_gate": {
+    "exit_status": 0,
+    "log": "local-do-staged-doctrines.log.gz",
+    "fresh_acceptance": "root=perl_diagnostic, no-regression=prove_summary",
+    "normal_hook": "Rechecks final commit stage."
+  },
+  "final_source_view_receipt": "docs/audits/push-readiness-20261025/local-do-final-source-view.json"
+}

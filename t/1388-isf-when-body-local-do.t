@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use File::Spec;
 use FindBin;
+use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -12,9 +13,9 @@ use FSM::Scheduler::ISF;
 
 # ISF-CONDITIONAL-CHILD-ACTIVATION.2
 #
-# A plain LOCAL `(do child)` is now accepted directly inside a `when` body
-# (conditional one-shot activation, no `(repeat 1 ...)` wrapping). Generated /
-# bound conditional activation stays deferred (later slices).
+# Exercise local, bound and generated conditional activation and branch/loop
+# fan-out joins through their lowered artifacts. Controller/composition runtime
+# qualification remains separate from these source and artifact checks.
 
 sub parse_source {
     my ($source, $label) = @_;
@@ -83,8 +84,27 @@ ISF
     my $lowered = eval { FSM::Scheduler::ISF->new()->lower($bound) };
     ok($lowered, 'a bound local (do) in a when body lowers') or diag($@);
     my $fsm = $lowered->{files}{'when_bound_do.fsm'};
-    like($fsm, qr/parent_do_\d+[\s\S]*?\(addr req\)/, 'the do-state drives the bound child port (addr <- req)');
-    like($fsm, qr/parent_do_\d+[\s\S]*?\(worker_start 1\)/, 'the do-state still asserts the start handshake');
+    # This fixture's allocated carrier is private; authored report names remain
+    # addr/req. Scope each dataflow/handshake check to its actual emitted state.
+    my $carrier = 'isf_port_worker_addr';
+    my ($do_state) = $fsm =~ /(^  \(parent_do_\d+\n.*?^  \))/ms;
+    my ($worker_update) = $fsm =~ /(^  \(worker_update_\d+\n.*?^  \))/ms;
+    ok(defined($do_state), 'the bound conditional do-state is emitted');
+    like($do_state // '', qr/\(\Q$carrier\E req\)/, 'the do-state writes req into the private addr carrier');
+    like($do_state // '', qr/\(worker_start 1\)/, 'the do-state asserts the child start handshake');
+    like($do_state // '', qr/<worker_done\b/, 'the do-state waits for the child done handshake');
+    like($fsm, qr/\(internal \Q$carrier\E\)/, 'the formal carrier is declared internal');
+    unlike($fsm, qr/\((?:input|output) \Q$carrier\E\)/, 'the private carrier is not an actor pin');
+    like($fsm, qr/\(\Q$carrier\E 8\)/, 'the private formal retains its eight-bit width');
+    like($worker_update // '', qr/\(wc> \Q$carrier\E\)/, 'the worker consumes the same private carrier');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($bound));
+    is_deeply(
+        [map { [@{$_}{qw(owner target_transaction role port actor_signal width)}] }
+            @{$report->{transaction_port_bindings}}],
+        [['parent', 'worker', 'input', 'addr', 'req', 8]],
+        'public binding provenance retains authored names and width',
+    );
 };
 
 subtest 'a generated (params) (do) inside a when body lowers to a conditional generated child instance' => sub {

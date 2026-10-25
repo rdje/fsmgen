@@ -1,0 +1,19 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.3",
+  "command": [
+    "git",
+    "-c",
+    "core.packedGitWindowSize=32m",
+    "-c",
+    "core.packedGitLimit=256m",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "isf_port_${owner}_${name}",
+    "--",
+    "perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm"
+  ],
+  "exit_status": 0,
+  "stdout": "32642d54c4763a78e916f65c1c019e64bb99d0d4 SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.1: plan scoped formal identities\n",
+  "stderr": ""
+}

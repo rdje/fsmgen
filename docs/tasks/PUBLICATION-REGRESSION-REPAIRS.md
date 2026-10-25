@@ -52,11 +52,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.2: align quiet fixture stdout expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve conditional local-do dataflow assertions through physical formal allocation.`
-  Acceptance: `After .2 and its required intake observation .7 commit, inspect current public authored binding and emitted artifact contracts for T1388. Preserve req-to-worker.addr dataflow, width and conditional start/done handshake through the allocated physical signal. Replace the stale raw addr literal without dropping the binding assertion or treating private names as authored endpoints; update stale test commentary and qualify focused formal/local-do cases.`
-  Verification: `P1 pre-push; actual (= (isf_port_worker_addr req)) and matching worker read conflict with the stale raw-formal regex. Canonical isf-formal-source-binding-reports and isf-production-formal-scope cards plus FormalIdentityPlan own the current boundary; complete queue receipt retains.`
-  Commit: `pending`
+  Acceptance: `After .2 and its required intake observation .7 commit, inspect current public authored binding and emitted artifact contracts for T1388. Preserve req-to-worker.addr dataflow, width and conditional start/done handshake through the allocated physical signal. Replace the stale raw addr literal without dropping the binding assertion or treating private names as authored endpoints; update stale test commentary and qualify focused formal/local-do cases. Bound the do/worker checks to their emitted state blocks; assert internal eight-bit carrier declaration, req-to-carrier assignment, worker consumption, start/done handshake and unchanged authored public binding projection.`
+  Verification: `The unchanged original test bytes equal bff full2; its line86 expected (addr req), while the retained actual FSM declares internal isf_port_worker_addr width8, writes req in parent_do and consumes that carrier in worker_update. Git32642d54c plans scoped identities; separate57b6495f8 activates production FormalLowering. Canonical cards and the qualified .7 native binding record preserve authored addr/req separately. The test now bounds each dataflow/handshake assertion to its actual emitted state, requires internal/non-public eight-bit storage, checks worker consumption and exact done-signal identity, and independently verifies the public authored-binding projection. The stale top comment now describes actual local/bound/generated lowering scope without a runtime claim. Guarded T1388/T1243/T1961 pass All tests successful, Files=3 Tests=14; the final tightened T1388 check separately passes Files=1 Tests=6. Native mdBook/POD/source/index pass. local-do-bindings.json and exact history/focused/book receipts retain distinct source re-derivation, original-oracle falsification and durable identities. The book clarifies the existing direct private-carrier example. No producer, DSL, support/corpus/API/MCP change. Final metadata/book-source and complete staged/normal doctrine gates are required before commit; full CI remains separate.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.3: check private local-do binding dataflow`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.4`
   Status: `pending`
@@ -90,7 +90,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.3` | `pending` | After .7 commit, use qualified authored binding/report intake to preserve conditional-do dataflow through private physical allocation. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.4` | `pending` | After .3 commits, align the exact shared-datapath DTO goldens with the already-qualified nullable pulse delay. |
 
 ## Decisions
 
@@ -99,7 +99,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- No external blocker for .3 after .7 commits. Full CI/push/hosted qualification remain pending, not successful.
+- No external blocker for .4 after .3 commits. Full CI/push/hosted qualification remain pending, not successful.
 
 ## Acceptance Checklist — `.1`
 
@@ -118,3 +118,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — SEM .93 retains a sixty-second wrapper-query timeout; ISF-REDUCTION .16 retains the missing defaults schedule product/inner lifecycle and partial pipes. Their explicit before-publication condition requires observed next normal queries and a precise causal/authority disposition, not an invented historical repair. The actual required --trace-log / --emit-schedule-json T1388 intake and literal Knowledge Map question now preserve that current evidence; the complete original packets stay exact.
 - [x] **ADDRESSED (verified)** — Both normal intakes return literal current products, complete normalized streams/actual traces, UTC/monotonic method observations and owned-session settlement under unchanged bounds. The fixture is byte-exact from the existing Git test and its complete authored binding oracle was declared before query. Original provider-record access is precisely limited; original missing bytes/cause and the invalid prior parent outcome are preserved. Saved default replay launches no source queries, and covaried product/fixture plus omission/extra/type/settlement controls refuse.
 - [x] **NO REGRESSION** — knowledge-map: OK; current locality and saved original query controls pass with the new saved intake/fixture reader, all commands status0 in normal-query-intake-focused.json. Production/query/DSL/API/corpus sources are unchanged. Native mdBook/POD/current source-index/byte views and complete staged/normal scripts/check_doctrines.sh are mandatory delivery gates. Full CI, push and hosted/macOS follow-up remain separately owned.
+
+## Acceptance Checklist — `.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual full2 diagnostic at t/1388-isf-when-body-local-do.t line 86 shows the private carrier assignment where the stale regex expects raw addr. git log -S separates scoped plan32642d54c from production activation57b6495f8; current FormalIdentityPlan/production cards require private executable storage and authored report names. Exact native .7 source/report independently confirms the intended addr<-req row; no current producer fault is inferred.
+- [x] **ADDRESSED (verified)** — Bounded parent_do and worker_update state bodies now prove req assignment and worker consumption through this fixture's private carrier. Exact internal/non-public declaration, eight-bit width and start/done handshake assertions remain explicit; public binding provenance stays parent/worker/input/addr/req/8. No assertion is removed to conceal the binding. The comment/book distinguish source lowering/artifact checks from separately qualified runtime and private names from authored endpoints.
+- [x] **NO REGRESSION** — All tests successful in guarded T1388/T1243/T1961 (Files=3, Tests=14) and the final T1388 done-signal check (Files=1, Tests=6). Native mdBook/POD/current copied source/index pass; git diff --check is clean. Exact retained receipts and unchanged producer/source hashes scope the result. Fresh claim/reference/ceiling and complete staged/normal scripts/check_doctrines.sh gates precede commit; full CI is not claimed.

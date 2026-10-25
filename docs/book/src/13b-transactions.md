@@ -260,6 +260,9 @@ Public reports use these original records for binding provenance. Wait counts,
 loop conditions, temporal operands and bank-access expressions likewise retain
 authored names in a detached report view; executable operands remain physical.
 Inferred-storage entries identify the actual private storage and its width.
+For eight-bit `addr` and `req` in `(bind (input addr req))`, the scheduled
+`.fsm` declares an eight-bit internal carrier for the formal. Public binding
+records retain `addr` and `req`; the carrier's emitted name is private.
 
 Source preparation can retain a monitor-name collision with an unallocated
 direct formal as pending physical work. The collision stays recorded with both

@@ -1,0 +1,19 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.3",
+  "command": [
+    "git",
+    "-c",
+    "core.packedGitWindowSize=32m",
+    "-c",
+    "core.packedGitLimit=256m",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "FormalLowering->prepare",
+    "--",
+    "perl/FSM/Scheduler/ISF.pm"
+  ],
+  "exit_status": 0,
+  "stdout": "57b6495f8d39095e9e53d0e982669de597917695 SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.3.2: integrate private formal lowering\n",
+  "stderr": ""
+}

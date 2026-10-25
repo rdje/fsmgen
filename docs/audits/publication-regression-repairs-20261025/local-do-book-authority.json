@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.3",
+  "before": {
+    "files": 65,
+    "lines_total": 73962,
+    "bytes_total": 4142463
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73965,
+    "bytes_total": 4142687
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 3,
+    "bytes_total": 224
+  },
+  "rederive": "Current unique book member dimensions before/after the narrow existing formal-carrier example.",
+  "falsify": "Reference-authority gate independently derives staged source delta; no ceiling increase.",
+  "durability": "Tracked authority/source/native book receipts, qualified intake and focused test/gate/unit commit."
+}
