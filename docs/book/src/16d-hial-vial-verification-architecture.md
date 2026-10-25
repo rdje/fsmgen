@@ -2201,6 +2201,10 @@ digests, and the source byte and line counts. Those values are checked against
 current raw FSM bytes, so legitimate lowering changes update their provenance
 while protocol facts, IDs, endpoints, types, maps and all other fields stay
 frozen. A changed protocol role must break the contract identity.
+Downstream execution, checking and backend-foundation identity checks are
+being requalified after generated-byte provenance changed. Their remaining
+historical bridge and derived-identity mismatches are tracked in the
+[publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
 Every accepted candidate records exactly the `IAL1 -> IAL0`
 review route, while the AHB reference records `IAL2 -> IAL1 -> IAL0`.
 

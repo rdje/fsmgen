@@ -1,0 +1,20 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.5",
+  "baseline_revision": "571b89f25c6085f2d26b5593cae57dbb2a783ddb",
+  "receipt": "docs/audits/push-readiness-20261025/vial-scale-remaining-red-1.json",
+  "command_statuses": [
+    1,
+    1,
+    1
+  ],
+  "classification": {
+    "T1604": "Three old raw-bridge identity failures only; all remaining current topology/semantic/plan/count assertions pass. Core report difference is already exact four-field provenance in .16.",
+    "T1629": "Raw bridge plus evaluation and rerun identities fail. Derived tuple cause remains unverified and owned by .17.2.2.",
+    "T1645": "Evaluation/rerun and stage dictionary fail; first dictionary difference is backend_inputs_sha256. Full input/stage causal comparison remains owned by .17.2.3.",
+    "remaining": "Nineteen other exact-match execution files still require runtime classification/adoption under .17.2.4."
+  },
+  "rederive": "Complete default published command outputs and source seals reproduce each expected1 actual1 without explicit large/native flags. Compare actual assertions with exact .16 current/historical full-report evidence.",
+  "falsify": "Do not promote expected RED controller success or complete:true to product qualification; keep derived checking/backend causes and unrun remaining/large branches explicitly missing. No generic checksum update, producer fault, resource cause, native cause or old-epoch attribution is inferred.",
+  "durability": "Tracked original receipts/logs/launch source commitments, this intake, precise child ownership, book scope and normal staged/commit gates.",
+  "next": "After this completed diagnostic intake commits, .17.2.1 creates a checked current AHB test reference and repairs only T1604; .2/.3/.4 remain owned before full6."
+}

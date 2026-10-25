@@ -211,17 +211,53 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Classify and repair downstream scale content-identity expectations in safe causal slices.`
   Acceptance: `After .17.1 commits, classify all other exact scan matches and reproduce representative default execution/checking/backend-foundation gates before selecting bounded repair children. Existing source also freezes dependent semantic/plan/execution/evaluation/rerun identities, so changing only bridge constants is insufficient without field-level causal diagnosis. Preserve meaningful exact identities and quantitative/resource/profile/negative checks; no wholesale refresh or unsafe large/native flag. Use complete public stage recipes and current/historical comparisons to distinguish legitimate provenance propagation from real producer defects, then own each repair and qualify scope before .13 full6.`
-  Verification: `Initial reads identify live report constants across execution topology/fibers/source-maps/random/plan/qualification/limits and checking/backend foundations. Only source-maps/total-operation-limit declare an extra FSMGEN_VIAL_SCALE_EXACT branch; other current defaults still need runtime classification. No downstream repair is selected.`
+  Verification: `Complete default intake vial-scale-remaining-red-1 returns actual1 for T1604/T1629/T1645. T1604 has exactly three stale bridge-identity failures while all other topology/semantic/plan/count checks pass. T1629 fails bridge plus evaluation/rerun identities; T1645 fails evaluation/rerun and the stage dictionary, whose first mismatch is backend_inputs_sha256. Those derived checking/backend differences require their own tuple/input diagnosis, not an assumed bridge-only refresh. Source/recipe launch seal and complete TAP/statuses are retained. There are19 other exact-match execution files not yet runtime-classified; source-maps/total-operation-limit also have explicit large branches. .5 commits this scoped intake, .1 owns the already proved current AHB reference test authority/topology repair, .2/.3 own derived checking/backend causes, and .4 owns the remaining execution files in smaller child slices. No downstream code is changed or full6 launched.`
+  Commit: `pending`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.17.2.5, PUBLICATION-REGRESSION-REPAIRS.17.2.1, PUBLICATION-REGRESSION-REPAIRS.17.2.2, PUBLICATION-REGRESSION-REPAIRS.17.2.3, PUBLICATION-REGRESSION-REPAIRS.17.2.4`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.5`
+  Status: `done`
+  Goal: `Preserve the actual representative default failure census and own bounded successors.`
+  Acceptance: `Retain exact source/command/status/complete output for default T1604/T1629/T1645 without large/native flags. Separate known stale raw-bridge provenance from unclassified derived checking/backend differences. Name missing causal legs and scheduled owners, update book/Memory and commit before repair code.`
+  Verification: `All three commands return1; complete:true is collection only. Topology fails only old bridge SHA in three axes; checking also fails its evaluation/rerun IDs; backend also fails its stage dictionary/evaluation/rerun IDs. No unrelated producer fault, semantic change, resource/native issue or full-suite success is inferred. .17.2.1-.4 own next repairs/remaining19 defaults; no blind update is selected. Intake proof/source seal and full logs survive under push-readiness-20261025. Current canonical bridge/core .16 checks remain green in their own scope. First staged gate rejects the zero-numbered draft intake node as malformed; rename it to positive .17.2.5 under the existing task grammar and retain the refusal before unique staged-2. No product/checker policy is changed.`
+  Commit: `This work-unit commit.`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.1`
+  Status: `pending`
+  Goal: `Provide one checked current AHB reference for tests and repair the small topology gate.`
+  Acceptance: `After .5 commits, use .16 exact whole-report proof to extract a purpose-specific test-only current reference from the explicit public PPIF/ISF/Builder route, with repository-derived fixed fixture paths. Validate current generated-byte provenance and frozen every-other-field contract; expose an immutable digest/current reference without changing product code. Reuse it in T1602 and T1604, preserving all literal contract/count/negative checks and the changed-role adverse control. Reject unknown invocation/source substitution and avoid shared mutable cached reports. Focused tests/book/docs and normal commit before further callers.`
+  Verification: `No helper or topology repair implemented.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.2`
+  Status: `pending`
+  Goal: `Diagnose and repair checking-foundation derived identities.`
+  Acceptance: `P1 after .1. Capture full current stage/evaluation/rerun tuples through actual own public/test integration, derive exact identity recipes and reconstruct the old expected identities by only independently proved provenance changes. If reconstruction fails, compare the actual historical public fixture before choosing a fix. Preserve model/checking semantics, exact metrics and all adversarial cases. No blind digest refresh; meaningful frozen contract/current-byte checks and normal focused commit.`
+  Verification: `T1629 actual RED1: bridge240db instead ofa456, checking-evaluation6cf729 instead of9b6746, rerun138bb8 instead ofceefc4. Other current assertions pass; identity causes remain to be established.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3`
+  Status: `pending`
+  Goal: `Diagnose and repair backend-foundation input and derived identities.`
+  Acceptance: `P1 after .2. Capture exact backend inputs/stage tuples/evaluation/rerun and compare current/historical fixture data as needed. Explain every changed field using current contracts; do not infer backend-input drift from the bridge alone. Preserve exact provider/profile/ownership/metrics/refusal/oracle checks, no native opt-in or pin/submodule changes. Small causal repair(s), public book/docs and normal focused commit.`
+  Verification: `T1645 actual RED1: evaluationef2f5a versus e7d9a4, rerune3457e versus172c04; stage dictionary first reports backend_inputs2bfa10 versus0b8260. Complete output is retained. No input/tuple repair selected.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4`
+  Status: `pending`
+  Goal: `Classify and migrate the remaining execution reference checks in small verified groups.`
+  Acceptance: `After the common reference and derived-foundation repairs, inventory the19 remaining exact-match execution files, group safe slices before edits and verify each actual default outcome. Adopt current reference only where the same core source/contract is proved; retain all existing semantic/plan identities, counts, limits, source maps, forgery/caller/rerun checks. Document any unrun explicit-large branch rather than enabling unsafe work or claiming coverage. Own any new defect, commit each group, then .13 exclusive full6/current capacity/checkpoint before push.`
+  Verification: `Remaining membership is derivable from remaining-identity-scan.json minus planning T1556 and representative T1604/T1629/T1645. No remaining-file repair/runtime census yet.`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2` | `pending` | After .17.1 commits, reproduce/classify remaining downstream stage-identity expectations and own small repair children before full6. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.1` | `pending` | After .5 commits, extract the checked current AHB test reference and repair T1604; derived foundations/remaining execution callers retain separate owners. |
 
 ## Decisions
 
@@ -351,3 +387,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual guarded RED reports at t/1556-vial-public-planning-artifacts.t line 82: historical3d8 differs from actual6f58. The published review artifact has the same exact interface-only evolution already retained by .14/.16. The test froze old generated bytes while its contract is to return the current reviewed lowering. Exact23-file membership is retained separately from runtime defect claims.
 - [x] **ADDRESSED (verified)** — Replace only the stale IAL0 oracle with exact artifact/current public PPIF byte equality. Retain the original IAL1 literal and every artifact/manifest/route/determinism/defensive mutation/refusal/cleanup check. Guarded syntax0 and public source/planning GREEN0 follow the preserved RED1. No production module or fixture changes.
 - [x] **NO REGRESSION** — vial1556-planning-green reports All tests successful, Files=2, Tests=11. vial1556-planning-docs returns0 for native book/POD/current-source/index/KMap. Remaining22 downstream candidate files stay owned by .17.2, with no unrun full/hosted or native qualification claim. Ordinary staged/commit gates remain mandatory.
+
+## Acceptance Checklist — `.17.2.5` default failure intake
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact actual REDs report at t/1604-vial-architecture-scale-execution-topology.t line 175, t/1629-vial-architecture-scale-checking-foundation.t lines215/219/225 and t/1645-vial-architecture-scale-backend-emission-foundation.t lines268/273/283. Topology rejects the already proved old raw-bridge identity; checking/backend derived tuple/input differences are explicitly unclassified, owned by .2/.3.
+- [x] **ADDRESSED (verified)** — Preserve all three default1 outcomes, complete TAP/recipes/source seal and exact boundary between known provenance drift and missing derived-identity causes. Schedule .1 current-reference/topology, .2 checking, .3 backend and .4 remaining19 candidates. No source/test repair or full6 starts inside this completed intake.
+- [x] **NO REGRESSION** — vial-scale-remaining-intake-docs returns0 for native book/POD/current-source/index/KMap; knowledge-map: OK. Product source/tests remain unchanged from571b89f2, and the three REDs remain owned rather than called successful. Normal staged/commit gates qualify this documentation/metadata intake only.

@@ -1,0 +1,64 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2",
+  "revision": "571b89f25c6085f2d26b5593cae57dbb2a783ddb",
+  "commands": [
+    {
+      "command": [
+        "prove",
+        "-v",
+        "-Iperl",
+        "t/1604-vial-architecture-scale-execution-topology.t"
+      ],
+      "expected_status": 1
+    },
+    {
+      "command": [
+        "prove",
+        "-v",
+        "-Iperl",
+        "t/1629-vial-architecture-scale-checking-foundation.t"
+      ],
+      "expected_status": 1
+    },
+    {
+      "command": [
+        "prove",
+        "-v",
+        "-Iperl",
+        "t/1645-vial-architecture-scale-backend-emission-foundation.t"
+      ],
+      "expected_status": 1
+    }
+  ],
+  "source_inputs": [
+    {
+      "path": "t/1604-vial-architecture-scale-execution-topology.t",
+      "sha256": "fd5aa2780f10689afdd77a49640c120dd0c1c0567e4acad6202aefa29d605306"
+    },
+    {
+      "path": "t/1629-vial-architecture-scale-checking-foundation.t",
+      "sha256": "adb8a3ac28ad68009c994a5b4348fea9b4b3764a379cbd09c9819649a1d7c142"
+    },
+    {
+      "path": "t/1645-vial-architecture-scale-backend-emission-foundation.t",
+      "sha256": "492de52b31bfe6d6ea1c7e1be0030fa9bcbc85ff06b8e825513f9f8543f7e23e"
+    },
+    {
+      "path": "perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm",
+      "sha256": "c8af4cb8f02e99554931d60a7b23f7385065d2be565fbace262028e213dd14e8"
+    },
+    {
+      "path": "perl/FSM/VIAL/ArchitectureScaleCheckingState.pm",
+      "sha256": "164b7a4fe7ccaf9d56c61cdd656eaccc382f6b5a0f9e83799fc59f8740de641f"
+    },
+    {
+      "path": "perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm",
+      "sha256": "fafd0fa8a6382f4482d2ee757e550f2619fed9208c5516eae2459ba55e8cdcb0"
+    },
+    {
+      "path": "ppif/ahb_lite_subordinate.ppif",
+      "sha256": "9a1d7a591d3ec9a3419b07f05bc83aefa2b213b2cae45f5332f9349ffa27056c"
+    }
+  ],
+  "scope": "Default published tests only, no explicit large/native flags; expected1 is failure intake, never green qualification."
+}
