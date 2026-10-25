@@ -266,7 +266,8 @@ Rules:
   separately from selected instances. Generated activation scopes retain original
   override expressions and selected values per actual spawn/do/rule instance,
   including repeated and conditional do; shared child defaults stay separate.
-  Domain propagation and full carrier/public qualification remain pending.
+  Domain selection retains lexical owners and local shadows under focused checks;
+  IAL0 propagation and full carrier/public qualification remain pending.
   Nested aggregate first rows now normalize recursively without changing scalar
   kinds. Selected alias/nested/default native/API/newline reports conserve resolved
   values; carrier/public source inventories and generic specialization remain pending.

@@ -1,0 +1,13 @@
+(actor domain_widths
+  (clock-domains (domain core (clock clk) (reset rst_n) :default)
+                (domain aux (clock aux_clk) (reset aux_rst_n)))
+  (params (W 8) (ALIAS W))
+  (interface (input start (domain core)) (input aux_start (domain aux))
+    (input data (width W) (domain core)) (input aux_data (width ALIAS) (domain aux))
+    (output result (width W) (domain core)) (output aux_result (width W) (domain aux)))
+  (storage (var saved (width W) (domain core))
+    (var aux_saved (width ALIAS) (domain aux)))
+  (transaction core_tx (domain core) (params (W 4)) (ports (input payload (width W)))
+    (on start) (set result data))
+  (transaction aux_tx (domain aux) (params (W 6)) (ports (input payload (width W)))
+    (on aux_start) (set aux_result aux_data)))

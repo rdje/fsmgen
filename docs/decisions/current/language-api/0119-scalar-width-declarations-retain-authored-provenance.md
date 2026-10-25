@@ -9,11 +9,11 @@ answers:
   - "which scopes must generated child width declarations preserve?"
   - "where is library parameter override source provenance lost?"
   - "why is library source preservation blocked on nested aggregate normalization?"
-date: 2026-10-23
+date: 2026-10-25
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
-evidence: t/2107-isf-reusable-width-ir.t; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
+evidence: t/2100-isf-direct-formal-width-ir.t; docs/audits/domain-width-ir-20261025.json.gz; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -139,7 +139,7 @@ watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides
 remain separate from source defaults. Literal/type/reset declarations stay
 exact. Direct formals retain original names, plan identities and isolated lexical scopes. Generated formal/inherited/storage-read ports retain actor and selected transaction sources.
-Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable children and generated spawn/do/rule instances keep defaults separate from selections, raw aliases and original overrides. Domain/IAL0 propagation and public qualification remain.
+Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable children and spawn/do/rule instances separate defaults, selections, raw aliases and original overrides. Domain ownership has focused checks; IAL0/public qualification remains.
 Nested heads now normalize recursively under `.2.3.2.1.2.2`; original diagnosis: `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained

@@ -6,6 +6,7 @@ use JSON::PP;
 use FSM::Test::FormalWidthIR qw(formal_width_actor formal_width_products);
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::FormalLowering;
+use FSM::Adapter::ISF;
 
 my $json = JSON::PP->new->canonical;
 my $products = formal_width_products();
@@ -118,4 +119,81 @@ subtest 'formal metadata is detached from original inputs, sibling results and o
     is($json->encode($scheduler->{ir}->build_module($context->{actor})), $second_before, 'fresh module retains original complete data');
 };
 
+my %domain_captures;
+subtest 'domain selection preserves lexical widths across independent defaults' => sub {
+    open my $in, '<:raw', 't/data/isf-formal-width-ir/domains.isf' or die $!;
+    my $fixture = do {local $/; <$in>};
+    close $in or die $!;
+    for my $default (qw(core aux)) {
+        my $source = $fixture;
+        if ($default eq 'aux') {
+            $source =~ s/\) :default/)/;
+            $source =~ s/\(reset aux_rst_n\)\)/\(reset aux_rst_n\) :default\)/;
+        }
+        my $actor = FSM::Adapter::ISF->new->parse_source($source, 'domain-width-ir.isf');
+        my $before = $json->encode($actor);
+        my $scheduler = FSM::Scheduler::ISF->new;
+        my $context = FSM::Scheduler::ISF::FormalLowering->prepare($scheduler->{ir}, $actor);
+        my $physical_before = $json->encode($context->{actor});
+        my $root = $scheduler->{ir}->build_module($context->{actor});
+        is($root->{domain_partition}{default_domain}, $default, 'actual partition uses the selected default');
+        my $realizations = $scheduler->_multi_domain_realizations($context->{actor}, $root->{domain_partition});
+        FSM::Scheduler::ISF::FormalLowering->verify($context,
+            {map {$_->{ir}{actor_name} => $_->{ir}} @$realizations});
+        $domain_captures{$default} = $json->decode($json->encode({source => $source,
+            actor => $actor, context => $context, root => $root, realizations => $realizations}));
+        is_deeply([sort map {$_->{domain}{name}} @$realizations], [qw(aux core)],
+            'complete actual realization membership has no invented or omitted domains');
+        for my $row (['core', 'core_tx', 'data', 'result', 'saved', 'W', '4'],
+                     ['aux', 'aux_tx', 'aux_data', 'aux_result', 'aux_saved', 'ALIAS', '6']) {
+            my ($domain, $tx, $input, $output, $storage, $token, $local_width) = @$row;
+            my ($realization) = grep {$_->{domain}{name} eq $domain} @$realizations;
+            my $ir = $realization->{ir};
+            my %expected;
+            for my $entry ([$input, 'input', $token], [$output, 'output', 'W']) {
+                $expected{$entry->[0]} = {scope => {kind => 'actor', owner => 'domain_widths'},
+                    source => {token => $entry->[2], kind => 'actor_parameter', owner => 'domain_widths'},
+                    declaration => {kind => 'interface', name => $entry->[0], direction => $entry->[1]}};
+            }
+            $expected{$storage} = {scope => {kind => 'actor', owner => 'domain_widths'},
+                source => {token => $token, kind => 'actor_parameter', owner => 'domain_widths'},
+                declaration => {kind => 'storage', storage_kind => 'var', name => $storage}};
+            my $formal = "isf_port_${tx}_payload";
+            $expected{$formal} = expected_formal('domain_widths', $tx, 'payload', 'input',
+                'W', 'transaction_parameter', $tx);
+            is_deeply($ir->{_width_declarations}, \%expected,
+                "$domain complete source inventory excludes sibling declarations and physical-owner guesses");
+            is($ir->{actor_name}, "domain_widths__domain_$domain", 'physical module retains distinct domain identity');
+            is_deeply($ir->{_width_scopes}{transactions}, {$tx => {owner => $tx, actor => 'domain_widths',
+                params => [{name => 'W', value => $local_width}]}}, 'only local transaction environment is retained');
+            is_deeply($ir->{_width_scopes}{actor}{params}, [{name => 'W', value => '8'},
+                {name => 'ALIAS', value => 'W', resolved_value => '8'}], 'actor alias and defaults remain lexical');
+            is($ir->{signal_widths}{$formal}, $local_width, 'actual formal retains local shadow width');
+            is($ir->{signal_widths}{$input}, 8, 'actual actor input keeps independent default width');
+            my $prepared = $context->{prepared}{domain_source_products}{$domain}{preparation}{actor};
+            is_deeply([map {$_->{name}} @{$prepared->{transactions}}], [$tx], 'canonical domain preparation excludes foreign transactions');
+            my ($port) = grep {$_->{name} eq $input} @{$prepared->{interface}{inputs}};
+            is_deeply($port->{_width_declaration}, {token => $token, kind => 'actor_parameter', owner => 'domain_widths'},
+                'original domain preparation retains the exact authored source');
+        }
+        is($json->encode($actor), $before, 'source caller and primitive kinds remain exact');
+        is($json->encode($context->{actor}), $physical_before, 'physical preparation remains exact');
+        my $saved = $json->encode($realizations);
+        my %by_domain = map {$_->{domain}{name} => $_} @$realizations;
+        my $aux = $json->encode($by_domain{aux});
+        $by_domain{core}{ir}{_width_declarations}{data}{source}{owner} = 'WRONG';
+        $by_domain{core}{ir}{_width_scopes}{actor}{params}[0]{value} = '99';
+        is($by_domain{core}{ir}{params}[0]{value}, '8', 'executable parameters are detached');
+        is($json->encode($by_domain{aux}), $aux, 'other domain remains detached');
+        is($json->encode($context->{actor}), $physical_before, 'domain metadata cannot mutate its physical caller');
+        is($json->encode($scheduler->_multi_domain_realizations($context->{actor}, $root->{domain_partition})), $saved,
+            'fresh domain realizations remain exact');
+    }
+};
+
+if (defined $ENV{FSMGEN_DOMAIN_WIDTH_CAPTURE}) {
+    open my $out, '>:raw', $ENV{FSMGEN_DOMAIN_WIDTH_CAPTURE} or die $!;
+    print {$out} $json->encode(\%domain_captures), "\n" or die $!;
+    close $out or die $!;
+}
 done_testing;

@@ -375,7 +375,8 @@ child module defaults. `(params (WIDTH BASE))` keeps both the authored `BASE`
 and the selected value, including equal-valued aliases. Spawn, blocking do,
 repeat/conditional do and rule-trigger instances keep distinct caller contexts;
 statically pruned activations add no instance scope. These private records do
-not specialize widths. Domain propagation and publication qualification remain.
+not specialize widths. Domain selection also retains lexical owners and local
+shadows under focused checks. IAL0 propagation and full qualification remain.
 
 The connected scope example includes independent four-bit and six-bit children:
 
