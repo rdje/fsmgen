@@ -1,0 +1,21 @@
+{
+  "before": {
+    "files": 65,
+    "lines_total": 73988,
+    "bytes_total": 4143850
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73988,
+    "bytes_total": 4143850
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 0,
+    "bytes_total": 0
+  },
+  "rederive": "Complete source membership/bytes/LF counts.",
+  "falsify": "Independent staged aggregate gate; unchanged ceilings.",
+  "durability": "Tracked book/authority and normal gated unit commit.",
+  "disposition": "The attempted zero-delta authority refresh was refused by the staged gate. Current aggregate authority is retained byte-exact from HEAD because the dated link replacement changes no aggregate counts."
+}

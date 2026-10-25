@@ -94,11 +94,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete the due artifact cleanup before another long verification run.`
-  Acceptance: `P1 maintenance after the full3 outcome commits clean, before .8 long focused work. Read the latest cleanup record, canonical cleanup/locality procedures and relevant book. Census root/project-local generated artifacts and required Rust log/bin locations without crossing Git write boundaries or inspecting submodule implementations. Preserve all original evidence, current source/book, required caches and planned worktrees. Delete only exact provably disposable owned artifacts; a no-removal outcome is valid when authority is absent. Overwrite docs/ARTIFACT_CLEANUP.md with only the current date/one-line result, retain dated evidence with honest metadata-only versus byte/absence scope, run focused docs/book/doctrine checks and commit before .8.`
-  Verification: `Latest entry2026-10-24T08:30:52Z; the interrupted full3 ran beyond the next due date. No cleanup deletion has been attempted during that verification. No new long run should precede this owned maintenance slice.`
-  Commit: `pending`
+  Acceptance: `P1 maintenance from clean2b3ca9bbe, before .8 long focused work. Reuse the byte-exact installed census20261020 authenticated against a13376d4ba5f2b89af45b2d1170e5221efdca211; a new artifact-census-20261025 wrapper selects only BASE2b3ca9bbe, this owner and exclusive output. Preserve its independent rg/os.walk membership and existing missing-member/unsafe-path/primitive-size/invented-removal controls; default saved replay must never walk/delete. Read the latest cleanup record, canonical cleanup/locality procedures and relevant book. Census root/project-local generated artifacts and required Rust log/bin locations without crossing Git write boundaries or inspecting submodule implementations. Preserve all original evidence, current source/book, required caches and planned worktrees. Delete only exact provably disposable owned artifacts; a no-removal outcome is valid when authority is absent. Overwrite docs/ARTIFACT_CLEANUP.md with only the current date/one-line result, retain dated evidence with honest metadata-only versus byte/absence scope, run focused docs/book/doctrine checks and commit before .8.`
+  Verification: `From clean2b3ca9bbe, the byte-exact installed collector authenticated against a13376d4 performs the due read-only same-volume regular log/bin census in a new exclusive dated slot. Independent rg/os.walk membership, explicit root/six Rust locations and excluded Git/symlink/volume boundaries qualify. Every candidate is retained: no exact disposal authority is established, and no deletion is attempted. Saved replay and existing actual missing-member/unsafe-path/boolean-size/invented-removal controls pass. The latest-only record uses the receipt UTC; book now routes to the dated saved reader. This proves metadata/membership only, not candidate content or reclaimable bytes. Complete receipt and guarded command logs plus unit commit retain durability. First staged gate refuses an unnecessary zero-delta book aggregate authority refresh; retain that failure and restore the prior authority, since the same-length link changes no aggregate counts. Native book/source and fresh staged/normal doctrines gate handoff to .8 focused memory diagnosis.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.9: complete due artifact census`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.10`
   Status: `pending`
@@ -111,7 +111,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.9` | `pending` | After SEM .69.3 commits the interrupted full3 outcome clean, complete due cleanup; then .8 focused memory diagnosis before any full retry. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.8` | `pending` | Cleanup .9 qualifies its dated no-removal census; after its clean commit, diagnose current memory before any full retry. |
 
 ## Decisions
 
@@ -120,7 +120,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- Full3 is interrupted by the fixed host-capacity guard; .8 owns the current attribution/fix, after due cleanup .9. Full CI/push/hosted success is unqualified. .6/.10 remain ordered P2 follow-ups; historical native causality imposes no renewed blanket hold.
+- Full3 is interrupted by the fixed host-capacity guard; .8 owns the current attribution/fix, after completed cleanup .9 commits clean. Full CI/push/hosted success is unqualified. .6/.10 remain ordered P2 follow-ups; historical native causality imposes no renewed blanket hold.
 
 ## Acceptance Checklist — `.1`
 
@@ -157,3 +157,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Tool-specific stores' -- PROJECT_DATA_LOCALITY.md identifies the existing local-store requirement. The retained original GH migration receipt locates the exact previously shared project log-cache record and unique run/revision ownership. The missing concrete GH environment guidance is now routed through the existing card/book. First staged diagnostics independently locate the omitted generated card-date shard, inventory drift after registry remeasurement and missing current-slice checklist; that failed gate remains retained.
 - [x] **ADDRESSED (verified)** — Byte-exact original migration proof and full prior-run inventory are tracked; fresh read-only checks confirm local size/SHA/device and exact old-file absence. No deletion repeats or global-cache absence claim is made. The book provides the local cache/state/temp wrapper and read-only authentication boundary; existing card questions/facts remain within unchanged authority. Generated date shard, fresh inventory after final registry update and this leaf's checklist join final staging.
 - [x] **NO REGRESSION** — knowledge-map: OK and project-data-locality checks pass, with complete commands/status/output in gh-locality-focused.json/log.gz. Native mdBook/POD/current built source/index checks pass. Exact book aggregate authority changes no ceiling. The original failed staged gate is retained; a fresh final staged scripts/check_doctrines.sh and normal hook must pass before commit. Full CI and hosted qualification remain separate.
+
+## Acceptance Checklist — `.9`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S of the prior latest-only cleanup summary identifies its Oct24 source record; the current receipt authenticates those exact Git bytes and a UTC interval over24h. Maintenance is due. No artifact is assumed disposable from its suffix or size.
+- [x] **ADDRESSED (verified)** — Reuse the authenticated published collector with only the declared new boundary/owner/output wrapper; complete independent regular log/bin membership and root/Rust locations pass. No candidate is removed. Latest-only UTC record and book saved-reader link are refreshed; metadata-only scope and all excluded boundaries remain explicit. The first staged gate rejects a zero-delta reference-authority refresh; restoring the prior unchanged authority corrects that metadata error without changing a ceiling.
+- [x] **NO REGRESSION** — Saved census and existing adverse membership/path/type/removal controls pass; knowledge-map: OK and native book/POD/current source/index checks qualify the documentation. Claim/reference/containment metadata and full staged/normal scripts/check_doctrines.sh gates precede commit. No runtime/test/guard or evidence-custody change.
