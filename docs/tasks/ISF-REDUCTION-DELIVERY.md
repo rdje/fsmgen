@@ -885,10 +885,10 @@ checkpoint is committed before activating that task.
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.16`
-  Status: `pending`
+  Status: `active`
   Goal: `P1 before publication: attribute the interrupted library source query and qualify the next normally required observation.`
   Acceptance: `Own the 2026-10-22 final defaults schedule timeout and missing original partial streams from .2.3.2.1.2.3.1. Keep the original after packet, current traced native success and invalid one-second startup control separate. The first interval lacks process start/stop/trace/partial streams, so a later pass or unrelated delayed echo does not establish cause. Reuse the SEM .93 adjudication: retain the causal gap and attach bounded explicit process/clock/trace/settlement observation to the next genuinely required source query before publication; no recurrence-only campaign, weakened deadline/RAM/SIP/host policy or authentication request. Determine whether authoritative execution-service/host evidence can attribute the original interval, or flag its precise unavailable authority. If a project fault is isolated, split its smallest verified repair first. The future capture-stream loss is already repaired and controlled; missing historical bytes cannot be manufactured. Required feature delivery continues under decision0121, while .69 publication stays gated on this before-publication observation and explicit causal disposition.`
-  Verification: `Original before/after/interruption and exact helper-unit receipts retain under docs/audits/library-source-*20261022*. The native diagnostic stage passed, but its parent programme failed an invalid startup control. No historic causal repair is established. Unrelated queued shell observations have no recorded process-bound timing and are context only, not an attribution oracle.`
+  Verification: `Original before/after/interruption and exact helper-unit receipts retain under docs/audits/library-source-*20261022*. The native diagnostic stage passed, but its parent programme failed an invalid startup control. No historic causal repair is established. Unrelated queued shell observations have no recorded process-bound timing and are context only, not an attribution oracle. PUBLICATION-REGRESSION-REPAIRS.7 now qualifies the next normally required binding-contract intake: exact existing T1388 source, complete literal authored addr<-req row, strict schedule product, real debug trace, complete normalized streams, UTC/monotonic launch/settlement and absent owned session/group under sixty seconds and RAM88/4096. Its Knowledge Map intake also qualifies. authority-disposition.json pins originals and identifies missing original execution-service telemetry; no retrieved host record attributes the original interval, and no global host-log absence is claimed. The original defaults query, invalid startup control and special native epochs were not replayed. This fulfills the before-publication normal-observation and explicit causal-disposition portion; original attribution remains owned here, not inferred from a later pass.`
   Commit: `pending before-publication diagnosis`
 
 - ID: `ISF-REDUCTION-DELIVERY.17`
@@ -917,8 +917,11 @@ checkpoint is committed before activating that task.
 
 ## Blockers
 
-Publication retains the HIAL/startup, full-CI and query-incident obligations
-under SEM `.69` and `.93`. No external access or product decision is pending.
+Current publication follows SEM `.69.3` and the director order. PUB `.7`
+qualifies the `.16`/SEM `.93` normal-query observation and explicit causal-gap
+disposition; historical attribution remains separately owned. Full CI and
+exact-SHA hosted qualification remain open. No external access or product
+decision is pending for the current publication path.
 
 ## Constructor preparation checkpoint acceptance
 

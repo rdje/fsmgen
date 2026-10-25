@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.7",
+  "before": {
+    "files": 65,
+    "lines_total": 73950,
+    "bytes_total": 4141863
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73962,
+    "bytes_total": 4142463
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 12,
+    "bytes_total": 600
+  },
+  "rederive": "Current unique book member dimensions before and after the narrow saved-replay guidance.",
+  "falsify": "Maintained-reference gate independently derives exact staged original/final delta; no ceiling is changed.",
+  "durability": "Tracked authority/source, saved reader/controls, native book receipt and unit commit."
+}

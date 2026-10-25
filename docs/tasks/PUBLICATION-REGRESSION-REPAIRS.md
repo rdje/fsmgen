@@ -80,17 +80,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Observe the next required binding-contract intakes and preserve explicit historical query dispositions.`
   Acceptance: `After .2 commits clean, use the Knowledge Map and actual public CLI fixture inspection genuinely needed for .3 binding diagnosis, with bounded process/UTC/monotonic/trace/stream/settlement evidence. Authenticate any reused helper and invoke only its selected capture function for new needed inputs; never run old native diagnostic mains, original spent sources or invalid startup controls. Preserve the existing sixty-second query bounds and RAM88/4096. Before new audit code/source, record exact inputs, literal expected semantic/route scope and saved-reader verification/control requirements. Retain complete actual products and first failures; saved replay defaults must not relaunch queries. Name the precise original execution-service/host lifecycle/stop/partial-stream authority available or unavailable; a new success cannot attribute the spent intervals. Update SEM .93 and ISF-REDUCTION .16 with current before-publication observation/disposition while retaining original failures and causal gaps. Verify literal binding/route predicates, source/program/trace/settlement identity and meaningful adverse saved-record controls, native book/source and staged/normal gates, then commit before .3 code repair. This satisfies existing qualification requirements, without a new historical startup investigation, host-policy/auth change or feature/corpus/API/MCP expansion.`
-  Verification: `Both existing task owners explicitly require the next normally required observed query before publication. Their acceptance permits retaining the historical gap and flagging unavailable original authority; later success is not a causal repair. The .3 Knowledge Map/formal-binding and public fixture inspection provide that normal intake. Candidate existing library-source-interruption-20261022.py run(argv, timeout) captures PID, UTC/monotonic interval, reaped status and streams; its main includes a spent original source and invalid startup control and must not execute. Selection remains pending until .2 commits.`
-  Commit: `pending`
+  Verification: `Both genuinely required current intakes completed with integer0, no timeout, complete normalized stdout/stderr, actual wrapper/producer traces and absent owned sessions/groups under fixed60 and RAM88/4096. Before capture, contract.json declares the literal Knowledge Map route and exact Git-derived T1388 conditional-do source with the complete authored transaction_port_bindings row from canonical T1243 meanings. No old source/diagnostic main or startup control was replayed. observe.py preserves the actual programme, input/revision/hash, clocks/owned PID/session, products and trace; default saved checks do not launch queries. verify.py proves complete finite case closure and exact original fixture selection; genuine omitted/extra/covaried-fixture and wrong status/type/clock/recipe/settlement/covaried-product controls refuse. authority-disposition.json pins original failures, retains the missing defaults schedule slot and invalid diagnostic-parent outcome, and identifies original provider telemetry unavailable through current exec/session APIs without claiming global host-log absence. Original causes stay open in SEM .93/ISF-REDUCTION .16; their before-publication observed-query and explicit-disposition portion is met. normal-query-intake-focused.json retains saved/current Knowledge Map/locality checks, all status0. Book explains the separate claims and saved-only replay. Native book/POD/source/index and complete staged/normal gates are required before commit. No producer/API/DSL/corpus/MCP behavior change, historical causal repair, raw-root/full-environment or latency-distribution claim.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.7: qualify normal publication query observations`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.7` | `pending` | After .2 commits, observe required .3 contract intake and record the older incidents' causal dispositions, then repair binding assertions under .3. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.3` | `pending` | After .7 commit, use qualified authored binding/report intake to preserve conditional-do dataflow through private physical allocation. |
 
 ## Decisions
 
@@ -99,7 +99,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- No external blocker for .7 after .2 commits. Full CI/push/hosted qualification remain pending, not successful.
+- No external blocker for .3 after .7 commits. Full CI/push/hosted qualification remain pending, not successful.
 
 ## Acceptance Checklist — `.1`
 
@@ -112,3 +112,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Retained full2 reports empty stdout at t/1330-isf-atl-resolved-child-fixture-coverage.t line 1516 while the command explicitly requests --quiet; current source equals that failed source. The intentional8e5dd7f predicate suppresses informational notices, as decision0117 and the CLI book explain. The stale Wrote expectations conflict with that current behavior; no producer defect is inferred.
 - [x] **ADDRESSED (verified)** — One existing resolved-child case runs nonquiet and retains its concrete generated-top Wrote assertion; all remaining quiet outdir cases require empty stdout. Every success/stderr/exact generated file-domain and machine-report assertion remains. Exact before/after identities and the complete old assertion domain retain; existing ATL guidance explains the same quiet/nonquiet behavior.
 - [x] **NO REGRESSION** — All tests successful, Files=2, Tests=69 for guarded T1330/T2088. The independent quiet/trace suite qualifies both aliases, ISF/single/bundle paths, unchanged products and traced/untraced machine reports. Native mdBook/POD/current source-byte/index checks pass, and git diff --check is clean. Fresh inventory/reference/ceiling plus complete staged/normal scripts/check_doctrines.sh gates precede commit; full CI remains separate.
+
+## Acceptance Checklist — `.7`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — SEM .93 retains a sixty-second wrapper-query timeout; ISF-REDUCTION .16 retains the missing defaults schedule product/inner lifecycle and partial pipes. Their explicit before-publication condition requires observed next normal queries and a precise causal/authority disposition, not an invented historical repair. The actual required --trace-log / --emit-schedule-json T1388 intake and literal Knowledge Map question now preserve that current evidence; the complete original packets stay exact.
+- [x] **ADDRESSED (verified)** — Both normal intakes return literal current products, complete normalized streams/actual traces, UTC/monotonic method observations and owned-session settlement under unchanged bounds. The fixture is byte-exact from the existing Git test and its complete authored binding oracle was declared before query. Original provider-record access is precisely limited; original missing bytes/cause and the invalid prior parent outcome are preserved. Saved default replay launches no source queries, and covaried product/fixture plus omission/extra/type/settlement controls refuse.
+- [x] **NO REGRESSION** — knowledge-map: OK; current locality and saved original query controls pass with the new saved intake/fixture reader, all commands status0 in normal-query-intake-focused.json. Production/query/DSL/API/corpus sources are unchanged. Native mdBook/POD/current source-index/byte views and complete staged/normal scripts/check_doctrines.sh are mandatory delivery gates. Full CI, push and hosted/macOS follow-up remain separately owned.

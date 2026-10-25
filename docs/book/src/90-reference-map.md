@@ -2814,3 +2814,15 @@ the query or an original semantic workload:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-request-status-20261021/query_verify.py
 ```
+
+Current normally required binding-contract intakes have separate saved products,
+actual traces and settled owned process groups. Their current success does not
+recover missing earlier streams or attribute either historical timeout. The
+original execution-service authority gap is recorded explicitly; the older
+failure and its cause remain separate from current qualification. Replay the
+complete saved intakes, exact fixture origin and adverse controls without
+launching either query:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/publication-query-intake-20261025/verify.py
+```

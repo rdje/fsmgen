@@ -1,0 +1,19 @@
+(actor when_bound_do
+  (interface
+    (input start)
+    (input cond)
+    (input req (width 8))
+    (input go)
+    (output done)
+    (output wc (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (do worker
+        (bind (input addr req))))
+    (complete done))
+  (transaction worker
+    (on go)
+    (ports (input addr (width 8)))
+    (update wc addr)
+    (complete wc)))

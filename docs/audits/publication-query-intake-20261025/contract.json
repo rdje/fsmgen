@@ -1,0 +1,82 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.7",
+  "purpose": "Normal Knowledge Map and public schedule intake genuinely required to diagnose T1388 binding assertions; current observation only, never historical causal repair.",
+  "cases": {
+    "knowledge": {
+      "argv": [
+        "bash",
+        "-x",
+        "knowledge-map/scripts/query_knowledge_map.sh",
+        "--no-cache",
+        "how are authored binding names retained before formal physical projection?"
+      ],
+      "inputs": [
+        "knowledge-map/scripts/query_knowledge_map.sh",
+        "knowledge-map/scripts/knowledge_map.pl",
+        "docs/knowledge/isf-formal-source-binding-reports.md"
+      ],
+      "expected_stdout": "how are authored binding names retained before formal physical projection?\tisf-formal-source-binding-reports\tdocs/knowledge/isf-formal-source-binding-reports.md\n",
+      "json_predicates": [],
+      "trace_file": null
+    },
+    "binding": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--quiet",
+        "--strict",
+        "--trace-verbosity=debug",
+        "--trace-log=.artifacts/publication-query-intake-20261025/binding/events.trace",
+        "--emit-schedule-json",
+        "docs/audits/publication-query-intake-20261025/conditional-do.isf"
+      ],
+      "inputs": [
+        "bin/fsmgen",
+        "perl/FSM/Scheduler/ISF/FormalIdentityPlan.pm",
+        "perl/FSM/Scheduler/ISF/FormalLowering.pm",
+        "docs/audits/publication-query-intake-20261025/conditional-do.isf"
+      ],
+      "expected_stdout": null,
+      "json_predicates": [
+        {
+          "path": [
+            "transaction_port_bindings"
+          ],
+          "value": [
+            {
+              "site_kind": "do",
+              "owner": "parent",
+              "owner_kind": "transaction",
+              "target_transaction": "worker",
+              "role": "input",
+              "port": "addr",
+              "actor_signal": "req",
+              "actor_expression": "req",
+              "actor_endpoint_kind": "signal",
+              "binding_timing": "activation_region",
+              "authored_timing_mode": null,
+              "width": 8,
+              "instance": null,
+              "parent_port": null,
+              "child_port": null,
+              "start_signal": "worker_start",
+              "done_signal": "worker_done",
+              "trigger_source": null,
+              "payload_source": null
+            }
+          ]
+        }
+      ],
+      "trace_file": ".artifacts/publication-query-intake-20261025/binding/events.trace",
+      "fixture_origin": {
+        "source_path": "t/1388-isf-when-body-local-do.t",
+        "baseline_revision": "6ed41458fced109453828e69210e79f409824f34",
+        "source_sha256": "b13f5f98625a14f33869d2b95a5797646d4d7baee997db0eeb7316b959b878b2",
+        "selector": "my \\$bound = parse_source\\(<<'ISF', 'when-bound-do'\\);\\n(.*?)\\nISF",
+        "fixture_sha256": "675663da8750c00d0104abf8c855ac4774c512d133017b80be2beaf0ce114775"
+      }
+    }
+  },
+  "limits": "Native binding capture is disabled until its exact fixture and literal public report predicates are declared. Fixed sixty-second post-launch deadline; unchanged RAM88/4096. Complete normalized streams and selected trace retained. No full transitive environment, original kernel birth/stop evidence, raw-root reconstruction or latency distribution claim.",
+  "binding_oracle": "Complete literal transaction_port_bindings row follows the authored T1388 input addr<-req and the independently declared T1243 public report shape. It expects logical authored names and width8, not private physical carrier names. No runtime/HDL or full-schema qualification claim."
+}

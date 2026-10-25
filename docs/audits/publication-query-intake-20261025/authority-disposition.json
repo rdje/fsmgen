@@ -1,0 +1,38 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.7",
+  "assessed_utc": "2026-10-25T05:11:17.466919+00:00",
+  "baseline_revision": "6ed41458fced109453828e69210e79f409824f34",
+  "historical_pins": {
+    "docs/audits/specforge-request-status-20261021/second-gate-refusal.json.gz": "c163d5b7f86d26bc6bd49c1bd3f48903146048b19ba4289c336f4b4ba4dcd50b",
+    "docs/audits/specforge-request-status-20261021/query_verify.py": "24b8893e67306e12d966131a1c64169d1cb5df851214148e6881b99357b772c3",
+    "docs/audits/library-source-retention-after-20261022.json.gz": "c3d3ef3464557e83b44e803de841b323ea5f91b6b8ed8008d2e29c8706e57d24",
+    "docs/audits/library-source-interruption-20261022.json.gz": "c05de21dbc6509dfeed125d78d60b517deddf7217a9664330ee1eef0fa0c441c"
+  },
+  "source_query_original_error": "Command '['perl', 'bin/fsmgen', '--quiet', '--strict', '--emit-schedule-json', '.artifacts/library-source-retention-qualified-20261022/defaults.isf']' timed out after 60 seconds",
+  "source_query_missing_product": "defaults schedule: no original successful/partial stream record or child lifecycle interval is present in the interrupted packet.",
+  "later_diagnostic_disposition": "Native diagnostic stage passed, but its parent failed the invalid one-second startup control; preserve both and do not relabel that programme successful. It was not rerun.",
+  "current_authority_available": "Current exec_command and write_stdin expose newly run commands/current active sessions, not an API for the original inner-query lifecycle/stop/partial-pipe telemetry. Repository original failure/source/available-stream records and immutable Git versions are available and retained.",
+  "specific_unavailable_authority": "The current exec/session APIs do not expose the original execution-service job record needed to bind failed inner-child identity, start/stop/stop reason and unretained partial pipes to the Oct21 Knowledge Map or Oct22 defaults interval. The retained packets do not provide that telemetry. No retrieved host record has been established as authoritative for those original intervals; host logs were not exhaustively searched, and their absence or recoverability is not claimed.",
+  "catalog_candidates_reviewed": [
+    "exec_command",
+    "write_stdin",
+    "mcp__codex_apps__chatgpt_space_execute_artifact_code",
+    "mcp__codex_apps__chatgpt_space_get_artifact_execution_status",
+    "mcp__codex_apps__codex_document_control_execute_document_command",
+    "mcp__codex_apps__sites_get_site_worker_logs"
+  ],
+  "current_disposition": "The genuinely required authored-binding Knowledge Map and conditional-do CLI intakes both completed with integer0, complete normalized streams, actual traces, UTC/monotonic method intervals and absent owned sessions/groups. They establish current qualification, not original timeout causality.",
+  "publication_condition": "SEM .93 and ISF-REDUCTION .16 require observed next normal queries plus explicit historical causal disposition; these observations and this precise authority gap satisfy that before-publication portion. Historical attribution remains owned by those nodes. No gate/deadline/resource/SIP/host-policy waiver or special recurrence campaign.",
+  "limits": "Method launch/settlement observations are not original kernel birth evidence or a latency distribution. No full transitive environment/producer-footprint or raw-root byte reconstruction claim.",
+  "disclosure_check": {
+    "checked_normalized_products": [
+      "knowledge:stdout",
+      "knowledge:stderr",
+      "binding:stdout",
+      "binding:stderr",
+      "binding:trace"
+    ],
+    "unqualified_machine_root_or_user_temporary_prefix_present": false,
+    "normalization": "Only the exact runtime repository prefix becomes <repository>; no fields or array members are removed."
+  }
+}
