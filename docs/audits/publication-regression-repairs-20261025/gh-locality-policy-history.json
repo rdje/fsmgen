@@ -1,0 +1,16 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.5",
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "Tool-specific stores",
+    "--",
+    "PROJECT_DATA_LOCALITY.md"
+  ],
+  "exit_status": 0,
+  "stdout": "d9bfeb61d9f676f8e13a98e44b1aaecc4f465357 PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.1: adopt same-volume data doctrine\n",
+  "stderr": ""
+}

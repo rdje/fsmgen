@@ -9,24 +9,27 @@ answers:
   - "how should off-volume FSMGen data be migrated?"
   - "what is the project data locality policy?"
   - "how is the mdbook destination output directory resolved?"
-date: 2026-09-10
+date: 2026-10-25
 status: current
 tags: [artifacts, storage, temporary-files, caches, portability, doctrine]
 evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; PROJECT_DATA_LOCALITY.md; docs/decisions/0022-project-data-locality-and-same-volume-storage.md; docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md; scripts/check_project_data_locality.sh; README.md; TOOLBOX.md; docs/book/src/09-generated-hdl-debugging-and-inspection.md
 reverify: scripts/check_project_data_locality.sh
 ---
 
-All project-owned output, builds, caches, logs, fixtures and temporary workspaces
-stay on the repository volume, normally in `.artifacts/`. Runtime tools derive
-absolute locations from the current root; persisted paths remain root-relative.
-`PROJECT_DATA_LOCALITY.md` defines subdirectories and external-input exceptions.
-Off-volume data follows copy/verify/use/delete; ambiguous shared caches stay.
+Keep all project outputs/builds/caches/logs/fixtures/temp workspaces on the repo
+volume, normally `.artifacts/`. Persist relative paths; derive absolute paths.
+`PROJECT_DATA_LOCALITY.md` owns roots/external-input exceptions. Migration:
+copy/verify/use/delete exact owned data; retain ambiguous shared caches.
 
-Adoption is complete. `scripts/check_project_data_locality.sh` rejects OS temporary
-paths in runtime, tests, configuration, README, toolbox, mdBook, fact cards and
-Knowledge Map, and verifies shared local runtime/launcher controls.
+Adoption is complete. `scripts/check_project_data_locality.sh` rejects OS-temp
+paths in runtime/tests/config/README/toolbox/book/cards/Knowledge Map and checks
+shared runtime/launcher controls.
 
-From repository cwd, use `mdbook build docs/book --dest-dir .artifacts/book`:
-mdBook resolves the destination from cwd. Task `.3.2.15.7.3.9` retains a misplaced
-build's same-volume copy, complete hash comparison, rendered inspection and
-exact-directory deletion/residue evidence.
+From repo cwd, `mdbook build docs/book --dest-dir .artifacts/book` resolves from
+cwd. Task `.3.2.15.7.3.9`: misplaced build's local copy, complete hashes, rendered
+inspection, exact deletion/residue.
+
+For `gh`, use the book's local XDG cache/state/temp wrapper with updates and
+telemetry disabled. Config/keychain remain read-only auth inputs.
+PUBLICATION-REGRESSION-REPAIRS.5 owns exact log-cache migration proof; other
+shared entries stay.

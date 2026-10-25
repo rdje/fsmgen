@@ -1,0 +1,18 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "source_alias": "user GH cache/run-log-35782532228-1790110032.zip",
+  "destination": ".artifacts/cache/gh/run-log-35782532228-1790110032.zip",
+  "source_mtime_ns": 1790119762920686642,
+  "bytes_each": 1433735,
+  "sha256": "d9aa06eeb1e3cd0e7f9cdd337815da739584199585e03583bd4be53578f6e6bb",
+  "ownership": "Unique run35782532228 is rdje/fsmgen at remote54ac1c22d5314943027494f4c270f9c612e62704; prior-hosted-regression-jobs.json and API log inventory retain. Existing cache predates this session; do not remove any other shared cache record.",
+  "copy_verified": true,
+  "use_verified": true,
+  "deleted_old": true,
+  "use_command": "env XDG_CACHE_HOME=<repository>/.artifacts/cache XDG_STATE_HOME=<repository>/.artifacts/state TMPDIR=<repository>/.artifacts/tmp/gh GH_NO_UPDATE_NOTIFIER=1 GH_NO_EXTENSION_UPDATE_NOTIFIER=1 GH_TELEMETRY=0 gh run view 35782532228 --repo rdje/fsmgen --log-failed",
+  "output_equal": true,
+  "repository_boundary_probe": "git rev-parse returned128; source cache is not inside another Git repository",
+  "cross_volume_exception": "Existing uniquely project-owned cached log was read only to copy and verify; delete precisely the migrated record after verified local use. Shared config/keychain remain required read-only authentication inputs.",
+  "residue_census": "Exact original cache filename absent after unlink; other shared cache entries untouched.",
+  "falsification": "After exact old-file deletion, the local-cache query returns identical complete output and does not recreate the global record. This distinguishes local cache use from fallback to the previous shared location."
+}

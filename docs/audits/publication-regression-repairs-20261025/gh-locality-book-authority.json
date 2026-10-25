@@ -1,0 +1,21 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.5",
+  "before": {
+    "files": 65,
+    "lines_total": 73967,
+    "bytes_total": 4142845
+  },
+  "after": {
+    "files": 65,
+    "lines_total": 73984,
+    "bytes_total": 4143608
+  },
+  "delta": {
+    "files": 0,
+    "lines_total": 17,
+    "bytes_total": 763
+  },
+  "rederive": "Whole current book source membership/bytes/LF counts before/after the concrete local GH environment example.",
+  "falsify": "Independent staged reference-authority gate derives complete member delta; ceilings unchanged.",
+  "durability": "Tracked source/authority, native book/gate receipts and unit commit."
+}

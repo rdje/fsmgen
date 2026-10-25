@@ -19,5 +19,5 @@
 
 _FSMGen project-owned data stays on the repository filesystem volume_
 
-- **date:** 2026-09-10 · **status:** current
+- **date:** 2026-10-25 · **status:** current
 - **source and verification:** [`docs/knowledge/project-data-locality-same-volume-storage.md`](../../docs/knowledge/project-data-locality-same-volume-storage.md)

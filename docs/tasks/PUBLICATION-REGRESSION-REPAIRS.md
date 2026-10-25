@@ -66,11 +66,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.4: retain nullable delay in exact shared DTO goldens`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Durably route the completed GitHub log-cache locality migration.`
   Acceptance: `Before next qualifying full CI/push, preserve .artifacts/push-readiness-20261025/gh-log-locality.json operational evidence in tracked data. Route GH XDG cache/state/temp usage through the existing locality card and relevant book guidance inside unchanged limits. Preserve copy/hash/use/delete/exact-residue proof and the after-delete local-cache query; leave ambiguously shared cache entries untouched. Normal docs/claim/doctrine gates and commit required.`
-  Verification: `P1 pre-push durable handoff; operational migration already completed under SEM .69.3. Do not repeat a deletion or treat ignored evidence as committed documentation.`
-  Commit: `pending`
+  Verification: `The exact original gh-log-locality.json and complete prior-run job inventory are now retained in tracked data, with hashes and unique rdje/fsmgen/run/revision identity. The original copy/hash/use/delete/exact-residue and successful after-delete local-cache query observations remain intact; no deletion repeats. A fresh read-only check confirms the exact local cache size/SHA/device and old filename absence, without claiming global cache emptiness. Existing locality card questions/facts remain, with the concrete wrapper routed to its existing book section and within unchanged knowledge_cards authority. Focused locality/Knowledge Map checks and native mdBook/POD/current source/index checks pass. gh-locality-routing.json names distinct original/source, separating after-delete use and tracked durability legs plus the external read-only residue/auth boundary. Fresh metadata/reference/claim and complete staged/normal doctrine gates precede commit. The first staged gate retained an omitted generated card-date shard, stale inventory after registry remeasurement and missing fresh checklist; final staging/metadata/checklist correct these under the same leaf without bypass. After clean commit return to SEM .69.3 fresh checkpointed full3; no full-CI/push outcome is claimed.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.5: route GitHub CLI state through local storage`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.6`
   Status: `pending`
@@ -90,7 +90,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.5` | `pending` | After .4 commits clean, durably route the already-completed GH cache migration before full CI/push. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.6` | `pending` | Deferred until SEM .69.3 full CI/push/hosted/macOS/worktree qualification; return there after .5 commits. |
 
 ## Decisions
 
@@ -99,7 +99,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Blockers
 
-- No external blocker for .5 after .4 commits. Full CI/push/hosted qualification remain pending, not successful.
+- .6 awaits the ordered SEM .69.3 publication/macOS/worktree follow-up. No external blocker for fresh full3 after .5 commits; full CI/push/hosted qualification remain pending.
 
 ## Acceptance Checklist — `.1`
 
@@ -130,3 +130,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual full2 mismatch at t/139-composition-shared-datapath-candidate-metadata.t line 84 and t/140-composition-shared-datapath-drive-intent-metadata.t line 95 identifies the additional nullable pulse_delay_cycles family field. git log -S identifies intentional9dca2caa389 producer adoption. Complete public DTO capture from exact unchanged fixtures confirms explicit null in family objects and unchanged separate drive-intent keys; no producer defect is inferred.
 - [x] **ADDRESSED (verified)** — Only the five expected family hashes gain literal pulse_delay_cycles => undef. Every original complete-object comparison, contributor/binding/drive-intent field and the three pre-existing forward-IR exclusions remain intact. Qualified captures and exact before/after identities retain the full shape; production timing/admission code is byte-identical. The book explicitly distinguishes contributor family nulls from the existing drive-intent projection. The failed collector accessor is retained and corrected through its public documented accessor in a separate slot.
 - [x] **NO REGRESSION** — All tests successful, Files=4 Tests=8 for guarded T139/T140/T168/T551, preserving independent structural leaf binding and cache mutation controls. Native mdBook/POD/current built source/index checks pass. Complete focused/book receipts and saved full DTO/fixture identities retain; git diff --check and fresh metadata/reference/claim plus complete staged/normal scripts/check_doctrines.sh are required before commit. No native runtime or full-suite success is claimed.
+
+## Acceptance Checklist — `.5`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Tool-specific stores' -- PROJECT_DATA_LOCALITY.md identifies the existing local-store requirement. The retained original GH migration receipt locates the exact previously shared project log-cache record and unique run/revision ownership. The missing concrete GH environment guidance is now routed through the existing card/book. First staged diagnostics independently locate the omitted generated card-date shard, inventory drift after registry remeasurement and missing current-slice checklist; that failed gate remains retained.
+- [x] **ADDRESSED (verified)** — Byte-exact original migration proof and full prior-run inventory are tracked; fresh read-only checks confirm local size/SHA/device and exact old-file absence. No deletion repeats or global-cache absence claim is made. The book provides the local cache/state/temp wrapper and read-only authentication boundary; existing card questions/facts remain within unchanged authority. Generated date shard, fresh inventory after final registry update and this leaf's checklist join final staging.
+- [x] **NO REGRESSION** — knowledge-map: OK and project-data-locality checks pass, with complete commands/status/output in gh-locality-focused.json/log.gz. Native mdBook/POD/current built source/index checks pass. Exact book aggregate authority changes no ceiling. The original failed staged gate is retained; a fresh final staged scripts/check_doctrines.sh and normal hook must pass before commit. Full CI and hosted qualification remain separate.

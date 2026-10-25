@@ -1,0 +1,18 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.5",
+  "original_owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "operational_receipt_sha256": "d7d6ba9b22dd49d178082172a9a5beb4ad9394b04d1bcb39492368ee327767df",
+  "prior_run_inventory_sha256": "118a52c568193fe534cab98c7fe2d737223439dadd8d2ab93772c7c431c60fa5",
+  "scope": "Durable routing of the completed exact migration; no new deletion or claim about all shared-cache entries. Current source absence/hash/device verification is separate from the retained earlier copy/use/delete observations.",
+  "rederive": "Retained original migration record identifies the unique run, size and SHA; full prior-run job identity links it to rdje/fsmgen and the remote revision. Fresh current hash/device/source-residue verification checks the retained local object and exact old filename only.",
+  "falsify": "Original after-delete local-cache query returns identical complete failed-log output without recreating the old record, separating local use from old-cache fallback. No original workflow success or global cache absence is inferred.",
+  "durability": "Byte-exact original operational record and compressed full prior-run inventory, current check/recipe receipt, existing locality card/book, focused doctrine/normal hook and task commit.",
+  "external_read": "Exact prior user GH cache filename is inspected read-only solely to verify residue; shared config/keychain remain required read-only authentication inputs. No other repository is written.",
+  "staged_gate": {
+    "initial_receipt": "docs/audits/push-readiness-20261025/gh-locality-staged.json",
+    "initial_exit_status": 1,
+    "final_receipt": "docs/audits/push-readiness-20261025/gh-locality-staged-2.json",
+    "final_exit_status": 0,
+    "normal_hook": "Rechecks final commit stage."
+  }
+}

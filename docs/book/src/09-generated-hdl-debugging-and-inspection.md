@@ -345,6 +345,23 @@ git-ignored `.artifacts/` directory, with typed roots such as
 in-tree build roots such as `rust/target/` and `docs/book/book/` also remain
 valid.
 
+Use repository-local cache, state and temporary roots for GitHub CLI inspection
+and push-triggered CI monitoring. From the repository root:
+
+```sh
+mkdir -p .artifacts/cache .artifacts/state .artifacts/tmp/gh
+XDG_CACHE_HOME="$PWD/.artifacts/cache" \
+XDG_STATE_HOME="$PWD/.artifacts/state" \
+TMPDIR="$PWD/.artifacts/tmp/gh" \
+GH_NO_UPDATE_NOTIFIER=1 GH_NO_EXTENSION_UPDATE_NOTIFIER=1 GH_TELEMETRY=0 \
+gh run list --commit "$(git rev-parse HEAD)" --event push
+```
+
+Apply the same environment to `gh run view`, `gh run watch` and `gh api`.
+Existing shared configuration/keychain credentials are read-only authentication
+inputs. Migrate only cache records proven to belong to this project using the
+copy/verify/use/delete sequence; leave other shared entries intact.
+
 The latest cleanup is recorded in `docs/ARTIFACT_CLEANUP.md`. Cleanup removes
 verified generated outputs while preserving failed-run evidence needed by open
 investigations.
