@@ -30,6 +30,8 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{state_model} = $args{state_model};
         $hash_to_bless->{declared_type_name} = $args{declared_type_name};
         $hash_to_bless->{declared_type_spec} = _clone_structured_value($args{declared_type_spec});
+        $hash_to_bless->{_declared_width_source} = _clone_structured_value($args{_declared_width_source})
+            if defined $args{_declared_width_source};
         $hash_to_bless->{clock_domain} = $args{clock_domain};
         $hash_to_bless->{reset_domain} = $args{reset_domain};
         $hash_to_bless->{attributes} = $args{attributes} // {};
@@ -53,6 +55,7 @@ package FSM::CoreAST::Signal;
     sub state_model($self) { $self->{state_model} }
     sub declared_type_name($self) { $self->{declared_type_name} }
     sub declared_type_spec($self) { return _clone_structured_value($self->{declared_type_spec}) }
+    sub declared_width_source($self) { return _clone_structured_value($self->{_declared_width_source}) }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }
@@ -2395,6 +2398,13 @@ without being tied to any specific input format.
 =head3 Signals
 Represent all signal types with comprehensive attributes including timing domains,
 constraints, and type information.
+
+C<declared_width_source> returns a detached optional source record for an explicit
+scalar C<+size> expression: C<signal>, the original declaration's signal name;
+C<expression>, its frontend token tree; and C<resolved_width>, its evaluated width
+at declaration time. Bare decimal widths and named types retain their existing
+contracts. This source record does not classify parameter dependencies, resize HDL,
+or extend the sanitized semantic-report schema.
 
 =head3 Expressions  
 Flexible expression system supporting all boolean operations, comparisons, and

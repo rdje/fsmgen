@@ -1380,16 +1380,13 @@
     },
     {
       "content": {
-        "bytes": 11753,
-        "lines": 164,
+        "bytes": 12148,
+        "lines": 165,
         "line_bytes": 774,
-        "sha256": "c3fc659fee06d31a8c5802f9eb762198259be142b1c1e9d5241e4a392ffc51fb"
+        "sha256": "0ed3ce46af19978733014b7de84f6ffaf5d2f2a8827e272ec37153788804259c"
       },
       "id": "0119",
       "metadata": {
-        "authority_status": [
-          "- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending"
-        ],
         "knowledge_id": "isf-authored-scalar-width-provenance",
         "knowledge_status": "current",
         "questions": [
@@ -1399,7 +1396,11 @@
           "where are authored bank depth and watchdog parameter references lost?",
           "which scopes must generated child width declarations preserve?",
           "where is library parameter override source provenance lost?",
-          "why is library source preservation blocked on nested aggregate normalization?"
+          "why is library source preservation blocked on nested aggregate normalization?",
+          "where does IAL0 retain authored scalar width expressions?"
+        ],
+        "authority_status": [
+          "- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending"
         ]
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",

@@ -65,6 +65,13 @@ Lisp-ish arithmetic/bitwise expressions:
 The expression must resolve to one positive integer before generation. Unknown
 or aggregate-valued leaves are rejected instead of becoming accidental signals.
 
+Core Signal objects retain expression declarations through the detached
+`declared_width_source` accessor: the source signal, frontend token tree and
+evaluated declaration width. Bare decimal widths and named types keep their
+existing contracts. Sanitized semantic reports still expose resolved width/type
+fields; parameter-dependent HDL and public dependency inventories need their
+separate qualification.
+
 `.fsm` integer literals are intentionally a little friendlier than target HDL.
 
 Alongside SystemVerilog-style forms such as `8'hA5`, you can write

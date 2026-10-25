@@ -9,11 +9,12 @@ answers:
   - "which scopes must generated child width declarations preserve?"
   - "where is library parameter override source provenance lost?"
   - "why is library source preservation blocked on nested aggregate normalization?"
+  - "where does IAL0 retain authored scalar width expressions?"
 date: 2026-10-25
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
 evidence: t/2100-isf-direct-formal-width-ir.t; docs/audits/domain-width-ir-20261025.json.gz; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/50-language-contract-size-section-boundary.t t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -95,7 +96,7 @@ same-named parameter sixteen. ISF selects the parameter; bare IAL0 `+size`
 selects the type. IAL0 `(+ word_t 0)` selects the scalar parameter through the
 existing integer evaluator. Preserve the chosen namespace and expression, not
 just token spelling: current IAL0 still resolves that expression numerically.
-This default check establishes neither generic HDL nor override legality.
+This default check establishes neither generic HDL nor override legality. Core Signals retain `{signal, expression, resolved_width}` through the detached `declared_width_source` accessor; it preserves scalar expression source without classifying parameter dependencies or changing default HDL/public reports. ISF binding and carrier emission remain pending.
 
 At parameter default two, changing only bank `(depth 2)` to `(depth W)`, or only
 `(watchdog 2)` to `(watchdog W)`, yields exactly identical complete parsed actors,

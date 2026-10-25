@@ -106,6 +106,13 @@ sub register_signal($self, $signal_name, %attributes) {
             if (exists $normalized_attrs{declared_type_spec}) {
                 $existing->{declared_type_spec} = _clone_type_spec($normalized_attrs{declared_type_spec});
             }
+            if (exists $normalized_attrs{_declared_width_source}) {
+                if (defined $normalized_attrs{_declared_width_source}) {
+                    $existing->{_declared_width_source} = _clone_type_spec($normalized_attrs{_declared_width_source});
+                } else {
+                    delete $existing->{_declared_width_source};
+                }
+            }
             $existing->{clock_domain} = $normalized_attrs{clock_domain} if exists $normalized_attrs{clock_domain};
             $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
             

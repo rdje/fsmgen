@@ -850,10 +850,20 @@ sub parse_size_section($self, $size_ast) {
                 && !ref($resolved_sig)
                 && $resolved_sig =~ /\A[A-Za-z_]\w*\z/;
 
+        # Resolution may inspect scalar flags. Retain the source token tree
+        # independently before evaluation; rejected reference kinds still reach
+        # the canonical resolver and keep its existing diagnostics.
+        my $authored_width = _copy_width_expression($resolved_width);
         my $width_contract = $self->resolve_declared_width_contract(
             signal_name => $resolved_sig,
             width_token => $resolved_width,
         );
+        my $declared_width_source;
+        if (!defined($width_contract->{declared_type_name})
+                && (ref($authored_width) || $authored_width !~ /\A[0-9]+\z/)) {
+            $declared_width_source = {signal => $resolved_sig, expression => $authored_width,
+                resolved_width => $width_contract->{width}};
+        }
 
         $self->{signal_manager}->register_signal(
             $resolved_sig,
@@ -863,6 +873,7 @@ sub parse_size_section($self, $size_ast) {
             declared_type_name => $width_contract->{declared_type_name},
             declared_type_spec => $width_contract->{declared_type_spec},
             width_declared => 1,
+            _declared_width_source => $declared_width_source,
             (defined $reset_value ? (attributes => { reset_value => $reset_value }) : ()),
         );
 
@@ -880,6 +891,7 @@ sub parse_size_section($self, $size_ast) {
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
+                _declared_width_source => $declared_width_source,
             );
         }
         my $q_aux = "${resolved_sig}_r";
@@ -894,6 +906,7 @@ sub parse_size_section($self, $size_ast) {
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
+                _declared_width_source => $declared_width_source,
             );
         }
     }
@@ -1079,6 +1092,13 @@ sub parse_system_section($self, $system_ast) {
             attributes => { is_system_signal => 1 },
         );
     }
+}
+
+# Only list containers occur in admitted width expressions. Leave unsupported
+# references untouched until normal validation so copying cannot change refusal.
+sub _copy_width_expression($value) {
+    return [map { _copy_width_expression($_) } @$value] if ref($value) eq 'ARRAY';
+    return $value;
 }
 
 sub unwrap_scalar_token($self, $value) {
@@ -3634,11 +3654,13 @@ sub parse_signal_action($self, $action) {
         my $next_output_name = $target_base_signal ne '' ? "next_$target_base_signal" : undef;
         for my $target_base_spec (@target_base_specs) {
             my $aux_output_name = "next_$target_base_spec->{name}";
+            my $width_source_signal = $self->{signal_manager}->get_signal($target_base_spec->{name});
             $self->{signal_manager}->register_signal(
                 $aux_output_name,
                 width => $target_base_spec->{width},
                 is_output => 1,
                 is_aux_output => 1,
+                _declared_width_source => $width_source_signal ? $width_source_signal->declared_width_source : undef,
             );
         }
         $assignment = FSM::CoreAST::RegisterAssignment->new(
@@ -3679,11 +3701,13 @@ sub parse_signal_action($self, $action) {
         my $q_output_name = $target_base_signal ne '' ? $target_base_signal . '_r' : undef;
         for my $target_base_spec (@target_base_specs) {
             my $aux_output_name = $target_base_spec->{name} . '_r';
+            my $width_source_signal = $self->{signal_manager}->get_signal($target_base_spec->{name});
             $self->{signal_manager}->register_signal(
                 $aux_output_name,
                 width => $target_base_spec->{width},
                 is_output => 1,
                 is_aux_output => 1,
+                _declared_width_source => $width_source_signal ? $width_source_signal->declared_width_source : undef,
             );
         }
         $assignment = FSM::CoreAST::RegisterAssignment->new(

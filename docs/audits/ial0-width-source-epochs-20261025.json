@@ -1,0 +1,50 @@
+{
+  "owner": "ISF-REDUCTION-DELIVERY.2.3.3.2",
+  "revision_semantics": "Revision denotes base HEAD at capture. Embedded inputs are actual producing source snapshots, including uncommitted changes; after epochs are not unmodified Git builds.",
+  "epochs": [
+    {
+      "epoch": "initial-fixture",
+      "path": "docs/audits/ial0-width-source-initial-fixture-20261025.json.gz",
+      "sha256": "6ad88cdcedbd7af38411ab10e9715e274cd4955d2d09d4817e326a2bc49398ad"
+    },
+    {
+      "epoch": "before-first",
+      "path": "docs/audits/ial0-width-source-before-first-20261025.json.gz",
+      "sha256": "1ce76a6eaea15e898eb18741c75d31702ca074eb5880748ffc3f043c69a2311c"
+    },
+    {
+      "epoch": "before-final",
+      "path": "docs/audits/ial0-width-source-before-final-20261025.json.gz",
+      "sha256": "9fd8d9d8d36936128e2aa71b93e7bdd0f8d61c30bff684b91315e35dcdbed401"
+    },
+    {
+      "epoch": "after-first",
+      "path": "docs/audits/ial0-width-source-after-first-20261025.json.gz",
+      "sha256": "36c1a77debf8d38eebf221d05b4f86b4d5832be074d7a3f59d339948f63aa539"
+    },
+    {
+      "epoch": "aux-red",
+      "path": "docs/audits/ial0-width-source-aux-red-20261025.json.gz",
+      "sha256": "97860de46a587098d589642d846f448c440b68c90c8dfc11434b2ac652e19f27"
+    },
+    {
+      "epoch": "after-final",
+      "path": "docs/audits/ial0-width-source-after-final-20261025.json.gz",
+      "sha256": "f88bf1d6bf59c38f20757e36cdf5f25b466812fb97fdabaec768420afadcdcaf"
+    }
+  ],
+  "fixed_comparisons": [
+    [
+      "before-final",
+      "after-first"
+    ],
+    [
+      "aux-red",
+      "after-final"
+    ]
+  ],
+  "native_before_portable": "docs/audits/ial0-width-source-native-before-portable-20261025.json.gz",
+  "native_after": "after-final",
+  "native_raw_sha256_equal": true,
+  "scope": "Initial malformed type fixture is not source-retention RED. Original and expanded RED/GREEN pairs remain separate. An initial reader compared raw-before with normalized-after text; the portable projection fixes that reader mismatch while preserving original bytes. Selected module paths are observed; full dependency/method footprints and raw-root reconstruction remain unclaimed. No generic-width or full transport/profile qualification."
+}
