@@ -2201,10 +2201,15 @@ digests, and the source byte and line counts. Those values are checked against
 current raw FSM bytes, so legitimate lowering changes update their provenance
 while protocol facts, IDs, endpoints, types, maps and all other fields stay
 frozen. A changed protocol role must break the contract identity.
+The bridge and execution-topology gates share this checked current reference.
+Caller source substitutions, wrong JSON count types and shared mutable oracle
+state are rejected; the existing topology/count/negative checks remain.
 Downstream execution, checking and backend-foundation identity checks are
 being requalified after generated-byte provenance changed. Their remaining
 historical bridge and derived-identity mismatches are tracked in the
 [publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
+Required SPECFORGE feature implementation has priority; the remaining caller
+repairs resume when needed for its validation and publication.
 Every accepted candidate records exactly the `IAL1 -> IAL0`
 review route, while the AHB reference records `IAL2 -> IAL1 -> IAL0`.
 

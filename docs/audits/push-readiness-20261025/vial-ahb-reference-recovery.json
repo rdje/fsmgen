@@ -1,0 +1,9 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.1",
+  "first_receipt": "docs/audits/push-readiness-20261025/vial-ahb-reference-helper-focused.json",
+  "first_test_source": "docs/audits/push-readiness-20261025/vial-ahb-reference-first-test.source.gz",
+  "first_test_sha256": "6098af8d976fc00b79cbfe97c1a0a6f881e7f1190467961086def7e2a60b5e6e",
+  "mechanism": "Mechanical extraction omitted the pointer arrow in two $report dereferences at T1602 lines176/177; strict compilation rejected undeclared %report. No T1602 subtest ran; three other files passed.",
+  "repair": "Replace exactly $report{sources}/$report{review_artifacts} with scalar-hash-reference dereferences, then unique syntax and integration rerun.",
+  "scope": "No product source or original identity cause is altered."
+}

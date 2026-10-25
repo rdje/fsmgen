@@ -1,0 +1,29 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.1",
+  "baseline_revision": "583a843ae5b5549c0181044c46dc66e0d4b42430",
+  "rederive": "Use exact .16 historical/current report comparison and preserved T1604 RED. Shared explicit public fixture route derives current raw report digest only after exact typed raw provenance and frozen every-other-field contract checks.",
+  "falsify": "Protocol-role mutation changes the contract seal; both source/digest APIs reject caller source substitution; caller report mutation cannot affect a fresh reference. An observational Builder control changes only numeric byte-count wire kind to JSON string and is genuinely refused before normalization. All existing topology/semantic/plan/count/negative checks remain.",
+  "durability": "Tracked helper/tests, complete original/corrected/final focused receipts/logs, exact failed-refactor source/recovery, book/card/task and ordinary gates. Initial T1602 compile255 is never treated as tested integration.",
+  "current_sources": [
+    {
+      "path": "t/lib/FSM/Test/AhbReference.pm",
+      "sha256": "8fd90d56a2ccc1cec284c26be2c10d963018446fe7a2b46a1eb3917298b0abcc"
+    },
+    {
+      "path": "t/1602-vial-architecture-scale-bridge-fanout.t",
+      "sha256": "310fdb1ab1596eeb723769cfdf504fc5c502c13c4466ed7e67949b65806bb600"
+    },
+    {
+      "path": "t/1604-vial-architecture-scale-execution-topology.t",
+      "sha256": "b623c80dc86c362e434a5abf7bf94707f5f00f1763797e7e71fd14f1667594cd"
+    }
+  ],
+  "checks": "Three explicit syntax0 and final Files4 Tests18/0; final native docs/KMap0.",
+  "director_priority": "Latest director says remaining .7/.8/.10/.12 are very high priority and block SPECFORGE. Commit only this verified in-flight unit clean, then immediately resume ISF-REDUCTION-DELIVERY.2.3.2.4.2; independent CI work is deferred except demonstrated required validation/publication.",
+  "missing": [
+    "Remaining required SPECFORGE implementations",
+    "derived checking/backend/remaining execution identity qualification",
+    "complete full CI/push/exact-SHA hosted result",
+    "post-push macOS relevance review"
+  ]
+}

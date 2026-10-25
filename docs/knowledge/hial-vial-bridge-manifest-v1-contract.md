@@ -18,13 +18,13 @@ answers:
 date: 2026-10-25
 status: current
 tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb, scale]
-evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md; t/lib/FSM/Test/AhbReference.pm
 reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t t/1602-vial-architecture-scale-bridge-fanout.t && (scripts/decision_records.py read 0035 && cat perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md) | rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|architecture_scale_probe|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process'
 ---
 
-Decision `0035` selects `fsmgen.hial_vial_bridge_manifest.v1`, initially
-`core_single_unit_v1`: sanitized JSON-safe HIAL-to-VIAL binding data, not raw
-AST/IR, target HDL, an execution plan or runtime result.
+`0035`: `fsmgen.hial_vial_bridge_manifest.v1`, initially `core_single_unit_v1`.
+Sanitized JSON-safe HIAL-to-VIAL binding data; no raw AST/IR, target HDL,
+execution plan or runtime result.
 
 Only routes: direct IAL0; direct IAL1 through generated IAL0; IAL2 through
 generated IAL1 and IAL0. PPIF never feeds the bridge directly. Protocol/event/
@@ -43,10 +43,10 @@ private Builder/Manifest/Report and t1551: no file/binding/backend/runtime/
 parity/scale claim. Decision `0037` retains hardware carrier types;
 the later binder proves directional VIAL relations.
 
-Decision `0060` preserves exact AHB and selects a separate
-`qualification_only` direct-IAL1 scale profile using ordinary parse/report/
-lowering/builder authorities. Only private scale evidence; no protocol/
-performance/capacity claims. Prior source-map/manifest caps remain.
+`0060` keeps exact AHB and a separate `qualification_only` direct-IAL1
+profile through ordinary parse/report/lowering/builder. It claims private
+scale evidence, no protocol support/performance/capacity; prior source-map/
+manifest caps remain.
 Completed `.17.2.3.2` implements all 13 `bridge_fanout_v1` axes through source.
 Default proof: frozen AHB and every gate axis. Explicit RAM-guarded proof:
 qualification, exact boundaries and excess. Canonical manifests reach exactly

@@ -226,28 +226,31 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Provide one checked current AHB reference for tests and repair the small topology gate.`
   Acceptance: `After .5 commits, use .16 exact whole-report proof to extract a purpose-specific test-only current reference from the explicit public PPIF/ISF/Builder route, with repository-derived fixed fixture paths. Validate current generated-byte provenance and frozen every-other-field contract; expose an immutable digest/current reference without changing product code. Reuse it in T1602 and T1604, preserving all literal contract/count/negative checks and the changed-role adverse control. Reject unknown invocation/source substitution and avoid shared mutable cached reports. Focused tests/book/docs and normal commit before further callers.`
-  Verification: `No helper or topology repair implemented.`
-  Commit: `pending`
+  Verification: `Shared test-only AhbReference builds the fixed PPIF/ISF/public Builder route from repository-owned regular same-volume data, validates exact raw provenance values and JSON wire types, and freezes all other report fields. It rejects caller source/digest arguments, builds fresh reports and preserves the protocol-role adverse control. T1602 and T1604 share it; every existing topology/count/semantic/plan/source/negative assertion remains. First integration compiles helper0 and passes three files, but T1602 aborts255 at lines176/177 because extraction missed two scalar-pointer arrows. Complete first test source/recovery/log is retained; no credit is borrowed. Corrected integration passes; final stricter JSON provenance guard rejects a genuine numeric-string count before normalization. Three explicit syntax checks and final focused four-file gate return0/Files4 Tests18. Native book/POD/current-source/index/KMap are verified before normal staged/commit. Production modules/fixtures remain unchanged. Director now explicitly reasserts that .7/.8/.10/.12 are very-high-priority SPECFORGE blockers: finish only this in-flight verified unit, commit clean, then immediately resume required ISF-REDUCTION-DELIVERY.2.3.2.4.2 under decision0121. Remaining independent CI/caller work is deferred until it is needed for required validation/publication; no additional CI-cleanup slice precedes feature implementation.`
+  Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.2`
-  Status: `pending`
+  Status: `deferred`
+  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
   Goal: `Diagnose and repair checking-foundation derived identities.`
   Acceptance: `P1 after .1. Capture full current stage/evaluation/rerun tuples through actual own public/test integration, derive exact identity recipes and reconstruct the old expected identities by only independently proved provenance changes. If reconstruction fails, compare the actual historical public fixture before choosing a fix. Preserve model/checking semantics, exact metrics and all adversarial cases. No blind digest refresh; meaningful frozen contract/current-byte checks and normal focused commit.`
   Verification: `T1629 actual RED1: bridge240db instead ofa456, checking-evaluation6cf729 instead of9b6746, rerun138bb8 instead ofceefc4. Other current assertions pass; identity causes remain to be established.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3`
-  Status: `pending`
+  Status: `deferred`
+  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
   Goal: `Diagnose and repair backend-foundation input and derived identities.`
   Acceptance: `P1 after .2. Capture exact backend inputs/stage tuples/evaluation/rerun and compare current/historical fixture data as needed. Explain every changed field using current contracts; do not infer backend-input drift from the bridge alone. Preserve exact provider/profile/ownership/metrics/refusal/oracle checks, no native opt-in or pin/submodule changes. Small causal repair(s), public book/docs and normal focused commit.`
   Verification: `T1645 actual RED1: evaluationef2f5a versus e7d9a4, rerune3457e versus172c04; stage dictionary first reports backend_inputs2bfa10 versus0b8260. Complete output is retained. No input/tuple repair selected.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4`
-  Status: `pending`
+  Status: `deferred`
+  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
   Goal: `Classify and migrate the remaining execution reference checks in small verified groups.`
   Acceptance: `After the common reference and derived-foundation repairs, inventory the19 remaining exact-match execution files, group safe slices before edits and verify each actual default outcome. Adopt current reference only where the same core source/contract is proved; retain all existing semantic/plan identities, counts, limits, source maps, forgery/caller/rerun checks. Document any unrun explicit-large branch rather than enabling unsafe work or claiming coverage. Own any new defect, commit each group, then .13 exclusive full6/current capacity/checkpoint before push.`
   Verification: `Remaining membership is derivable from remaining-identity-scan.json minus planning T1556 and representative T1604/T1629/T1645. No remaining-file repair/runtime census yet.`
@@ -255,9 +258,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
+Director priority 2026-10-25: required SPECFORGE .7/.8/.10/.12 block the downstream project. After .17.2.1 commits clean, resume ISF-REDUCTION-DELIVERY.2.3.2.4.2; then remaining required aggregate ports, durations and named timers follow checked dependencies. Remaining publication repairs stay owned and resume only for demonstrated required validation/publication.
+
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.1` | `pending` | After .5 commits, extract the checked current AHB test reference and repair T1604; derived foundations/remaining execution callers retain separate owners. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.2` | `deferred` | Required SPECFORGE feature work controls selection; resume this owned repair only for demonstrated required validation/publication. |
 
 ## Decisions
 
@@ -393,3 +398,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Exact actual REDs report at t/1604-vial-architecture-scale-execution-topology.t line 175, t/1629-vial-architecture-scale-checking-foundation.t lines215/219/225 and t/1645-vial-architecture-scale-backend-emission-foundation.t lines268/273/283. Topology rejects the already proved old raw-bridge identity; checking/backend derived tuple/input differences are explicitly unclassified, owned by .2/.3.
 - [x] **ADDRESSED (verified)** — Preserve all three default1 outcomes, complete TAP/recipes/source seal and exact boundary between known provenance drift and missing derived-identity causes. Schedule .1 current-reference/topology, .2 checking, .3 backend and .4 remaining19 candidates. No source/test repair or full6 starts inside this completed intake.
 - [x] **NO REGRESSION** — vial-scale-remaining-intake-docs returns0 for native book/POD/current-source/index/KMap; knowledge-map: OK. Product source/tests remain unchanged from571b89f2, and the three REDs remain owned rather than called successful. Normal staged/commit gates qualify this documentation/metadata intake only.
+
+## Acceptance Checklist — `.17.2.1` checked AHB reference
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Preserved actual default RED reports at t/1604-vial-architecture-scale-execution-topology.t line 175: current240db differs from historicala456, solely the exact generated-byte provenance evolution qualified by .16. Duplicate frozen raw-bridge constants require one checked current reference while retaining the frozen contract and raw metadata. First refactor integration also reports undeclared %report at T1602 lines176/177; the exact wrong source/refusal is retained and those pointer arrows are corrected.
+- [x] **ADDRESSED (verified)** — Test-only AhbReference uses fixed owned public PPIF/ISF/Builder input, validates raw provenance values/JSON types and every-other-field contract, rejects substituted source/digest arguments and returns fresh data. T1602/T1604 share it, retain literal contract/count/stage/negative checks, and reject altered role, mutated caller state and a genuine numeric-string count. All three syntax checks and final integration return0. Latest director instruction is preserved: this unit commits clean, then required .7/.8/.10/.12 blockers resume under decision0121; no more independent CI cleanup first.
+- [x] **NO REGRESSION** — Final focused All tests successful, Files=4, Tests=18, with original default-large skip retained. Final native book/POD/current-source/index/KMap checks pass; knowledge-map: OK. No production module/fixture or product contract changes. Derived checking/backend/remaining-caller gaps remain owned and deferred for required validation/publication. Normal staged/commit gates complete the handoff.

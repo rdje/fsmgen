@@ -10,6 +10,9 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 
@@ -51,8 +54,7 @@ my %expected = (
         plan_sha256 => '4ab01baee6a589c00a4f9137d6830b885d4e13e1e7a90a02aa4afa64d872c155',
     },
 );
-my $bridge_sha256 =
-    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';
+my $bridge_sha256 = current_ahb_report_sha256();
 
 sub construction {
     my ($axis) = @_;
@@ -173,7 +175,7 @@ subtest 'scenario and operation gates preserve exact topology and global maps' =
         is($evaluation->{semantic_ir_sha256},
             $expected{$axis}{semantic_sha256}, "$axis semantic identity is exact");
         is($evaluation->{bridge_manifest_sha256}, $bridge_sha256,
-            "$axis bridge identity is the frozen AHB manifest");
+            "$axis bridge identity matches the checked current AHB reference");
         is($evaluation->{plan_sha256}, $expected{$axis}{plan_sha256},
             "$axis plan identity is exact");
         is_deeply($evaluation->{contract_discrepancies}, [],

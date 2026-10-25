@@ -11,9 +11,10 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
-use FSM::Adapter::IAL2::PPIF;
-use FSM::Adapter::ISF;
+use FSM::Test::AhbReference qw(checked_ahb_reference current_ahb_report_sha256 reference_contract_sha256);
+
 use FSM::HIAL::VIALBridge::Builder;
 use FSM::VIAL::ArchitectureScaleBridgeFanout;
 use FSM::VIAL::ArchitectureScaleWorkload;
@@ -162,53 +163,56 @@ subtest 'frozen AHB reference and every gate candidate pass reusable bridge orac
         construction => construct('selected_units', 'reference_v1'),
     });
     check_evaluation('selected_units', 'reference_v1', $reference);
-    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_source(
-        $reference_hial, 'ppif/ahb_lite_subordinate.ppif',
-    );
-    my $ial1 = $ppif->{generated_ial1};
-    my $ial0_text = $ppif->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'};
-    my @ports = qw(clk rst_n HSEL HREADY HADDR HTRANS HWRITE HSIZE HWDATA wait_cycles HREADYOUT HRESP HRDATA);
-    my $direct = FSM::HIAL::VIALBridge::Builder->build_ial2_via_ial1({
-        profile => 'core_single_unit_v1',
-        authored_source => source_record($reference_hial, 'ppif/ahb_lite_subordinate.ppif', 'ahb_lite_subordinate.ppif'),
-        generated_ial1 => {
-            source => source_record($ial1->{text}, undef, $ial1->{name}),
-            actor => FSM::Adapter::ISF->new()->parse_source($ial1->{text}, $ial1->{name}),
-            schedule_report => $ppif->{generated_ial1_schedule_report},
-        },
-        generated_ial0 => source_record($ial0_text, undef, 'ahb_lite_subordinate.fsm'),
-        backend_names => {
-            map {
-                $_ => {
-                    unit => 'ahb_lite_subordinate',
-                    endpoints => {map { $_ => $_ } @ports},
-                    configurations => {},
-                    probes => {reg_data_q => 'reg_data_q'},
-                }
-            } qw(systemverilog vhdl)
-        },
-    });
-    ok($direct->{ok}, 'independently assembled public AHB review route builds');
-    return unless $direct->{ok};
-    is($reference->{report_sha256}, sha256_hex($json->encode($direct->{report})),
+    my $checked = checked_ahb_reference();
+    my $report = $checked->{report};
+    my $ial0_text = $checked->{ial0_text};
+    ok(ref($report) eq 'HASH', 'checked public AHB reference returns a report');
+    is($reference->{report_sha256}, sha256_hex($json->encode($report)),
         'scale reference matches the complete current public AHB report');
     is($reference->{manifest_sha256}, $reference->{report_sha256},
         'reference manifest and report have the same complete current identity');
 
-    my ($source) = grep { $_->{source_id} eq 'source/generated_ial0' } @{$direct->{report}{sources}};
-    my ($artifact) = grep { $_->{artifact_id} eq 'artifact/generated_ial0' } @{$direct->{report}{review_artifacts}};
+    my ($source) = grep { $_->{source_id} eq 'source/generated_ial0' } @{$report->{sources}};
+    my ($artifact) = grep { $_->{artifact_id} eq 'artifact/generated_ial0' } @{$report->{review_artifacts}};
     is_deeply([@{$source}{qw(content_sha256 byte_length line_count)}],
         [@{source_record($ial0_text, undef, 'ahb_lite_subordinate.fsm')}{qw(content_sha256 byte_length line_count)}],
         'generated-source provenance matches current raw FSM bytes');
     is($artifact->{content_sha256}, sha256_hex($ial0_text),
         'generated review artifact names the current raw FSM digest');
     my $frozen_contract = '64946a809cb57d932f41696baaf25f664194257d13dd57b7da7a251ca42fdf14';
-    is(reference_contract_sha256($direct->{report}), $frozen_contract,
+    is(reference_contract_sha256($report), $frozen_contract,
         'complete frozen AHB contract remains identical apart from verified generated-byte provenance');
-    my $changed_contract = $json->decode($json->encode($direct->{report}));
+    my $changed_contract = $json->decode($json->encode($report));
     $changed_contract->{protocols}[0]{role} = 'requester';
     isnt(reference_contract_sha256($changed_contract), $frozen_contract,
         'adverse protocol-role change cannot hide in provenance normalization');
+    my $unknown_source = eval { checked_ahb_reference({source => 'other.ppif'}); 1 };
+    ok(!$unknown_source, 'checked reference refuses caller source substitution');
+    like($@, qr/checked_ahb_reference expects no arguments/, 'source refusal names the closed test-fixture boundary');
+    my $unknown_digest = eval { current_ahb_report_sha256('other.ppif'); 1 };
+    ok(!$unknown_digest, 'current digest refuses caller source substitution');
+    like($@, qr/current_ahb_report_sha256 expects no arguments/, 'digest refusal names the closed test-fixture boundary');
+    $report->{protocols}[0]{role} = 'mutated_by_caller';
+    is(current_ahb_report_sha256(), $reference->{report_sha256},
+        'caller mutation cannot poison a fresh checked AHB reference');
+    my $build = FSM::HIAL::VIALBridge::Builder->can('build_ial2_via_ial1');
+    my $encoded_bad_count;
+    {
+        no warnings 'redefine';
+        local *FSM::HIAL::VIALBridge::Builder::build_ial2_via_ial1 = sub {
+            my $built = $build->(@_);
+            my ($generated) = grep { $_->{source_id} eq 'source/generated_ial0' }
+                @{$built->{report}{sources}};
+            $generated->{byte_length} = '' . $generated->{byte_length};
+            $encoded_bad_count = $json->encode($generated->{byte_length});
+            return $built;
+        };
+        my $accepted = eval { checked_ahb_reference(); 1 };
+        ok(!$accepted, 'checked reference rejects a byte count with the wrong JSON type');
+        like($@, qr/generated provenance differs from current raw bytes or JSON types/,
+            'wire-type refusal happens before provenance normalization');
+    }
+    like($encoded_bad_count, qr/\A"[0-9]+"\z/, 'adverse count retains its value but is encoded as a JSON string');
     is_deeply($reference->{review_layers}, [qw(IAL2 IAL1 IAL0)],
         'checked AHB reference retains all three review layers');
     is_deeply($reference->{contract_discrepancies}, [],
@@ -408,20 +412,6 @@ sub source_record {
         byte_length => bytes::length($text),
         line_count => $lines,
     };
-}
-
-sub reference_contract_sha256 {
-    my ($report) = @_;
-    my $copy = $json->decode($json->encode($report));
-    my @sources = grep { $_->{source_id} eq 'source/generated_ial0' } @{$copy->{sources}};
-    my @artifacts = grep { $_->{artifact_id} eq 'artifact/generated_ial0' } @{$copy->{review_artifacts}};
-    die "Expected exactly one generated IAL0 source and artifact\n"
-        unless @sources == 1 && @artifacts == 1;
-    # Raw-byte provenance is verified separately above. Preserve every other
-    # field, key, array order, semantic ID and source-map entry in this seal.
-    @{$sources[0]}{qw(content_sha256 byte_length line_count)} = (undef, undef, undef);
-    $artifacts[0]{content_sha256} = undef;
-    return sha256_hex($json->encode($copy));
 }
 
 sub slurp_raw {
