@@ -1,0 +1,26 @@
+(actor generated_instances (clock clk)
+  (params (BASE 8) (SAME 8) (LIMIT 16))
+  (interface (input start) (input gate) (output done))
+  (transaction worker
+    (params (WIDTH 8) (ALIAS WIDTH) (CONTROL 0) (LANES (0 0)))
+    (ports (input data (width WIDTH)))
+    (await data))
+  (transaction parent (on start)
+    (spawn worker as first
+      (params (WIDTH BASE) (CONTROL LIMIT) (LANES (1 2)))
+      (bind (input data 0)))
+    (await_all first)
+    (spawn worker as second
+      (params (WIDTH SAME) (CONTROL 3)) (bind (input data 0)))
+    (await_all second)
+    (spawn worker as defaults (bind (input data 0)))
+    (await_all defaults)
+    (repeat 0 (spawn worker as removed (bind (input data 0))))
+    (do worker (params (WIDTH BASE) (CONTROL 4)) (bind (input data 0)))
+    (repeat 1
+      (do worker (params (WIDTH 8) (CONTROL 5)) (bind (input data 0))))
+    (when gate
+      (do worker (params (WIDTH SAME) (CONTROL 6)) (bind (input data 0))))
+    (complete done))
+  (rule kick gate
+    (trigger worker (params (WIDTH BASE) (CONTROL LIMIT)) (bind (input data 0)))))

@@ -139,7 +139,7 @@ watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides
 remain separate from source defaults. Literal/type/reset declarations stay
 exact. Direct formals retain original names, plan identities and isolated lexical scopes. Generated formal/inherited/storage-read ports retain actor and selected transaction sources.
-Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable children retain detached source defaults and selected instance scopes, including raw aliases and original override expressions. Domain/IAL0 propagation and full public qualification remain.
+Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable children and generated spawn/do/rule instances keep defaults separate from selections, raw aliases and original overrides. Domain/IAL0 propagation and public qualification remain.
 Nested heads now normalize recursively under `.2.3.2.1.2.2`; original diagnosis: `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained

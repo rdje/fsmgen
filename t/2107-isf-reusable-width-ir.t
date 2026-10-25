@@ -65,6 +65,78 @@ for my $case (qw(library atl)) {
         }
     };
 }
+subtest 'generated instance selections stay distinct from shared module defaults' => sub {
+    my $actor = FSM::Adapter::ISF->new->parse_file('t/data/isf-reusable-width-ir/generated-instances.isf');
+    my $before = $json->encode($actor);
+    my $lowerer = FSM::Scheduler::ISF->new->{ir};
+    my $ir = $lowerer->build_module($actor);
+    $captures{generated} = {actor => $json->decode($before), ir => $json->decode($json->encode($ir))};
+    my %expected;
+    for my $row (
+        ['first', 'spawn', 'parent', 'transaction', 'BASE', 'LIMIT', '16', ['1', '2']],
+        ['second', 'spawn', 'parent', 'transaction', 'SAME', '3', '3'],
+        ['parent_worker_do_0', 'do', 'parent', 'transaction', 'BASE', '4', '4'],
+        ['parent_worker_repeat_do_0', 'do', 'parent', 'transaction', '8', '5', '5'],
+        ['parent_worker_cond_do_0', 'do', 'parent', 'transaction', 'SAME', '6', '6'],
+        ['kick_worker_trigger_0', 'trigger', 'kick', 'rule', 'BASE', 'LIMIT', '16'],
+    ) {
+        my ($instance, $kind, $owner, $owner_kind, $width, $control, $value, $lanes) = @$row;
+        my @overrides = ({name => 'WIDTH', value => '8'}, {name => 'CONTROL', value => $value});
+        my @sources = ({name => 'WIDTH', value => $width, owner => 'generated_instances'},
+            {name => 'CONTROL', value => $control, owner => 'generated_instances'});
+        if ($lanes) {
+            push @overrides, {name => 'LANES', value => $lanes};
+            push @sources, {name => 'LANES', value => $lanes, owner => 'generated_instances'};
+        }
+        $expected{$instance} = {
+            kind => 'generated_activation', parent_actor => 'generated_instances',
+            source_actor => 'generated_instances', child => 'worker', instance => $instance,
+            activation_kind => $kind, context => {owner => $owner, kind => $owner_kind},
+            parameters => [{name => 'WIDTH', source => 'override', value => '8'},
+                {name => 'ALIAS', source => 'default', value => 'WIDTH'},
+                {name => 'CONTROL', source => 'override', value => $value},
+                {name => 'LANES', source => $lanes ? 'override' : 'default', value => $lanes || ['0', '0']}],
+            parameter_overrides => \@overrides, parameter_override_sources => \@sources,
+        };
+    }
+    $expected{defaults} = {
+        kind => 'generated_activation', parent_actor => 'generated_instances',
+        source_actor => 'generated_instances', child => 'worker', instance => 'defaults',
+        activation_kind => 'spawn', context => {owner => 'parent', kind => 'transaction'},
+        parameters => [{name => 'WIDTH', source => 'default', value => '8'},
+            {name => 'ALIAS', source => 'default', value => 'WIDTH'},
+            {name => 'CONTROL', source => 'default', value => '0'},
+            {name => 'LANES', source => 'default', value => ['0', '0']}],
+        parameter_overrides => [], parameter_override_sources => [],
+    };
+    my $instances = $ir->{_width_scopes}{generated_instances};
+    is_deeply($instances, \%expected, 'complete independently named spawn/do/repeat/conditional/rule selections');
+    is_deeply([sort keys %{$ir->{children}}], ['worker'], 'all actual instances share one child module');
+    is_deeply($ir->{children}{worker}{params}, [
+        {name => 'WIDTH', value => '8'}, {name => 'ALIAS', value => 'WIDTH', resolved_value => '8'},
+        {name => 'CONTROL', value => '0'}, {name => 'LANES', value => ['0', '0']}],
+        'complete executable module defaults are independent of instance selections');
+    is_deeply($ir->{children}{worker}{_width_declarations}{data}{source},
+        {token => 'WIDTH', kind => 'transaction_parameter', owner => 'worker'},
+        'actual port retains the local width source');
+    is($json->encode($actor), $before, 'complete caller and primitive kinds survive');
+    unlike($json->encode($ir->{spawn_instances}), qr/_width_/, 'executable instance records retain no private capture fields');
+    if (ref($instances) eq 'HASH') {
+        my $saved = $json->encode($lowerer->build_module($actor));
+        my $second = $json->encode($instances->{second});
+        $instances->{first}{parameter_override_sources}[0]{value} = 'WRONG';
+        $instances->{first}{parameter_override_sources}[2]{value}[0] = '99';
+        $instances->{first}{parameter_overrides}[2]{value}[1] = '99';
+        $instances->{first}{parameters}[3]{value}[0] = '99';
+        is($instances->{first}{parameters}[3]{value}[1], '2', 'selected values and resolved override arrays are detached');
+        is($instances->{first}{parameter_overrides}[2]{value}[0], '1', 'authored and resolved arrays are detached');
+        is($ir->{spawn_instances}[0]{parameter_overrides}[2]{value}[1], '2', 'executable overrides are detached');
+        is($json->encode($instances->{second}), $second, 'sibling metadata stays detached');
+        is($json->encode($actor), $before, 'authored clauses stay detached');
+        is($json->encode($lowerer->build_module($actor)), $saved, 'fresh constructor result stays detached');
+    }
+};
+
 if (defined $ENV{FSMGEN_REUSABLE_WIDTH_CAPTURE}) {
     open my $out, '>:raw', $ENV{FSMGEN_REUSABLE_WIDTH_CAPTURE} or die $!;
     print {$out} $json->encode(\%captures), "\n" or die $!;

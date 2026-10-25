@@ -59,6 +59,26 @@ sub capture_actor_width_metadata {
         $transactions{$name} = {owner => $name, actor => $owner,
             params => _copy($args{transaction_params}{$name})};
     }
+    my %instances;
+    for my $instance (@{$args{generated_instances} || []}) {
+        my $context = $instance->{_width_activation_context};
+        confess "Generated activation lacks width source context\n" unless ref($context) eq 'HASH';
+        my %overrides = map { $_->{name} => $_ } @{$instance->{parameter_overrides} || []};
+        my @parameters = map {
+            my $override = $overrides{$_->{name}};
+            {name => $_->{name}, source => $override ? 'override' : 'default',
+                value => _copy($override ? $override->{value} : $_->{value})}
+        } @{$args{transaction_params}{$instance->{child}}};
+        $instances{$instance->{instance}} = {
+            kind => 'generated_activation', parent_actor => $actor->{actor_name},
+            source_actor => $owner, child => $instance->{child}, instance => $instance->{instance},
+            activation_kind => $instance->{activation_kind} // 'spawn',
+            context => {owner => $context->{owner}, kind => $context->{owner_kind}},
+            parameters => \@parameters,
+            parameter_overrides => _copy($instance->{parameter_overrides} || []),
+            parameter_override_sources => _copy($context->{parameter_override_sources}),
+        };
+    }
     return {
         _width_declarations => \%declarations,
         _width_scopes => {
@@ -67,6 +87,7 @@ sub capture_actor_width_metadata {
                 package_constants => _copy(($actor->{constant_symbols} || {})->{packages} || {}),
                 enum_symbols => _copy($actor->{enum_symbols} || {local => {}, packages => {}})},
             transactions => \%transactions,
+            (keys(%instances) ? (generated_instances => \%instances) : ()),
         },
         _width_static_uses => {scope => _copy($scope), storage_depths => \%depths, library_overrides => \%overrides,
             (exists($actor->{_watchdog_declaration}) ? (watchdog => _copy($actor->{_watchdog_declaration})) : ())},

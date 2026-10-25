@@ -370,6 +370,13 @@ physical module and instance names. These records do not resize library ports;
 ATL retains its existing default-only parameter syntax. Focused constructor
 checks pass; complete carrier and public qualification remains pending.
 
+Generated activations retain instance selections separately from their shared
+child module defaults. `(params (WIDTH BASE))` keeps both the authored `BASE`
+and the selected value, including equal-valued aliases. Spawn, blocking do,
+repeat/conditional do and rule-trigger instances keep distinct caller contexts;
+statically pruned activations add no instance scope. These private records do
+not specialize widths. Domain propagation and publication qualification remain.
+
 The connected scope example includes independent four-bit and six-bit children:
 
 ```bash

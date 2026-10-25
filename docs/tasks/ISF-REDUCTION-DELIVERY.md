@@ -598,11 +598,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=23 Tests=326 covers actor/formal/library/ATL/file origins, prepared scopes, identities, bindings and width/default controls. LoweringIR and ISFWidthDeclarations are syntax OK. Complete selected native/API/newline/text/structured products conserve old output; saved hostile controls reject. Final book example/task/build/source/index/decision checks and staged scripts/check_doctrines.sh plus normal hooks gate this bounded source-only commit; P1 .16 and required successors remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve generated transaction and reusable-actor width declarations and selected environments.`
   Acceptance: `After .2/.3, qualify generated child interfaces, independent library/ATL instances and explicit/inherited parameter source associations using actual supported constructors. Keep source owners distinct from module/instance identity; preserve original expressions versus resolved overrides without guessing from equal defaults. Retain known reusable-formal refusal ownership under SEM .60...3.1.2.5; do not promote that unsupported path. Require isolated cloned records, exact ordinary defaults, carriers/public products and scoped environment controls; split constructors if needed and commit before domain closure.`
-  Verification: `Generated transaction constructor sources/environments are qualified by .4.1; reusable constructors and complete instance joins remain .4.2/.4.3.`
-  Commit: `pending`
+  Verification: `Generated and reusable constructors plus generated instance selections are implemented with focused checks under .4.1-.4.3. Full carrier/public and broad qualification is deferred to publication .6 by the director; domain propagation remains .5.`
+  Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.2.3.2.4.1, ISF-REDUCTION-DELIVERY.2.3.2.4.2, ISF-REDUCTION-DELIVERY.2.3.2.4.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.1`
@@ -631,11 +631,16 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Close complete generated/reusable constructor declaration and environment conservation.`
   Acceptance: `Join the qualified constructors to independent full source/physical membership oracles and hostile wrong-owner/default/instance controls. Include generated spawn/do override sources and actual selected instance records, especially multiple instances of one source module; retain module defaults separately without claiming shape re-specialization. Verify actual strict carriers and complete public conservation, synchronized book/downstream facts and required gates; close .4 before domain propagation. Any unsupported handoff source mapping remains explicitly owned and cannot be guessed.`
-  Verification: `pending reusable constructors`
-  Commit: `pending`
+  Verification: `From clean 59d6d32af, actual reference constructors now retain authored override expressions before selected-value resolution. Parent private scopes join actual spawn/do/repeat/conditional/rule instances to canonical transaction defaults and selected overrides; executable records retain no capture fields. Independent complete literal expectations include equal-default BASE/SAME, raw ALIAS, nested arrays, default-only and zero-pruned controls. Sibling/source/executable/fresh-result isolation passes. The fixed regression fails at T2107 line113 against authenticated predecessor modules and passes current code; complete selected actor/IR products match after removing only the new map. The initial comparison accidentally loads current modules because -Iperl precedes the predecessor root; actual loaded paths and complete products retain as a root-first control, not predecessor proof. Its original subprocess streams were not retained; corrected ordered preload retains complete streams and paths. Final focused All tests successful Files=3 Tests=106 (T2107/T2101/T1215); both production modules are syntax OK. Receipt/producer: docs/audits/generated-instance-width-ir-20261025.py and .json.gz. Re-derive: actual source constructors. Falsify: unchanged predecessor RED, independent complete instance records and isolation controls. Durability: tracked inputs, hashes, loaded paths, full products, tests and retained comparison. Full native/API/MCP/carrier and broad qualification stays deferred to .6 under the director instruction; no generic shape claim. Sync scope: private contract/book/task and decision119; grammar, manifest/schema and corpus membership unchanged. Claim-template source matches its retained review; cleanup remains current. Initial staged doctrines reject task_evidence line/byte allowances; the complete log and staged patch retain in generated-instance-width-gate-20261025.json.gz. Refresh measured warning allowances plus their existing ratchet steps, preserving baselines and ceilings. Sandbox denied restaging without creating a lock; the next gate rejects the stale index as required (generated-instance-width-index-20261025.json.gz). Authorized restaging and normal hooks gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.2.4.3: retain generated instance width selections`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2107-isf-reusable-width-ir.t line 113 identifies the missing complete generated-instance map. Reference constructors resolve overrides but discarded original expressions; shared module defaults cannot identify individual selections. The initial root-first preload control is separately retained with its actual loaded paths.
+  - [x] **ADDRESSED (verified)** — Fixed predecessor RED/current GREEN qualifies exact actual instance membership, owner/context, original and resolved override values, raw defaults and detached nested arrays. Complete selected old actor/IR products conserve after removing only the new private map; zero-pruned instances are absent. Original constructor defaults remain independent.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=106 for T2107/T2101/T1215; both changed modules are syntax OK. Full carrier/public/broad qualification is deferred to .6; scripts/check_doctrines.sh and normal hooks remain required. Book/downstream and decision119 describe only focused implementation qualification.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.5`
   Status: `pending`
@@ -697,7 +702,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Qualify and publish complete required SPECFORGE reduction delivery.`
   Acceptance: `Coordinate SEM .92.4 and .69 after required source slices. Compare exact retained unrolled baseline and accepted scalar parity, then grouped parity at widths 16/32 and a short-tail setting under real parameter overrides, with independent expected bits and width/legality negatives. Verify source/carrier/report/public discovery and supported profiles, required full CI and exact-SHA hosted workflows. Update canonical feedback with revision, selected syntax, limits and caller-owned pin/bundle/integration steps. No foreign write or historical-gate waiver; required R1-R3 close only on complete evidence.`
-  Verification: `pending implementation and publication qualification`
+  Verification: `Deferred verification task, activated after required feature implementation: full source/carrier/native/API/MCP/corpus and broad constructor/domain qualification, including .2.3.2.4 products, remain unexecuted. Focused implementation checks do not close this task. Publication qualification and exact-SHA hosted results remain pending.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.7`

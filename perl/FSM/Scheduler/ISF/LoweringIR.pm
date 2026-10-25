@@ -1823,7 +1823,10 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     } @{$width_actor->{transactions} || []};
     my $width_metadata = capture_actor_width_metadata(actor => $width_actor,
         params => $ir->{params}, constants => $ir->{constants},
-        transaction_params => \%width_transaction_params, direct_formals => \@width_direct_formals);
+        transaction_params => \%width_transaction_params, direct_formals => \@width_direct_formals,
+        generated_instances => $ir->{spawn_instances});
+    # Move private constructor context out of executable activation records.
+    delete $_->{_width_activation_context} for @{$ir->{spawn_instances}};
     $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{resource_arbitration} = _apply_rule_user_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
@@ -1973,6 +1976,11 @@ sub _register_generated_activation_instance {
         : "Transaction '$owner'";
     my $instance = $s->{instance};
     my $child = $s->{child};
+
+    $s->{_width_activation_context} = {
+        owner => $owner, owner_kind => $owner_kind,
+        parameter_override_sources => delete($s->{_width_parameter_override_sources}) // [],
+    };
 
     $ctrs->{"${instance}_start"} = 1;
     $ctrs->{"${instance}_done"} = 1;
@@ -2618,6 +2626,7 @@ sub _rule_trigger_generated_refs {
                 trigger_ordinal     => $ordinal,
                 trigger_source      => _rule_trigger_source_name($rule_name, $target, $ordinal),
                 parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values, $actor),
+                _width_parameter_override_sources => _activation_parameter_sources($action, $actor),
                 port_bindings       => _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
             };
         }
@@ -6839,6 +6848,7 @@ sub _spawn_ref_from_clause {
         child => $clause->[1],
         instance => $instance,
         parameter_overrides => _spawn_parameter_overrides($clause, $tn, $label, $constant_values, $actor),
+        _width_parameter_override_sources => _activation_parameter_sources($clause, $actor),
     };
     my $domain = _activation_domain_from_clause($clause, $tn, $label);
     $ref->{domain} = $domain if defined $domain;
@@ -6862,6 +6872,7 @@ sub _do_ref_from_clause {
         my $instance = _generated_do_instance_name($tn, $child, $ordinal);
         $ref->{instance} = $instance;
         $ref->{parameter_overrides} = $overrides;
+        $ref->{_width_parameter_override_sources} = _activation_parameter_sources($clause, $actor);
         my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
         $ref->{domain} = $domain if defined $domain;
         my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
@@ -6888,6 +6899,7 @@ sub _repeat_do_ref_from_clause {
     if ($generated_child) {
         $ref->{instance} = _generated_repeat_do_instance_name($tn, $child, $ordinal);
         $ref->{parameter_overrides} = $overrides;
+        $ref->{_width_parameter_override_sources} = _activation_parameter_sources($clause, $actor);
         my $domain = _activation_domain_from_clause($clause, $tn, 'repeat body');
         $ref->{domain} = $domain if defined $domain;
         my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'repeat body');
@@ -6920,6 +6932,7 @@ sub _conditional_do_ref_from_clause {
         $ref->{instance} = _generated_conditional_do_instance_name($tn, $child, $ordinal);
         $ref->{branch_do} = 1;
         $ref->{parameter_overrides} = $overrides;
+        $ref->{_width_parameter_override_sources} = _activation_parameter_sources($clause, $actor);
         my $domain = _activation_domain_from_clause($clause, $tn, $label);
         $ref->{domain} = $domain if defined $domain;
         my $port_bindings = _activation_bindings_from_clause($clause, $tn, $label);
@@ -7064,6 +7077,18 @@ sub _activation_domain_from_clause {
 sub _parse_spawn_params_clause {
     my ($params_clause, $tn, $instance, $label, $constant_values, $actor) = @_;
     return _parse_activation_params_clause($params_clause, $tn, 'spawn', $instance, $label, $constant_values, $actor);
+}
+
+# The executable resolver publishes selected values. Preserve the already
+# validated authored expressions separately before those values replace them.
+sub _activation_parameter_sources {
+    my ($clause, $actor) = @_;
+    $clause = _clone_isf_value($clause);
+    my ($params) = grep { ref($_) eq 'ARRAY' && @$_ && $_->[0] eq 'params' } @$clause;
+    return [] unless $params;
+    my $owner = $actor->{_width_source_actor_name} // $actor->{actor_name};
+    return [map { {name => $_->[0], value => $_->[1], owner => $owner} }
+        @{$params}[1 .. $#$params]];
 }
 
 sub _parse_activation_params_clause {
