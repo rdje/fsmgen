@@ -1,0 +1,21 @@
+(?top:declaration_evidence
+  (+params (W 1))
+  (+import declaration_defaults)
+  (?fsmc:u_fsm evidence_fsm (params (INTEGER W) (BIT W) (VECTOR W) (ALIAS W)))
+  (?dtc:u_dt evidence_dt (params (INTEGER W) (BIT W) (VECTOR W) (ALIAS W)))
+  (?rtl:u_rtl (module evidence_rtl) (params (INTEGER W) (BIT W) (VECTOR W) (ALIAS W)))
+)
+(?pkg:declaration_defaults (+constants (VECTOR 8'h01)))
+(?fsm:evidence_fsm
+  (+params (INTEGER 1) (BIT 1'b1) (VECTOR 8'h01) (ALIAS VECTOR))
+  (+system (clock clk) (sreset rstn))
+  (-idle (ready> = 1'b1))
+)
+(?dt:evidence_dt
+  (+params (INTEGER 1) (BIT 1'b1) (VECTOR 8'h01) (ALIAS VECTOR))
+  (-pass (ready> = 1'b1))
+)
+(?rtlif:evidence_rtl
+  (params (INTEGER 1) (BIT 1'b1) (VECTOR 8'h01) (ALIAS declaration_defaults.VECTOR))
+  ready>1
+)

@@ -329,7 +329,9 @@ sub normalized_semantic_structural_rtl_ir_instance_parameter_override_raw_value_
 }
 
 sub normalized_semantic_structural_rtl_ir_instance_parameter_override_value_metadata_extension_keys {
-    return [qw(declaration_default_value_kind declaration_default_value_width value_type_spec value_width)];
+    return [qw(declaration_default_value_kind declaration_default_value_width value_type_spec value_width
+        declaration_default_value_text declaration_default_value_payload declaration_default_value_type_spec
+        declaration_default_source_expression)];
 }
 
 sub normalized_semantic_structural_rtl_ir_instance_port_binding_entry_keys {

@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.2`
-- next_action: Preserve actual child generic declaration source/type evidence under .2.3.3.4.1.4.3.2 before typed VHDL symbolic actual forwarding. Current kind/width caches cannot distinguish decimal integer from sized bit/vector declaration types. Source admission and full verification stay .4/.6.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.3`
+- next_action: Integrate prepared natural top generics and declaration-qualified symbolic child actuals into VHDL under .2.3.3.4.1.4.3.3. Keep source admission and full verification separate under .4/.6.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.

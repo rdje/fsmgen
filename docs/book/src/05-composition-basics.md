@@ -93,9 +93,9 @@ accepts it. The [public-contract test](../../../t/2131-composition-port-width-pu
 checks actual source/Plan/IR/report allocation and isolation.
 
 This prepared inspection contract leaves symbolic source plans and port
-specialization pending. Both structural emitters still refuse
-known width contracts, including when an environment is absent; a cached
-positive width alone is not lowering. It does not admit parameterized `.isf`
+specialization pending. VHDL still refuses known width contracts, including
+when an environment is absent; a cached positive width alone is not lowering.
+It does not admit parameterized `.isf`
 widths or alter API/MCP source-query refusal.
 
 `Top::parameter_environment()` captures these actual resolved products as
@@ -212,8 +212,24 @@ bitwise operators, foreign scopes, cycles and incomplete bindings refuse.
 The [source fixture](../../../t/data/composition-vhdl-natural-generics.fsm) and
 [focused preparation test](../../../t/2136-composition-vhdl-natural-generics.t)
 cover actual parsed/imported Plan/IR and independent order, cache and namespace
-controls. Child declaration type evidence, generic-map integration, symbolic
+controls. Generic-map integration, symbolic
 VHDL ranges, external override legality and full qualification remain pending.
+
+Validated RTL, FSM and standalone-DT child overrides now retain the matched
+declaration's canonical `declaration_default_value_text`, `payload`, `kind`,
+`width` and `type_spec`, with the same `declaration_default_value_` prefix.
+Optional `declaration_default_source_expression` separately preserves the
+authored frontend tree, including aliases. For example, equal actual values
+can target defaults `1`, `1'b1` and `8'h01`; declaration text and payload keep
+their different generic types distinguishable. Width alone cannot do so.
+These detached fields survive realization, structural IR and prepared reports.
+Absent source records gain no invented provenance; missing declaration text or
+payload refuses. Discovery names `declaration_default_value_keys` and
+`declaration_default_optional_keys`; payload/type recurse through the existing
+schemas. The [declaration regression](../../../t/2137-composition-child-declaration-evidence.t)
+checks real RTL/FSM/DT sources, cache separation and missing-evidence controls.
+This metadata prepares typed forwarding; VHDL symbolic actual emission and
+parameter-bearing source admission remain guarded.
 
 ## Top Root Shape
 

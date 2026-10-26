@@ -72,7 +72,9 @@ for my $instance (@{$spec->top->instances}) {
         for my $record (@$records) {
             my $original = (grep {$_->{name} eq $record->{name}} @{$instance->parameter_overrides})[0];
             my $without_declaration = copy($record);
-            delete @{$without_declaration}{qw(declaration_default_value_kind declaration_default_value_width)};
+            delete @{$without_declaration}{qw(declaration_default_value_kind declaration_default_value_width
+                declaration_default_value_text declaration_default_value_payload declaration_default_value_type_spec
+                declaration_default_source_expression)};
             is_deeply($without_declaration, $original, 'only actual declaration annotations extend the source record');
         }
         if ($kind eq 'fsmc') {

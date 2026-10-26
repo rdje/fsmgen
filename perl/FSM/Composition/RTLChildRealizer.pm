@@ -11,6 +11,13 @@ package takes already-loaded `.rtlif` interface metadata, projects it into the
 active realized-child runtime carrier, and preserves the metadata provenance
 needed by later planning and reporting layers.
 
+Validated overrides preserve the actual interface declaration's canonical
+C<declaration_default_value_kind>, C<text>, C<payload>, C<width> and
+C<type_spec> (all with the C<declaration_default_value_> prefix). Optional
+C<declaration_default_source_expression> retains the authored default tree.
+Values and source are detached; missing default text/payload refuses instead
+of borrowing the actual-value cache. Source-less metadata gains no provenance.
+
 =cut
 
 use v5.20;
@@ -108,12 +115,23 @@ sub validate_parameter_overrides ($class, %args) {
             override => $override,
         );
         my $validated_override = _clone($override);
-        my $declaration_kind = $declaration->{default_value_kind};
-        my $declaration_width = $declaration->{default_value_width};
-        $validated_override->{declaration_default_value_kind} = $declaration_kind
-            if defined $declaration_kind;
-        $validated_override->{declaration_default_value_width} = $declaration_width
-            if defined $declaration_width;
+        delete @{$validated_override}{qw(declaration_default_value_kind declaration_default_value_text
+            declaration_default_value_payload declaration_default_value_width declaration_default_value_type_spec
+            declaration_default_source_expression)};
+        confess "RTL child '$module_name' parameter '$name' requires complete declaration default evidence\n"
+            unless ($declaration->{default_value_kind} // '') =~ /\A(?:scalar|list|map)\z/
+                && defined($declaration->{default_value_text}) && !ref($declaration->{default_value_text})
+                && ref($declaration->{default_value_payload}) eq 'HASH';
+        for my $field (qw(kind text payload width type_spec)) {
+            my $key = "default_value_$field";
+            $validated_override->{"declaration_$key"} = _clone($declaration->{$key})
+                if exists $declaration->{$key};
+        }
+        for my $source_key (qw(raw_default_value_ast raw_default_value)) {
+            next unless exists $declaration->{$source_key};
+            $validated_override->{declaration_default_source_expression} = _clone($declaration->{$source_key});
+            last;
+        }
         push @validated_overrides, $validated_override;
     }
 

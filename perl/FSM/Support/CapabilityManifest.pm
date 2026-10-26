@@ -333,6 +333,8 @@ C<value_payload>, C<value_text>. This is not a complete nested AST/value model.
 The optional C<raw_value> extension requires a single authored token surviving
 validation. The resolver and matched child/interface declaration provide optional
 C<declaration_default_value_kind>, C<declaration_default_value_width>,
+C<declaration_default_value_text>, C<declaration_default_value_payload>,
+C<declaration_default_value_type_spec>, C<declaration_default_source_expression>,
 C<value_type_spec> and C<value_width> metadata; do not require every extension
 key on every entry. Equal schemas establish neither matching populations nor
 unconditional source availability. No standalone-DT parameter-override alias

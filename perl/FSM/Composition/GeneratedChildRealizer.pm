@@ -12,6 +12,13 @@ root kind, compiles the child through the current pipeline callbacks, and
 returns normalized L<FSM::Composition::RealizedInstance> records for the
 composition planners.
 
+Validated overrides retain C<declaration_default_value_kind>, C<text>,
+C<payload>, C<width> and C<type_spec> (each with the same
+C<declaration_default_value_> prefix) from the actual child default. Optional
+C<declaration_default_source_expression> keeps its authored frontend tree
+separately. These records are detached from actual-value caches; missing
+default text/payload refuses and absent source evidence is not invented.
+
 =cut
 
 use v5.20;
@@ -368,6 +375,7 @@ sub validate_parameter_overrides ($class, %args) {
     my $module_name = $child_module->name;
     my $instance_name = $instance->name // $module_name;
     my $parameter_declarations = $child_module->parameters || {};
+    my $default_sources = $child_module->parameter_default_sources;
 
     my @validated_overrides;
     for my $override (@overrides) {
@@ -389,12 +397,21 @@ sub validate_parameter_overrides ($class, %args) {
             override => $override,
         );
         my $validated_override = _clone($override);
-        my $declaration_kind = $declaration->{value_kind};
-        my $declaration_width = $declaration->{value_width};
-        $validated_override->{declaration_default_value_kind} = $declaration_kind
-            if defined $declaration_kind;
-        $validated_override->{declaration_default_value_width} = $declaration_width
-            if defined $declaration_width;
+        delete @{$validated_override}{qw(declaration_default_value_kind declaration_default_value_text
+            declaration_default_value_payload declaration_default_value_width declaration_default_value_type_spec
+            declaration_default_source_expression)};
+        confess "Generated child '$module_name' parameter '$name' requires complete declaration default evidence\n"
+            unless ($declaration->{value_kind} // '') =~ /\A(?:scalar|list|map)\z/
+                && defined($declaration->{value_text}) && !ref($declaration->{value_text})
+                && ref($declaration->{value_payload}) eq 'HASH';
+        for my $field (qw(kind text payload width type_spec)) {
+            my $key = "value_$field";
+            $validated_override->{"declaration_default_$key"} = _clone($declaration->{$key})
+                if exists $declaration->{$key};
+        }
+        my $source = $default_sources->{$name};
+        $validated_override->{declaration_default_source_expression} = _clone($source->{expression})
+            if ref($source) eq 'HASH' && exists $source->{expression};
         push @validated_overrides, $validated_override;
     }
 

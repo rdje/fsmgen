@@ -45,6 +45,8 @@ sub build_composition_parameter_contract {
         parameter_value_keys => [qw(value_kind value_payload value_text)],
         parameter_value_optional_keys => [qw(value_width value_type_spec)],
         parameter_value_kinds => [qw(scalar list map)],
+        declaration_default_value_keys => [qw(declaration_default_value_kind declaration_default_value_payload declaration_default_value_text)],
+        declaration_default_optional_keys => [qw(declaration_default_value_width declaration_default_value_type_spec declaration_default_source_expression)],
         default_source_keys => [qw(parameter source_module expression references)],
         reference_keys => [qw(parameter token suffix)],
         binding_node_keys => {
@@ -85,6 +87,7 @@ sub build_composition_parameter_contract {
             'Default bindings and optional instance binding_expression use binding_node_keys by kind. Operands, items and members recurse through the same node family; payload values and static_symbol value_payload use payload_node_keys.',
             'Parameter token is the declared root plus suffix; aliases retain immediate declaration identity. Static symbols retain scope, source token and selected payload. Operator is canonical, while source_operator retains the authored alias.',
             'Type items and members recurse through type_node_keys; signed is the canonical numeric flag. Missing optional fields are omitted, never inferred from a cached number.',
+            'Validated child overrides retain declaration_default_value_keys and applicable declaration_default_optional_keys. These describe the child default independently of the actual value cache: payload/type use payload_node_keys/type_node_keys; source_expression is an authored frontend tree, omitted when no source record exists. Kind and width alone cannot distinguish decimal integer from sized bit/vector generic declarations.',
             'Unparameterized environments and static overrides keep their existing report shapes. prepared_scalar_emission names only direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults, scalar child actuals and captured scalar port ranges. Typed tops, symbolic aggregate bindings, VHDL parameter emission and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
         ],
     };
@@ -109,5 +112,10 @@ untyped scalar top-default/child-actual and captured scalar port-range subset,
 excluding typed tops and source admission. It describes producer
 contracts; it neither resolves input nor attests the provenance of caller-made
 hashes. Follow the actual Top/Plan/IR producers for semantic provenance.
+
+C<declaration_default_value_keys> and C<declaration_default_optional_keys>
+describe matched child declaration evidence in override records. Default
+payload/type use the existing recursive schemas; the optional source expression
+is an authored frontend tree. These fields do not qualify symbolic VHDL maps.
 
 =cut

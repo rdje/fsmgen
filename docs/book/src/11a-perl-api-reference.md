@@ -404,7 +404,7 @@ the child itself or every structural instance in the design.
 | --- | --- | --- |
 | `entry_keys` | `name`, `origin_kind`, `raw_value_ast`, `value_kind`, `value_payload`, `value_text` | Core entry keys. |
 | `raw_value_extension_keys` | `raw_value` | Optional authored-token extension. |
-| `value_metadata_extension_keys` | `declaration_default_value_kind`, `declaration_default_value_width`, `value_type_spec`, `value_width` | Optional resolver/declaration metadata. |
+| `value_metadata_extension_keys` | `declaration_default_value_kind`, `declaration_default_value_width`, `value_type_spec`, `value_width`, `declaration_default_value_text`, `declaration_default_value_payload`, `declaration_default_value_type_spec`, `declaration_default_source_expression` | Optional resolver/declaration metadata. |
 
 `FSM::Support::NormalizedSemanticCompositionContract` owns the child aliases.
 Its ordinary/generated helpers delegate to

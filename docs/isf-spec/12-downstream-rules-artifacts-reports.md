@@ -1406,6 +1406,12 @@ admit ISF generic widths or specialization. See the [composition parameter
 reference](../book/src/05-composition-basics.md) and focused
 [test](../../t/2127-composition-parameter-public-contract.t).
 
+Matched child overrides also retain detached declaration default text, payload,
+type and optional authored source, independently of actual caches. Discovery
+names the exact optional key families; see the composition reference and
+[declaration test](../../t/2137-composition-child-declaration-evidence.t).
+This evidence does not enable symbolic VHDL forwarding or ISF generic widths.
+
 Composition Port width-expression declarations now retain source AST and scoped
 lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).
 Plan capture/getters also detach expression Ports from later source retries.
