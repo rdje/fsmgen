@@ -150,7 +150,9 @@ published fixed `.rtlif` interface, and top widths contain no mutable parameter
 references. Defaults and actuals retain selected names instead of validation
 numbers. Generated children, aggregate top defaults and top widths selecting
 `(param NAME)` still refuse with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`.
-Equal default widths never establish interface independence.
+Equal default widths never establish interface independence. A static generated
+child literal actual can be emitted while the child interface still uses its
+default width; generic HDL and per-instance specialization must precede admission.
 
 For example, this complete source preserves `COPY = WIDTH`, `TOTAL = COPY + 2`
 and the selected child bindings:
@@ -185,9 +187,10 @@ The source/HDL support flags are true within this named profile. The prepared
 emitter profiles below are broader: they also render symbolic port ranges and
 some generated-child actuals, so their whole-profile `source_admission` flags
 remain false. The [source regression](../../../t/2141-composition-scalar-rtl-source-admission.t)
-qualifies actual planning, native strict check/semantic products and generated
-text for SystemVerilog, Verilog and VHDL. External override legality, external
-HDL compilation/runtime and complete API/MCP/profile qualification remain pending.
+qualifies actual planning, native strict checks and generated text for
+SystemVerilog, Verilog and VHDL, plus representative native semantic export.
+External override legality, external HDL compilation/runtime and complete
+API/MCP/profile qualification remain pending.
 
 The direct Verilog-family structural IR emitter now supports prepared scalar
 top defaults and child actuals when a matching captured environment is present.

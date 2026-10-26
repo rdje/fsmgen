@@ -6,6 +6,7 @@ answers:
   - "does scalar composition expression rendering enable parameterized HDL plans?"
   - "where is scalar top declaration order prepared?"
   - "where are VHDL composition natural generics prepared?"
+  - "what blocks generated composition parameter source admission?"
 date: 2026-10-26
 status: current
 tags: [composition, parameters, lowering, verilog]
@@ -28,3 +29,6 @@ profiles are unchanged. See the [composition reference](../book/src/05-compositi
 `PlanBuilder::assert_parameter_source_candidate` admits scalar fixed-interface RTL
 source plans; generated children and mutable top widths refuse (T2140/T2141).
 Native source/semantic and HDL text qualify; full external/transport proof stays pending.
+
+Generated admission follows canonical module carriers, generic HDL and shape
+specialization; the source guard cannot be removed on literal-actual emission alone.

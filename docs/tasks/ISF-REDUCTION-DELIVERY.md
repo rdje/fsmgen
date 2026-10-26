@@ -1378,65 +1378,85 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=11 Tests=56 for the directly affected source/candidate/schema/emitter controls, including retained native/API/newline refusals. Changed module syntax OK, guarded mdBook/POD build and source freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit; full corpus/transport/external runtime qualification stays .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify generated-child and symbolic-interface source admission through preserved width contracts.`
   Acceptance: `After .2, establish actual child declaration/interface dependencies and generic emission rather than numeric cache equality. Reuse canonical source/IR contracts and independently compare connected top/child/net widths. Admit only demonstrated conserved profiles; preserve explicit refusal for unspecialized/generated width relationships. Split prerequisites before editing if this requires generic child HDL work owned by .3, and resolve dependency ordering without claiming unsupported admission. Focused checks, synchronized contracts/book and commit precede parent closure; full qualification remains .6.`
-  Verification: `pending fixed-interface admission; child generic width emission remains owned by .3`
+  Verification: `Bounded fixed-interface RTL admission is committed. Separate the generated-interface prerequisite diagnosis and dependency repair from eventual admission; no safety guard is bypassed.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3.1`
+  Status: `done`
+  Goal: `Resolve the generated-interface admission dependency order using canonical evidence and a bounded public-source control.`
+  Acceptance: `Consult existing generic-width ownership and preserve its adjudications. Reproduce only the relevant public static-child override versus matching-default declaration boundary without bypassing admission, inspecting dependencies or running external HDL. Retain source/command/output evidence and name missing generic/specialization legs. Schedule canonical source preparation, generic emission, shape legality and final generated admission in a feasible order. Preserve default behavior and all existing owners; correct relevant obsolete blanket-refusal prose by identifying its historical capture boundary and routing current support to the manual. Commit this diagnosis before source changes; broad verification stays .6.`
+  Verification: `The existing SPECFORGE intake card and decision0119 already own default-fixed generic widths and unspecialized child shapes. Fresh strict public static-composition controls at f9b50f197 reproduce the generated-child boundary without bypassing admission: both emit WIDTH(16), but declaration-default 8 retains payload[7:0] in child/top while declaration-default 16 emits payload[15:0]. The initial infix assignment refusal is an oracle error retained before canonical strict pair-form controls. Actual GeneratedChildRealizer creates the declaration-default module before validating overrides and exports its interface; no shape environment is recomputed, matching .3/.4 ownership. Re-derive: exact public sources, native commands and emitted declarations. Falsify: matching-default control with the same actual WIDTH value, separating lost actual emission from fixed interface lowering. Durability: docs/audits/generated-composition-admission-prerequisite-20261026.json.gz and canonical producer/source hashes; external compilation/runtime remain unexecuted under .6. Generated admission and final forwarding are explicitly blocked on generic HDL/specialization; canonical module-carrier emission .2.3.3.4.2 is next. Complete carrier/public matrices remain separately deferred to .6 and no longer block .3-.5 implementation through a circular prerequisite. Existing owners and goals are retained. Mark original T2119-T2127 decision prose as historical epochs and route current source support to the manual; refresh authenticated dimensions without changing original records. Narrow the manual semantic-qualification wording to the actual representative native query. The first staged doctrine gate rejects rationale allowance/rollover pressure from the new preface; retain its full patch/log and compact equivalent historical wording in the existing lines, preserving all facts and recovery links without budget growth. No production code or admission guard changes. Focused task/decision/Knowledge Map/reference checks, fresh claim inventory and mandatory staged doctrines/normal hooks gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3.1: order generated admission prerequisites`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --strict --check --json and --trace-log accept the existing static WIDTH actual while paired emitted HDL retains declaration-default child/top widths. GeneratedChildRealizer creates the child module before validating actuals and exports that interface, matching the already-owned .3/.4 generic/specialization gap.
+  - [x] **ADDRESSED (verified)** — Retain exact public sources/commands/HDL/check/trace without bypassing admission. Reorder dependencies so canonical module carriers precede generic HDL and specialization, followed by generated source admission/forwarding; complete carrier/public verification remains .6. Label historical decision preparation prose and route current support to the manual. No production guard changes or generic repair claim.
+  - [x] **NO REGRESSION** — Both bounded public controls complete successfully with independently expected actual/width declarations. scripts/check_task_tree_integrity.pl and authenticated decision-record checks pass; knowledge-map: OK and mandatory staged scripts/check_doctrines.sh plus normal hooks gate this diagnosis/enforcement-metadata slice. No external HDL or broad regression run is implied.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3.2`
+  Status: `blocked`
+  Goal: `Admit generated and symbolic-interface profiles after canonical generic emission and specialization are qualified.`
+  Acceptance: `After .3/.4 and canonical source preparation, independently bind actual child declarations and top/child/net width dependencies through generic emission. Preserve selected parameter identities and source scope, reject stale/default-only shape matches, and admit only demonstrated conserved profiles. Keep unsupported target/type/interface refusals; synchronize discovery, native representative controls and book/contracts. Focused checks and commit gate this activation; complete profile/transport/runtime qualification remains .6.`
+  Verification: `Blocked on .3 generic HDL and .4 shape specialization after canonical module-carrier preparation .2.3.3.4.2. Public static-child controls already emit a literal WIDTH actual while the child and inferred top port keep declaration-default widths. A matching-default control changes both declarations; .3/.4 own repair and complete evidence. No admission guard is bypassed.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.2`
   Status: `pending`
   Goal: `Emit bound ISF module width/default plans and immutable supporting declarations through canonical IAL0.`
-  Acceptance: `After lexical/target/instance plans and .1, emit explicit real/captured parameter widths, immutable local defaults, selected static aliases and canonical module defaults for actual actor/formal/generated/reusable/domain artifacts. Preserve existing types, resets, literals and public interfaces; qualify a small representative strict carrier/source consumer set, update book/downstream boundaries and commit. Generic HDL default/range propagation and complete shape legality retain .3/.4 owners.`
-  Verification: `pending canonical composition prerequisite`
+  Acceptance: `After lexical/target/instance plans, typed composition environments/bindings (.1.1-.1.3) and bounded RTL admission (.1.4.4.2), emit explicit real/captured parameter widths, immutable local defaults, selected static aliases and canonical module defaults for actual actor/formal/generated/reusable/domain artifacts. Preserve existing types, resets, literals and public interfaces; qualify a small representative strict carrier/source consumer set, update book/downstream boundaries and commit. Generic HDL default/range propagation and complete shape legality retain .3/.4 owners.`
+  Verification: `Eligible next: typed composition preparation and bounded RTL admission are committed. Emit canonical module declarations before generic HDL .3; generated composition source admission remains blocked at .1.4.4.3.2 until .3/.4. Preserve existing default behavior and do not activate incomplete forwarding.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.3`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Emit one authored actor configuration and actual symbolic context forwarding in generated compositions.`
-  Acceptance: `After .1/.2 and semantic instance joins, place authored actor parameters in the actual composition scope, forward them to the parent and every instantiated compiler context target, and preserve selected authored use-site overrides. Resolve actual namespace/domain mappings; never copy defaults as generic links or infer a producer from physical names. Focused actual generated/reusable/domain source checks, pending-profile documentation and commit gate closure; joined full verification stays .6.`
-  Verification: `pending canonical source emission and forwarding plans`
+  Acceptance: `After .2, generic emission .3, shape legality .4, final generated admission .1.4.4.3.2 and semantic instance joins, place authored actor parameters in the actual composition scope, forward them to the parent and every instantiated compiler context target, and preserve selected authored use-site overrides. Resolve actual namespace/domain mappings; never copy defaults as generic links or infer a producer from physical names. Focused actual generated/reusable/domain source checks, pending-profile documentation and commit gate closure; joined full verification stays .6.`
+  Verification: `Blocked until canonical module emission, generic HDL, shape specialization and generated source admission permit safe forwarding. Typed source/IR scope plans remain available; no new top source is activated before these prerequisites.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.5`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Close focused canonical source/carrier preservation before advancing generic-width implementation.`
   Acceptance: `After .2-.4, use small representative actual-source/IAL0 checks for changed boundaries, with independently expected owner/token/namespace/default relations and meaningful wrong-binding controls. Preserve caller/result kinds, type/reset independence and explicit incomplete generic/specialization/public-report boundaries. Synchronize book/downstream/current scope and commit. Complete cross-scope/public/corpus matrices remain deferred to .2.3.4/.6 after required feature implementation; this leaf is not permission for a broad verification campaign.`
-  Verification: `pending canonical carrier implementation`
+  Verification: `Blocked on module emission and generated forwarding/admission after .3/.4. This focused closure does not authorize deferred full qualification.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.4`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Qualify complete source/preparation/IR/IAL0 dependency conservation and close carrier foundation.`
   Acceptance: `After .1-.3, independently enumerate actual source and physical declarations in actor/formal/generated/library/domain scopes, compare complete canonical carriers and selected parameter environments, and reject lost/misbound/equal-default/type/reset associations. Reuse existing evaluator and declaration provenance rather than reconstructed numbers. Verify source/caller/result isolation and focused public transport preservation; synchronize book/downstream/decision boundaries. Preserve first failures and actual missing generic/legality/public-inventory legs under .3/.4/.2.4. Focused checks, exact source/build contracts and staged doctrines pass before parent closure and commit.`
-  Verification: `pending IAL0 preservation`
+  Verification: `Deferred qualification: blocked until the required feature implementation permits activation with .6. Source/IR/IAL0 implementation can proceed through its focused checks; this complete matrix does not gate generic implementation .3.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.4`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Qualify detached native/API/MCP width-dependency reports and close the bounded foundation.`
   Acceptance: `After .2.2/.2.3, publish the selected source-bound dependency/default records through applicable successful check/semantic/schedule reports, actual API and newline MCP, manifest/schema/fixture metadata and independent declaration/carrier oracles. Qualify constant/parameter/alias/equal-default and reset controls, caller/result isolation and failures without invented metadata. Synchronize ISF/downstream/book/feedback and preserve existing public products outside the owned fields. Record precise incomplete override/derived-width boundaries under .3/.4 and SEM .32.3; focused broader and staged doctrines pass before parent .2 closure and commit.`
-  Verification: `pending carrier preservation`
+  Verification: `Deferred public qualification: blocked until required source/generic/grouped implementation is ready for .6. Applicable fields remain implemented with focused checks; complete native/API/MCP matrices are not a prerequisite for feature implementation .3-.5.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3`
   Status: `pending`
   Goal: `Emit consistent parameter-dependent widths through supported HDL profiles.`
-  Acceptance: `After .2, coordinate SEM .33.3.2. Carry parameter-default aliases and dependencies through canonical IAL0 to ports, storage, intermediate expressions, constants and resets; no HDL post-processing. Independently compile a real parameter override and compare its declarations and runtime against separately generated matching defaults. Unrelated equal-width declarations remain independent. Refuse profiles that cannot preserve these relationships. Synchronize corpus/public native/API/MCP/book/feedback contracts and commit.`
+  Acceptance: `After canonical module carriers .2.3.3.4.2 and typed source/IR preparation, coordinate SEM .33.3.2. Complete .2 qualification and generated forwarding/source activation follow the implemented generic/specialization prerequisites instead of blocking this implementation. Carry parameter-default aliases and dependencies through canonical IAL0 to ports, storage, intermediate expressions, constants and resets; no HDL post-processing. Independently compile a real parameter override and compare its declarations and runtime against separately generated matching defaults. Unrelated equal-width declarations remain independent. Refuse profiles that cannot preserve these relationships. Synchronize corpus/public native/API/MCP/book/feedback contracts and commit.`
   Verification: `Pending width carrier foundation. P1 parameter-default dependency loss is reproduced under .2.3.3.3.2.2.2.1: native source alias BOUND=W emits BOUND=16 independently of W=16. Core authored-default retention is implemented at .2.3.3.3.2.2.2.2; this .3 owns actual HDL alias/default relation emission and independent override-versus-matching-default behavior. The gap remains open until that feature is verified; current default-only output is not a generic claim.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.4`
   Status: `pending`
   Goal: `Qualify specialization, parameter legality and external relationship guards.`
-  Acceptance: `After .2/.3, coordinate SEM .33.3.3/.33.3.4 and existing derived-width legality. Recompute independent library/activation/generated-top environments before bindings, refuse stale/default-width mismatches and invalid widths, and preserve instance identity. Qualify positive integer legality plus compiled external HDL checks for dependent group/output-width relationships. Reports describe the chosen environment and retain authored dependencies without suggesting a default is generic proof. Keep all generic-width obligations tracked through closure and commit the bounded implementation.`
+  Acceptance: `After canonical module-carrier preparation and .3 generic emission, coordinate SEM .33.3.3/.33.3.4 and existing derived-width legality. Recompute independent library/activation/generated-top environments before bindings, refuse stale/default-width mismatches and invalid widths, and preserve instance identity. Qualify positive integer legality plus compiled external HDL checks for dependent group/output-width relationships. Reports describe the chosen environment and retain authored dependencies without suggesting a default is generic proof. Keep all generic-width obligations tracked through closure and commit the bounded implementation.`
   Verification: `pending generic emission`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.5`
   Status: `pending`
   Goal: `Implement reduce-groups with parameter-correct group order and short tails.`
-  Acceptance: `After .2-.4, implement decision 0117 through shared expression/type/width, ISF validation, IAL0 AST, HDL and detached reports. Literal operators ^/&/| and positive decimal N only; use elaborated operand width, least-significant group first, exact result width and an unpadded short final group. Strict target mismatch names target width and group count. Independently qualify defaults, overrides, N greater than W, single-bit and short-tail vectors, slices, nested expressions and invalid group/operator/operand controls. Add supported corpus plus real native/API/MCP reports, actual HDL behavior and synchronized references/book/feedback; no default-width unroll or source-only delivery claim. Split a growing slice before implementation.`
+  Acceptance: `After source/IR/IAL0 implementation plus .3/.4 generic emission and legality, implement decision 0117 through shared expression/type/width, ISF validation, IAL0 AST, HDL and detached reports. Literal operators ^/&/| and positive decimal N only; use elaborated operand width, least-significant group first, exact result width and an unpadded short final group. Strict target mismatch names target width and group count. Independently qualify defaults, overrides, N greater than W, single-bit and short-tail vectors, slices, nested expressions and invalid group/operator/operand controls. Add supported corpus plus real native/API/MCP reports, actual HDL behavior and synchronized references/book/feedback; no default-width unroll or source-only delivery claim. Split a growing slice before implementation.`
   Verification: `pending generic prerequisites`
   Commit: `pending`
 
