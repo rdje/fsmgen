@@ -212,8 +212,7 @@ bitwise operators, foreign scopes, cycles and incomplete bindings refuse.
 The [source fixture](../../../t/data/composition-vhdl-natural-generics.fsm) and
 [focused preparation test](../../../t/2136-composition-vhdl-natural-generics.t)
 cover actual parsed/imported Plan/IR and independent order, cache and namespace
-controls. Symbolic VHDL ranges, external override legality and full qualification
-remain pending.
+controls. External override legality and full qualification remain pending.
 
 Validated RTL, FSM and standalone-DT child overrides now retain the matched
 declaration's canonical `declaration_default_value_text`, `payload`, `kind`,
@@ -241,9 +240,30 @@ The [emission fixture](../../../t/data/composition-vhdl-scalar-emission.fsm) and
 [focused test](../../../t/2138-composition-vhdl-scalar-emission.t) exercise actual
 RTL/FSM/DT declaration producers and connected prepared Plan/IR products.
 Discovery's `prepared_vhdl_scalar_emission` advertises `top_defaults` and
-`natural_to_integer_child_actuals`, with false `symbolic_port_widths` and
+`natural_to_integer_child_actuals` and `symbolic_port_widths`, with false
 `source_admission`. Parameter-bearing source queries still refuse; these
 focused checks do not qualify external VHDL compilation or runtime.
+
+Captured scalar port widths now render descending VHDL vector ranges. For
+example, `(input data (width (param COPY)))` retains
+`data : in std_logic_vector((COPY - 1) downto 0)` even when `COPY` defaults
+to one. Signed ports use `signed` with the same range; state flags retain the
+existing VHDL representation. The emitter validates the captured top scope and
+exact ordered parameter/static lookups, retains selected parameter names, and
+folds static subexpressions from their captured integer payloads. Numeric port
+width caches never supply the range. Arithmetic `+`, `-`, `*`, `/`, `%` retains
+left-associated parentheses, with `%` rendered as `mod`; each default fold
+must fit the portable natural integer range and final width must be positive.
+Declared-type conflicts, bitwise operators, malformed/cyclic expressions,
+foreign scopes, missing/extra/wrong lookups and invalid default arithmetic
+refuse. Ordinary static scalar/vector declarations keep their existing text.
+The [VHDL range fixture](../../../t/data/composition-vhdl-port-ranges.fsm) and
+[focused test](../../../t/2139-composition-vhdl-port-ranges.t) exercise actual
+parsed/imported Plan/IR products, complete expected HDL and hostile controls.
+Run `scripts/run_with_ram_guard.sh -- prove -Iperl t/2139-composition-vhdl-port-ranges.t`
+for this prepared-emitter check. Parameter-bearing source admission, internal
+net width propagation, external override legality and full compiler/runtime
+qualification remain separately owned.
 
 ## Top Root Shape
 

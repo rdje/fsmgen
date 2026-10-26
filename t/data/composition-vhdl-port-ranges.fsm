@@ -1,0 +1,13 @@
+(?top:vhdl_range_top
+  (+params (COPY W) (W 1) (SAME 1))
+  (+constants (BASE 3))
+  (+import widths)
+  (?ports
+    clk<1:clock fixed<BASE
+    (input data (width (param COPY)))
+    (output result (width (div (* (param W) 6) widths.EXTRA)))
+    (input folded (width (+ BASE 1)))
+    (input remainder (width (+ (mod (param COPY) 3) 1)))
+  )
+)
+(?pkg:widths (+constants (EXTRA 2)))

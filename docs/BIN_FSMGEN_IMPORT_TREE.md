@@ -48,8 +48,9 @@ the historical closure census below is unchanged.
 
 The VHDL structural emitter now imports
 `FSM::Backend::VHDL::CompositionParameterEmitter` for prepared natural top
-defaults and declaration-qualified integer child actuals. Source admission and
-symbolic VHDL port ranges remain guarded; no fresh closure count is inferred.
+defaults and declaration-qualified integer child actuals, plus
+`FSM::Backend::VHDL::CompositionWidthEmitter` for captured scalar port ranges.
+Source admission remains guarded; no fresh closure count is inferred.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.

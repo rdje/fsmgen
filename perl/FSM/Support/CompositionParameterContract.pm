@@ -78,7 +78,7 @@ sub build_composition_parameter_contract {
         },
         prepared_vhdl_scalar_emission => {
             top_defaults => JSON::PP::true, natural_to_integer_child_actuals => JSON::PP::true,
-            symbolic_port_widths => JSON::PP::false, source_admission => JSON::PP::false,
+            symbolic_port_widths => JSON::PP::true, source_admission => JSON::PP::false,
         },
         guidance => [
             'Optional width_contract records preserve the captured top scope, authored frontend expression tree and ordered actual parameter/static lookups beside numeric width caches. Width-analysis path wildcards expand only to width_analysis_buckets.',
@@ -93,7 +93,7 @@ sub build_composition_parameter_contract {
             'Type items and members recurse through type_node_keys; signed is the canonical numeric flag. Missing optional fields are omitted, never inferred from a cached number.',
             'Validated child overrides retain declaration_default_value_keys and applicable declaration_default_optional_keys. These describe the child default independently of the actual value cache: payload/type use payload_node_keys/type_node_keys; source_expression is an authored frontend tree, omitted when no source record exists. Kind and width alone cannot distinguish decimal integer from sized bit/vector generic declarations.',
             'Unparameterized products omit environments; static actual caches keep their existing value fields, with optional matched-declaration annotations. prepared_scalar_emission names direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults, scalar child actuals and captured scalar port ranges. Typed tops, symbolic aggregate bindings and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
-            'prepared_vhdl_scalar_emission names only direct prepared natural top defaults and canonical natural-valued actuals for scalar child declarations with bounded plain decimal defaults. Sized/aggregate symbolic child profiles, VHDL symbolic port widths and source admission remain unqualified.',
+            'prepared_vhdl_scalar_emission names direct prepared natural top defaults, canonical natural-valued actuals for scalar child declarations with bounded plain decimal defaults, and captured scalar port ranges with portable natural arithmetic. Sized/aggregate symbolic child profiles, external override legality and source admission remain unqualified.',
         ],
     };
 }
@@ -123,7 +123,7 @@ describe matched child declaration evidence in override records. Default
 payload/type use the existing recursive schemas; the optional source expression
 is an authored frontend tree. C<prepared_vhdl_scalar_emission> separately
 describes direct natural top defaults and canonical natural-to-integer child
-actuals with declaration evidence. Symbolic VHDL ranges and source admission
-remain pending.
+actuals with declaration evidence, plus captured scalar port ranges. Source
+admission and external override legality remain pending.
 
 =cut

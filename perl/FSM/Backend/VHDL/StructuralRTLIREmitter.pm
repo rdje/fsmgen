@@ -25,9 +25,9 @@ backend-neutral StructuralRTLIR expression helper.
 
 Prepared top environments emit dependency-ordered natural defaults. Canonical
 C<binding_expression> actuals forward to declaration-qualified integer child
-generics; actual caches never provide their text. Port C<width_contract>
-records, symbolic sized/aggregate child declarations and missing environments
-retain explicit refusals.
+generics; actual caches never provide their text. Captured scalar port widths
+retain symbolic VHDL vector ranges, including one-bit defaults. Symbolic
+sized/aggregate child declarations and missing environments retain explicit refusals.
 Ordinary supported static/literal parameter actuals retain existing behavior.
 
 =cut
@@ -43,6 +43,7 @@ no warnings 'experimental::signatures';
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
 use FSM::IR::StructuralRTLIR;
 use FSM::Backend::VHDL::CompositionParameterEmitter;
+use FSM::Backend::VHDL::CompositionWidthEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub emit_module ($class, $structural_rtl_ir) {
@@ -57,8 +58,8 @@ sub emit_module ($class, $structural_rtl_ir) {
         unless $target_language eq 'vhdl';
     if (!exists $structural->{parameter_environment}) {
         FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
+        FSM::IR::StructuralRTLIR->assert_no_pending_port_width_contracts($structural);
     }
-    FSM::IR::StructuralRTLIR->assert_no_pending_port_width_contracts($structural);
     my $declarations = FSM::Backend::VHDL::CompositionParameterEmitter->lower_declarations(structural => $structural);
 
     my $top_name = $structural->{module_name}
@@ -68,7 +69,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @instances = @{$structural->{instances} || []};
     my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
 
-    my @port_lines = _render_port_lines(\@ports);
+    my @port_lines = _render_port_lines(\@ports, $structural->{parameter_environment});
     my @net_lines = _render_signal_lines(\@nets);
     my @instance_blocks = map { _render_instance_block($_, $structural) } @instances;
 
@@ -115,7 +116,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     return join("\n", @body_lines);
 }
 
-sub _render_port_lines ($ports) {
+sub _render_port_lines ($ports, $environment) {
     my @lines;
     for my $index (0 .. $#$ports) {
         my $port = $ports->[$index];
@@ -124,7 +125,7 @@ sub _render_port_lines ($ports) {
             '    %s : %s %s%s',
             _identifier($port->{name}, 'port name'),
             _vhdl_direction($port->{direction}),
-            _vhdl_type($port),
+            _vhdl_type($port, $environment),
             $suffix,
         );
     }
@@ -477,7 +478,12 @@ sub _vhdl_direction ($direction) {
     confess _unsupported("unsupported structural VHDL port direction '$direction'");
 }
 
-sub _vhdl_type ($entry) {
+sub _vhdl_type ($entry, $environment = undef) {
+    if (exists $entry->{width_contract}) {
+        my $range = FSM::Backend::VHDL::CompositionWidthEmitter->lower_range(
+            port => $entry, environment => $environment);
+        return ($entry->{signed} ? 'signed' : 'std_logic_vector') . $range;
+    }
     confess _unsupported('declared aggregate structural VHDL types are outside the first structural-top leaf')
         if defined($entry->{declared_type_name}) || defined($entry->{declared_type_spec});
 

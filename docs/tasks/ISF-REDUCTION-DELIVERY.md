@@ -1288,11 +1288,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2135/T2134/T2131; guarded mdBook/POD build and POD/source freshness checks pass. Static module text and named-type controls remain exact. Staged scripts/check_doctrines.sh and normal hooks gate this slice; complete external/profile/runtime/API/MCP qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate canonical top generics, bindings and port widths into supported VHDL structural profiles.`
   Acceptance: `After .1/.2, use explicit typed generic semantics and namespace rules. Preserve canonical dependency identity without cached-value substitution; refuse unsupported arithmetic/type/profile shapes. Focused VHDL emission checks and synchronized profile contracts/book gate commit; full external execution remains .6.`
-  Verification: `Split before implementation: prepare canonical natural-valued scalar generics with VHDL case-insensitive namespace rules; preserve child declaration literal/type evidence before generic actual forwarding; integrate prepared top/child emission, then captured port ranges. Sized literals and unsupported scalar/operator/type forms remain fail-closed. Source admission stays .4 and full verification .6.`
-  Commit: `pending`
+  Verification: `Children close prepared natural top generics, child declaration evidence, canonical integer actuals and captured arithmetic port ranges with focused checks. Sized/aggregate symbolic child profiles remain fail-closed. Source admission stays .4, external override legality and full qualification stay .6.`
+  Commit: `children below; closure with ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4`
 
@@ -1333,11 +1333,17 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=19 for final VHDL emission and directly affected declaration/Verilog/range/preparer boundaries. Module syntax OK; guarded mdBook/POD build and source freshness qualify docs. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit; complete feature verification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Lower captured scalar port widths into prepared VHDL ranges with exact parameter identities.`
   Acceptance: `After .3, preserve selected parameter names and static lookup payloads in supported VHDL vector ranges, including one-bit defaults; retain signed/state/type meaning and refuse unsupported operators/shape/type combinations. Validate scope and ordered lookups without numeric cache substitution. Focused actual source/Plan/IR/emitter and hostile controls, precise discovery/book, task evidence and commit; source admission and full verification remain separate.`
-  Verification: `pending top/child emission`
-  Commit: `pending`
+  Verification: `Actual parsed/imported natural top source feeds captured Plan/StructuralRTLIR and the direct VHDL hash/object emitter. Complete independent expected HDL preserves COPY at a one-bit default, equal-default SAME selection, ordered static/import lookups, arithmetic/mod spelling and signed/state representation. Numeric port width mutations cannot change ranges. Foreign/missing/wrong/extra lookups, missing environments, declared-type conflicts, aggregate payloads, cycles, invalid arithmetic, bitwise/unknown operators and intermediate portable-integer overflow refuse. Final T2139/T2138/T2135 report All tests successful Files=3 Tests=9. Exact predecessor and isolated numeric-cache helper controls fail the same final assertions with selected loaded paths retained; other dependencies remain current. Draft reserved literal/ALIAS identifiers and whole-stack diagnostic matching were oracle defects: final fixture uses folded/COPY and hostile assertions inspect first lines. Initial control wrappers omitted a quote and ran no assertions; corrected control epochs establish attribution. Re-derive: actual source/Plan/IR and complete expected text; falsify: independent identity/cache/hostile controls plus retained predecessor/mutant; durability: tracked helper/tests/fixture/docs and docs/audits/composition-vhdl-port-ranges-20261026.json.gz with normalized streams, source hashes and control launchers/sources. Native strict source check still reports FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING. Selected public sync: prepared discovery, helper/emitter POD, composition book, downstream boundary, fact and scoped import edge; source grammar/accounting/API/MCP source admission is unchanged. Module syntax OK, guarded mdBook/POD build and freshness/source checks pass. First staged doctrines reject exhausted task-evidence lines/bytes; declare measured growth plus its existing ratchet, preserving baseline and ceilings. The first copied-source check used a build predating final task edits; refresh the build after those edits. Corrected staged doctrines and normal hooks gate commit. Internal-net propagation, source admission, external override legality and full compiler/runtime/profile/transport qualification stay successors/.6. Designated claim template equals the retained review; local README/containment authority remains adopted and daily cleanup is not due. Decision0116 permits a clean context refresh before source-admission review to maintain signoff quality.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4: emit prepared VHDL port ranges`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic from the actual T2139 source/Plan/IR locates the blanket width guard at perl/FSM/IR/StructuralRTLIR.pm line 92, called by VHDL StructuralRTLIREmitter. The exact predecessor loaded from its retained capsule fails the final corrected assertions at that boundary. Initial invalid test names and malformed control wrappers remain separate oracle-error epochs.
+  - [x] **ADDRESSED (verified)** — A target-specific width lowerer renders captured arithmetic and selected names through the shared evaluator, with scoped ordered lookups and portable default-fold checks. Complete expected HDL, one-bit/signed/static/cache/hostile controls pass. The isolated wrong-cache helper fails the same test. Source admission and full qualification remain separately owned.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for focused VHDL ranges and directly affected VHDL/Verilog emitters; both modules report syntax OK. Guarded mdBook/POD build and freshness/source checks pass. Native strict source check retains the pending parameter-lowering code. Staged scripts/check_doctrines.sh and normal hooks gate this slice; full verification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
   Status: `pending`

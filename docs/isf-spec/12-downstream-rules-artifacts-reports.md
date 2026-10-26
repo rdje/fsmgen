@@ -1412,8 +1412,9 @@ names the exact optional key families; see the composition reference and
 [declaration test](../../t/2137-composition-child-declaration-evidence.t).
 The direct prepared VHDL profile now emits natural top defaults and canonical
 natural-valued actuals to declaration-qualified decimal integer child generics.
-Sized/aggregate symbolic child bindings and VHDL width contracts still refuse;
-ISF generic widths, source admission and full qualification remain pending.
+Captured scalar port ranges retain selected names and portable natural arithmetic,
+including one-bit defaults. Sized/aggregate symbolic child bindings still refuse;
+ISF generic widths, source admission, override legality and full qualification remain pending.
 
 Composition Port width-expression declarations now retain source AST and scoped
 lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).
@@ -1422,5 +1423,6 @@ Prepared forward IR, signal analysis and plan snapshots retain optional
 width_contract records, advertised by the same composition_parameter_contract.
 Supplied IR must match the captured Plan width/dependency meaning; structured
 source and lookup records remain detached. This inspection adds no ISF generic
-width, API/MCP source-query or symbolic HDL admission; target lowering stays
-owned and the shared emitter guard refuses known width contracts.
+width or API/MCP source-query admission. Direct prepared Verilog-family and VHDL
+scalar port ranges are bounded by the composition reference; internal-net
+propagation and full qualification remain pending.

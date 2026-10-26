@@ -81,7 +81,7 @@ subtest 'hostile contracts cannot fall back to numeric widths' => sub {
     refuses('missing environment', sub {delete $_[0]{parameter_environment}}, qr/port width contract emission is blocked/);
     my $input = copy($ir); $input->{target_language} = 'vhdl';
     my $ok = eval {FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($input);1};
-    ok(!$ok, 'VHDL symbolic ranges stay refused'); like($@, qr/port width contract emission is blocked/, 'VHDL width guard remains exact');
+    ok(!$ok, 'VHDL invalid namespace stays refused'); like($@, qr/identifier 'literal' is reserved/, 'VHDL namespace boundary remains exact');
 };
 subtest 'discovery exposes only prepared range support' => sub {
     my $contract = build_composition_parameter_contract();

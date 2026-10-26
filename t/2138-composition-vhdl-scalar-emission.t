@@ -146,7 +146,7 @@ subtest 'declaration types, scopes, identifiers and pending widths refuse explic
     refuses('case-folded child generic collision',sub {$_[0]{instances}[0]{parameter_overrides}[1]{name}='count'},qr/duplicate.*generic|generic.*collid/i);
     refuses('top port collision',sub {$_[0]{ports}[0]{name}='width'},qr/WIDTH.*port/);
     refuses('missing environment',sub {delete $_[0]{parameter_environment}},qr/symbolic parameter binding.*blocked/s);
-    refuses('pending port width',sub {$_[0]{ports}[0]{width_contract}={}},qr/port width contract.*blocked/s);
+    refuses('incomplete port width',sub {$_[0]{ports}[0]{width_contract}={}},qr/width.*complete width contract/s);
 };
 subtest 'static formatting and profile discovery keep exact boundaries' => sub {
     my $static = copy($ir); delete $static->{parameter_environment};
@@ -165,7 +165,7 @@ subtest 'static formatting and profile discovery keep exact boundaries' => sub {
     }
     my $contract = build_composition_parameter_contract();
     is_deeply($contract->{prepared_vhdl_scalar_emission},{top_defaults=>JSON::PP::true,
-        natural_to_integer_child_actuals=>JSON::PP::true,symbolic_port_widths=>JSON::PP::false,
+        natural_to_integer_child_actuals=>JSON::PP::true,symbolic_port_widths=>JSON::PP::true,
         source_admission=>JSON::PP::false},'discovery describes only the prepared VHDL subset');
     ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported},'complete source/HDL support remains unqualified');
 };
