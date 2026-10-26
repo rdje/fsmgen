@@ -93,12 +93,12 @@ carrier propagation and generic HDL remain open.
 
 ## Carrier namespace and static-use prerequisites
 
-The source-only `.2.3.1.1` audit supplies a type `word_t` of width eight and a
-same-named parameter sixteen. ISF selects the parameter; bare IAL0 `+size`
-selects the type. IAL0 `(+ word_t 0)` selects the scalar parameter through the
-existing integer evaluator. Preserve the chosen namespace and expression, not
-just token spelling: current IAL0 still resolves that expression numerically.
-This default check establishes neither generic HDL nor override legality. Core Signals retain `{signal, expression, resolved_width}` through the detached `declared_width_source` accessor; it preserves scalar expression source without classifying parameter dependencies or changing default HDL/public reports. IAL0 scalar lookup checks constants before params, while parameter aliases resolve in their parameter graph; constants cannot reference params. Scoped binding and carrier emission remain pending.
+The source-only `.2.3.1.1` audit gives type `word_t` width eight and same-named parameter sixteen: ISF chooses the parameter, bare IAL0 `+size` the type, and `(+ word_t 0)` the scalar. Preserve namespace and expression; numeric default checks establish neither generic HDL nor override legality.
+Core Signals retain detached `{signal, expression, resolved_width}` via `declared_width_source`, without classifying dependencies or changing default HDL/public reports. Scalar width lookup checks constants before params; parameter aliases use their parameter graph; constants cannot reference params. Scoped binding/emission remain pending.
+Actual `.2.3.3.3.2.2.2.1` controls give constant/define aliases width eight, ordinary parameter alias sixteen and enum-to-constant alias eight. `(param W)` currently refuses; select that width-only declared-parameter form as a pending prerequisite, avoiding another independently tunable alias. No grammar is admitted by this decision.
+With W=16, BOUND=W and BOUND=16 have identical complete Core parameter records but distinct raw ASTs. ParameterValueSupport canonicalizes the reference to a payload, Parser stores normalized info, and native SV prints BOUND=16. Raw source remains separate; per-parameter association is lost, not the whole AST.
+Required source retention is `.2.3.3.3.2.2.2.2`; actual HDL default/override relation propagation remains `.3`. Neither default equality nor architecture labels prove a live generic dependency. Existing defaults are unchanged; source preservation must precede scoped selection, binding plans and explicit forwarding.
+Re-derive/falsify from `docs/audits/width-scalar-namespace-contract-20261026.json.gz`: full source/native/Core controls, exact selected Git joins and rejected hostile widths. This retained packet plus tasks/book/Git is durability; full loaded footprint, generic runtime and other profiles are unclaimed.
 
 At parameter default two, changing only bank `(depth 2)` to `(depth W)`, or only
 `(watchdog 2)` to `(watchdog W)`, yields exactly identical complete parsed actors,

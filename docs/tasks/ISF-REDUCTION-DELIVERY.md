@@ -754,10 +754,45 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=19 for focused binding/source/scope consumers; LoweringIR and ISFWidthDeclarations are syntax OK. Complete selected source, executable IR, carriers and reports are conserved. Book build/source checks and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Full generic/runtime/public/profile qualification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Allocate canonical scalar symbols and supporting-declaration/forwarding plans from retained semantic bindings.`
   Acceptance: `After .1, use actual width declarations, module owners and canonical default binding trees to allocate collision-safe scalar names, preserve local/actor/package/type namespaces and alias/override relations, and identify required cross-scope forwarding. No inference from resolved values, second evaluator, frozen dependency or HDL replacement. Split module-local and imported-scope consumers if needed; emission stays .2.3.3.4 and complete verification stays deferred.`
-  Verification: `pending canonical default bindings`
+  Verification: `Canonical default bindings are committed at bb0699876. Before allocating names, check actual IAL0 constant aliases, scalar namespace selection and default/override semantics. A compiler alias expressed as an ordinary parameter may become an independent configuration input; preserving a reference requires an immutable relation or an explicit selected namespace, not merely a matching default. Use bounded actual-source probes, then split or select a bounded contract before emission if existing syntax cannot safely carry the relation. Preserve module interfaces, source kinds and instance forwarding; no new grammar is chosen from speculation.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.1, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.2, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.3, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.1`
+  Status: `done`
+  Goal: `Select a safe scalar binding contract from actual IAL0 namespace and default-source observations.`
+  Acceptance: `Own the bounded probes under the original allocation leaf, then split before implementation grows. Check immutable constant aliases, ordinary parameter and define aliases, enum/static sources, namespace-form refusal and one current native generation. Trace lost parameter-default identity through actual Core records and owned source code; retain a literal counterfactual. Select a bounded parameter-width namespace form, per-parameter authored-default retention and explicit later name/forwarding plans. Keep all current grammar/default/backend boundaries unchanged and schedule the generic-default gap through HDL closure.`
+  Verification: `Strict native source probes show constant alias width8, parameter alias16, define alias8 and enum-to-constant alias8; (param W) currently refuses as an unsupported width operator. Current default SV generation emits independently configurable BOUND=16 and W=16. An actual Core getter control changes only the BOUND default from W to16: raw ASTs differ but complete parameter records are identical. First per-parameter association loss is ParameterValueSupport::_canonical_payload recursively replacing the reference by its resolved payload; canonical_value returns normalized value_text, Parser stores that info, and owned ScaffoldEmitter::_render_module_parameter_lines prints value_text. Raw AST remains separately available; no claim that the entire source disappears. The P1 generic dependency gap is owned by child .2 for source retention and required .3 for actual HDL default relations. Select (param NAME) only in width-expression slots, reusing canonical declared-parameter payload/integer evaluation, requiring a real scalar parameter and refusing constant/type borrowing. It adds no tunable alias. Child .2 precedes admission .3, then .4 allocates captured-scope symbols, immutable/local inline expressions and required forwarding with original identities. Ordinary parameter aliases are not selected as protected compiler references. Full sources/streams/Core control/selected loaded paths/Git joins and executed wrong-width controls retain in docs/audits/width-scalar-namespace-contract-20261026.json.gz. Probes began under the existing parent allocation leaf; this closure split assigns their finite activity to .1 before any new implementation. Re-derive: actual sources, native/Core observations and producer code. Falsify: opposing namespace values, different alias kinds, alias/literal source control and hostile widths. Durability: tracked packet, owning tasks, book/fact and Git. No current grammar admission, external HDL compile/runtime, generic proof, full method/dependency footprint or new public schema. Book/source assets and mandatory doctrines gate the contract; full verification remains deferred.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.1: select safe width binding prerequisites`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'value_text => $payload->{payload}' -- perl/FSM/ParameterValueSupport.pm identifies a01da5bd3 as the shared normalization origin. Actual Core alias/literal records are identical; Parser stores the normalized result and ScaffoldEmitter renders value_text. Native strict (param W) refuses, so existing token copying cannot select that namespace explicitly.
+  - [x] **ADDRESSED (verified)** — Bounded source/Core/native observations select authored-default retention, a width-only parameter namespace form and then symbol/forwarding plans. The P1 generic-default relation gap has explicit source and HDL owners. Grammar and emission remain unchanged; no ordinary mutable alias is treated as an immutable link.
+  - [x] **NO REGRESSION** — No compiler/test/grammar behavior changes. Actual probe and literal-counterfactual checks pass within their declared historical scope; book/source checks, task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate this planning slice. No generic/runtime or other-profile qualification is inferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Retain authored IAL0 parameter defaults and actual named-parameter references beside normalized values.`
+  Acceptance: `Inspect Core module parameter/source owners, canonical lazy parameter resolution, re-registration/copy and SourceHIR/report interfaces before selecting a detached per-parameter descriptor. Snapshot the admitted original expression before normalization and record references at the actual parameter-resolution branches, including qualified parameter leaves; no second evaluator or inference from equal payloads. Keep parameters() and existing normalized/default HDL products unchanged, isolate source/caller/getter/sibling data, clear stale provenance on replacement and invent none for programmatic values. Qualify alias/literal/equal/default/arithmetic/aggregate/cycle controls with focused checks. Update API POD/book/task; generic HDL relation emission stays required .3.`
+  Verification: `P1 dependency-loss reproduction and producing input snapshots retain in width-scalar-namespace-contract-20261026.json.gz. Core alias and literal parameters currently have the same value_text/value_payload/type records; raw expression association must precede symbol planning.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Admit bounded explicit parameter selection in canonical IAL0 width expressions.`
+  Acceptance: `After .2, select (param NAME) with exactly one real declared parameter identifier, resolved through the existing parameter payload and integer-width evaluator. Reuse current positive/scalar rules, reject unknown or wrong-shape names without borrowing constants/types, and retain raw source/owner identity. Keep other width operators, named types, literals and reset behavior unchanged. Qualify direct and nested namespace collisions and meaningful failures through focused actual source/API/corpus consumers, update required manifest/contracts/book scope, and commit. This admits static selected-default evaluation plus provenance, not generic HDL qualification; broaden no other expression/value grammar.`
+  Verification: `Selected contract only; the retained original strict source currently refuses. No admission or implementation exists yet.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4`
+  Status: `pending`
+  Goal: `Build collision-safe scoped width, supporting-declaration and forwarding plans using the selected canonical contracts.`
+  Acceptance: `After .2/.3, use explicit module owners, actual declarations and canonical binding trees. Select real module parameters explicitly, inline immutable local defaults with source identity retained, use qualified immutable static aliases only where needed, and represent captured actor scopes and actual instance forwarding without new independent compiler knobs or frozen dependencies. Preserve source interfaces/defaults, local shadowing and named types. Split constructor consumers if needed; emission remains .2.3.3.4 and complete qualification remains deferred.`
+  Verification: `pending source/default namespace prerequisites`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4`
@@ -791,8 +826,8 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3`
   Status: `pending`
   Goal: `Emit consistent parameter-dependent widths through supported HDL profiles.`
-  Acceptance: `After .2, coordinate SEM .33.3.2. Carry dependencies through canonical IAL0 to ports, storage, intermediate expressions, constants and resets; no HDL post-processing. Independently compile a real parameter override and compare its declarations and runtime against separately generated matching defaults. Unrelated equal-width declarations remain independent. Refuse profiles that cannot preserve these relationships. Synchronize corpus/public native/API/MCP/book/feedback contracts and commit.`
-  Verification: `pending width carrier foundation`
+  Acceptance: `After .2, coordinate SEM .33.3.2. Carry parameter-default aliases and dependencies through canonical IAL0 to ports, storage, intermediate expressions, constants and resets; no HDL post-processing. Independently compile a real parameter override and compare its declarations and runtime against separately generated matching defaults. Unrelated equal-width declarations remain independent. Refuse profiles that cannot preserve these relationships. Synchronize corpus/public native/API/MCP/book/feedback contracts and commit.`
+  Verification: `Pending width carrier foundation. P1 parameter-default dependency loss is reproduced under .2.3.3.3.2.2.2.1: native source alias BOUND=W emits BOUND=16 independently of W=16. Core authored-default retention is required at .2.3.3.3.2.2.2.2; this .3 owns actual HDL alias/default relation emission and independent override-versus-matching-default behavior. The gap remains open until that feature is verified; current default-only output is not a generic claim.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.4`

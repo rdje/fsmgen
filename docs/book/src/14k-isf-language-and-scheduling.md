@@ -702,6 +702,23 @@ the emitted parameter list, including renamed and generated modules. This
 prepares dependency propagation; generic port widths and override-driven shape
 specialization remain pending.
 
+The next binding work must also preserve parameter default expressions. In a
+current IAL0 control, `BOUND=W` and `BOUND=16` produce identical normalized
+parameter records when `W=16`; native SystemVerilog emits `BOUND=16` in both
+cases. The original AST remains available, but the per-parameter record loses
+the authored dependency. Source retention and later HDL default propagation
+have separate required tasks; changing `W` is not yet qualified to update
+`BOUND`.
+
+Namespace selection needs an explicit contract too. An IAL0 constant alias
+selects the static namespace, whereas an ordinary parameter alias creates
+another configurable parameter. The selected future width-only form
+`(param NAME)` will select an actual declared scalar parameter without adding
+an alias. **It is not implemented or accepted yet.** Existing sources must use
+the currently documented width syntax. Admission, source preservation and
+cross-scope forwarding are tracked under `ISF-REDUCTION-DELIVERY`; generic HDL
+qualification follows their implementation.
+
 Shipped binding shape:
 
 ```lisp
