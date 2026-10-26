@@ -702,13 +702,13 @@ the emitted parameter list, including renamed and generated modules. This
 prepares dependency propagation; generic port widths and override-driven shape
 specialization remain pending.
 
-The next binding work must also preserve parameter default expressions. In a
-current IAL0 control, `BOUND=W` and `BOUND=16` produce identical normalized
-parameter records when `W=16`; native SystemVerilog emits `BOUND=16` in both
-cases. The original AST remains available, but the per-parameter record loses
-the authored dependency. Source retention and later HDL default propagation
-have separate required tasks; changing `W` is not yet qualified to update
-`BOUND`.
+The binding work also needs parameter default expressions. In a current IAL0
+control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records
+when `W=16`; native SystemVerilog emits `BOUND=16` in both cases. Core now retains
+the authored expression and direct parameter references in separate detached
+source records, alongside the unchanged normalized values. HDL default
+propagation remains a required later task; changing `W` is not yet qualified to
+update `BOUND`.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates

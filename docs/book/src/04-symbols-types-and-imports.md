@@ -75,6 +75,21 @@ and `20'x1`. Bounded literal list/record payloads are also accepted when they
 can lower to one packed literal. That keeps the authoring surface convenient
 while preserving a concrete semantic value before generation.
 
+The Core module retains authored defaults separately from those normalized
+values. For example, `(BOUND W)` with `W=16` retains the expression `W` and its
+selected parameter reference, while `(BOUND 16)` retains a literal with no
+parameter reference. Both still have the same normalized default value.
+`FSMModule::parameter_default_sources()` exposes detached source records for
+compiler consumers; `parameters()` keeps its existing normalized shape.
+Forward references, aggregate member/index paths and arithmetic retain their
+direct parameter references through the existing resolver. Constants and enum
+members keep their source expression but are not listed as parameter references.
+
+This preservation prepares later lowering. Current HDL parameter defaults still
+use normalized values; dependent-default emission and override behavior remain
+required follow-on work. Retained source identity alone does not prove that an
+HDL override propagates through an alias.
+
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of
 being guessed. Use `0b00001110`, `8'b00001110`, or `0d1110` explicitly.

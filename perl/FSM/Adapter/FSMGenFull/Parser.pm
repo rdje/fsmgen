@@ -2606,6 +2606,7 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
     }
 
     my %resolved;
+    my %default_sources;
     my %visiting;
     my @stack;
     my $docs_hint = ' ' . supported_boundary_sentence();
@@ -2628,6 +2629,8 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
 
         $visiting{$name} = 1;
         push @stack, $name;
+        my $authored_expression = _copy_parameter_default_expression($entry->{value_ast});
+        my @references;
         my $value_info = FSM::ParameterValueSupport->canonical_value(
             value_ast => $entry->{value_ast},
             context => "Direct source parameter '$name'",
@@ -2635,17 +2638,22 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
             resolve_symbol_payload => sub ($symbol_name) {
                 if (exists $entry_by_name{$symbol_name}) {
                     my $symbol_value_info = $resolve_param->($symbol_name);
-                    return $symbol_value_info->{value_payload} if ref($symbol_value_info) eq 'HASH';
+                    if (ref($symbol_value_info) eq 'HASH') {
+                        push @references, {parameter => $symbol_name, token => $symbol_name, suffix => ''};
+                        return $symbol_value_info->{value_payload};
+                    }
                     return undef;
                 }
                 if ($symbol_name =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/ && exists $entry_by_name{$1}) {
                     my ($param_name, $suffix) = ($1, $2);
                     my $symbol_value_info = $resolve_param->($param_name);
-                    return FSM::ParameterValueSupport->resolve_payload_path(
+                    my $payload = FSM::ParameterValueSupport->resolve_payload_path(
                         $symbol_value_info->{value_payload},
                         $suffix,
                     ) if ref($symbol_value_info) eq 'HASH';
-                    return undef;
+                    push @references, {parameter => $param_name, token => $symbol_name, suffix => $suffix}
+                        if defined $payload;
+                    return $payload;
                 }
                 return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
             },
@@ -2653,6 +2661,10 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
         pop @stack;
         delete $visiting{$name};
 
+        $default_sources{$name} = {
+            parameter => $name, source_module => $module_name,
+            expression => $authored_expression, references => \@references,
+        };
         $resolved{$name} = $value_info;
         return $value_info;
     };
@@ -2665,11 +2677,20 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
             $self->{fsm_module}->set_parameter($name, {
                 %$value_info,
                 origin_kind => 'direct_root_parameter',
-            });
+            }, $default_sources{$name});
         }
     }
 
     return 1;
+}
+
+# Copy admitted frontend trees and semantic payloads before normalization can
+# inspect scalar flags. Unsupported references still reach canonical validation.
+sub _copy_parameter_default_expression($value) {
+    return [map { _copy_parameter_default_expression($_) } @$value] if ref($value) eq 'ARRAY';
+    return {map { $_ => _copy_parameter_default_expression($value->{$_}) } keys %$value}
+        if ref($value) eq 'HASH';
+    return $value;
 }
 
 sub parse_init_assignment_directive($self, $init_ast) {

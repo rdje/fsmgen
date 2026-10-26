@@ -2206,6 +2206,7 @@ package FSM::CoreAST::FSMModule;
             clock_domains => _clone_fsm_module_value($args{clock_domains} // {}),
             reset_domains => _clone_fsm_module_value($args{reset_domains} // {}),
             parameters => _clone_fsm_module_value($args{parameters} // {}),
+            _parameter_default_sources => _clone_fsm_module_value($args{_parameter_default_sources} // {}),
             constraints => $args{constraints} // [],
             attributes => $args{attributes} // {},
         }, $class;
@@ -2217,15 +2218,21 @@ package FSM::CoreAST::FSMModule;
     sub clock_domains($self) { _clone_fsm_module_value($self->{clock_domains}) }
     sub reset_domains($self) { _clone_fsm_module_value($self->{reset_domains}) }
     sub parameters($self) { _clone_fsm_module_value($self->{parameters}) }
+    sub parameter_default_sources($self) { _clone_fsm_module_value($self->{_parameter_default_sources} // {}) }
     sub attributes($self) { $self->{attributes} }
     sub explicit_system_contract($self) { return _clone_fsm_module_value($self->{attributes}{system_contract}) }
     sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
     sub direct_root_symbols($self) { return $self->{attributes}{direct_root_symbols} }
     sub package_imports($self) { return _clone_fsm_module_value($self->{attributes}{package_imports} || []) }
-    sub set_parameter($self, $name, $parameter_info) {
+    sub set_parameter($self, $name, $parameter_info, $default_source = undef) {
         Carp::confess "FSMModule parameter name required"
             unless defined($name) && !ref($name) && length($name);
         $self->{parameters}{$name} = _clone_fsm_module_value($parameter_info);
+        if (defined $default_source) {
+            $self->{_parameter_default_sources}{$name} = _clone_fsm_module_value($default_source);
+        } else {
+            delete $self->{_parameter_default_sources}{$name};
+        }
         return $self->{parameters}{$name};
     }
     sub is_dt_root($self) { return $self->source_root_kind eq 'dt' }
@@ -2424,6 +2431,23 @@ capabilities.
 =head3 FSM Module
 Complete FSM representation with states, signals, timing domains, and analysis
 framework.
+
+C<parameters> returns the existing detached normalized parameter values.
+C<parameter_default_sources> separately returns a detached map of authored
+direct-root defaults. Each record contains C<parameter>, C<source_module>, the
+original C<expression> token tree or semantic payload, and ordered C<references>
+observed by the canonical parameter resolver. A reference contains the selected
+root C<parameter>, its original C<token>, and its member/index C<suffix> (empty
+for a root reference). These are direct parameter references; static constants
+and enum members are not classified by this list, and a copied aggregate does
+not expand its transitive dependencies into the caller's references.
+
+C<set_parameter($name, $info, $default_source)> accepts an optional detached
+source record. Replacing a value without that record clears its previous source.
+The internal constructor key C<_parameter_default_sources> supports explicit
+copies; programmatic parameter values otherwise acquire no invented provenance.
+This metadata preserves source identity only. It does not alter normalized
+defaults, emit dependent HDL defaults, or extend public semantic-report schemas.
 
 =head2 Key Features
 
