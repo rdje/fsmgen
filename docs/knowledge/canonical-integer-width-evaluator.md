@@ -23,6 +23,8 @@ Composition verbose Port expressions now reuse it after import/default
 resolution. Explicit `(param NAME)` keeps declaration identity separate from
 bare static operands; detached `width_contract` retains scope/source/lookups.
 The declaration-only test is `t/2129-composition-port-width-expressions.t`.
-IR/schema propagation is owned by `.2.3.3.4.1.3.2.2` in
+Plan capture and getters detach expression Ports so later source retries cannot
+change widths beside an earlier captured environment (test `t/2130-composition-port-width-plan-snapshots.t`).
+IR/schema propagation is owned by `.2.3.3.4.1.3.2.2.2` in
 `ISF-REDUCTION-DELIVERY`; symbolic plans/HDL and full qualification remain pending. The
 [book](../book/src/14k-isf-language-and-scheduling.md) retains that boundary.

@@ -3,6 +3,7 @@ package FSM::Composition::Port;
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -67,6 +68,15 @@ sub set_declared_type_spec ($self, $declared_type_spec) {
     return $self->declared_type_spec;
 }
 
+sub snapshot ($self) {
+    if (ref($self->{width_token})) {
+        confess "Port '$self->{name}' requires a resolved width and source contract before snapshot\n"
+            unless defined($self->{width}) && $self->{width} > 0
+                && ref($self->{width_contract}) eq 'HASH';
+    }
+    return bless _clone_structured_value({%$self}), ref($self);
+}
+
 sub _clone_structured_value ($value) {
     return undef unless defined $value;
 
@@ -84,3 +94,18 @@ sub _clone_structured_value ($value) {
 }
 
 1;
+
+=head1 NAME
+
+FSM::Composition::Port - Composition interface port with authored width provenance
+
+=head1 DESCRIPTION
+
+C<width_token> returns detached authored width syntax. Structured width forms
+also expose a detached C<width_contract> after import/default resolution.
+C<snapshot> returns a separate Port object with the complete current attributes;
+structured-width ports require a resolved positive width and source contract.
+The copy preserves JSON scalar kinds and nested type/source/reference records.
+This does not enable symbolic source planning or HDL emission.
+
+=cut

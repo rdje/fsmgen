@@ -56,6 +56,12 @@ sub _clone ($value) {
         return [ map { _clone($_) } @$value ];
     }
 
+    # Expression ports carry an epoch-specific width beside the captured top
+    # environment. Do not share them with the live source or getter callers.
+    return $value->snapshot
+        if blessed($value) && $value->isa('FSM::Composition::Port')
+            && ref($value->width_token);
+
     return $value;
 }
 
@@ -77,6 +83,13 @@ existing stored shape and return undef from the getter.
 C<parameter_symbol_contract> separately snapshots the static-symbol/import
 contract retained by that successful top resolution. Later live cache edits
 cannot mix a new static context with an older parameter environment.
+
+Structured-width Port objects are snapshotted on construction and each getter
+read, preserving the width/source/lookup epoch beside the captured environment.
+Caller edits, later successful source retries and refused retries cannot change
+those ports. Incomplete expression widths refuse capture. Ordinary scalar and
+named-type ports keep their existing behavior. No public width IR/schema
+propagation is implied by this snapshot boundary.
 
 Both forward IR builders preserve the parameter environment; IntentHIR consumes
 the separate captured static contract. This storage does not enable source

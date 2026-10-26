@@ -71,6 +71,12 @@ cache. Retries clear all expression ports before imports/defaults and publish
 new widths/contracts only after every declaration resolves successfully.
 See the [source fixture](../../../t/data/composition-top-port-width-expressions.fsm)
 and [focused test](../../../t/2129-composition-port-width-expressions.t).
+`Plan::ports()` captures separate structured-width Port objects beside its
+parameter environment and returns fresh copies on access. Later source retries
+or getter mutations cannot mix another width epoch into that captured plan;
+unresolved expression widths refuse capture. Ordinary static port behavior
+stays unchanged. The [snapshot regression](../../../t/2130-composition-port-width-plan-snapshots.t)
+checks actual source retries and complete serialized plan stability.
 This is a declaration-only compiler API contract: canonical IR/public schema
 propagation, symbolic source plans and HDL remain pending. It does not admit
 parameterized `.isf` widths or alter API/MCP source-query refusal.

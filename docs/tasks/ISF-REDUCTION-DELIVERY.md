@@ -1180,9 +1180,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=114 for T2129/T2128/T14/T502. POD/mdBook build passes; smallest affected declaration/direct-evaluator/parser/setter checks qualify this slice, while full verification stays .6. Staged scripts/check_doctrines.sh and normal hooks gate commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate qualified composition Port width source and scoped dependency contracts through canonical IR and optional public schemas.`
   Acceptance: `After .1, preserve actual source/default/namespace bindings in IntentHIR, StructuralRTLIR and plan snapshots without static shape drift. Advertise exact optional field contracts and verify detached producer/report products. Source planning/HDL remains .4 and full verification .6; synchronize POD/book/contracts and commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.1`
+  Status: `done`
+  Goal: `Capture detached expression Port widths beside the matching Plan parameter environment before IR propagation.`
+  Acceptance: `Reproduce actual resolved source to Plan port aliasing across a default retry. Snapshot structured-width Port objects on Plan construction and return detached structured-width Ports through its getters; preserve all port source/type/role/binding attributes and ordinary static behavior. Reject incomplete expression caches before capture. Focused actual source/default/retry/getter/snapshot tests, POD/book and task evidence gate commit; no IR/schema/source/HDL admission.`
+  Verification: `Actual source-to-Plan reproduction shows a captured W default remaining16 while its data width changes18 to22 after a top-default retry. Plan::_clone previously returned blessed Port references unchanged. The fixed-name T2130 cohort fails all subtests before production edits and passes afterward, preserving independent expected old/new arithmetic widths, complete source/scope/reference/type/role attributes, JSON snapshot kinds, caller isolation and unresolved-cache refusal. T2130/T2129/T2127 focused checks pass All tests successful Files=3 Tests=22. POD/book and staged doctrines gate commit. Re-derive: actual parsed/imported source, Plan and serialized products; falsify: fixed RED/GREEN cohort, independently expected old/new widths, mutated getters and refused retries; durability: tracked source/test/book/fact and docs/audits/composition-port-width-plan-snapshots-20261026.json.gz with full command streams, recipe and input identities. Initial red.log has a Test::More plan-name collision; red-fixed.log removes it before production edits and is the attribution cohort. Static port behavior remains unchanged; no public normalized width schema, source planning or HDL admission follows. IR/schema propagation remains .2.2 and full verification .6. Task-evidence growth uses decision0070 measured actual plus the existing ratchet without a baseline or ceiling increase.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.1: snapshot expression ports with plan defaults`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2130-composition-port-width-plan-snapshots.t line 37 reports a captured Plan width22 where the independently expected original width18 belongs; the same actual-source reproduction retains W16. Plan::_clone returns blessed Ports unchanged, while parameter_environment is detached, allowing later source retries and getter setters to rewrite an older width epoch.
+  - [x] **ADDRESSED (verified)** — Fixed T2130 fails before production changes and passes afterward. Plan capture and getters snapshot resolved expression Ports, preserve complete attributes and source/reference JSON kinds, refuse incomplete caches and retain old widths/defaults after successful or refused source retries. Ordinary static port behavior and IR/source/HDL boundaries remain unchanged.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=22 for T2130/T2129/T2127. POD/mdBook build and mandatory staged doctrines qualify this capture prerequisite; full verification remains .6 and public width propagation .2.2.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2`
+  Status: `pending`
+  Goal: `Propagate the captured Port width contract through forward IR, snapshots and advertised optional schemas.`
+  Acceptance: `After .1, extend canonical structural ports, derived IntentHIR port analysis and public plan snapshots with optional detached width_contract. Publish exact applicable paths and key families; preserve existing static shapes and source/HDL refusals. Focused actual source/Plan/IR/report/schema/static/isolation controls plus synchronized book/downstream/POD and commit qualify the slice; full verification remains .6.`
   Verification: `pending`
   Commit: `pending`
 
