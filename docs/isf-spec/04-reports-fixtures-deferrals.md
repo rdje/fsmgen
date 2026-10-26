@@ -1440,6 +1440,9 @@ Focused tests:
 - [t/2099-isf-actor-width-ir-provenance.t](../../t/2099-isf-actor-width-ir-provenance.t)
 - [t/2100-isf-direct-formal-width-ir.t](../../t/2100-isf-direct-formal-width-ir.t)
 - [t/2101-isf-generated-width-ir.t](../../t/2101-isf-generated-width-ir.t)
+- [t/2107-isf-reusable-width-ir.t](../../t/2107-isf-reusable-width-ir.t)
+- [t/2108-isf-width-parameter-default-sources.t](../../t/2108-isf-width-parameter-default-sources.t)
+- [t/2109-isf-width-default-bindings.t](../../t/2109-isf-width-default-bindings.t)
 
 ## 12. Explicitly Deferred
 

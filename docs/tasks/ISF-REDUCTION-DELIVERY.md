@@ -799,10 +799,54 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=14 for T2111/T50/T2110; changed parser/payload owner are syntax OK. Legacy width formats, Core source/default isolation and ordinary parameter-value grammar retain focused coverage. Book/POD/source checks and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Full generic/override/profile/transport/runtime verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Build collision-safe scoped width, supporting-declaration and forwarding plans using the selected canonical contracts.`
   Acceptance: `After .2/.3, use explicit module owners, actual declarations and canonical binding trees. Select real module parameters explicitly, inline immutable local defaults with source identity retained, use qualified immutable static aliases only where needed, and represent captured actor scopes and actual instance forwarding without new independent compiler knobs or frozen dependencies. Preserve source interfaces/defaults, local shadowing and named types. Split constructor consumers if needed; emission remains .2.3.3.4 and complete qualification remains deferred.`
-  Verification: `pending source/default namespace prerequisites`
+  Verification: `Authored IAL0 default sources are committed at64e981768; explicit width parameter selection is committed atf78bd441c. Split semantic binding, name/declaration allocation and actual forwarding before implementation. Bind only canonical source kinds/default observations; module ownership, not matching names/defaults, decides whether a parameter is real or an immutable local inline value.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.2, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1`
+  Status: `active`
+  Goal: `Bind actual scalar width declarations to detached semantic expressions with explicit lexical identities.`
+  Acceptance: `Use actual final constructor width metadata and explicit module parameter ownership. Keep actual module parameters symbolic, inline only transaction-local defaults that are not module parameters, and preserve alias chains, literal token kinds and actor/transaction/package/enum identities through the existing canonical default binding trees. Identify foreign actor parameters as captures without guessing an emitted name or freezing a value. No second evaluator or numeric provenance inference. Integrate a private detached binding plan in actual actor/direct/generated/reusable/domain module constructors after their final metadata ownership/pruning, qualify small representative actual-source scope/alias/static/copy/refusal controls and selected old-product conservation. Plan only: names/supporting declarations and forwarding remain children .2/.3; carriers stay .2.3.3.4 and generic/public/full qualification retain later owners. Sync book/fact/task and commit.`
+  Verification: `Relevant canonical fact queried; actual source/default scope envelopes and actor/generated metadata constructors reviewed. Real module parameters and immutable local defaults must be distinguished before target symbol allocation.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1.1, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1.1`
+  Status: `done`
+  Goal: `P2: repair omitted recent ISF tests in the normative focused-test index before new binding implementation.`
+  Acceptance: `The pre-implementation census identifies exactly T2107/T2108/T2109 missing and no extra rows in docs/isf-spec/04-reports-fixtures-deferrals.md. Reproduce the existing T1250 failure, inspect the relevant test-introduction Git commits, append only the actual missing tests in lexical order while preserving every existing row/annotation, and rerun the unchanged audit. Retain before/after source, actual outputs and finite set/order controls; update book navigation and continuity. No source/runtime/API/manifest changes, test weakening or broad verification. Commit separately, then resume semantic binding .2.`
+  Verification: `The unchanged T1250 first fails at line32: listed rows end before T2107 while three current files exist. Independent Git-tracked membership confirms exactly T2107/T2108/T2109 omitted and no extras. Relevant introductions59d6d32af,3035a689f,bb0699876 each add the named test without its normative focused row; exact introduced test/index sources retain. Add only those three current paths in lexical order. Removing the inserted block reconstructs the complete original spec byte-for-byte, preserving all old annotations and unrelated prose. The unchanged audit now reports All tests successful Files=1 Tests=2. Complete current listed order equals independent tracked-test membership; individual omission and reordered-tail controls reject. Before/after spec, exact base Git join, introduction sources/metadata, unchanged test, full actual logs and controls retain in docs/audits/isf-focused-index-repair-20261026.json.gz. Re-derive: actual audit plus independent current Git census and relevant history. Falsify: individual omissions/order changes and exact outside-block conservation. Durability: tracked spec/book/task, unchanged audit, complete packet and Git. Book contributor navigation names the required focused audit. No source/test implementation, API/schema, artifact behavior, native/runtime, broad regression or publication claim. Book build/source assets and mandatory doctrines gate this finite repair; semantic binding resumes at sibling .2.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1.1: repair the ISF focused-test index`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/1250-isf-spec-focused-test-index-audit.t line 32 identifies missing T2107 and its later neighbors. Actual Git introduction edges for T2107/T2108/T2109 add those tests without the required normative rows; an independent complete tracked-test census confirms the exact omission set.
+  - [x] **ADDRESSED (verified)** — The unchanged focused-index audit changes RED to GREEN after inserting only the missing current paths in lexical order. Complete current rows equal the independent Git census; removing only the inserted block reconstructs all previous source bytes. Individual omission and order mutations reject, with relevant historical source edges retained.
+  - [x] **NO REGRESSION** — All tests successful Files=1 Tests=2 for the unchanged T1250 audit. No code/test/fixture behavior changes; old annotations and all outside-block spec bytes remain exact. Book build/source assets and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit; full feature/public/runtime verification remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.1.2`
+  Status: `pending`
+  Goal: `Implement detached scoped width-expression binding through actual module constructors.`
+  Acceptance: `After .1, implement the parent semantic-expression acceptance against actual final actor/direct/generated/reusable/domain metadata. Preserve real module parameters, immutable local alias chains, static/enum/package source identities and detached capture obligations. No second evaluator, numeric provenance inference, symbol allocation or carrier/HDL change. Qualify focused actual-source/copy/canonical-failure and old-product controls, sync all required reference/test-index/book boundaries and commit.`
+  Verification: `pending prerequisite focused-test index repair`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.2`
+  Status: `pending`
+  Goal: `Allocate collision-safe IAL0 width symbols and supporting declarations from bound semantic identities.`
+  Acceptance: `After .1, select actual module parameters through (param NAME), allocate deterministic compiler-owned context/static symbols against actual module namespaces, preserve alias/default identities and use immutable static declarations where required. Do not turn compiler aliases into independent knobs or infer scope from physical names/equal values. Split if default supporting graphs grow. Qualify actual namespace/shadow/rename/static/caller controls; no carrier or HDL rewrite. Commit with synchronized boundaries.`
+  Verification: `pending semantic binding`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3`
+  Status: `pending`
+  Goal: `Join captured width parameters to explicit actual-instance forwarding obligations.`
+  Acceptance: `After .2, bind imported actor contexts and real module parameters to actual generated/reusable/domain instance records. Retain source owners, selected use-site defaults/overrides and public interfaces; no literal freezing or guessed physical ancestry. Require every compiler context parameter to have an explicit forwarding obligation, preserving meaningful static/local controls. Split constructor families if needed. Actual emission stays .2.3.3.4 and HDL/default/shape qualification stays .3/.4/.6. Qualify focused actual-instance controls, sync docs and commit.`
+  Verification: `pending symbol allocation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4`

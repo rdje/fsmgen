@@ -3,6 +3,10 @@
 This chapter helps you navigate between the new book and the older focused
 reference docs.
 
+Contributor check: keep the ISF specification's focused-test list aligned with
+`t/*-isf-*.t`. Run `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`
+after adding or renaming an ISF test.
+
 ## What The Book Is For
 
 Use the book when you want:
