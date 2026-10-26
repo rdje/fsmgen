@@ -197,6 +197,24 @@ cover forward/default/namespace meaning; the
 canonical expression boundaries. These focused checks do not qualify external
 HDL compilation/runtime or complete profile and transport matrices.
 
+The internal VHDL [generic preparer](../../../perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm)
+now prepares dependency-ordered `natural` top defaults from matching captured
+environments. This is a helper boundary; the structural VHDL emitter still
+refuses parameter environments. Plain nonnegative decimal literals, aliases,
+captured decimal static values and canonical `+`, `-`, `*`, `/`, `%` arithmetic
+are prepared; `%` renders as VHDL `mod`. Rendered arithmetic steps must remain
+nonnegative and within the portable integer range through `2147483647`.
+Defaults retain parameter names rather than validation values. Names must be
+non-reserved VHDL basic identifiers; module, port, signal, instance and parameter
+names reserve a case-insensitive namespace. Generated `natural`, `std_logic`,
+`std_logic_vector` and `signed` type names are also reserved. Sized literals, aggregate defaults,
+bitwise operators, foreign scopes, cycles and incomplete bindings refuse.
+The [source fixture](../../../t/data/composition-vhdl-natural-generics.fsm) and
+[focused preparation test](../../../t/2136-composition-vhdl-natural-generics.t)
+cover actual parsed/imported Plan/IR and independent order, cache and namespace
+controls. Child declaration type evidence, generic-map integration, symbolic
+VHDL ranges, external override legality and full qualification remain pending.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an

@@ -1,27 +1,28 @@
 ---
 id: composition-scalar-binding-renderer
-title: Canonical scalar composition rendering preserves scoped parameter names
+title: Scalar composition rendering preserves scoped parameter names
 answers:
   - "where does canonical scalar composition binding rendering live?"
   - "does scalar composition expression rendering enable parameterized HDL plans?"
   - "where is scalar top declaration order prepared?"
+  - "where are VHDL composition natural generics prepared?"
 date: 2026-10-26
 status: current
 tags: [composition, parameters, lowering, verilog]
-evidence: perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm; perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm; t/2132-composition-scalar-binding-renderer.t; t/2133-composition-top-declaration-lowering.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t t/2135-composition-symbolic-port-ranges.t
+evidence: docs/book/src/05-composition-basics.md; t/2136-composition-vhdl-natural-generics.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t t/2135-composition-symbolic-port-ranges.t t/2136-composition-vhdl-natural-generics.t
 ---
 
-`CompositionBindingEmitter` renders scoped scalar bindings as text and ordered
-references, retaining parameter names. Static scalars become literals; raw
-expressions and aggregates refuse. `CompositionParameterEmitter` orders defaults
-by canonical dependencies, with earliest-ready authored ties. Module, port, net,
-instance and collected typedef names reserve the namespace; validation widths
-never size parameter declarations.
+Verilog-family `CompositionBindingEmitter` retains scoped scalar names and
+ordered references; static scalars become literals. Raw text and aggregates
+refuse. `CompositionParameterEmitter` orders defaults by dependencies with
+earliest-ready authored ties, reserving module/port/net/instance/typedef names.
+Validation widths never size declarations. T2134 covers actual source/child/Plan/IR.
+`CompositionWidthEmitter` checks scope/ordered lookups and ignores port caches,
+retaining one-bit-default parameter ranges (T2135).
 
-The structural emitter requires a matching captured environment. T2134 covers
-actual source/child/Plan/IR. `CompositionWidthEmitter` checks scope and ordered
-lookups, retains one-bit-default parameter ranges and ignores port width caches
-(T2135). Source admission, VHDL parameters, typed tops and symbolic aggregate
-bindings stay guarded; existing static aggregate profiles are unchanged.
-See the [composition reference](../book/src/05-composition-basics.md).
+The VHDL `CompositionParameterEmitter` prepares canonical `natural` defaults
+with case-insensitive basic-identifier namespace checks and bounded decimal
+arithmetic (T2136). Actual VHDL parameter emission stays guarded. Source admission,
+typed tops and symbolic aggregate bindings stay pending; static aggregate
+profiles are unchanged. See the [composition reference](../book/src/05-composition-basics.md).

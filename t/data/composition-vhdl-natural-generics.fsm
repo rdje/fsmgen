@@ -1,0 +1,6 @@
+(?top:vhdl_generic_top
+  (+params (COPY WIDTH) (WIDTH 16) (EQUAL 16) (TOTAL (+ COPY shared.EXTRA)))
+  (+import shared)
+  (?ports:io clk<1)
+)
+(?pkg:shared (+constants (EXTRA 2)))

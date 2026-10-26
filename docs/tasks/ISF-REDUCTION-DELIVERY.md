@@ -1288,10 +1288,45 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2135/T2134/T2131; guarded mdBook/POD build and POD/source freshness checks pass. Static module text and named-type controls remain exact. Staged scripts/check_doctrines.sh and normal hooks gate this slice; complete external/profile/runtime/API/MCP qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate canonical top generics, bindings and port widths into supported VHDL structural profiles.`
   Acceptance: `After .1/.2, use explicit typed generic semantics and namespace rules. Preserve canonical dependency identity without cached-value substitution; refuse unsupported arithmetic/type/profile shapes. Focused VHDL emission checks and synchronized profile contracts/book gate commit; full external execution remains .6.`
-  Verification: `pending`
+  Verification: `Split before implementation: prepare canonical natural-valued scalar generics with VHDL case-insensitive namespace rules; preserve child declaration literal/type evidence before generic actual forwarding; integrate prepared top/child emission, then captured port ranges. Sized literals and unsupported scalar/operator/type forms remain fail-closed. Source admission stays .4 and full verification .6.`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.1`
+  Status: `done`
+  Goal: `Prepare dependency-ordered canonical natural-valued VHDL top generics and exact target namespace checks.`
+  Acceptance: `Use actual parsed/imported environments and scoped default bindings. Select nonnegative portable integer defaults with plain decimal source literals, aliases and bounded arithmetic; do not infer vector generic types from validation widths. Refuse sized literals, aggregates, unsupported operators, invalid/default arithmetic, case-insensitive structural collisions, invalid basic identifiers, reserved words, foreign scopes and incomplete memberships. Preserve selected names rather than validation cache values and source/emitter guards. Add focused actual-source/prepared-product, independent namespace/order/arithmetic and hostile controls; synchronize helper POD, book and task evidence and commit. Child type evidence, actual emission, port widths and full verification remain successors/.6.`
+  Verification: `Actual parsed/imported natural-valued scalar source feeds captured Plan/StructuralRTLIR and the internal VHDL generic preparer. Independent exact declaration records preserve forward WIDTH/COPY aliases, equal-valued EQUAL identity, TOTAL arithmetic and earliest-ready authored ties. Mutated validation caches and returned dependency arrays cannot change authored defaults or owner data. Case-folded structural/parameter collisions, generated type names, VHDL keywords/basic-identifier violations, foreign scopes, incomplete/duplicate memberships, default cycles, aggregates, sized/negative/out-of-range literals and bitwise operators refuse. Canonical arithmetic aliases retain ordered selected parameter references; rendered integer folds reject intermediate overflow even before a later multiplication by zero. Initial T2136 RED reports the absent helper; final T2136/T2133/T2134 pass All tests successful Files=3 Tests=13. Isolated final-source numeric-cache substitution and final-only-fold-bound variants fail the same focused test. Module syntax OK, guarded mdBook/POD build and POD/source freshness pass. Native --strict --check --json preserves FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING; actual VHDL emission retains its top-environment guard. Re-derive: actual source/Plan/IR and literal typed declarations; falsify: independently expected identity/order/namespace/arithmetic results, hostile inputs and retained wrong-cache/wrong-fold controls; durability: helper/test/fixture/book/fact plus docs/audits/composition-vhdl-natural-generics-20261026.json.gz with full streams, source hashes, control sources and replay recipe. API/MCP/corpus/discovery applicability is internal preparation only: no new successful source query or actual emitter profile is advertised. Child declaration type evidence, VHDL emission and port ranges remain successors; full profile/runtime/transport qualification stays .6. Refresh exact book aggregate authority and claim inventory; use decision0070 actual plus the existing task-evidence ratchet without baseline or ceiling growth. Existing fact questions and routes remain; canonical book links replace duplicated source-path evidence while retaining a new VHDL question. Staged doctrines and normal hooks gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.1: prepare canonical natural VHDL generics`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2136-composition-vhdl-natural-generics.t line 13 reports the missing VHDL CompositionParameterEmitter. The prepared parameter environment and canonical bindings already exist, while VHDL module emission retains its top-environment guard; generic type and case-insensitive declaration lowering has no implementation.
+  - [x] **ADDRESSED (verified)** — Actual source/Plan/IR now prepares exact natural generic records in canonical dependency order with selected alias names. VHDL basic identifiers, case-insensitive collisions and generated type names are checked independently of Verilog rules. Default arithmetic validates each rendered fold. Retained wrong-cache and wrong-fold variants fail the same focused test; VHDL module and native source admission stay guarded.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for VHDL preparation and existing Verilog declaration/emission controls. Module syntax OK; guarded book/POD build and POD/source freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit. Complete profile/runtime/public-transport qualification remains .6.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.2`
+  Status: `pending`
+  Goal: `Preserve actual child generic declaration source/type evidence for typed VHDL forwarding.`
+  Acceptance: `Before converting symbolic actuals, distinguish integer versus sized vector/bit child declarations through declared RTL/generated child contracts; current declaration kind/width metadata alone cannot supply that distinction. Preserve detached exact declaration evidence through actual realization/IR paths, add focused independent source-shape controls, sync optional schema/POD/book and commit. Refuse incomplete type evidence rather than guessing from validation values. Broader transport/runtime verification stays .6.`
+  Verification: `pending canonical top preparation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.3`
+  Status: `pending`
+  Goal: `Integrate qualified natural top generic defaults and correctly typed symbolic child actuals into prepared VHDL emission.`
+  Acceptance: `After .1/.2, use canonical target rendering, dependency order and actual child declaration type evidence. Preserve static byte shape and existing supported literal/aggregate profiles; refuse unsupported symbolic vector/aggregate/typed profiles and missing environments. Focused actual source/Plan/IR/emitter checks, exact discovery/book and commit; source admission stays .4 and full verification .6.`
+  Verification: `pending declaration evidence`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3.4`
+  Status: `pending`
+  Goal: `Lower captured scalar port widths into prepared VHDL ranges with exact parameter identities.`
+  Acceptance: `After .3, preserve selected parameter names and static lookup payloads in supported VHDL vector ranges, including one-bit defaults; retain signed/state/type meaning and refuse unsupported operators/shape/type combinations. Validate scope and ordered lookups without numeric cache substitution. Focused actual source/Plan/IR/emitter and hostile controls, precise discovery/book, task evidence and commit; source admission and full verification remain separate.`
+  Verification: `pending top/child emission`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
