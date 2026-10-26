@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -945,10 +945,31 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Admit canonical top +params with detached authored and resolved default graphs.`
   Acceptance: `Inspect existing Core/default/source and composition top interfaces before sharing their evaluator and dependency rules. Add bounded ?top +params with explicit ownership and declared namespace behavior, retain original trees/direct references beside selected defaults, preserve ordering/cycle/refusal contracts and caller isolation, and keep static constants distinct. Qualify the smallest actual source/API/default/refusal checks and synchronize public source discovery, corpus, applicability and book. Do not claim symbolic instance or HDL propagation yet; commit.`
-  Verification: `pending semantic instance contract`
+  Verification: `Active after clean5f213e76f. Reuse the existing direct-root lazy parameter graph and canonical ParameterValueSupport evaluator before admitting composition declarations. Split shared resolver ownership/lifetime from top declaration/import/default integration. Preserve current registration order, normalized products, original/default references, namespace precedence and refusals; never route future top generics through the static override resolver as frozen values.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.1`
+  Status: `done`
+  Goal: `Share the canonical parameter-default declaration graph without retaining resolver contexts.`
+  Acceptance: `Inspect actual direct-root parsing, canonical value/path resolution, registration and source/getter contracts. Extract the existing lazy acyclic parameter graph into one neutral reusable owner with no second evaluator or self-retaining callback graph. Preserve declaration order, actual parameter-root/member/index observations, raw default/source identity, static fallback, normalized records, registration behavior and meaningful errors. Probe parser/context lifetime through actual objects and fix any demonstrated retained-context defect within this required reuse. Focused legacy/new lifetime/source/copy/refusal checks, old-product conservation, POD/book/fact/task and commit gate closure. No top grammar, symbolic override or HDL behavior is introduced here.`
+  Verification: `Actual adapter/parser weak-reference controls isolate a self-referential parameter resolver callback: empty resolution releases, but literal/alias/cycle/unknown retain after all caller references leave scope. A bounded diagnostic copy that clears the callback only at normal return releases successful graphs but still retains on cycle refusal. The shared ParameterDeclarationSupport uses named functions and ordinary per-call context, delegating value/path normalization to the unchanged canonical evaluator. It preserves source-order registration with detached callback/result trees. Fixed T2117 fails four lifetime assertions through the exact committed predecessor Parser, while legacy T2110 passes; the unchanged current cohort reports All tests successful Files=4 Tests=15. All selected legacy raw AST/Core/manager/default source/Intent/native HDL products remain exact, with only the declared Parser load identity and existing HDL Date projection accounted. Selected loaded hashes and compiled method files bind current owners; predecessor bytes join HEAD. Source syntax passes. The receipt docs/audits/canonical-parameter-graph-20261026.json.gz retains producers, code/test epochs, causal probe, before/after and complete streams with exact root-label normalization declared. Distinct re-derivation is actual graph/source/callback/lifetime/native products; falsification is fixed old/current, success-only cleanup counterexample, namespace/cycle/unknown/copy controls and whole legacy equality; durability is code/test/receipt/POD/book/fact/task/Git. The separate static-symbol resolver also demonstrably retains parser context for constants/aliases: owned P1 .19 before publication, not repaired or claimed leak-free here. No memory-size/throughput, whole footprint, top grammar, symbolic override or HDL propagation claim. Book/source, staged doctrines and normal hooks gate the slice before .4.1.1.2 integration.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.1: share canonical parameter declaration graph`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Fixed predecessor diagnostics at t/2117-canonical-parameter-declaration-graph.t line 29 expose retained Parser objects on literal/alias success and cycle/unknown refusal. Actual compiled Parser file matches the exact Git predecessor. The self-recursive resolve_param closure captures itself and the parser; success-only cleanup releases successes but not exceptions.
+  - [x] **ADDRESSED (verified)** — Named shared graph functions remove the self-owning closure on all exits, preserving canonical evaluation, actual direct references, declaration registration order and detached callback/result/source trees. Unchanged current lifetime assertions pass; selected complete old products conserve outside the declared loader identity and pre-existing Date projection. Separate symbol retention stays owned by .19.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=15 for T2117/T2110/T534/T50; shared helper and Parser syntax OK. Complete legacy source/value/Intent/HDL equality passes. Book/source checks, staged scripts/check_doctrines.sh and normal hooks gate this slice; full qualification remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2`
+  Status: `pending`
+  Goal: `Integrate canonical top declarations and detached authored/resolved defaults after imports.`
+  Acceptance: `After .1, inspect actual top parsing, package import resolution, Top/TopSymbols interfaces, pipeline plans, source-query/schema applicability and generation profiles. Admit bounded top +params with the shared graph, explicit owner/namespace behavior, original/default references, cycle/order/source/copy guards and canonical package/static environments. Keep mutable configuration separate from static top symbols; unfinished symbolic binding/width/HDL profiles must fail closed rather than drop declarations or freeze defaults. Synchronize source discovery/corpus/applicability/book at the actual supported boundary. Split growing consumers before implementation; focused checks and commit precede later typed binding/emission.`
+  Verification: `Shared canonical resolver .1 is committed; inspect actual top/import/query/emission consumers and split integration before admission.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2`
@@ -1031,7 +1052,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.6`
   Status: `pending`
   Goal: `Qualify and publish complete required SPECFORGE reduction delivery.`
-  Acceptance: `Coordinate SEM .92.4 and .69 after required source slices. Compare exact retained unrolled baseline and accepted scalar parity, then grouped parity at widths 16/32 and a short-tail setting under real parameter overrides, with independent expected bits and width/legality negatives. Verify source/carrier/report/public discovery and supported profiles, required full CI and exact-SHA hosted workflows. Update canonical feedback with revision, selected syntax, limits and caller-owned pin/bundle/integration steps. No foreign write or historical-gate waiver; required R1-R3 close only on complete evidence.`
+  Acceptance: `After required feature implementation, close the separately owned symbol-resolver retention defect .19 before resource-sensitive full/publication qualification. Coordinate SEM .92.4 and .69 after required source slices. Compare exact retained unrolled baseline and accepted scalar parity, then grouped parity at widths 16/32 and a short-tail setting under real parameter overrides, with independent expected bits and width/legality negatives. Verify source/carrier/report/public discovery and supported profiles, required full CI and exact-SHA hosted workflows. Update canonical feedback with revision, selected syntax, limits and caller-owned pin/bundle/integration steps. No foreign write or historical-gate waiver; required R1-R3 close only on complete evidence.`
   Verification: `Deferred verification task, activated after required feature implementation: full source/carrier/native/API/MCP/corpus and broad constructor/domain qualification, including .2.3.2.4 products, remain unexecuted. Focused implementation checks do not close this task. Publication qualification and exact-SHA hosted results remain pending.`
   Commit: `pending`
 
@@ -1261,6 +1282,14 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and native 0456d31a1 identify the exact prior UTC record. Actual collector admission now exceeds 24 hours, after the earlier startup refusal; suffix or age cannot authorize disposal.
   - [x] **ADDRESSED (verified)** — The admitted exclusive census and independent rg membership agree. All candidates retain without disposal authority, the latest-only record takes the captured UTC, and saved member/path/Boolean/removal controls reject without another walk or deletion.
   - [x] **NO REGRESSION** — Saved published-contract replay and current task/book/source/index/decision checks pass. knowledge-map: OK, complete claim checks, staged scripts/check_doctrines.sh and normal hooks gate this dated maintenance slice. Original/native/compiler evidence and every enforcement ceiling remain unchanged.
+
+- ID: `ISF-REDUCTION-DELIVERY.19`
+  Status: `pending`
+  Goal: `Repair retained declarative symbol-resolver contexts before publication qualification.`
+  Acceptance: `P1 resource defect found while reading the required shared parameter kernel: an actual parser weak reference releases after empty symbol resolution, but remains after successful constant and constant-alias resolution once all caller references leave scope. Reproduce with .artifacts/canonical-parameter-graph-20261026/symbol-lifetime.pl and retained receipt. DeclarativeSymbolResolver has self-referential resolve_node and dependency-walk closures; establish exact retaining edges, replace per-call ownership safely on success/failure, and preserve current constant/enum/package/top evaluation, ordering, diagnostics, source/getter/caller contracts. Run focused real lifetime/namespace/graph/refusal controls and conservation checks, update book/fact/task and commit. Director0121 scheduling: after required feature implementation and before .6/publication qualification, unless a required integration check demonstrates it blocks delivery earlier. No global leak-free or memory-size/throughput claim without its own evidence.`
+  Verification: `Actual direct-root symbol probes: empty releases, constant and constant_alias retain; all complete successfully. This separate existing symbol graph is not repaired or hidden by the parameter-kernel extraction. Current .2.3.3.4.1.1.1 remains the required implementation frontier; the final tracked parameter-kernel receipt will retain the related probe/source and explicit missing repair leg.`
+  Commit: `pending`
+
 
 ## Blockers
 

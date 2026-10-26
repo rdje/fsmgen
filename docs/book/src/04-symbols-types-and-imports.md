@@ -85,6 +85,14 @@ Forward references, aggregate member/index paths and arithmetic retain their
 direct parameter references through the existing resolver. Constants and enum
 members keep their source expression but are not listed as parameter references.
 
+The direct-root parser now uses the reusable
+`FSM::ParameterDeclarationSupport` declaration graph with the existing canonical
+value evaluator. It keeps declaration and registration order even when a default
+refers forward. Callbacks receive detached values and source records. Literal,
+alias, cyclic and unknown-name parameter resolutions release their parser context
+after the caller releases it; this is a scoped lifetime guarantee, not a claim
+about every symbol resolver. Composition top parameters remain a later feature.
+
 This preservation prepares later lowering. Current HDL parameter defaults still
 use normalized values; dependent-default emission and override behavior remain
 required follow-on work. Retained source identity alone does not prove that an

@@ -21,6 +21,7 @@ use FSM::Package::PayloadTypeSupport;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::ParameterValueSupport;
+use FSM::ParameterDeclarationSupport;
 use FSM::SourceClassifier;
 use FSM::Support::DocumentationHints qw(supported_boundary_hint supported_boundary_sentence);
 
@@ -2604,105 +2605,23 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
     $param_entries ||= [];
     return 1 unless @$param_entries;
 
-    my %entry_by_name;
-    my @param_order;
-    for my $entry (@$param_entries) {
-        my $name = $entry->{name};
-        Carp::confess
-            "Malformed '+params' entry for parameter '".$self->describe_contract_name($name)."' in source '$module_name'. ".
-            "Each '+params' declaration may bind a parameter/generic name at most once so one default value remains unambiguous. ".
-            supported_boundary_hint()
-            if exists $entry_by_name{$name};
-        $entry_by_name{$name} = $entry;
-        push @param_order, $name;
-    }
-
-    my %resolved;
-    my %default_sources;
-    my %visiting;
-    my @stack;
-    my $docs_hint = ' ' . supported_boundary_sentence();
-
-    my $resolve_param;
-    $resolve_param = sub ($name) {
-        return $resolved{$name} if exists $resolved{$name};
-
-        if ($visiting{$name}) {
-            my @cycle = (@stack, $name);
-            Carp::confess
-                "Malformed '+params' dependency graph in source '$module_name'. ".
-                "The active '+params' contract resolves normal non-cyclic parameter references without depending on declaration order, but parameter dependency cycles are blocked. ".
-                "Cycle: ".join(' -> ', map { "parameter '$_'" } @cycle).". ".
-                supported_boundary_hint();
-        }
-
-        my $entry = $entry_by_name{$name}
-            or return undef;
-
-        $visiting{$name} = 1;
-        push @stack, $name;
-        my $authored_expression = _copy_parameter_default_expression($entry->{value_ast});
-        my @references;
-        my $value_info = FSM::ParameterValueSupport->canonical_value(
-            value_ast => $entry->{value_ast},
-            context => "Direct source parameter '$name'",
-            docs_hint => $docs_hint,
-            resolve_symbol_payload => sub ($symbol_name) {
-                if (exists $entry_by_name{$symbol_name}) {
-                    my $symbol_value_info = $resolve_param->($symbol_name);
-                    if (ref($symbol_value_info) eq 'HASH') {
-                        push @references, {parameter => $symbol_name, token => $symbol_name, suffix => ''};
-                        return $symbol_value_info->{value_payload};
-                    }
-                    return undef;
-                }
-                if ($symbol_name =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/ && exists $entry_by_name{$1}) {
-                    my ($param_name, $suffix) = ($1, $2);
-                    my $symbol_value_info = $resolve_param->($param_name);
-                    my $payload = FSM::ParameterValueSupport->resolve_payload_path(
-                        $symbol_value_info->{value_payload},
-                        $suffix,
-                    ) if ref($symbol_value_info) eq 'HASH';
-                    push @references, {parameter => $param_name, token => $symbol_name, suffix => $suffix}
-                        if defined $payload;
-                    return $payload;
-                }
-                return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
-            },
-        );
-        pop @stack;
-        delete $visiting{$name};
-
-        $default_sources{$name} = {
-            parameter => $name, source_module => $module_name,
-            expression => $authored_expression, references => \@references,
-        };
-        $resolved{$name} = $value_info;
-        return $value_info;
-    };
-
-    for my $name (@param_order) {
-        my $value_info = $resolve_param->($name);
-        $self->{signal_manager}->store_param($name, $value_info);
-
-        if ($self->{fsm_module} && $self->{fsm_module}->can('set_parameter')) {
-            $self->{fsm_module}->set_parameter($name, {
-                %$value_info,
-                origin_kind => 'direct_root_parameter',
-            }, $default_sources{$name});
-        }
-    }
-
+    FSM::ParameterDeclarationSupport->resolve_declarations(
+        entries => $param_entries, source_module => $module_name,
+        boundary_hint => supported_boundary_hint(),
+        docs_hint => ' ' . supported_boundary_sentence(),
+        resolve_static_symbol_payload => sub ($symbol_name) {
+            return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
+        },
+        on_resolved => sub ($name, $value_info, $source) {
+            $self->{signal_manager}->store_param($name, $value_info);
+            if ($self->{fsm_module} && $self->{fsm_module}->can('set_parameter')) {
+                $self->{fsm_module}->set_parameter($name, {
+                    %$value_info, origin_kind => 'direct_root_parameter',
+                }, $source);
+            }
+        },
+    );
     return 1;
-}
-
-# Copy admitted frontend trees and semantic payloads before normalization can
-# inspect scalar flags. Unsupported references still reach canonical validation.
-sub _copy_parameter_default_expression($value) {
-    return [map { _copy_parameter_default_expression($_) } @$value] if ref($value) eq 'ARRAY';
-    return {map { $_ => _copy_parameter_default_expression($value->{$_}) } keys %$value}
-        if ref($value) eq 'HASH';
-    return $value;
 }
 
 sub parse_init_assignment_directive($self, $init_ast) {

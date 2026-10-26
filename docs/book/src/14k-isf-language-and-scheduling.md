@@ -739,6 +739,10 @@ the authored expression and direct parameter references in separate detached
 source records, alongside the unchanged normalized values. HDL default
 propagation remains a required later task; changing `W` is not yet qualified to
 update `BOUND`.
+The direct-root declaration graph now shares one canonical helper for future
+composition reuse, preserving defaults and source records while removing retained
+parameter resolver contexts on success and refusal. Top declarations and symbolic
+instance emission remain pending.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates
