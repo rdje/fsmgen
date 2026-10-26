@@ -1,0 +1,14 @@
+(?top:port_widths
+  (+params (W BASE) (ALIAS W) (GROUP (8'h01 8'h02)))
+  (+constants (BASE 16) (TYPE 3))
+  (+types (type TYPE (signed (bits 7))))
+  (+import widths)
+  (?ports
+    clock<1:clock reset<1:reset
+    typed<TYPE static<BASE
+    (input data (width (+ (param ALIAS) widths.EXTRA)))
+    (output result (width (div (* (param W) 3) 2)))
+    (input explicit_static (width (+ BASE 1)))
+  )
+)
+(?pkg:widths (+constants (EXTRA 2)))

@@ -1159,9 +1159,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=48 for shared evaluator, explicit parameter selection, scalar width support and size-section boundary. Shared helper and Parser syntax OK; native strict source check and POD/mdBook build pass. Staged scripts/check_doctrines.sh and normal hooks gate this preparation; full qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate authored composition port width expressions and detached scoped dependencies into canonical declarations and IR.`
   Acceptance: `Use the shared width evaluator with explicit top parameter/static selection after import/default resolution. Preserve source trees and actual parameter references beside cached positive widths through Port and canonical IR. Preserve named-type precedence, resets and static report shapes; refuse unsupported namespace, aggregate and arithmetic forms contextually. Qualify a small actual-source/default/type/refusal/isolation cohort, synchronize grammar/schema applicability and book, and commit. Split IR/schema propagation before editing if necessary. Source planning and HDL remain refused until .4; full qualification stays .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.1`
+  Status: `done`
+  Goal: `Resolve authored verbose composition width expressions through the shared evaluator after imports/defaults and retain detached scoped Port contracts.`
+  Acceptance: `Preserve named-type and existing scalar token precedence; explicit (param NAME) alone selects declared top parameters. Resolve bounded arithmetic with contextual refusals and retain source AST plus ordered actual namespace lookups beside positive defaults. Test actual source/default/static/type/refusal/isolation and retry controls with focused checks; document declaration-only applicability. IR/schema propagation stays .2; symbolic source plans/HDL and full verification stay .4/.6.`
+  Verification: `Actual parsed/imported/defaulted Port widths and detached source/scope/ordered lookup records pass independent literal arithmetic, alias/static/type/role, getter isolation, refreshed-default, failed-default and all-port refused-retry controls. The qualified predecessor parser refuses the exact current fixture at its scalar-only verbose width boundary; earlier malformed test-fixture and string-input harness failures are retained separately and are not product RED evidence. Native --strict --check --json still refuses top parameter lowering, so no source/HDL/API/MCP admission or normalized schema claim follows. Focused T2129/T2128/T14/T502 reports All tests successful Files=4 Tests=114; POD/mdBook builds. Re-derive: actual source/import/default/evaluator/Port products; falsify: independently expected widths, namespace/type collisions, hostile source and predecessor refusal; durability: source/tests/book/fact plus docs/audits/composition-port-width-declarations-20261026.json.gz and Git. Full verification and joined public propagation remain .6/.2. Public-contract sync applies only to this private declaration boundary; downstream notes deny source/IR/HDL admission. PGEN claim source hash matches the retained reviewed template; README and containment guide are already adopted locally. No further policy adoption change is indicated. Initial doctrines reject task-evidence total line/byte allowance exhaustion; apply decision0070 measured actual plus the existing ratchet, without baseline or ceiling growth. Corrected staged doctrines and hooks gate this slice.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.1: preserve composition port width dependencies`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at .artifacts/composition-width-20261026/predecessor/FSM/Composition/Parser.pm line 1130 rejects the actual source (input data (width (+ (param ALIAS) widths.EXTRA))) because verbose widths require one scalar token. PortWidthResolver previously resolved only static scalar/type tokens, so no actual top parameter selection or detached width source/lookups survived declarations.
+  - [x] **ADDRESSED (verified)** — Actual imported source resolves declared alias and arithmetic widths with independent literal expectations, preserves named-type precedence and clock/reset roles, and retains detached AST/scope/ordered parameter/static lookups. Changed defaults recompute; aggregate/default failures clear every expression port before retries; complete declaration success gates cache publication. Native --strict --check --json preserves the symbolic top-lowering refusal. IR/schema and complete source/HDL delivery remain separately owned.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=114 for T2129/T2128/T14/T502. POD/mdBook build passes; smallest affected declaration/direct-evaluator/parser/setter checks qualify this slice, while full verification stays .6. Staged scripts/check_doctrines.sh and normal hooks gate commit.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2`
+  Status: `pending`
+  Goal: `Propagate qualified composition Port width source and scoped dependency contracts through canonical IR and optional public schemas.`
+  Acceptance: `After .1, preserve actual source/default/namespace bindings in IntentHIR, StructuralRTLIR and plan snapshots without static shape drift. Advertise exact optional field contracts and verify detached producer/report products. Source planning/HDL remains .4 and full verification .6; synchronize POD/book/contracts and commit.`
   Verification: `pending`
   Commit: `pending`
 

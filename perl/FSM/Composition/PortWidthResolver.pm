@@ -8,6 +8,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Package::DeclarativeTypeSupport;
+use FSM::WidthExpressionSupport;
 
 sub _is_deferred_imported_type_alias ($class, $type_spec) {
     return ref($type_spec) eq 'HASH'
@@ -29,6 +30,15 @@ sub resolve_port_contract ($class, %args) {
     my $top_symbols = $args{top_symbols};
     my $docs_hint = $args{docs_hint} // q{};
     my $allow_unresolved_imported_type_refs = $args{allow_unresolved_imported_type_refs} // 0;
+
+    # Structured widths require the actual resolved top environment. Parsing
+    # retains the authored AST without resolving against incomplete imports.
+    return {width => undef, signed => 0, state_model => undef,
+        declared_type_name => undef, declared_type_spec => undef}
+        if ref($width_token) eq 'ARRAY' && $allow_unresolved_imported_type_refs;
+    if (ref($width_token)) {
+        return $class->resolve_expression_contract(%args);
+    }
 
     return {
         width => 1,
@@ -105,9 +115,54 @@ sub resolve_port_contract ($class, %args) {
         $docs_hint;
 }
 
+sub resolve_expression_contract ($class, %args) {
+    my $top = $args{top} or confess "Composition width expression requires a resolved top";
+    my $symbols = $args{top_symbols} || $top->top_symbols;
+    my $graph = $top->parameter_default_graph;
+    confess "Composition top '" . $top->name . "' width expression requires resolved parameter defaults\n"
+        if @{$top->parameter_declarations} && !defined($graph);
+    my $parameters = $graph ? $graph->{parameters} : {};
+    my @references;
+    my $evaluator = FSM::WidthExpressionSupport->new(
+        resolve_symbol_payload => sub ($name) {
+            my $payload = $symbols->resolve_payload($name);
+            push @references, {kind => 'static_symbol', token => $name,
+                value_payload => $payload} if defined $payload;
+            return $payload;
+        },
+        resolve_parameter_payload => sub ($name) {
+            my $parameter = $parameters->{$name};
+            return undef unless $parameter;
+            push @references, {kind => 'parameter', token => $name};
+            return $parameter->{value_payload};
+        },
+    );
+    my $context = "Composition top '" . $top->name . "' contains '?ports' token '" .
+        ($args{token} // '?ports') . "', but composition port sizing";
+    my $width = $evaluator->resolve_positive_width_expression($args{width_token}, $context);
+    return {width => $width, signed => 0, state_model => undef,
+        declared_type_name => undef, declared_type_spec => undef,
+        width_contract => {
+            scope => {kind => 'composition_top', owner => $top->name},
+            expression => $args{width_token}, references => \@references,
+        }};
+}
+
 sub resolve_width_token ($class, %args) {
     my $resolved_contract = $class->resolve_port_contract(%args);
     return $resolved_contract->{width};
+}
+
+sub clear_expression_widths ($class, %args) {
+    my $top = $args{top} or confess "PortWidthResolver requires a composition top";
+    for my $block (@{$top->ports_blocks || []}) {
+        for my $port (@{$block->ports || []}) {
+            next unless $port->can('width_token') && ref($port->width_token);
+            $port->set_width(undef);
+            $port->set_width_contract(undef);
+        }
+    }
+    return 1;
 }
 
 sub resolve_declared_port_widths ($class, %args) {
@@ -118,10 +173,12 @@ sub resolve_declared_port_widths ($class, %args) {
     my $top_symbols = $top->top_symbols
         or confess "PortWidthResolver requires top symbols";
 
+    $class->clear_expression_widths(top => $top);
+    my @updates;
     for my $ports_block (@{ $top->ports_blocks || [] }) {
         for my $port (@{ $ports_block->ports || [] }) {
             next unless ref($port) && $port->can('width_token') && $port->can('set_width');
-            next if defined $port->width;
+            next if defined($port->width) && !ref($port->width_token);
             next unless defined $port->width_token;
 
             my $resolved_contract = $class->resolve_port_contract(
@@ -129,22 +186,53 @@ sub resolve_declared_port_widths ($class, %args) {
                 token => ($port->raw_token // '?ports'),
                 width_token => $port->width_token,
                 top_symbols => $top_symbols,
+                top => $top,
                 docs_hint => $docs_hint,
                 allow_unresolved_imported_type_refs => 0,
             );
-            $port->set_width($resolved_contract->{width});
-            $port->set_signed($resolved_contract->{signed})
-                if $port->can('set_signed');
-            $port->set_state_model($resolved_contract->{state_model})
-                if $port->can('set_state_model');
-            $port->set_declared_type_name($resolved_contract->{declared_type_name})
-                if $port->can('set_declared_type_name');
-            $port->set_declared_type_spec($resolved_contract->{declared_type_spec})
-                if $port->can('set_declared_type_spec');
+            push @updates, [$port, $resolved_contract];
         }
+    }
+    # Publish only after every declaration has resolved successfully.
+    for my $update (@updates) {
+        my ($port, $resolved_contract) = @$update;
+        $port->set_width($resolved_contract->{width});
+        $port->set_width_contract($resolved_contract->{width_contract});
+        $port->set_signed($resolved_contract->{signed})
+            if $port->can('set_signed');
+        $port->set_state_model($resolved_contract->{state_model})
+            if $port->can('set_state_model');
+        $port->set_declared_type_name($resolved_contract->{declared_type_name})
+            if $port->can('set_declared_type_name');
+        $port->set_declared_type_spec($resolved_contract->{declared_type_spec})
+            if $port->can('set_declared_type_spec');
     }
 
     return 1;
 }
 
 1;
+
+=head1 NAME
+
+FSM::Composition::PortWidthResolver - Composition port type and width resolution
+
+=head1 DESCRIPTION
+
+Keeps named-type precedence and ordinary scalar width tokens. Verbose port
+C<(width EXPR)> forms retain their authored AST during parsing and resolve via
+L<FSM::WidthExpressionSupport> after imports and top defaults. Bare symbols
+select static symbols; C<(param NAME)> selects only declared top parameters.
+Positive cached widths do not replace source identity.
+
+Structured widths attach a detached Port C<width_contract> containing the
+composition-top C<scope>, authored C<expression>, and ordered actual
+C<references>. References contain C<kind> and C<token>; static references also
+retain C<value_payload>. Parameter aliases keep the selected declaration name.
+Retries clear every expression width/contract before import/default resolution
+and publish new caches only after all port declarations resolve. Existing scalar and named-type ports omit this optional contract.
+
+This declaration contract does not yet propagate through public IR schemas or
+enable parameter-bearing source plans or HDL emission.
+
+=cut

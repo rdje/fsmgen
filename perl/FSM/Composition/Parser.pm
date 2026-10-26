@@ -1129,9 +1129,10 @@ sub parse_verbose_port_form ($self, $top_name, $form, $top_symbols = undef) {
         my $unwrapped_width = $self->unwrap_scalar_token($attribute_payload);
         confess
             "Composition top '$top_name' contains '?ports' verbose declaration '$rendered', ".
-            "but composition port declaration sizing is blocked because '(width TOKEN)' must contain exactly one scalar width token.".
+            "but composition port declaration sizing is blocked because '(width TOKEN)' must contain exactly one width token or expression.".
             $self->scope_docs_suffix
-            unless defined($unwrapped_width) && !ref($unwrapped_width);
+            unless ref($attribute_payload) eq 'ARRAY' && @$attribute_payload == 1
+                && defined($unwrapped_width);
 
         $width_token = $unwrapped_width;
     }

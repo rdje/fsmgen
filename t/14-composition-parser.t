@@ -193,8 +193,8 @@ $bad_verbose_width_error = $@;
 
 like(
     $bad_verbose_width_error,
-    qr/verbose declaration '\(output bus \(width\)\)'.*'\(width TOKEN\)' must contain exactly one scalar width token/s,
-    'parser rejects verbose width attributes without a scalar token',
+    qr/verbose declaration '\(output bus \(width\)\)'.*'\(width TOKEN\)' must contain exactly one width token or expression/s,
+    'parser rejects verbose width attributes without a width operand',
 );
 
 my $inline_port_error = eval {

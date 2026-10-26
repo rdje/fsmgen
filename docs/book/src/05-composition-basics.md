@@ -52,8 +52,28 @@ structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
 Instance overrides retain actual scoped bindings beside their canonical validation
-values. Interface widths and HDL propagation remain pending; parameter-bearing
-HDL plans still refuse.
+values. Parameter-bearing HDL plans still refuse.
+
+Prepared port declarations also accept verbose width expressions, for example
+`(input data (width (+ (param WIDTH) 2)))`. The shared bounded integer evaluator
+resolves these after imports and top defaults. Bare operands select static
+symbols; `(param NAME)` selects only a declared parameter, even when a static
+symbol has an equal value. Arithmetic uses the direct width operators and
+requires nonnegative intermediate results and a positive final width; aggregate
+parameters, unknown names and unsupported operators refuse with top/port context.
+Compact widths and named-type precedence keep their existing meaning.
+`Port::width_token()` returns the detached authored AST;
+`Port::width_contract()` returns its `scope`, `expression` and ordered actual
+`references`. Each lookup carries `kind` (`parameter` or `static_symbol`) and
+`token`; static lookups also retain `value_payload`. Aliases keep their selected
+name beside the cached `width()`. Re-resolution uses source rather than the old
+cache. Retries clear all expression ports before imports/defaults and publish
+new widths/contracts only after every declaration resolves successfully.
+See the [source fixture](../../../t/data/composition-top-port-width-expressions.fsm)
+and [focused test](../../../t/2129-composition-port-width-expressions.t).
+This is a declaration-only compiler API contract: canonical IR/public schema
+propagation, symbolic source plans and HDL remain pending. It does not admit
+parameterized `.isf` widths or alter API/MCP source-query refusal.
 
 `Top::parameter_environment()` captures these actual resolved products as
 separate scope, declaration order, normalized parameters, authored default

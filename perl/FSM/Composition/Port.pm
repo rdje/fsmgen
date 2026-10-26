@@ -11,7 +11,8 @@ sub new ($class, %args) {
         name => $args{name},
         direction => $args{direction},
         width => exists $args{width} ? $args{width} : 1,
-        width_token => $args{width_token},
+        width_token => _clone_structured_value($args{width_token}),
+        width_contract => _clone_structured_value($args{width_contract}),
         signed => ($args{signed} // 0) ? 1 : 0,
         state_model => $args{state_model},
         declared_type_name => $args{declared_type_name},
@@ -26,7 +27,12 @@ sub new ($class, %args) {
 sub name ($self) { return $self->{name} }
 sub direction ($self) { return $self->{direction} }
 sub width ($self) { return $self->{width} }
-sub width_token ($self) { return $self->{width_token} }
+sub width_token ($self) { return _clone_structured_value($self->{width_token}) }
+sub width_contract ($self) { return _clone_structured_value($self->{width_contract}) }
+sub set_width_contract ($self, $contract) {
+    $self->{width_contract} = _clone_structured_value($contract);
+    return $self->width_contract;
+}
 sub signed ($self) { return $self->{signed} }
 sub state_model ($self) { return $self->{state_model} }
 sub declared_type_name ($self) { return $self->{declared_type_name} }

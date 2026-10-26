@@ -1405,3 +1405,8 @@ The pending source-planning and HDL refusal remains unchanged; this does not
 admit ISF generic widths or specialization. See the [composition parameter
 reference](../book/src/05-composition-basics.md) and focused
 [test](../../t/2127-composition-parameter-public-contract.t).
+
+Composition Port width-expression declarations now retain source AST and scoped
+lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).
+This private declaration contract adds no normalized IR/schema, ISF generic
+width, API/MCP source-query or symbolic HDL admission; those stages stay owned.

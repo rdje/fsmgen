@@ -25,6 +25,9 @@ sub resolve_imports ($class, %args) {
     my $top_symbols = $top->top_symbols
         or confess "PackageImportResolver requires top symbols";
 
+    # A refused import/default/override retry must not expose older port caches.
+    FSM::Composition::PortWidthResolver->clear_expression_widths(top => $top);
+
     my $resolved_packages = FSM::Package::ImportResolver->resolve_imports(
         package_imports => $package_imports,
         embedded_package_sources => ($composition_spec->embedded_package_sources || {}),
