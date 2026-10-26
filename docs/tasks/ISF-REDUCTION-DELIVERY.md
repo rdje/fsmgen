@@ -1509,10 +1509,31 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for direct capture, original authored-source and canonical graph tests. Complete old raw/default/manager/source/IntentHIR/HDL products and JSON kinds compare exactly; actual literal/alias parser-release controls remain green. Core/Parser syntax OK, exact native manual generation and guarded mdBook/POD build/freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks qualify this private producer; general target consumers/full matrices remain successors.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Render supported direct scalar operator defaults from canonical bindings in Verilog-family headers.`
   Acceptance: `After .2, share the existing canonical scalar binding renderer where applicable while preserving the composition wrapper contract. Render actual scalar roots, nested operators, aliases, static snapshots and literals with exact dependency order and existing independent alphabetical ties. Never substitute validation caches for mutable references. Preserve legacy programmatic defaults and clearly owned unsupported aggregate/path boundaries. Test actual native and compatibility text, equal-default/static controls, malformed/foreign bindings, caller ownership and exact predecessor failure. Synchronize book/POD/corpus applicability and commit; real external override/runtime matrix remains .3.6/.6.`
-  Verification: `pending direct Core bindings`
+  Verification: `Direct Core capture is committed at cc0ef23d3. git log -S sub lower_expression identifies c47020dab introducing the existing composition scalar renderer. Its recursive scalar walk already preserves names, operators, literal/static normalization, repeated dependencies and cycle refusals, but its public wrapper requires composition_top. Split a neutral explicit-scope scalar renderer behind that unchanged wrapper, then integrate direct headers. Direct header scope must come from retained source ownership rather than the physical module name. Preserve the bounded alias observation checks, independent alphabetical ties and legacy plain programmatic formatting; invalidated captured sources must not silently emit stale cached relationships. Existing private snapshot controls must copy or deliberately corrupt the new canonical records explicitly. Aggregate/path relationship legality remains the next .3.2.4 owner, and real compiled/runtime/public matrices remain .3.6/.6. No target behavior changes in this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.2.3: split shared scalar rendering and direct headers`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub lower_expression' -- perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm identifies c47020dab. Direct Core now has canonical bindings, but ScaffoldEmitter still consumes normalized defaults plus its bounded raw alias checks; the reusable scalar tree renderer remains composition-scoped.
+  - [x] **ADDRESSED (verified)** — Split shared scalar rendering and direct module-header consumption into ordered concrete leaves. Keep composition validation/diagnostic scope, captured lexical ownership, source observation checks, declared dependency ordering and invalidation behavior explicit; aggregate/path profiles and full qualification stay separately owned.
+  - [x] **NO REGRESSION** — knowledge-map: OK and scripts/check_task_tree_integrity.pl qualify the unchanged source/support boundary; git diff --check passes. Mandatory staged scripts/check_doctrines.sh and normal hooks gate the decomposition and measured task-evidence growth without baseline or ceiling changes.
+
+  Children: `ISF-REDUCTION-DELIVERY.3.2.3.1, ISF-REDUCTION-DELIVERY.3.2.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.3.1`
+  Status: `pending`
+  Goal: `Share the canonical Verilog-family scalar binding renderer across explicit source scopes.`
+  Acceptance: `Extract the current scalar walk into a shared target helper with explicit direct_module/composition_top scope. Keep the composition wrapper's narrower scope, target/environment admission and diagnostic meanings. Preserve canonical scalar literal/static normalization, actual root/token/scope checks, parenthesized operator structure, repeated reference order, caller isolation and recursive-tree refusal. Retain aggregate/path/raw scalar-expression refusals as existing unsupported profiles. Verify actual current direct Core scalar bindings and exact existing composition preparation products with focused known-bad and old-product controls. Update POD/book/fact/import map and commit; this helper does not yet change direct module headers, ranges, source admission or public schema.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.3.2`
+  Status: `pending`
+  Goal: `Consume canonical supported scalar default relationships in direct Verilog-family headers.`
+  Acceptance: `After .1, render actual direct scalar operator/root/static/literal bindings through the shared target helper and order emitted dependencies with existing alphabetical ties. Validate captured source/binding membership and original lexical scope independently of physical module names; preserve the existing bounded alias observation controls. Missing/invalidated captured bindings cannot silently become selected-default relationships. Preserve legacy programmatic literal formatting without invented source. Update source-only private test copies to carry deliberate canonical snapshots, retaining wrong-cache/equal-name/refusal controls rather than weakening them. Keep aggregate/path profile work explicitly owned by .3.2.4 and avoid claiming it qualified here. Focused actual SystemVerilog/compatibility Verilog/native text, generated carrier smoke, exact predecessor controls and caller JSON conservation qualify this consumer. Synchronize book/POD/corpus and public applicability boundaries, then commit. Full external override/runtime and native/API/MCP matrices remain .3.6/.6.`
+  Verification: `pending shared scalar renderer`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.4`
