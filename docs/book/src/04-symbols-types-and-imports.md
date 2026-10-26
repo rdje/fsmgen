@@ -107,8 +107,24 @@ binding; it does not itself supply top generics or symbolic HDL emission.
 explicit direct-module and composition-top scopes. It preserves observed
 parameter roots and paths, nested operators and immutable selected static
 payloads. The composition wrapper still requires its original top scope and
-static-symbol object. This shared helper does not yet capture direct Core
-bindings or add general-default HDL support; those consumers remain pending.
+static-symbol object.
+
+The direct parser now captures complete canonical bindings through this helper.
+`FSMModule::parameter_default_bindings()` returns detached compiler records in
+the original source scope, including selected static constants, enum members
+and imported aggregate leaves. A copied physical module keeps that captured
+scope. Declaration replacement invalidates the entire derived binding map;
+failed nonempty resolution retries expose no stale or partial binding snapshot.
+Normalized parameter values and the existing authored-source records retain
+their previous shapes and JSON kinds. Private bindings add no public report
+fields and do not yet supply general-default HDL relationships.
+
+The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
+exercises qualified constants, enum members and a nested aggregate leaf:
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/sv/imported_default_bindings.sv t/data/ial0-imported-default-bindings.fsm
+```
 
 Direct SystemVerilog and compatibility Verilog module declarations now preserve
 actual direct scalar root aliases from these observations. `(BOUND W)` emits

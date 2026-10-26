@@ -23,6 +23,7 @@ use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::ParameterValueSupport;
 use FSM::ParameterDeclarationSupport;
+use FSM::ParameterBindingSupport;
 use FSM::SourceClassifier;
 use FSM::Support::DocumentationHints qw(supported_boundary_hint supported_boundary_sentence);
 
@@ -2364,8 +2365,13 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
     $param_entries ||= [];
     return 1 unless @$param_entries;
 
-    FSM::ParameterDeclarationSupport->resolve_declarations(
+    my $module = $self->{fsm_module};
+    # A refused retry must expose no stale or partially published bindings.
+    $module->set_parameter_default_bindings({})
+        if $module && $module->can('set_parameter_default_bindings');
+    my $graph = FSM::ParameterDeclarationSupport->resolve_declarations(
         entries => $param_entries, source_module => $module_name,
+        capture_expression => 1,
         boundary_hint => supported_boundary_hint(),
         docs_hint => ' ' . supported_boundary_sentence(),
         resolve_static_symbol_payload => sub ($symbol_name) {
@@ -2380,6 +2386,25 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
             }
         },
     );
+    if ($module && $module->can('set_parameter_default_bindings')) {
+        my %bindings;
+        for my $name (@{$graph->{order}}) {
+            $bindings{$name} = FSM::ParameterBindingSupport->bind_expression(
+                expression => $graph->{expressions}{$name},
+                references => $graph->{default_sources}{$name}{references},
+                parameters => $graph->{parameters},
+                scope => {kind => 'direct_module', owner => $module_name},
+                resolve_static_symbol_payload => sub ($symbol_name) {
+                    # Missing declared observations cannot fall through to the
+                    # signal manager's parameter-valued compatibility lookup.
+                    return undef if FSM::ParameterDeclarationSupport->declared_reference(
+                        $graph->{parameters}, $symbol_name);
+                    return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
+                },
+            );
+        }
+        $module->set_parameter_default_bindings(\%bindings);
+    }
     return 1;
 }
 

@@ -2207,6 +2207,7 @@ package FSM::CoreAST::FSMModule;
             reset_domains => _clone_fsm_module_value($args{reset_domains} // {}),
             parameters => _clone_fsm_module_value($args{parameters} // {}),
             _parameter_default_sources => _clone_fsm_module_value($args{_parameter_default_sources} // {}),
+            _parameter_default_bindings => _clone_fsm_module_value($args{_parameter_default_bindings} // {}),
             constraints => $args{constraints} // [],
             attributes => $args{attributes} // {},
         }, $class;
@@ -2219,6 +2220,13 @@ package FSM::CoreAST::FSMModule;
     sub reset_domains($self) { _clone_fsm_module_value($self->{reset_domains}) }
     sub parameters($self) { _clone_fsm_module_value($self->{parameters}) }
     sub parameter_default_sources($self) { _clone_fsm_module_value($self->{_parameter_default_sources} // {}) }
+    sub parameter_default_bindings($self) { _clone_fsm_module_value($self->{_parameter_default_bindings} // {}) }
+    sub set_parameter_default_bindings($self, $bindings) {
+        Carp::confess "FSMModule parameter default bindings require a map"
+            unless ref($bindings) eq 'HASH';
+        $self->{_parameter_default_bindings} = _clone_fsm_module_value($bindings);
+        return $self->parameter_default_bindings;
+    }
     sub attributes($self) { $self->{attributes} }
     sub explicit_system_contract($self) { return _clone_fsm_module_value($self->{attributes}{system_contract}) }
     sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
@@ -2227,6 +2235,8 @@ package FSM::CoreAST::FSMModule;
     sub set_parameter($self, $name, $parameter_info, $default_source = undef) {
         Carp::confess "FSMModule parameter name required"
             unless defined($name) && !ref($name) && length($name);
+        # A declaration change invalidates every dependent binding snapshot.
+        $self->{_parameter_default_bindings} = {};
         $self->{parameters}{$name} = _clone_fsm_module_value($parameter_info);
         if (defined $default_source) {
             $self->{_parameter_default_sources}{$name} = _clone_fsm_module_value($default_source);
@@ -2446,8 +2456,21 @@ C<set_parameter($name, $info, $default_source)> accepts an optional detached
 source record. Replacing a value without that record clears its previous source.
 The internal constructor key C<_parameter_default_sources> supports explicit
 copies; programmatic parameter values otherwise acquire no invented provenance.
-This metadata preserves source identity only. It does not alter normalized
-defaults, emit dependent HDL defaults, or extend public semantic-report schemas.
+These source records keep normalized defaults and public semantic-report
+schemas unchanged. The manual describes their bounded scalar-alias HDL consumer.
+
+C<parameter_default_bindings> separately returns detached canonical evaluator
+trees bound in the original C<direct_module> scope. Parameter nodes retain
+immediate roots and paths; static nodes own selected immutable payloads.
+The parser publishes this map only after complete successful binding and clears
+it before a nonempty resolution retry. C<set_parameter> invalidates the whole
+derived map on declaration replacement, including replacement with source.
+
+C<set_parameter_default_bindings($map)> clones a complete compiler-selected
+snapshot and returns a detached copy. The private constructor key
+C<_parameter_default_bindings> supports explicit copies without inferring scope
+from a new physical module name. Legacy programmatic parameters have no capture.
+These private records add no general-default HDL or public report/schema fields.
 
 =head2 Key Features
 

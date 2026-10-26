@@ -19,5 +19,6 @@ selections become detached canonical payloads, memoized within each call.
 
 The composition wrapper still requires composition-top scope and its blessed
 static-symbol object. Successful default and resolved instance products retain
-their prior JSON kinds and values. The extraction adds no direct Core capture,
-public schema or general-default HDL support; those remain separate consumers.
+their prior JSON kinds and values. Direct Core capture is a separate parser
+consumer, described by the `direct-core-default-bindings` fact card. The shared
+walk does not itself add public schema or general-default HDL support.

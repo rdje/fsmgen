@@ -55,8 +55,9 @@ Source admission remains guarded; no fresh closure count is inferred.
 `FSM::Composition::ParameterBindingSupport` now delegates canonical observed
 expression binding to `FSM::ParameterBindingSupport`. The wrapper keeps its
 composition-top scope and static-object contract; the shared walk accepts an
-explicit scope and transient static resolver. Direct Core capture remains a
-successor, and the historical import counts below are unchanged.
+explicit scope and transient static resolver. The direct FSMGenFull parser now
+also imports that helper after canonical declaration resolution and publishes
+detached private Core bindings. Historical import counts below are unchanged.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.

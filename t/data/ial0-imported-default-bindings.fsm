@@ -1,0 +1,17 @@
+(?fsm:imported_default_bindings
+  (+import shared_defaults)
+  (+system (clock clk))
+  (+params
+    (PACKAGE shared_defaults.FIXED)
+    (MODE shared_defaults.mode.BIG)
+    (ITEM shared_defaults.FRAME.data[1])
+    (ALIAS PACKAGE)
+    (SUM (+ PACKAGE 1)))
+  (+size (OUT 1))
+  (idle (<= (OUT 0))))
+
+(?pkg:shared_defaults
+  (+constants
+    (FIXED 16)
+    (FRAME ((flag 1) (data (8'hA5 8'h3C)))))
+  (+enums (mode (BIG 16))))
