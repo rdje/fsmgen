@@ -63,6 +63,9 @@ scalar parameter from same-named constants and types during direct `+size`
 default evaluation. Core retains its source tree. This prerequisite does not
 extend ISF source grammar, add public dependency-report fields or establish
 generic HDL/override propagation; those remain separately owned work.
+Compiler width-expression bindings now preserve real parameters, immutable
+local default chains and foreign actor capture identities privately. Published
+carriers and report schemas retain their current default-width behavior.
 
 The maintained `feature.isf_unary_reductions` representative retains explicit
 internal supported-phase and nonclaim arrays through source-query cohort

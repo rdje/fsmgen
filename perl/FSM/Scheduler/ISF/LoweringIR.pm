@@ -26,6 +26,7 @@ use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Support::ISFReductions qw(capture_actor_reductions);
 use FSM::Support::ISFWidthDeclarations qw(capture_actor_width_metadata capture_generated_width_metadata);
+use FSM::Support::ISFWidthBindings qw(build_width_binding_plan);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
@@ -736,6 +737,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         actor_default_bindings => \%width_actor_default_bindings,
         transaction_default_bindings => {$tx->{name} => \%width_transaction_default_bindings},
         ports => $ir->{ports});
+    $width_metadata->{_width_bindings} = build_width_binding_plan($width_metadata);
     $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
@@ -1836,6 +1838,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         actor_default_bindings => \%width_actor_default_bindings,
         transaction_default_bindings => \%width_transaction_default_bindings,
         generated_instances => $ir->{spawn_instances});
+    $width_metadata->{_width_bindings} = build_width_binding_plan($width_metadata);
     # Move private constructor context out of executable activation records.
     delete $_->{_width_activation_context} for @{$ir->{spawn_instances}};
     $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;

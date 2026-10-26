@@ -698,9 +698,13 @@ states/rules that use the port and activation sites that bind it.
 
 The compiler retains actor and transaction width sources separately from
 resolved defaults. Private module metadata also identifies which scope owns
-the emitted parameter list, including renamed and generated modules. This
-prepares dependency propagation; generic port widths and override-driven shape
-specialization remain pending.
+the emitted parameter list, including renamed and generated modules. Private
+binding expressions now keep real module parameters symbolic, preserve the
+default chains of immutable local parameters, and identify actor values that
+need capture across module boundaries. Constants, package constants, enums and
+literals retain distinct source identities. This groundwork changes no emitted
+widths; symbol allocation, forwarding, generic port widths and override-driven
+shape specialization remain pending.
 
 The binding work also needs parameter default expressions. In a current IAL0
 control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records
@@ -715,8 +719,8 @@ selects the static namespace, whereas an ordinary parameter alias creates
 another configurable parameter. IAL0 now admits `(param NAME)` in direct
 `+size` width expressions to select an actual declared scalar parameter
 without adding an alias. It evaluates the selected default and preserves the
-selector source. ISF width binding, carrier materialization, cross-scope
-forwarding and generic HDL propagation remain required work under
+selector source. Target symbol allocation, ISF carrier materialization,
+cross-scope forwarding and generic HDL propagation remain required work under
 `ISF-REDUCTION-DELIVERY`; this IAL0 prerequisite does not complete those features.
 
 Shipped binding shape:

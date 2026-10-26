@@ -1380,10 +1380,10 @@
     },
     {
       "content": {
-        "bytes": 14862,
+        "bytes": 15100,
         "lines": 167,
-        "line_bytes": 779,
-        "sha256": "43a8961ab60f3198873763a957cac2dc06add996d4cbe7a2b5769d70fc6df294"
+        "line_bytes": 775,
+        "sha256": "68e57e614376832176cb0c0f3e7bca9a94bc709c8ea34b88553631d830cb42d4"
       },
       "id": "0119",
       "metadata": {
@@ -1402,7 +1402,7 @@
           "where are canonical parameter default reference bindings retained?"
         ],
         "authority_status": [
-          "- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending"
+          "- Status: private source/IR and lexical bindings have focused checks; symbol/carrier/HDL/public qualification pending"
         ]
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",
