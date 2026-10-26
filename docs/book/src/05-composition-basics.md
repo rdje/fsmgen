@@ -77,9 +77,26 @@ or getter mutations cannot mix another width epoch into that captured plan;
 unresolved expression widths refuse capture. Ordinary static port behavior
 stays unchanged. The [snapshot regression](../../../t/2130-composition-port-width-plan-snapshots.t)
 checks actual source retries and complete serialized plan stability.
-This is a declaration-only compiler API contract: canonical IR/public schema
-propagation, symbolic source plans and HDL remain pending. It does not admit
-parameterized `.isf` widths or alter API/MCP source-query refusal.
+Prepared normalized reports also retain `width_contract` under structural
+`ports[]`, IntentHIR `signal_analysis` bucket entries, common
+`semantic.signal_analysis` entries and plan-snapshot `top_ports[]`.
+`composition_parameter_contract.width_contract_paths` names the exact paths;
+its `width_analysis_buckets` bounds wildcard expansion. `width_contract_keys`
+and `width_reference_keys` describe the exact object and kind-specific lookup
+keys; static payloads use the existing recursive payload schema. The authored
+`expression` remains a frontend JSON tree, separate from its numeric cache.
+These optional records have no separate schema/version envelope. Ordinary
+static ports omit them. Object and hash snapshots detach the structured width
+AST/contract and refuse non-JSON references. Supplied structural IR must match
+its plan's captured width, scope and dependency identities before IntentHIR
+accepts it. The [public-contract test](../../../t/2131-composition-port-width-public-contract.t)
+checks actual source/Plan/IR/report allocation and isolation.
+
+This prepared inspection contract leaves symbolic source plans, port
+specialization and HDL pending. The shared structural emitter guard refuses
+known width contracts, including when an environment is absent; a cached
+positive width alone is not lowering. It does not admit parameterized `.isf`
+widths or alter API/MCP source-query refusal.
 
 `Top::parameter_environment()` captures these actual resolved products as
 separate scope, declaration order, normalized parameters, authored default

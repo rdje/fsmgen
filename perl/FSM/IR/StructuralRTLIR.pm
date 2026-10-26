@@ -15,7 +15,9 @@ surfaces consume.
 Optional C<parameter_environment> records survive constructor/getter/hash
 boundaries as detached data. Ordinary IR retains its previous shape. The shared
 C<assert_no_pending_parameter_bindings> also refuses any known top environment,
-even with no instance overrides, pending canonical target lowering.
+even with no instance overrides, pending canonical target lowering. Optional
+port C<width_contract> records also survive detached boundaries and derived
+signal metadata; the same guard refuses them pending width lowering.
 
 =cut
 
@@ -65,6 +67,12 @@ sub assert_no_pending_parameter_bindings ($class, $structural) {
         unless (reftype($structural) // '') eq 'HASH';
     confess "StructuralRTLIR top parameter environment emission is blocked pending canonical lowering\n"
         if exists $structural->{parameter_environment};
+    for my $port (@{$structural->{ports} || []}) {
+        next unless (reftype($port) // '') eq 'HASH';
+        confess "StructuralRTLIR port width contract emission is blocked pending canonical lowering " .
+            "for port '" . ($port->{name} // '?') . "'.\n"
+            if exists $port->{width_contract};
+    }
     for my $instance (@{$structural->{instances} || []}) {
         next unless (reftype($instance) // '') eq 'HASH';
         for my $override (@{$instance->{parameter_overrides} || []}) {
@@ -95,6 +103,8 @@ sub port_metadata ($self) {
         $entry->{declared_type_name} = $port->{declared_type_name} if defined $port->{declared_type_name};
         $entry->{declared_type_spec} = _clone($port->{declared_type_spec}) if defined $port->{declared_type_spec};
 
+        $entry->{width_contract} = _clone($port->{width_contract}) if defined $port->{width_contract};
+
         push @signal_names, $port->{name};
         $signals{$port->{name}} = {
             width => $port->{width},
@@ -104,6 +114,9 @@ sub port_metadata ($self) {
         $signals{$port->{name}}{state_model} = $port->{state_model} if defined $port->{state_model};
         $signals{$port->{name}}{declared_type_name} = $port->{declared_type_name} if defined $port->{declared_type_name};
         $signals{$port->{name}}{declared_type_spec} = _clone($port->{declared_type_spec}) if defined $port->{declared_type_spec};
+
+        $signals{$port->{name}}{width_contract} = _clone($port->{width_contract})
+            if defined $port->{width_contract};
 
         if (($port->{direction} || '') eq 'output') {
             push @outputs, _clone($entry);
@@ -296,8 +309,9 @@ __END__
 =head2 assert_no_pending_parameter_bindings
 
 Checks normalized structural hash data before target emission. An instance
-parameter override carrying C<binding_expression> is refused until canonical
-symbolic lowering is implemented. The validation cache C<value_text> must not
+parameter override carrying C<binding_expression>, a known top environment or
+a port carrying C<width_contract> is refused until canonical symbolic lowering
+is implemented. The validation cache C<value_text> must not
 silently replace that semantic binding. Both structural backend entrypoints use
 this shared guard for hash and object callers; ordinary literal/static inputs
 remain unchanged. This check does not add a public symbolic IR profile or

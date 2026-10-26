@@ -164,16 +164,24 @@ sub _value {
 
 sub _port_snapshot {
     my ($port) = @_;
+    my $width_contract = _value($port, 'width_contract');
+    my $width_token = _value($port, 'width_token');
     return {
+        (defined($width_contract) ? (width_contract => _detached_json_value($width_contract)) : ()),
         name => _value($port, 'name'),
         direction => _value($port, 'direction'),
         width => _value($port, 'width'),
-        width_token => _value($port, 'width_token'),
+        width_token => ref($width_token) ? _detached_json_value($width_token) : $width_token,
         signed => _bool(_value($port, 'signed')),
         type => _value($port, 'type'),
         binding_mode => _value($port, 'binding_mode'),
         origin_kind => _value($port, 'origin_kind'),
     };
+}
+
+sub _detached_json_value {
+    my ($value) = @_;
+    return JSON::PP->new->decode(JSON::PP->new->encode($value));
 }
 
 sub _link_snapshot {
@@ -286,6 +294,9 @@ include C<parameter_environment>; ordinary plans omit it. This field is copied
 through JSON serialization, preserving nested JSON kinds and refusing non-JSON
 references instead of silently dropping environment data. Hash-backed callers
 receive the same copy boundary but must establish their own input provenance.
+Top ports optionally preserve C<width_contract>; structured C<width_token>
+and width contracts are copied through JSON with the same kind-preserving,
+fail-closed boundary. Static port shapes remain unchanged.
 
 C<build_serializable_composition_plan_snapshot_contract()> describes mandatory
 and optional keys separately and embeds the shared

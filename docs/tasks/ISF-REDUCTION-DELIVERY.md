@@ -1138,11 +1138,11 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve admitted top interface width dependencies through canonical port declarations and IR.`
   Acceptance: `After .1, inspect actual composition port/type contracts and retain symbolic parameter width expressions beside resolved port defaults. Reuse the canonical bounded integer-width evaluator and explicit namespace selection; preserve named types, resets and static controls without widening unrelated arithmetic. Qualify selected namespace/default/source/type/refusal observations, synchronize published grammar/schema applicability/book and commit; complete shape legality and specialization stay separately owned.`
-  Verification: `pending top parameter and port contracts`
-  Commit: `pending`
+  Verification: `Shared canonical evaluation, actual declaration/default/import resolution, isolated Plan capture and prepared IR/public optional schemas have focused checks through child slices. Symbolic source plans/HDL remain .2.3.3.4.1.4; full verification remains .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2: expose prepared port width contracts`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2`
 
@@ -1159,11 +1159,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=48 for shared evaluator, explicit parameter selection, scalar width support and size-section boundary. Shared helper and Parser syntax OK; native strict source check and POD/mdBook build pass. Staged scripts/check_doctrines.sh and normal hooks gate this preparation; full qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate authored composition port width expressions and detached scoped dependencies into canonical declarations and IR.`
   Acceptance: `Use the shared width evaluator with explicit top parameter/static selection after import/default resolution. Preserve source trees and actual parameter references beside cached positive widths through Port and canonical IR. Preserve named-type precedence, resets and static report shapes; refuse unsupported namespace, aggregate and arithmetic forms contextually. Qualify a small actual-source/default/type/refusal/isolation cohort, synchronize grammar/schema applicability and book, and commit. Split IR/schema propagation before editing if necessary. Source planning and HDL remain refused until .4; full qualification stays .6.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Shared canonical evaluation, actual declaration/default/import resolution, isolated Plan capture and prepared IR/public optional schemas have focused checks through child slices. Symbolic source plans/HDL remain .2.3.3.4.1.4; full verification remains .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2: expose prepared port width contracts`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2`
 
@@ -1180,11 +1180,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=114 for T2129/T2128/T14/T502. POD/mdBook build passes; smallest affected declaration/direct-evaluator/parser/setter checks qualify this slice, while full verification stays .6. Staged scripts/check_doctrines.sh and normal hooks gate commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Propagate qualified composition Port width source and scoped dependency contracts through canonical IR and optional public schemas.`
   Acceptance: `After .1, preserve actual source/default/namespace bindings in IntentHIR, StructuralRTLIR and plan snapshots without static shape drift. Advertise exact optional field contracts and verify detached producer/report products. Source planning/HDL remains .4 and full verification .6; synchronize POD/book/contracts and commit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Shared canonical evaluation, actual declaration/default/import resolution, isolated Plan capture and prepared IR/public optional schemas have focused checks through child slices. Symbolic source plans/HDL remain .2.3.3.4.1.4; full verification remains .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2: expose prepared port width contracts`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2`
 
@@ -1201,11 +1201,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=22 for T2130/T2129/T2127. POD/mdBook build and mandatory staged doctrines qualify this capture prerequisite; full verification remains .6 and public width propagation .2.2.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Propagate the captured Port width contract through forward IR, snapshots and advertised optional schemas.`
   Acceptance: `After .1, extend canonical structural ports, derived IntentHIR port analysis and public plan snapshots with optional detached width_contract. Publish exact applicable paths and key families; preserve existing static shapes and source/HDL refusals. Focused actual source/Plan/IR/report/schema/static/isolation controls plus synchronized book/downstream/POD and commit qualify the slice; full verification remains .6.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual parsed/imported/defaulted source feeds captured Plan ports, StructuralRTLIR, IntentHIR/common signal-analysis buckets and public plan snapshots with detached optional width_contract records. Exact discovery describes actual paths, bounded wildcard buckets, source owners and contract/lookup keys without changing mandatory static presence families or version envelopes. Cached width18 retains selected ALIAS plus static widths.EXTRA rather than equal-default W; another arithmetic port retains W24. Hash-backed snapshots detach width ASTs and contracts through JSON and refuse unsupported references. Supplied structural IR cannot omit or change captured width/scope/lookup meaning. Known width contracts refuse through the shared guard and actual SV/Verilog/VHDL emitter entrypoints even if a caller removes parameter_environment. Initial fixed T2131 fails missing actual fields/schema/copy/mismatch boundaries; the later expanded mismatch and actual-emitter controls are separately identified as current-only. Focused T2131/T2130/T2127 pass All tests successful Files=3 Tests=24; POD/mdBook and mandatory staged doctrines gate commit. Re-derive: actual source/Plan/IR/report/discovery products; falsify: initial RED/GREEN, independent literal/alias/static expectations, mutation/non-JSON/mismatch and target-refusal controls; durability: production/test/book/fact plus docs/audits/composition-port-width-ir-20261026.json.gz and Git. Broader transport/profile/external-HDL/full verification remain .6; this closes only prepared declaration/IR/schema integration and leaves symbolic source/HDL at .4. Task growth uses existing decision0070 measured actual plus ratchet without baseline or ceiling increase.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2.2.2: expose prepared port width contracts`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2131-composition-port-width-public-contract.t line 47 reports undef instead of the actual declaration width_contract. StructuralRTLIRBuilder copies width/type fields but drops width provenance, StructuralRTLIR port metadata drops it again, and SerializableCompositionPlanSnapshot omits it while aliasing a hash-backed width AST. Optional discovery has no width contract key/path family.
+  - [x] **ADDRESSED (verified)** — Actual Plan/IR/report products retain detached source/scope/ordered lookups with independently expected widths and distinct equal-default aliases. Exact optional discovery, bounded buckets and unchanged static omission shape pass; hash snapshots refuse non-JSON references, supplied IR must match captured meaning, and both emitter families refuse pending width contracts. Fixed initial RED/GREEN and separately identified current-only guard expansion retain honest attribution scope.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=24 for T2131/T2130/T2127, including actual SV/Verilog/VHDL refusal entrypoints. POD/mdBook and mandatory staged doctrines qualify this prepared width-contract slice; broad verification remains .6 and symbolic source/HDL lowering .4.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
   Status: `pending`

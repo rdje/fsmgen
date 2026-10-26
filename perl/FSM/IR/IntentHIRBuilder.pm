@@ -143,6 +143,19 @@ sub build_from_composition_plan ($class, %args) {
                 && exists($structural_rtl_ir_hash->{parameter_environment})
                 && $json->encode($environment) eq $json->encode($structural_rtl_ir_hash->{parameter_environment});
     }
+    # A caller-supplied structural projection must describe the same captured
+    # width epoch as the plan, including dependency identity and cached width.
+    my %plan_widths = map {
+        my $contract = $_->can('width_contract') ? $_->width_contract : undef;
+        defined($contract) ? ($_->name => {width => $_->width, width_contract => $contract}) : ()
+    } @{$composition_plan->ports || []};
+    my %structural_widths = map {
+        defined($_->{width_contract})
+            ? ($_->{name} => {width => $_->{width}, width_contract => $_->{width_contract}}) : ()
+    } @{$structural_rtl_ir_hash->{ports} || []};
+    confess "IntentHIRBuilder structural port width contracts must match its composition plan\n"
+        unless JSON::PP->new->canonical->encode(\%plan_widths)
+            eq JSON::PP->new->canonical->encode(\%structural_widths);
     my $effective_system_contract = $class->build_composition_effective_system_contract(
         composition_plan => $composition_plan,
         structural_rtl_ir => $structural_rtl_ir_hash,

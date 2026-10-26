@@ -11,8 +11,8 @@ C<StructuralRTLIR> layer. This package is the beginning of the planned split
 where backend text generation consumes structural connectivity rather than
 re-deriving structure inside the pipeline coordinator.
 
-Pending semantic C<binding_expression> records are explicitly refused before
-rendering. Their canonical validation numbers are not a symbolic lowering.
+Pending semantic C<binding_expression> records, top parameter environments
+and port C<width_contract> records are explicitly refused before rendering. Their canonical validation numbers are not a symbolic lowering.
 Ordinary supported static/literal parameter actuals retain existing behavior.
 
 =cut

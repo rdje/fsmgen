@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::NormalizedSemanticSignalAnalysisContract qw(normalized_semantic_signal_analysis_presence_keys);
 
 our @EXPORT_OK = qw(build_composition_parameter_contract);
 
@@ -14,7 +15,7 @@ sub build_composition_parameter_contract {
         discovery_query_family => 'capability_query',
         discovery_manifest_path => [qw(semantic_exports normalized_semantic_json composition_parameter_contract)],
         contract_source => 'FSM::Support::CompositionParameterContract',
-        producer_sources => [qw(FSM::Composition::Top FSM::Composition::Plan FSM::Composition::ParameterBindingSupport)],
+        producer_sources => [qw(FSM::Composition::Top FSM::Composition::Plan FSM::Composition::ParameterBindingSupport FSM::Composition::Port FSM::Composition::PortWidthResolver)],
         environment_paths => [
             'semantic.forward_ir.intent_hir.parameter_environment',
             'semantic.forward_ir.structural_rtl_ir.parameter_environment',
@@ -27,6 +28,17 @@ sub build_composition_parameter_contract {
             'semantic.composition.children[].parameter_overrides[].binding_expression',
             'semantic.composition.generated_children[].parameter_overrides[].binding_expression',
         ],
+        width_contract_paths => [
+            'semantic.forward_ir.structural_rtl_ir.ports[].width_contract',
+            'semantic.forward_ir.intent_hir.signal_analysis.*[].width_contract',
+            'semantic.signal_analysis.*[].width_contract',
+            'semantic.composition.plan_snapshot.top_ports[].width_contract',
+        ],
+        width_contract_keys => [qw(scope expression references)],
+        width_reference_keys => {
+            parameter => [qw(kind token)], static_symbol => [qw(kind token value_payload)],
+        },
+        width_analysis_buckets => normalized_semantic_signal_analysis_presence_keys(),
         environment_keys => [qw(scope declaration_order parameters default_sources default_bindings)],
         scope_keys => [qw(kind owner)],
         scope_kind => 'composition_top',
@@ -57,6 +69,8 @@ sub build_composition_parameter_contract {
         public_source_planning_supported => JSON::PP::false,
         hdl_emission_supported => JSON::PP::false,
         guidance => [
+            'Optional width_contract records preserve the captured top scope, authored frontend expression tree and ordered actual parameter/static lookups beside numeric width caches. Width-analysis path wildcards expand only to width_analysis_buckets.',
+            'Width references use width_reference_keys by kind; static value_payload uses payload_node_keys. Explicit (param NAME) selects declared parameters, while bare width operands select static symbols. Equal defaults do not merge lookup identities.',
             'These optional fields describe detached products assembled from resolved composition Plan and forward IR objects by the in-process report builders. They do not enable successful parameter-bearing source queries.',
             'The enclosing report and this discovery contract retain schema version 1; the environment and binding records have no separate version or source envelope.',
             'Scope owner is the actual composition-top name. Declaration order is authored order; parameters, default_sources and default_bindings are maps keyed by those declared names.',
@@ -79,7 +93,9 @@ FSM::Support::CompositionParameterContract - Optional composition parameter repo
 =head1 DESCRIPTION
 
 C<build_composition_parameter_contract()> returns a fresh JSON-safe discovery
-record for actual composition environments and scoped instance bindings. It
+record for actual composition environments, scoped instance bindings and
+captured port width dependencies. Width contracts describe optional structural
+ports, IntentHIR/common signal analysis and serialized top-port records. It
 names exact optional report paths, source owners, recursive key families,
 version semantics and the pending source/HDL boundary. It describes producer
 contracts; it neither resolves input nor attests the provenance of caller-made

@@ -23,8 +23,8 @@ generic-map actuals for bounded standalone-DT C1 instances, and port-map
 actuals whose connection expressions already render through the
 backend-neutral StructuralRTLIR expression helper.
 
-Pending semantic C<binding_expression> records are explicitly refused before
-rendering. Their canonical validation numbers are not a symbolic lowering.
+Pending semantic C<binding_expression> records, top parameter environments
+and port C<width_contract> records are explicitly refused before rendering. Their canonical validation numbers are not a symbolic lowering.
 Ordinary supported static/literal parameter actuals retain existing behavior.
 
 =cut

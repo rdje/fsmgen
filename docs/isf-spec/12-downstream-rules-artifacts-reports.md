@@ -1409,5 +1409,9 @@ reference](../book/src/05-composition-basics.md) and focused
 Composition Port width-expression declarations now retain source AST and scoped
 lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).
 Plan capture/getters also detach expression Ports from later source retries.
-This private declaration contract adds no normalized IR/schema, ISF generic
-width, API/MCP source-query or symbolic HDL admission; those stages stay owned.
+Prepared forward IR, signal analysis and plan snapshots retain optional
+width_contract records, advertised by the same composition_parameter_contract.
+Supplied IR must match the captured Plan width/dependency meaning; structured
+source and lookup records remain detached. This inspection adds no ISF generic
+width, API/MCP source-query or symbolic HDL admission; target lowering stays
+owned and the shared emitter guard refuses known width contracts.

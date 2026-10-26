@@ -7,8 +7,8 @@ answers:
 date: 2026-10-26
 status: current
 tags: [widths, parameters, composition]
-evidence: perl/FSM/WidthExpressionSupport.pm; t/2128-shared-integer-width-evaluator.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t t/294-scalar-width-support.t t/50-language-contract-size-section-boundary.t
+evidence: perl/FSM/WidthExpressionSupport.pm; t/2128-shared-integer-width-evaluator.t; t/2131-composition-port-width-public-contract.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2128-shared-integer-width-evaluator.t t/2129-composition-port-width-expressions.t t/2130-composition-port-width-plan-snapshots.t t/2131-composition-port-width-public-contract.t
 ---
 
 [WidthExpressionSupport](../../perl/FSM/WidthExpressionSupport.pm) owns the
@@ -25,6 +25,10 @@ bare static operands; detached `width_contract` retains scope/source/lookups.
 The declaration-only test is `t/2129-composition-port-width-expressions.t`.
 Plan capture and getters detach expression Ports so later source retries cannot
 change widths beside an earlier captured environment (test `t/2130-composition-port-width-plan-snapshots.t`).
-IR/schema propagation is owned by `.2.3.3.4.1.3.2.2.2` in
-`ISF-REDUCTION-DELIVERY`; symbolic plans/HDL and full qualification remain pending. The
+Optional width contracts now survive structural ports, IntentHIR/common signal
+analysis and plan snapshots. CompositionParameterContract advertises exact
+paths/keys; mismatched supplied IR and non-JSON snapshot references refuse.
+Both structural emitters call the shared pending-binding guard, which refuses
+known width contracts even without a top environment. Symbolic plans/HDL and
+full qualification remain separately pending in `ISF-REDUCTION-DELIVERY`. The
 [book](../book/src/14k-isf-language-and-scheduling.md) retains that boundary.

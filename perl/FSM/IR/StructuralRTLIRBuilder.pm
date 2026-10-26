@@ -163,6 +163,8 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     $port_entry->{state_model} = $state_model if defined $state_model;
                     $port_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
                     $port_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
+                    my $width_contract = $_->can('width_contract') ? $_->width_contract : undef;
+                    $port_entry->{width_contract} = $width_contract if defined $width_contract;
                     $port_entry;
                 }
             } @{$composition_plan->ports || []}
