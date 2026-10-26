@@ -1448,6 +1448,7 @@ Focused tests:
 - [t/2114-isf-width-symbol-plans.t](../../t/2114-isf-width-symbol-plans.t)
 - [t/2115-isf-width-context-forwarding.t](../../t/2115-isf-width-context-forwarding.t)
 - [t/2116-isf-domain-width-forwarding.t](../../t/2116-isf-domain-width-forwarding.t)
+- [t/2142-isf-bound-module-carriers.t](../../t/2142-isf-bound-module-carriers.t)
 - [t/2127-composition-parameter-public-contract.t](../../t/2127-composition-parameter-public-contract.t)
 
 ## 12. Explicitly Deferred

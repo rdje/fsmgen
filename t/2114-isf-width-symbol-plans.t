@@ -47,14 +47,7 @@ subtest 'final module namespaces determine target names without replacing source
 
 subtest 'selected plans use existing canonical IAL0 declarations and expression grammar' => sub {
     unless (ref($plan) eq 'HASH') {fail('target plan is required'); return}
-    my $module = $json->decode($json->encode($child));
-    $_->{value} = $plan->{parameter_defaults}{$_->{name}} for @{$module->{params}};
-    push @{$module->{params}}, map {{name => $_->{name}, value => $_->{value}}} @{$plan->{capture_parameters}};
-    push @{$module->{constants}}, map {{name => $_->{name}, value => $_->{value}}} @{$plan->{constants}};
-    for my $port (@{$module->{ports}}) {
-        $port->{type} = format_value($plan->{widths}{$port->{name}}) if exists $plan->{widths}{$port->{name}};
-    }
-    my $source = FSM::Scheduler::ISF::Emitter::FSM->new->emit($module);
+    my $source = FSM::Scheduler::ISF::Emitter::FSM->new->emit($child);
     my $dir = tempdir(DIR => '.artifacts', CLEANUP => 1);
     my ($fh, $path) = tempfile(DIR => $dir, SUFFIX => '.fsm');
     print {$fh} $source; close $fh or die $!;
@@ -89,5 +82,3 @@ if (my $path = $ENV{FSMGEN_WIDTH_SYMBOL_CAPTURE}) {
     open my $out, '>', $path or die $!; print {$out} $capture, "\n" or die $!; close $out or die $!;
 }
 done_testing();
-
-sub format_value {my ($v) = @_; return ref($v) eq 'ARRAY' ? '(' . join(' ', map {format_value($_)} @$v) . ')' : $v}

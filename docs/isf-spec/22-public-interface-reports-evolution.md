@@ -64,15 +64,18 @@ default evaluation. Core retains its source tree. This prerequisite does not
 extend ISF source grammar, add public dependency-report fields or establish
 generic HDL/override propagation; those remain separately owned work.
 Compiler width-expression bindings now preserve real parameters, immutable
-local default chains and foreign actor capture identities privately. Published
-carriers and report schemas retain their current default-width behavior.
+local default chains and foreign actor capture identities privately. Module
+carriers now emit those selected expressions and defaults without changing
+current default behavior; public report schemas remain unchanged.
 Bound actual module defaults preserve nested list/reference structure and
 include default-only actor dependencies in those private capture obligations.
 Private target plans allocate context names and immutable static aliases while
 retaining source identities; no target-plan fields enter public reports.
 Private actual-instance plans bind automatic context imports to declared
 producers while retaining selections separately. Final domain maps change only
-physical producer/child identities; public carriers stay unchanged.
+physical producer/child identities. The shared module emitter consumes bound
+widths/defaults and immutable support; generated-top forwarding and generic
+HDL/specialization remain pending. See the book width-carrier section.
 
 The maintained `feature.isf_unary_reductions` representative retains explicit
 internal supported-phase and nonclaim arrays through source-query cohort

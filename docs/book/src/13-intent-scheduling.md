@@ -356,6 +356,39 @@ independence from legacy discovery with:
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2106-lispish-parser-provider.t
 ```
 
+### Width dependencies in generated IAL0
+
+Module artifacts now retain scoped width and default relationships instead of
+using a resolved width as the declaration. For example:
+
+```lisp
+{{#include ../../../t/data/isf-bound-width-carrier-demo.isf}}
+```
+
+```bash
+./bin/fsmgen --quiet --strict --check --json t/data/isf-bound-width-carrier-demo.isf
+```
+
+Its IAL0 module keeps `(WIDTH BASE)` in `+params` and emits
+`(data (param WIDTH))` and `(result (param WIDTH))` in `+size`.
+The default width stays eight. Explicit selectors preserve the declared
+parameter namespace even when a constant or type has the same name.
+
+Prepared transaction modules retain local aliases separately from actor
+captures. A foreign actor default uses its allocated capture parameter with
+the selected default; ambiguous static defaults use immutable constants rather
+than configurable aliases. Nested default lists keep their order and shape.
+Static width expressions use the scalar namespace, avoiding same-named type
+borrowing. Named types, literal widths and reset suffixes retain their existing
+paths. Actual reusable exports and physical domain modules use the same
+canonical plan consumer; physical renaming does not select a lexical owner.
+
+This preserves per-module source relationships. Generated-top configuration
+forwarding, generic HDL ranges, override-driven specialization, external
+legality and complete public/runtime qualification remain pending. Current
+source defaults are supported; this is not a generic HDL override guarantee.
+The private plans do not add public dependency-report fields.
+
 ### Schedule Report
 
 The schedule report is generated from the same IR as the `.fsm` text.
@@ -966,12 +999,12 @@ The ISF-specific current limitations are:
   transaction parameters, declared actor constants, actor-local scalar
   parameter defaults, or qualified imported package scalar constants by name:
   `(transaction worker (params (BASE 8) (WIDTH BASE) (LANES (BASE DEFAULT_WIDTH shared.LANE0))) ...)`.
-  Actor constants and actor scalar parameter defaults publish literal child
-  `+params` and generated-composition defaults. Earlier transaction parameter
-  dependency tokens, enum-backed transaction defaults, and qualified package
-  constant defaults keep their authored tokens because the generated child
-  artifact carries the needed declarations, package imports, and embedded
-  package roots. Forward/self/cyclic/non-scalar transaction-parameter
+  Child module defaults now retain scoped references, allocated actor captures
+  and immutable static aliases through the bound module carrier described above.
+  Earlier transaction parameter dependency tokens, enum-backed transaction
+  defaults and qualified package constants retain their selected declarations,
+  imports and embedded package roots. Generated-top bindings still use their
+  current static/default path; configuration forwarding remains pending. Forward/self/cyclic/non-scalar transaction-parameter
   dependencies, runtime signals, unknown symbols, non-scalar actor parameters,
   unqualified package constants, aggregate package constants, package
   member/item paths, and arbitrary expressions fail closed.

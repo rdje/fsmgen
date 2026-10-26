@@ -1,0 +1,5 @@
+(actor width_carrier_demo
+  (clock clk)
+  (params (BASE 8) (WIDTH BASE))
+  (interface (input data (width WIDTH)) (output result (width WIDTH)))
+  (rule copy 1 (result data)))

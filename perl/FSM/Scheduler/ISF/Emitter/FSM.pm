@@ -8,7 +8,7 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 
 # Emits .fsm source text from LoweringIR.
-# Pure emitter — no logic, just walks the IR and produces strings.
+# Canonical width/default plans are rendered without evaluating them again.
 
 sub new($class, %args) { bless {}, $class }
 
@@ -20,6 +20,7 @@ sub emit($self, $ir) {
     $self->{outputs} = { map { $_->{name} => 1 } grep { $_->{direction} eq 'output' } @{$ir->{ports}} };
 
     my @lines;
+    my $symbols = $ir->{_width_symbols} // {};
 
     push @lines, $self->_emit_header($ir);
     push @lines, '';
@@ -35,11 +36,11 @@ sub emit($self, $ir) {
         push @lines, $self->_emit_types($ir);
         push @lines, '';
     }
-    if (@{$ir->{constants} || []}) {
+    if (@{$ir->{constants} || []} || @{$symbols->{constants} || []}) {
         push @lines, $self->_emit_constants($ir);
         push @lines, '';
     }
-    if (@{$ir->{params} || []}) {
+    if (@{$ir->{params} || []} || @{$symbols->{capture_parameters} || []}) {
         push @lines, $self->_emit_params($ir);
         push @lines, '';
     }
@@ -107,8 +108,9 @@ sub _emit_types($self, $ir) {
 
 sub _emit_constants($self, $ir) {
     my @l;
+    my $symbols = $ir->{_width_symbols} // {};
     push @l, '  (+constants';
-    for my $constant (@{$ir->{constants} || []}) {
+    for my $constant (@{$ir->{constants} || []}, @{$symbols->{constants} || []}) {
         push @l, "    ($constant->{name} " . _format_param_value($constant->{value}) . ")";
     }
     push @l, '  )';
@@ -117,9 +119,15 @@ sub _emit_constants($self, $ir) {
 
 sub _emit_params($self, $ir) {
     my @l;
+    my $symbols = $ir->{_width_symbols} // {};
+    my $defaults = $symbols->{parameter_defaults} // {};
     push @l, '  (+params';
     for my $param (@{$ir->{params} || []}) {
-        push @l, "    ($param->{name} " . _format_param_value($param->{value}) . ")";
+        my $value = exists($defaults->{$param->{name}}) ? $defaults->{$param->{name}} : $param->{value};
+        push @l, "    ($param->{name} " . _format_param_value($value) . ")";
+    }
+    for my $capture (@{$symbols->{capture_parameters} || []}) {
+        push @l, "    ($capture->{name} " . _format_param_value($capture->{value}) . ")";
     }
     push @l, '  )';
     return join("\n", @l);
@@ -173,7 +181,8 @@ sub _emit_size($self, $ir) {
     my $resets = $ir->{reset_values} || {};
     for my $p (@{$ir->{ports}}) {
         $declared{$p->{name}} = 1;
-        my $width_token = $p->{type} // $type_refs->{$p->{name}} // $p->{width};
+        my $width_token = _bound_width_token(
+            $ir, $p->{name}, $p->{type} // $type_refs->{$p->{name}} // $p->{width});
         push @l, "    ($p->{name} $width_token" . _reset_suffix($resets, $p->{name}) . ")";
     }
     for my $storage (@{$ir->{declared_storage} || []}) {
@@ -181,7 +190,8 @@ sub _emit_size($self, $ir) {
             my $name = $signal->{name};
             next if $declared{$name};
             $declared{$name} = 1;
-            my $width_token = $signal->{type} // $type_refs->{$name} // $signal->{width};
+            my $width_token = _bound_width_token(
+                $ir, $name, $signal->{type} // $type_refs->{$name} // $signal->{width});
             push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
         }
     }
@@ -189,7 +199,7 @@ sub _emit_size($self, $ir) {
     for my $name (sort keys %$ctrs) {
         next if $declared{$name};
         $declared{$name} = 1;
-        my $width_token = $type_refs->{$name} // $ctrs->{$name};
+        my $width_token = _bound_width_token($ir, $name, $type_refs->{$name} // $ctrs->{$name});
         push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
     }
     for my $name (sort keys %{$self->{reduction_samples}}) {
@@ -208,12 +218,18 @@ sub _emit_size($self, $ir) {
             next if $declared{$name} || $static{$name};
             next unless defined($widths->{$name}) && $widths->{$name} > 0;
             $declared{$name} = 1;
-            my $width_token = $type_refs->{$name} // $widths->{$name};
+            my $width_token = _bound_width_token($ir, $name, $type_refs->{$name} // $widths->{$name});
             push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
         }
     }
     return '' unless @l;
     return join("\n", '  (+size', @l, '  )');
+}
+
+sub _bound_width_token($ir, $name, $fallback) {
+    my $symbols = $ir->{_width_symbols} // {};
+    my $widths = $symbols->{widths} // {};
+    return exists($widths->{$name}) ? _format_param_value($widths->{$name}) : $fallback;
 }
 
 # A scalar source sample is an explicit private declaration. Preserve its known
@@ -645,3 +661,26 @@ sub _format_condition_selector {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+FSM::Scheduler::ISF::Emitter::FSM - Canonical IAL0 module source emission
+
+=head1 DESCRIPTION
+
+C<emit($ir)> renders prepared LoweringIR without reevaluating widths or
+defaults. Optional private C<_width_symbols> plans provide C<+size> expression
+trees, authored parameter defaults, capture parameter defaults and immutable
+supporting constants. The existing formatter serializes those canonical trees.
+Named types, literal widths and reset suffixes retain their existing paths
+when no bound expression applies. Reading an absent plan does not mutate IR.
+
+Capture defaults describe the selected module environment. They do not
+establish generated-top forwarding, generic HDL ranges, per-instance shape
+specialization or external override legality; those have separate consumers
+and qualification boundaries. Private plan fields are compiler records, not
+source options or a public dependency-report schema.
+
+=cut
