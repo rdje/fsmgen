@@ -1346,10 +1346,37 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for focused VHDL ranges and directly affected VHDL/Verilog emitters; both modules report syntax OK. Guarded mdBook/POD build and freshness/source checks pass. Native strict source check retains the pending parameter-lowering code. Staged scripts/check_doctrines.sh and normal hooks gate this slice; full verification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Admit the qualified canonical composition source plans and publish exact profile boundaries.`
   Acceptance: `After .2/.3, remove only qualified pending guards and join actual source/planning/IR/HDL discovery contracts. Preserve contextual unsupported refusals and static controls. Run the smallest representative native checks and update source fixtures/accounting/contracts/book together; defer full profile/transport/runtime matrices to .6.`
-  Verification: `pending`
+  Verification: `Split admission by interface safety before removing the blanket guard: fixed-interface external RTL first, generated children and symbolic interface conservation afterward. Direct emitter support cannot prove that realized numeric child ports or internal nets resize under top overrides.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.1`
+  Status: `done`
+  Goal: `Prepare a bounded parameter-source admission check without changing source admission.`
+  Acceptance: `Use actual parsed/imported top defaults, child declarations and captured width references. Select only scalar top parameters with external RTL children and interfaces independent of mutable top widths. Reject generated children, aggregate defaults and parameter-dependent top widths contextually; static/no-parameter sources retain their existing lane checks. Do not guess dependency identity from equal numeric widths or read external RTL internals. Focused source/target/refusal/isolation controls, synchronized POD/book and commit precede guard integration.`
+  Verification: `Actual parsed/imported scalar/default aliases and immutable-width RTL sources pass the new interface-safety candidate check. Scalar parameters with generated FSM/DT or mixed children, aggregate defaults and direct/alias/nested mutable top widths refuse contextually. Static generated sources bypass this parameter check; missing children remain lane-owned and unresolved defaults cannot become candidates. Caller environment kinds/values stay unchanged. Initial missing-method RED identifies the absent prerequisite; the first expanded run exposes a test-fixture missing import, corrected before the focused GREEN. A retained wrong-reference classifier and a classifier dropping all width references both fail the same focused assertions with loaded capsule paths recorded. Focused candidate/emitter checks report All tests successful Files=2 Tests=7; PlanBuilder syntax OK, guarded mdBook/POD build passes and actual native --strict --check --json retains FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING. Re-derive: actual parsed/imported declarations and captured references; falsify: independent source controls and wrong-classifier variants; durability: tracked source/test/book/fact and docs/audits/composition-parameter-source-candidate-20261026.json.gz. This internal check is not called by build_plan yet; no source/profile/corpus promotion or external HDL qualification. The designated claim template matches the retained review; local README/containment policy remains authoritative. Initial worktree doctrines reject exhausted task-evidence line/byte and Knowledge Map byte allowances. Apply measured actual plus each existing ratchet only to those dimensions, preserving baselines and ceilings; the failed gate stream is retained in the audit. Corrected staged doctrines and normal hooks gate commit; integration is .4.2 and complete verification stays .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.1: prepare bounded parameter source candidates`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2140-composition-parameter-source-candidate.t line 14 identifies the missing candidate check. PlanBuilder has only its blanket guard, while realized child interfaces and internal nets retain numeric widths; direct backend support alone cannot establish generic interface conservation. Actual --strict --check --json retains the pending-lowering diagnostic.
+  - [x] **ADDRESSED (verified)** — Prepare a source-bound interface-safety check for scalar external RTL candidates using declared child kinds and captured width-reference identities. Generated children, aggregate defaults and mutable port widths refuse without numeric-equality inference. Wrong-reference and dropped-reference classifier variants fail the same focused assertions; build_plan admission stays unchanged.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=7 for the focused candidate and existing scalar emitter checks; PlanBuilder syntax OK and guarded mdBook/POD build passes. Native source refusal is unchanged. Staged scripts/check_doctrines.sh and normal hooks gate this internal preparation; complete feature verification remains .6.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.2`
+  Status: `pending`
+  Goal: `Admit bounded scalar fixed-interface RTL source plans through actual backend generation.`
+  Acceptance: `After .1, replace only the blanket top-parameter guard with the qualified check. Native strict check/semantic/generation must preserve aliases and selected child actuals for Verilog-family and existing bounded VHDL shapes. Keep backend type/namespace refusals, generated and symbolic-width guards; synchronize exact discovery, representative corpus allocations, existing guard tests, scope/downstream/book/fact contracts. Use focused checks and commit; full API/MCP/corpus/runtime matrices remain .6.`
+  Verification: `pending admission preparation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4.3`
+  Status: `pending`
+  Goal: `Qualify generated-child and symbolic-interface source admission through preserved width contracts.`
+  Acceptance: `After .2, establish actual child declaration/interface dependencies and generic emission rather than numeric cache equality. Reuse canonical source/IR contracts and independently compare connected top/child/net widths. Admit only demonstrated conserved profiles; preserve explicit refusal for unspecialized/generated width relationships. Split prerequisites before editing if this requires generic child HDL work owned by .3, and resolve dependency ordering without claiming unsupported admission. Focused checks, synchronized contracts/book and commit precede parent closure; full qualification remains .6.`
+  Verification: `pending fixed-interface admission; child generic width emission remains owned by .3`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.2`

@@ -24,3 +24,7 @@ names (T2136). Integer child actuals retain selected names (T2138); symbolic siz
 children refuse; captured VHDL arithmetic ranges retain names (T2139). Source admission,
 typed tops and symbolic aggregate bindings stay pending; static aggregate
 profiles are unchanged. See the [composition reference](../book/src/05-composition-basics.md).
+
+`PlanBuilder::assert_parameter_source_candidate` prepares a fixed-interface RTL
+subset; generated children and mutable top widths refuse (T2140). The blanket
+source guard remains until integration; backend checks still own target types.

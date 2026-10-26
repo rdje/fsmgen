@@ -147,6 +147,15 @@ source queries still return the pending-lowering diagnostic; discovery marks
 source planning and complete HDL emission unsupported. Symbolic interface specialization
 and canonical source emission remain required before generation is enabled.
 
+An internal source-candidate check now separates fixed interfaces from pending
+generic interface propagation. It selects scalar top defaults with external RTL
+children and top widths that use only literals or captured static symbols.
+The published `.rtlif` contract supplies fixed child port widths; the check
+does not inspect RTL implementation. Generated children, aggregate top defaults
+and top widths selecting `(param NAME)` still refuse, even when a selected
+parameter equals a static width. Backend typing, namespace and connection
+validation remain separate. This preparation does not change source admission.
+
 The direct Verilog-family structural IR emitter now supports prepared scalar
 top defaults and child actuals when a matching captured environment is present.
 It emits untyped `parameter` defaults in canonical dependency order; the earliest

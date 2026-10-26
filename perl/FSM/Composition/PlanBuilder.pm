@@ -30,6 +30,38 @@ use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::Composition::TopPortInferenceBuilder;
 
+sub assert_parameter_source_candidate ($class, %args) {
+    my $top = $args{top} or confess "Parameter source admission requires a composition top\n";
+    return 1 unless @{$top->parameter_declarations};
+
+    # This is an interface-safety prerequisite, not backend qualification.
+    # The target emitter still owns default/actual types and namespace rules.
+    my $environment = $top->parameter_environment;
+    my $refuse = sub ($reason) {
+        confess "Composition top '" . $top->name . "' top parameter lowering is blocked because " .
+            $reason . ". See docs/COMPOSITION_SCOPE.md.\n";
+    };
+    for my $name (@{$environment->{declaration_order}}) {
+        $refuse->("parameter '$name' requires scalar top defaults")
+            unless ($environment->{parameters}{$name}{value_kind} // '') eq 'scalar';
+    }
+    for my $instance (@{$top->instances}) {
+        $refuse->("generated child '" . $instance->name .
+            "' requires generic interface preservation before source admission")
+            unless $instance->kind eq 'rtl';
+    }
+    for my $block (@{$top->ports_blocks}) {
+        for my $port (@{$block->ports}) {
+            my $contract = $port->width_contract;
+            next unless $contract;
+            $refuse->("port '" . $port->name .
+                "' has a parameter-dependent width requiring connected interface preservation")
+                if grep {($_->{kind} // '') eq 'parameter'} @{$contract->{references}};
+        }
+    }
+    return 1;
+}
+
 sub build_plan ($class, %args) {
     my $pipeline = $args{pipeline}
         or confess "PlanBuilder requires a pipeline";
@@ -628,6 +660,19 @@ sub augment_with_shared_datapath ($class, %args) {
 __END__
 
 =head1 METHODS
+
+=head2 assert_parameter_source_candidate
+
+Checks the interface-safety prerequisite for future parameter-bearing source
+admission. Resolved scalar top defaults with external RTL children and no
+mutable top-port width references are candidates. The published C<.rtlif>
+contract supplies fixed child interface widths; no RTL implementation is read.
+Generated children and parameter-dependent top widths remain blocked until
+connected generic interface preservation is qualified. Equal numeric defaults
+cannot erase a captured parameter reference. Static sources bypass this check
+and retain existing lane rules. Backend default/actual typing and namespace
+validation remain separate. C<build_plan> still retains its blanket guard;
+this method alone does not enable source queries or generation.
 
 =head2 build_plan
 
