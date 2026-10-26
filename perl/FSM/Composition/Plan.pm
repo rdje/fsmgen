@@ -25,6 +25,8 @@ sub new ($class, %args) {
         raw_spec => _clone($args{raw_spec}),
     }, $class;
     $self->{parameter_environment} = _clone($environment) if defined $environment;
+    $self->{parameter_symbol_contract} = _clone($top->parameter_symbol_contract)
+        if defined $environment;
     return $self;
 }
 
@@ -39,6 +41,7 @@ sub auxiliary_assignments ($self) { return _clone($self->{auxiliary_assignments}
 sub shared_datapath_candidates ($self) { return _clone($self->{shared_datapath_candidates}) }
 sub raw_spec ($self) { return _clone($self->{raw_spec}) }
 sub parameter_environment ($self) { return _clone($self->{parameter_environment}) }
+sub parameter_symbol_contract ($self) { return _clone($self->{parameter_symbol_contract}) }
 
 sub _clone ($value) {
     return undef unless defined $value;
@@ -71,8 +74,13 @@ Later caller retries and returned-value mutation cannot change the snapshot.
 Unresolved declared parameters refuse construction. Ordinary plans retain their
 existing stored shape and return undef from the getter.
 
-This storage does not enable parameter-bearing source plans or IR/HDL lowering.
-Until canonical IR propagation exists, both forward IR builders explicitly
-refuse a plan carrying this environment rather than silently dropping it.
+C<parameter_symbol_contract> separately snapshots the static-symbol/import
+contract retained by that successful top resolution. Later live cache edits
+cannot mix a new static context with an older parameter environment.
+
+Both forward IR builders preserve the parameter environment; IntentHIR consumes
+the separate captured static contract. This storage does not enable source
+plans with parameters, public normalized environment schemas or HDL lowering;
+structural emitters refuse a known top environment pending lowering.
 
 =cut

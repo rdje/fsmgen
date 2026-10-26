@@ -88,12 +88,11 @@ capture_refusal('failed plan environment', sub {FSM::Composition::Plan->new(raw_
 is_deeply($plan->parameter_environment, $snapshot, 'refused retry cannot corrupt the already owned plan snapshot');
 
 for my $builder (qw(FSM::IR::IntentHIRBuilder FSM::IR::StructuralRTLIRBuilder)) {
-    capture_refusal($builder, sub {
-        $builder eq 'FSM::IR::IntentHIRBuilder'
-            ? $builder->build_from_composition_plan(composition_plan => $plan)
-            : $builder->build_from_composition_plan($plan);
-    }, qr/parameter environment.*blocked.*IR propagation/s);
-    is_deeply($plan->parameter_environment, $snapshot, 'pending IR refusal preserves the complete caller environment');
+    my $ir = $builder eq 'FSM::IR::IntentHIRBuilder'
+        ? $builder->build_from_composition_plan(composition_plan => $plan)
+        : $builder->build_from_composition_plan($plan);
+    is_deeply($ir->parameter_environment, $snapshot, 'forward IR retains the original snapshot after caller retry failure');
+    is_deeply($plan->parameter_environment, $snapshot, 'IR propagation preserves the complete caller environment');
 }
 my $static_text = '(?top:plain (?rtl:u (module child_rtl)))';
 my $static_spec = FSM::Composition::Parser->new->parse_source(scalar Lispish::multi(\$static_text));

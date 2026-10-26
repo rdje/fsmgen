@@ -32,6 +32,7 @@ sub package_imports ($self) { return _clone($self->{package_imports}) }
 sub parameter_declarations ($self) { return _clone($self->{parameter_declarations}) }
 sub parameter_default_graph ($self) { return _clone($self->{parameter_default_graph}) }
 sub parameter_default_bindings ($self) { return _clone($self->{parameter_default_bindings}) }
+sub parameter_symbol_contract ($self) { return _clone($self->{parameter_symbol_contract}) }
 sub top_symbols ($self) { return $self->{top_symbols} }
 sub raw_ast ($self) { return _clone($self->{raw_ast}) }
 
@@ -50,10 +51,24 @@ sub parameter_environment ($self) {
     });
 }
 
+sub symbol_contract ($self) {
+    my $symbols = $self->top_symbols;
+    my $contract = $symbols && $symbols->can('as_hashref') ? $symbols->as_hashref : {};
+    my $imports = $self->package_imports;
+    $contract->{package_import_count} = scalar(@$imports);
+    $contract->{package_imports} = $imports;
+    return undef unless ($contract->{constant_count} // 0) > 0
+        || ($contract->{enum_count} // 0) > 0
+        || ($contract->{type_count} // 0) > 0
+        || @$imports;
+    return $contract;
+}
+
 sub resolve_parameter_defaults ($self) {
     # A refused retry must not expose a stale or partially resolved graph.
     delete $self->{parameter_default_graph};
     delete $self->{parameter_default_bindings};
+    delete $self->{parameter_symbol_contract};
     return undef unless @{$self->{parameter_declarations}};
     my $graph = FSM::ParameterDeclarationSupport->resolve_declarations(
         entries => $self->{parameter_declarations}, source_module => $self->{name},
@@ -73,8 +88,10 @@ sub resolve_parameter_defaults ($self) {
             scope => {kind => 'composition_top', owner => $self->{name}},
         );
     }
+    my $symbol_contract = $self->symbol_contract;
     $self->{parameter_default_graph} = $graph;
     $self->{parameter_default_bindings} = \%bindings;
+    $self->{parameter_symbol_contract} = _clone($symbol_contract);
     return $self->parameter_default_graph;
 }
 
@@ -120,7 +137,8 @@ Real observed parameter roots remain configurable references; static symbols
 keep immutable selected canonical payloads and lookup identity. Equal values
 do not merge declarations, and aliases retain their immediate reference.
 The original C<parameter_default_graph> shape and normalized values stay intact.
-Both graphs publish only after complete success and clear before a retry.
+Graphs and their captured static contract publish only after complete success
+and clear before a retry.
 
 C<parameter_environment> combines those resolved products into one detached
 snapshot with C<scope>, C<declaration_order>, C<parameters>, C<default_sources>
@@ -128,6 +146,13 @@ and C<default_bindings>. No-parameter tops return undef. Declared parameters
 require complete successful resolution; an unresolved or failed retry refuses
 capture instead of publishing an absent or stale environment. Static symbols
 remain in their existing separate namespace.
+
+C<symbol_contract> is the live canonical static-symbol/import projection.
+Successful default resolution captures that projection separately as
+C<parameter_symbol_contract>. Its detached getter retains the same resolution
+boundary as the defaults, even if the caller later changes static caches or
+retries. Mutable parameters never enter the static namespace.
+
 
 Authored top C<+params> now collects these declarations; defaults resolve only
 after imports. Composition planning refuses parameter-bearing tops until

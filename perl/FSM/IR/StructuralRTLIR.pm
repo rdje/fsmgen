@@ -12,6 +12,11 @@ assignment records, auxiliary assignments, and the current typed
 actual-connection summaries that the backend emitter and composition reporting
 surfaces consume.
 
+Optional C<parameter_environment> records survive constructor/getter/hash
+boundaries as detached data. Ordinary IR retains its previous shape. The shared
+C<assert_no_pending_parameter_bindings> also refuses any known top environment,
+even with no instance overrides, pending canonical target lowering.
+
 =cut
 
 use v5.20;
@@ -26,7 +31,7 @@ sub new ($class, %args) {
     confess "FSM::IR::StructuralRTLIR requires 'module_name'"
         unless defined($args{module_name}) && $args{module_name} ne '';
 
-    return bless {
+    my $self = bless {
         module_name => $args{module_name},
         source_root_kind => $args{source_root_kind} // 'fsm',
         target_language => $args{target_language} // 'systemverilog',
@@ -38,6 +43,9 @@ sub new ($class, %args) {
         assignment_records => _clone($args{assignment_records} || []),
         auxiliary_assignments => _clone($args{auxiliary_assignments} || []),
     }, $class;
+    $self->{parameter_environment} = _clone($args{parameter_environment})
+        if exists $args{parameter_environment};
+    return $self;
 }
 
 sub module_name ($self) { return $self->{module_name} }
@@ -50,10 +58,13 @@ sub declared_links ($self) { return _clone($self->{declared_links}) }
 sub resolved_links ($self) { return _clone($self->{resolved_links}) }
 sub assignment_records ($self) { return _clone($self->{assignment_records}) }
 sub auxiliary_assignments ($self) { return _clone($self->{auxiliary_assignments}) }
+sub parameter_environment ($self) { return _clone($self->{parameter_environment}) }
 
 sub assert_no_pending_parameter_bindings ($class, $structural) {
     confess "StructuralRTLIR parameter binding boundary requires a structural hash\n"
         unless (reftype($structural) // '') eq 'HASH';
+    confess "StructuralRTLIR top parameter environment emission is blocked pending canonical lowering\n"
+        if exists $structural->{parameter_environment};
     for my $instance (@{$structural->{instances} || []}) {
         next unless (reftype($instance) // '') eq 'HASH';
         for my $override (@{$instance->{parameter_overrides} || []}) {
@@ -236,7 +247,7 @@ sub as_hashref ($self) {
     my $assignment_records = _clone($self->assignment_records || []);
     my $auxiliary_assignments = _clone($self->auxiliary_assignments || []);
 
-    return {
+    my $result = {
         module_name => $self->module_name,
         source_root_kind => $self->source_root_kind,
         target_language => $self->target_language,
@@ -255,6 +266,9 @@ sub as_hashref ($self) {
         auxiliary_assignment_count => scalar(@$auxiliary_assignments),
         auxiliary_assignments => $auxiliary_assignments,
     };
+    $result->{parameter_environment} = $self->parameter_environment
+        if exists $self->{parameter_environment};
+    return $result;
 }
 
 sub _clone ($value) {

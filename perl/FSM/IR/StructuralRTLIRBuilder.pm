@@ -12,8 +12,9 @@ C<FSM::Composition::Plan>, bounded direct-root structural construction from
 generated module analysis, and object/hash coercion for downstream pipeline and
 backend consumers.
 
-Plans with a captured top parameter environment currently refuse construction
-until canonical IR propagation preserves all default/source/binding records.
+Composition construction and hash coercion preserve detached parameter
+environments when present. Target emission remains blocked until canonical
+lowering preserves top declarations, default bindings and interface widths.
 
 =cut
 
@@ -136,12 +137,12 @@ sub build_from_generated_module_info ($class, %args) {
 sub build_from_composition_plan ($class, $composition_plan, $target_language = 'systemverilog') {
     confess "StructuralRTLIRBuilder requires a composition plan"
         unless $composition_plan;
-    confess "StructuralRTLIRBuilder parameter environment is blocked pending canonical IR propagation\n"
-        if $composition_plan->can('parameter_environment')
-            && defined($composition_plan->parameter_environment);
+    my $environment = $composition_plan->can('parameter_environment')
+        ? $composition_plan->parameter_environment : undef;
 
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($composition_plan->top_name // ''),
+        (defined($environment) ? (parameter_environment => $environment) : ()),
         source_root_kind => 'top',
         target_language => ($target_language // 'systemverilog'),
         ports => [
@@ -260,6 +261,8 @@ sub coerce ($class, $structural_rtl_ir, $default_target_language = 'systemverilo
 
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($structural_rtl_ir_hash->{module_name} // ''),
+        (exists($structural_rtl_ir_hash->{parameter_environment})
+            ? (parameter_environment => $structural_rtl_ir_hash->{parameter_environment}) : ()),
         source_root_kind => ($structural_rtl_ir_hash->{source_root_kind} // 'fsm'),
         target_language => ($structural_rtl_ir_hash->{target_language} // ($default_target_language // 'systemverilog')),
         ports => ($structural_rtl_ir_hash->{ports} || []),

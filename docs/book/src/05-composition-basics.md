@@ -52,7 +52,7 @@ structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
 Instance overrides now also retain actual scoped bindings beside their
-canonical validation values. Validated IR, interface widths and HDL propagation
+canonical validation values. Public IR schemas, interface widths and HDL propagation
 remain pending; parameter-bearing HDL plans still refuse.
 
 `Top::parameter_environment()` captures these actual resolved products as
@@ -61,14 +61,19 @@ sources and scoped default bindings. A plan constructed from that source owns
 a detached snapshot, available through `Plan::parameter_environment()`.
 Caller retries and getter mutations cannot change an existing snapshot;
 unresolved or failed defaults refuse new capture. Tops without parameters keep
-no environment. Both forward IR builders currently refuse a captured plan
-environment until they can preserve it; this private storage adds no public
-report schema or symbolic HDL admission.
+no environment. Both forward IR builders and structural hash coercion preserve
+the full environment; IntentHIR's parameter names follow authored order. A
+supplied structural environment must match its actual plan. Successful default
+resolution also captures the separate static-symbol/import contract, so a later
+caller cache edit cannot mix new static facts with older parameter defaults.
+Constructor/getter/hash mutation remains isolated. This private propagation
+adds no public normalized environment schema or symbolic HDL admission.
 
 The direct structural IR backend API enforces this boundary too. An override
 carrying a symbolic binding is refused until canonical target lowering exists;
-the backend cannot emit its cached validation number instead. Existing
-static/literal generic maps retain their supported behavior.
+the backend cannot emit its cached validation number instead. A known top
+parameter environment also refuses, even with no symbolic child overrides.
+Existing static/literal generic maps retain their supported behavior.
 
 ## Top Root Shape
 

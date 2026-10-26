@@ -11,6 +11,12 @@ the root identity, system contract, state and standalone-DT families,
 signal-boundary summaries, and bounded composition child summaries that later
 lowering steps consume.
 
+Optional C<parameter_environment> records retain detached top scope, authored
+order, normalized defaults, authored sources and scoped bindings. The getter
+and C<as_hashref> preserve them without adding a key to ordinary roots. Top
+parameter names derive from declaration order; static symbols remain separate.
+These private IR products do not enable symbolic source or target emission.
+
 =cut
 
 use v5.20;
@@ -25,7 +31,7 @@ sub new ($class, %args) {
     confess "FSM::IR::IntentHIR requires 'module_name'"
         unless defined($args{module_name}) && $args{module_name} ne '';
 
-    return bless {
+    my $self = bless {
         module_name => $args{module_name},
         source_root_kind => $args{source_root_kind} // 'fsm',
         regular_state_names => [@{$args{regular_state_names} || []}],
@@ -51,6 +57,9 @@ sub new ($class, %args) {
         composition_standalone_dt_children => _clone($args{composition_standalone_dt_children}),
         composition_lane => $args{composition_lane},
     }, $class;
+    $self->{parameter_environment} = _clone($args{parameter_environment})
+        if exists $args{parameter_environment};
+    return $self;
 }
 
 sub module_name ($self) { return $self->{module_name} }
@@ -65,6 +74,7 @@ sub requires_implicit_system_ports ($self) { return $self->{requires_implicit_sy
 sub standalone_dt_enable_families ($self) { return _clone($self->{standalone_dt_enable_families}) }
 sub standalone_dt_module_enable_family ($self) { return _clone($self->{standalone_dt_module_enable_family}) }
 sub parameter_names ($self) { return _clone($self->{parameter_names}) }
+sub parameter_environment ($self) { return _clone($self->{parameter_environment}) }
 sub symbol_contract ($self) { return _clone($self->{symbol_contract}) }
 sub composition_child_count ($self) { return $self->{composition_child_count} }
 sub composition_children ($self) { return _clone($self->{composition_children}) }
@@ -195,6 +205,8 @@ sub as_hashref ($self) {
         parameter_names => $parameter_names,
         symbol_contract => _clone($self->symbol_contract),
     };
+    $result->{parameter_environment} = $self->parameter_environment
+        if exists $self->{parameter_environment};
 
     $result->{composition_child_count} = $self->composition_child_count
         if defined $self->composition_child_count;

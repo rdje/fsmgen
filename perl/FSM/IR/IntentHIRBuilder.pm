@@ -12,14 +12,16 @@ composition-top semantic summary from an already-built composition plan plus
 the surrounding structural and child-export inputs, and it also owns the
 bounded direct-root semantic summary extracted from the direct pipeline path.
 
-Plans with a captured top parameter environment currently refuse construction
-until canonical IR propagation preserves all default/source/binding records.
+Composition construction preserves the captured parameter environment and its
+separate static contract. Supplied structural IR must carry the same complete
+environment as the actual plan; missing, injected or changed records refuse.
 
 =cut
 
 use v5.20;
 use strict;
 use warnings;
+use JSON::PP ();
 use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
@@ -105,9 +107,8 @@ sub build_from_fsm_module ($class, %args) {
 sub build_from_composition_plan ($class, %args) {
     my $composition_plan = $args{composition_plan}
         or confess "IntentHIRBuilder requires a composition_plan";
-    confess "IntentHIRBuilder parameter environment is blocked pending canonical IR propagation\n"
-        if $composition_plan->can('parameter_environment')
-            && defined($composition_plan->parameter_environment);
+    my $environment = $composition_plan->can('parameter_environment')
+        ? $composition_plan->parameter_environment : undef;
     my $target_language = $args{target_language} // 'systemverilog';
 
     my $composition_child_exports = $args{composition_child_exports}
@@ -135,6 +136,13 @@ sub build_from_composition_plan ($class, %args) {
         : ref($structural_rtl_ir)
             ? $structural_rtl_ir->as_hashref
             : {};
+    if (defined($environment) || exists($structural_rtl_ir_hash->{parameter_environment})) {
+        my $json = JSON::PP->new->canonical;
+        confess "IntentHIRBuilder structural parameter environment must match its composition plan\n"
+            unless defined($environment)
+                && exists($structural_rtl_ir_hash->{parameter_environment})
+                && $json->encode($environment) eq $json->encode($structural_rtl_ir_hash->{parameter_environment});
+    }
     my $effective_system_contract = $class->build_composition_effective_system_contract(
         composition_plan => $composition_plan,
         structural_rtl_ir => $structural_rtl_ir_hash,
@@ -152,7 +160,8 @@ sub build_from_composition_plan ($class, %args) {
         requires_implicit_system_ports => 0,
         standalone_dt_enable_families => [],
         standalone_dt_module_enable_family => {},
-        parameter_names => [],
+        parameter_names => defined($environment) ? $environment->{declaration_order} : [],
+        (defined($environment) ? (parameter_environment => $environment) : ()),
         symbol_contract => $class->build_composition_top_symbol_contract($composition_plan),
         composition_child_count => $composition_child_exports->{child_count},
         composition_children => $composition_child_exports->{children},
@@ -200,6 +209,12 @@ sub build_direct_root_symbol_contract ($class, $fsm_module) {
 
 sub build_composition_top_symbol_contract ($class, $composition_plan) {
     return undef unless $composition_plan && ref($composition_plan);
+    if ($composition_plan->can('parameter_environment')
+        && defined($composition_plan->parameter_environment)) {
+        confess "IntentHIRBuilder parameter environment requires its captured static symbol contract\n"
+            unless $composition_plan->can('parameter_symbol_contract');
+        return $composition_plan->parameter_symbol_contract;
+    }
 
     my $composition_spec = $composition_plan->can('raw_spec')
         ? $composition_plan->raw_spec
@@ -209,6 +224,7 @@ sub build_composition_top_symbol_contract ($class, $composition_plan) {
         : undef;
 
     return undef unless $top && ref($top);
+    return $top->symbol_contract if $top->can('symbol_contract');
 
     my $top_symbols = $top->can('top_symbols')
         ? $top->top_symbols
