@@ -1,0 +1,13 @@
+(?top:range_top
+  (+params (ALIAS W) (W 1))
+  (+constants (BASE 3))
+  (+types (type SIGNED (signed (bits 7))))
+  (+import widths)
+  (?ports
+    clk<1:clock typed<SIGNED fixed<BASE
+    (input data (width (param ALIAS)))
+    (output result (width (div (* (param W) 6) widths.EXTRA)))
+    (input literal (width (+ BASE 1)))
+  )
+)
+(?pkg:widths (+constants (EXTRA 2)))

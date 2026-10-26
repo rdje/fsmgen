@@ -121,8 +121,7 @@ FSM::Backend::VerilogFamily::CompositionBindingEmitter - Canonical scalar compos
 =head1 DESCRIPTION
 
 Canonical scalar expression rendering for the prepared Verilog-family structural
-emitter. It does not enable parameter-bearing source plans. Width lowering,
-VHDL rendering and aggregate bindings remain pending.
+emitter. It does not enable parameter-bearing source plans. VHDL rendering and aggregate bindings remain pending.
 
 =head1 METHODS
 
@@ -141,7 +140,7 @@ parameter paths refuse. Operator aliases/arity use the canonical operator
 contract; explicit parentheses preserve nesting and operand order. Caller trees
 are read-only and recursive caller trees refuse. Returned dependency lists are
 owned by the result. Top namespace reservation and declaration ordering belong to
-L<FSM::Backend::VerilogFamily::CompositionParameterEmitter>. Port widths,
+L<FSM::Backend::VerilogFamily::CompositionParameterEmitter>. Scalar port ranges use L<FSM::Backend::VerilogFamily::CompositionWidthEmitter>;
 explicit typed tops and broader profile legality remain separately owned.
 
 =cut

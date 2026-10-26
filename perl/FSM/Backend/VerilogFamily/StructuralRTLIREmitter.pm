@@ -12,8 +12,8 @@ where backend text generation consumes structural connectivity rather than
 re-deriving structure inside the pipeline coordinator.
 
 Prepared scalar top environments and child C<binding_expression> records render
-through canonical declaration and expression helpers. Port C<width_contract>
-records remain refused. Validation numbers never replace symbolic bindings;
+through canonical declaration and expression helpers. Captured scalar port
+C<width_contract> records render symbolic packed ranges through the width helper. Validation numbers never replace symbolic bindings;
 ordinary supported static/literal actuals retain existing behavior.
 
 =cut
@@ -28,6 +28,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
 use FSM::Backend::VerilogFamily::CompositionParameterEmitter;
+use FSM::Backend::VerilogFamily::CompositionWidthEmitter;
 use FSM::Backend::VerilogFamily::CompositionBindingEmitter;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
@@ -43,9 +44,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $target_language = $structural->{target_language} // 'systemverilog';
     confess "StructuralRTLIR verilog-family emitter only supports systemverilog/verilog target_language values"
         unless $target_language =~ /^(?:systemverilog|sv|verilog|v)$/;
-    if (exists $structural->{parameter_environment}) {
-        FSM::IR::StructuralRTLIR->assert_no_pending_port_width_contracts($structural);
-    } else {
+    if (!exists $structural->{parameter_environment}) {
         FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
     }
 
@@ -63,7 +62,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $declarations = FSM::Backend::VerilogFamily::CompositionParameterEmitter->lower_declarations(
         structural => $structural, aggregate_typedef_lookup => $aggregate_typedef_lookup);
 
-    my @port_lines = map { _render_port_line($_, $aggregate_typedef_lookup) } @ports;
+    my @port_lines = map { _render_port_line($_, $aggregate_typedef_lookup, $structural) } @ports;
 
     my @net_lines = map { _render_net_line($_, $aggregate_typedef_lookup) } @nets;
 
@@ -131,12 +130,17 @@ sub _parameter_value ($override, $structural) {
         target_language => $structural->{target_language} // 'systemverilog')->{text};
 }
 
-sub _render_port_line ($port, $aggregate_typedef_lookup) {
+sub _render_port_line ($port, $aggregate_typedef_lookup, $structural) {
+    my $symbolic_range = exists($port->{width_contract})
+        ? FSM::Backend::VerilogFamily::CompositionWidthEmitter->lower_range(
+            port => $port, environment => $structural->{parameter_environment},
+            target_language => $structural->{target_language} // 'systemverilog')
+        : undef;
     my $typedef_name = _aggregate_typedef_name_for($port, $aggregate_typedef_lookup);
     return sprintf("    %s %s %s", $port->{direction}, $typedef_name, $port->{name})
         if defined $typedef_name;
 
-    my $width = ($port->{width} || 1) > 1 ? sprintf("[%d:0] ", $port->{width} - 1) : '';
+    my $width = $symbolic_range // (($port->{width} || 1) > 1 ? sprintf("[%d:0] ", $port->{width} - 1) : '');
     my $signed = ($port->{signed} // 0) ? 'signed ' : '';
     my $state_model = _state_model_keyword($port->{state_model});
     my $type_prefix = defined($state_model) ? "${state_model} ${signed}" : $signed;

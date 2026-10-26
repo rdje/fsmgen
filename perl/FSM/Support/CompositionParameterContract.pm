@@ -71,7 +71,7 @@ sub build_composition_parameter_contract {
         prepared_scalar_emission => {
             targets => [qw(systemverilog sv verilog v)],
             top_defaults => JSON::PP::true, child_actuals => JSON::PP::true,
-            symbolic_port_widths => JSON::PP::false, typed_top_parameters => JSON::PP::false,
+            symbolic_port_widths => JSON::PP::true, typed_top_parameters => JSON::PP::false,
             source_admission => JSON::PP::false,
         },
         guidance => [
@@ -85,7 +85,7 @@ sub build_composition_parameter_contract {
             'Default bindings and optional instance binding_expression use binding_node_keys by kind. Operands, items and members recurse through the same node family; payload values and static_symbol value_payload use payload_node_keys.',
             'Parameter token is the declared root plus suffix; aliases retain immediate declaration identity. Static symbols retain scope, source token and selected payload. Operator is canonical, while source_operator retains the authored alias.',
             'Type items and members recurse through type_node_keys; signed is the canonical numeric flag. Missing optional fields are omitted, never inferred from a cached number.',
-            'Unparameterized environments and static overrides keep their existing report shapes. prepared_scalar_emission names only direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults and scalar child actuals. Symbolic widths, typed tops, symbolic aggregate bindings, VHDL parameter emission and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
+            'Unparameterized environments and static overrides keep their existing report shapes. prepared_scalar_emission names only direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults, scalar child actuals and captured scalar port ranges. Typed tops, symbolic aggregate bindings, VHDL parameter emission and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
         ],
     };
 }
@@ -105,8 +105,8 @@ ports, IntentHIR/common signal analysis and serialized top-port records. It
 names exact optional report paths, source owners, recursive key families,
 version semantics and the pending source/complete-HDL boundary. The separate
 C<prepared_scalar_emission> record names the direct Verilog-family emitter's
-untyped scalar top-default/child-actual subset, excluding symbolic widths,
-typed tops and source admission. It describes producer
+untyped scalar top-default/child-actual and captured scalar port-range subset,
+excluding typed tops and source admission. It describes producer
 contracts; it neither resolves input nor attests the provenance of caller-made
 hashes. Follow the actual Top/Plan/IR producers for semantic provenance.
 

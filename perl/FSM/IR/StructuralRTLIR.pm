@@ -17,9 +17,9 @@ boundaries as detached data. Ordinary IR retains its previous shape. The shared
 C<assert_no_pending_parameter_bindings> also refuses any known top environment,
 even with no instance overrides, pending canonical target lowering. Optional
 port C<width_contract> records also survive detached boundaries and derived
-signal metadata. The independent width guard refuses them pending width
-lowering. Verilog-family emission with a captured matching scalar environment
-uses canonical declaration/binding lowering; VHDL retains the complete guard.
+signal metadata. The independent width guard refuses them outside prepared target lowering.
+Verilog-family emission with a captured matching scalar environment uses
+canonical declaration, binding and scalar port-range lowering; VHDL retains the complete guard.
 
 =cut
 
@@ -329,8 +329,8 @@ replace source-plan and target-shape validation.
 =head2 assert_no_pending_port_width_contracts
 
 Refuses known port C<width_contract> records independently of parameter binding
-admission. The Verilog-family emitter uses this width gate before lowering a
-captured scalar parameter environment. The complete guard above still applies
+admission. Verilog-family emission with a captured scalar environment validates
+and lowers these contracts through its canonical width renderer instead. The complete guard above still applies
 when that environment is absent and to the separately pending VHDL profile.
 
 =head2 new

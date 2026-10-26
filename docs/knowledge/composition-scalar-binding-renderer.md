@@ -9,21 +9,19 @@ date: 2026-10-26
 status: current
 tags: [composition, parameters, lowering, verilog]
 evidence: perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm; perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm; t/2132-composition-scalar-binding-renderer.t; t/2133-composition-top-declaration-lowering.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t t/2135-composition-symbolic-port-ranges.t
 ---
 
-`CompositionBindingEmitter` renders scoped canonical bindings as text and ordered
-parameter references, preserving names rather than validation values. Static
-scalars normalize to literals; raw expression text and aggregates refuse.
+`CompositionBindingEmitter` renders scoped scalar bindings as text and ordered
+references, retaining parameter names. Static scalars become literals; raw
+expressions and aggregates refuse. `CompositionParameterEmitter` orders defaults
+by canonical dependencies, with earliest-ready authored ties. Module, port, net,
+instance and collected typedef names reserve the namespace; validation widths
+never size parameter declarations.
 
-`CompositionParameterEmitter::lower_declarations` orders scalar defaults by
-canonical dependencies, selecting the earliest ready authored declaration. It
-reserves actual module, port, net, instance and collected typedef names. Cached
-widths never fix parameter sizes.
-
-The Verilog-family structural emitter consumes these helpers with a matching
-captured environment. Actual source, child validation and captured Plan/IR are
-checked by T2134. Discovery names this prepared scalar subset; source admission,
-width contracts, VHDL parameters, explicit typed tops and symbolic aggregate
-bindings remain guarded. Existing static aggregate profiles are unchanged.
+The structural emitter requires a matching captured environment. T2134 covers
+actual source/child/Plan/IR. `CompositionWidthEmitter` checks scope and ordered
+lookups, retains one-bit-default parameter ranges and ignores port width caches
+(T2135). Source admission, VHDL parameters, typed tops and symbolic aggregate
+bindings stay guarded; existing static aggregate profiles are unchanged.
 See the [composition reference](../book/src/05-composition-basics.md).

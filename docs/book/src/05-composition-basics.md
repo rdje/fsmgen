@@ -163,13 +163,30 @@ collected typedef names in the case-sensitive target namespace. Cycles,
 incomplete binding membership, foreign scopes, reserved identifiers, aggregate parameter defaults, symbolic
 aggregate actuals and raw expression payloads refuse. Symbolic child actuals
 without a captured environment still refuse instead of emitting cached numbers.
-VHDL parameter emission, symbolic port ranges and explicit typed top parameters
-remain outside this prepared profile. Parameter-bearing source plans retain
+VHDL parameter emission and explicit typed top parameters remain outside this
+prepared profile. Parameter-bearing source plans retain
 `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`.
 
+Captured scalar port widths also render through the internal
+[width renderer](../../../perl/FSM/Backend/VerilogFamily/CompositionWidthEmitter.pm).
+For `(input data (width (param ALIAS)))`, the prepared emitter writes
+`input [(ALIAS - 1):0] data` even when the default width is one. Numeric port
+width caches never supply this range. Scoped parameter selectors retain actual
+names; bare static symbols use captured integer payloads. Static expression
+subtrees fold to decimal integers; symbolic arithmetic retains explicit
+left-associated parentheses and the shared width evaluator's default checks.
+Signed/state flags survive, and ordinary static/named-type ports retain their
+existing declarations. Combining a declared type with an expression width,
+foreign scopes, incomplete or out-of-order lookups, aggregates and unsupported
+operators refuses. The [range fixture](../../../t/data/composition-symbolic-port-ranges.fsm)
+and [focused regression](../../../t/2135-composition-symbolic-port-ranges.t)
+exercise actual parsed/imported declarations and captured Plan/IR products.
+This prepares direct emission only; source admission, external override legality,
+internal-net width propagation and HDL runtime qualification remain pending.
+
 Discovery's `composition_parameter_contract.prepared_scalar_emission` names the
-direct targets (`systemverilog`, `sv`, `verilog`, `v`), supported `top_defaults`
-and `child_actuals`, and false `symbolic_port_widths`, `typed_top_parameters`
+direct targets (`systemverilog`, `sv`, `verilog`, `v`), supported `top_defaults`,
+`child_actuals` and `symbolic_port_widths`, with false `typed_top_parameters`
 and `source_admission`. The broader source/HDL support flags remain false.
 The [source fixture](../../../t/data/composition-scalar-emission.fsm) and
 [emission test](../../../t/2134-composition-scalar-structural-emission.t) use

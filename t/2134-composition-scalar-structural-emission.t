@@ -76,7 +76,7 @@ subtest 'actual source, real child declarations and captured IR emit symbolic sc
     is($json->encode($ir), $before, 'all nested source/IR inputs remain unchanged');
 };
 subtest 'unqualified widths, namespaces, types and scopes stay closed' => sub {
-    refuses('pending width', sub {$_[0]{ports}[0]{width_contract} = {}}, qr/port width contract emission is blocked/);
+    refuses('pending width', sub {$_[0]{ports}[0]{width_contract} = {}}, qr/requires a complete width contract/);
     refuses('port name collision', sub {$_[0]{ports}[0]{name} = 'WIDTH'}, qr/WIDTH.*port/);
     refuses('foreign child binding', sub {$_[0]{instances}[0]{parameter_overrides}[0]{binding_expression}{scope}{owner} = 'other'}, qr/scope/);
     refuses('aggregate child declaration', sub {$_[0]{instances}[0]{parameter_overrides}[0]{declaration_default_value_kind} = 'list'}, qr/scalar.*override/);
@@ -97,7 +97,7 @@ subtest 'ordinary static source shape and public applicability remain explicit' 
     ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported}, 'complete source/HDL support is still unqualified');
     is_deeply($contract->{prepared_scalar_emission}, {targets => [qw(systemverilog sv verilog v)],
         top_defaults => JSON::PP::true, child_actuals => JSON::PP::true,
-        symbolic_port_widths => JSON::PP::false, typed_top_parameters => JSON::PP::false,
+        symbolic_port_widths => JSON::PP::true, typed_top_parameters => JSON::PP::false,
         source_admission => JSON::PP::false}, 'discovery names only the prepared direct-emitter subset');
 };
 done_testing;
