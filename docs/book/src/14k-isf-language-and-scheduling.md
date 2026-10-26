@@ -755,7 +755,9 @@ Instance overrides now keep the same actual scoped identities beside canonical
 validation caches for FSM, DT and RTL children, including aggregate paths and
 mixed static operands. Reuse refreshes bound records from authored source rather
 than a previous default number. Validated IR, symbolic widths and source emission
-remain pending; parameter-bearing HDL plans still refuse.
+remain pending; parameter-bearing HDL plans still refuse. Direct structural emitters also
+refuse pending symbolic binding records, preventing a lower-level API call from
+silently substituting their cached defaults.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates

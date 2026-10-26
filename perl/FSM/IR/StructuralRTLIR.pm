@@ -18,7 +18,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed reftype);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -50,6 +50,21 @@ sub declared_links ($self) { return _clone($self->{declared_links}) }
 sub resolved_links ($self) { return _clone($self->{resolved_links}) }
 sub assignment_records ($self) { return _clone($self->{assignment_records}) }
 sub auxiliary_assignments ($self) { return _clone($self->{auxiliary_assignments}) }
+
+sub assert_no_pending_parameter_bindings ($class, $structural) {
+    confess "StructuralRTLIR parameter binding boundary requires a structural hash\n"
+        unless (reftype($structural) // '') eq 'HASH';
+    for my $instance (@{$structural->{instances} || []}) {
+        next unless (reftype($instance) // '') eq 'HASH';
+        for my $override (@{$instance->{parameter_overrides} || []}) {
+            next unless (reftype($override) // '') eq 'HASH';
+            confess "StructuralRTLIR symbolic parameter binding emission is blocked pending canonical lowering " .
+                "for instance '" . ($instance->{instance_name} // '?') . "' override '" . ($override->{name} // '?') . "'.\n"
+                if exists $override->{binding_expression};
+        }
+    }
+    return 1;
+}
 
 sub port_metadata ($self) {
     my (@inputs, @outputs, @multi_bit, @single_bit);
@@ -263,6 +278,16 @@ sub _clone ($value) {
 __END__
 
 =head1 METHODS
+
+=head2 assert_no_pending_parameter_bindings
+
+Checks normalized structural hash data before target emission. An instance
+parameter override carrying C<binding_expression> is refused until canonical
+symbolic lowering is implemented. The validation cache C<value_text> must not
+silently replace that semantic binding. Both structural backend entrypoints use
+this shared guard for hash and object callers; ordinary literal/static inputs
+remain unchanged. This check does not add a public symbolic IR profile or
+replace source-plan and target-shape validation.
 
 =head2 new
 

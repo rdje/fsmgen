@@ -1053,10 +1053,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=11 for final instance bindings, canonical graph/parser lifetime and actual existing generated-child parameter pipeline/HDL controls. Changed lookup/resolver/discovery syntax OK. Static-control source/products and current complete native/API/newline pending-lowering reports agree. Book/source, staged scripts/check_doctrines.sh and normal hooks gate commit; complete IR/child/width/HDL qualification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry typed top parameter defaults and instance bindings through validated composition IR contracts.`
   Acceptance: `After .2, preserve bound expressions and resolved caches through actual generated/external child validation, realized instances, plan, IntentHIR and structural IR. Validate real declarations and existing scalar/aggregate shape rules; maintain detached caller/source/getter data and synchronize exact public schema/discovery applicability before successful admission. Do not remove fail-closed top planning before width/source emission is implemented. Refine safe slices before edits, run focused checks and commit; full profile/transport/runtime verification stays .6.`
   Verification: `Scoped default/instance semantics are ready. Inspect and refine actual child validation, plan, IntentHIR/structural consumers and schema applicability while preserving the current fail-closed boundary.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.1`
+  Status: `done`
+  Goal: `Prevent structural emitters from freezing pending symbolic parameter bindings into validation caches.`
+  Acceptance: `Before IR/schema propagation, reproduce direct structural hash/object emission using actual scoped override records from the source producer. The current renderers read value_text; determine whether binding_expression is silently discarded. If confirmed, own this P1 integration boundary and add a shared explicit refusal until target lowering can preserve the binding. Cover SystemVerilog, compatibility Verilog and VHDL with unchanged static-cache controls, object/hash isolation and source identities. Keep ordinary static output exact, retain the main plan guard, and avoid enabling any new source/IR/HDL profile. Focused source/IR/emitter controls, POD/book/fact/task and commit precede later schema exposure.`
+  Verification: `Actual parsed source supplies WIDTH-to-W binding metadata beside canonical value16. Direct SystemVerilog, compatibility Verilog and VHDL hash/object emitter calls all previously emit that number and discard the known symbolic relation; literal controls and caller snapshots pass. This confirms the P1 unsupported-binding integration defect before IR exposure. StructuralRTLIR now owns one read-only pending-binding refusal used by both structural emitter entrypoints before rendering. No metadata is removed or converted into a constant; ordinary supported static/literal inputs retain exact complete text. Fixed T2123 fails all target groups through the exact named committed emitter pair, with compiled FILE/hashes joined to Git; source producer and IR dependencies are current and separately declared. Current unchanged T2123/T163 report All tests successful Files=2 Tests=5. Complete old/current actual source binding, literal inputs/output and rejected caller snapshots conserve. Hash/object inputs refuse consistently without mutation. Syntax and selected compiled owner identities bind final files. Receipt docs/audits/structural-binding-boundary-20261026.json.gz retains exact source/test/producer epochs, old emitters/loader, complete selected observations/logs and declared root normalization. Re-derive: actual source binding and public emitter products; falsify: unchanged exact named-emitter RED/current GREEN, equal numeric cache versus real binding, complete literal/source/caller conservation and object/hash controls; durability: code/test/POD/book/fact/task/receipt/Git. Full transitive footprints, lint/runtime and every target profile are not requalified. This adds no symbolic source/IR/schema/HDL admission and leaves the main source plan guard unchanged. New top environment fields must keep this fail-closed discipline during later propagation. Book/source, final measured claim inventory and staged/normal doctrines gate commit before actual child validation .2.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.1: refuse pending structural parameter bindings`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Fixed predecessor diagnostics at t/2123-structural-symbolic-parameter-boundary.t line 48 expose successful cached-number emission where an actual W binding requires refusal. The Verilog-family renderer reads value_text; VHDL generic actual conversion does the same. Exact old compiled emitter FILE/hash joins identify these producers; the ordinary literal controls pass.
+  - [x] **ADDRESSED (verified)** — Both public structural emitter entrypoints share an explicit pending semantic binding guard before rendering, for object/hash callers and every changed target family. The unchanged fixed assertions pass; source identity, complete literal text and whole caller snapshots remain exact. No generic metadata is silently discarded or given a false constant meaning.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=5 for exact source/emitter boundary and existing forward structural pipeline controls; all changed owners syntax OK. Static output remains byte-exact and the source plan guard remains. Book/source, staged scripts/check_doctrines.sh and normal hooks qualify this protected boundary; actual child/IR/width/source emission stays pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.2`
+  Status: `pending`
+  Goal: `Validate and preserve scoped overrides through real child declarations and realized instances.`
+  Acceptance: `After .1, inspect actual generated/external child interfaces, validate real target parameter names and scalar/aggregate shapes against canonical caches, and retain detached binding/source metadata through actual realized records. Use real source or metadata producers and focused positive/missing-name/shape/isolation controls, without bypassing the main source plan guard or claiming full HDL admission. Add implementation only where a consumer is missing; synchronize book/fact/task and commit before plan/IR/schema propagation.`
+  Verification: `Direct structural binding refusal .1 is qualified; inspect and exercise actual generated/external child declarations and realized records next.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3`
+  Status: `pending`
+  Goal: `Preserve actual top environments and validated bindings in plan, IntentHIR, structural IR and exact schemas.`
+  Acceptance: `After .2, refine safe constructor/schema slices from actual paths. Carry detached declaration order, normalized values, default sources/bindings and scoped instance bindings without mixing mutable parameters into static symbol contracts. Keep ordinary products exact, expose only truthful applicable schema/discovery fields, extend pending-emission guards for new environment fields as introduced, and keep source planning/target emission fail-closed until width/source owners are implemented. Qualify small actual constructor/source/contract controls and commit each slice; whole profile/transport/runtime matrices remain .6.`
+  Verification: `pending child contracts`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`

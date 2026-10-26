@@ -11,6 +11,10 @@ C<StructuralRTLIR> layer. This package is the beginning of the planned split
 where backend text generation consumes structural connectivity rather than
 re-deriving structure inside the pipeline coordinator.
 
+Pending semantic C<binding_expression> records are explicitly refused before
+rendering. Their canonical validation numbers are not a symbolic lowering.
+Ordinary supported static/literal parameter actuals retain existing behavior.
+
 =cut
 
 use v5.20;
@@ -22,6 +26,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
+use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -35,6 +40,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $target_language = $structural->{target_language} // 'systemverilog';
     confess "StructuralRTLIR verilog-family emitter only supports systemverilog/verilog target_language values"
         unless $target_language =~ /^(?:systemverilog|sv|verilog|v)$/;
+    FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
 
     my $top_name = $structural->{module_name}
         // confess "StructuralRTLIR verilog-family emitter requires module_name";

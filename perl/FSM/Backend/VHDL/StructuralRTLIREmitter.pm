@@ -23,6 +23,10 @@ generic-map actuals for bounded standalone-DT C1 instances, and port-map
 actuals whose connection expressions already render through the
 backend-neutral StructuralRTLIR expression helper.
 
+Pending semantic C<binding_expression> records are explicitly refused before
+rendering. Their canonical validation numbers are not a symbolic lowering.
+Ordinary supported static/literal parameter actuals retain existing behavior.
+
 =cut
 
 use v5.20;
@@ -34,6 +38,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
+use FSM::IR::StructuralRTLIR;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub emit_module ($class, $structural_rtl_ir) {
@@ -46,6 +51,7 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $target_language = lc($structural->{target_language} // 'vhdl');
     confess _unsupported('structural VHDL emitter only supports target_language vhdl')
         unless $target_language eq 'vhdl';
+    FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
 
     my $top_name = $structural->{module_name}
         // confess _unsupported('structural VHDL emitter requires module_name');

@@ -55,6 +55,11 @@ Instance overrides now also retain actual scoped bindings beside their
 canonical validation values. Validated IR, interface widths and HDL propagation
 remain pending; parameter-bearing HDL plans still refuse.
 
+The direct structural IR backend API enforces this boundary too. An override
+carrying a symbolic binding is refused until canonical target lowering exists;
+the backend cannot emit its cached validation number instead. Existing
+static/literal generic maps retain their supported behavior.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an
