@@ -748,8 +748,10 @@ update `BOUND`.
 The direct-root declaration graph now shares one canonical helper for future
 composition reuse, preserving defaults and source records while removing retained
 parameter resolver contexts on success and refusal. Canonical value evaluation now also offers an optional expression tree at its
-actual literal/symbol/operator/list/map branches. Scoped top bindings and
-symbolic instance emission remain pending.
+actual literal/symbol/operator/list/map branches. Top defaults now bind actual observed
+parameter identities to a composition scope, retaining immediate aliases,
+aggregate paths and immutable static caches beside unchanged normalized values.
+Symbolic instance bindings and emission remain pending.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates

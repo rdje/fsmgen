@@ -21,6 +21,7 @@ sub resolve_declarations {
         source_module => $source_module, boundary_hint => $args{boundary_hint} // '',
         docs_hint => $args{docs_hint} // '', context_prefix => $args{context_prefix} // 'Direct source parameter',
         resolve_static_symbol_payload => $args{resolve_static_symbol_payload}, on_resolved => $args{on_resolved},
+        capture_expression => $args{capture_expression} ? 1 : 0, expressions => {},
     };
     for my $entry (@$entries) {
         confess "Parameter declaration resolution requires named value entries\n"
@@ -41,8 +42,10 @@ sub resolve_declarations {
         $context->{on_resolved}->($name, _copy($value), _copy($context->{sources}{$name}))
             if $context->{on_resolved};
     }
-    return {order => _copy($context->{order}), parameters => _copy($context->{resolved}),
+    my $result = {order => _copy($context->{order}), parameters => _copy($context->{resolved}),
         default_sources => _copy($context->{sources})};
+    $result->{expressions} = _copy($context->{expressions}) if $context->{capture_expression};
+    return $result;
 }
 
 sub _resolve_parameter {
@@ -62,8 +65,10 @@ sub _resolve_parameter {
     my $value = FSM::ParameterValueSupport->canonical_value(
         value_ast => $entry->{value_ast}, context => "$context->{context_prefix} '$name'",
         docs_hint => $context->{docs_hint},
+        capture_expression => $context->{capture_expression},
         resolve_symbol_payload => sub {return _resolve_reference($context, \@references, $_[0])},
     );
+    $context->{expressions}{$name} = delete $value->{value_expression} if $context->{capture_expression};
     pop @{$context->{stack}};
     delete $context->{visiting}{$name};
     $context->{sources}{$name} = {parameter => $name, source_module => $context->{source_module},
@@ -127,6 +132,12 @@ Optional C<on_resolved> receives detached name/value/source records in original
 declaration order, after lazy resolution. It can register each declaration
 without rewriting the resolver cache or later aliases. C<boundary_hint>,
 C<docs_hint> and C<context_prefix> retain the caller's diagnostic contract.
+
+With C<capture_expression> enabled, C<expressions> separately records canonical
+source trees keyed by parameter name. Expression observations never enter the
+normalized parameter values or C<on_resolved> registration records. Disabled
+capture keeps the existing graph shape. Lazy dependencies still register in
+source order, and every returned expression is detached.
 
 Named private functions carry ordinary per-call context. No self-referential
 resolver callback survives success or failure. This helper adds no source

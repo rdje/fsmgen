@@ -43,6 +43,16 @@ roots and imported package roots; this prevents ambiguous static/configurable
 lookup. Named types keep their separate namespace. Top declarations and default
 source/value getters return detached records.
 
+The compiler also retains scoped default bindings. In the fixture above,
+`BOUND` remains a reference to the actual `WIDTH` declaration; the imported
+`WIDTH` default remains static. Equal default values do not merge declarations,
+and aliases retain their immediate reference. Aggregate paths retain their
+parameter root and suffix; operators, list order and map fields retain their
+structure. Static symbols keep their lookup identity and selected value cache.
+`Top::parameter_default_bindings()` exposes detached compiler records beside
+the unchanged normalized default graph. A failed retry clears both graphs.
+Instance bindings and HDL propagation remain pending.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an

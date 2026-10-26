@@ -27,6 +27,10 @@ sub canonical_value_text ($class, %args) {
     return $class->canonical_value(%args)->{value_text};
 }
 
+sub normalize_expression_operator ($class, $operator) {
+    return $class->_normalize_scalar_expression_operator($operator);
+}
+
 sub canonical_value ($class, %args) {
     my $context = $args{context} // 'Parameter/generic value';
     my $docs_hint = $args{docs_hint} // '';
@@ -952,6 +956,12 @@ scalar-expression payload text acquires no invented authored operator tree.
 These are source observations, not scoped generic bindings or HDL expressions.
 Consumers must still bind real declarations and preserve supported target
 semantics. Capture does not admit a value that ordinary evaluation refuses.
+
+=head2 normalize_expression_operator
+
+Returns the existing canonical operator spelling for a supported operator or
+alias, and undef otherwise. Compiler consumers share this authority when
+validating observed operator nodes; it performs no value evaluation.
 
 =head2 canonical_value_text
 
