@@ -1471,10 +1471,52 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=167 for focused alias, Core-source and original symbol/executable-parameter controls. Scaffold syntax OK; exact native example generation and selected generated-hierarchy check pass, as does guarded mdBook/POD build. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit; complete generic ranges/defaults and external/runtime matrices remain successors/.6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve canonical general parameter-default relationships through supported module backend profiles.`
   Acceptance: `After .1, reuse the shared canonical parameter evaluator/expression capture to carry actual selected scalar operators, aliases and supported aggregate/path defaults without a second evaluator or raw source escape hatch. Preserve constant/enum/package versus parameter namespaces and actual declaration type evidence. Qualify dependency order, nested source meaning, immutable defaults and target-specific supported/refused profiles with focused checks; split unsafe producer/backend work before implementation. Synchronize source/discovery/book boundaries and commit; full matrices remain .6.`
-  Verification: `pending direct alias consumer`
+  Verification: `Direct aliases are committed at dddeb2e6c. The existing Composition::ParameterBindingSupport already binds canonical observed trees, ordered declared references and detached static payloads; git log -S bind_expression identifies its introduction at 840ea6000. Extract this walk without weakening the composition-top wrapper, then capture direct-module bindings after canonical resolution, then consume them through explicitly supported backend profiles. ParameterDeclarationSupport expression capture is opt-in and its on_resolved callback remains the existing three-argument contract. Core normalized parameters/source getters must stay unchanged; no raw-source renderer, guessed equal-value dependency, physical-name lexical inference or second evaluator. Commit this decomposition before code. The initial staged driver rejects a no-regression box carrying script names without a declared output token; use its actual knowledge-map: OK result and retain the failed log/patch in docs/audits/general-default-boundary-split-20261026.json.gz. Full external/runtime/native/API/MCP qualification remains .3.6/.6, not an implementation prerequisite.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.2: split general default binding boundaries`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S bind_expression -- perl/FSM/Composition/ParameterBindingSupport.pm identifies 840ea6000; the canonical binding walk is currently composition-owned. Direct Parser resolution does not request expression capture, and Core retains authored observations but no frozen canonical binding map. Scalar alias rendering alone cannot preserve nested operator/static/default relationships.
+  - [x] **ADDRESSED (verified)** — Split the shared kernel, direct Core producer, Verilog-family consumer, aggregate/path legality and VHDL profile into concrete ordered children. Keep wrapper scope checks, normalized registration/source contracts and deferred full qualification explicit before implementation.
+  - [x] **NO REGRESSION** — knowledge-map: OK from the staged driver, scripts/check_task_tree_integrity.pl and git diff --check qualify the task decomposition. Mandatory staged scripts/check_doctrines.sh and normal hooks gate measured task-evidence allowance growth without baseline or ceiling changes. No product behavior, source admission or user-facing support claim changes.
+
+  Children: `ISF-REDUCTION-DELIVERY.3.2.1, ISF-REDUCTION-DELIVERY.3.2.2, ISF-REDUCTION-DELIVERY.3.2.3, ISF-REDUCTION-DELIVERY.3.2.4, ISF-REDUCTION-DELIVERY.3.2.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.1`
+  Status: `pending`
+  Goal: `Share the canonical observed-expression binding walk without changing composition contracts.`
+  Acceptance: `Extract the existing traversal into a format-neutral helper with explicit direct-module/composition-top scopes and a transient static-payload resolver. Keep the composition wrapper strict about composition-top scope and its existing static-symbol object contract. Preserve ordered actual references, aliases, suffixes, operator/list/map/payload structure and immutable selected static values. Reject malformed observations, unknown scopes/kinds and unavailable static symbols with focused controls. Compare actual existing composition graph/binding products before and after; caller/getter JSON kinds and callback lifetimes remain intact. Update POD, import map, bounded book/fact boundaries and commit. This helper alone adds no Core producer, public schema or HDL/source admission.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.2`
+  Status: `pending`
+  Goal: `Capture detached canonical direct-module default bindings after successful shared resolution.`
+  Acceptance: `After .1, enable existing canonical expression capture in direct-root resolution, bind actual declared references and freeze static selections in the original lexical scope. Store cloned Core records through an explicit private constructor/getter/update contract; replacing declarations must clear stale derived bindings. Preserve normalized parameter/source shapes, existing three-argument registration callbacks, namespace selection, forward dependencies and caller isolation. Qualify real parsed scalar/operator/aggregate/path/static/import inputs and refusal/copy/replacement controls. No physical rename changes source ownership; no parser context or mutable symbol cache is retained by returned bindings. Synchronize POD/book/fact and commit; HDL consumers remain successors.`
+  Verification: `pending shared binder`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.3`
+  Status: `pending`
+  Goal: `Render supported direct scalar operator defaults from canonical bindings in Verilog-family headers.`
+  Acceptance: `After .2, share the existing canonical scalar binding renderer where applicable while preserving the composition wrapper contract. Render actual scalar roots, nested operators, aliases, static snapshots and literals with exact dependency order and existing independent alphabetical ties. Never substitute validation caches for mutable references. Preserve legacy programmatic defaults and clearly owned unsupported aggregate/path boundaries. Test actual native and compatibility text, equal-default/static controls, malformed/foreign bindings, caller ownership and exact predecessor failure. Synchronize book/POD/corpus applicability and commit; real external override/runtime matrix remains .3.6/.6.`
+  Verification: `pending direct Core bindings`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.4`
+  Status: `pending`
+  Goal: `Preserve or explicitly refuse dependent aggregate and selected-path default profiles.`
+  Acceptance: `After .3, use actual declared payload/type evidence and existing aggregate lowering contracts to select supported backend aggregate/path relationships. Preserve aggregate shape, member/index semantics and immediate parameter identity; refuse profiles that would silently freeze mutable dependencies. Keep ordinary static aggregate and executable aggregate semantics intact. Split target-specific implementation first if needed; focused independently expected member/shape/default/refusal controls and book/corpus applicability qualify each commit. Full compiled override/runtime cases remain .3.6/.6.`
+  Verification: `pending scalar relationship consumer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5`
+  Status: `pending`
+  Goal: `Consume supported direct-module generic defaults through the bounded VHDL profile.`
+  Acceptance: `After canonical bindings and the prior default-profile adjudication, reuse the existing prepared natural-generic arithmetic/alias contract rather than introducing another evaluator. Preserve actual scope/dependency order and immutable static selections; reject unsupported typed/sized/bitwise/aggregate/path profiles before output instead of emitting unrelated selected-default text. Preserve existing static VHDL behavior. Focused direct native text, matching profile controls and known-bad refusal checks qualify implementation; synchronize support discovery/book boundaries and commit. Complete external/runtime/public matrices remain .3.6/.6.`
+  Verification: `pending prior default consumers`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3`
