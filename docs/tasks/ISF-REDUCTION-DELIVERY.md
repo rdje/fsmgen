@@ -1086,11 +1086,40 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for current child realization, source/native/API/newline refusal and existing static generated-child pipeline controls. Book/source checks, scripts/check_doctrines.sh and normal hooks gate this qualification. Full CI and successful public IR/width/HDL verification remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve actual top environments and validated bindings in plan, IntentHIR, structural IR and exact schemas.`
   Acceptance: `After .2, refine safe constructor/schema slices from actual paths. Carry detached declaration order, normalized values, default sources/bindings and scoped instance bindings without mixing mutable parameters into static symbol contracts. Keep ordinary products exact, expose only truthful applicable schema/discovery fields, extend pending-emission guards for new environment fields as introduced, and keep source planning/target emission fail-closed until width/source owners are implemented. Qualify small actual constructor/source/contract controls and commit each slice; whole profile/transport/runtime matrices remain .6.`
-  Verification: `pending child contracts`
+  Verification: `Actual child consumers are qualified at .2. Inspection shows Plan stores only raw_spec and currently lacks a detached top environment; structural and intent builders do not carry top defaults/bindings. Separate typed storage, IR and public schema boundaries before edits. Existing top planning/emitter refusals remain. This preparation changes no source behavior; task integrity, diff hygiene and mandatory doctrines qualify the split.`
+  Commit: `preparation: ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3: split parameter environment propagation boundaries`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.3`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S raw_spec identifies Plan storage at 0f6a71dcb; git log -S parameter_default_bindings identifies actual Top binding introduction at 840ea6000. Current Plan/IntentHIR/StructuralRTLIR builder inspection confirms distinct storage/propagation/schema consumers and a leaf too broad for one safe slice.
+  - [x] **ADDRESSED (verified)** — Split canonical plan environment storage, actual IR propagation and public schema exposure into three ordered leaves with explicit guards, source semantics, detachment controls and focused checks. Current Memory/index select .1. No production, public behavior or book contract changes; warning-debt allowance follows measured task growth and configured ratchet steps with unchanged baselines/ceilings.
+  - [x] **NO REGRESSION** — Current task integrity holds and diff hygiene passes; scripts/check_doctrines.sh and knowledge-map: OK gate this bounded preparation commit. The prior committed child source checks remain historical evidence; no full suite or symbolic HDL qualification is inferred.
+
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.1`
+  Status: `pending`
+  Goal: `Capture an actual resolved top parameter environment in detached composition plans.`
+  Acceptance: `Derive one canonical environment from actual Top declaration/default/binding producers, preserving scope, authored declaration order, normalized values, default sources and scoped trees separately from static symbols. Unresolved or failed declared defaults refuse rather than disappear; no-parameter tops retain old behavior. Plan construction from the real raw_spec snapshots the environment once and exposes a detached getter. Protect structural/IntentHIR constructors from dropping a known environment until .2 propagates it; retain public source planning and backend guards. Focused real source, equal-default/alias/static/source/cache and constructor/getter/retry controls, exact static-plan products and explicit pending-IR refusals qualify; synchronize POD/book/fact/task, schemas remain unadvertised, then commit.`
+  Verification: `pending canonical environment implementation`
   Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.2`
+  Status: `pending`
+  Goal: `Propagate actual plan environments through IntentHIR and structural IR without enabling emission.`
+  Acceptance: `After .1, replace temporary IR refusal with detached canonical environment propagation through real builders, constructors, coercers and as_hashref products. Preserve actual instance bindings and static symbol separation; keep ordinary no-environment products exact. Extend shared structural emission refusal to top environments, including tops with no symbolic instance overrides, before exposing any new IR field. Exercise real parsed source/plan/IR, copy/mutation/refusal and static controls. Keep source planning closed until width/source lowering; focused checks, POD/book/fact/task and commit precede .3.`
+  Verification: `pending detached plan storage`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.3`
+  Status: `pending`
+  Goal: `Expose truthful parameter environment and binding schema applicability in detached public reports.`
+  Acceptance: `After .2, enumerate actual normalized composition/IntentHIR/structural producers and schema/capability contracts before changes. Add only applicable optional environment/binding fields with exact nested keys, owner/source/version/query semantics and detached JSON-safe products. Preserve static report shapes and complete native/API/newline pending-source refusal; actual low-level producer inputs establish semantic provenance, transport equality alone does not. Public source successful planning/HDL admission remains closed pending width/source owners. Split schema families if needed; focused independent semantic/schema/isolation controls, downstream reference/book/fact/task and commit qualify this boundary; broad profile/runtime verification remains .6.`
+  Verification: `pending actual IR environment propagation`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`
   Status: `pending`
