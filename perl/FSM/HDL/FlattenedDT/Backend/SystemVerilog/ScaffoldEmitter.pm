@@ -11,6 +11,12 @@ module backend. This package renders the stable top-of-module sections that
 surround the richer enable-graph logic: file header, module declaration, state
 encoding localparams, and the state register block.
 
+Direct scalar parameter-root aliases use retained default-source observations,
+with dependency ordering and unchanged alphabetical ties. Literal/static and
+unqualified general-default forms keep their existing rendering. This bounded
+consumer does not implement general expression/path defaults, generic signal
+ranges or external override qualification.
+
 =cut
 
 use v5.20;
@@ -99,16 +105,75 @@ sub _render_module_parameter_lines ($fsm_module) {
     return unless $fsm_module && $fsm_module->can('parameters');
 
     my $parameters = $fsm_module->parameters || {};
-    my @lines;
+    my $sources = $fsm_module->can('parameter_default_sources')
+        ? ($fsm_module->parameter_default_sources // {}) : {};
+    die "Module parameter default alias sources require a declaration map\n"
+        unless ref($sources) eq 'HASH';
+    my (%values, %aliases);
     for my $parameter_name (sort keys %$parameters) {
         my $parameter_info = $parameters->{$parameter_name};
         my $value_text = ref($parameter_info) eq 'HASH'
             ? $parameter_info->{value_text}
             : $parameter_info;
         next unless defined($value_text) && length($value_text);
-        push @lines, "  parameter $parameter_name = $value_text";
+        $values{$parameter_name} = $value_text;
+        my $target = _direct_scalar_default_alias(
+            $parameter_name, $parameter_info, $sources->{$parameter_name}, $parameters);
+        $aliases{$parameter_name} = $target if defined $target;
     }
-    return @lines;
+    for my $name (sort keys %aliases) {
+        die "Module parameter default alias '$name' requires an emitted declared target\n"
+            unless exists $values{$aliases{$name}};
+        $values{$name} = $aliases{$name};
+    }
+
+    # Keep existing alphabetical ties while moving an emitted alias dependency
+    # before its consumer. Source observations, not equal defaults, add edges.
+    my @names = sort keys %values;
+    my (%emitted, @order);
+    while (@order < @names) {
+        my $next;
+        for my $name (@names) {
+            next if $emitted{$name};
+            next if exists($aliases{$name}) && !$emitted{$aliases{$name}};
+            $next = $name; last;
+        }
+        die "Module parameter default alias dependency cycle\n" unless defined $next;
+        push @order, $next; $emitted{$next} = 1;
+    }
+    return map {"  parameter $_ = $values{$_}"} @order;
+}
+
+sub _direct_scalar_default_alias ($name, $info, $source, $parameters) {
+    return undef unless defined $source;
+    return undef unless ref($info) eq 'HASH' && ($info->{value_kind} // '') eq 'scalar';
+    die "Module parameter default alias '$name' has an inconsistent source declaration\n"
+        unless ref($source) eq 'HASH' && ($source->{parameter} // '') eq $name;
+    my $references = $source->{references};
+    die "Module parameter default alias '$name' has malformed reference observations\n"
+        unless ref($references) eq 'ARRAY';
+    for my $reference (@$references) {
+        die "Module parameter default alias '$name' has malformed reference observations\n"
+            unless ref($reference) eq 'HASH'
+                && !grep {!defined($reference->{$_}) || ref($reference->{$_})} qw(parameter token suffix);
+        die "Module parameter default alias '$name' has inconsistent reference observations\n"
+            unless $reference->{token} eq $reference->{parameter}.$reference->{suffix};
+        die "Module parameter default alias '$name' observes an undeclared target\n"
+            unless exists $parameters->{$reference->{parameter}};
+    }
+    my $expression = $source->{expression};
+    $expression = $expression->[0] while ref($expression) eq 'ARRAY' && @$expression == 1;
+    # Operators and aggregate/path defaults keep their existing fixed-default
+    # path until the separately owned general relationship consumer is ready.
+    return undef unless defined($expression) && !ref($expression)
+        && $expression =~ /\A[A-Za-z_]\w*\z/ && @$references;
+    die "Module parameter default alias '$name' has inconsistent expression observations\n"
+        unless @$references == 1 && $references->[0]{suffix} eq ''
+            && $expression eq $references->[0]{token};
+    my $target = $parameters->{$references->[0]{parameter}};
+    die "Module parameter default alias '$name' requires a scalar declared target\n"
+        unless ref($target) eq 'HASH' && ($target->{value_kind} // '') eq 'scalar';
+    return $references->[0]{parameter};
 }
 
 sub _render_module_port_plan ($port_plan, $aggregate_typedef_lookup = undef) {

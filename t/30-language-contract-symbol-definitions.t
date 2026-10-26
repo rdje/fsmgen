@@ -240,7 +240,7 @@ like($hdl, qr/module\s+symbol_contract\s*#\(/s, 'direct SystemVerilog module emi
 like($hdl, qr/parameter\s+P0\s*=\s*8\b/s, 'direct SystemVerilog module declares scalar decimal parameter');
 like($hdl, qr/parameter\s+P_HEX\s*=\s*'h10\b/s, 'direct SystemVerilog module declares canonical unsized hex parameter');
 like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares packed aggregate parameter');
-like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*8'h3C\b/s, 'direct SystemVerilog module declares forward sibling parameter default');
+like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*P_FORWARD_BASE\b/s, 'direct SystemVerilog module preserves the forward sibling default relation');
 like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares sibling aggregate parameter default');
 like($hdl, qr/parameter\s+P_EXPR\s*=\s*\(8 \+ 1\)/s, 'direct SystemVerilog module declares scalar parameter expression default');
 like($hdl, qr/parameter\s+P_EXPR_AGG_LEAF\s*=\s*\(8'h3C \+ 1\)/s, 'direct SystemVerilog module declares aggregate-leaf scalar parameter expression default');

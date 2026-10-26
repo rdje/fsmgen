@@ -117,7 +117,7 @@ subtest 'canonical graph refusals and public products remain bounded' => sub {
     my $intent = FSM::IR::IntentHIRBuilder->build_from_fsm_module(fsm_module => $module)->as_hashref;
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($module);
     unlike($json->encode($intent), qr/"(?:_?parameter_default_sources|source_module|references)"\s*:/, 'private metadata stays out of IntentHIR');
-    like($hdl, qr/parameter FORWARD = 16\b/, 'default HDL remains normalized in this foundation slice');
+    like($hdl, qr/parameter FORWARD = W\b/, 'direct scalar alias now reaches HDL through retained source observations');
     unlike($hdl, qr/parameter_default_sources\s*[=:]/, 'source metadata is not emitted as HDL declarations');
     if (my $path = $ENV{FSMGEN_PARAMETER_DEFAULT_CAPTURE}) {
         $hdl =~ s/^\/\/ Date: .*$/\/\/ Date: <timestamp>/m;

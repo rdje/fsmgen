@@ -91,8 +91,9 @@ value evaluator. It keeps declaration and registration order even when a default
 refers forward. Callbacks receive detached values and source records. Literal,
 alias, cyclic and unknown-name parameter resolutions release their parser context
 after the caller releases it; this is a scoped lifetime guarantee, not a claim
-about every symbol resolver. Composition top declarations share this graph after imports; their HDL lowering
-remains a later feature.
+about every symbol resolver. Composition tops share this graph after imports;
+the bounded fixed-interface RTL source profile is described in Composition Basics.
+Generated and mutable-interface composition profiles remain pending.
 
 Compiler consumers can also request `capture_expression` from
 `FSM::ParameterValueSupport::canonical_value`. Its optional `value_expression`
@@ -102,10 +103,28 @@ explicit payload nodes. The ordinary result shape, values and resolver order
 stay unchanged when capture is disabled. This source tree prepares scoped
 binding; it does not itself supply top generics or symbolic HDL emission.
 
-This preservation prepares later lowering. Current HDL parameter defaults still
-use normalized values; dependent-default emission and override behavior remain
-required follow-on work. Retained source identity alone does not prove that an
-HDL override propagates through an alias.
+Direct SystemVerilog and compatibility Verilog module declarations now preserve
+actual direct scalar root aliases from these observations. `(BOUND W)` emits
+`parameter BOUND = W`; a distinct `(LITERAL 16)` remains a literal even when
+`W` also defaults to sixteen. Declared dependencies precede their consumers;
+independent names keep the existing alphabetical tie order. Static values and
+legacy programmatic declarations keep their existing formatting. A physical
+module rename does not replace its local declared binding identities.
+
+The complete [scalar alias fixture](../../../t/data/ial0-scalar-parameter-aliases.fsm)
+checks ordinary, forward, chained and sized scalar aliases:
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/sv/scalar_parameter_aliases.sv t/data/ial0-scalar-parameter-aliases.fsm
+```
+
+Malformed alias observations, missing/non-scalar targets and dependency cycles
+refuse instead of emitting an invented identifier. General operator defaults
+such as `(+ W 1)`, aggregate/path relationships, VHDL and generic signal ranges
+remain separately owned; their existing default-only behavior is unchanged by
+this bounded consumer. Normalized Core values still describe the selected
+defaults. External override/runtime qualification remains pending, so named
+alias text alone is not a complete generic-width guarantee.
 
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of

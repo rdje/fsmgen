@@ -1,0 +1,16 @@
+(?fsm:scalar_parameter_aliases
+  (+system (clock clk))
+  (+constants (FIXED 16))
+  (+params
+    (BOUND W)
+    (CHAIN BOUND)
+    (OTHER SAME)
+    (W 16)
+    (SAME 16)
+    (LITERAL 16)
+    (STATIC FIXED)
+    (BITS 8'hA5)
+    (BITS_COPY BITS)
+    (SUM (+ W 1)))
+  (+size (OUT 16))
+  (idle (= (OUT BOUND))))

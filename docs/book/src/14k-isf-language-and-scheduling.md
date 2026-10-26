@@ -717,16 +717,19 @@ library and ATL selections retain their own defaults and authored overrides;
 equal values cannot supply an unrelated producer. Domain realization now applies
 the final allocated producer and child identities, including name collisions,
 while keeping lexical owners, parameter slots and selected environments exact.
-The parent definition module remains explicit. This groundwork changes no
-emitted widths or defaults. Carrier emission, generic port widths and
-override-driven shape specialization remain pending; these plans are not
-backend signoff evidence.
+The parent definition module remains explicit. The shared module source emitter
+now consumes the selected width/default trees, capture defaults and immutable
+supporting declarations. Selected default behavior is preserved while IAL0
+retains the scoped expressions. Generic ranges, generated-top forwarding and
+override-driven shape specialization remain pending; these source products are
+not backend runtime signoff evidence.
 
 Cross-module generic forwarding also needs a real composition configuration
-scope. Current composition accepts static child overrides: a top constant is
-resolved to its value before instance emission. Top `+params` now parses and
-resolves defaults after imports; current HDL plans refuse these declarations,
-and sibling parameter references remain unsupported. The selected extension
+scope. Composition accepts static child overrides and a bounded scalar
+fixed-interface external-RTL source profile. Static top constants resolve to
+values; qualified top parameter defaults and child actuals retain selected names.
+Top `+params` resolves after imports. Generated-child configuration and mutable
+interfaces remain outside source admission. The required generated extension
 will declare the authored actor parameters at the composition top and forward the same bindings
 to its parent module and child context parameters. Typed symbolic expressions
 must survive beside resolved defaults through the canonical IR and source
@@ -734,17 +737,19 @@ emitters. This extension is required work, with parser, interface-width and
 SystemVerilog/VHDL lowering owners in the task tree. Internal top default
 resolution runs after package imports without promoting parameters into static
 symbols.
-Parameter-bearing tops are refused before child planning until symbolic emission
-is implemented. Native/API/MCP source checks expose that classified refusal;
-parser/default support does not yet deliver configurable generated chips.
+Generated parameter-bearing tops and mutable interfaces remain refused before
+child planning; the bounded scalar fixed-interface RTL profile is admitted.
+Native/API/MCP expose the selected source boundary. This does not yet deliver
+configurable generated chips.
 
-The binding work also needs parameter default expressions. In a current IAL0
-control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records
-when `W=16`; native SystemVerilog emits `BOUND=16` in both cases. Core now retains
+The binding work also needs parameter default expressions. In the retained
+metadata-foundation IAL0 control, `BOUND=W` and `BOUND=16` produce identical
+normalized records when `W=16`; that epoch emitted `BOUND=16` in both cases. Core now retains
 the authored expression and direct parameter references in separate detached
 source records, alongside the unchanged normalized values. HDL default
-propagation remains a required later task; changing `W` is not yet qualified to
-update `BOUND`.
+propagation now preserves direct scalar root aliases in Verilog-family headers.
+General expressions, ranges and actual override behavior remain unqualified;
+see the Symbols, Types and Imports chapter for the precise bounded consumer.
 The direct-root declaration graph now shares one canonical helper for future
 composition reuse, preserving defaults and source records while removing retained
 parameter resolver contexts on success and refusal. Canonical value evaluation now also offers an optional expression tree at its
@@ -754,24 +759,29 @@ aggregate paths and immutable static caches beside unchanged normalized values.
 Instance overrides now keep the same actual scoped identities beside canonical
 validation caches for FSM, DT and RTL children, including aggregate paths and
 mixed static operands. Reuse refreshes bound records from authored source rather
-than a previous default number. Validated IR, symbolic widths and source emission
-remain pending; parameter-bearing HDL plans still refuse. Direct structural emitters also
-refuse pending symbolic binding records, preventing a lower-level API call from
-silently substituting their cached defaults.
+than a previous default number. Plans and forward IR retain captured environments
+and width contracts. Prepared structural emitters render qualified defaults,
+actuals and scalar ranges with matching environments; exact target/profile
+boundaries are in Composition Basics. Generated/mutable-interface source
+admission remains pending. Known symbolic bindings without their required
+environment still refuse rather than substituting cached defaults.
 
 The direct width-expression evaluator is now shared for composition reuse. It
 keeps the existing integer literals, arithmetic/bitwise aliases, precedence and
-positive-width checks; this preparation admits no new composition port syntax.
-Top-interface dependency propagation remains the next required integration.
+positive-width checks. Structured top widths retain authored expressions and
+ordered lookups; Composition Basics defines their prepared-emitter and bounded
+source applicability. Parameter-dependent source interfaces remain separately
+guarded until connected shape propagation is implemented.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates
 another configurable parameter. IAL0 now admits `(param NAME)` in direct
 `+size` width expressions to select an actual declared scalar parameter
 without adding an alias. It evaluates the selected default and preserves the
-selector source. Target symbol allocation, ISF carrier materialization,
-cross-scope forwarding and generic HDL propagation remain required work under
-`ISF-REDUCTION-DELIVERY`; this IAL0 prerequisite does not complete those features.
+selector source. Target symbols and ISF module carriers now consume the scoped
+plans. Cross-scope forwarding, complete generic HDL propagation and shape
+specialization remain required work; the selector/carrier implementation does
+not complete those features.
 
 Shipped binding shape:
 
