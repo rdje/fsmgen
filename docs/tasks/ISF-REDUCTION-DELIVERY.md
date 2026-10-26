@@ -1213,10 +1213,45 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=24 for T2131/T2130/T2127, including actual SV/Verilog/VHDL refusal entrypoints. POD/mdBook and mandatory staged doctrines qualify this prepared width-contract slice; broad verification remains .6 and symbolic source/HDL lowering .4.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit canonical composition top generics, symbolic child bindings and retained port widths in HDL source.`
   Acceptance: `After .1-.3, follow declared dependency order and source identities into SystemVerilog parameter/instance syntax and VHDL generic declarations/maps. Reserve actual top namespaces and preserve static source profiles; do not post-process HDL or accept unsupported symbolic values through string escape hatches. Focused representative native source/IR/HDL checks and accurate profile discovery/book boundaries gate commit. Full external compile/runtime/profile/transport matrices stay .6.`
-  Verification: `pending typed parameter and width IR`
+  Verification: `Prepared typed environments and widths are committed. Split canonical scalar binding rendering, Verilog-family integration and VHDL integration before source admission; focused checks per child, full qualification stays .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4: split canonical HDL lowering boundaries`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "pending typed parameter and width IR" locates the saved broad lowering leaf. Actual structural emitter guards and prepared IR separate binding rendering, target integration and source admission. The first doctrine log .artifacts/startup-pnt-doctrines.log reports exhausted task-evidence total-line/byte allowances after this split.
+  - [x] **ADDRESSED (verified)** — Split four concrete dependency-ordered children before implementation; preserve every existing node, pending HDL guard and full-verification owner. Apply measured actual plus the declared ratchet to task-evidence growth only, retaining baseline and ceilings. Designated claim template is byte-identical to the retained review; local README/containment adoption remains authoritative.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl passes and knowledge-map: OK; no product source or admission changes. Corrected staged scripts/check_doctrines.sh and normal hooks gate this task decomposition. Full feature verification stays .6.
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.1`
+  Status: `pending`
+  Goal: `Render canonical scalar composition bindings without reading cached parameter values.`
+  Acceptance: `Validate actual scope/declaration identities, canonical literal and operator nodes and static scalar payloads. Preserve direct symbolic aliases and operand order; refuse aggregate selections, malformed references and raw expression payloads. Focused actual-source bindings, independent expected text and hostile controls qualify an internal renderer only; source/HDL guards remain. Synchronize POD/book and commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2`
+  Status: `pending`
+  Goal: `Integrate scalar top defaults, symbolic bindings and width ranges into Verilog-family structural emission.`
+  Acceptance: `After .1, derive dependency order and reserve the actual top namespace. Render generic defaults and instance actuals from canonical bindings and retained width expressions; preserve static HDL byte shape. Keep unsupported types and profiles fail-closed. Focused actual prepared IR and native emission controls, accurate discovery/book and commit precede admission.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3`
+  Status: `pending`
+  Goal: `Integrate canonical top generics, bindings and port widths into supported VHDL structural profiles.`
+  Acceptance: `After .1/.2, use explicit typed generic semantics and namespace rules. Preserve canonical dependency identity without cached-value substitution; refuse unsupported arithmetic/type/profile shapes. Focused VHDL emission checks and synchronized profile contracts/book gate commit; full external execution remains .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
+  Status: `pending`
+  Goal: `Admit the qualified canonical composition source plans and publish exact profile boundaries.`
+  Acceptance: `After .2/.3, remove only qualified pending guards and join actual source/planning/IR/HDL discovery contracts. Preserve contextual unsupported refusals and static controls. Run the smallest representative native checks and update source fixtures/accounting/contracts/book together; defer full profile/transport/runtime matrices to .6.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.2`
