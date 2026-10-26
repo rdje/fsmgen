@@ -1239,10 +1239,37 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for the focused renderer, actual default bindings and unchanged emitter boundary. Module syntax OK; guarded POD/mdBook build passes. Staged scripts/check_doctrines.sh and normal hooks gate this slice; full qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate scalar top defaults, symbolic bindings and width ranges into Verilog-family structural emission.`
   Acceptance: `After .1, derive dependency order and reserve the actual top namespace. Render generic defaults and instance actuals from canonical bindings and retained width expressions; preserve static HDL byte shape. Keep unsupported types and profiles fail-closed. Focused actual prepared IR and native emission controls, accurate discovery/book and commit precede admission.`
+  Verification: `Split before implementation: canonical declaration ordering and namespace preparation, actual top/child emitter integration, then retained port-width lowering. Source admission remains .4 and full verification .6. No product behavior changes in this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2: split Verilog structural emission boundaries`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Integrate scalar top defaults" -- docs/tasks/ISF-REDUCTION-DELIVERY.md locates the combined emission leaf. The staged doctrine log reports task_evidence aggregate lines/bytes beyond its declared transition growth after the dependency split.
+  - [x] **ADDRESSED (verified)** — Split declaration/namespace preparation, scalar emitter integration and port ranges into owned dependent children before implementation. Apply decision0070 measured actual plus the declared ratchet only to the exhausted task-evidence dimensions; baseline and enforcement ceilings stay fixed. The designated claim template equals the retained review bytes; local README and containment contracts remain authoritative.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl reports all active task-tree invariants hold and knowledge-map: OK; no product behavior changed. Corrected staged scripts/check_doctrines.sh and normal hooks gate this decomposition. Source admission remains .4 and full feature verification .6.
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.1`
+  Status: `pending`
+  Goal: `Prepare dependency-ordered canonical scalar top declarations and reserve structural names.`
+  Acceptance: `Consume actual resolved environments and canonical renderer references, preserving forward aliases and authored tie order without cached-value substitution. Refuse cycles, missing/foreign declarations, unsupported scalar types and collisions with module/port/net/instance/generated typedef names. Retain source/emitter guards. Focused actual parsed environments and hostile independent namespace/order controls, synchronized POD/book/fact and commit; no broad verification.`
   Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.2`
+  Status: `pending`
+  Goal: `Emit canonical scalar top parameter declarations and child actuals from prepared structural IR.`
+  Acceptance: `After .1, integrate declaration preparation and the scalar binding renderer into actual SystemVerilog/Verilog emitter entrypoints. Preserve static byte shape and pending width/type/source guards. Exercise actual parsed Plan/IR products, selected equal-default aliases, target refusal and namespace collision controls. Synchronize exact direct-emitter discovery/book boundaries and commit; full verification remains .6.`
+  Verification: `pending declaration preparation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.3`
+  Status: `pending`
+  Goal: `Lower retained canonical port width expressions into Verilog-family structural ranges.`
+  Acceptance: `After .2, lower actual scoped width contracts with declared parameter identities and static lookup payloads. Preserve symbolic one-bit-default ranges, signed/state/type meaning and static byte shape; refuse unknown/cross-scope/unsupported shapes instead of using numeric caches. Focused actual source/Plan/IR/emitter and hostile controls plus synchronized exact profile/book boundaries and commit; source admission stays .4 and full verification .6.`
+  Verification: `pending scalar emitter integration`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3`
