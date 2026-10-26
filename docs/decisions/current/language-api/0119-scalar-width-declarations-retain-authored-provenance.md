@@ -33,10 +33,10 @@ references become numbers. LoweringIR projects those numbers, then IAL0 emits
 them. Named types already retain their own reference/specification. A transaction
 parameter-use set does not associate each port with its source token.
 
-Actual library use-site overrides remain in generated tops while child shapes
-keep their defaults. This is the existing specialization backlog, not a newly
-qualified implementation. Derived arithmetic remains refused at actor parameter
-admission. Audit/native/private products alone cannot establish generic HDL.
+Library use-site overrides reach tops while child shapes retain defaults: existing specialization backlog.
+Derived actor-parameter arithmetic remains refused. Composition currently resolves overrides from static top/package symbols;
+top +params and sibling parameter references refuse. Required generic forwarding needs top declarations and typed bindings.
+Audit/native/private products cannot qualify generic HDL. Evidence: `docs/audits/width-forwarding-contract-20261026.json.gz`; reverify with `python3 -B docs/audits/width-forwarding-contract-verify-20261026.py`.
 
 ## Decision
 

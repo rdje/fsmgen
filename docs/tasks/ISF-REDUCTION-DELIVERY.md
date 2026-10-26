@@ -874,17 +874,90 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=14 for target/default/width/source checks, with separate directly affected constructors/index Files=4 Tests=14 and helper syntax OK. Complete selected old products conserve outside enumerated private symbol roots; the old counterfactual projection changes only after exact diagnosis. Book/POD/source assets and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Production forwarding/emission and full generic/profile/public/runtime qualification remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join captured width parameters to explicit actual-instance forwarding obligations.`
   Acceptance: `After .2, bind imported actor contexts and real module parameters to actual generated/reusable/domain instance records. Retain source owners, selected use-site defaults/overrides and public interfaces; no literal freezing or guessed physical ancestry. Require every compiler context parameter to have an explicit forwarding obligation, preserving meaningful static/local controls. Split constructor families if needed. Actual emission stays .2.3.3.4 and HDL/default/shape qualification stays .3/.4/.6. Qualify focused actual-instance controls, sync docs and commit.`
-  Verification: `pending symbol allocation`
+  Verification: `Active after cleanf8fb9e8bd. Inspect actual composition top/instance parameter scope before joining context imports; public composition currently lists static top symbols and named child overrides. Probe canonical source behavior, select a safe lowering contract and own any required prerequisite before implementing semantic instance joins.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3.1, ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3.1`
+  Status: `done`
+  Goal: `Select the canonical composition scope and prerequisites for symbolic context forwarding.`
+  Acceptance: `Read the actual composition parser, top symbol resolver, parameter override realizer and emitter contracts. Probe admitted top/static/child/sibling parameter cases through public source interfaces; retain successful controls and refusals. Locate the first loss/refusal, distinguish current static source behavior from desired generic dependencies, and choose an explicit canonical source/IR lowering contract without literal freezing, hierarchical HDL access or independent compiler alias knobs. Own concrete implementation slices and focused/deferred qualification before moving on. Keep compiler behavior unchanged, update book/fact/task, and commit the selected contract and bounded evidence.`
+  Verification: `Actual public Lispish/Composition parser and HDLGenerator controls accept static literal and top-constant overrides with opposing values. Same-valued literal/constant inputs yield byte-exact whole HDL without normalization: the child retains its declared generic and the composition instantiates a static value, with no top configuration declaration. IntentHIR and structural parameter observations retain original tokens beside resolved payloads. Actual top +params refuses at Parser line276; undeclared bare and sibling parent.WIDTH references reach deferred resolution and refuse at ParameterValueSupport line340. The corresponding sibling literal control succeeds with explicit ports/wiring. This is the documented static capability boundary and a required generic-forwarding feature gap, not evidence that existing static behavior is defective. Select one authored actor parameter scope in canonical composition +params; forward its typed symbolic bindings to the actual parent and context targets while retaining resolved payloads for checks. No sibling hierarchical HDL access, frozen generic links or independent compiler alias knobs. Own top declarations/default IR, symbolic instance binding, port-width preservation and SV/VHDL source emission under .2.3.3.4.1.1 through .1.4, before actual ISF carrier emission .4.2/.4.3. Semantic actual-instance joins remain .2.3.3.3.2.2.2.4.3.2. The tracked reader verifies actual source/native/selected IR observations, raw caller snapshots, exact selected Git joins and contemporaneous compiled parser/resolver/pipeline identities; hostile admission, sibling, erased-source, wrong-value, false-generic and caller candidates reject. Packet and producer/reader/source/logs retain in docs/audits/width-forwarding-contract-20261026.json.gz. The first broad audit serializer encounters a blessed Core Signal, the first sibling control lacks complete wiring, and an intermediate projection selects an absent name key; corrected bounded final captures use actual instance_name and explicit wiring. Initial attempts are retained but not qualification. Re-derive: actual public sources/native artifacts, selected parameter observations and code identities. Falsify: opposing defaults, byte-exact static controls, valid sibling contrast, caller snapshots and executed hostile products. Durability: tracked reader/packet, canonical fact, book and required task prerequisites/Git. Complete Core/IR graphs, full dependency/method footprint, external HDL compile/runtime, API/MCP/profile matrices and actual generic implementation remain missing by scope. The first hook catches newly split containers left as pending leaves. Correct their status to active containers, leaving implementation children pending; the focused task-tree gate and rebuilt book/source assets precede retrying normal doctrines. No compiler/test/grammar behavior changes.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3.1: select canonical composition forwarding scope`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Native diagnostic at perl/FSM/Composition/Parser.pm line 276 rejects top +params; actual sibling-reference resolution refuses at perl/FSM/ParameterValueSupport.pm line 340 through the static top-symbol callback. Successful literal/static and sibling-literal source controls locate the missing configuration scope without blaming wiring or current documented static behavior.
+  - [x] **ADDRESSED (verified)** — Actual source/native controls and the tracked bounded reader select top declarations plus typed symbolic instance bindings, preserving original tokens and resolved check values. The required canonical parser/IR/port/HDL prerequisites now have explicit ordered owners; executed hostile scope/value/source/caller products reject. This closes contract selection, not generic implementation.
+  - [x] **NO REGRESSION** — Compiler, existing tests, public grammar and emitted behavior are unchanged. Actual static/literal and sibling-literal controls succeed, same-valued whole HDL is exact, and raw caller snapshots remain unchanged. Reader/Git/source identity checks and book/source assets pass; scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate commit. Full generic/profile/runtime/transport qualification remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2.4.3.2`
+  Status: `pending`
+  Goal: `Join private symbolic context obligations to actual generated, reusable and domain instances.`
+  Acceptance: `After .1, bind each instantiated compiler context parameter to a declared real parent parameter or explicit imported context from actual records. Preserve named use-site overrides, source scopes and module interfaces without numeric inference or guessed physical ancestry. Keep target/source identities detached and require completeness for actual instances. Qualify the smallest representative source/namespace/override/rename/domain controls, conserve old carriers/reports and commit. Actual source/HDL emission stays later owned work.`
+  Verification: `pending selected composition scope`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit admitted canonical IAL0 width relations through actual declarations and bound environments.`
   Acceptance: `After .2/.3, emit unambiguous +size expressions and selected supporting declarations for owned physical ports/storage/formals/generated/reusable/domain modules. Use canonical expression syntax and real source identities, retaining named types, constants, resets and literal/default controls. Do not post-process HDL or relabel unchanged default numbers as generic support. Replay the smallest representative actual strict carrier cases and source metadata checks; split constructor-specific emission if needed. Generic HDL and public dependency inventories retain their later owners.`
-  Verification: `pending lexical binding`
+  Verification: `Required prerequisite selected by .2.3.3.3.2.2.2.4.3.1: current composition top +params and sibling-parameter references refuse, while static overrides work. Introduce a real top configuration scope and typed symbolic instance bindings before emitting cross-module width captures; never substitute static copies or hierarchical HDL names. Existing public defaults stay correct within the documented static contract.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1, ISF-REDUCTION-DELIVERY.2.3.3.4.2, ISF-REDUCTION-DELIVERY.2.3.3.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1`
+  Status: `active`
+  Goal: `Provide canonical first-class composition top parameters and symbolic child bindings.`
+  Acceptance: `After semantic instance joins, reuse canonical parameter/default evaluation and expression identities at ?top, preserve symbolic bindings beside resolved defaults, and expose one authored actor configuration scope with mandatory forwarding to parent/context parameters. No independent compiler alias knobs, static copies presented as generics or hierarchical instance-parameter access. Preserve existing static contracts and same canonical source/API/MCP behavior; synchronize language discovery, finite corpus, public schema applicability and book when admission actually changes. Run focused checks per implementation slice; full profile/transport/runtime qualification remains deferred to .6.`
+  Verification: `pending; actual source refusals and successful static/sibling-literal controls retained by .2.3.3.3.2.2.2.4.3.1`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1`
+  Status: `pending`
+  Goal: `Admit canonical top +params with detached authored and resolved default graphs.`
+  Acceptance: `Inspect existing Core/default/source and composition top interfaces before sharing their evaluator and dependency rules. Add bounded ?top +params with explicit ownership and declared namespace behavior, retain original trees/direct references beside selected defaults, preserve ordering/cycle/refusal contracts and caller isolation, and keep static constants distinct. Qualify the smallest actual source/API/default/refusal checks and synchronize public source discovery, corpus, applicability and book. Do not claim symbolic instance or HDL propagation yet; commit.`
+  Verification: `pending semantic instance contract`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2`
+  Status: `pending`
+  Goal: `Retain typed symbolic top-parameter expressions through actual child override realization and IR.`
+  Acceptance: `After .1, bind explicit top parameter references and supported expressions without replacing them with default numbers. Keep resolved payloads for existing shape/type checks, validate real child declarations, retain static/aggregate distinctions and detached source identities, and reject unknown/mismatched bindings. Extend the actual top/instance/IntentHIR/structural contracts and applicability together; focused source/IR controls, book and commit precede emission.`
+  Verification: `pending top parameter semantics`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`
+  Status: `pending`
+  Goal: `Preserve admitted top interface width dependencies through canonical port declarations and IR.`
+  Acceptance: `After .1, inspect actual composition port/type contracts and retain symbolic parameter width expressions beside resolved port defaults. Reuse the canonical bounded integer-width evaluator and explicit namespace selection; preserve named types, resets and static controls without widening unrelated arithmetic. Qualify selected namespace/default/source/type/refusal observations, synchronize published grammar/schema applicability/book and commit; complete shape legality and specialization stay separately owned.`
+  Verification: `pending top parameter and port contracts`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
+  Status: `pending`
+  Goal: `Emit canonical composition top generics, symbolic child bindings and retained port widths in HDL source.`
+  Acceptance: `After .1-.3, follow declared dependency order and source identities into SystemVerilog parameter/instance syntax and VHDL generic declarations/maps. Reserve actual top namespaces and preserve static source profiles; do not post-process HDL or accept unsupported symbolic values through string escape hatches. Focused representative native source/IR/HDL checks and accurate profile discovery/book boundaries gate commit. Full external compile/runtime/profile/transport matrices stay .6.`
+  Verification: `pending typed parameter and width IR`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.2`
+  Status: `pending`
+  Goal: `Emit bound ISF module width/default plans and immutable supporting declarations through canonical IAL0.`
+  Acceptance: `After lexical/target/instance plans and .1, emit explicit real/captured parameter widths, immutable local defaults, selected static aliases and canonical module defaults for actual actor/formal/generated/reusable/domain artifacts. Preserve existing types, resets, literals and public interfaces; qualify a small representative strict carrier/source consumer set, update book/downstream boundaries and commit. Generic HDL default/range propagation and complete shape legality retain .3/.4 owners.`
+  Verification: `pending canonical composition prerequisite`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.3`
+  Status: `pending`
+  Goal: `Emit one authored actor configuration and actual symbolic context forwarding in generated compositions.`
+  Acceptance: `After .1/.2 and semantic instance joins, place authored actor parameters in the actual composition scope, forward them to the parent and every instantiated compiler context target, and preserve selected authored use-site overrides. Resolve actual namespace/domain mappings; never copy defaults as generic links or infer a producer from physical names. Focused actual generated/reusable/domain source checks, pending-profile documentation and commit gate closure; joined full verification stays .6.`
+  Verification: `pending canonical source emission and forwarding plans`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.5`
