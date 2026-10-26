@@ -1,0 +1,6 @@
+(?fsm:direct_size_parameter_selection_missing
+  (+system (clock clk))
+  (+constants (W 8))
+  (+types (type W (bits 4)))
+  (+size (OUT (param W)))
+  (idle (= (OUT 8'h00))))

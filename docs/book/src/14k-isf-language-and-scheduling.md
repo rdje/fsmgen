@@ -712,12 +712,12 @@ update `BOUND`.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates
-another configurable parameter. The selected future width-only form
-`(param NAME)` will select an actual declared scalar parameter without adding
-an alias. **It is not implemented or accepted yet.** Existing sources must use
-the currently documented width syntax. Admission, source preservation and
-cross-scope forwarding are tracked under `ISF-REDUCTION-DELIVERY`; generic HDL
-qualification follows their implementation.
+another configurable parameter. IAL0 now admits `(param NAME)` in direct
+`+size` width expressions to select an actual declared scalar parameter
+without adding an alias. It evaluates the selected default and preserves the
+selector source. ISF width binding, carrier materialization, cross-scope
+forwarding and generic HDL propagation remain required work under
+`ISF-REDUCTION-DELIVERY`; this IAL0 prerequisite does not complete those features.
 
 Shipped binding shape:
 

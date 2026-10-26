@@ -58,6 +58,12 @@ JSON-safe. Failed and unrelated source reports omit this field. Discovery uses
 records establish source meaning, not HDL runtime qualification or preserved
 parameter-width dependencies. See the book's data manipulation chapter.
 
+The IAL0 width-only selector `(param NAME)` now distinguishes a declared
+scalar parameter from same-named constants and types during direct `+size`
+default evaluation. Core retains its source tree. This prerequisite does not
+extend ISF source grammar, add public dependency-report fields or establish
+generic HDL/override propagation; those remain separately owned work.
+
 The maintained `feature.isf_unary_reductions` representative retains explicit
 internal supported-phase and nonclaim arrays through source-query cohort
 selection. It owns source admission, check/semantic/schedule reports and

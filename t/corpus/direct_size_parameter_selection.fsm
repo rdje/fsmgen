@@ -1,0 +1,21 @@
+(?fsm:direct_size_parameter_selection
+  (+system (clock clk) (sreset reset))
+  (+constants (W 8))
+  (+types (type W (bits 4)))
+  (+params (W 16) (ALIAS W) (DERIVED (+ W 1)) (EXTRA 0x8))
+  (+size
+    (BARE W)
+    (SCALAR (+ W 0))
+    (SELECTED (param W))
+    (ALIASED (param ALIAS))
+    (DERIVED_WIDTH (param DERIVED))
+    (NESTED (+ (param W) (param EXTRA)))
+    (LITERAL 8))
+  (idle
+    (= (BARE 4'h0))
+    (= (SCALAR 8'h00))
+    (= (SELECTED 16'h0000))
+    (= (ALIASED 16'h0000))
+    (= (DERIVED_WIDTH 17'h00000))
+    (= (NESTED 24'h000000))
+    (= (LITERAL 8'h00))))

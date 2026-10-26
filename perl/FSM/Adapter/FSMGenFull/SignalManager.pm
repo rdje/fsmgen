@@ -243,6 +243,13 @@ sub resolve_aggregate_symbol_payload($self, $name) {
     return _clone_type_spec($self->{aggregate_payloads}{$name});
 }
 
+sub resolve_declared_parameter_payload($self, $name) {
+    return undef unless defined($name) && !ref($name);
+    my $info = $self->{params}{$name};
+    return undef unless ref($info) eq 'HASH' && ref($info->{value_payload}) eq 'HASH';
+    return _clone_type_spec($info->{value_payload});
+}
+
 sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
     return undef unless defined $symbol_name && !ref($symbol_name);
 
@@ -467,3 +474,17 @@ sub get_signal_summary($self) {
 }
 
 1;
+
+=head1 NAME
+
+FSM::Adapter::FSMGenFull::SignalManager - Direct-source signal and symbol ownership
+
+=head2 resolve_declared_parameter_payload($name)
+
+Returns a detached canonical payload for an actual declared parameter, or undef
+when none exists. Unlike C<resolve_parameter_value_symbol_payload>, this helper
+does not search constants, defines, enums, types or aggregate source symbols.
+The width parser uses it for C<(param NAME)> and applies its existing scalar,
+integer and positive-width checks. It does not perform generic HDL propagation.
+
+=cut

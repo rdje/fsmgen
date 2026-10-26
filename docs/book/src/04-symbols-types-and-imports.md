@@ -245,6 +245,39 @@ The resolved value must be one positive integer before generation. Named types
 still work in this same slot, so `(+size (frame frame_t))` remains the way to
 attach a declared aggregate/scalar type rather than computing a raw width.
 
+Use `(param NAME)` in a direct `+size` expression when the parameter namespace
+must be explicit:
+
+```lisp
+(+constants (W 8))
+(+types (type W (bits 4)))
+(+params (W 16))
+(+size
+  (typed_bus W)
+  (constant_bus (+ W 0))
+  (parameter_bus (param W))
+  (extended_bus (+ (param W) 1)))
+```
+
+Here `typed_bus` uses the named type at width 4, `constant_bus` uses the constant
+at width 8, `parameter_bus` uses the parameter default at width 16, and
+`extended_bus` has width 17. The selector requires exactly one declared scalar
+parameter identifier;
+it never borrows a same-named constant or type. Member/index paths and general
+expressions are not selector names. Existing arithmetic can contain selectors,
+and the final result must remain a positive integer. A missing parameter,
+aggregate default, malformed selector or non-positive result is rejected.
+
+This form is confined to direct `+size` width expressions. It is not a general
+parameter-value operator or an extension to `+types`. The original selector
+tree survives in Core width-source metadata. Current HDL still emits the
+evaluated width; generic HDL ranges and override propagation remain follow-on
+work. The complete collision example can be checked with:
+
+```sh
+./bin/fsmgen --quiet --strict --check --json t/corpus/direct_size_parameter_selection.fsm
+```
+
 Positive integer scalar symbols used as direct `+size` widths or composition
 `?ports` widths accept the same common scalar literal spellings, so a shared
 `(BYTE_W 0x8)` or `(BYTE_W 'h8)` can safely drive a width contract.

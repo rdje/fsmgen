@@ -1223,6 +1223,18 @@ sub evaluate_constant_integer_expression($self, $expr, $context) {
     Carp::confess "$context is malformed because the expression operator is not a scalar token.\n"
         if ref($operator);
 
+    if (defined($operator) && $operator eq 'param') {
+        my @names = @operands;
+        @names = @{$names[0]} if @names == 1 && ref($names[0]) eq 'ARRAY';
+        my $name = @names == 1 ? $self->unwrap_scalar_token($names[0]) : undef;
+        Carp::confess "$context selector 'param' requires exactly one declared parameter name.\n"
+            unless @names == 1 && $self->is_contract_identifier($name);
+        my $payload = $self->{signal_manager}->resolve_declared_parameter_payload($name);
+        Carp::confess "$context references unknown declared parameter '$name'.\n"
+            unless defined $payload;
+        return $self->evaluate_constant_integer_payload($payload, "$context parameter '$name'");
+    }
+
     my $normalized_operator = $self->normalize_constant_width_operator($operator);
     Carp::confess
         "$context uses unsupported width expression operator '$operator'. ".

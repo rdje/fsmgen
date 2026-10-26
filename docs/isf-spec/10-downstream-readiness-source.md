@@ -285,6 +285,13 @@ Imported files may also contain library roots:
 
 General source rules:
 
+- IAL0 direct `+size` expressions admit `(param NAME)` to select a declared
+  scalar parameter default explicitly, including inside existing arithmetic.
+  This avoids constant/type namespace borrowing and retains the selector
+  source. It is a lowering prerequisite: ISF still emits its current resolved
+  width carriers. ISF dependency propagation, captured-scope forwarding,
+  generic HDL widths and override-driven shape specialization remain pending.
+
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
   No value is invented. Reset-only undriven outputs retain a separately owned
