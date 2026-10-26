@@ -152,6 +152,18 @@ the backend cannot emit its cached validation number instead. A known top
 parameter environment also refuses, even with no symbolic child overrides.
 Existing static/literal generic maps retain their supported behavior.
 
+The internal [scalar binding renderer](../../../perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm)
+now preserves actual scalar parameter names, operator nesting and operand order
+for Verilog-family expression text. Static scalar symbols render as canonical
+literals; equal default values never choose a parameter identity. It checks the
+captured scope and declared names and refuses aggregate selections, raw
+expression payload text and malformed literal/operator nodes. The
+[focused regression](../../../t/2132-composition-scalar-binding-renderer.t)
+uses actual parsed defaults and child bindings. This is groundwork only: neither
+structural emitter calls this helper yet, and parameter-bearing source plans,
+HDL generic declarations/maps, namespace reservation and symbolic ranges remain
+pending. VHDL expression rendering remains separately owned.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an

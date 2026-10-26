@@ -1227,11 +1227,16 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Render canonical scalar composition bindings without reading cached parameter values.`
   Acceptance: `Validate actual scope/declaration identities, canonical literal and operator nodes and static scalar payloads. Preserve direct symbolic aliases and operand order; refuse aggregate selections, malformed references and raw expression payloads. Focused actual-source bindings, independent expected text and hostile controls qualify an internal renderer only; source/HDL guards remain. Synchronize POD/book and commit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual parsed/imported defaults and child bindings render selected scalar names, static literals and nested operators with ordered repeated dependencies. Independent equal-default identities, mutated parameter caches, detached results and hostile scope/name/path/operator/raw-text/cyclic-node controls pass. Initial missing-module RED proves the new helper was absent. Expanded literal-token controls then expose arrays and payload hashes bypassing node typing; retained pre-guard source fails and strict scalar-token validation passes. Focused renderer/default-binding/emitter-boundary checks report All tests successful Files=3 Tests=13; module syntax OK and guarded POD/mdBook build pass. Re-derive: actual source/compiler binding products; falsify: independent expected names/text and retained known-bad controls; durability: source/test/book/fact and docs/audits/composition-scalar-binding-renderer-20261026.json.gz with streams, input identities and pre-guard source. Neither emitter calls the helper; source/profile discovery, generic declarations/maps, symbolic ranges and VHDL remain pending. Full qualification and inherited push qualification remain .6 under the director feature-first instruction. Initial RAM guard process-inspection refusal is retained before approved guarded execution. First staged doctrines reject exhausted Knowledge Map card-file allowance; apply measured actual plus its existing ratchet without changing baseline or ceiling. Corrected normal hooks run the full staged doctrine gate. Next .4.2 remains pending; decision0116 permits a clean context refresh after this slice to maintain signoff quality.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.1: render canonical scalar bindings`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2132-composition-scalar-binding-renderer.t line 12 identifies the absent canonical renderer. The prepared source/default/child binding producer already retains actual identities, while structural emitters still refuse. Expanded pre-guard controls expose literal-node arrays/hashes escaping node typing through the value normalizer; retained source and streams identify that boundary.
+  - [x] **ADDRESSED (verified)** — Add the internal canonical scalar renderer with explicit environment/scope/name/token checks, canonical literals/operators and ordered dependency observations. Preserve aliases instead of parameter validation values; refuse aggregates and raw expression payloads. Scalar token validation turns the retained expanded hostile controls green. Neither structural emitter nor source admission changes.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for the focused renderer, actual default bindings and unchanged emitter boundary. Module syntax OK; guarded POD/mdBook build passes. Staged scripts/check_doctrines.sh and normal hooks gate this slice; full qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2`
   Status: `pending`
