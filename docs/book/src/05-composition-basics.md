@@ -13,13 +13,35 @@ Other child headers such as `?bogus:child` are rejected as unsupported child
 kinds; FSMGen does not reinterpret unknown composition children as raw HDL or
 legacy extension hooks.
 
-The compiler now has an internal top parameter environment. It resolves detached
-parameter defaults after package imports and keeps configurable parameters out
-of the static symbol table used by existing child overrides. Source-level top
-`+params` remains unsupported. Programmatic tops carrying parameter declarations
-are explicitly refused by every current HDL plan until symbolic defaults,
-instance bindings, interface widths and HDL propagation are implemented. This
-foundation does not yet provide an authorable top generic feature.
+The parser now accepts top `+params` declarations and resolves their defaults
+after package imports. This is a parser and default-resolution boundary: all
+current HDL plans still refuse parameter-bearing tops until symbolic defaults,
+instance bindings, interface widths and HDL propagation are implemented.
+Configurable parameters stay separate from the static symbol table used by
+existing child overrides.
+
+For example, this tracked refusal fixture collects declarations across blocks,
+resolves a forward alias and imported aggregate values, then reaches the explicit
+lowering boundary before trying to realize its child:
+
+```lisp
+{{#include ../../../t/corpus/composition_top_parameters_lowering_pending.fsm}}
+```
+
+Run `./bin/fsmgen --strict --check --json
+t/corpus/composition_top_parameters_lowering_pending.fsm`. It currently reports
+`FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`. The native check, in-process API
+and newline MCP return the same source refusal. This example does not generate
+HDL yet.
+
+Defaults use the canonical parameter value rules, with acyclic forward references,
+scalar and aggregate values, package symbols and direct parameter reference
+identity. Multiple blocks contribute to one declaration order. Empty sections,
+malformed entries, invalid identifiers, duplicate names, dependency cycles and
+unknown names refuse. A parameter name must differ from local constant and enum
+roots and imported package roots; this prevents ambiguous static/configurable
+lookup. Named types keep their separate namespace. Top declarations and default
+source/value getters return detached records.
 
 ## Top Root Shape
 

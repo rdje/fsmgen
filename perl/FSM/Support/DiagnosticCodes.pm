@@ -739,6 +739,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'composition_contract',
         summary => 'An explicit composition wiring entry used an unsupported token shape.',
     },
+    FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'composition_contract',
+        summary => 'Composition top parameters require pending symbolic default, binding, width and HDL lowering.',
+    },
     FSMGEN_COMPOSITION_TOP_SYMBOL_TOKEN_SHAPE => {
         severity => 'error',
         stability => 'stable',

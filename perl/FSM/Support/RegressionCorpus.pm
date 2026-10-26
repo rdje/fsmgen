@@ -9,6 +9,16 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'contract.composition_top_parameters_lowering_pending',
+        relpath => 't/corpus/composition_top_parameters_lowering_pending.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        diagnostic_code => 'FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING',
+        expected_error_pattern => qr/Composition top '[^']+' top parameter lowering is blocked because symbolic default, instance binding, interface width and HDL propagation are not implemented yet/,
+    },
+    {
         id => 'language.isf_storage_identifier.rejection',
         relpath => 't/corpus/isf_storage_identifier.isf',
         family => 'language_feature_fixture',

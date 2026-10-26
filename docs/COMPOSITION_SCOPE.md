@@ -108,6 +108,14 @@ The currently shipped composition behavior is intentionally bounded:
   `(attribute)` or `:attribute`. The shipped same-name binding flags are
   canonical `:same-name` plus accepted aliases `(same-name)`,
   `:connect-by-name`, and `(connect-by-name)`,
+- top `+params` blocks now parse into a detached default graph resolved after imports,
+  with canonical scalar/aggregate values and acyclic forward parameter references.
+  Parameter names must differ from local constant/enum roots and imported package
+  roots. This is parser/default support only: all current HDL plans refuse a
+  parameter-bearing top with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING` until
+  symbolic default/binding/interface-width/HDL lowering is implemented. Native
+  check, API and MCP preserve this refusal; successful composition admission and
+  semantic export do not include top parameters yet,
 - zero or more bounded `+constants` / `+enums` / `+types` blocks plus zero or more bounded
   `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded
   aggregate values, whole aggregate roots on the live literal path, authored-member-order

@@ -87,6 +87,7 @@ sub parse_top ($self, $top_ast) {
     my @pending_constant_entries;
     my @pending_enum_entries;
     my @pending_type_entries;
+    my @parameter_declarations;
     my @inline_top_items;
     my $symbol_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
         debug => ($self->{debug} ? 1 : 0),
@@ -103,6 +104,11 @@ sub parse_top ($self, $top_ast) {
         }
 
         confess "Composition top '$top_name' contains a non-list child item" unless ref($child) eq 'ARRAY';
+
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+params') {
+            push @parameter_declarations, @{$self->parse_top_params_block($top_name, $child)};
+            next;
+        }
 
         if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+constants') {
             push @pending_constant_entries, @{ $self->parse_top_constants_block(
@@ -186,6 +192,18 @@ sub parse_top ($self, $top_ast) {
         \@package_imports,
     );
 
+    my %static_roots = map {$_ => 1} (
+        keys %{$top_symbols->constants}, keys %{$top_symbols->enums}, @package_imports,
+    );
+    for my $declaration (@parameter_declarations) {
+        my $name = $declaration->{name};
+        confess
+            "Composition top '$top_name' top parameter namespace is blocked because parameter '$name' " .
+            "conflicts with a static root declared by '+constants', '+enums' or '+import'." .
+            $self->scope_docs_suffix
+            if $static_roots{$name};
+    }
+
     for my $pending_ports (@pending_ports_blocks) {
         my ($child_ast, $block_name, $items) = @$pending_ports;
         push @ports_blocks, $self->parse_ports_block($top_name, $child_ast, $block_name, $items, $top_symbols);
@@ -205,6 +223,7 @@ sub parse_top ($self, $top_ast) {
         ports_blocks => \@ports_blocks,
         wiring_blocks => \@wiring_blocks,
         package_imports => \@package_imports,
+        parameter_declarations => \@parameter_declarations,
         top_symbols => $top_symbols,
         raw_ast => $top_ast,
     );
@@ -213,19 +232,19 @@ sub parse_top ($self, $top_ast) {
 sub parse_top_child ($self, $top_name, $child_ast) {
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+params', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless @$child_ast;
 
     my $header = $child_ast->[0];
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+params', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless defined($header) && length($header);
     confess
         "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
-        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+params', '+types', or '+import'.".
         $self->scope_docs_suffix
         if ref($header);
 
@@ -274,8 +293,31 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains child '$header', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', '+types', and '+import'.".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', '+params', '+types', and '+import'.".
         $self->scope_docs_suffix;
+}
+
+sub parse_top_params_block ($self, $top_name, $child_ast) {
+    my (undef, $entries) = @$child_ast;
+    confess "Composition top '$top_name' malformed '+params' section requires a non-empty list of '(NAME value)' entries." .
+        $self->scope_docs_suffix
+        unless ref($entries) eq 'ARRAY' && @$entries;
+    my @declarations;
+    for my $entry (@$entries) {
+        confess "Composition top '$top_name' malformed '+params' entry must be a pair '(NAME value)'." .
+            $self->scope_docs_suffix
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        $name = $self->unwrap_scalar_token($name);
+        confess "Composition top '$top_name' '+params' entry must use an HDL-identifier-compatible name." .
+            $self->scope_docs_suffix
+            unless $self->is_contract_identifier($name);
+        confess "Composition top '$top_name' parameter '$name' must provide a scalar or aggregate value." .
+            $self->scope_docs_suffix
+            unless defined $value;
+        push @declarations, {name => $name, value_ast => _clone($value)};
+    }
+    return \@declarations;
 }
 
 sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols) {

@@ -724,16 +724,19 @@ backend signoff evidence.
 
 Cross-module generic forwarding also needs a real composition configuration
 scope. Current composition accepts static child overrides: a top constant is
-resolved to its value before instance emission. It refuses top-level `+params`
-and sibling parameter references. The selected extension will declare the
-authored actor parameters at the composition top and forward the same bindings
+resolved to its value before instance emission. Top `+params` now parses and
+resolves defaults after imports; current HDL plans refuse these declarations,
+and sibling parameter references remain unsupported. The selected extension
+will declare the authored actor parameters at the composition top and forward the same bindings
 to its parent module and child context parameters. Typed symbolic expressions
 must survive beside resolved defaults through the canonical IR and source
 emitters. This extension is required work, with parser, interface-width and
-SystemVerilog/VHDL lowering owners in the task tree. Internal top default resolution
-now runs after package imports without promoting parameters into static symbols.
+SystemVerilog/VHDL lowering owners in the task tree. Internal top default
+resolution runs after package imports without promoting parameters into static
+symbols.
 Parameter-bearing tops are refused before child planning until symbolic emission
-is implemented; source-level top declarations remain unsupported.
+is implemented. Native/API/MCP source checks expose that classified refusal;
+parser/default support does not yet deliver configurable generated chips.
 
 The binding work also needs parameter default expressions. In a current IAL0
 control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records

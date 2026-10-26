@@ -147,6 +147,10 @@ Active modern direction, started in `R6` and widened in `R11`:
 - but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
 - allow the modern `(?rtl:instance module)` form when one declared RTL module/interface contract must be instantiated several times under distinct instance names,
 - allow bounded scalar and aggregate `.rtlif` parameter/generic declarations whose defaults may use package-qualified shared symbols, bounded scalar expressions, matching-shape leafwise aggregate expressions, and unary aggregate bitwise complement expressions, plus resolved composition-top/package-symbol per-instance `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
+- parse top `+params` through detached canonical defaults after imports, while
+  refusing HDL planning with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING` until
+  symbolic defaults, instance bindings and width/source propagation are implemented;
+  this is not successful top generic generation or public semantic admission,
 - allow bounded generated-child `?fsmc` / `?dtc` `(params (NAME value) ...)` override blocks that target direct child-source `(+params ...)` declarations, resolve the same composition-top/package symbols, and validate aggregate shape before target lowering,
 - allow `.rtlif` interface ports to be authored as compact tokens such as
   `core_clk:clock` / `data_in<8:data` / `txd>:data` or as verbose declarations

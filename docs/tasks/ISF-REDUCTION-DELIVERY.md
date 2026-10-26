@@ -945,11 +945,11 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Admit canonical top +params with detached authored and resolved default graphs.`
   Acceptance: `Inspect existing Core/default/source and composition top interfaces before sharing their evaluator and dependency rules. Add bounded ?top +params with explicit ownership and declared namespace behavior, retain original trees/direct references beside selected defaults, preserve ordering/cycle/refusal contracts and caller isolation, and keep static constants distinct. Qualify the smallest actual source/API/default/refusal checks and synchronize public source discovery, corpus, applicability and book. Do not claim symbolic instance or HDL propagation yet; commit.`
-  Verification: `Active after clean5f213e76f. Reuse the existing direct-root lazy parameter graph and canonical ParameterValueSupport evaluator before admitting composition declarations. Split shared resolver ownership/lifetime from top declaration/import/default integration. Preserve current registration order, normalized products, original/default references, namespace precedence and refusals; never route future top generics through the static override resolver as frozen values.`
-  Commit: `children below`
+  Verification: `Children complete the shared graph/lifetime repair, detached post-import environment and authored parser/default foundation with focused controls and explicit current lowering refusal. Source/default support is distinct from successful top generic HDL or public semantic export, which remain required .4.1.2-.4. No full profile/runtime/publication qualification is inferred.`
+  Commit: `children below; closure with .2.3.3.4.1.1.2.2`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2`
 
@@ -966,11 +966,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=15 for T2117/T2110/T534/T50; shared helper and Parser syntax OK. Complete legacy source/value/Intent/HDL equality passes. Book/source checks, staged scripts/check_doctrines.sh and normal hooks gate this slice; full qualification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate canonical top declarations and detached authored/resolved defaults after imports.`
   Acceptance: `After .1, inspect actual top parsing, package import resolution, Top/TopSymbols interfaces, pipeline plans, source-query/schema applicability and generation profiles. Admit bounded top +params with the shared graph, explicit owner/namespace behavior, original/default references, cycle/order/source/copy guards and canonical package/static environments. Keep mutable configuration separate from static top symbols; unfinished symbolic binding/width/HDL profiles must fail closed rather than drop declarations or freeze defaults. Synchronize source discovery/corpus/applicability/book at the actual supported boundary. Split growing consumers before implementation; focused checks and commit precede later typed binding/emission.`
-  Verification: `Shared canonical resolver .1 is committed; inspect actual top/import/query/emission consumers and split integration before admission.`
-  Commit: `children below`
+  Verification: `Children complete the shared graph/lifetime repair, detached post-import environment and authored parser/default foundation with focused controls and explicit current lowering refusal. Source/default support is distinct from successful top generic HDL or public semantic export, which remain required .4.1.2-.4. No full profile/runtime/publication qualification is inferred.`
+  Commit: `children below; closure with .2.3.3.4.1.1.2.2`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2.2`
 
@@ -987,17 +987,22 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=9 for focused environment/kernel/import/static-forward-IR controls. Top, PackageImportResolver and PlanBuilder syntax OK. Book/source checks, staged scripts/check_doctrines.sh and normal hooks gate the slice; full profile/transport qualification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate bounded top parameter source parsing and its exact public discovery/refusal boundary.`
   Acceptance: `After .1, add source declarations with existing identifier/value/duplicate/namespace contracts, retaining all blocks in declaration order and deferring package-dependent resolution. Exercise actual source imports/defaults/cycles/unknowns and source/getter isolation; synchronize discovery, finite source corpus and API/MCP applicability with the implemented boundary. Native check/generation remains explicitly refused at the canonical plan guard until later typed binding/width/emission owners replace it safely. Source parsing is not successful HDL admission or full delivery. Commit focused checks before proceeding.`
-  Verification: `Post-import environment .1 has focused checks; source parser/discovery and its explicit generation refusal boundary are next.`
-  Commit: `pending`
+  Verification: `Composition Parser now collects bounded +params blocks in authored order into typed Top without evaluating before imports. Existing canonical graph semantics retain values, original expressions and actual direct parameter identities. Names cannot collide with local constant/enum or imported package roots; configurable values never enter static TopSymbols. Shape/identifier/missing-value, duplicate/cycle/unknown and namespace refusals are explicit. Every current plan remains fail-closed pending symbolic defaults/bindings/width/HDL lowering. The finite expected-failure fixture, stable TOP_PARAMETER_LOWERING diagnostic and existing capability blocked list expose that precise boundary without widening successful semantic schemas or advertising configurable HDL. First test draft mistook a valid aggregate spelling for a malformed pair; published Lispish shape probe identifies its actual aggregate tail. The corrected fixed test uses a scalar entry and separately checks missing value; its feature assertions then genuinely fail through the committed parser and pass unchanged now. Actual source/import/default/source/caller/getter controls and complete native/API/newline check refusal/text/structured equality pass. Source and selected public producers remain byte-exact across queries. Focused T2119/T2118/T363 report All tests successful Files=3 Tests=9. Parser, Top and changed discovery/diagnostic/corpus syntax pass. Receipt docs/audits/top-parameter-source-20261026.json.gz retains draft/fixed tests, shape probe, original/current products, selected code/Git epochs and compiled current identities; original full RED footprint remains missing. Re-derive: actual authored source/default/public refusal and capability projections; falsify: corrected fixed RED/GREEN, malformed/namespace/graph/copy controls and whole transport equality; durability: code/fixture/corpus/diagnostic/test/POD/book/fact/task/receipt/Git. Source/default foundations .4.1.1 close, but authorable top generic HDL and successful public semantic parameter export remain .4.1.2-.4; no full delivery, runtime or profile qualification claim. Book/source, final measured inventory, staged doctrines and normal hooks gate commit before typed bindings.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.1.2.2: parse canonical composition top parameters`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected fixed source diagnostics at t/2119-composition-top-parameter-source.t line 33 locate parse_top_child refusing +params before the already committed default environment can run. Capability/corpus checks lack its precise pending-lowering accounting. Published Lispish shape output separately identifies the first draft's valid aggregate spelling; that oracle mistake is not product evidence.
+  - [x] **ADDRESSED (verified)** — Authored ordered declarations now reach canonical post-import defaults with explicit static namespace separation, original/default references and detached trees. Native/API/newline checks agree on classified pending-lowering refusal, with corpus expected failure and capability discovery synchronized. Existing successful semantic schemas remain unchanged; no child lookup or HDL emission silently drops configuration.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for source/default/refusal transports, typed environment and manifest CLI projections. Changed parser/container/discovery/diagnostic/corpus syntax OK; source/selected public producers preserve bytes. Book/source, staged scripts/check_doctrines.sh and normal hooks qualify the slice; full feature verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2`
   Status: `pending`
   Goal: `Retain typed symbolic top-parameter expressions through actual child override realization and IR.`
   Acceptance: `After .1, bind explicit top parameter references and supported expressions without replacing them with default numbers. Keep resolved payloads for existing shape/type checks, validate real child declarations, retain static/aggregate distinctions and detached source identities, and reject unknown/mismatched bindings. Extend the actual top/instance/IntentHIR/structural contracts and applicability together; focused source/IR controls, book and commit precede emission.`
-  Verification: `pending top parameter semantics`
+  Verification: `Canonical top parser/defaults are available with explicit plan refusal; inspect and split typed override/default/IR contracts next.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`

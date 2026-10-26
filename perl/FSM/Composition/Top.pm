@@ -84,8 +84,9 @@ resolution, after refusal, or when no parameters are declared. A successful
 retry replaces the whole graph; failure publishes no stale or partial result.
 Constructor inputs and returned declaration/value/source trees are detached.
 
-This internal container support adds no source admission. Composition planning
-currently refuses parameter-bearing tops until symbolic lowering can preserve
-their configuration. Existing static compositions retain their behavior.
+Authored top C<+params> now collects these declarations; defaults resolve only
+after imports. Composition planning refuses parameter-bearing tops until
+symbolic lowering preserves their configuration. Existing static compositions
+retain their behavior.
 
 =cut

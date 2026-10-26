@@ -91,7 +91,8 @@ value evaluator. It keeps declaration and registration order even when a default
 refers forward. Callbacks receive detached values and source records. Literal,
 alias, cyclic and unknown-name parameter resolutions release their parser context
 after the caller releases it; this is a scoped lifetime guarantee, not a claim
-about every symbol resolver. Composition top parameters remain a later feature.
+about every symbol resolver. Composition top declarations share this graph after imports; their HDL lowering
+remains a later feature.
 
 This preservation prepares later lowering. Current HDL parameter defaults still
 use normalized values; dependent-default emission and override behavior remain

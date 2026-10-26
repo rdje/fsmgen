@@ -1,0 +1,17 @@
+(?top:composition_top_parameters_lowering_pending
+  (+params (BOUND WIDTH))
+  (+import shared)
+  (+constants (FIXED 4))
+  (+params
+    (WIDTH shared.BASE)
+    (COPY FIXED)
+    (LANE shared.LANES[1])
+  )
+  (?rtl:child)
+)
+(?pkg:shared
+  (+constants
+    (BASE 16)
+    (LANES (8'hA5 8'h3C))
+  )
+)
