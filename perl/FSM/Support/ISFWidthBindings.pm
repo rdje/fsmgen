@@ -28,12 +28,23 @@ sub build_width_binding_plan {
         $bound{$signal} = {declaration => _copy($declaration),
             expression => _bind_default($context, $declaration->{source}, $declaration->{scope})};
     }
+    my %defaults;
+    my $environment = _parameter_environment($context, $module_scope);
+    for my $parameter (@{$environment->{params} || []}) {
+        my $name = $parameter->{name};
+        my $binding = ($environment->{parameter_default_bindings} || {})->{$name};
+        confess "Width binding lacks canonical parameter default '$name'\n"
+            unless ref($binding) eq 'HASH';
+        $defaults{$name} = {declaration => _copy($parameter),
+            expression => _bind_default($context, $binding, $module_scope)};
+    }
     return {module_parameters => _copy($module_scope), declarations => \%bound,
+        parameter_defaults => \%defaults,
         captures => [map {_copy($context->{captures}{$_})} sort keys %{$context->{captures}}]};
 }
 
-sub _bind_parameter {
-    my ($context, $scope, $token) = @_;
+sub _parameter_environment {
+    my ($context, $scope) = @_;
     my $key = _scope_key($scope);
     my $scopes = $context->{scopes};
     my $environment;
@@ -48,6 +59,13 @@ sub _bind_parameter {
                 && defined($environment->{actor}) && $environment->{actor} eq $scope->{actor}
                 && defined($environment->{owner}) && $environment->{owner} eq $scope->{owner};
     }
+    return $environment;
+}
+
+sub _bind_parameter {
+    my ($context, $scope, $token) = @_;
+    my $key = _scope_key($scope);
+    my $environment = _parameter_environment($context, $scope);
     if (!exists $context->{parameter_names}{$key}) {
         $context->{parameter_names}{$key} = {map {$_->{name} => 1} @{$environment->{params} || []}};
     }
@@ -74,6 +92,11 @@ sub _bind_parameter {
 sub _bind_default {
     my ($context, $binding, $lexical_scope) = @_;
     my $kind = $binding->{kind} // '';
+    if ($kind eq 'list') {
+        confess "Width binding requires a non-empty canonical default list\n"
+            unless ref($binding->{items}) eq 'ARRAY' && @{$binding->{items}};
+        return {kind => 'list', items => [map {_bind_default($context, $_, $lexical_scope)} @{$binding->{items}}]};
+    }
     my $token = $binding->{token};
     my $actor_scope = $context->{actor_scope};
     confess "Width binding lacks a scalar source token\n" unless defined($token) && !ref($token);
@@ -135,21 +158,24 @@ FSM::Support::ISFWidthBindings - Private lexical expressions for scalar width lo
 
 C<build_width_binding_plan($metadata)> consumes final constructor width
 declarations, explicit module parameter ownership and canonical default-binding
-observations. It returns detached C<module_parameters>, C<declarations> and
-C<captures>. Each physical declaration retains its complete source descriptor
-beside a typed expression.
+observations. It returns detached C<module_parameters>, C<declarations>,
+C<parameter_defaults> and C<captures>. Each physical declaration retains its
+complete source descriptor beside a typed expression. Actual module parameter
+defaults retain their canonical declaration record and a bound expression;
+nested lists preserve their item structure and token kinds.
 
 Real module parameters remain C<parameter> references. Actor parameters outside
 that module become C<capture> references. Non-module transaction parameters
 become C<inline_parameter> nodes whose nested C<default> preserves each alias.
 Static nodes preserve constant, package and enum identities; literal nodes
 preserve tokens. Enum references retain their actor lookup environment and full
-qualified token. Captures are deduplicated by lexical identity, without sharing
-mutable containers with declaration expressions.
+qualified token. Captures include width and module-default expressions,
+deduplicated by lexical identity without sharing mutable containers with either
+expression family.
 
 This is private semantic groundwork, with no new evaluation or target names.
-Module-parameter default supporting graphs, symbol allocation, instance
-forwarding, IAL0 carrier emission, generic HDL and public dependency reports
-remain separate compiler stages.
+Target symbol/supporting declaration allocation, instance forwarding, IAL0
+carrier emission, generic HDL and public dependency reports remain separate
+compiler stages.
 
 =cut

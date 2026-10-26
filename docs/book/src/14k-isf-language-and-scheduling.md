@@ -702,9 +702,11 @@ the emitted parameter list, including renamed and generated modules. Private
 binding expressions now keep real module parameters symbolic, preserve the
 default chains of immutable local parameters, and identify actor values that
 need capture across module boundaries. Constants, package constants, enums and
-literals retain distinct source identities. This groundwork changes no emitted
-widths; symbol allocation, forwarding, generic port widths and override-driven
-shape specialization remain pending.
+literals retain distinct source identities. Actual module defaults also have
+bound expressions, including nested lists, so actor values used only in a
+default still create capture obligations. This groundwork changes no emitted
+widths or defaults; symbol allocation, supporting declarations, forwarding,
+generic port widths and override-driven shape specialization remain pending.
 
 The binding work also needs parameter default expressions. In a current IAL0
 control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records
