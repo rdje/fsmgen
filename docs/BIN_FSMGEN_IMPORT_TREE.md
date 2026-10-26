@@ -52,6 +52,12 @@ defaults and declaration-qualified integer child actuals, plus
 `FSM::Backend::VHDL::CompositionWidthEmitter` for captured scalar port ranges.
 Source admission remains guarded; no fresh closure count is inferred.
 
+`FSM::Composition::ParameterBindingSupport` now delegates canonical observed
+expression binding to `FSM::ParameterBindingSupport`. The wrapper keeps its
+composition-top scope and static-object contract; the shared walk accepts an
+explicit scope and transient static resolver. Direct Core capture remains a
+successor, and the historical import counts below are unchanged.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

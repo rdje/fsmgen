@@ -103,6 +103,13 @@ explicit payload nodes. The ordinary result shape, values and resolver order
 stay unchanged when capture is disabled. This source tree prepares scoped
 binding; it does not itself supply top generics or symbolic HDL emission.
 
+`FSM::ParameterBindingSupport` shares the canonical binding walk between
+explicit direct-module and composition-top scopes. It preserves observed
+parameter roots and paths, nested operators and immutable selected static
+payloads. The composition wrapper still requires its original top scope and
+static-symbol object. This shared helper does not yet capture direct Core
+bindings or add general-default HDL support; those consumers remain pending.
+
 Direct SystemVerilog and compatibility Verilog module declarations now preserve
 actual direct scalar root aliases from these observations. `(BOUND W)` emits
 `parameter BOUND = W`; a distinct `(LITERAL 16)` remains a literal even when
