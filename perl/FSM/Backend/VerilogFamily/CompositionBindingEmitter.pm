@@ -120,9 +120,9 @@ FSM::Backend::VerilogFamily::CompositionBindingEmitter - Canonical scalar compos
 
 =head1 DESCRIPTION
 
-Internal groundwork for structural HDL emission. This helper does not enable
-parameter-bearing source plans or change either structural emitter's pending
-parameter/width guard. VHDL rendering and aggregate bindings remain pending.
+Canonical scalar expression rendering for the prepared Verilog-family structural
+emitter. It does not enable parameter-bearing source plans. Width lowering,
+VHDL rendering and aggregate bindings remain pending.
 
 =head1 METHODS
 
@@ -140,7 +140,8 @@ symbol resolver. Raw C<scalar_expr> payload text, aggregate nodes and aggregate
 parameter paths refuse. Operator aliases/arity use the canonical operator
 contract; explicit parentheses preserve nesting and operand order. Caller trees
 are read-only and recursive caller trees refuse. Returned dependency lists are
-owned by the result. Top namespace reservation, declaration ordering, full type
-legality, port widths and actual emitter integration remain separately owned.
+owned by the result. Top namespace reservation and declaration ordering belong to
+L<FSM::Backend::VerilogFamily::CompositionParameterEmitter>. Port widths,
+explicit typed tops and broader profile legality remain separately owned.
 
 =cut

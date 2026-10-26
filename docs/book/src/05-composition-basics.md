@@ -52,7 +52,7 @@ structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
 Instance overrides retain actual scoped bindings beside their canonical validation
-values. Parameter-bearing HDL plans still refuse.
+values. Parameter-bearing source HDL plans still refuse.
 
 Prepared port declarations also accept verbose width expressions, for example
 `(input data (width (+ (param WIDTH) 2)))`. The shared bounded integer evaluator
@@ -92,8 +92,8 @@ its plan's captured width, scope and dependency identities before IntentHIR
 accepts it. The [public-contract test](../../../t/2131-composition-port-width-public-contract.t)
 checks actual source/Plan/IR/report allocation and isolation.
 
-This prepared inspection contract leaves symbolic source plans, port
-specialization and HDL pending. The shared structural emitter guard refuses
+This prepared inspection contract leaves symbolic source plans and port
+specialization pending. Both structural emitters still refuse
 known width contracts, including when an environment is absent; a cached
 positive width alone is not lowering. It does not admit parameterized `.isf`
 widths or alter API/MCP source-query refusal.
@@ -143,39 +143,42 @@ cache; static overrides retain their existing shape.
 
 This is public in-process inspection of prepared objects. Parameter-bearing
 source queries still return the pending-lowering diagnostic; discovery marks
-source planning and HDL emission unsupported. Symbolic interface specialization
+source planning and complete HDL emission unsupported. Symbolic interface specialization
 and canonical source emission remain required before generation is enabled.
 
-The direct structural IR backend API enforces this boundary too. An override
-carrying a symbolic binding is refused until canonical target lowering exists;
-the backend cannot emit its cached validation number instead. A known top
-parameter environment also refuses, even with no symbolic child overrides.
-Existing static/literal generic maps retain their supported behavior.
+The direct Verilog-family structural IR emitter now supports prepared scalar
+top defaults and child actuals when a matching captured environment is present.
+It emits untyped `parameter` defaults in canonical dependency order; the earliest
+currently ready authored declaration wins each tie. Immediate aliases, nested
+operators, literal sizing and static values survive. For example, `ALIAS` can
+remain `WIDTH`, `SUM` can remain `(ALIAS + 2)`, and a child's `.WIDTH(SUM)`
+remains configurable independently of its validation cache. Inferred validation
+widths do not become fixed parameter declaration sizes. Ordinary static module
+formatting and static/literal child actuals retain their existing behavior.
 
 The internal [scalar binding renderer](../../../perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm)
-now preserves actual scalar parameter names, operator nesting and operand order
-for Verilog-family expression text. Static scalar symbols render as canonical
-literals; equal default values never choose a parameter identity. It checks the
-captured scope and declared names and refuses aggregate selections, raw
-expression payload text and malformed literal/operator nodes. The
-[focused regression](../../../t/2132-composition-scalar-binding-renderer.t)
-uses actual parsed defaults and child bindings. This is groundwork only: neither
-structural emitter calls this helper yet, and parameter-bearing source plans,
-HDL generic declarations/maps and symbolic ranges remain pending. VHDL
-expression rendering remains separately owned.
+and [declaration preparer](../../../perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm)
+validate canonical nodes and reserve actual module, port, net, instance and
+collected typedef names in the case-sensitive target namespace. Cycles,
+incomplete binding membership, foreign scopes, reserved identifiers, aggregate parameter defaults, symbolic
+aggregate actuals and raw expression payloads refuse. Symbolic child actuals
+without a captured environment still refuse instead of emitting cached numbers.
+VHDL parameter emission, symbolic port ranges and explicit typed top parameters
+remain outside this prepared profile. Parameter-bearing source plans retain
+`FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`.
 
-Internal [declaration preparation](../../../perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm)
-now orders scalar top defaults by canonical dependencies, choosing the earliest
-ready authored declaration at each step. Forward aliases retain their immediate
-names. It reserves actual module, port, net, instance and collected typedef names
-in the case-sensitive Verilog namespace; cycles, incomplete binding membership,
-foreign scopes, reserved names and aggregate parameters refuse. These are untyped
-parameter defaults: inferred validation widths do not become fixed declaration
-ranges. The [source fixture](../../../t/data/composition-top-scalar-declarations.fsm)
-and [focused regression](../../../t/2133-composition-top-declaration-lowering.t)
-exercise captured Plan/IR products and hostile controls. This helper does not
-emit a module or enable source/HDL generation; actual emitter integration and
-explicit typed top parameters remain outside this prepared profile.
+Discovery's `composition_parameter_contract.prepared_scalar_emission` names the
+direct targets (`systemverilog`, `sv`, `verilog`, `v`), supported `top_defaults`
+and `child_actuals`, and false `symbolic_port_widths`, `typed_top_parameters`
+and `source_admission`. The broader source/HDL support flags remain false.
+The [source fixture](../../../t/data/composition-scalar-emission.fsm) and
+[emission test](../../../t/2134-composition-scalar-structural-emission.t) use
+actual import resolution, child declaration validation and captured Plan/IR.
+[Declaration checks](../../../t/2133-composition-top-declaration-lowering.t)
+cover forward/default/namespace meaning; the
+[binding checks](../../../t/2132-composition-scalar-binding-renderer.t) cover
+canonical expression boundaries. These focused checks do not qualify external
+HDL compilation/runtime or complete profile and transport matrices.
 
 ## Top Root Shape
 

@@ -17,7 +17,9 @@ boundaries as detached data. Ordinary IR retains its previous shape. The shared
 C<assert_no_pending_parameter_bindings> also refuses any known top environment,
 even with no instance overrides, pending canonical target lowering. Optional
 port C<width_contract> records also survive detached boundaries and derived
-signal metadata; the same guard refuses them pending width lowering.
+signal metadata. The independent width guard refuses them pending width
+lowering. Verilog-family emission with a captured matching scalar environment
+uses canonical declaration/binding lowering; VHDL retains the complete guard.
 
 =cut
 
@@ -67,12 +69,7 @@ sub assert_no_pending_parameter_bindings ($class, $structural) {
         unless (reftype($structural) // '') eq 'HASH';
     confess "StructuralRTLIR top parameter environment emission is blocked pending canonical lowering\n"
         if exists $structural->{parameter_environment};
-    for my $port (@{$structural->{ports} || []}) {
-        next unless (reftype($port) // '') eq 'HASH';
-        confess "StructuralRTLIR port width contract emission is blocked pending canonical lowering " .
-            "for port '" . ($port->{name} // '?') . "'.\n"
-            if exists $port->{width_contract};
-    }
+    $class->assert_no_pending_port_width_contracts($structural);
     for my $instance (@{$structural->{instances} || []}) {
         next unless (reftype($instance) // '') eq 'HASH';
         for my $override (@{$instance->{parameter_overrides} || []}) {
@@ -81,6 +78,18 @@ sub assert_no_pending_parameter_bindings ($class, $structural) {
                 "for instance '" . ($instance->{instance_name} // '?') . "' override '" . ($override->{name} // '?') . "'.\n"
                 if exists $override->{binding_expression};
         }
+    }
+    return 1;
+}
+
+sub assert_no_pending_port_width_contracts ($class, $structural) {
+    confess "StructuralRTLIR width boundary requires a structural hash\n"
+        unless (reftype($structural) // '') eq 'HASH';
+    for my $port (@{$structural->{ports} || []}) {
+        next unless (reftype($port) // '') eq 'HASH';
+        confess "StructuralRTLIR port width contract emission is blocked pending canonical lowering " .
+            "for port '" . ($port->{name} // '?') . "'.\n"
+            if exists $port->{width_contract};
     }
     return 1;
 }
@@ -312,10 +321,17 @@ Checks normalized structural hash data before target emission. An instance
 parameter override carrying C<binding_expression>, a known top environment or
 a port carrying C<width_contract> is refused until canonical symbolic lowering
 is implemented. The validation cache C<value_text> must not
-silently replace that semantic binding. Both structural backend entrypoints use
+silently replace that semantic binding. VHDL and Verilog-family inputs without a captured environment use
 this shared guard for hash and object callers; ordinary literal/static inputs
 remain unchanged. This check does not add a public symbolic IR profile or
 replace source-plan and target-shape validation.
+
+=head2 assert_no_pending_port_width_contracts
+
+Refuses known port C<width_contract> records independently of parameter binding
+admission. The Verilog-family emitter uses this width gate before lowering a
+captured scalar parameter environment. The complete guard above still applies
+when that environment is absent and to the separately pending VHDL profile.
 
 =head2 new
 

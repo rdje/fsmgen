@@ -68,6 +68,12 @@ sub build_composition_parameter_contract {
         optional_when_inapplicable => JSON::PP::true,
         public_source_planning_supported => JSON::PP::false,
         hdl_emission_supported => JSON::PP::false,
+        prepared_scalar_emission => {
+            targets => [qw(systemverilog sv verilog v)],
+            top_defaults => JSON::PP::true, child_actuals => JSON::PP::true,
+            symbolic_port_widths => JSON::PP::false, typed_top_parameters => JSON::PP::false,
+            source_admission => JSON::PP::false,
+        },
         guidance => [
             'Optional width_contract records preserve the captured top scope, authored frontend expression tree and ordered actual parameter/static lookups beside numeric width caches. Width-analysis path wildcards expand only to width_analysis_buckets.',
             'Width references use width_reference_keys by kind; static value_payload uses payload_node_keys. Explicit (param NAME) selects declared parameters, while bare width operands select static symbols. Equal defaults do not merge lookup identities.',
@@ -79,7 +85,7 @@ sub build_composition_parameter_contract {
             'Default bindings and optional instance binding_expression use binding_node_keys by kind. Operands, items and members recurse through the same node family; payload values and static_symbol value_payload use payload_node_keys.',
             'Parameter token is the declared root plus suffix; aliases retain immediate declaration identity. Static symbols retain scope, source token and selected payload. Operator is canonical, while source_operator retains the authored alias.',
             'Type items and members recurse through type_node_keys; signed is the canonical numeric flag. Missing optional fields are omitted, never inferred from a cached number.',
-            'Unparameterized environments and static overrides keep their existing report shapes. Query kinds, source applicability, lowering and target refusal boundaries remain unchanged.',
+            'Unparameterized environments and static overrides keep their existing report shapes. prepared_scalar_emission names only direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults and scalar child actuals. Symbolic widths, typed tops, symbolic aggregate bindings, VHDL parameter emission and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
         ],
     };
 }
@@ -97,7 +103,10 @@ record for actual composition environments, scoped instance bindings and
 captured port width dependencies. Width contracts describe optional structural
 ports, IntentHIR/common signal analysis and serialized top-port records. It
 names exact optional report paths, source owners, recursive key families,
-version semantics and the pending source/HDL boundary. It describes producer
+version semantics and the pending source/complete-HDL boundary. The separate
+C<prepared_scalar_emission> record names the direct Verilog-family emitter's
+untyped scalar top-default/child-actual subset, excluding symbolic widths,
+typed tops and source admission. It describes producer
 contracts; it neither resolves input nor attests the provenance of caller-made
 hashes. Follow the actual Top/Plan/IR producers for semantic provenance.
 

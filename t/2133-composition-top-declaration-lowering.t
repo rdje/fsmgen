@@ -9,7 +9,7 @@ use FSM::Composition::PackageImportResolver;
 use FSM::Composition::Plan;
 use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
-use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
+use FSM::Backend::VHDL::StructuralRTLIREmitter;
 use FSM::SourcePathResolver;
 
 my $lowerer = 'FSM::Backend::VerilogFamily::CompositionParameterEmitter';
@@ -112,12 +112,13 @@ subtest 'canonical graph and scalar profile refuse invalid prepared callers' => 
     refuses('unsupported target', sub {$_[0]{target_language} = 'vhdl'}, qr/Verilog-family/);
     refuses('malformed structural namespace', sub {$_[0]{nets} = {}}, qr/nets/);
 };
-subtest 'declaration preparation preserves static omission and pending emitter boundary' => sub {
+subtest 'declaration preparation preserves static omission and the VHDL boundary' => sub {
     my $static = copy($structural); delete $static->{parameter_environment};
     is_deeply(lower($static), [], 'ordinary structural input adds no parameter declarations');
-    my $ok = eval {FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural);1};
-    ok(!$ok, 'internal preparation alone does not enable the public emitter');
-    like($@, qr/top parameter environment emission is blocked/, 'canonical integration still owns emission');
+    my $vhdl = copy($structural); $vhdl->{target_language} = 'vhdl';
+    my $ok = eval {FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($vhdl);1};
+    ok(!$ok, 'VHDL remains independently guarded');
+    like($@, qr/top parameter environment emission is blocked/, 'VHDL integration still owns emission');
     ok(!$lowerer->can('emit_module'), 'preparation owns no alternate module-generation entrypoint');
 };
 done_testing;

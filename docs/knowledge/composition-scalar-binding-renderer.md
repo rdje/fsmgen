@@ -9,20 +9,21 @@ date: 2026-10-26
 status: current
 tags: [composition, parameters, lowering, verilog]
 evidence: perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm; perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm; t/2132-composition-scalar-binding-renderer.t; t/2133-composition-top-declaration-lowering.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t
 ---
 
-The internal renderer returns expression text and ordered actual parameter
-references from scoped canonical binding nodes. It never substitutes parameter
-validation values. Static scalar payloads use canonical literal normalization;
-raw expression text and aggregates refuse. It does not enable source plans or
-change either structural emitter's pending guard. See the
-[composition reference](../book/src/05-composition-basics.md) for applicability.
+`CompositionBindingEmitter` renders scoped canonical bindings as text and ordered
+parameter references, preserving names rather than validation values. Static
+scalars normalize to literals; raw expression text and aggregates refuse.
 
-`CompositionParameterEmitter::lower_declarations` prepares dependency-ordered
-scalar top defaults from canonical bindings and reserves actual module, port,
-net, instance and collected typedef names. It uses authored order to choose
-among currently ready declarations. Validation widths never fix parameter sizes.
-Source/emitter guards remain; explicit typed tops and aggregates are excluded.
-Reverify declaration preparation with
-`scripts/run_with_ram_guard.sh -- prove -Iperl t/2133-composition-top-declaration-lowering.t`.
+`CompositionParameterEmitter::lower_declarations` orders scalar defaults by
+canonical dependencies, selecting the earliest ready authored declaration. It
+reserves actual module, port, net, instance and collected typedef names. Cached
+widths never fix parameter sizes.
+
+The Verilog-family structural emitter consumes these helpers with a matching
+captured environment. Actual source, child validation and captured Plan/IR are
+checked by T2134. Discovery names this prepared scalar subset; source admission,
+width contracts, VHDL parameters, explicit typed tops and symbolic aggregate
+bindings remain guarded. Existing static aggregate profiles are unchanged.
+See the [composition reference](../book/src/05-composition-basics.md).

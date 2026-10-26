@@ -11,9 +11,10 @@ C<StructuralRTLIR> layer. This package is the beginning of the planned split
 where backend text generation consumes structural connectivity rather than
 re-deriving structure inside the pipeline coordinator.
 
-Pending semantic C<binding_expression> records, top parameter environments
-and port C<width_contract> records are explicitly refused before rendering. Their canonical validation numbers are not a symbolic lowering.
-Ordinary supported static/literal parameter actuals retain existing behavior.
+Prepared scalar top environments and child C<binding_expression> records render
+through canonical declaration and expression helpers. Port C<width_contract>
+records remain refused. Validation numbers never replace symbolic bindings;
+ordinary supported static/literal actuals retain existing behavior.
 
 =cut
 
@@ -26,6 +27,8 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
+use FSM::Backend::VerilogFamily::CompositionParameterEmitter;
+use FSM::Backend::VerilogFamily::CompositionBindingEmitter;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
 use FSM::Support::HDLInstanceIdentifierPolicy;
@@ -40,7 +43,11 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $target_language = $structural->{target_language} // 'systemverilog';
     confess "StructuralRTLIR verilog-family emitter only supports systemverilog/verilog target_language values"
         unless $target_language =~ /^(?:systemverilog|sv|verilog|v)$/;
-    FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
+    if (exists $structural->{parameter_environment}) {
+        FSM::IR::StructuralRTLIR->assert_no_pending_port_width_contracts($structural);
+    } else {
+        FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
+    }
 
     my $top_name = $structural->{module_name}
         // confess "StructuralRTLIR verilog-family emitter requires module_name";
@@ -53,6 +60,8 @@ sub emit_module ($class, $structural_rtl_ir) {
             [@ports, @nets],
             FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(module_name => $top_name),
         );
+    my $declarations = FSM::Backend::VerilogFamily::CompositionParameterEmitter->lower_declarations(
+        structural => $structural, aggregate_typedef_lookup => $aggregate_typedef_lookup);
 
     my @port_lines = map { _render_port_line($_, $aggregate_typedef_lookup) } @ports;
 
@@ -68,7 +77,7 @@ sub emit_module ($class, $structural_rtl_ir) {
             sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_, $target_language))
         } @{$instance->{port_bindings} || []};
         my @parameter_lines = map {
-            sprintf("        .%s(%s)", $_->{name}, $_->{value_text})
+            sprintf("        .%s(%s)", $_->{name}, _parameter_value($_, $structural))
         } @{$instance->{parameter_overrides} || []};
 
         @parameter_lines
@@ -89,7 +98,11 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @body_lines;
     push @body_lines, @$typedef_lines, "" if @$typedef_lines;
     push @body_lines,
-        "module $top_name (",
+        (@$declarations
+            ? "module $top_name #(\n" . join(",\n", map {
+                "    parameter $_->{name} = $_->{default_text}"
+            } @$declarations) . "\n) ("
+            : "module $top_name ("),
         join(",\n", @port_lines),
         ");";
 
@@ -99,6 +112,23 @@ sub emit_module ($class, $structural_rtl_ir) {
     push @body_lines, "endmodule";
 
     return join("\n", @body_lines);
+}
+
+sub _parameter_value ($override, $structural) {
+    return $override->{value_text} unless exists $override->{binding_expression};
+    my $name = $override->{name};
+    confess "StructuralRTLIR symbolic override requires a non-reserved scalar parameter identifier\n"
+        unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name)
+            && !grep {$_ eq 'SystemVerilog'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
+    confess "StructuralRTLIR requires a scalar parameter override for '$name'\n"
+        unless ($override->{value_kind} // '') eq 'scalar'
+            && (!exists($override->{declaration_default_value_kind})
+                || ($override->{declaration_default_value_kind} // '') eq 'scalar')
+            && ref($override->{value_payload}) eq 'HASH'
+            && ($override->{value_payload}{kind} // '') =~ /\A(?:scalar|scalar_expr)\z/;
+    return FSM::Backend::VerilogFamily::CompositionBindingEmitter->lower_expression(
+        binding => $override->{binding_expression}, environment => $structural->{parameter_environment},
+        target_language => $structural->{target_language} // 'systemverilog')->{text};
 }
 
 sub _render_port_line ($port, $aggregate_typedef_lookup) {

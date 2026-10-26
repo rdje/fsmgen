@@ -13,8 +13,9 @@ generated module analysis, and object/hash coercion for downstream pipeline and
 backend consumers.
 
 Composition construction and hash coercion preserve detached parameter
-environments when present. Target emission remains blocked until canonical
-lowering preserves top declarations, default bindings and interface widths.
+environments when present. Prepared scalar Verilog-family emission consumes
+canonical top/child bindings. Source admission, symbolic interface widths and
+VHDL parameter emission retain their separate pending boundaries.
 
 =cut
 

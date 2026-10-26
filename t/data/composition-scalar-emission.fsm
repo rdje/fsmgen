@@ -1,0 +1,12 @@
+(?top:scalar_emission
+  (+params (ALIAS WIDTH) (WIDTH 16) (SAME 16) (SUM (+ ALIAS shared.EXTRA)))
+  (+import shared)
+  (?ports:io clk<1)
+  (?rtl:child (module scalar_leaf)
+    (params (WIDTH SUM) (EQUAL SAME) (STATIC shared.EXTRA)))
+)
+(?pkg:shared (+constants (EXTRA 2)))
+(?rtlif:scalar_leaf
+  (params (WIDTH 8) (EQUAL 8) (STATIC 8))
+  clk<1
+)

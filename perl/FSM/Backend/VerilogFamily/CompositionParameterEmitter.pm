@@ -118,9 +118,9 @@ FSM::Backend::VerilogFamily::CompositionParameterEmitter - Canonical scalar top 
 
 =head1 DESCRIPTION
 
-Internal preparation for Verilog-family structural emission. Source admission
-and both structural emitters retain their pending parameter and width guards.
-This package renders no module and changes no public capability profile.
+Prepares the scalar top declarations consumed by the Verilog-family structural
+emitter. This package renders no module. Source admission, symbolic port widths,
+explicit typed tops, aggregates and the VHDL profile remain separately guarded.
 
 =head1 METHODS
 
