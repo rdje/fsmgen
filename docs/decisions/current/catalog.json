@@ -1380,15 +1380,15 @@
     },
     {
       "content": {
-        "bytes": 15883,
+        "bytes": 16066,
         "line_bytes": 790,
         "lines": 167,
-        "sha256": "8f7cf5ea1077a079b7cba19dbec4abba9d7ab43a7c4d7cb921f9d32b3a53c508"
+        "sha256": "f489a08602fb38519468b2519f75d03a32c9110a856a455906d385bc88555e17"
       },
       "id": "0119",
       "metadata": {
         "authority_status": [
-          "- Status: private source/IR, lexical/target and normal instance plans have focused checks; domain mapping/carrier/HDL/public qualification pending"
+          "- Status: private source/IR and scoped target/instance plans have focused checks; carrier/HDL/public qualification pending"
         ],
         "knowledge_id": "isf-authored-scalar-width-provenance",
         "knowledge_status": "current",

@@ -71,7 +71,8 @@ include default-only actor dependencies in those private capture obligations.
 Private target plans allocate context names and immutable static aliases while
 retaining source identities; no target-plan fields enter public reports.
 Private actual-instance plans bind automatic context imports to declared
-producers while retaining selections separately; public carriers stay unchanged.
+producers while retaining selections separately. Final domain maps change only
+physical producer/child identities; public carriers stay unchanged.
 
 The maintained `feature.isf_unary_reductions` representative retains explicit
 internal supported-phase and nonclaim arrays through source-query cohort

@@ -714,10 +714,13 @@ module declarations, executable identifiers and state/enable names with case
 folding. Private instance plans now join automatic child context slots to
 declared producer parameters with the same source identity. Actual activation,
 library and ATL selections retain their own defaults and authored overrides;
-equal values cannot supply an unrelated producer. This groundwork changes no
-emitted widths or defaults. Final domain identity mapping, carrier emission,
-generic port widths and override-driven shape specialization remain pending;
-these plans are not backend signoff evidence.
+equal values cannot supply an unrelated producer. Domain realization now applies
+the final allocated producer and child identities, including name collisions,
+while keeping lexical owners, parameter slots and selected environments exact.
+The parent definition module remains explicit. This groundwork changes no
+emitted widths or defaults. Carrier emission, generic port widths and
+override-driven shape specialization remain pending; these plans are not
+backend signoff evidence.
 
 Cross-module generic forwarding also needs a real composition configuration
 scope. Current composition accepts static child overrides: a top constant is

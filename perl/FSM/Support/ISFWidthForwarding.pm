@@ -5,7 +5,7 @@ use warnings;
 use Carp qw(confess);
 use Exporter 'import';
 
-our @EXPORT_OK = qw(build_width_forwarding_plan);
+our @EXPORT_OK = qw(build_width_forwarding_plan remap_width_forwarding_plan);
 
 sub build_width_forwarding_plan {
     my ($ir) = @_;
@@ -87,6 +87,34 @@ sub build_width_forwarding_plan {
         module_parameters => _copy($scope)}, instances => \@bound};
 }
 
+sub remap_width_forwarding_plan {
+    my ($plan, $names) = @_;
+    confess "Width forwarding requires a normal composition plan and final domain maps\n"
+        unless ref($plan) eq 'HASH' && ref($plan->{producer}) eq 'HASH'
+            && ref($plan->{instances}) eq 'ARRAY' && ref($names) eq 'HASH'
+            && ref($names->{instances}) eq 'HASH' && ref($names->{modules}) eq 'HASH';
+    my $mapped = _copy($plan);
+    $mapped->{producer}{instance} = _domain_name($names->{instances}, $plan->{producer}{instance}, 'instance');
+    # The parent definition module is already the actual scheduled domain
+    # module. The module map belongs to child definitions, even if a child key
+    # happens to have the same spelling as the parent definition.
+    for my $instance (@{$mapped->{instances}}) {
+        $instance->{instance} = _domain_name($names->{instances}, $instance->{instance}, 'instance');
+        $instance->{module} = _domain_name($names->{modules}, $instance->{module}, 'module');
+    }
+    return $mapped;
+}
+
+sub _domain_name {
+    my ($map, $logical, $role) = @_;
+    confess "Width forwarding requires actual domain $role mapping\n"
+        unless defined($logical) && !ref($logical) && length($logical);
+    my $actual = $map->{$logical};
+    confess "Width forwarding requires actual domain $role mapping for '$logical'\n"
+        unless defined($actual) && !ref($actual) && length($actual);
+    return _copy($actual);
+}
+
 sub _require_context_name {
     my ($name) = @_;
     confess "Width forwarding requires a named context parameter slot\n"
@@ -143,9 +171,16 @@ unrelated lexical environment and physical-name prefixes cannot supply a slot.
 Conflicting real parameters, authored overrides and duplicate targets refuse.
 Existing selected defaults and authored override sources remain separate.
 
-This plan changes no source, HDL, public report or parameter value. Final domain
-identity remapping, canonical top configuration and symbolic source emission
-remain separately required. Producer instance identity here follows the normal
-composition emitter's explicit parent-instance contract.
+C<remap_width_forwarding_plan($plan, $names)> consumes final actual domain name
+maps and returns a detached plan with the producer instance and child
+instance/module identities mapped. The parent definition module is already
+explicit and stays outside the child-module map. Lexical scopes, local parameter
+slots and selected source environments remain exact. Missing actual mappings
+refuse instead of falling back to guessed names.
+
+These plans change no source, HDL, public report or parameter value. Canonical
+top configuration and symbolic source emission remain separately required.
+Normal producer identity follows the composition emitter's parent-instance
+contract; domain realization applies its final maps after collision allocation.
 
 =cut

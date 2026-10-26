@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::Support::ISFWidthForwarding qw(remap_width_forwarding_plan);
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::FormalLowering;
 use FSM::Scheduler::ISF::RecordOutputWriters;
@@ -247,6 +248,8 @@ sub _multi_domain_realizations($self, $actor, $partition) {
                 if exists $names->{instances}{$instance};
             $names->{instances}{$instance} = $allocate->("$domain->{instance}__$instance", \%instances);
         }
+        $domain_ir->{_width_forwarding} = remap_width_forwarding_plan($domain_ir->{_width_forwarding}, $names)
+            if $domain_ir->{_width_forwarding};
         push @realizations, { domain => $domain, ir => $domain_ir, names => $names, composed => @children ? 1 : 0 };
     }
     return \@realizations;
