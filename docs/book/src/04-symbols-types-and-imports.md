@@ -119,6 +119,14 @@ Normalized parameter values and the existing authored-source records retain
 their previous shapes and JSON kinds. Private bindings add no public report
 fields and do not yet supply general-default HDL relationships.
 
+`FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
+preparation for these direct-module bindings and composition-top bindings. It
+retains selected names, static payloads, operator parentheses and repeated
+dependencies. Its `text` result keeps the canonical normalizer's scalar kind
+for target interpolation. The composition wrapper keeps its narrower scope;
+direct-header integration is the next consumer. Aggregate/path target profiles
+and complete override/runtime qualification remain separately owned.
+
 The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
 exercises qualified constants, enum members and a nested aggregate leaf:
 

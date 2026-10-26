@@ -203,8 +203,10 @@ widths do not become fixed parameter declaration sizes. Ordinary static module
 formatting and static/literal child actuals retain their existing behavior.
 
 The internal [scalar binding renderer](../../../perl/FSM/Backend/VerilogFamily/CompositionBindingEmitter.pm)
-and [declaration preparer](../../../perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm)
-validate canonical nodes and reserve actual module, port, net, instance and
+delegates canonical node validation and scalar rendering to `ParameterBindingEmitter`,
+retaining its composition-top scope and diagnostics. The
+[declaration preparer](../../../perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm)
+reserves actual module, port, net, instance and
 collected typedef names in the case-sensitive target namespace. Cycles,
 incomplete binding membership, foreign scopes, reserved identifiers, aggregate parameter defaults, symbolic
 aggregate actuals and raw expression payloads refuse. Symbolic child actuals

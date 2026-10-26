@@ -14,7 +14,9 @@ evidence: docs/book/src/05-composition-basics.md; t/2136-composition-vhdl-natura
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2132-composition-scalar-binding-renderer.t t/2133-composition-top-declaration-lowering.t t/2134-composition-scalar-structural-emission.t t/2135-composition-symbolic-port-ranges.t t/2136-composition-vhdl-natural-generics.t t/2138-composition-vhdl-scalar-emission.t t/2139-composition-vhdl-port-ranges.t t/2141-composition-scalar-rtl-source-admission.t
 ---
 
-`CompositionBindingEmitter` retains scoped scalar names/references; static
+`CompositionBindingEmitter` delegates to the shared `ParameterBindingEmitter`
+while retaining composition-top scope and diagnostics. Scoped scalar names and
+references survive; static
 scalars become literals. Raw text/aggregates refuse. `CompositionParameterEmitter`
 orders defaults by dependencies and earliest-ready authored ties, reserving
 structural/typedef names. `CompositionWidthEmitter` checks scope/ordered lookups,

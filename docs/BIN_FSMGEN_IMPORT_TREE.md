@@ -59,6 +59,11 @@ explicit scope and transient static resolver. The direct FSMGenFull parser now
 also imports that helper after canonical declaration resolution and publishes
 detached private Core bindings. Historical import counts below are unchanged.
 
+The Verilog-family `CompositionBindingEmitter` now imports
+`FSM::Backend::VerilogFamily::ParameterBindingEmitter` for the shared scalar
+walk. The composition wrapper keeps its narrower scope and diagnostics; direct
+header integration remains a successor. No fresh closure census is inferred.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes
