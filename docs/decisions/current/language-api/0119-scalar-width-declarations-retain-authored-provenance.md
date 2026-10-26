@@ -16,7 +16,7 @@ date: 2026-10-26
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
 evidence: perl/FSM/Support/ISFWidthBindings.pm; docs/audits/domain-width-ir-20261025.json.gz; docs/audits/reusable-width-ir-20261025.json.gz; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/211[0-7]-*.t t/50-language-contract-size-section-boundary.t t/2108-isf-width-parameter-default-sources.t t/2109-isf-width-default-bindings.t t/2101-isf-generated-width-ir.t t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/211[0-8]-*.t t/50-language-contract-size-section-boundary.t t/2108-isf-width-parameter-default-sources.t t/2109-isf-width-default-bindings.t t/2101-isf-generated-width-ir.t t/2100-isf-direct-formal-width-ir.t t/2107-isf-reusable-width-ir.t && python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -35,7 +35,7 @@ parameter-use set does not associate each port with its source token.
 
 Library use-site overrides reach tops while child shapes retain defaults: existing specialization backlog.
 Derived actor-parameter arithmetic remains refused. Composition currently resolves overrides from static top/package symbols;
-top +params and sibling parameter references refuse. Required generic forwarding needs top declarations and typed bindings.
+top +params and sibling parameter references refuse. Typed Top now owns detached declarations/default graphs resolved after imports, separate from static symbols; every HDL plan refuses parameter-bearing tops until symbolic lowering exists.
 Audit/native/private products cannot qualify generic HDL. Evidence: `docs/audits/width-forwarding-contract-20261026.json.gz`; reverify with `python3 -B docs/audits/width-forwarding-contract-verify-20261026.py`.
 
 ## Decision

@@ -13,6 +13,14 @@ Other child headers such as `?bogus:child` are rejected as unsupported child
 kinds; FSMGen does not reinterpret unknown composition children as raw HDL or
 legacy extension hooks.
 
+The compiler now has an internal top parameter environment. It resolves detached
+parameter defaults after package imports and keeps configurable parameters out
+of the static symbol table used by existing child overrides. Source-level top
+`+params` remains unsupported. Programmatic tops carrying parameter declarations
+are explicitly refused by every current HDL plan until symbolic defaults,
+instance bindings, interface widths and HDL propagation are implemented. This
+foundation does not yet provide an authorable top generic feature.
+
 ## Top Root Shape
 
 A composition source uses one `?top:name` root with an

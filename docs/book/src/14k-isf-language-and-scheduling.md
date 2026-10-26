@@ -730,7 +730,10 @@ authored actor parameters at the composition top and forward the same bindings
 to its parent module and child context parameters. Typed symbolic expressions
 must survive beside resolved defaults through the canonical IR and source
 emitters. This extension is required work, with parser, interface-width and
-SystemVerilog/VHDL lowering owners in the task tree; it is not implemented yet.
+SystemVerilog/VHDL lowering owners in the task tree. Internal top default resolution
+now runs after package imports without promoting parameters into static symbols.
+Parameter-bearing tops are refused before child planning until symbolic emission
+is implemented; source-level top declarations remain unsupported.
 
 The binding work also needs parameter default expressions. In a current IAL0
 control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records

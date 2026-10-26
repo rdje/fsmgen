@@ -43,6 +43,8 @@ sub resolve_imports ($class, %args) {
     $top_symbols->finalize_imported_type_aliases
         if $top_symbols->can('finalize_imported_type_aliases');
 
+    $top->resolve_parameter_defaults;
+
     FSM::Composition::ParameterOverrideResolver->resolve_deferred_overrides(
         top => $top,
         top_symbols => $top_symbols,

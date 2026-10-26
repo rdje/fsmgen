@@ -49,6 +49,11 @@ sub build_plan ($class, %args) {
     );
 
     my $top = $composition_spec->top;
+    confess
+        "Composition top '" . $top->name . "' top parameter lowering is blocked because symbolic " .
+        "default, instance binding, interface width and HDL propagation are not implemented yet. " .
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if @{$top->parameter_declarations};
     my @instances = @{$top->instances || []};
     my @ports_blocks = @{$top->ports_blocks || []};
     my @wiring_blocks = @{$top->wiring_blocks || []};
