@@ -1,0 +1,20 @@
+(?top:scalar_declarations
+  (+params
+    (FORWARD ALIAS)
+    (BASE 16)
+    (SAME 16)
+    (ALIAS BASE)
+    (OTHER SAME)
+    (SUM (+ BASE shared.EXTRA))
+    (STATIC_COPY shared.EXTRA)
+    (HEX 8'hA5)
+    (NEG -8)
+  )
+  (+import shared)
+  (+types
+    (type frame_t (record (tag bit) (payload (bits 8))))
+  )
+  (?ports:io clk<1 frame<frame_t)
+  (?rtl:child)
+)
+(?pkg:shared (+constants (EXTRA 2)))

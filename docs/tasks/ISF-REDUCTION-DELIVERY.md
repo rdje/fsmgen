@@ -1252,11 +1252,16 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare dependency-ordered canonical scalar top declarations and reserve structural names.`
   Acceptance: `Consume actual resolved environments and canonical renderer references, preserving forward aliases and authored tie order without cached-value substitution. Refuse cycles, missing/foreign declarations, unsupported scalar types and collisions with module/port/net/instance/generated typedef names. Retain source/emitter guards. Focused actual parsed environments and hostile independent namespace/order controls, synchronized POD/book/fact and commit; no broad verification.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual parsed/imported scalar source feeds captured Plan and StructuralRTLIR. The internal lowerer derives declaration order from canonical rendered dependencies, preserves immediate forward aliases, equal-default identities, source literal sizing and static values, and reserves module/port/net/instance/actual collected typedef names. Validation values/widths cannot supply declaration text or fixed sizes. Cycles, incomplete membership, foreign scopes, malformed names/structures and unsupported scalar profiles refuse without mutating inputs. Fixed initial T2133 RED lacks the new module; final production checks pass All tests successful Files=3 Tests=14 with T2132/T2123. An isolated retained cached-value substitution fails the same focused test; production files remain untouched by that control. Module syntax OK, guarded mdBook/POD build, POD freshness and copied-source verification pass. Re-derive: actual source/Plan/IR and exact expected declaration records; falsify: independent literal/identity/order/namespace expectations, hostile controls and known-bad cache variant; durability: tracked helper/fixture/test/book/fact plus docs/audits/composition-top-declarations-20261026.json.gz with hashes, complete streams and control sources. API/MCP/source/corpus applicability: internal preparation only, no public profile or source admission change; unchanged actual emitter refusal is checked. Full verification stays .6 and actual emission continues .2.2. Initial process-inspection refusal required approved RAM-guard execution. Book aggregate authority and exhausted task-evidence growth use existing exact-change/decision0070 rules without baseline or ceiling widening.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.1: prepare canonical scalar top declarations`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2133-composition-top-declaration-lowering.t line 16 reports the missing CompositionParameterEmitter. The canonical scalar renderer retains actual references, but no helper yet orders top defaults or reserves structural declarations. The fixed initial test and retained stream identify this missing boundary.
+  - [x] **ADDRESSED (verified)** — Actual parsed Plan/IR defaults now prepare ordered name/default_text/reference records. Exact aliases, literal sizing, static values and ready-node order pass; all actual structural name classes reserve parameters, including allocated typedefs. Known-bad cached substitution fails independently; malformed/cyclic/foreign/aggregate controls refuse. Source and actual emitter guards stay unchanged.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=14 for T2133/T2132/T2123; module syntax OK, guarded mdBook/POD build, POD freshness and copied-source verification pass. Mandatory staged doctrines and normal hooks gate commit. Full source/native/API/MCP/external-HDL verification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4.2.2`
   Status: `pending`

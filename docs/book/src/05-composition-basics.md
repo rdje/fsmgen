@@ -161,8 +161,21 @@ expression payload text and malformed literal/operator nodes. The
 [focused regression](../../../t/2132-composition-scalar-binding-renderer.t)
 uses actual parsed defaults and child bindings. This is groundwork only: neither
 structural emitter calls this helper yet, and parameter-bearing source plans,
-HDL generic declarations/maps, namespace reservation and symbolic ranges remain
-pending. VHDL expression rendering remains separately owned.
+HDL generic declarations/maps and symbolic ranges remain pending. VHDL
+expression rendering remains separately owned.
+
+Internal [declaration preparation](../../../perl/FSM/Backend/VerilogFamily/CompositionParameterEmitter.pm)
+now orders scalar top defaults by canonical dependencies, choosing the earliest
+ready authored declaration at each step. Forward aliases retain their immediate
+names. It reserves actual module, port, net, instance and collected typedef names
+in the case-sensitive Verilog namespace; cycles, incomplete binding membership,
+foreign scopes, reserved names and aggregate parameters refuse. These are untyped
+parameter defaults: inferred validation widths do not become fixed declaration
+ranges. The [source fixture](../../../t/data/composition-top-scalar-declarations.fsm)
+and [focused regression](../../../t/2133-composition-top-declaration-lowering.t)
+exercise captured Plan/IR products and hostile controls. This helper does not
+emit a module or enable source/HDL generation; actual emitter integration and
+explicit typed top parameters remain outside this prepared profile.
 
 ## Top Root Shape
 
