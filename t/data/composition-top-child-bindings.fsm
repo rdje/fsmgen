@@ -1,0 +1,24 @@
+(?top:child_bindings
+  (+params (W 16) (SAME 16) (LANES (8'hA5 8'h3C)))
+  (?fsmc:u_fsm child_fsm
+    (params (WIDTH W) (EQUAL SAME) (DATA LANES) (STATIC 16)))
+  (?dtc:u_dt child_dt
+    (params (WIDTH W) (DATA LANES) (LEAF LANES[1])))
+  (?rtl:u_rtl (module child_rtl)
+    (params (WIDTH W) (DATA LANES)))
+)
+(?fsm:child_fsm
+  (+params (WIDTH 8) (EQUAL 8) (DATA (8'h00 8'h00)) (STATIC 8))
+  (+system (clock clk) (sreset rstn))
+  (+size (out_data 16))
+  (-idle (out_data> = DATA))
+)
+(?dt:child_dt
+  (+params (WIDTH 8) (DATA (8'h00 8'h00)) (LEAF 8'h00))
+  (+size (out_data 16))
+  (-pass (out_data> = DATA))
+)
+(?rtlif:child_rtl
+  (params (WIDTH 8) (DATA (8'h00 8'h00)))
+  out_data>16
+)

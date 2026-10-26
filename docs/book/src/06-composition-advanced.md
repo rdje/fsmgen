@@ -839,6 +839,13 @@ retain authored source for reuse with a new top environment; derived width/type
 metadata refreshes with that environment. Missing roots, invalid paths or
 missing retained source refuse.
 
+The child validators check these resolved caches against actual FSM/DT `+params`
+declarations and loaded RTL interface metadata. They preserve the complete
+scoped binding and authored source in detached realized-instance records,
+adding the child default's kind and width annotations. Unknown child names,
+scalar/aggregate substitutions and incompatible aggregate shapes refuse.
+This validation does not specialize child ports or enable symbolic top emission.
+
 These bindings are internal preparation. Current parameter-bearing tops still
 reach the explicit pending-lowering refusal: validated IR, symbolic interface
 widths and source emission must preserve the bindings before generation can be
