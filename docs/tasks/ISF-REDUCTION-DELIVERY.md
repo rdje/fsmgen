@@ -1138,10 +1138,31 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve admitted top interface width dependencies through canonical port declarations and IR.`
   Acceptance: `After .1, inspect actual composition port/type contracts and retain symbolic parameter width expressions beside resolved port defaults. Reuse the canonical bounded integer-width evaluator and explicit namespace selection; preserve named types, resets and static controls without widening unrelated arithmetic. Qualify selected namespace/default/source/type/refusal observations, synchronize published grammar/schema applicability/book and commit; complete shape legality and specialization stay separately owned.`
   Verification: `pending top parameter and port contracts`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.1`
+  Status: `done`
+  Goal: `Share the canonical bounded integer-width evaluator before composition port reuse.`
+  Acceptance: `Move the existing IAL0 integer-width expression implementation into one reusable owner with explicit scalar and declared-parameter resolver hooks. Preserve Parser method interfaces, literal grammar, operator aliases/arity/precedence, per-step nonnegative and final-positive constraints, exact selector namespace and failure meanings. Exercise independent literal expectations, actual direct-source controls, malformed inputs and caller isolation through both consumers; use focused checks only. This preparatory slice admits no composition grammar or HDL. Update POD/book/fact/task and commit before port integration.`
+  Verification: `The exact predecessor arithmetic method block conserves after only two namespace-hook substitutions. Parser inherits the shared implementation and keeps the existing SignalManager lookups. Independent integer, precedence, selector/static identity, callback order, source/payload isolation and malformed/aggregate/zero/negative controls pass alongside existing actual direct-source tests: All tests successful Files=4 Tests=48. Native strict check accepts the maintained direct width-expression source; POD/mdBook builds. The first test epoch fails only because the new reusable module does not yet exist, not because old source arithmetic was wrong. Sandbox process inspection initially refuses; the same RAM guard runs with process inspection available. Re-derive: canonical method conservation and actual source checks; falsify: literal independent outcomes and hostile arithmetic/namespace controls; durability: shared source/test, fact, dated receipt and Git. Receipt docs/audits/shared-width-evaluator-20261026.json.gz retains selected identities, exact method comparison and command streams with repository-root normalization declared. No composition grammar/port/IR/HDL admission or full qualification follows. The first driver rejects only task-evidence total-line/byte and Knowledge Map card line growth allowances; record the complete failed log and apply the existing measured-actual plus ratchet procedure without changing baselines or ceilings. Corrected staged doctrines and normal hooks gate commit; next .3.2 integrates ports.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.1: share canonical integer-width evaluation`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic at t/2128-shared-integer-width-evaluator.t line 6 identifies the absent reusable owner in the preparatory epoch. Existing Parser resolve_positive_width_expression through parse_constant_integer_literal owns the canonical arithmetic; composition reuse must share that implementation rather than reimplement it. The actual --strict --check --json source control accepts existing direct width expressions.
+  - [x] **ADDRESSED (verified)** — Exact predecessor methods conserve after only two resolver-hook substitutions; Parser inherits the same implementation and existing namespace meanings. Literal arithmetic/precedence expectations, actual source, selector/static identities, callback order, unchanged payload/source kinds and hostile zero/negative/aggregate/operator/arity/namespace controls pass. New source or HDL admission remains pending.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=48 for shared evaluator, explicit parameter selection, scalar width support and size-section boundary. Shared helper and Parser syntax OK; native strict source check and POD/mdBook build pass. Staged scripts/check_doctrines.sh and normal hooks gate this preparation; full qualification remains .6.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3.2`
+  Status: `pending`
+  Goal: `Integrate authored composition port width expressions and detached scoped dependencies into canonical declarations and IR.`
+  Acceptance: `Use the shared width evaluator with explicit top parameter/static selection after import/default resolution. Preserve source trees and actual parameter references beside cached positive widths through Port and canonical IR. Preserve named-type precedence, resets and static report shapes; refuse unsupported namespace, aggregate and arithmetic forms contextually. Qualify a small actual-source/default/type/refusal/isolation cohort, synchronize grammar/schema applicability and book, and commit. Split IR/schema propagation before editing if necessary. Source planning and HDL remain refused until .4; full qualification stays .6.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.4`

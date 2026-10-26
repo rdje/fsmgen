@@ -24,6 +24,11 @@ recursive records and the pending source-planning/HDL boundary. The
 [plan snapshot](perl-api/FSM/Support/SerializableCompositionPlanSnapshot.html)
 preserves a detached environment only when one is supplied by the actual plan.
 
+The internal [integer-width evaluator](perl-api/FSM/WidthExpressionSupport.html)
+shares direct-parser width semantics through separate ordinary-symbol and
+explicit-parameter resolver callbacks. Composition port integration remains
+pending; this helper does not enable symbolic source planning or HDL emission.
+
 POD documents the Perl bindings. The normalized semantic field reference below
 complements [Extensions and Embedding](11-extensions-and-embedding.md) for
 discovery, support boundaries and tutorials, and the

@@ -307,6 +307,10 @@ as the common integer-literal parser for scalar width symbols and direct
 `+size` expression terms. It also owns the target-HDL normalization rule for
 intent-level `.fsm` sized literals so parser/CoreAST/pure-AST rendering do not
 leak source-only spellings such as `2'3` or `20'x1` into generated SV.
+[perl/FSM/WidthExpressionSupport.pm](perl/FSM/WidthExpressionSupport.pm) owns
+the canonical bounded integer-width evaluator inherited by the direct parser;
+the parser supplies its SignalManager namespaces through explicit hooks.
+Composition port integration remains pending.
 The newest parameter/generic semantic-value slice keeps
 [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm)
 as the scalar/aggregate literal, bounded scalar-expression, matching-shape

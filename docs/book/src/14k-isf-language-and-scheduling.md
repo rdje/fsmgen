@@ -759,6 +759,11 @@ remain pending; parameter-bearing HDL plans still refuse. Direct structural emit
 refuse pending symbolic binding records, preventing a lower-level API call from
 silently substituting their cached defaults.
 
+The direct width-expression evaluator is now shared for composition reuse. It
+keeps the existing integer literals, arithmetic/bitwise aliases, precedence and
+positive-width checks; this preparation admits no new composition port syntax.
+Top-interface dependency propagation remains the next required integration.
+
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates
 another configurable parameter. IAL0 now admits `(param NAME)` in direct
