@@ -12,6 +12,9 @@ C<FSM::Composition::Plan>, bounded direct-root structural construction from
 generated module analysis, and object/hash coercion for downstream pipeline and
 backend consumers.
 
+Plans with a captured top parameter environment currently refuse construction
+until canonical IR propagation preserves all default/source/binding records.
+
 =cut
 
 use v5.20;
@@ -133,6 +136,9 @@ sub build_from_generated_module_info ($class, %args) {
 sub build_from_composition_plan ($class, $composition_plan, $target_language = 'systemverilog') {
     confess "StructuralRTLIRBuilder requires a composition plan"
         unless $composition_plan;
+    confess "StructuralRTLIRBuilder parameter environment is blocked pending canonical IR propagation\n"
+        if $composition_plan->can('parameter_environment')
+            && defined($composition_plan->parameter_environment);
 
     return FSM::IR::StructuralRTLIR->new(
         module_name => ($composition_plan->top_name // ''),

@@ -55,6 +55,16 @@ Instance overrides now also retain actual scoped bindings beside their
 canonical validation values. Validated IR, interface widths and HDL propagation
 remain pending; parameter-bearing HDL plans still refuse.
 
+`Top::parameter_environment()` captures these actual resolved products as
+separate scope, declaration order, normalized parameters, authored default
+sources and scoped default bindings. A plan constructed from that source owns
+a detached snapshot, available through `Plan::parameter_environment()`.
+Caller retries and getter mutations cannot change an existing snapshot;
+unresolved or failed defaults refuse new capture. Tops without parameters keep
+no environment. Both forward IR builders currently refuse a captured plan
+environment until they can preserve it; this private storage adds no public
+report schema or symbolic HDL admission.
+
 The direct structural IR backend API enforces this boundary too. An override
 carrying a symbolic binding is refused until canonical target lowering exists;
 the backend cannot emit its cached validation number instead. Existing

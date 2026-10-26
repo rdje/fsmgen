@@ -12,6 +12,9 @@ composition-top semantic summary from an already-built composition plan plus
 the surrounding structural and child-export inputs, and it also owns the
 bounded direct-root semantic summary extracted from the direct pipeline path.
 
+Plans with a captured top parameter environment currently refuse construction
+until canonical IR propagation preserves all default/source/binding records.
+
 =cut
 
 use v5.20;
@@ -102,6 +105,9 @@ sub build_from_fsm_module ($class, %args) {
 sub build_from_composition_plan ($class, %args) {
     my $composition_plan = $args{composition_plan}
         or confess "IntentHIRBuilder requires a composition_plan";
+    confess "IntentHIRBuilder parameter environment is blocked pending canonical IR propagation\n"
+        if $composition_plan->can('parameter_environment')
+            && defined($composition_plan->parameter_environment);
     my $target_language = $args{target_language} // 'systemverilog';
 
     my $composition_child_exports = $args{composition_child_exports}
