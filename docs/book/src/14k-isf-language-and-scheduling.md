@@ -751,7 +751,11 @@ parameter resolver contexts on success and refusal. Canonical value evaluation n
 actual literal/symbol/operator/list/map branches. Top defaults now bind actual observed
 parameter identities to a composition scope, retaining immediate aliases,
 aggregate paths and immutable static caches beside unchanged normalized values.
-Symbolic instance bindings and emission remain pending.
+Instance overrides now keep the same actual scoped identities beside canonical
+validation caches for FSM, DT and RTL children, including aggregate paths and
+mixed static operands. Reuse refreshes bound records from authored source rather
+than a previous default number. Validated IR, symbolic widths and source emission
+remain pending; parameter-bearing HDL plans still refuse.
 
 Namespace selection needs an explicit contract too. An IAL0 constant alias
 selects the static namespace, whereas an ordinary parameter alias creates

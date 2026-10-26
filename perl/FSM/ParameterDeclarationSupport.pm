@@ -79,23 +79,29 @@ sub _resolve_parameter {
 
 sub _resolve_reference {
     my ($context, $references, $symbol) = @_;
-    if (exists $context->{entries}{$symbol}) {
-        my $value = _resolve_parameter($context, $symbol);
+    if (my $reference = __PACKAGE__->declared_reference($context->{entries}, $symbol)) {
+        my $value = _resolve_parameter($context, $reference->{parameter});
+        my $payload;
         if (ref($value) eq 'HASH') {
-            push @$references, {parameter => $symbol, token => $symbol, suffix => ''};
-            return $value->{value_payload};
+            $payload = length($reference->{suffix})
+                ? FSM::ParameterValueSupport->resolve_payload_path($value->{value_payload}, $reference->{suffix})
+                : $value->{value_payload};
         }
-        return undef;
-    }
-    if ($symbol =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/ && exists $context->{entries}{$1}) {
-        my ($parameter, $suffix) = ($1, $2);
-        my $value = _resolve_parameter($context, $parameter);
-        my $payload = FSM::ParameterValueSupport->resolve_payload_path($value->{value_payload}, $suffix)
-            if ref($value) eq 'HASH';
-        push @$references, {parameter => $parameter, token => $symbol, suffix => $suffix} if defined $payload;
+        push @$references, $reference if defined $payload;
         return $payload;
     }
     return $context->{resolve_static_symbol_payload}->($symbol) if $context->{resolve_static_symbol_payload};
+    return undef;
+}
+
+sub declared_reference {
+    my ($class, $declarations, $symbol) = @_;
+    confess "Parameter reference selection requires declared names\n" unless ref($declarations) eq 'HASH';
+    return undef unless defined($symbol) && !ref($symbol);
+    return {parameter => $symbol, token => $symbol, suffix => ''} if exists $declarations->{$symbol};
+    if ($symbol =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/ && exists $declarations->{$1}) {
+        return {parameter => $1, token => $symbol, suffix => $2};
+    }
     return undef;
 }
 
@@ -132,6 +138,12 @@ Optional C<on_resolved> receives detached name/value/source records in original
 declaration order, after lazy resolution. It can register each declaration
 without rewriting the resolver cache or later aliases. C<boundary_hint>,
 C<docs_hint> and C<context_prefix> retain the caller's diagnostic contract.
+
+C<declared_reference($declarations, $symbol)> shares exact declared-root and
+aggregate-suffix selection between lazy defaults and resolved instance values.
+It returns parameter/token/suffix identity or undef for an unrelated root. A
+selected root still needs a valid payload path; consumers must refuse that
+path instead of falling through to a static namespace with the same spelling.
 
 With C<capture_expression> enabled, C<expressions> separately records canonical
 source trees keyed by parameter name. Expression observations never enter the

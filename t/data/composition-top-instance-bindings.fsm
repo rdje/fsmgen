@@ -1,0 +1,37 @@
+(?top:top_instance_bindings
+  (+params
+    (W C)
+    (SAME 16)
+    (ALIAS W)
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((tag 4'hA) (data LANES)))
+  )
+  (+constants (C 16))
+  (+import shared)
+  (?fsmc:u_fsm child_source
+    (params
+      (SCALAR W)
+      (ALIAS ALIAS)
+      (EQUAL SAME)
+      (EXPR (+ W C))
+      (AGGREGATE LANES)
+      (PATH FRAME.tag)
+      (STATIC C)
+      (LITERAL 16)
+    )
+  )
+  (?dtc:u_dt sink_source
+    (params
+      (WHOLE LANES)
+      (LEAF LANES[1])
+      (MASKED (xor LANES shared.MASK))
+    )
+  )
+  (?rtl:u_rtl
+    (module uart_tx)
+    (params (WIDTH W) (LANES LANES))
+  )
+)
+(?pkg:shared
+  (+constants (MASK (8'hF0 8'h0F)))
+)

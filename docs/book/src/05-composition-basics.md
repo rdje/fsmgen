@@ -51,7 +51,9 @@ parameter root and suffix; operators, list order and map fields retain their
 structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
-Instance bindings and HDL propagation remain pending.
+Instance overrides now also retain actual scoped bindings beside their
+canonical validation values. Validated IR, interface widths and HDL propagation
+remain pending; parameter-bearing HDL plans still refuse.
 
 ## Top Root Shape
 

@@ -683,8 +683,9 @@ Direct generated-enable roots now also expose machine-readable
 direct assignment-record surface is separate from the composition helper-line
 mirror.
 
-VHDL generic-map lowering is still a future backend follow-up tracked in
-[Feature Backlog](14-feature-backlog.md).
+VHDL generic maps are available within the documented bounded profiles; see
+[Backends and Validation](14l-backends-validation-and-apis.md#full-vhdl-backend).
+Symbolic top-parameter forwarding still requires the unfinished lowering stages.
 
 ## Current `.rtlif` Direction
 
@@ -822,11 +823,28 @@ The parser accepts at most one `(params (NAME value) ...)` block under each
 generated-child instance. Symbolic override values resolve after composition
 imports, undeclared override names fail against the generated child's direct
 `+params` declarations, scalar overrides stay width-flexible, aggregate
-overrides must match the child default's aggregate shape, and current
-Verilog-family emission lowers valid generated-child overrides to
-SystemVerilog `#(...)` instance parameters. VHDL generic-map lowering remains a
-backend follow-up; the shipped C3 external-RTL, C1 standalone-DT, and C2
-generated-FSM composition VHDL tops have no parameter overrides.
+overrides must match the child default's aggregate shape, and the existing
+static override profiles use Verilog-family emission to lower valid values to
+SystemVerilog `#(...)` instance parameters. VHDL generic maps support documented
+bounded external-RTL, standalone-DT and generated-FSM profiles, with different
+value restrictions; see [the backend boundary](14l-backends-validation-and-apis.md#full-vhdl-backend).
+
+Top `+params` now also supplies real symbolic values to the same `(params ...)`
+syntax for FSM, DT and RTL children. In `(params (WIDTH WIDTH))`, the left name
+is the child declaration and the right name resolves in the composition top.
+The compiler keeps the actual scoped reference beside its resolved validation
+cache, preserving aliases, aggregate paths and mixed static/parameter
+expressions. Equal values never choose a different declaration. Bound records
+retain authored source for reuse with a new top environment; derived width/type
+metadata refreshes with that environment. Missing roots, invalid paths or
+missing retained source refuse.
+
+These bindings are internal preparation. Current parameter-bearing tops still
+reach the explicit pending-lowering refusal: validated IR, symbolic interface
+widths and source emission must preserve the bindings before generation can be
+enabled. Existing static child overrides keep their current behavior and record
+shape. See [Top Root Shape](05-composition-basics.md#top-root-shape) for the
+current source/default boundary.
 
 The same bounded expression value surface is accepted for generated-child
 overrides and for the direct `+params` defaults declared in the generated child

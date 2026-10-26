@@ -116,6 +116,12 @@ The currently shipped composition behavior is intentionally bounded:
   symbolic default/binding/interface-width/HDL lowering is implemented. Native
   check, API and MCP preserve this refusal; successful composition admission and
   semantic export do not include top parameters yet,
+- symbolic child overrides now resolve declared top parameter roots and aggregate
+  paths before static fallback, retaining scoped binding expressions beside
+  canonical validation caches. Static/literal-only records remain unchanged.
+  Bound retries retain authored source and refresh derived metadata; malformed
+  graphs and invalid paths refuse. Successful parameter-bearing HDL and public
+  IR admission remain blocked until the later lowering stages are implemented,
 - zero or more bounded `+constants` / `+enums` / `+types` blocks plus zero or more bounded
   `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded
   aggregate values, whole aggregate roots on the live literal path, authored-member-order
@@ -169,7 +175,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `.rtlif` remains the canonical low-level external-RTL interface metadata contract for now, not a separate full interface-source language above composition; any stronger interface-source layer is deferred until a concrete portable type, package/import, shared-datapath, or reusable-module requirement proves that the current metadata contract is insufficient,
 - explicit `.rtlif` type annotations are currently limited to `data`, `clock`, and `reset`,
 - typed `.rtlif` `clock` / `reset` tokens and verbose role attributes let custom-named RTL system ports auto-wire through composition without reviving broader hidden inference, and those system-role annotations are input-only, so `core_clk>:clock`, `rst_async_n>:reset`, and `(output core_clk :clock)` are rejected while ordinary `data` outputs such as `txd>:data` or `(output txd :data)` remain valid,
-- per-instance parameter/generic overrides now preserve validated values through `FSM::Composition::Instance`, `FSM::Composition::RealizedInstance`, structural RTL IR, and current SystemVerilog instance-parameter emission for both external `?rtl` children and generated `?fsmc` / `?dtc` children; symbolic `.rtlif` declaration defaults and symbolic override values are resolved after package imports and before planning, so unresolved names still abort before HDL emission; VHDL generic-map lowering and richer expression domains beyond the shipped bounded scalar-expression, leafwise aggregate-expression, and unary aggregate complement slices remain future follow-ups, not raw payload escape hatches,
+- per-instance parameter/generic overrides now preserve validated values through `FSM::Composition::Instance`, `FSM::Composition::RealizedInstance`, structural RTL IR, and current SystemVerilog instance-parameter emission for both external `?rtl` children and generated `?fsmc` / `?dtc` children; symbolic `.rtlif` declaration defaults and symbolic override values are resolved after package imports and before planning, so unresolved names still abort before HDL emission; VHDL generic maps are implemented only within the documented bounded backend profiles; symbolic top-parameter forwarding and richer expression domains beyond the shipped bounded scalar-expression, leafwise aggregate-expression, and unary aggregate complement slices remain future follow-ups, not raw payload escape hatches,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
 - when `C1` infers ports, that inferred top interface is exactly the realized child interface by name, width, and direction,
 - when `C2` / `C3` omit `?ports`, undeclared top endpoints may be inferred directly from explicit `?wiring` evidence, including renamed top-boundary names and source-side top-port bit/slice expressions, but each such endpoint must still keep one direction plus one compatible width/type contract,

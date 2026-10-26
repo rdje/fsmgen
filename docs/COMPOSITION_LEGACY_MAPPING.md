@@ -162,7 +162,7 @@ Active modern direction, started in `R6` and widened in `R11`:
   reusable-module requirements demand it,
 - treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens and verbose output-role declarations are rejected while ordinary `data` outputs remain valid,
 - do not parse or regenerate the external RTL child at this composition layer,
-- and keep VHDL generic-map lowering plus richer expression domains beyond the shipped bounded scalar-expression, leafwise aggregate-expression, and unary aggregate complement slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
+- retain the existing bounded VHDL generic-map profiles while keeping symbolic top-parameter forwarding and richer expression domains beyond the shipped bounded scalar-expression, leafwise aggregate-expression, and unary aggregate complement slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
 
 Reason:
 - this preserves the real composition need, interface-aware wiring and validation,

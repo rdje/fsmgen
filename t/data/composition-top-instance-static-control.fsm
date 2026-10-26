@@ -1,0 +1,8 @@
+(?top:static_instance_control
+  (+constants (C 16))
+  (?fsmc:u_fsm child_source
+    (params (STATIC C) (EXPR (+ C 1)) (LITERAL 16))
+  )
+  (?dtc:u_dt sink_source (params (STATIC C)))
+  (?rtl:u_rtl (module uart_tx) (params (STATIC C)))
+)
