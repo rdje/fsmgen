@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionParameterContract qw(build_composition_parameter_contract);
 use FSM::Support::NormalizedSemanticCompositionContract qw(
     normalized_semantic_composition_child_entry_keys
     normalized_semantic_composition_child_parameter_override_entry_keys
@@ -73,6 +74,7 @@ our @EXPORT_OK = qw(
 sub build_normalized_semantic_intent_hir_contract {
     return {
         schema_version => 1,
+        composition_parameter_contract => build_composition_parameter_contract(),
         status => 'bounded_public',
         contract_source => normalized_semantic_intent_hir_contract_source(),
         object_name => 'intent_hir',
@@ -90,6 +92,7 @@ sub build_normalized_semantic_intent_hir_contract {
                 'FSM::Support::NormalizedSemanticReport::build_normalized_semantic_success_report(...)->{semantic}{forward_ir}{intent_hir}',
             ],
         },
+        optional_parameter_keys => [qw(parameter_environment)],
         public_presence_keys => normalized_semantic_intent_hir_presence_keys(),
         symbol_contract_constant_value_entry_keys =>
             normalized_semantic_intent_hir_symbol_contract_constant_value_entry_keys(),

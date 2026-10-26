@@ -846,10 +846,11 @@ adding the child default's kind and width annotations. Unknown child names,
 scalar/aggregate substitutions and incompatible aggregate shapes refuse.
 This validation does not specialize child ports or enable symbolic top emission.
 
-These bindings are internal preparation. Current parameter-bearing tops still
-reach the explicit pending-lowering refusal: public IR schemas, symbolic interface
-widths and source emission must preserve the bindings before generation can be
-enabled. Existing static child overrides keep their current behavior and record
+These bindings have an optional public in-process inspection schema described
+in [Composition Basics](05-composition-basics.md). Current parameter-bearing
+source queries still reach the explicit pending-lowering refusal: symbolic
+interface widths and source emission must preserve the bindings before generation
+can be enabled. Existing static child overrides keep their current behavior and record
 shape. See [Top Root Shape](05-composition-basics.md#top-root-shape) for the
 current source/default boundary.
 

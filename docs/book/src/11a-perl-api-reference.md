@@ -17,6 +17,13 @@ and identifies missing POD explicitly; it also has a
 | [MCP adapter](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html) | Host the bounded read-only local MCP service |
 | [VIAL tooling](perl-api/FSM/VIAL/Tool.html) | Check/inspect VIAL source or use the versioned tooling lifecycle |
 
+Prepared composition parameter inspection has a shared
+[optional schema owner](perl-api/FSM/Support/CompositionParameterContract.html).
+See [Composition Basics](05-composition-basics.md) for discovery paths,
+recursive records and the pending source-planning/HDL boundary. The
+[plan snapshot](perl-api/FSM/Support/SerializableCompositionPlanSnapshot.html)
+preserves a detached environment only when one is supplied by the actual plan.
+
 POD documents the Perl bindings. The normalized semantic field reference below
 complements [Extensions and Embedding](11-extensions-and-embedding.md) for
 discovery, support boundaries and tutorials, and the

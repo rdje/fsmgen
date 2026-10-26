@@ -999,10 +999,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for source/default/refusal transports, typed environment and manifest CLI projections. Changed parser/container/discovery/diagnostic/corpus syntax OK; source/selected public producers preserve bytes. Book/source, staged scripts/check_doctrines.sh and normal hooks qualify the slice; full feature verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain typed symbolic top-parameter expressions through actual child override realization and IR.`
   Acceptance: `After .1, bind explicit top parameter references and supported expressions without replacing them with default numbers. Keep resolved payloads for existing shape/type checks, validate real child declarations, retain static/aggregate distinctions and detached source identities, and reject unknown/mismatched bindings. Extend the actual top/instance/IntentHIR/structural contracts and applicability together; focused source/IR controls, book and commit precede emission.`
-  Verification: `Canonical top parser/defaults are available with explicit plan refusal; inspect and split typed override/default/IR contracts next.`
+  Verification: `Children retain scoped defaults/overrides through validated actual children, detached Plan/forward IR and optional public report schemas. Each implementation slice has focused checks; final schema/snapshot closure is .3.3.3. Source planning, symbolic widths, HDL and broad .6 qualification remain pending.`
   Commit: `children below`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3`
@@ -1053,10 +1053,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=11 for final instance bindings, canonical graph/parser lifetime and actual existing generated-child parameter pipeline/HDL controls. Changed lookup/resolver/discovery syntax OK. Static-control source/products and current complete native/API/newline pending-lowering reports agree. Book/source, staged scripts/check_doctrines.sh and normal hooks gate commit; complete IR/child/width/HDL qualification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Carry typed top parameter defaults and instance bindings through validated composition IR contracts.`
   Acceptance: `After .2, preserve bound expressions and resolved caches through actual generated/external child validation, realized instances, plan, IntentHIR and structural IR. Validate real declarations and existing scalar/aggregate shape rules; maintain detached caller/source/getter data and synchronize exact public schema/discovery applicability before successful admission. Do not remove fail-closed top planning before width/source emission is implemented. Refine safe slices before edits, run focused checks and commit; full profile/transport/runtime verification stays .6.`
-  Verification: `Scoped default/instance semantics are ready. Inspect and refine actual child validation, plan, IntentHIR/structural consumers and schema applicability while preserving the current fail-closed boundary.`
+  Verification: `Children retain scoped defaults/overrides through validated actual children, detached Plan/forward IR and optional public report schemas. Each implementation slice has focused checks; final schema/snapshot closure is .3.3.3. Source planning, symbolic widths, HDL and broad .6 qualification remain pending.`
   Commit: `children below`
 
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3`
@@ -1086,10 +1086,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for current child realization, source/native/API/newline refusal and existing static generated-child pipeline controls. Book/source checks, scripts/check_doctrines.sh and normal hooks gate this qualification. Full CI and successful public IR/width/HDL verification remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve actual top environments and validated bindings in plan, IntentHIR, structural IR and exact schemas.`
   Acceptance: `After .2, refine safe constructor/schema slices from actual paths. Carry detached declaration order, normalized values, default sources/bindings and scoped instance bindings without mixing mutable parameters into static symbol contracts. Keep ordinary products exact, expose only truthful applicable schema/discovery fields, extend pending-emission guards for new environment fields as introduced, and keep source planning/target emission fail-closed until width/source owners are implemented. Qualify small actual constructor/source/contract controls and commit each slice; whole profile/transport/runtime matrices remain .6.`
-  Verification: `Actual child consumers are qualified at .2. Inspection shows Plan stores only raw_spec and currently lacks a detached top environment; structural and intent builders do not carry top defaults/bindings. Separate typed storage, IR and public schema boundaries before edits. Existing top planning/emitter refusals remain. This preparation changes no source behavior; task integrity, diff hygiene and mandatory doctrines qualify the split.`
+  Verification: `Children retain scoped defaults/overrides through validated actual children, detached Plan/forward IR and optional public report schemas. Each implementation slice has focused checks; final schema/snapshot closure is .3.3.3. Source planning, symbolic widths, HDL and broad .6 qualification remain pending.`
   Commit: `preparation: ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3: split parameter environment propagation boundaries`
   Children: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.1, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.2, ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.3`
 
@@ -1124,11 +1124,17 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=6 Tests=60 for new environment propagation, existing snapshots/defaults/IR/binding guards and complete native/API/newline pending-source refusal. All changed owners syntax OK; mdBook and source checks pass. Staged scripts/check_doctrines.sh and normal hooks gate this private slice; public schema/source/width/HDL and full verification remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Expose truthful parameter environment and binding schema applicability in detached public reports.`
   Acceptance: `After .2, enumerate actual normalized composition/IntentHIR/structural producers and schema/capability contracts before changes. Add only applicable optional environment/binding fields with exact nested keys, owner/source/version/query semantics and detached JSON-safe products. Preserve static report shapes and complete native/API/newline pending-source refusal; actual low-level producer inputs establish semantic provenance, transport equality alone does not. Public source successful planning/HDL admission remains closed pending width/source owners. Split schema families if needed; focused independent semantic/schema/isolation controls, downstream reference/book/fact/task and commit qualify this boundary; broad profile/runtime verification remains .6.`
-  Verification: `pending actual IR environment propagation`
-  Commit: `pending`
+  Verification: `Actual resolved Top/Plan and realized FSM/DT/RTL producers feed detached normalized forward IR, child override and plan-snapshot products. A shared CompositionParameterContract advertises optional paths, source owners, version/query semantics and exact recursive environment/binding/value/type key families through report and nested contracts. Mandatory static presence/core families and source-query kinds remain unchanged. Plan snapshots preserve the optional environment by JSON serialization rather than discarding it or sharing nested caller data. Fixed initial T2127 fails snapshot/embedded-snapshot/discovery assertions before production edits and passes afterward; the later named-recursion/realized-child expansion is separately identified as current-only. Literal scope/order/alias/static/cache/packed-width/member-order expectations distinguish semantic meaning from transport equality. Deep report/snapshot/hash/schema mutation controls preserve owners; actual child WIDTH selects top W with validation16. Final focused T2127/T2123/T2122/T341/T311 reports All tests successful Files=5 Tests=37. Existing check-query native/API/newline and target refusals stay current; successful symbolic source planning remains unsupported. Native capability discovery exposes the schema and explicit false source/HDL flags. POD/mdBook build passes. Re-derive: actual parsed source/Plan/IR/report products; falsify: fixed pre-edit failures, independently expected lexical/default relations, exact static snapshot and nested mutation controls; durability: code/test/docs/fact/receipt/Git. Receipt docs/audits/parameter-public-contract-20261026.json.gz retains selected source identities, test epochs and command logs. Full loaded footprints, source-query success, complete profile/transport/HDL matrices and full qualification remain missing under width/source owners and .6. Shared environment propagation containers close with this slice; .2.3.3.4.1.3 is next. The first staged doctrine run rejects rationale-byte allowance exhaustion from the current fact correction; declare measured growth plus its existing ratchet step without increasing a baseline or ceiling. The next run identifies the stale current0119 byte descriptor; refresh only its catalog content identity, preserving authority and questions. Current decision authentication passes. Settled tests compare exact canonical JSON wire kinds, not only Perl deep equality. Decision0116 selects a clean context-refresh checkpoint after this slice following extended metadata recovery; resume .2.3.3.4.1.3 from committed state. Mandatory staged/normal doctrines gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.2.3.3.3: expose optional composition parameter report contracts`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Pre-edit T2127 Perl diagnostic at t/2127-composition-parameter-public-contract.t line 28 identifies the missing public snapshot environment; line 52 identifies absent discovery metadata. Existing NormalizedSemanticReport preserves forward IR fields, while SerializableCompositionPlanSnapshot omits the actual Plan environment.
+  - [x] **ADDRESSED (verified)** — Share exact optional environment/binding schemas, explicit query/version/source boundaries and detached snapshot propagation. Fixed before/current snapshot/discovery checks, actual parsed and realized semantic expectations, JSON kinds, nested mutation and complete static snapshot controls pass. Native capability discovery exposes the new schema; source/HDL refusal remains.
+  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=37 for the focused public schema, validated child bindings, source/target refusals and existing structural/report contracts. New schema/snapshot syntax OK; POD and mdBook build pass. Staged scripts/check_doctrines.sh and normal hooks gate commit. Full qualification remains deferred.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.3.4.1.3`

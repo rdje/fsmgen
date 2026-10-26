@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionParameterContract qw(build_composition_parameter_contract);
 
 our @EXPORT_OK = qw(
     build_normalized_semantic_structural_rtl_ir_contract
@@ -43,6 +44,7 @@ our @EXPORT_OK = qw(
 sub build_normalized_semantic_structural_rtl_ir_contract {
     return {
         schema_version => 1,
+        composition_parameter_contract => build_composition_parameter_contract(),
         status => 'bounded_public',
         contract_source => normalized_semantic_structural_rtl_ir_contract_source(),
         object_name => 'structural_rtl_ir',
@@ -60,6 +62,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
                 'FSM::Support::NormalizedSemanticReport::build_normalized_semantic_success_report(...)->{semantic}{forward_ir}{structural_rtl_ir}',
             ],
         },
+        optional_parameter_keys => [qw(parameter_environment)],
         public_presence_keys => normalized_semantic_structural_rtl_ir_presence_keys(),
         summary_presence_keys => normalized_semantic_structural_rtl_ir_summary_presence_keys(),
         collection_presence_keys => normalized_semantic_structural_rtl_ir_collection_presence_keys(),
@@ -94,6 +97,7 @@ sub build_normalized_semantic_structural_rtl_ir_contract {
         instance_entry_keys => normalized_semantic_structural_rtl_ir_instance_entry_keys(),
         instance_interface_port_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_interface_port_entry_keys(),
+        instance_parameter_override_binding_extension_keys => [qw(binding_expression)],
         instance_parameter_override_entry_keys =>
             normalized_semantic_structural_rtl_ir_instance_parameter_override_entry_keys(),
         instance_parameter_override_raw_value_extension_keys =>

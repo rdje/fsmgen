@@ -51,9 +51,9 @@ parameter root and suffix; operators, list order and map fields retain their
 structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
-Instance overrides now also retain actual scoped bindings beside their
-canonical validation values. Public IR schemas, interface widths and HDL propagation
-remain pending; parameter-bearing HDL plans still refuse.
+Instance overrides retain actual scoped bindings beside their canonical validation
+values. Interface widths and HDL propagation remain pending; parameter-bearing
+HDL plans still refuse.
 
 `Top::parameter_environment()` captures these actual resolved products as
 separate scope, declaration order, normalized parameters, authored default
@@ -66,8 +66,42 @@ the full environment; IntentHIR's parameter names follow authored order. A
 supplied structural environment must match its actual plan. Successful default
 resolution also captures the separate static-symbol/import contract, so a later
 caller cache edit cannot mix new static facts with older parameter defaults.
-Constructor/getter/hash mutation remains isolated. This private propagation
-adds no public normalized environment schema or symbolic HDL admission.
+Constructor/getter/hash mutation remains isolated.
+
+In-process normalized semantic reports now preserve this environment in
+`semantic.forward_ir.intent_hir.parameter_environment`,
+`semantic.forward_ir.structural_rtl_ir.parameter_environment`, and
+`semantic.composition.plan_snapshot.parameter_environment`. These optional
+objects contain exactly `scope`, `declaration_order`, `parameters`,
+`default_sources`, and `default_bindings`. Static snapshots omit the field.
+The plan snapshot owns a JSON-safe copy, including for hash-backed callers.
+These builders describe the actual resolved objects supplied by the caller;
+a hand-built hash does not establish source provenance.
+
+Capability discovery exposes `composition_parameter_contract` under
+`semantic_exports.normalized_semantic_json`. It names the optional paths,
+source owners, exact recursive environment/binding/payload/type key families,
+and schema-version semantics. For example:
+
+```bash
+./bin/fsmgen --capability-manifest | python3 -c 'import json,sys; print(json.load(sys.stdin)["semantic_exports"]["normalized_semantic_json"]["composition_parameter_contract"]["environment_paths"])'
+```
+
+The enclosing report and discovery schema stay at version 1; environment and
+binding nodes have no separate version envelope. `parameters` contains resolved
+validation caches, while `default_sources` retains authored trees and ordered
+references. `default_bindings` preserves the scoped expression structure.
+The three maps use declared parameter names; `declaration_order` preserves the
+authored order independently of lazy resolution. Numeric equality cannot select
+an owner. Recursive binding nodes distinguish literals, parameters, static
+symbols, semantic payloads, operators, lists and maps. Optional instance
+`binding_expression` fields use this same family alongside their validation
+cache; static overrides retain their existing shape.
+
+This is public in-process inspection of prepared objects. Parameter-bearing
+source queries still return the pending-lowering diagnostic; discovery marks
+source planning and HDL emission unsupported. Symbolic interface specialization
+and canonical source emission remain required before generation is enabled.
 
 The direct structural IR backend API enforces this boundary too. An override
 carrying a symbolic binding is refused until canonical target lowering exists;

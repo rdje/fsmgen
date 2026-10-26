@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionParameterContract qw(build_composition_parameter_contract);
 use FSM::Support::CheckFailureDiagnosticContract qw(
     check_failure_diagnostic_contract_source
     check_failure_diagnostic_matched_presence_keys
@@ -350,6 +351,7 @@ sub normalized_semantic_report_contract_source {
 sub build_normalized_semantic_report_contract {
     return {
         schema_version => 1,
+        composition_parameter_contract => build_composition_parameter_contract(),
         status => 'bounded_public',
         contract_source => normalized_semantic_report_contract_source(),
         report_source => 'FSM::Support::NormalizedSemanticReport',

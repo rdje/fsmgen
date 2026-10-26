@@ -1,0 +1,88 @@
+package FSM::Support::CompositionParameterContract;
+
+use strict;
+use warnings;
+use Exporter 'import';
+use JSON::PP ();
+
+our @EXPORT_OK = qw(build_composition_parameter_contract);
+
+sub build_composition_parameter_contract {
+    return {
+        schema_version => 1,
+        status => 'bounded_public',
+        discovery_query_family => 'capability_query',
+        discovery_manifest_path => [qw(semantic_exports normalized_semantic_json composition_parameter_contract)],
+        contract_source => 'FSM::Support::CompositionParameterContract',
+        producer_sources => [qw(FSM::Composition::Top FSM::Composition::Plan FSM::Composition::ParameterBindingSupport)],
+        environment_paths => [
+            'semantic.forward_ir.intent_hir.parameter_environment',
+            'semantic.forward_ir.structural_rtl_ir.parameter_environment',
+            'semantic.composition.plan_snapshot.parameter_environment',
+        ],
+        binding_paths => [
+            'semantic.forward_ir.structural_rtl_ir.instances[].parameter_overrides[].binding_expression',
+            'semantic.forward_ir.intent_hir.composition_children[].parameter_overrides[].binding_expression',
+            'semantic.forward_ir.intent_hir.composition_generated_children[].parameter_overrides[].binding_expression',
+            'semantic.composition.children[].parameter_overrides[].binding_expression',
+            'semantic.composition.generated_children[].parameter_overrides[].binding_expression',
+        ],
+        environment_keys => [qw(scope declaration_order parameters default_sources default_bindings)],
+        scope_keys => [qw(kind owner)],
+        scope_kind => 'composition_top',
+        parameter_value_keys => [qw(value_kind value_payload value_text)],
+        parameter_value_optional_keys => [qw(value_width value_type_spec)],
+        parameter_value_kinds => [qw(scalar list map)],
+        default_source_keys => [qw(parameter source_module expression references)],
+        reference_keys => [qw(parameter token suffix)],
+        binding_node_keys => {
+            literal => [qw(kind token)],
+            parameter => [qw(kind scope parameter token suffix)],
+            static_symbol => [qw(kind scope token value_payload)],
+            payload => [qw(kind value)],
+            operator => [qw(kind operator source_operator operands)],
+            list => [qw(kind items)],
+            map => [qw(kind member_order members)],
+        },
+        payload_node_keys => {
+            scalar => [qw(kind payload)], scalar_expr => [qw(kind payload)],
+            list => [qw(kind items)], map => [qw(kind member_order members)],
+        },
+        type_node_keys => {
+            bit => [qw(kind width signed)], bits => [qw(kind width signed)],
+            list => [qw(kind width signed items)],
+            record => [qw(kind width signed member_order members)],
+        },
+        optional_when_inapplicable => JSON::PP::true,
+        public_source_planning_supported => JSON::PP::false,
+        hdl_emission_supported => JSON::PP::false,
+        guidance => [
+            'These optional fields describe detached products assembled from resolved composition Plan and forward IR objects by the in-process report builders. They do not enable successful parameter-bearing source queries.',
+            'The enclosing report and this discovery contract retain schema version 1; the environment and binding records have no separate version or source envelope.',
+            'Scope owner is the actual composition-top name. Declaration order is authored order; parameters, default_sources and default_bindings are maps keyed by those declared names.',
+            'Parameter values are resolved validation caches. Scalar payloads carry normalized text; recursive list/map payloads retain items or ordered members. Optional widths and type records describe those caches, not symbolic interface specialization.',
+            'Default source expression retains the authored frontend JSON scalar/array/hash tree. Ordered references contain only actual declared parameter selections; static lookups do not acquire parameter identity from equal values.',
+            'Default bindings and optional instance binding_expression use binding_node_keys by kind. Operands, items and members recurse through the same node family; payload values and static_symbol value_payload use payload_node_keys.',
+            'Parameter token is the declared root plus suffix; aliases retain immediate declaration identity. Static symbols retain scope, source token and selected payload. Operator is canonical, while source_operator retains the authored alias.',
+            'Type items and members recurse through type_node_keys; signed is the canonical numeric flag. Missing optional fields are omitted, never inferred from a cached number.',
+            'Unparameterized environments and static overrides keep their existing report shapes. Query kinds, source applicability, lowering and target refusal boundaries remain unchanged.',
+        ],
+    };
+}
+
+1;
+
+=head1 NAME
+
+FSM::Support::CompositionParameterContract - Optional composition parameter report schemas
+
+=head1 DESCRIPTION
+
+C<build_composition_parameter_contract()> returns a fresh JSON-safe discovery
+record for actual composition environments and scoped instance bindings. It
+names exact optional report paths, source owners, recursive key families,
+version semantics and the pending source/HDL boundary. It describes producer
+contracts; it neither resolves input nor attests the provenance of caller-made
+hashes. Follow the actual Top/Plan/IR producers for semantic provenance.
+
+=cut

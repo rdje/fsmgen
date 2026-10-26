@@ -1391,3 +1391,17 @@ Report stability rules:
   order for that transaction.
 - The full schema may grow; do not reject unknown keys unless your integration
   deliberately chooses strict mode for its own version pin.
+
+
+### Prepared composition parameter inspection
+
+Normalized in-process semantic builders preserve optional resolved composition
+parameter environments in both forward IR layers and `composition.plan_snapshot`.
+`semantic_exports.normalized_semantic_json.composition_parameter_contract`
+advertises their exact paths and recursive environment/binding/payload/type
+schemas, including optional child override `binding_expression`. These are
+prepared object products, not successful parameter-bearing source queries.
+The pending source-planning and HDL refusal remains unchanged; this does not
+admit ISF generic widths or specialization. See the [composition parameter
+reference](../book/src/05-composition-basics.md) and focused
+[test](../../t/2127-composition-parameter-public-contract.t).

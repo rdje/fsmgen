@@ -5,6 +5,7 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::CompositionParameterContract qw(build_composition_parameter_contract);
 use Scalar::Util qw(blessed);
 
 our @EXPORT_OK = qw(
@@ -23,6 +24,7 @@ sub serializable_composition_plan_snapshot_contract_source {
 sub build_serializable_composition_plan_snapshot_contract {
     return {
         schema_version => 1,
+        composition_parameter_contract => build_composition_parameter_contract(),
         status => 'bounded_public',
         contract_source => serializable_composition_plan_snapshot_contract_source(),
         object_name => 'composition_plan_snapshot',
@@ -32,6 +34,7 @@ sub build_serializable_composition_plan_snapshot_contract {
                 'FSM::Support::SerializableCompositionPlanSnapshot::build_serializable_composition_plan_snapshot(composition_plan => $result->{composition_plan})',
             ],
         },
+        optional_top_level_keys => [qw(parameter_environment)],
         public_top_level_presence_keys => serializable_composition_plan_snapshot_public_top_level_keys(),
         summary_keys => serializable_composition_plan_snapshot_summary_keys(),
         collection_keys => serializable_composition_plan_snapshot_collection_keys(),
@@ -59,7 +62,10 @@ sub build_serializable_composition_plan_snapshot {
     my $auxiliary_assignments = _plan_array($plan, 'auxiliary_assignments');
     my $shared_datapath_candidates = _plan_array($plan, 'shared_datapath_candidates');
 
+    my $environment = _value($plan, 'parameter_environment');
     return {
+        (defined($environment) ? (parameter_environment => JSON::PP->new->decode(
+            JSON::PP->new->encode($environment))) : ()),
         composition_plan_snapshot_schema_version => 1,
         report_source => serializable_composition_plan_snapshot_contract_source(),
         contract_source => serializable_composition_plan_snapshot_contract_source(),
@@ -267,3 +273,23 @@ sub _json_value {
 }
 
 1;
+
+=head1 NAME
+
+FSM::Support::SerializableCompositionPlanSnapshot - Detached composition plan inspection
+
+=head1 DESCRIPTION
+
+C<build_serializable_composition_plan_snapshot(composition_plan =E<gt> $plan)>
+returns the bounded JSON-safe plan summary. Actual resolved plans optionally
+include C<parameter_environment>; ordinary plans omit it. This field is copied
+through JSON serialization, preserving nested JSON kinds and refusing non-JSON
+references instead of silently dropping environment data. Hash-backed callers
+receive the same copy boundary but must establish their own input provenance.
+
+C<build_serializable_composition_plan_snapshot_contract()> describes mandatory
+and optional keys separately and embeds the shared
+L<FSM::Support::CompositionParameterContract>. Snapshot inspection does not
+enable parameter-bearing source planning, port specialization or HDL emission.
+
+=cut

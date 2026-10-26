@@ -40,6 +40,12 @@ Scoped update on `2026-10-23`: LoweringIR imports
 lexical environments and static-use sources. Resolution still uses the existing
 parser/lowering resolvers. This adds no public schema or fresh closure census.
 
+Scoped update on `2026-10-26`: normalized semantic report, forward IR contract
+and serializable composition-plan snapshot contracts import
+`FSM::Support::CompositionParameterContract` for shared optional environment
+and scoped binding discovery. This adds no source planning or HDL admission;
+the historical closure census below is unchanged.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes
