@@ -704,9 +704,16 @@ default chains of immutable local parameters, and identify actor values that
 need capture across module boundaries. Constants, package constants, enums and
 literals retain distinct source identities. Actual module defaults also have
 bound expressions, including nested lists, so actor values used only in a
-default still create capture obligations. This groundwork changes no emitted
-widths or defaults; symbol allocation, supporting declarations, forwarding,
-generic port widths and override-driven shape specialization remain pending.
+default still create capture obligations. A private target plan now selects real
+parameters with `(param NAME)`, gives captures collision-checked context names,
+and uses immutable constant aliases for static default roots that collide with
+parameters. Alias values come from the selected canonical static cache; source
+identity remains separate. Static width expressions use scalar arithmetic to
+bypass bare named-type lookup. Plans preserve nested lists and reserve final
+module declarations, executable identifiers and state/enable names with case
+folding. This groundwork changes no emitted widths or defaults. Actual instance
+forwarding, carrier emission, generic port widths and override-driven shape
+specialization remain pending; the plan is not backend signoff evidence.
 
 The binding work also needs parameter default expressions. In a current IAL0
 control, `BOUND=W` and `BOUND=16` produce identical normalized parameter records

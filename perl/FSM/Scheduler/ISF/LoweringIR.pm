@@ -27,6 +27,7 @@ use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Support::ISFReductions qw(capture_actor_reductions);
 use FSM::Support::ISFWidthDeclarations qw(capture_actor_width_metadata capture_generated_width_metadata);
 use FSM::Support::ISFWidthBindings qw(build_width_binding_plan);
+use FSM::Support::ISFWidthSymbols qw(build_width_symbol_plan);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
@@ -130,7 +131,13 @@ sub build_module($self, $actor) {
         ];
     }
     $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
+    _attach_width_symbol_plans($parent_ir);
     return $parent_ir;
+}
+
+sub _attach_width_symbol_plans($ir) {
+    $ir->{_width_symbols} = build_width_symbol_plan($ir);
+    _attach_width_symbol_plans($ir->{children}{$_}) for sort keys %{$ir->{children} || {}};
 }
 
 # These modules and composition records are constructed before the parent

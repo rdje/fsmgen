@@ -68,6 +68,8 @@ local default chains and foreign actor capture identities privately. Published
 carriers and report schemas retain their current default-width behavior.
 Bound actual module defaults preserve nested list/reference structure and
 include default-only actor dependencies in those private capture obligations.
+Private target plans allocate context names and immutable static aliases while
+retaining source identities; no target-plan fields enter public reports.
 
 The maintained `feature.isf_unary_reductions` representative retains explicit
 internal supported-phase and nonclaim arrays through source-query cohort

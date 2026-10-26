@@ -1445,6 +1445,7 @@ Focused tests:
 - [t/2109-isf-width-default-bindings.t](../../t/2109-isf-width-default-bindings.t)
 - [t/2112-isf-width-binding-expressions.t](../../t/2112-isf-width-binding-expressions.t)
 - [t/2113-isf-width-default-expressions.t](../../t/2113-isf-width-default-expressions.t)
+- [t/2114-isf-width-symbol-plans.t](../../t/2114-isf-width-symbol-plans.t)
 
 ## 12. Explicitly Deferred
 

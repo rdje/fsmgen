@@ -1380,13 +1380,16 @@
     },
     {
       "content": {
-        "bytes": 15208,
+        "bytes": 15290,
+        "line_bytes": 792,
         "lines": 167,
-        "line_bytes": 786,
-        "sha256": "4585fb07c7567fb384de3ace878f91f4f427a3ee31a54b00305f7e143d0a0f41"
+        "sha256": "c3989d17eed12b04774dcc0968d4437ad716e2ee002408e4da2fa834cc34c2cf"
       },
       "id": "0119",
       "metadata": {
+        "authority_status": [
+          "- Status: private source/IR, lexical bindings and target plans have focused checks; forwarding/carrier/HDL/public qualification pending"
+        ],
         "knowledge_id": "isf-authored-scalar-width-provenance",
         "knowledge_status": "current",
         "questions": [
@@ -1400,9 +1403,6 @@
           "where does IAL0 retain authored scalar width expressions?",
           "where are original transaction parameter defaults retained for width binding?",
           "where are canonical parameter default reference bindings retained?"
-        ],
-        "authority_status": [
-          "- Status: private source/IR and lexical bindings have focused checks; symbol/carrier/HDL/public qualification pending"
         ]
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",
