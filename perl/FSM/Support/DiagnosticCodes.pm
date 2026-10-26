@@ -743,7 +743,7 @@ my %DIAGNOSTIC_CODES = (
         severity => 'error',
         stability => 'stable',
         family => 'composition_contract',
-        summary => 'Composition top parameters require pending symbolic default, binding, width and HDL lowering.',
+        summary => 'Composition top parameters use a default or interface profile beyond bounded scalar fixed-interface RTL lowering.',
     },
     FSMGEN_COMPOSITION_TOP_SYMBOL_TOKEN_SHAPE => {
         severity => 'error',

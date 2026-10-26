@@ -68,8 +68,15 @@ sub build_composition_parameter_contract {
             record => [qw(kind width signed member_order members)],
         },
         optional_when_inapplicable => JSON::PP::true,
-        public_source_planning_supported => JSON::PP::false,
-        hdl_emission_supported => JSON::PP::false,
+        public_source_planning_supported => JSON::PP::true,
+        hdl_emission_supported => JSON::PP::true,
+        fixed_interface_rtl_source => {
+            targets => [qw(systemverilog sv verilog v vhdl)],
+            source_admission => JSON::PP::true, scalar_top_defaults => JSON::PP::true,
+            scalar_child_actuals => JSON::PP::true, generated_children => JSON::PP::false,
+            parameter_dependent_interfaces => JSON::PP::false,
+            external_override_legality => JSON::PP::false,
+        },
         prepared_scalar_emission => {
             targets => [qw(systemverilog sv verilog v)],
             top_defaults => JSON::PP::true, child_actuals => JSON::PP::true,
@@ -83,7 +90,7 @@ sub build_composition_parameter_contract {
         guidance => [
             'Optional width_contract records preserve the captured top scope, authored frontend expression tree and ordered actual parameter/static lookups beside numeric width caches. Width-analysis path wildcards expand only to width_analysis_buckets.',
             'Width references use width_reference_keys by kind; static value_payload uses payload_node_keys. Explicit (param NAME) selects declared parameters, while bare width operands select static symbols. Equal defaults do not merge lookup identities.',
-            'These optional fields describe detached products assembled from resolved composition Plan and forward IR objects by the in-process report builders. They do not enable successful parameter-bearing source queries.',
+            'These optional fields describe detached products assembled from resolved composition Plan and forward IR objects. fixed_interface_rtl_source names the bounded successful parameter-bearing source profile; the support flags apply within that profile, not to every prepared-emitter shape.',
             'The enclosing report and this discovery contract retain schema version 1; the environment and binding records have no separate version or source envelope.',
             'Scope owner is the actual composition-top name. Declaration order is authored order; parameters, default_sources and default_bindings are maps keyed by those declared names.',
             'Parameter values are resolved validation caches. Scalar payloads carry normalized text; recursive list/map payloads retain items or ordered members. Optional widths and type records describe those caches, not symbolic interface specialization.',
@@ -94,6 +101,7 @@ sub build_composition_parameter_contract {
             'Validated child overrides retain declaration_default_value_keys and applicable declaration_default_optional_keys. These describe the child default independently of the actual value cache: payload/type use payload_node_keys/type_node_keys; source_expression is an authored frontend tree, omitted when no source record exists. Kind and width alone cannot distinguish decimal integer from sized bit/vector generic declarations.',
             'Unparameterized products omit environments; static actual caches keep their existing value fields, with optional matched-declaration annotations. prepared_scalar_emission names direct Verilog-family structural emission with a captured matching environment: untyped scalar defaults, scalar child actuals and captured scalar port ranges. Typed tops, symbolic aggregate bindings and source admission remain unqualified. Existing static aggregate profiles are unchanged.',
             'prepared_vhdl_scalar_emission names direct prepared natural top defaults, canonical natural-valued actuals for scalar child declarations with bounded plain decimal defaults, and captured scalar port ranges with portable natural arithmetic. Sized/aggregate symbolic child profiles, external override legality and source admission remain unqualified.',
+            'fixed_interface_rtl_source admits scalar top defaults and scalar actuals to external RTL through fixed .rtlif interfaces and top widths independent of mutable parameters. Existing lane, target, type and namespace rules still apply, including the bounded VHDL shape and natural-to-integer actual restrictions. Generated children, aggregate top defaults, parameter-dependent interfaces and external override legality remain unqualified. The prepared profiles include symbolic port widths beyond this source subset, so their whole-profile source_admission flags remain false.',
         ],
     };
 }
@@ -111,7 +119,7 @@ record for actual composition environments, scoped instance bindings and
 captured port width dependencies. Width contracts describe optional structural
 ports, IntentHIR/common signal analysis and serialized top-port records. It
 names exact optional report paths, source owners, recursive key families,
-version semantics and the pending source/complete-HDL boundary. The separate
+version semantics and the bounded source/HDL boundary. The separate
 C<prepared_scalar_emission> record names the direct Verilog-family emitter's
 untyped scalar top-default/child-actual and captured scalar port-range subset,
 excluding typed tops and source admission. It describes producer
@@ -124,6 +132,8 @@ payload/type use the existing recursive schemas; the optional source expression
 is an authored frontend tree. C<prepared_vhdl_scalar_emission> separately
 describes direct natural top defaults and canonical natural-to-integer child
 actuals with declaration evidence, plus captured scalar port ranges. Source
-admission and external override legality remain pending.
+admission beyond C<fixed_interface_rtl_source> and external override legality
+remain pending. The source profile admits scalar defaults and actuals with
+external RTL fixed interfaces only; support flags apply within that profile.
 
 =cut

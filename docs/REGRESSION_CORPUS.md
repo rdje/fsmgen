@@ -904,6 +904,7 @@ public catalog schema. See the book's data manipulation chapter for examples.
 | `feature.test_selector_symbolic_default` | [t/corpus/test_selector_symbolic_default.fsm](t/corpus/test_selector_symbolic_default.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.composition_scalar_rtl_parameters` | [t/corpus/composition_scalar_rtl_parameters.fsm](t/corpus/composition_scalar_rtl_parameters.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `feature.implicit_composition_system_autowire` | [t/corpus/implicit_composition_system_autowire.fsm](t/corpus/implicit_composition_system_autowire.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `feature.standalone_dtc_explicit_system_autowire` | [t/corpus/standalone_dtc_explicit_system_autowire.fsm](t/corpus/standalone_dtc_explicit_system_autowire.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |

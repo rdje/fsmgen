@@ -301,7 +301,7 @@ sub build_language_surface_section {
             lanes => [qw(C1 C2 C3 C4)],
         },
         intentionally_blocked_or_not_yet_public => [
-            'composition top +params and scoped instance bindings resolve after imports; HDL generation is blocked pending symbolic lowering',
+            'composition top +params with generated children or parameter-dependent interfaces remain blocked pending symbolic lowering; fixed-interface RTL scalar profiles are supported',
             'VHDL backend generation',
             'unchecked annotations treated as enforced metadata',
             'full normalized semantic JSON export beyond the bounded public semantic JSON slice',

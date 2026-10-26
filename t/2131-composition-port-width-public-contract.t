@@ -70,9 +70,9 @@ subtest 'public schemas describe exact optional paths and key families' => sub {
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{semantic_exports}{normalized_semantic_json}{composition_parameter_contract}, $contract,
         'native/API discovery shares the same optional schema');
-    ok(JSON::PP::is_bool($contract->{public_source_planning_supported}) && !$contract->{public_source_planning_supported},
-        'parameter-bearing source planning stays refused');
-    ok(JSON::PP::is_bool($contract->{hdl_emission_supported}) && !$contract->{hdl_emission_supported}, 'symbolic HDL stays refused');
+    ok(JSON::PP::is_bool($contract->{public_source_planning_supported}) && $contract->{public_source_planning_supported},
+        'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
+    ok(JSON::PP::is_bool($contract->{hdl_emission_supported}) && $contract->{hdl_emission_supported}, 'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
     $contract->{width_reference_keys}{parameter}[0] = 'WRONG';
     is_deeply(build_normalized_semantic_report_contract()->{composition_parameter_contract}{width_reference_keys}{parameter},
         [qw(kind token)], 'nested schema getter remains detached');

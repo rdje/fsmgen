@@ -136,7 +136,7 @@ subtest 'public transports reach the unchanged pending-lowering boundary after s
         source_id => $path, query_kinds => ['check'], search_path_relpaths => [], strict => 1}});
     is($r->{native}{exit_code}, 1, 'native check still refuses unfinished HDL lowering');
     is($r->{native}{report}{diagnostics}[0]{code}, 'FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING', 'source now resolves symbolic overrides before the explicit plan guard');
-    like($r->{native}{report}{diagnostics}[0]{message}, qr/top parameter lowering is blocked because symbolic/, 'refusal remains the real unfinished stage');
+    like($r->{native}{report}{diagnostics}[0]{message}, qr/top parameter lowering is blocked because/, 'refusal remains the real unfinished stage');
     is($r->{stdio}{exit_code}, 0, 'newline source refusal is a normal protocol result');
     is($r->{stdio}{stderr}, '', 'newline protocol stderr stays clean');
     my $api = $r->{adapter_result};ok($api->{isError}, 'source refusal remains a tool error');

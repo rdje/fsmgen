@@ -94,7 +94,7 @@ subtest 'ordinary static source shape and public applicability remain explicit' 
     is(emit($static), "module static_top (\n    input clk\n);\n\n    leaf #(\n        .W(16)\n    ) u_leaf (\n\n    );\n\nendmodule",
         'complete pre-existing static formatting stays exact');
     my $contract = build_composition_parameter_contract();
-    ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported}, 'complete source/HDL support is still unqualified');
+    ok($contract->{public_source_planning_supported} && $contract->{hdl_emission_supported}, 'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
     is_deeply($contract->{prepared_scalar_emission}, {targets => [qw(systemverilog sv verilog v)],
         top_defaults => JSON::PP::true, child_actuals => JSON::PP::true,
         symbolic_port_widths => JSON::PP::true, typed_top_parameters => JSON::PP::false,

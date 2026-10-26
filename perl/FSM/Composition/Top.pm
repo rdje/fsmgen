@@ -155,8 +155,10 @@ retries. Mutable parameters never enter the static namespace.
 
 
 Authored top C<+params> now collects these declarations; defaults resolve only
-after imports. Composition planning refuses parameter-bearing tops until
-symbolic lowering preserves their configuration. Existing static compositions
-retain their behavior.
+after imports. Composition planning admits the bounded scalar fixed-interface
+external RTL profile through L<FSM::Composition::PlanBuilder>; generated children,
+aggregate defaults and mutable top widths retain explicit refusals. Backend
+types and namespaces remain target-specific. Existing static compositions retain
+their behavior.
 
 =cut

@@ -7,7 +7,7 @@
     (COPY FIXED)
     (LANE shared.LANES[1])
   )
-  (?rtl:child)
+  (?fsmc:child pending_generated_child)
 )
 (?pkg:shared
   (+constants

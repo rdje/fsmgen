@@ -1,0 +1,9 @@
+(?top:composition_scalar_rtl_parameters
+  (+params (COPY WIDTH) (WIDTH 16) (SAME 16) (TOTAL (+ COPY shared.EXTRA)))
+  (+import shared)
+  (?ports drive<1 ready>1)
+  (?rtl:u_leaf (module scalar_leaf) (params (COUNT TOTAL) (OTHER SAME)))
+  (?wiring:links (drive u_leaf.enable) (u_leaf.ready ready))
+)
+(?pkg:shared (+constants (EXTRA 2)))
+(?rtlif:scalar_leaf (params (COUNT 8) (OTHER 8)) enable<1 ready>1)

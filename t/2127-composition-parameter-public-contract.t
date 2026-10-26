@@ -70,8 +70,8 @@ subtest 'schema describes actual optional fields without source admission' => su
         'semantic.forward_ir.intent_hir.parameter_environment',
         'semantic.forward_ir.structural_rtl_ir.parameter_environment',
         'semantic.composition.plan_snapshot.parameter_environment'], 'only actual environment products are advertised');
-    ok(JSON::PP::is_bool($contract->{public_source_planning_supported}) && !$contract->{public_source_planning_supported},
-        'discovery explicitly denies pending source planning');
+    ok(JSON::PP::is_bool($contract->{public_source_planning_supported}) && $contract->{public_source_planning_supported},
+        'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
     for my $name (@{$environment->{declaration_order}}) {
         is_deeply([sort keys %{$environment->{default_sources}{$name}}], [sort @{$contract->{default_source_keys}}], 'actual authored source schema matches');
         my $value = $environment->{parameters}{$name};

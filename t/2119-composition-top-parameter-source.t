@@ -79,7 +79,7 @@ subtest 'discovery and actual native/API/newline check expose unfinished lowerin
     is($r->{stdio}{stderr}, '', 'newline protocol has clean stderr');
     ok(!$r->{native}{report}{success}, 'native report records source failure');
     is($r->{native}{report}{diagnostics}[0]{code}, 'FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING', 'classified diagnostic names pending lowering');
-    like($r->{native}{report}{diagnostics}[0]{message}, qr/top parameter lowering is blocked because symbolic/, 'refusal reaches plan boundary after defaults');
+    like($r->{native}{report}{diagnostics}[0]{message}, qr/top parameter lowering is blocked because/, 'refusal reaches plan boundary after defaults');
     my $api = $r->{adapter_result};
     ok($api->{isError}, 'API keeps the expected source failure flag');
     is_deeply($api->{structuredContent}{report}, normalize_repository_paths($r->{native}{report}, getcwd()), 'complete native/API refusal equality');

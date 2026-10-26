@@ -14,9 +14,9 @@ kinds; FSMGen does not reinterpret unknown composition children as raw HDL or
 legacy extension hooks.
 
 The parser now accepts top `+params` declarations and resolves their defaults
-after package imports. This is a parser and default-resolution boundary: all
-current HDL plans still refuse parameter-bearing tops until symbolic defaults,
-instance bindings, interface widths and HDL propagation are implemented.
+after package imports. Scalar fixed-interface RTL sources now preserve their
+defaults and child bindings through HDL; the exact bounded profile and runnable
+example are below. Generated-child and mutable-interface sources still refuse.
 Configurable parameters stay separate from the static symbol table used by
 existing child overrides.
 
@@ -52,7 +52,8 @@ structure. Static symbols keep their lookup identity and selected value cache.
 `Top::parameter_default_bindings()` exposes detached compiler records beside
 the unchanged normalized default graph. A failed retry clears both graphs.
 Instance overrides retain actual scoped bindings beside their canonical validation
-values. Parameter-bearing source HDL plans still refuse.
+values. The fixed-interface RTL source profile below admits only qualified
+scalar relationships; generated and mutable-interface plans remain blocked.
 
 Prepared port declarations also accept verbose width expressions, for example
 `(input data (width (+ (param WIDTH) 2)))`. The shared bounded integer evaluator
@@ -92,11 +93,11 @@ its plan's captured width, scope and dependency identities before IntentHIR
 accepts it. The [public-contract test](../../../t/2131-composition-port-width-public-contract.t)
 checks actual source/Plan/IR/report allocation and isolation.
 
-This prepared inspection contract leaves symbolic source plans and port
-specialization pending. VHDL still refuses known width contracts, including
-when an environment is absent; a cached positive width alone is not lowering.
-It does not admit parameterized `.isf`
-widths or alter API/MCP source-query refusal.
+These inspection records cover more than the bounded source profile below.
+Parameter-dependent interface specialization remains pending at source admission.
+Direct prepared emitters can render captured ranges with a matching environment;
+a cached positive width alone cannot supply that environment or its dependencies.
+Parameterized `.isf` widths remain outside this source profile.
 
 `Top::parameter_environment()` captures these actual resolved products as
 separate scope, declaration order, normalized parameters, authored default
@@ -142,19 +143,51 @@ symbols, semantic payloads, operators, lists and maps. Optional instance
 cache; static overrides gain no symbolic binding field. Matched declarations
 may add the optional metadata described below.
 
-This is public in-process inspection of prepared objects. Parameter-bearing
-source queries still return the pending-lowering diagnostic; discovery marks
-source planning and complete HDL emission unsupported. Symbolic interface specialization
-and canonical source emission remain required before generation is enabled.
+Scalar top parameters now have a bounded successful source profile:
+`composition_parameter_contract.fixed_interface_rtl_source`. It admits scalar
+top defaults and scalar child actuals when every child is external RTL with a
+published fixed `.rtlif` interface, and top widths contain no mutable parameter
+references. Defaults and actuals retain selected names instead of validation
+numbers. Generated children, aggregate top defaults and top widths selecting
+`(param NAME)` still refuse with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`.
+Equal default widths never establish interface independence.
 
-An internal source-candidate check now separates fixed interfaces from pending
-generic interface propagation. It selects scalar top defaults with external RTL
-children and top widths that use only literals or captured static symbols.
-The published `.rtlif` contract supplies fixed child port widths; the check
-does not inspect RTL implementation. Generated children, aggregate top defaults
-and top widths selecting `(param NAME)` still refuse, even when a selected
-parameter equals a static width. Backend typing, namespace and connection
-validation remain separate. This preparation does not change source admission.
+For example, this complete source preserves `COPY = WIDTH`, `TOTAL = COPY + 2`
+and the selected child bindings:
+
+```lisp
+(?top:composition_scalar_rtl_parameters
+  (+params (COPY WIDTH) (WIDTH 16) (SAME 16) (TOTAL (+ COPY shared.EXTRA)))
+  (+import shared)
+  (?ports drive<1 ready>1)
+  (?rtl:u_leaf (module scalar_leaf) (params (COUNT TOTAL) (OTHER SAME)))
+  (?wiring:links (drive u_leaf.enable) (u_leaf.ready ready))
+)
+(?pkg:shared (+constants (EXTRA 2)))
+(?rtlif:scalar_leaf (params (COUNT 8) (OTHER 8)) enable<1 ready>1)
+```
+
+```bash
+./bin/fsmgen --quiet --strict --check --json t/corpus/composition_scalar_rtl_parameters.fsm
+./bin/fsmgen --quiet --strict --language vhdl --check --json t/corpus/composition_scalar_rtl_parameters.fsm
+```
+
+The Verilog-family top emits `.COUNT(TOTAL)` and `.OTHER(SAME)`; VHDL emits
+`COUNT => TOTAL` and `OTHER => SAME`. SystemVerilog/Verilog use untyped scalar
+top defaults. VHDL retains its natural top defaults, declaration-qualified
+integer child actuals and existing bounded external-RTL composition shapes.
+All existing target, namespace, type, lane and connection checks still apply.
+The `.rtlif` ports are the external module's fixed public interface contract;
+FSMGen does not inspect the RTL implementation to infer parameterized ports.
+Ordinary static compositions retain their existing lanes.
+
+The source/HDL support flags are true within this named profile. The prepared
+emitter profiles below are broader: they also render symbolic port ranges and
+some generated-child actuals, so their whole-profile `source_admission` flags
+remain false. The [source regression](../../../t/2141-composition-scalar-rtl-source-admission.t)
+qualifies actual planning, native strict check/semantic products and generated
+text for SystemVerilog, Verilog and VHDL. External override legality, external
+HDL compilation/runtime and complete API/MCP/profile qualification remain pending.
 
 The direct Verilog-family structural IR emitter now supports prepared scalar
 top defaults and child actuals when a matching captured environment is present.
@@ -173,9 +206,9 @@ collected typedef names in the case-sensitive target namespace. Cycles,
 incomplete binding membership, foreign scopes, reserved identifiers, aggregate parameter defaults, symbolic
 aggregate actuals and raw expression payloads refuse. Symbolic child actuals
 without a captured environment still refuse instead of emitting cached numbers.
-VHDL parameter emission and explicit typed top parameters remain outside this
-prepared profile. Parameter-bearing source plans retain
-`FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`.
+Explicit typed top parameters remain outside this prepared profile.
+Parameter-bearing source plans beyond the fixed-interface RTL subset retain
+`FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`; VHDL has its separate profile below.
 
 Captured scalar port widths also render through the internal
 [width renderer](../../../perl/FSM/Backend/VerilogFamily/CompositionWidthEmitter.pm).
@@ -191,13 +224,15 @@ foreign scopes, incomplete or out-of-order lookups, aggregates and unsupported
 operators refuses. The [range fixture](../../../t/data/composition-symbolic-port-ranges.fsm)
 and [focused regression](../../../t/2135-composition-symbolic-port-ranges.t)
 exercise actual parsed/imported declarations and captured Plan/IR products.
-This prepares direct emission only; source admission, external override legality,
-internal-net width propagation and HDL runtime qualification remain pending.
+This prepares direct symbolic-range emission only; source admission of mutable
+interfaces, external override legality, internal-net width propagation and HDL
+runtime qualification remain pending.
 
 Discovery's `composition_parameter_contract.prepared_scalar_emission` names the
 direct targets (`systemverilog`, `sv`, `verilog`, `v`), supported `top_defaults`,
 `child_actuals` and `symbolic_port_widths`, with false `typed_top_parameters`
-and `source_admission`. The broader source/HDL support flags remain false.
+and `source_admission`. Source/HDL support flags apply within the separately
+named fixed-interface RTL source profile.
 The [source fixture](../../../t/data/composition-scalar-emission.fsm) and
 [emission test](../../../t/2134-composition-scalar-structural-emission.t) use
 actual import resolution, child declaration validation and captured Plan/IR.
@@ -250,8 +285,8 @@ The [emission fixture](../../../t/data/composition-vhdl-scalar-emission.fsm) and
 RTL/FSM/DT declaration producers and connected prepared Plan/IR products.
 Discovery's `prepared_vhdl_scalar_emission` advertises `top_defaults` and
 `natural_to_integer_child_actuals` and `symbolic_port_widths`, with false
-`source_admission`. Parameter-bearing source queries still refuse; these
-focused checks do not qualify external VHDL compilation or runtime.
+`source_admission`. Source queries beyond the fixed-interface RTL subset still
+refuse; these focused checks do not qualify external VHDL compilation or runtime.
 
 Captured scalar port widths now render descending VHDL vector ranges. For
 example, `(input data (width (param COPY)))` retains
@@ -270,7 +305,7 @@ The [VHDL range fixture](../../../t/data/composition-vhdl-port-ranges.fsm) and
 [focused test](../../../t/2139-composition-vhdl-port-ranges.t) exercise actual
 parsed/imported Plan/IR products, complete expected HDL and hostile controls.
 Run `scripts/run_with_ram_guard.sh -- prove -Iperl t/2139-composition-vhdl-port-ranges.t`
-for this prepared-emitter check. Parameter-bearing source admission, internal
+for this prepared-emitter check. Mutable-interface source admission, internal
 net width propagation, external override legality and full compiler/runtime
 qualification remain separately owned.
 

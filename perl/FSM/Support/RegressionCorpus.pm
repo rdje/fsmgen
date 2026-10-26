@@ -9,6 +9,25 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'feature.composition_scalar_rtl_parameters',
+        relpath => 't/corpus/composition_scalar_rtl_parameters.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'composition_top_pipeline_cli',
+        source_kind => 'composition',
+        strict_supported => 1,
+        expected_top_name => 'composition_scalar_rtl_parameters',
+        expected_lane => 'C3',
+        expected_instance_count => 1,
+        expected_child_modules => [],
+        expected_hdl_patterns => [
+            qr/parameter COPY = WIDTH/,
+            qr/parameter TOTAL = \(COPY \+ 2\)/,
+            qr/\.COUNT\(TOTAL\)/,
+            qr/\.OTHER\(SAME\)/,
+        ],
+    },
+    {
         id => 'contract.composition_top_parameters_lowering_pending',
         relpath => 't/corpus/composition_top_parameters_lowering_pending.fsm',
         family => 'composition_contract_fixture',
@@ -16,7 +35,7 @@ my @REGRESSION_CORPUS = (
         coverage => 'composition_contract_rejection_pipeline_cli',
         source_kind => 'composition',
         diagnostic_code => 'FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING',
-        expected_error_pattern => qr/Composition top '[^']+' top parameter lowering is blocked because symbolic default, instance binding, interface width and HDL propagation are not implemented yet/,
+        expected_error_pattern => qr/Composition top '[^']+' top parameter lowering is blocked because (?:parameter '[^']+' requires scalar top defaults|generated child '[^']+' requires generic interface preservation before source admission|port '[^']+' has a parameter-dependent width requiring connected interface preservation)/,
     },
     {
         id => 'language.isf_storage_identifier.rejection',

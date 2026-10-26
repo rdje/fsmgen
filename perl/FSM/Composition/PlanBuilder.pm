@@ -81,11 +81,7 @@ sub build_plan ($class, %args) {
     );
 
     my $top = $composition_spec->top;
-    confess
-        "Composition top '" . $top->name . "' top parameter lowering is blocked because symbolic " .
-        "default, instance binding, interface width and HDL propagation are not implemented yet. " .
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        if @{$top->parameter_declarations};
+    $class->assert_parameter_source_candidate(top => $top);
     my @instances = @{$top->instances || []};
     my @ports_blocks = @{$top->ports_blocks || []};
     my @wiring_blocks = @{$top->wiring_blocks || []};
@@ -663,7 +659,7 @@ __END__
 
 =head2 assert_parameter_source_candidate
 
-Checks the interface-safety prerequisite for future parameter-bearing source
+Checks the interface-safety prerequisite for parameter-bearing source
 admission. Resolved scalar top defaults with external RTL children and no
 mutable top-port width references are candidates. The published C<.rtlif>
 contract supplies fixed child interface widths; no RTL implementation is read.
@@ -671,8 +667,9 @@ Generated children and parameter-dependent top widths remain blocked until
 connected generic interface preservation is qualified. Equal numeric defaults
 cannot erase a captured parameter reference. Static sources bypass this check
 and retain existing lane rules. Backend default/actual typing and namespace
-validation remain separate. C<build_plan> still retains its blanket guard;
-this method alone does not enable source queries or generation.
+validation remain separate. C<build_plan> calls this check before child
+realization; the existing lane rules and actual backend emission then qualify
+the selected source's remaining contracts.
 
 =head2 build_plan
 

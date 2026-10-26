@@ -167,6 +167,6 @@ subtest 'static formatting and profile discovery keep exact boundaries' => sub {
     is_deeply($contract->{prepared_vhdl_scalar_emission},{top_defaults=>JSON::PP::true,
         natural_to_integer_child_actuals=>JSON::PP::true,symbolic_port_widths=>JSON::PP::true,
         source_admission=>JSON::PP::false},'discovery describes only the prepared VHDL subset');
-    ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported},'complete source/HDL support remains unqualified');
+    ok($contract->{public_source_planning_supported} && $contract->{hdl_emission_supported},'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
 };
 done_testing;

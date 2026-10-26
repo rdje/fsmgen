@@ -111,7 +111,7 @@ subtest 'hostile contracts refuse without numeric fallback' => sub {
 subtest 'discovery retains source and full verification boundaries' => sub {
     my $contract = build_composition_parameter_contract();
     ok($contract->{prepared_vhdl_scalar_emission}{symbolic_port_widths}, 'prepared VHDL ranges advertised');
-    ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported}
-        && !$contract->{prepared_vhdl_scalar_emission}{source_admission}, 'source and complete HDL support stay false');
+    ok($contract->{public_source_planning_supported} && $contract->{hdl_emission_supported}
+        && !$contract->{prepared_vhdl_scalar_emission}{source_admission}, 'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
 };
 done_testing;

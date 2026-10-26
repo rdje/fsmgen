@@ -1400,9 +1400,11 @@ parameter environments in both forward IR layers and `composition.plan_snapshot`
 `semantic_exports.normalized_semantic_json.composition_parameter_contract`
 advertises their exact paths and recursive environment/binding/payload/type
 schemas, including optional child override `binding_expression`. These are
-prepared object products, not successful parameter-bearing source queries.
-The pending source-planning and HDL refusal remains unchanged; this does not
-admit ISF generic widths or specialization. See the [composition parameter
+prepared object products. A bounded `fixed_interface_rtl_source` profile now
+admits scalar top defaults and actuals with fixed external RTL interfaces and
+top widths independent of mutable parameters. Existing backend/lane/type rules
+apply. Generated children, aggregate top defaults, mutable interfaces and ISF
+generic widths/specialization remain outside source admission. See the [composition parameter
 reference](../book/src/05-composition-basics.md) and focused
 [test](../../t/2127-composition-parameter-public-contract.t).
 
@@ -1414,7 +1416,8 @@ The direct prepared VHDL profile now emits natural top defaults and canonical
 natural-valued actuals to declaration-qualified decimal integer child generics.
 Captured scalar port ranges retain selected names and portable natural arithmetic,
 including one-bit defaults. Sized/aggregate symbolic child bindings still refuse;
-ISF generic widths, source admission, override legality and full qualification remain pending.
+ISF generic widths, source admission beyond fixed-interface RTL, override legality
+and full qualification remain pending.
 
 Composition Port width-expression declarations now retain source AST and scoped
 lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).
@@ -1423,6 +1426,6 @@ Prepared forward IR, signal analysis and plan snapshots retain optional
 width_contract records, advertised by the same composition_parameter_contract.
 Supplied IR must match the captured Plan width/dependency meaning; structured
 source and lookup records remain detached. This inspection adds no ISF generic
-width or API/MCP source-query admission. Direct prepared Verilog-family and VHDL
+width or mutable-interface source-query admission. Direct prepared Verilog-family and VHDL
 scalar port ranges are bounded by the composition reference; internal-net
 propagation and full qualification remain pending.

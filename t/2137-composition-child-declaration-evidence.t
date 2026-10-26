@@ -91,8 +91,8 @@ subtest 'captured IR and public optional schemas preserve complete declaration r
     my $contract = build_composition_parameter_contract();
     is_deeply($contract->{declaration_default_value_keys}, [qw(declaration_default_value_kind declaration_default_value_payload declaration_default_value_text)],
         'discovery names the exact declaration default value family');
-    ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported},
-        'preparation does not enable source queries or full HDL support');
+    ok($contract->{public_source_planning_supported} && $contract->{hdl_emission_supported},
+        'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
     is($json->encode(copy($report)), $json->encode($report), 'complete report round trips without changing JSON kinds');
 };
 subtest 'missing declaration evidence cannot borrow actual caches or stale annotations' => sub {

@@ -111,11 +111,14 @@ The currently shipped composition behavior is intentionally bounded:
 - top `+params` blocks now parse into a detached default graph resolved after imports,
   with canonical scalar/aggregate values and acyclic forward parameter references.
   Parameter names must differ from local constant/enum roots and imported package
-  roots. This is parser/default support only: all current HDL plans refuse a
-  parameter-bearing top with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING` until
-  symbolic default/binding/interface-width/HDL lowering is implemented. Native
-  check, API and MCP preserve this refusal; successful composition admission and
-  semantic export do not include top parameters yet,
+  roots. The bounded scalar fixed-interface RTL source profile now preserves
+  canonical defaults and child actuals in planning, semantic reports and HDL.
+  Every child must use a fixed `.rtlif` interface and top port widths must not
+  select mutable parameters. Existing target/lane/type/namespace rules apply;
+  VHDL retains natural defaults and declaration-qualified integer actuals.
+  Generated children, aggregate top defaults and mutable interfaces still refuse
+  with `FSMGEN_COMPOSITION_TOP_PARAMETER_LOWERING`. See the exact source profile
+  and qualification boundaries in [Composition Basics](book/src/05-composition-basics.md),
 - symbolic child overrides now resolve declared top parameter roots and aggregate
   paths before static fallback, retaining scoped binding expressions beside
   canonical validation caches. Static/literal-only records remain unchanged.

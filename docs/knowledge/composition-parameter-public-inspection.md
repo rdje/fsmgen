@@ -10,10 +10,11 @@ date: 2026-10-26
 status: current
 tags: [composition, parameters, schemas, semantic-reports]
 evidence: perl/FSM/Support/CompositionParameterContract.pm; t/2127-composition-parameter-public-contract.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2127-composition-parameter-public-contract.t t/2137-composition-child-declaration-evidence.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2127-composition-parameter-public-contract.t t/2137-composition-child-declaration-evidence.t t/2141-composition-scalar-rtl-source-admission.t
 ---
 
 [Composition Basics](../book/src/05-composition-basics.md) owns optional
 schemas, detached Plan snapshots and prepared VHDL/source boundaries. Overrides
 retain child default text/payload/type/source apart from actual caches (T2137).
-Only actual Top/Plan/IR establish provenance; static products omit environments.
+Actual Top/Plan/IR supply provenance; static products omit environments. Scalar
+fixed-interface RTL source queries now succeed (T2141); wider profiles stay guarded.

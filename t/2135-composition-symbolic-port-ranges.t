@@ -86,6 +86,6 @@ subtest 'hostile contracts cannot fall back to numeric widths' => sub {
 subtest 'discovery exposes only prepared range support' => sub {
     my $contract = build_composition_parameter_contract();
     ok($contract->{prepared_scalar_emission}{symbolic_port_widths}, 'prepared direct range support advertised');
-    ok(!$contract->{public_source_planning_supported} && !$contract->{hdl_emission_supported}, 'complete source/HDL flags remain false');
+    ok($contract->{public_source_planning_supported} && $contract->{hdl_emission_supported}, 'bounded fixed-interface RTL source support is advertised; broader profiles remain guarded');
 };
 done_testing;
