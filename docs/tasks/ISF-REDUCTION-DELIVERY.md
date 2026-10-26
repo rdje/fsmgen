@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -1441,6 +1441,20 @@ do not start broad suites between implementation slices.
   Acceptance: `P1 resource defect found while reading the required shared parameter kernel: an actual parser weak reference releases after empty symbol resolution, but remains after successful constant and constant-alias resolution once all caller references leave scope. Reproduce with .artifacts/canonical-parameter-graph-20261026/symbol-lifetime.pl and retained receipt. DeclarativeSymbolResolver has self-referential resolve_node and dependency-walk closures; establish exact retaining edges, replace per-call ownership safely on success/failure, and preserve current constant/enum/package/top evaluation, ordering, diagnostics, source/getter/caller contracts. Run focused real lifetime/namespace/graph/refusal controls and conservation checks, update book/fact/task and commit. Director0121 scheduling: after required feature implementation and before .6/publication qualification, unless a required integration check demonstrates it blocks delivery earlier. No global leak-free or memory-size/throughput claim without its own evidence.`
   Verification: `Actual direct-root symbol probes: empty releases, constant and constant_alias retain; all complete successfully. This separate existing symbol graph is not repaired or hidden by the parameter-kernel extraction. Current .2.3.3.4.1.1.1 remains the required implementation frontier; the final tracked parameter-kernel receipt will retain the related probe/source and explicit missing repair leg.`
   Commit: `pending`
+
+
+- ID: `ISF-REDUCTION-DELIVERY.20`
+  Status: `done`
+  Goal: `Complete the due daily startup artifact census without discarding evidence.`
+  Acceptance: `Reuse the authenticated installed census/reviewer in an exclusive dated slot at the current clean revision. Preserve all candidates without exact disposal authority; verify independent membership and saved hostile controls. Update the latest-only cleanup record and book reader, complete mandatory commit gates, then resume the saved public schema leaf. Compare the designated claim template with the retained review; keep local README and containment authority.`
+  Verification: `Actual elapsed-time-admitted census at bb16971e2fea9d0eca00a064e55d2a65983882d1 passes independent rg membership and saved missing-member/unsafe-path/Boolean-size/invented-removal controls. All candidates retained: no exact disposal authority established. The mandatory RAM guard initially refuses unavailable sandbox process inspection; the same command runs with process inspection and settles successfully. Dated wrapper/receipt, latest-only record and book reader retain reproducibility. Re-derive: actual same-volume census; falsify: independent membership and saved hostile controls; durability: tracked wrapper/receipt and Git. Content identity, reclamation and future absence remain outside scope. Designated claim template compares byte-identical with retained review; locally owned README/containment policies remain adopted. Initial task integrity catches the omitted new root child; add it before commit. The first doctrine gate rejects task-evidence allowance exhaustion; declare measured growth plus its existing ratchet step, preserving baselines and ceilings. Staged doctrines and normal hooks gate commit; resume saved schema leaf.`
+  Commit: `ISF-REDUCTION-DELIVERY.20: complete due startup artifact census`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" identifies the native prior record; actual UTC admission exceeds its daily boundary. The unchanged collector preserves candidates absent exact disposal authority.
+  - [x] **ADDRESSED (verified)** — Actual census and independent membership pass; saved hostile member/path/type/removal controls refuse. Update latest-only record and book replay route, preserving every candidate.
+  - [x] **NO REGRESSION** — Saved census replay and knowledge-map: OK pass; scripts/check_doctrines.sh and normal hooks gate this maintenance commit. Feature/source/HDL admission is unchanged.
 
 
 ## Blockers
