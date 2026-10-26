@@ -47,8 +47,9 @@ subtest 'actual captured defaults preserve natural generic identity and dependen
     my $result = lower($ir); $result->[1]{parameter_references}[0] = 'WRONG';
     is_deeply(lower($ir), $expected, 'returned dependency arrays belong to the caller');
     is($json->encode($ir), $before, 'complete captured source/Plan/IR remains unchanged');
-    my $ok = eval {FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($ir);1};
-    ok(!$ok, 'actual VHDL emission stays pending'); like($@, qr/top parameter environment emission is blocked/, 'existing emitter guard remains exact');
+    my $text = FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($ir);
+    like($text, qr/WIDTH : natural := 16;\n    COPY : natural := WIDTH;/,
+        'prepared VHDL emitter consumes these canonical declarations');
 };
 subtest 'case insensitive namespace, default graphs and profile limits refuse explicitly' => sub {
     refuses('case-folded port collision', sub {$_[0]{ports}[0]{name}='width'}, qr/WIDTH.*port/);

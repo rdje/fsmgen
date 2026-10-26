@@ -46,6 +46,11 @@ and serializable composition-plan snapshot contracts import
 and scoped binding discovery. This adds no source planning or HDL admission;
 the historical closure census below is unchanged.
 
+The VHDL structural emitter now imports
+`FSM::Backend::VHDL::CompositionParameterEmitter` for prepared natural top
+defaults and declaration-qualified integer child actuals. Source admission and
+symbolic VHDL port ranges remain guarded; no fresh closure count is inferred.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

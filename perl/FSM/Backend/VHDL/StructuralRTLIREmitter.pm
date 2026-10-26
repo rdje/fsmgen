@@ -23,8 +23,11 @@ generic-map actuals for bounded standalone-DT C1 instances, and port-map
 actuals whose connection expressions already render through the
 backend-neutral StructuralRTLIR expression helper.
 
-Pending semantic C<binding_expression> records, top parameter environments
-and port C<width_contract> records are explicitly refused before rendering. Their canonical validation numbers are not a symbolic lowering.
+Prepared top environments emit dependency-ordered natural defaults. Canonical
+C<binding_expression> actuals forward to declaration-qualified integer child
+generics; actual caches never provide their text. Port C<width_contract>
+records, symbolic sized/aggregate child declarations and missing environments
+retain explicit refusals.
 Ordinary supported static/literal parameter actuals retain existing behavior.
 
 =cut
@@ -39,6 +42,7 @@ no warnings 'experimental::signatures';
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_expr_text);
 use FSM::IR::StructuralRTLIR;
+use FSM::Backend::VHDL::CompositionParameterEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub emit_module ($class, $structural_rtl_ir) {
@@ -51,7 +55,11 @@ sub emit_module ($class, $structural_rtl_ir) {
     my $target_language = lc($structural->{target_language} // 'vhdl');
     confess _unsupported('structural VHDL emitter only supports target_language vhdl')
         unless $target_language eq 'vhdl';
-    FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
+    if (!exists $structural->{parameter_environment}) {
+        FSM::IR::StructuralRTLIR->assert_no_pending_parameter_bindings($structural);
+    }
+    FSM::IR::StructuralRTLIR->assert_no_pending_port_width_contracts($structural);
+    my $declarations = FSM::Backend::VHDL::CompositionParameterEmitter->lower_declarations(structural => $structural);
 
     my $top_name = $structural->{module_name}
         // confess _unsupported('structural VHDL emitter requires module_name');
@@ -62,7 +70,7 @@ sub emit_module ($class, $structural_rtl_ir) {
 
     my @port_lines = _render_port_lines(\@ports);
     my @net_lines = _render_signal_lines(\@nets);
-    my @instance_blocks = map { _render_instance_block($_) } @instances;
+    my @instance_blocks = map { _render_instance_block($_, $structural) } @instances;
 
     my @body_lines = (
         'library ieee;',
@@ -71,6 +79,17 @@ sub emit_module ($class, $structural_rtl_ir) {
         '',
         "entity $top_name is",
     );
+
+    if (@$declarations) {
+        push @body_lines, '  generic (';
+        for my $index (0 .. $#$declarations) {
+            my $declaration = $declarations->[$index];
+            push @body_lines, sprintf('    %s : %s := %s%s',
+                $declaration->{name}, $declaration->{type}, $declaration->{default_text},
+                $index == $#$declarations ? '' : ';');
+        }
+        push @body_lines, '  );';
+    }
 
     if (@port_lines) {
         push @body_lines,
@@ -122,19 +141,30 @@ sub _render_signal_lines ($nets) {
     } @$nets;
 }
 
-sub _render_instance_block ($instance) {
+sub _render_instance_block ($instance, $structural) {
     my $instance_kind = $instance->{kind} // '';
     confess _unsupported("child kind '$instance_kind' is outside the bounded structural-top leaves")
         unless $instance_kind eq 'rtl' || $instance_kind eq 'dtc' || $instance_kind eq 'fsmc';
 
     my @parameter_overrides = @{$instance->{parameter_overrides} || []};
+    my %generic_names;
+    for my $override (@parameter_overrides) {
+        my $name = _identifier($override->{name}, 'instance generic name');
+        confess _unsupported("instance generic name '$name' requires a VHDL basic identifier")
+            unless $name =~ /\A[A-Za-z](?:[A-Za-z0-9]|_[A-Za-z0-9])*\z/;
+        confess _unsupported("instance generic name '$name' is reserved in VHDL")
+            if grep {$_ eq 'VHDL'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
+        confess _unsupported("duplicate VHDL generic '$name' in instance '" . ($instance->{instance_name} // '?') . "'")
+            if $generic_names{lc($name)}++;
+    }
+    my @static_overrides = grep {!exists $_->{binding_expression}} @parameter_overrides;
     if (@parameter_overrides) {
         my $is_supported_generated_fsm_generic_map =
             $instance_kind eq 'fsmc'
-            && _has_only_supported_generated_fsm_generic_actuals(\@parameter_overrides);
+            && _has_only_supported_generated_fsm_generic_actuals(\@static_overrides);
         my $is_supported_standalone_dt_generic_map =
             $instance_kind eq 'dtc'
-            && _has_only_supported_standalone_dt_generic_actuals(\@parameter_overrides);
+            && _has_only_supported_standalone_dt_generic_actuals(\@static_overrides);
         confess _unsupported('composition VHDL generic maps are currently limited to external RTL scalar integer, scalar integer expression, sized bitstring, or packed aggregate overrides, generated-FSM scalar integer, scalar integer expression, one-bit sized bitstring, multi-bit sized bitstring, or resolved packed aggregate overrides, plus standalone-DT scalar integer, scalar integer expression, metadata-backed one-bit and multi-bit sized bitstring, packed-list, or packed-map overrides')
             unless $instance_kind eq 'rtl'
             || $is_supported_generated_fsm_generic_map
@@ -156,7 +186,10 @@ sub _render_instance_block ($instance) {
         push @generic_lines, sprintf(
             '      %s => %s%s',
             _identifier($override->{name}, 'instance generic name'),
-            _vhdl_generic_actual(
+            exists($override->{binding_expression})
+                ? FSM::Backend::VHDL::CompositionParameterEmitter->lower_actual(
+                    structural => $structural, instance => $instance, override => $override)
+                : _vhdl_generic_actual(
                 $override,
                 allow_one_bit_sized_bitstring =>
                     $instance_kind eq 'fsmc'

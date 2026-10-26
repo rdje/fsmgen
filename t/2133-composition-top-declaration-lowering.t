@@ -117,8 +117,8 @@ subtest 'declaration preparation preserves static omission and the VHDL boundary
     is_deeply(lower($static), [], 'ordinary structural input adds no parameter declarations');
     my $vhdl = copy($structural); $vhdl->{target_language} = 'vhdl';
     my $ok = eval {FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($vhdl);1};
-    ok(!$ok, 'VHDL remains independently guarded');
-    like($@, qr/top parameter environment emission is blocked/, 'VHDL integration still owns emission');
+    ok(!$ok, 'Verilog fixture is outside the VHDL natural profile');
+    like($@, qr/reserved/, 'VHDL rejects the reserved ALIAS declaration');
     ok(!$lowerer->can('emit_module'), 'preparation owns no alternate module-generation entrypoint');
 };
 done_testing;

@@ -139,7 +139,8 @@ authored order independently of lazy resolution. Numeric equality cannot select
 an owner. Recursive binding nodes distinguish literals, parameters, static
 symbols, semantic payloads, operators, lists and maps. Optional instance
 `binding_expression` fields use this same family alongside their validation
-cache; static overrides retain their existing shape.
+cache; static overrides gain no symbolic binding field. Matched declarations
+may add the optional metadata described below.
 
 This is public in-process inspection of prepared objects. Parameter-bearing
 source queries still return the pending-lowering diagnostic; discovery marks
@@ -197,10 +198,9 @@ cover forward/default/namespace meaning; the
 canonical expression boundaries. These focused checks do not qualify external
 HDL compilation/runtime or complete profile and transport matrices.
 
-The internal VHDL [generic preparer](../../../perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm)
-now prepares dependency-ordered `natural` top defaults from matching captured
-environments. This is a helper boundary; the structural VHDL emitter still
-refuses parameter environments. Plain nonnegative decimal literals, aliases,
+The VHDL [generic preparer](../../../perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm)
+and direct structural emitter now consume dependency-ordered `natural` top
+defaults from matching captured environments. Plain nonnegative decimal literals, aliases,
 captured decimal static values and canonical `+`, `-`, `*`, `/`, `%` arithmetic
 are prepared; `%` renders as VHDL `mod`. Rendered arithmetic steps must remain
 nonnegative and within the portable integer range through `2147483647`.
@@ -212,8 +212,8 @@ bitwise operators, foreign scopes, cycles and incomplete bindings refuse.
 The [source fixture](../../../t/data/composition-vhdl-natural-generics.fsm) and
 [focused preparation test](../../../t/2136-composition-vhdl-natural-generics.t)
 cover actual parsed/imported Plan/IR and independent order, cache and namespace
-controls. Generic-map integration, symbolic
-VHDL ranges, external override legality and full qualification remain pending.
+controls. Symbolic VHDL ranges, external override legality and full qualification
+remain pending.
 
 Validated RTL, FSM and standalone-DT child overrides now retain the matched
 declaration's canonical `declaration_default_value_text`, `payload`, `kind`,
@@ -228,8 +228,22 @@ payload refuses. Discovery names `declaration_default_value_keys` and
 `declaration_default_optional_keys`; payload/type recurse through the existing
 schemas. The [declaration regression](../../../t/2137-composition-child-declaration-evidence.t)
 checks real RTL/FSM/DT sources, cache separation and missing-evidence controls.
-This metadata prepares typed forwarding; VHDL symbolic actual emission and
-parameter-bearing source admission remain guarded.
+Prepared VHDL symbolic actuals now forward canonical natural-valued expressions
+to child generics whose matched scalar declaration has a bounded plain decimal
+default. Canonical default text, payload and type must agree; absent evidence,
+sized bit/vector defaults and aggregate symbolic declarations refuse. Actual
+validation caches never supply emitted values. For example, `COUNT => TOTAL`
+retains the selected top generic independently of its default. Static literal
+and aggregate mappings keep their existing path and formatting. Child generic
+names must be non-reserved VHDL basic identifiers and unique without regard
+to case; `COUNT` and `count` cannot appear in the same generic map.
+The [emission fixture](../../../t/data/composition-vhdl-scalar-emission.fsm) and
+[focused test](../../../t/2138-composition-vhdl-scalar-emission.t) exercise actual
+RTL/FSM/DT declaration producers and connected prepared Plan/IR products.
+Discovery's `prepared_vhdl_scalar_emission` advertises `top_defaults` and
+`natural_to_integer_child_actuals`, with false `symbolic_port_widths` and
+`source_admission`. Parameter-bearing source queries still refuse; these
+focused checks do not qualify external VHDL compilation or runtime.
 
 ## Top Root Shape
 

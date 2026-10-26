@@ -85,7 +85,7 @@ subtest 'unqualified widths, namespaces, types and scopes stay closed' => sub {
     refuses('unsupported top aggregate', sub {$_[0]{parameter_environment}{parameters}{WIDTH}{value_kind} = 'list'}, qr/scalar parameter/);
     my $vhdl = copy($ir); $vhdl->{target_language} = 'vhdl';
     my $ok = eval {FSM::Backend::VHDL::StructuralRTLIREmitter->emit_module($vhdl);1};
-    ok(!$ok, 'VHDL remains separately guarded'); like($@, qr/top parameter environment emission is blocked/, 'VHDL pending boundary stays explicit');
+    ok(!$ok, 'Verilog ALIAS fixture remains outside the VHDL profile'); like($@, qr/reserved/, 'VHDL rejects the reserved ALIAS declaration');
 };
 subtest 'ordinary static source shape and public applicability remain explicit' => sub {
     my $static = {module_name => 'static_top', ports => [{name => 'clk', direction => 'input', width => 1}],

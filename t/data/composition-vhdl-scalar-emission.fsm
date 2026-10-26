@@ -1,0 +1,19 @@
+(?top:vhdl_scalar_top
+  (+params (COPY WIDTH) (WIDTH 16) (EQUAL 16) (TOTAL (+ COPY shared.EXTRA)))
+  (+import shared)
+  (?ports:io clk<1 rstn<1 rtl_ready>1 fsmc_ready>1 dtc_ready>1)
+  (?rtl:rtl_child (module scalar_rtl) (params (COUNT TOTAL) (OTHER EQUAL) (STATIC shared.EXTRA)))
+  (?fsmc:fsm_child scalar_fsm (params (COUNT TOTAL) (OTHER EQUAL) (STATIC shared.EXTRA)))
+  (?dtc:dt_child scalar_dt (params (COUNT TOTAL) (OTHER EQUAL) (STATIC shared.EXTRA)))
+)
+(?pkg:shared (+constants (EXTRA 2)))
+(?rtlif:scalar_rtl (params (COUNT 8) (OTHER 8) (STATIC 8)) clk<1 ready>1)
+(?fsm:scalar_fsm
+  (+params (COUNT 8) (OTHER 8) (STATIC 8))
+  (+system (clock clk) (sreset rstn))
+  (-idle (ready> = 1'b1))
+)
+(?dt:scalar_dt
+  (+params (COUNT 8) (OTHER 8) (STATIC 8))
+  (-pass (ready> = 1'b1))
+)

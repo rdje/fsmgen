@@ -14,6 +14,6 @@ reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2127-composition-param
 ---
 
 [Composition Basics](../book/src/05-composition-basics.md) owns optional
-schemas, detached Plan snapshots and pending source/VHDL boundaries. Overrides
+schemas, detached Plan snapshots and prepared VHDL/source boundaries. Overrides
 retain child default text/payload/type/source apart from actual caches (T2137).
 Only actual Top/Plan/IR establish provenance; static products omit environments.

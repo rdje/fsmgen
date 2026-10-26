@@ -1410,7 +1410,10 @@ Matched child overrides also retain detached declaration default text, payload,
 type and optional authored source, independently of actual caches. Discovery
 names the exact optional key families; see the composition reference and
 [declaration test](../../t/2137-composition-child-declaration-evidence.t).
-This evidence does not enable symbolic VHDL forwarding or ISF generic widths.
+The direct prepared VHDL profile now emits natural top defaults and canonical
+natural-valued actuals to declaration-qualified decimal integer child generics.
+Sized/aggregate symbolic child bindings and VHDL width contracts still refuse;
+ISF generic widths, source admission and full qualification remain pending.
 
 Composition Port width-expression declarations now retain source AST and scoped
 lookup records after default/import resolution; see [Composition Basics](../book/src/05-composition-basics.md).

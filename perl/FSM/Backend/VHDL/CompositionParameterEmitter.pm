@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Scalar::Util qw(refaddr);
+use JSON::PP ();
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -16,7 +17,7 @@ sub lower_declarations ($class, %args) {
     my $structural = $args{structural};
     confess "VHDL generic preparation requires a structural hash\n" unless ref($structural) eq 'HASH';
     confess "VHDL generic preparation requires a VHDL target\n"
-        unless ($structural->{target_language} // 'vhdl') eq 'vhdl';
+        unless lc($structural->{target_language} // 'vhdl') eq 'vhdl';
     return [] unless exists $structural->{parameter_environment};
     my $environment = $structural->{parameter_environment};
     confess "VHDL generic preparation requires a resolved parameter environment\n"
@@ -91,6 +92,41 @@ sub _identifier ($name) {
     confess "VHDL generic namespace identifier '$name' hides a generated type\n"
         if grep {lc($name) eq $_} qw(natural std_logic std_logic_vector signed);
     return $name;
+}
+
+sub lower_actual ($class, %args) {
+    my $structural = $args{structural};
+    $class->lower_declarations(structural => $structural);
+    my $environment = $structural->{parameter_environment};
+    confess "VHDL symbolic generic actual requires its captured parameter environment\n"
+        unless ref($environment) eq 'HASH';
+    my $override = $args{override};
+    my $instance = $args{instance};
+    confess "VHDL symbolic generic actual requires an instance and override record\n"
+        unless ref($instance) eq 'HASH' && ref($override) eq 'HASH';
+    _identifier($instance->{module_name});
+    _identifier($override->{name});
+    confess "VHDL symbolic generic actual requires a scalar integer child declaration\n"
+        unless ($override->{value_kind} // '') eq 'scalar'
+            && ($override->{declaration_default_value_kind} // '') eq 'scalar';
+    my $text = $override->{declaration_default_value_text};
+    my $payload = $override->{declaration_default_value_payload};
+    my $type = $override->{declaration_default_value_type_spec};
+    confess "VHDL symbolic generic actual requires decimal integer declaration evidence\n"
+        unless defined($text) && !ref($text) && $text =~ /\A\+?\d[\d_]*\z/
+            && ref($payload) eq 'HASH' && ($payload->{kind} // '') eq 'scalar'
+            && defined($payload->{payload}) && !ref($payload->{payload}) && $payload->{payload} eq $text
+            && ref($type) eq 'HASH';
+    _integer_payload($payload);
+    my $canonical = FSM::ParameterValueSupport->canonical_value(value_ast => $payload);
+    my $json = JSON::PP->new->canonical;
+    confess "VHDL symbolic generic actual has inconsistent declaration type evidence\n"
+        unless $json->encode($type) eq $json->encode($canonical->{value_type_spec})
+            && (!exists($override->{declaration_default_value_width})
+                || $json->encode($override->{declaration_default_value_width}) eq $json->encode($canonical->{value_width}));
+    my $state = {environment=>$environment, scope=>$environment->{scope}, active=>{}, references=>[]};
+    my ($actual) = _render($state, $override->{binding_expression});
+    return $actual;
 }
 
 sub _bounded_natural ($value) {
@@ -183,8 +219,8 @@ FSM::Backend::VHDL::CompositionParameterEmitter - Prepared canonical natural-val
 
 =head1 DESCRIPTION
 
-Prepares captured scalar top defaults without enabling VHDL structural emission
-or source admission. The bounded profile selects C<natural> generics with plain
+Prepares captured scalar top defaults and child actuals for direct VHDL
+structural emission. Source admission remains separate. The bounded profile selects C<natural> generics with plain
 nonnegative decimal literals, scalar aliases, captured decimal static payloads
 and canonical C<+>, C<->, C<*>, C</>, C<%> arithmetic. Modulo renders as C<mod>;
 explicit left-associated parentheses retain operand order. Rendered arithmetic
@@ -208,6 +244,17 @@ C<natural>, C<std_logic>, C<std_logic_vector> or C<signed> type names; incomplet
 membership, cyclic defaults, foreign scopes and unsupported shapes refuse.
 Static structural inputs return an empty array. This internal helper does not
 attest the provenance of caller-made hashes, establish external override
-legality, type child actuals or emit a module. Those remain separately owned.
+legality or emit a module.
+
+=head2 lower_actual
+
+Consumes C<structural>, C<instance> and C<override>. Validates the captured
+natural top environment and emits the canonical C<binding_expression> without
+using the actual-value cache. The child must have scalar declaration evidence
+with a bounded plain nonnegative decimal default and consistent canonical
+payload/type/optional width records. Sized bit/vector and aggregate symbolic
+child declarations refuse rather than acquiring guessed integer conversions.
+Child module and generic names must be valid VHDL basic identifiers. Static
+actuals retain the structural emitter's existing separate literal path.
 
 =cut
