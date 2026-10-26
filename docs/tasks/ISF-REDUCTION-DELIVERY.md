@@ -1445,17 +1445,66 @@ do not start broad suites between implementation slices.
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit consistent parameter-dependent widths through supported HDL profiles.`
   Acceptance: `After canonical module carriers .2.3.3.4.2 and typed source/IR preparation, coordinate SEM .33.3.2. Complete .2 qualification and generated forwarding/source activation follow the implemented generic/specialization prerequisites instead of blocking this implementation. Carry parameter-default aliases and dependencies through canonical IAL0 to ports, storage, intermediate expressions, constants and resets; no HDL post-processing. Independently compile a real parameter override and compare its declarations and runtime against separately generated matching defaults. Unrelated equal-width declarations remain independent. Refuse profiles that cannot preserve these relationships. Synchronize corpus/public native/API/MCP/book/feedback contracts and commit.`
-  Verification: `Pending width carrier foundation. P1 parameter-default dependency loss is reproduced under .2.3.3.3.2.2.2.1: native source alias BOUND=W emits BOUND=16 independently of W=16. Core authored-default retention is implemented at .2.3.3.3.2.2.2.2; this .3 owns actual HDL alias/default relation emission and independent override-versus-matching-default behavior. The gap remains open until that feature is verified; current default-only output is not a generic claim.`
+  Verification: `Canonical module carriers .2.3.3.4.2 now have focused checks. Split direct scalar alias declarations, complete default relationships, declared ranges, dependent internals and profile integration before implementation. First consumer: the shared Verilog-family scaffold currently emits value_text and sorts names; the retained Core source observations distinguish actual declared aliases from equal literals/static values. Prior adjudication 1dc9e4449cd792467636e429d6dfefc017202ad0 preserves executable parameter operands and emits declarations; its t/30 controls do not qualify authored default aliases. T2110 explicitly retained normalized default HDL during metadata preparation. Preserve those scopes rather than contradicting their historical results. Full compiled override/runtime versus matching-default qualification is separately blocked under .3.6 until .6; focused implementation .3.1-.3.5 can precede that matrix and specialization .4 remains downstream of implemented generic behavior. No code or source-admission guard changes in this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY.3: split generic HDL implementation boundaries`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '_render_module_parameter_lines' identifies 1dc9e4449 and the shared ScaffoldEmitter path. Its historical tests qualify executable RHS/guard parameter references, while current _render_module_parameter_lines reads normalized value_text. T2110 and decision119 separately retain authored default identity and the known normalized-alias gap.
+  - [x] **ADDRESSED (verified)** — Split six concrete dependency-ordered children before implementation. Begin with actual declared direct scalar aliases and preserve static controls; retain general expressions, ranges, dependent internals and backend integration as explicit successors. Keep exact external override/runtime qualification owned by .3.6/.6 rather than implying it passed or delaying implementation with a broad matrix.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl passes and knowledge-map: OK; no product behavior or source profile changed. Mandatory staged scripts/check_doctrines.sh and normal hooks gate the task decomposition and measured task-evidence growth metadata, without baseline or ceiling changes.
+
+  Children: `ISF-REDUCTION-DELIVERY.3.1, ISF-REDUCTION-DELIVERY.3.2, ISF-REDUCTION-DELIVERY.3.3, ISF-REDUCTION-DELIVERY.3.4, ISF-REDUCTION-DELIVERY.3.5, ISF-REDUCTION-DELIVERY.3.6`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.1`
+  Status: `pending`
+  Goal: `Emit actual direct scalar parameter aliases in Verilog-family module declarations.`
+  Acceptance: `Use retained Core source expressions and observed declared references, not equal numeric values or raw HDL substitution. Recognize only actual direct scalar root aliases in this first consumer, preserve chosen names and dependency order, and retain existing static/programmatic/aggregate/operator-default behavior as explicitly incomplete general relationship profiles. Preserve alphabetical tie order when no emitted dependency constrains it. Reject malformed declared alias observations/cycles rather than emitting invented identifiers. Verify native source/Core/HDL text, actual ordinary/generated carrier consumers, independent alias-versus-literal/static controls and caller JSON kinds. Synchronize existing T2110 expectations, POD/book/fact boundaries and commit after focused checks. VHDL/general defaults, ranges and complete external override/runtime qualification remain successors/.6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2`
+  Status: `pending`
+  Goal: `Preserve canonical general parameter-default relationships through supported module backend profiles.`
+  Acceptance: `After .1, reuse the shared canonical parameter evaluator/expression capture to carry actual selected scalar operators, aliases and supported aggregate/path defaults without a second evaluator or raw source escape hatch. Preserve constant/enum/package versus parameter namespaces and actual declaration type evidence. Qualify dependency order, nested source meaning, immutable defaults and target-specific supported/refused profiles with focused checks; split unsafe producer/backend work before implementation. Synchronize source/discovery/book boundaries and commit; full matrices remain .6.`
+  Verification: `pending direct alias consumer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3`
+  Status: `pending`
+  Goal: `Emit retained parameter-dependent declared signal ranges through supported HDL backends.`
+  Acceptance: `After default relationships, carry actual Core declared_width_source trees and selected parameter identities through direct ports/storage and backend declarations. Reuse existing width evaluation for selected defaults while emitting supported symbolic ranges, including one-bit defaults, arithmetic and same-name type/static controls. Preserve unrelated equal-width declarations and named types. Guard unsupported profile/shape combinations before artifact success; source text is never post-processed. Focused actual source/carrier/Core/HDL checks, synchronized profile/book contracts and commit precede dependent internal widths.`
+  Verification: `pending canonical default relationships`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4`
+  Status: `pending`
+  Goal: `Propagate generic width relationships through internal expressions, constants, resets and width-sensitive helpers.`
+  Acceptance: `After declared ranges, join existing AST/IR width consumers to actual declarations rather than numeric equality. Preserve reductions, intermediate/result widths, register/reset sizing and supported canonical helper expressions under the elaborated relationship. Keep unrelated fixed widths and existing type/reset semantics. Split by actual backend/consumer boundaries when necessary; use focused distinguishing controls and named unsupported refusals. Synchronize book/discovery/owned constructor contracts and commit; full corpus/runtime remains .6.`
+  Verification: `pending declared generic ranges`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.5`
+  Status: `pending`
+  Goal: `Join implemented generic profiles to focused source/IR/backend legality and specialization handoff.`
+  Acceptance: `After .1-.4, use small representative native/default/carrier checks for each newly implemented boundary and fail closed for unsupported relationships or stale shapes. Preserve authored defaults, actual declaration identities and selected-environment report meaning. Keep generated composition admission blocked until specialization .4 conserves connected shapes; do not activate mismatched artifacts. Synchronize exact supported/unqualified profile guidance and commit. This focused implementation closure is not full external or transport qualification; .3.6/.6 retain that proof.`
+  Verification: `pending generic consumers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.6`
+  Status: `blocked`
+  Goal: `Qualify generic parameter overrides against independently generated matching defaults.`
+  Acceptance: `Activate with .6 after required feature implementation and symbol-retention prerequisite .19. Independently compile and observe actual overrides versus matching source defaults across supported profiles, including complete declarations, intermediates, resets/constants, legal and illegal settings and unrelated equal-width controls. Preserve first failures, exact source/provider identities and public native/API/MCP/corpus allocation. Coordinate .4 legality/specialization and grouped .5; close parent .3 only when its required evidence is complete.`
+  Verification: `Deferred to .6 after required implementation; no external generic override/runtime matrix has passed.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.4`
   Status: `pending`
   Goal: `Qualify specialization, parameter legality and external relationship guards.`
   Acceptance: `After canonical module-carrier preparation and .3 generic emission, coordinate SEM .33.3.3/.33.3.4 and existing derived-width legality. Recompute independent library/activation/generated-top environments before bindings, refuse stale/default-width mismatches and invalid widths, and preserve instance identity. Qualify positive integer legality plus compiled external HDL checks for dependent group/output-width relationships. Reports describe the chosen environment and retain authored dependencies without suggesting a default is generic proof. Keep all generic-width obligations tracked through closure and commit the bounded implementation.`
-  Verification: `pending generic emission`
+  Verification: `Pending implemented generic consumers .3.1-.3.5; deferred full qualification .3.6 does not block this implementation.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.5`
@@ -1469,7 +1518,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Qualify and publish complete required SPECFORGE reduction delivery.`
   Acceptance: `After required feature implementation, close the separately owned symbol-resolver retention defect .19 before resource-sensitive full/publication qualification. Coordinate SEM .92.4 and .69 after required source slices. Compare exact retained unrolled baseline and accepted scalar parity, then grouped parity at widths 16/32 and a short-tail setting under real parameter overrides, with independent expected bits and width/legality negatives. Verify source/carrier/report/public discovery and supported profiles, required full CI and exact-SHA hosted workflows. Update canonical feedback with revision, selected syntax, limits and caller-owned pin/bundle/integration steps. No foreign write or historical-gate waiver; required R1-R3 close only on complete evidence.`
-  Verification: `Deferred verification task, activated after required feature implementation: full source/carrier/native/API/MCP/corpus and broad constructor/domain qualification, including .2.3.2.4 products, remain unexecuted. Focused implementation checks do not close this task. Publication qualification and exact-SHA hosted results remain pending.`
+  Verification: `Deferred verification task, activated after required feature implementation: full source/carrier/native/API/MCP/corpus and broad constructor/domain qualification, including .2.3.2.4 products and generic override task .3.6, remain unexecuted. Focused implementation checks do not close this task. Publication qualification and exact-SHA hosted results remain pending.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.7`
