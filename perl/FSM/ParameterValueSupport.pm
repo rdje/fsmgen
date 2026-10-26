@@ -32,12 +32,15 @@ sub canonical_value ($class, %args) {
     my $docs_hint = $args{docs_hint} // '';
     my $value_ast = exists($args{value_ast}) ? $args{value_ast} : $args{value};
     my $resolve_symbol_payload = $args{resolve_symbol_payload};
+    my $expression;
+    my $expression_ref = $args{capture_expression} ? \$expression : undef;
 
     my $payload = $class->_canonical_payload(
         $value_ast,
         $context,
         $docs_hint,
         $resolve_symbol_payload,
+        $expression_ref,
     );
     my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payload);
     my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($payload);
@@ -50,6 +53,7 @@ sub canonical_value ($class, %args) {
         );
         $result{value_width} = $width if defined $width;
         $result{value_type_spec} = $type_spec if ref($type_spec) eq 'HASH';
+        $result{value_expression} = $expression if $expression_ref;
         return \%result;
     }
 
@@ -65,6 +69,7 @@ sub canonical_value ($class, %args) {
         value_width => $width,
     );
     $result{value_type_spec} = $type_spec if ref($type_spec) eq 'HASH';
+    $result{value_expression} = $expression if $expression_ref;
     return \%result;
 }
 
@@ -99,30 +104,34 @@ sub resolve_payload_path ($class, $payload, $suffix) {
     return $class->_clone_payload($current);
 }
 
-sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
-    return $class->_canonical_existing_payload(
-        $value_ast,
-        $context,
-        $docs_hint,
-        $resolve_symbol_payload,
-    ) if ref($value_ast) eq 'HASH' && exists $value_ast->{kind};
+sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef, $expression_ref = undef) {
+    if (ref($value_ast) eq 'HASH' && exists $value_ast->{kind}) {
+        my $payload = $class->_canonical_existing_payload($value_ast, $context, $docs_hint, $resolve_symbol_payload);
+        # Semantic payloads have no authored operator tree to reconstruct.
+        $$expression_ref = {kind => 'payload', value => $class->_clone_payload($payload)} if $expression_ref;
+        return $payload;
+    }
 
     my $scalar_value = $class->_unwrap_scalar_token($value_ast);
     if (defined($scalar_value) && !ref($scalar_value)) {
+        my $source_token = $scalar_value;
         if ($resolve_symbol_payload) {
             my $resolved_payload = $resolve_symbol_payload->($scalar_value);
-            return $class->_canonical_payload(
-                $resolved_payload,
-                "$context symbol '$scalar_value'",
-                $docs_hint,
-                $resolve_symbol_payload,
-            ) if defined $resolved_payload;
+            if (defined $resolved_payload) {
+                my $payload = $class->_canonical_payload(
+                    $resolved_payload, "$context symbol '$scalar_value'", $docs_hint, $resolve_symbol_payload,
+                );
+                $$expression_ref = {kind => 'symbol', token => $source_token} if $expression_ref;
+                return $payload;
+            }
         }
 
-        return {
+        my $payload = {
             kind => 'scalar',
             payload => $class->_canonical_scalar_value_text($scalar_value, $context, $docs_hint),
         };
+        $$expression_ref = {kind => 'literal', token => $source_token} if $expression_ref;
+        return $payload;
     }
 
     if (ref($value_ast) eq 'ARRAY') {
@@ -131,6 +140,7 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
             $context,
             $docs_hint,
             $resolve_symbol_payload,
+            $expression_ref,
         );
         return $expression_payload if defined $expression_payload;
     }
@@ -161,6 +171,7 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
 
     if ($hash_like_entries && !$non_hash_entries) {
         my %members;
+        my %member_expressions;
         my @member_order;
         for my $entry (@$value_items) {
             my ($member_name_ast, $member_value_ast) = @$entry;
@@ -170,14 +181,19 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
                 $docs_hint."\n"
                 if exists $members{$member_name};
             push @member_order, $member_name;
+            my $member_expression;
             $members{$member_name} = $class->_canonical_payload(
                 $member_value_ast,
                 "$context member '$member_name'",
                 $docs_hint,
                 $resolve_symbol_payload,
+                ($expression_ref ? \$member_expression : undef),
             );
+            $member_expressions{$member_name} = $member_expression if $expression_ref;
         }
 
+        $$expression_ref = {kind => 'map', member_order => [@member_order], members => \%member_expressions}
+            if $expression_ref;
         return {
             kind => 'map',
             member_order => \@member_order,
@@ -190,19 +206,17 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
         $docs_hint."\n"
         if $hash_like_entries && $non_hash_entries;
 
-    return {
-        kind => 'list',
-        items => [
-            map {
-                $class->_canonical_payload(
-                    $value_items->[$_],
-                    "$context item $_",
-                    $docs_hint,
-                    $resolve_symbol_payload,
-                )
-            } 0 .. $#$value_items
-        ],
-    };
+    my (@items, @item_expressions);
+    for my $index (0 .. $#$value_items) {
+        my $item_expression;
+        push @items, $class->_canonical_payload(
+            $value_items->[$index], "$context item $index", $docs_hint, $resolve_symbol_payload,
+            ($expression_ref ? \$item_expression : undef),
+        );
+        push @item_expressions, $item_expression if $expression_ref;
+    }
+    $$expression_ref = {kind => 'list', items => \@item_expressions} if $expression_ref;
+    return {kind => 'list', items => \@items};
 }
 
 sub _canonical_existing_payload ($class, $payload, $context, $docs_hint, $resolve_symbol_payload = undef) {
@@ -341,7 +355,7 @@ sub _canonical_scalar_value_text ($class, $value, $context, $docs_hint) {
         $docs_hint."\n";
 }
 
-sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
+sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef, $expression_ref = undef) {
     my $expr_ast = $value_ast;
     while (ref($expr_ast) eq 'ARRAY' && @$expr_ast == 1 && ref($expr_ast->[0]) eq 'ARRAY') {
         $expr_ast = $expr_ast->[0];
@@ -368,19 +382,24 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
             $docs_hint."\n"
             unless @defined_operands == 1 && !$has_flat_multi_operand_list;
 
+        my $operand_expression;
         my $operand_payload = $class->_canonical_payload(
             $defined_operands[0],
             "$context expression operand for '$operator'",
             $docs_hint,
             $resolve_symbol_payload,
+            ($expression_ref ? \$operand_expression : undef),
         );
-        return $class->_canonical_unary_aggregate_expression_payload(
+        my $payload = $class->_canonical_unary_aggregate_expression_payload(
             $normalized_operator,
             $operator,
             $operand_payload,
             $context,
             $docs_hint,
         );
+        $$expression_ref = {kind => 'operator', operator => $normalized_operator,
+            source_operator => $operator, operands => [$operand_expression]} if $expression_ref;
+        return $payload;
     }
 
     if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
@@ -392,14 +411,18 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
         $docs_hint."\n"
         unless @operands >= 2;
 
-    my @operand_payloads = map {
-        $class->_canonical_payload(
-            $_,
+    my (@operand_payloads, @operand_expressions);
+    for my $operand (@operands) {
+        my $operand_expression;
+        push @operand_payloads, $class->_canonical_payload(
+            $operand,
             "$context expression operand for '$operator'",
             $docs_hint,
             $resolve_symbol_payload,
-        )
-    } @operands;
+            ($expression_ref ? \$operand_expression : undef),
+        );
+        push @operand_expressions, $operand_expression if $expression_ref;
+    }
 
     my $saw_aggregate_operand = 0;
     for my $operand_payload (@operand_payloads) {
@@ -408,26 +431,22 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
             if $operand_kind eq 'list' || $operand_kind eq 'map';
     }
 
-    return $class->_canonical_aggregate_expression_payload(
-        $normalized_operator,
-        $operator,
-        \@operand_payloads,
-        $context,
-        $docs_hint,
-    ) if $saw_aggregate_operand;
-
-    my @operand_texts = map {
-        $class->_scalar_expression_operand_text_from_payload(
-            $_,
-            "$context expression operand for '$operator'",
-            $docs_hint,
-        )
-    } @operand_payloads;
-
-    return {
-        kind => 'scalar_expr',
-        payload => '(' . join(" $normalized_operator ", @operand_texts) . ')',
-    };
+    my $payload;
+    if ($saw_aggregate_operand) {
+        $payload = $class->_canonical_aggregate_expression_payload(
+            $normalized_operator, $operator, \@operand_payloads, $context, $docs_hint,
+        );
+    } else {
+        my @operand_texts = map {
+            $class->_scalar_expression_operand_text_from_payload(
+                $_, "$context expression operand for '$operator'", $docs_hint,
+            )
+        } @operand_payloads;
+        $payload = {kind => 'scalar_expr', payload => '(' . join(" $normalized_operator ", @operand_texts) . ')'};
+    }
+    $$expression_ref = {kind => 'operator', operator => $normalized_operator,
+        source_operator => $operator, operands => \@operand_expressions} if $expression_ref;
+    return $payload;
 }
 
 sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payloads, $context, $docs_hint) {
@@ -912,6 +931,27 @@ sub _clone_payload ($class, $value) {
 __END__
 
 =head1 METHODS
+
+=head2 canonical_value
+
+C<canonical_value(value_ast =E<gt> ..., capture_expression =E<gt> 1, ...)>
+optionally adds a detached C<value_expression> to the ordinary canonical result.
+With capture disabled, the existing result shape is unchanged. The same
+canonical evaluator chooses every branch; capture does not parse or evaluate a
+second expression and does not change resolver call order or admitted values.
+
+Literal nodes retain their original token. Symbol nodes retain the actual
+successfully resolved token, including member/index paths, without expanding
+its definition into a default number. Operator nodes retain normalized
+C<operator>, authored C<source_operator> and ordered C<operands>. List nodes
+retain ordered C<items>; map nodes retain C<member_order> and C<members> chosen
+by the canonical aggregate parser. Existing semantic payload inputs produce an
+explicit C<payload> node holding a detached canonical C<value>; opaque normalized
+scalar-expression payload text acquires no invented authored operator tree.
+
+These are source observations, not scoped generic bindings or HDL expressions.
+Consumers must still bind real declarations and preserve supported target
+semantics. Capture does not admit a value that ordinary evaluation refuses.
 
 =head2 canonical_value_text
 

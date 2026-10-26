@@ -94,6 +94,14 @@ after the caller releases it; this is a scoped lifetime guarantee, not a claim
 about every symbol resolver. Composition top declarations share this graph after imports; their HDL lowering
 remains a later feature.
 
+Compiler consumers can also request `capture_expression` from
+`FSM::ParameterValueSupport::canonical_value`. Its optional `value_expression`
+records literal and successfully resolved symbol tokens, operators with their
+authored aliases, ordered lists and maps. Existing semantic payload inputs stay
+explicit payload nodes. The ordinary result shape, values and resolver order
+stay unchanged when capture is disabled. This source tree prepares scoped
+binding; it does not itself supply top generics or symbolic HDL emission.
+
 This preservation prepares later lowering. Current HDL parameter defaults still
 use normalized values; dependent-default emission and override behavior remain
 required follow-on work. Retained source identity alone does not prove that an
