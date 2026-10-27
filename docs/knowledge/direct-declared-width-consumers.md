@@ -31,12 +31,13 @@ captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
 direct consumer integration; computed shapes and full qualification stay .3.4/.6.
 
-The direct Parser now offers opt-in capture_declared_width_contract with explicit
-lexical direct_module scope. It preserves the actual constant-only fast branch
-and reuses canonical expression capture with real selected observations. Fixed
-literal/type results and all ordinary contracts remain unchanged. This private
-result is not yet published on Core Signals: .3.3.1.2.2.3 owns automatic source
-association/invalidation before target kernels may consume it. The Core holder
-and registry invalidation are now implemented separately; automatic source
-publication is .3.3.1.2.2.3.2 and actual auxiliary origin copies are .3. Reverify:
-`prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t`.
+The direct Parser offers opt-in capture_declared_width_contract with explicit
+lexical direct_module scope, preserving the actual constant fast branch and
+canonical selected observation walk. Successful source parsing now stages real
+Signal associations and publishes primary declared_width_binding records only
+after complete module validation; facade failures clear them too. Original
+header scope survives physical renaming. Old source/numeric/public products
+conserve; literal/type branches acquire no parameter relationship. Auxiliary
+origin propagation remains .3.3.1.2.2.3.3, before target range kernels .3.3.2.
+Reverify:
+`prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.

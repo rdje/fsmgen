@@ -32,9 +32,10 @@ sub signal {
         _declared_width_source => copy($source), _declared_width_binding => copy($binding), @_);
 }
 
-subtest 'plain holder detaches callers/getters without automatic source publication' => sub {
-    is($source_signal->declared_width_binding, undef, 'ordinary source parse still publishes no binding');
-    ok(!exists $source_signal->{_declared_width_binding}, 'ordinary Signal shape has no extra metadata field');
+subtest 'plain holder detaches callers/getters and ordinary constructors remain unbound' => sub {
+    my $ordinary = FSM::CoreAST::Signal->new(name => 'ordinary', width => 16, _declared_width_source => copy($source));
+    is($ordinary->declared_width_binding, undef, 'ordinary constructor without supplied binding remains unbound');
+    ok(!exists $ordinary->{_declared_width_binding}, 'ordinary constructor adds no metadata field');
     my $input = copy($binding); my $s = signal(_declared_width_binding => $input);
     is($json->encode($s->declared_width_binding), $expected_json, 'copied physical name retains original declaration identity');
     $input->{scope}{owner} = 'WRONG'; $input->{observations}[0]{value_payload}{payload} = '99';

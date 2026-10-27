@@ -141,8 +141,9 @@ Literal and named-type branches retain their existing fixed/type contracts.
 The constant fast path consumes its actual exact decimal observation without
 replaying general lookup, evaluation or target formatting. Expression capture
 uses the canonical walk and declared-only parameter selector. Ordinary parser
-calls, source getters and numeric values stay unchanged; automatic Core
-publication and symbolic HDL activation remain separate pending work.
+calls, source getters and numeric values stay unchanged. Successful full source
+parsing now publishes these private primary declaration bindings; propagation
+through auxiliary origins and symbolic HDL activation remain pending.
 
 Core Signals now provide private `declared_width_binding` storage for explicitly
 supplied compiler records. The envelope adds the actual declaration signal and
@@ -153,8 +154,19 @@ a physical copy can retain a different original declaration name. Failed
 replacement clears the old record. Registry width refinement or explicit source/
 type replacement invalidates the binding while preserving existing numeric and
 source getters. Ordinary inference with unchanged width and absent type keeps
-it. Canonical graph proof remains the producer and target preparer's job;
-normal source parsing has not yet enabled this publication.
+it. Canonical graph proof remains the producer and target preparer's job.
+
+Normal parsing resolves declarative environments before sizing, captures during
+the actual sizing walk, and stages the real Signal/record associations until the
+complete module validates. The lexical owner comes from the original decoded
+source header and survives later physical renaming. Bindings reach the same
+objects held by assignment targets, including targets absent from the module's
+signal map. A parser or later facade-analysis failure clears the records;
+nonempty environment replacement and failed direct sizing retries invalidate
+old snapshots while legacy empty no-ops retain them. Ordinary direct sizing
+without an active source context still supplies no inferred scope. Auxiliary
+origin propagation is the next compiler slice; public reports and numeric HDL
+remain unchanged in this publication step.
 
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate

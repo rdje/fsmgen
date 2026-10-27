@@ -46,6 +46,7 @@ sub get_fsm_module($self) {
 }
 
 sub parse_fsm($self, $raw_ast) {
+    $self->_invalidate_declared_width_bindings;
     fsm_trace_enter('Parser parse_fsm() entry', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     $self->reset_combinational_dependency_tracking();
@@ -117,6 +118,31 @@ sub parse_fsm($self, $raw_ast) {
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
+    $self->_invalidate_declared_width_bindings;
+    local $self->{_declared_width_capture_context} = {scope => undef, bindings => []};
+    my $module;
+    my $ok = eval {
+        $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
+        for my $pending (@{$self->{_declared_width_capture_context}{bindings}}) {
+            $pending->{signal}->set_declared_width_binding($pending->{binding});
+        }
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        $self->_invalidate_declared_width_bindings;
+        die $error;
+    }
+    return $module;
+}
+
+sub _invalidate_declared_width_bindings($self) {
+    $self->{signal_manager}->clear_declared_width_bindings;
+    $self->{_declared_width_capture_context}{bindings} = []
+        if $self->{_declared_width_capture_context};
+}
+
+sub _parse_fsm_module($self, $fsm_ast, $is_flat_ast, $root_kind) {
     fsm_trace_enter('Parser parse_fsm_module() entry', 2);
     $self->reset_combinational_dependency_tracking();
     $self->reset_transition_target_tracking();
@@ -141,6 +167,8 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     
     my $module = FSM::CoreAST::FSMModule->new(name => $module_name);
     $self->{fsm_module} = $module;
+    $self->{_declared_width_capture_context}{scope} = {kind => 'direct_module', owner => $module_name}
+        if $self->{_declared_width_capture_context};
     $module->{attributes}{source_root_kind} = $root_kind;
     $module->{attributes}{direct_root_symbols} //= FSM::Package::Symbols->new();
     my $root_contract_label = $self->root_contract_label($root_kind);
@@ -792,6 +820,28 @@ sub parse_check_property($self, $cond_tok) {
 }
 
 sub parse_size_section($self, $size_ast) {
+    # Preserve the original scalar/list/void return context for direct callers.
+    my $context = wantarray;
+    my ($result, @result);
+    my $ok = eval {
+        if ($context) {
+            @result = $self->_parse_size_section($size_ast);
+        } elsif (defined $context) {
+            $result = $self->_parse_size_section($size_ast);
+        } else {
+            $self->_parse_size_section($size_ast);
+        }
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        $self->_invalidate_declared_width_bindings;
+        die $error;
+    }
+    return $context ? @result : $result;
+}
+
+sub _parse_size_section($self, $size_ast) {
     my (undef, $size_entries) = @$size_ast;
 
     # Legacy no-op form still exists in the shipped corpus.
@@ -857,10 +907,11 @@ sub parse_size_section($self, $size_ast) {
         # independently before evaluation; rejected reference kinds still reach
         # the canonical resolver and keep its existing diagnostics.
         my $authored_width = _copy_width_expression($resolved_width);
-        my $width_contract = $self->resolve_declared_width_contract(
-            signal_name => $resolved_sig,
-            width_token => $resolved_width,
-        );
+        my $capture_context = $self->{_declared_width_capture_context};
+        my %resolution = (signal_name => $resolved_sig, width_token => $resolved_width);
+        my $width_contract = $capture_context
+            ? $self->capture_declared_width_contract(%resolution, scope => $capture_context->{scope})
+            : $self->resolve_declared_width_contract(%resolution);
         my $declared_width_source;
         if (!defined($width_contract->{declared_type_name})
                 && (ref($authored_width) || $authored_width !~ /\A[0-9]+\z/)) {
@@ -868,7 +919,7 @@ sub parse_size_section($self, $size_ast) {
                 resolved_width => $width_contract->{width}};
         }
 
-        $self->{signal_manager}->register_signal(
+        my $declared_signal = $self->{signal_manager}->register_signal(
             $resolved_sig,
             width => $width_contract->{width},
             signed => ($width_contract->{signed} // 0),
@@ -879,6 +930,14 @@ sub parse_size_section($self, $size_ast) {
             _declared_width_source => $declared_width_source,
             (defined $reset_value ? (attributes => { reset_value => $reset_value }) : ()),
         );
+        if ($capture_context && $width_contract->{width_capture} && $declared_width_source) {
+            push @{$capture_context->{bindings}}, {
+                signal => $declared_signal,
+                binding => {%{$width_contract->{width_capture}},
+                    signal => $declared_width_source->{signal},
+                    expression => $declared_width_source->{expression}},
+            };
+        }
 
         # Keep rm/mr auxiliary outputs width-aligned with their parent signal
         # even when +size appears after assignment actions.
@@ -2186,6 +2245,7 @@ sub resolve_pending_direct_root_symbols($self, $module_name, $constant_entries, 
     $constant_entries ||= [];
     $enum_entries ||= [];
     return 1 unless @$constant_entries || @$enum_entries;
+    $self->_invalidate_declared_width_bindings;
 
     my $direct_root_symbols = ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols'))
         ? $self->{fsm_module}->direct_root_symbols
@@ -2261,6 +2321,7 @@ sub resolve_pending_direct_root_symbols($self, $module_name, $constant_entries, 
 sub resolve_pending_direct_root_types($self, $module_name, $type_entries) {
     $type_entries ||= [];
     return 1 unless @$type_entries;
+    $self->_invalidate_declared_width_bindings;
 
     my $direct_root_symbols = ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols'))
         ? $self->{fsm_module}->direct_root_symbols
@@ -2335,6 +2396,7 @@ sub parse_import_section($self, $module_name, $imports_ast) {
 }
 
 sub parse_define_directive($self, $define_ast) {
+    $self->_invalidate_declared_width_bindings;
     my (undef, $define_spec) = @$define_ast;
 
     $define_spec = $self->unwrap_single_nested_list($define_spec);
@@ -2407,6 +2469,7 @@ sub parse_params_section($self, $params_ast) {
 sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
     $param_entries ||= [];
     return 1 unless @$param_entries;
+    $self->_invalidate_declared_width_bindings;
 
     my $module = $self->{fsm_module};
     # A refused retry must expose no stale or partially published bindings.

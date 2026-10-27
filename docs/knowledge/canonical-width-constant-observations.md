@@ -29,4 +29,6 @@ record; old captured width/default products remain exact.
 
 This helper publishes no direct Signal binding, source grammar, scope or target
 permission. The direct opt-in declared-width resolver consumes this observation
-without replaying lookup/evaluation; automatic Core publication remains pending.
+without replaying lookup/evaluation. Primary source publication now stages and
+attaches those records after complete validation; auxiliary/range consumers
+remain separate successors.

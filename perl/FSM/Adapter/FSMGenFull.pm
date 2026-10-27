@@ -54,16 +54,25 @@ sub parse_fsm($self, $raw_ast) {
     fsm_debug("Starting full FSMGen parsing", 3);
     
     # Phase 1: Parse the AST and build the CoreAST structures
-    my $fsm_module = $self->{parser}->parse_fsm($raw_ast);
+    my $fsm_module;
+    my $ok = eval {
+        $fsm_module = $self->{parser}->parse_fsm($raw_ast);
     
-    if (!$fsm_module) {
-        fsm_error('Parser returned undefined FSM module');
-        Carp::confess "Failed to parse FSM module from AST";
+        if (!$fsm_module) {
+            fsm_error('Parser returned undefined FSM module');
+            Carp::confess "Failed to parse FSM module from AST";
+        }
+    
+        # Phase 2: Analyze signal roles and attach interface
+        $self->{signal_analyzer}->analyze_signal_roles($fsm_module);
+        $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        $self->{signal_manager}->clear_declared_width_bindings;
+        die $error;
     }
-    
-    # Phase 2: Analyze signal roles and attach interface
-    $self->{signal_analyzer}->analyze_signal_roles($fsm_module);
-    $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
     
     fsm_trace_exit('FSMGenFull facade parse_fsm() completed', 2);
     return $fsm_module;
@@ -122,6 +131,13 @@ coordinating several specialized sub-modules:
 =item parse_fsm($raw_ast)
 
 Main entry point for parsing FSMGen AST structures.
+
+Successful source parsing retains private declared-width bindings on the actual
+Core Signals. Resolution uses the decoded source module's lexical scope and
+stages records until complete parser validation succeeds. A later facade
+analysis failure clears those snapshots as well. Literal/named-type contracts,
+numeric widths and public report schemas remain unchanged; auxiliary-origin
+propagation and symbolic HDL ranges have separate compiler integration owners.
 
 =item debug_summary()
 

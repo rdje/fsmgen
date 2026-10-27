@@ -6,10 +6,11 @@ answers:
   - "how do nested infix width payload lookups retain immediate identity?"
   - "how does direct declared-width resolution capture scope and actual lookup selection?"
   - "how are private Core declared-width bindings cloned and invalidated?"
+  - "when are direct source width bindings published after validation?"
 date: 2026-10-27
 status: current
 tags: [widths, source-capture, parameters, namespaces]
-evidence: perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull/SignalManager.pm; t/2161-core-declared-width-binding-lifecycle.t; docs/audits/core-width-binding-lifecycle-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; t/2160-direct-declared-width-capture.t; docs/audits/direct-declared-width-capture-20261027.json.gz; perl/FSM/WidthExpressionSupport.pm; t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
+evidence: perl/FSM/Adapter/FSMGenFull.pm; t/2162-direct-source-width-binding-publication.t; docs/audits/source-width-publication-20261027.json.gz; perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull/SignalManager.pm; t/2161-core-declared-width-binding-lifecycle.t; docs/audits/core-width-binding-lifecycle-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; t/2160-direct-declared-width-capture.t; docs/audits/direct-declared-width-capture-20261027.json.gz; perl/FSM/WidthExpressionSupport.pm; t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -42,9 +43,9 @@ observation/declared-only hooks. Only those branches add width_capture with
 scope, width, binding and observations. Ordinary source/contracts and JSON kinds
 conserve; failed retries and held-result parser release qualify.
 
-Automatic source/Core publication remains
-ISF-REDUCTION-DELIVERY.3.3.1.2.2.3. No source grammar, public schema or symbolic
-HDL range is activated by this opt-in resolver.
+Automatic primary source/Core publication is now implemented under
+ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.2. No source grammar, public schema or symbolic
+HDL range is activated by the opt-in resolver or this private publication.
 
 Core Signal declared_width_binding now stores an explicit plain detached
 envelope: captured scope/width/binding/observations plus actual declaration
@@ -55,6 +56,17 @@ explicit source/type replacement invalidate private metadata, preserving old
 max-width/numeric/source behavior; absent-type unchanged inference preserves it.
 Explicit whole-registry clearing supports later failed source transactions.
 Canonical graph semantics remain with actual producer/target proof, not this
-holder. Normal parsing still publishes none; source activation and auxiliary
-copies are .3.3.1.2.2.3.2/.3. Reverify:
+holder. Normal source publication now stages the actual primary associations;
+auxiliary copies remain .3.3.1.2.2.3.3. Reverify:
 `prove -Iperl t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
+
+Actual source capture uses the decoded original header scope. Static/type/define/
+parameter environments resolve before +size; captured real Signal associations
+publish only after all parser validation. Later facade failure clears them too.
+Nonempty declarative environment replacement and failed direct size retries
+invalidate snapshots; empty legacy no-ops preserve them. No source scope is
+inferred for direct sizing outside the active source context. Actual assignment
+objects receive bindings even when absent from module.signals. Selected complete
+native check/semantic products are byte-identical, HDL differs only in Date,
+and old source/default/numeric/caller JSON products conserve. Reverify:
+`prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t t/50-language-contract-size-section-boundary.t`.

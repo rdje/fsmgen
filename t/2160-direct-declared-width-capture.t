@@ -39,14 +39,15 @@ sub capture {
         scope => {kind => 'direct_module', owner => $owner});
 }
 
-subtest 'actual source selects type, static and explicit parameter namespaces without publication' => sub {
+subtest 'actual source selects type, static and explicit parameter namespaces without changing stored products' => sub {
     my $raw = Lispish::multi('t/corpus/direct_size_parameter_selection.fsm');
     my $raw_before = $json->encode($raw);
     my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
     my $module = $adapter->parse_fsm($raw);
     my $p = $adapter->{parser}; my $owner = 'direct_size_parameter_selection';
     my $before = $json->encode([$module->parameters, $module->parameter_default_sources,
-        $module->parameter_default_bindings, $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_source]);
+        $module->parameter_default_bindings, $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_source,
+        $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_binding]);
     for my $token ('8', 'W') {
         is($json->encode(capture($p, $token, $owner)),
             $json->encode($p->resolve_declared_width_contract(signal_name => 'probe', width_token => $token)),
@@ -67,8 +68,9 @@ subtest 'actual source selects type, static and explicit parameter namespaces wi
             [map {observation('parameter', 'parameter', 'W', '16', 'W', '')} 1 .. 2], $owner)),
         'repeated references retain actual ordered observations');
     is($json->encode([$module->parameters, $module->parameter_default_sources,
-        $module->parameter_default_bindings, $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_source]),
-        $before, 'complete old getters retain original kinds; capture is not published');
+        $module->parameter_default_bindings, $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_source,
+        $adapter->{signal_manager}->get_signal('SELECTED')->declared_width_binding]),
+        $before, 'complete old getters and any already-published binding retain original kinds');
     is($json->encode($raw), $raw_before, 'actual frontend caller is unchanged');
 };
 
