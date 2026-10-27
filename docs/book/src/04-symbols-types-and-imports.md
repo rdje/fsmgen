@@ -123,6 +123,12 @@ Captured declaration/source/binding membership is validated through one shared
 source-environment helper. Target name reservation remains a backend policy at
 its original validation boundary; source ownership stays lexical.
 
+The private `prove_binding_observations` check now verifies that recorded
+references cover the complete canonical binding tree, retaining immediate
+identities and JSON kinds. Missing, conflicting or opaque dependency records
+refuse. This proof supports direct VHDL profile preparation; namespace/profile
+selection and converter activation remain pending.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated

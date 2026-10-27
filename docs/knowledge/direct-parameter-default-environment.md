@@ -26,3 +26,7 @@ callback. Core getters already detach that snapshot from module ownership.
 This validates compiler records without evaluating values, choosing a target
 profile, attesting caller-made provenance or changing public schemas. Direct
 VHDL namespace/profile preparation and converter integration remain successors.
+
+The separate opt-in complete binding/reference proof is described by the
+`direct-binding-reference-proof` card. Membership validation alone does not
+certify that a caller omitted no canonical parameter reference.

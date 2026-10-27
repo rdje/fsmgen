@@ -68,7 +68,10 @@ walk. The composition wrapper keeps its narrower scope and diagnostics; direct
 headers now consume captured scalar and immutable aggregate defaults; mutable
 aggregate/path relationships explicitly refuse. Shared captured-source checks
 now live in `FSM::ParameterDefaultEnvironmentSupport`; the scaffold supplies its
-original Verilog name-reservation callback. No fresh closure census is inferred.
+original Verilog name-reservation callback. Its opt-in observation proof imports
+the existing ParameterBindingSupport/ParameterDeclarationSupport contracts,
+reusing their scoped binding and declared-reference selection. No fresh closure
+census is inferred.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
