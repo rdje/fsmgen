@@ -12,11 +12,11 @@ answers:
   - "how long can a fact card line be?"
   - "card line width exceeds 819"
   - "why does a long reverify line fail even though knowledge_cards is normal?"
-date: 2026-10-05
+date: 2026-10-27
 status: current
-evidence: docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md; docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md; doctrine/live_document_size/surfaces.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
+evidence: docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md; doctrine/live_document_size/surfaces.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/audits/task-evidence-growth-band-20261027/measure.py; docs/audits/task-evidence-growth-band-20261027/measurement.json; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
+  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current && python3 -B docs/audits/task-evidence-growth-band-20261027/measure.py --current
 tags: [live-document-size, containment, doctrine, transition-debt, task-trees]
 ---
 
@@ -50,6 +50,9 @@ and no decision record or authority row is required. Raising the *ceiling* is
 the reviewed act that does need both — see
 [[live-document-surface-growth-procedure]] and
 [[live-document-target-pair-calibration]].
+
+Task-evidence growth-band derivation, protected controls and rollover ownership
+are retained in containment task `.31` / `.32` and the measured evidence above.
 
 A related bound lives outside containment: the default fact-card content-line
 width is 819 bytes. Containment's line-width target and the card checker's bound

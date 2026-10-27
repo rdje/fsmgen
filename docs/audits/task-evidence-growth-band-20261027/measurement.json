@@ -1,0 +1,1016 @@
+{
+  "maxima": {
+    "bytes": 13094,
+    "lines": 101
+  },
+  "observation_unit": "signed aggregate net task-document growth per first-parent commit; no merges expanded",
+  "observations": [
+    {
+      "commit": "8ff72285cf0035d292f8583040125683678a1a0c",
+      "files": [
+        {
+          "after": {
+            "blob": "1a36da4b764cbc6b0a850fc9b5b81466c5ee47c6",
+            "bytes": 763565,
+            "lines": 2504,
+            "sha256": "fb5d3248a8da445624120b33b9be94b6a520031043aa35323b977a55615ccdfb"
+          },
+          "before": {
+            "blob": "34526105df9f572c0d0de2e368af945992154862",
+            "bytes": 758091,
+            "lines": 2484,
+            "sha256": "f10f9362b9ca534143d0230d1b1d420a7a3060f5640081148948af6db1e0a5eb"
+          },
+          "numstat": [
+            22,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 5474,
+        "lines": 20
+      },
+      "parent": "49cd43358dffce9e84c3b45a3979f77bdf06bfda"
+    },
+    {
+      "commit": "49cd43358dffce9e84c3b45a3979f77bdf06bfda",
+      "files": [
+        {
+          "after": {
+            "blob": "34526105df9f572c0d0de2e368af945992154862",
+            "bytes": 758091,
+            "lines": 2484,
+            "sha256": "f10f9362b9ca534143d0230d1b1d420a7a3060f5640081148948af6db1e0a5eb"
+          },
+          "before": {
+            "blob": "31e07ae5d03afc2bab733407b279f7b424e67473",
+            "bytes": 754600,
+            "lines": 2479,
+            "sha256": "5db3507cfc504aa4b9d6f581b4efe50cf8e39dbdbd92dd7646b4dcde55052166"
+          },
+          "numstat": [
+            8,
+            3
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3491,
+        "lines": 5
+      },
+      "parent": "c96fca19a6fc04656eba8d76632660a4a7698b16"
+    },
+    {
+      "commit": "c96fca19a6fc04656eba8d76632660a4a7698b16",
+      "files": [
+        {
+          "after": {
+            "blob": "31e07ae5d03afc2bab733407b279f7b424e67473",
+            "bytes": 754600,
+            "lines": 2479,
+            "sha256": "5db3507cfc504aa4b9d6f581b4efe50cf8e39dbdbd92dd7646b4dcde55052166"
+          },
+          "before": {
+            "blob": "0869e6254acec859bfcc0f51cf33564d0f1dbb27",
+            "bytes": 750578,
+            "lines": 2472,
+            "sha256": "0c75e96084536bc43104b0ca25dc43de5826763a1bc5a3049321c6effbce85c8"
+          },
+          "numstat": [
+            11,
+            4
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 4022,
+        "lines": 7
+      },
+      "parent": "83775edbc4aea5b55dcf6a38af7cc8c77097d874"
+    },
+    {
+      "commit": "83775edbc4aea5b55dcf6a38af7cc8c77097d874",
+      "files": [
+        {
+          "after": {
+            "blob": "0869e6254acec859bfcc0f51cf33564d0f1dbb27",
+            "bytes": 750578,
+            "lines": 2472,
+            "sha256": "0c75e96084536bc43104b0ca25dc43de5826763a1bc5a3049321c6effbce85c8"
+          },
+          "before": {
+            "blob": "c1a92e88152ea0f4b5cecd0aa430f4efdb7f82bc",
+            "bytes": 745329,
+            "lines": 2466,
+            "sha256": "200f32882d79db63650388fcb54d0bbd258805883290418816ad66743f480d06"
+          },
+          "numstat": [
+            13,
+            7
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 5249,
+        "lines": 6
+      },
+      "parent": "183f99f49a4293b7c8938f3c0fd28a0c26757996"
+    },
+    {
+      "commit": "183f99f49a4293b7c8938f3c0fd28a0c26757996",
+      "files": [
+        {
+          "after": {
+            "blob": "c1a92e88152ea0f4b5cecd0aa430f4efdb7f82bc",
+            "bytes": 745329,
+            "lines": 2466,
+            "sha256": "200f32882d79db63650388fcb54d0bbd258805883290418816ad66743f480d06"
+          },
+          "before": {
+            "blob": "781f0805531bcbf6d4bf3eacae84f4e00b558a0c",
+            "bytes": 739412,
+            "lines": 2446,
+            "sha256": "41d42ce99b1fceb69cb632b29bd87cc6c5e23d966dd7cdf16eea1d5ce5db9af1"
+          },
+          "numstat": [
+            21,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 5917,
+        "lines": 20
+      },
+      "parent": "d4544d1506d8df9762253dca8d7f99c75045f999"
+    },
+    {
+      "commit": "d4544d1506d8df9762253dca8d7f99c75045f999",
+      "files": [
+        {
+          "after": {
+            "blob": "781f0805531bcbf6d4bf3eacae84f4e00b558a0c",
+            "bytes": 739412,
+            "lines": 2446,
+            "sha256": "41d42ce99b1fceb69cb632b29bd87cc6c5e23d966dd7cdf16eea1d5ce5db9af1"
+          },
+          "before": {
+            "blob": "8a2e888c2fa64d8cf1cfc85f3d091f9e57826ba7",
+            "bytes": 731485,
+            "lines": 2423,
+            "sha256": "20e2a67fc4b1ab181a10bf77173e145f2238c21e7e24300d2ff5474d01b2b952"
+          },
+          "numstat": [
+            35,
+            12
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 7927,
+        "lines": 23
+      },
+      "parent": "5a0ea30278d233781cf2575d6a7d422a74925c44"
+    },
+    {
+      "commit": "5a0ea30278d233781cf2575d6a7d422a74925c44",
+      "files": [
+        {
+          "after": {
+            "blob": "8a2e888c2fa64d8cf1cfc85f3d091f9e57826ba7",
+            "bytes": 731485,
+            "lines": 2423,
+            "sha256": "20e2a67fc4b1ab181a10bf77173e145f2238c21e7e24300d2ff5474d01b2b952"
+          },
+          "before": {
+            "blob": "f3b528bbc084ea12b937ca963ce08c418aa14f3b",
+            "bytes": 725361,
+            "lines": 2403,
+            "sha256": "94f565f6761ff203e8581e4ce47bf42e0ae38df1a57584740975b7fe74ab83b7"
+          },
+          "numstat": [
+            21,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 6124,
+        "lines": 20
+      },
+      "parent": "20d8a913fef851e1b0164648f1368f16403f58b2"
+    },
+    {
+      "commit": "20d8a913fef851e1b0164648f1368f16403f58b2",
+      "files": [
+        {
+          "after": {
+            "blob": "f3b528bbc084ea12b937ca963ce08c418aa14f3b",
+            "bytes": 725361,
+            "lines": 2403,
+            "sha256": "94f565f6761ff203e8581e4ce47bf42e0ae38df1a57584740975b7fe74ab83b7"
+          },
+          "before": {
+            "blob": "d7e15ee90ea60a84e0589367d10f98f4e8a04f5c",
+            "bytes": 721985,
+            "lines": 2398,
+            "sha256": "1dfb44ea162d37148b33c818e41ccf13462ab994a2c5b07367770d625a2f5957"
+          },
+          "numstat": [
+            10,
+            5
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3376,
+        "lines": 5
+      },
+      "parent": "72a3ab59510d0114ef59d63ccdb9ef1e16204687"
+    },
+    {
+      "commit": "72a3ab59510d0114ef59d63ccdb9ef1e16204687",
+      "files": [
+        {
+          "after": {
+            "blob": "d7e15ee90ea60a84e0589367d10f98f4e8a04f5c",
+            "bytes": 721985,
+            "lines": 2398,
+            "sha256": "1dfb44ea162d37148b33c818e41ccf13462ab994a2c5b07367770d625a2f5957"
+          },
+          "before": {
+            "blob": "8e06af6daec6fd8f00a423737a524628b466a98c",
+            "bytes": 714526,
+            "lines": 2371,
+            "sha256": "cc7a3f4e9c5ea969c83b0ce93b80fa392291b101c20e645e9a4f3fb4f3964289"
+          },
+          "numstat": [
+            29,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 7459,
+        "lines": 27
+      },
+      "parent": "9efd6a1adb334298d88e9f3286e42dc081e82463"
+    },
+    {
+      "commit": "9efd6a1adb334298d88e9f3286e42dc081e82463",
+      "files": [
+        {
+          "after": {
+            "blob": "8e06af6daec6fd8f00a423737a524628b466a98c",
+            "bytes": 714526,
+            "lines": 2371,
+            "sha256": "cc7a3f4e9c5ea969c83b0ce93b80fa392291b101c20e645e9a4f3fb4f3964289"
+          },
+          "before": {
+            "blob": "73badb14a9fae485e8d11fba6d67ef432139f8cd",
+            "bytes": 710951,
+            "lines": 2366,
+            "sha256": "08f4822b1e5bede81a9d1724e08bb809f2962c2a95ff13eaa492f4b2c37f0546"
+          },
+          "numstat": [
+            8,
+            3
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3575,
+        "lines": 5
+      },
+      "parent": "f2a686cdec8772688d401bf78903d8b6e8933141"
+    },
+    {
+      "commit": "f2a686cdec8772688d401bf78903d8b6e8933141",
+      "files": [
+        {
+          "after": {
+            "blob": "73badb14a9fae485e8d11fba6d67ef432139f8cd",
+            "bytes": 710951,
+            "lines": 2366,
+            "sha256": "08f4822b1e5bede81a9d1724e08bb809f2962c2a95ff13eaa492f4b2c37f0546"
+          },
+          "before": {
+            "blob": "457f64b4601e5cff5ac187a8eaebd690f9399ef3",
+            "bytes": 707134,
+            "lines": 2361,
+            "sha256": "ebf3255f55c3215355403b32d106b0915f8f67de95d64e57877fa5c09a2cd142"
+          },
+          "numstat": [
+            8,
+            3
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3817,
+        "lines": 5
+      },
+      "parent": "ae7f16080db31c3f669136828be5fd5d0465b125"
+    },
+    {
+      "commit": "ae7f16080db31c3f669136828be5fd5d0465b125",
+      "files": [
+        {
+          "after": {
+            "blob": "457f64b4601e5cff5ac187a8eaebd690f9399ef3",
+            "bytes": 707134,
+            "lines": 2361,
+            "sha256": "ebf3255f55c3215355403b32d106b0915f8f67de95d64e57877fa5c09a2cd142"
+          },
+          "before": {
+            "blob": "b7d0c6c14df544af7b65cb821cc9f4147e717650",
+            "bytes": 699716,
+            "lines": 2347,
+            "sha256": "e45ea1994780aba6078541fa9860886ab8e1a701410a1d5d661a7d467b8a5764"
+          },
+          "numstat": [
+            37,
+            23
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 7418,
+        "lines": 14
+      },
+      "parent": "c0d1c2182b600e5057feb2f1bacce28ca65d6c97"
+    },
+    {
+      "commit": "c0d1c2182b600e5057feb2f1bacce28ca65d6c97",
+      "files": [
+        {
+          "after": {
+            "blob": "b7d0c6c14df544af7b65cb821cc9f4147e717650",
+            "bytes": 699716,
+            "lines": 2347,
+            "sha256": "e45ea1994780aba6078541fa9860886ab8e1a701410a1d5d661a7d467b8a5764"
+          },
+          "before": {
+            "blob": "fb33bc43d1ea5be7240921a1f09d7c8635adae8f",
+            "bytes": 695389,
+            "lines": 2342,
+            "sha256": "80493c2b9865c27736e5a57eb071903158ae49464703d67aedac606f64901291"
+          },
+          "numstat": [
+            9,
+            4
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 4327,
+        "lines": 5
+      },
+      "parent": "a3c9a9f51a7267dff73573cfd26230abf3b33693"
+    },
+    {
+      "commit": "a3c9a9f51a7267dff73573cfd26230abf3b33693",
+      "files": [
+        {
+          "after": {
+            "blob": "fb33bc43d1ea5be7240921a1f09d7c8635adae8f",
+            "bytes": 695389,
+            "lines": 2342,
+            "sha256": "80493c2b9865c27736e5a57eb071903158ae49464703d67aedac606f64901291"
+          },
+          "before": {
+            "blob": "64923348802c441ec332451a1cc43eeaf36f2238",
+            "bytes": 686476,
+            "lines": 2307,
+            "sha256": "a4ac2ffc993c8fcff1093be03653a1d1505b13075ded5441714cb69b4b383acc"
+          },
+          "numstat": [
+            36,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 8913,
+        "lines": 35
+      },
+      "parent": "ecbf3b00f83b249b70aa9882bf866a67f488ef72"
+    },
+    {
+      "commit": "ecbf3b00f83b249b70aa9882bf866a67f488ef72",
+      "files": [
+        {
+          "after": {
+            "blob": "64923348802c441ec332451a1cc43eeaf36f2238",
+            "bytes": 686476,
+            "lines": 2307,
+            "sha256": "a4ac2ffc993c8fcff1093be03653a1d1505b13075ded5441714cb69b4b383acc"
+          },
+          "before": {
+            "blob": "923edb36bdb54279de394cfe303c0b1a71301531",
+            "bytes": 682684,
+            "lines": 2302,
+            "sha256": "2154370a5ef632fe305185bce2c86076b1a5f588e054949f49f8d492d482f847"
+          },
+          "numstat": [
+            9,
+            4
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3792,
+        "lines": 5
+      },
+      "parent": "4acdd1347a41841fa4ac895074555e28f36f22cb"
+    },
+    {
+      "commit": "4acdd1347a41841fa4ac895074555e28f36f22cb",
+      "files": [
+        {
+          "after": {
+            "blob": "923edb36bdb54279de394cfe303c0b1a71301531",
+            "bytes": 682684,
+            "lines": 2302,
+            "sha256": "2154370a5ef632fe305185bce2c86076b1a5f588e054949f49f8d492d482f847"
+          },
+          "before": {
+            "blob": "dd292449fc8b1efd8a729abb857da253c909e046",
+            "bytes": 678335,
+            "lines": 2297,
+            "sha256": "d22441d3c38868f6886ebd34cad3af621c7aad58a26be6f0f78d50ac71410b1d"
+          },
+          "numstat": [
+            14,
+            9
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 4349,
+        "lines": 5
+      },
+      "parent": "72728bfa7d436cb3b8ef0647e863b0807aa4fcb4"
+    },
+    {
+      "commit": "72728bfa7d436cb3b8ef0647e863b0807aa4fcb4",
+      "files": [
+        {
+          "after": {
+            "blob": "dd292449fc8b1efd8a729abb857da253c909e046",
+            "bytes": 678335,
+            "lines": 2297,
+            "sha256": "d22441d3c38868f6886ebd34cad3af621c7aad58a26be6f0f78d50ac71410b1d"
+          },
+          "before": {
+            "blob": "4827e627bd8df1c2eb50880173f56eb755d1d21a",
+            "bytes": 672822,
+            "lines": 2277,
+            "sha256": "afb95926b10fdca2a9ac15e418f0f80ebf5b9fb4d8d19005bcc53492a4d50106"
+          },
+          "numstat": [
+            22,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 5513,
+        "lines": 20
+      },
+      "parent": "de53422ba204f364a90bfd55d30ccff8af9788e4"
+    },
+    {
+      "commit": "de53422ba204f364a90bfd55d30ccff8af9788e4",
+      "files": [
+        {
+          "after": {
+            "blob": "4827e627bd8df1c2eb50880173f56eb755d1d21a",
+            "bytes": 672822,
+            "lines": 2277,
+            "sha256": "afb95926b10fdca2a9ac15e418f0f80ebf5b9fb4d8d19005bcc53492a4d50106"
+          },
+          "before": {
+            "blob": "b3ff6527b9c9dde1f3aaa1952f8390d336937aaf",
+            "bytes": 665299,
+            "lines": 2241,
+            "sha256": "4bf5cd6b4a6c02957498765282a5a9bc546aa812dc9d83c3bed78c639d4a5e4a"
+          },
+          "numstat": [
+            37,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 7523,
+        "lines": 36
+      },
+      "parent": "451ac049851e043eb6eba16a66a5d30234f319fc"
+    },
+    {
+      "commit": "451ac049851e043eb6eba16a66a5d30234f319fc",
+      "files": [
+        {
+          "after": {
+            "blob": "b3ff6527b9c9dde1f3aaa1952f8390d336937aaf",
+            "bytes": 665299,
+            "lines": 2241,
+            "sha256": "4bf5cd6b4a6c02957498765282a5a9bc546aa812dc9d83c3bed78c639d4a5e4a"
+          },
+          "before": {
+            "blob": "4a5c9c69e5bd3d1d63c331af5b3a5a7ca16a74ed",
+            "bytes": 660904,
+            "lines": 2235,
+            "sha256": "d3f7fd5c213b0860879e7929e208d69c65c9ecd3c4941c489bb66ac79616315a"
+          },
+          "numstat": [
+            10,
+            4
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 4395,
+        "lines": 6
+      },
+      "parent": "6116e372763476a57b64595d966c0f0572c09649"
+    },
+    {
+      "commit": "6116e372763476a57b64595d966c0f0572c09649",
+      "files": [
+        {
+          "after": {
+            "blob": "4a5c9c69e5bd3d1d63c331af5b3a5a7ca16a74ed",
+            "bytes": 660904,
+            "lines": 2235,
+            "sha256": "d3f7fd5c213b0860879e7929e208d69c65c9ecd3c4941c489bb66ac79616315a"
+          },
+          "before": {
+            "blob": "9770c54fc52969f85814bc4058aa1f3363004779",
+            "bytes": 653997,
+            "lines": 2207,
+            "sha256": "ab78da333c3d0e18ecc0fe07f2b5ec8e38346820581372761b386bc544f3b954"
+          },
+          "numstat": [
+            30,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 6907,
+        "lines": 28
+      },
+      "parent": "70dc82f07671e27ffae55114cfec9cd9f2bd417e"
+    },
+    {
+      "commit": "70dc82f07671e27ffae55114cfec9cd9f2bd417e",
+      "files": [
+        {
+          "after": {
+            "blob": "9770c54fc52969f85814bc4058aa1f3363004779",
+            "bytes": 653997,
+            "lines": 2207,
+            "sha256": "ab78da333c3d0e18ecc0fe07f2b5ec8e38346820581372761b386bc544f3b954"
+          },
+          "before": {
+            "blob": "e93f7132c7f33316e5a0d88e4955e34937f261ec",
+            "bytes": 650639,
+            "lines": 2201,
+            "sha256": "f7df934aac8dcd43e9325edfd1e90a91a0000cdbfb0678314111daacd4a9bfa4"
+          },
+          "numstat": [
+            9,
+            3
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3358,
+        "lines": 6
+      },
+      "parent": "4533376ece6b704783445c978e0e8c7bc34cc720"
+    },
+    {
+      "commit": "4533376ece6b704783445c978e0e8c7bc34cc720",
+      "files": [
+        {
+          "after": {
+            "blob": "e3742b310f9ea10af81e535c816cbb39dc95f1d4",
+            "bytes": 19657,
+            "lines": 123,
+            "sha256": "77b85ad287118ba9a1b3ac6c6a62b06cffda9d1a52ac6ec2661305fcc0c175ce"
+          },
+          "before": {
+            "blob": "565216881489667031ec0c6f6b9928af2521eea8",
+            "bytes": 14430,
+            "lines": 104,
+            "sha256": "4c10b058cab7de48913ab183128804dfd2e71bb8e7b4e6fd8bee17691ceb3092"
+          },
+          "numstat": [
+            25,
+            6
+          ],
+          "path": "docs/tasks/COMMIT-GATE-PERFORMANCE.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 5227,
+        "lines": 19
+      },
+      "parent": "88479dd24c4363d443e3c43fe84952dd79cc86f0"
+    },
+    {
+      "commit": "88479dd24c4363d443e3c43fe84952dd79cc86f0",
+      "files": [
+        {
+          "after": {
+            "blob": "565216881489667031ec0c6f6b9928af2521eea8",
+            "bytes": 14430,
+            "lines": 104,
+            "sha256": "4c10b058cab7de48913ab183128804dfd2e71bb8e7b4e6fd8bee17691ceb3092"
+          },
+          "before": {
+            "blob": "2c68b4d42de0c9b23a4b507c4edd450d0143007f",
+            "bytes": 11068,
+            "lines": 89,
+            "sha256": "3623cb452b7cca8d6a4552359c77a3086c4545df48db45bdb01d8d323b795dbe"
+          },
+          "numstat": [
+            18,
+            3
+          ],
+          "path": "docs/tasks/COMMIT-GATE-PERFORMANCE.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3362,
+        "lines": 15
+      },
+      "parent": "863a11790233b033efa147bbab1575983e758f6e"
+    },
+    {
+      "commit": "863a11790233b033efa147bbab1575983e758f6e",
+      "files": [
+        {
+          "after": {
+            "blob": "2c68b4d42de0c9b23a4b507c4edd450d0143007f",
+            "bytes": 11068,
+            "lines": 89,
+            "sha256": "3623cb452b7cca8d6a4552359c77a3086c4545df48db45bdb01d8d323b795dbe"
+          },
+          "before": {
+            "blob": "7ab96b2ae577918632483d4eaec46e53b8b7f009",
+            "bytes": 8593,
+            "lines": 84,
+            "sha256": "f47a8a485a20c9f48e99f346270a0dc5d6640543d6b95df94379aafbed44e958"
+          },
+          "numstat": [
+            8,
+            3
+          ],
+          "path": "docs/tasks/COMMIT-GATE-PERFORMANCE.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 2475,
+        "lines": 5
+      },
+      "parent": "65554af36bb214a6ade19af69fb2a704b3f02dd3"
+    },
+    {
+      "commit": "65554af36bb214a6ade19af69fb2a704b3f02dd3",
+      "files": [
+        {
+          "after": {
+            "blob": "7ab96b2ae577918632483d4eaec46e53b8b7f009",
+            "bytes": 8593,
+            "lines": 84,
+            "sha256": "f47a8a485a20c9f48e99f346270a0dc5d6640543d6b95df94379aafbed44e958"
+          },
+          "before": {
+            "blob": null,
+            "bytes": 0,
+            "lines": 0,
+            "sha256": null
+          },
+          "numstat": [
+            84,
+            0
+          ],
+          "path": "docs/tasks/COMMIT-GATE-PERFORMANCE.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 8593,
+        "lines": 84
+      },
+      "parent": "be4928b7fff3b7dc9089f930ecbf46c280d55101"
+    },
+    {
+      "commit": "be4928b7fff3b7dc9089f930ecbf46c280d55101",
+      "files": [
+        {
+          "after": {
+            "blob": "e93f7132c7f33316e5a0d88e4955e34937f261ec",
+            "bytes": 650639,
+            "lines": 2201,
+            "sha256": "f7df934aac8dcd43e9325edfd1e90a91a0000cdbfb0678314111daacd4a9bfa4"
+          },
+          "before": {
+            "blob": "4d5b2b1a1f13fe6780c6d6e27d995d23d00075d0",
+            "bytes": 643626,
+            "lines": 2173,
+            "sha256": "eb7eeaab8bb759b9b89f3dc6e2736828f5256d5d646b5e66466cf708e77450db"
+          },
+          "numstat": [
+            29,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 7013,
+        "lines": 28
+      },
+      "parent": "643ad4f879b9b092928006c6d46b21f9e9979609"
+    },
+    {
+      "commit": "643ad4f879b9b092928006c6d46b21f9e9979609",
+      "files": [
+        {
+          "after": {
+            "blob": "4d5b2b1a1f13fe6780c6d6e27d995d23d00075d0",
+            "bytes": 643626,
+            "lines": 2173,
+            "sha256": "eb7eeaab8bb759b9b89f3dc6e2736828f5256d5d646b5e66466cf708e77450db"
+          },
+          "before": {
+            "blob": "8e8c47369f7e75af195234f728d55ba7d28b9801",
+            "bytes": 637459,
+            "lines": 2152,
+            "sha256": "50289045b7257d9f8762067d16511b45d6ff30d89cd6d0476c42ac2dd4b20b81"
+          },
+          "numstat": [
+            23,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 6167,
+        "lines": 21
+      },
+      "parent": "6c3a1c822c4ba2730dbab3284a5cb9ba6ca61d77"
+    },
+    {
+      "commit": "6c3a1c822c4ba2730dbab3284a5cb9ba6ca61d77",
+      "files": [
+        {
+          "after": {
+            "blob": "8e8c47369f7e75af195234f728d55ba7d28b9801",
+            "bytes": 637459,
+            "lines": 2152,
+            "sha256": "50289045b7257d9f8762067d16511b45d6ff30d89cd6d0476c42ac2dd4b20b81"
+          },
+          "before": {
+            "blob": "98c593ae383483d8bdcda39aa3baaffd7df340f9",
+            "bytes": 634229,
+            "lines": 2140,
+            "sha256": "df706a103b289ebf7ec8900831b386ea3d69874edf223b8783f7901cb5992ece"
+          },
+          "numstat": [
+            13,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3230,
+        "lines": 12
+      },
+      "parent": "53489038cdb5d8f66ae5d8138675f56c023488c4"
+    },
+    {
+      "commit": "53489038cdb5d8f66ae5d8138675f56c023488c4",
+      "files": [
+        {
+          "after": {
+            "blob": "98c593ae383483d8bdcda39aa3baaffd7df340f9",
+            "bytes": 634229,
+            "lines": 2140,
+            "sha256": "df706a103b289ebf7ec8900831b386ea3d69874edf223b8783f7901cb5992ece"
+          },
+          "before": {
+            "blob": "dc549e88262efe84219b46e6f1d501ca278a8a58",
+            "bytes": 631172,
+            "lines": 2135,
+            "sha256": "69da22132d3535c33acf9c61dc3dcfe295d477aab5583db5794863b49a7beb6a"
+          },
+          "numstat": [
+            8,
+            3
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3057,
+        "lines": 5
+      },
+      "parent": "c3ac01da87209a2fdff75e6cec92fb8efb61c6d3"
+    },
+    {
+      "commit": "c3ac01da87209a2fdff75e6cec92fb8efb61c6d3",
+      "files": [
+        {
+          "after": {
+            "blob": "dc549e88262efe84219b46e6f1d501ca278a8a58",
+            "bytes": 631172,
+            "lines": 2135,
+            "sha256": "69da22132d3535c33acf9c61dc3dcfe295d477aab5583db5794863b49a7beb6a"
+          },
+          "before": {
+            "blob": "03d7de00e81acf7ba91ecb94244ee9f6d4a140f6",
+            "bytes": 618078,
+            "lines": 2034,
+            "sha256": "eaf6a6c7724adb58067a493165cb1b4b23b0d2b3f6a02f48aad0d24e3b38b801"
+          },
+          "numstat": [
+            103,
+            2
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 13094,
+        "lines": 101
+      },
+      "parent": "b2601fe46c2eb34a6fbcb7e0d63c2950aaf07bd8"
+    },
+    {
+      "commit": "b2601fe46c2eb34a6fbcb7e0d63c2950aaf07bd8",
+      "files": [
+        {
+          "after": {
+            "blob": "03d7de00e81acf7ba91ecb94244ee9f6d4a140f6",
+            "bytes": 618078,
+            "lines": 2034,
+            "sha256": "eaf6a6c7724adb58067a493165cb1b4b23b0d2b3f6a02f48aad0d24e3b38b801"
+          },
+          "before": {
+            "blob": "f57e48b671ba6de74190c8deec0b83db225f5156",
+            "bytes": 614481,
+            "lines": 2029,
+            "sha256": "94b5fe7e9f9e0a755cf8210f3eba9c12ef611abdbb4f7f38e31f089ba6004b16"
+          },
+          "numstat": [
+            13,
+            8
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 3597,
+        "lines": 5
+      },
+      "parent": "6656dbaaf121510c6b356fd39d9971ddc06b3e25"
+    },
+    {
+      "commit": "6656dbaaf121510c6b356fd39d9971ddc06b3e25",
+      "files": [
+        {
+          "after": {
+            "blob": "f57e48b671ba6de74190c8deec0b83db225f5156",
+            "bytes": 614481,
+            "lines": 2029,
+            "sha256": "94b5fe7e9f9e0a755cf8210f3eba9c12ef611abdbb4f7f38e31f089ba6004b16"
+          },
+          "before": {
+            "blob": "11456778cc3865b1b143266104d9ca210731550e",
+            "bytes": 610216,
+            "lines": 2005,
+            "sha256": "4a8f2a0589adadeb99f5e776af60674d389f182d94f5869618a8ff45aa019c73"
+          },
+          "numstat": [
+            25,
+            1
+          ],
+          "path": "docs/tasks/ISF-REDUCTION-DELIVERY.md"
+        }
+      ],
+      "net_growth": {
+        "bytes": 4265,
+        "lines": 24
+      },
+      "parent": "e5059523488e3ab4a3b6c7b18ba14f687979e32e"
+    }
+  ],
+  "population": "last 32 first-parent transitions ending at revision, including zero-growth commits",
+  "prior_surface": {
+    "baseline": {
+      "bytes_each": 2366453,
+      "bytes_total": 11239220,
+      "files": 592,
+      "line_bytes_each": 6264,
+      "lines_each": 6401,
+      "lines_total": 110919
+    },
+    "canonical_inputs": [],
+    "containment_status": "migrated",
+    "enforcement_ceilings": {
+      "bytes_each": 4194304,
+      "bytes_total": 16777216,
+      "files": 768,
+      "line_bytes_each": 8192,
+      "lines_each": 8000,
+      "lines_total": 150000
+    },
+    "health_targets": {
+      "bytes_each": 4194304,
+      "bytes_total": 16777216,
+      "files": 768,
+      "line_bytes_each": 8192,
+      "lines_each": 8000,
+      "lines_total": 150000
+    },
+    "index": "docs/TASK_TREE.md",
+    "index_contract": {
+      "kind": "query",
+      "verifier": "builtin:registry_targets"
+    },
+    "lifecycle": "partitioned_canonical",
+    "locator": "collection",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7",
+    "routes_to": [],
+    "state": "warning_debt",
+    "surface_id": "task_evidence",
+    "targets": [
+      "docs/tasks/*.md",
+      "docs/tasks/segments/*/*.md"
+    ],
+    "transition": {
+      "max_growth": {
+        "bytes_each": 1,
+        "bytes_total": 3451075,
+        "files": 15,
+        "line_bytes_each": 1,
+        "lines_each": 797,
+        "lines_total": 14356
+      },
+      "owner": "ISF-REDUCTION-DELIVERY",
+      "ratchet_step": {
+        "bytes_each": 1,
+        "bytes_total": 1,
+        "files": 1,
+        "line_bytes_each": 1,
+        "lines_each": 1,
+        "lines_total": 1
+      }
+    },
+    "verifier": "builtin:budget"
+  },
+  "revision": "8ff72285cf0035d292f8583040125683678a1a0c",
+  "schema": 1,
+  "scope": [
+    "docs/tasks/*.md",
+    "docs/tasks/segments/*/*.md"
+  ],
+  "selected_bands": {
+    "bytes_total": 65536,
+    "lines_total": 512
+  },
+  "window": 32
+}

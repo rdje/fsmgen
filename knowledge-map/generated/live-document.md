@@ -139,5 +139,5 @@ _A live-document surface's lines_each and bytes_each must imply the bytes per li
 
 _A transition allowance is re-declared to the measured actual plus one ratchet step, and its owner must be live_
 
-- **date:** 2026-10-05 · **status:** current
+- **date:** 2026-10-27 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-transition-allowance-headroom.md`](../../docs/knowledge/live-document-transition-allowance-headroom.md)
