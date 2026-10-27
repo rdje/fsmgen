@@ -233,8 +233,15 @@ The scoped late-sizing contract audit also exercises overlapping auxiliary names
 fresh sizing context would lose existing declarations; clearing every generated
 requirement would lose an independent copy path. Preserving all records is safe,
 but earlier opaque inference can then withhold a clean late binding. The next
-private prerequisite records the immediate actual copy origin separately from
-the original declaration. Scoped updates will preserve authored and other-origin
+private records now carry optional `copy_origin`, the immediate actual registry
+source, separately from the original declaration. Capture requires the identical
+source object in that registry association; a same-name object cannot attest it.
+Chains update this immediate edge while retaining original expression/capture
+identity. Older records without the field, or with a null field, remain
+unattested. Ordinary declarations and unexplained numeric floors invent no
+copy origin. Distinct actual edges stay separate even if their original captured
+expressions are identical; combined-shape qualification owns any later reduction.
+Scoped updates will preserve authored and other-origin
 requirements, replacing only earlier opaque inference attested to the same
 immediate source. These are diagnostic policy results; the scoped entrypoint is
 not implemented yet. Replay the saved contract with:

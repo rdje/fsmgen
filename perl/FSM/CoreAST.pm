@@ -179,14 +179,21 @@ package FSM::CoreAST::Signal;
                 && defined($scope->{owner}) && !ref($scope->{owner}) && length($scope->{owner});
         my $max_width = 0;
         for my $entry (@{$copy->{requirements}}) {
+            my $entry_keys = ref($entry) eq 'HASH' ? join(',', sort keys %$entry) : '';
             Carp::confess "Declared width requirements need complete declaration/generated snapshots.\n"
                 unless ref($entry) eq 'HASH'
-                    && join(',', sort keys %$entry) eq 'declared_type_name,declared_type_spec,expression,kind,signal,width,width_capture'
+                    && ($entry_keys eq 'declared_type_name,declared_type_spec,expression,kind,signal,width,width_capture'
+                        || $entry_keys eq 'copy_origin,declared_type_name,declared_type_spec,expression,kind,signal,width,width_capture')
                     && !ref($entry->{kind}) && ($entry->{kind} // '') =~ /\A(?:declaration|generated)\z/
                     && defined($entry->{signal}) && !ref($entry->{signal}) && length($entry->{signal})
                     && $positive_integer->($entry->{width})
                     && (!ref($entry->{expression}) || ref($entry->{expression}) eq 'ARRAY')
                     && (defined($entry->{expression}) || $entry->{kind} eq 'generated');
+            if (defined $entry->{copy_origin}) {
+                Carp::confess "Declared width requirements need a plain generated copy origin.\n"
+                    unless $entry->{kind} eq 'generated' && !ref($entry->{copy_origin})
+                        && length($entry->{copy_origin});
+            }
             $max_width = $entry->{width} if $entry->{width} > $max_width;
             my $type_name = $entry->{declared_type_name};
             my $type_spec = $entry->{declared_type_spec};
@@ -2587,6 +2594,9 @@ Its scope and observed maximum width are explicit. Literal/type distinctions
 and canonical captures are retained without evaluation. Replacement clears old
 records before validation; registry source/type/width changes and transaction
 clearing invalidate them. Getter exposure requires unchanged installation state.
+Optional C<copy_origin> records a generated requirement's actual immediate
+registry source separately from its original declaration. Absent/null values
+attest no copy edge; a declaration cannot claim a non-null generated origin.
 This holder alone neither captures parser events nor admits symbolic HDL ranges.
 
 =head3 Expressions  

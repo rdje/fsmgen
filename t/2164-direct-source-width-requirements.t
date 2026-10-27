@@ -15,8 +15,9 @@ sub adapter { FSM::Adapter::FSMGenFull->new(debug => 0) }
 sub parse_text { my ($a, $text) = @_; $a->parse_fsm(scalar Lispish::multi(\$text)) }
 sub requirements { $_[0]{signal_manager}->get_signal($_[1])->declared_width_requirements }
 sub parameter_entry {
-    my ($kind, $signal, $parameter, $width, $owner) = @_;
+    my ($kind, $signal, $parameter, $width, $owner, $copy_origin) = @_;
     return {kind => $kind, signal => $signal, expression => ['param', [$parameter]], width => $width,
+        ($kind eq 'generated' ? (copy_origin => $copy_origin // $signal) : ()),
         declared_type_name => undef, declared_type_spec => undef,
         width_capture => {scope => {kind => 'direct_module', owner => $owner}, width => $width,
             binding => {kind => 'reference', observation_index => 0,
@@ -158,7 +159,7 @@ subtest 'size-copy ordering, independent auxiliary types and real copy chains re
     my $r = requirements($a, 'next_next_data');
     is($json->encode($r), $json->encode({scope => {kind => 'direct_module', owner => 'chain'}, width => 16,
         requirements => [parameter_entry('generated', 'next_data', 'X', 16, 'chain'),
-            parameter_entry('generated', 'data', 'W', 8, 'chain')]}), 'real chained copy freezes both original declaration identities');
+            parameter_entry('generated', 'data', 'W', 8, 'chain', 'next_data')]}), 'real chained copy freezes both original declaration identities');
 };
 
 subtest 'failure, replacement, no-op and retry boundaries clear every new record' => sub {

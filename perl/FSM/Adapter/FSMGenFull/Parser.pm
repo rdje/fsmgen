@@ -195,7 +195,16 @@ sub _generated_width_requirements($self, $signal, $signal_name, $width) {
         ? $self->_width_requirements_before($signal)
         : [];
     $entries = [_opaque_width_requirement($signal_name, $width)] unless @$entries;
-    $_->{kind} = 'generated' for @$entries;
+    my $registered = $self->{signal_manager}->get_signal($signal_name);
+    my $attested = $signal && $registered && refaddr($signal) == refaddr($registered);
+    for my $entry (@$entries) {
+        $entry->{kind} = 'generated';
+        # Persist the actual immediate registry edge, separately from the
+        # original declaration carried through a chain. Never inherit an older
+        # edge or attest a same-name object outside this registry association.
+        delete $entry->{copy_origin};
+        $entry->{copy_origin} = $signal_name if $attested;
+    }
     return $entries;
 }
 

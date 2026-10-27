@@ -138,7 +138,8 @@ stages records until complete parser validation succeeds. A later facade
 analysis failure clears those snapshots as well. Separate private width
 requirements retain actual literal/type/expression declarations and generated
 copy contributions before the legacy source record is overwritten. Copy events
-freeze original requirements; mutation versions prevent stale pending records
+freeze original requirements and separately attest the immediate registry source
+only through the identical actual source object. Mutation versions prevent stale pending records
 from reviving after matching-state replacement. Primary and auxiliary bindings
 derive only from a single complete captured requirement matching actual Core
 source/width/type state. Independent and opaque combined constraints do not lend

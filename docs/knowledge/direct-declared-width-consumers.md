@@ -10,7 +10,7 @@ answers:
 date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
-evidence: docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+evidence: docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -92,8 +92,15 @@ receive next(data_r) and q(next_data) requirements. Current retention keeps both
 Fresh contexts lose explicit auxiliary declarations; blanket generated-record
 removal loses the other copy path even with equal defaults. Preserving all
 records safely withholds clean late bindings behind earlier opaque inference.
-The selected prerequisite .3.3.1.2.2.3.3.3.2.1 adds optional immediate copy_origin
+The prerequisite .3.3.1.2.2.3.3.3.2.1 now records optional immediate copy_origin
 attestation at actual copy events, separate from original declaration identity.
+Capture requires actual source-object equality with the registry key; matching
+names or widths cannot attest an edge. Chains overwrite the immediate origin
+while preserving original declaration/capture identity. Older absent/null fields
+remain unattested; declarations and unexplained numeric floors invent no edge.
+Distinct immediate edges retain separate snapshots even for equivalent original
+captures; combined-shape reduction stays .3.4. Reverify:
+`prove -Iperl t/2166-immediate-width-copy-origins.t t/2164-direct-source-width-requirements.t t/2165-direct-auxiliary-width-bindings.t t/2163-core-declared-width-requirements.t`.
 The scoped entrypoint .2.2 must preserve all authored and other-origin records,
 replacing only opaque generated records attested to that same actual immediate
 source under original lexical scope; unknown older records stay conservative.
