@@ -292,8 +292,17 @@ retain their meaning, including vector rank at a one-bit default. Numeric width
 caches cannot replace a captured range. Unknown scopes, foreign targets,
 type conflicts, missing/extra lookups and invalid arithmetic refuse. Caller
 records remain detached from returned text. This extraction keeps current
-composition output and leaves direct capture-to-plan preparation, direct range
-emission and the shared VHDL range kernel as subsequent work.
+composition output and leaves direct capture-to-plan preparation and direct
+range emission as subsequent work.
+
+The parallel private VHDL `WidthExpressionEmitter` now accepts the same explicit
+source scopes behind its narrower composition wrapper. It preserves portable
+natural bounds at each arithmetic step, positive final width, left-associated
+parentheses and modulo spelling as `mod`. Selected roots use the existing VHDL
+identifier primitive; complete declaration/namespace preparation remains the
+caller's responsibility. Current composition output, refusal messages and caller
+graphs preserve. The shared helper adds no direct converter or source admission;
+captured-plan preparation and source-aware declaration conversion remain next.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:

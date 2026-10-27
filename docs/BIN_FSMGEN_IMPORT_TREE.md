@@ -82,6 +82,13 @@ for selected scalar roots in explicit direct/composition scope. The composition
 wrapper keeps its top-scope and diagnostic policy; direct declaration activation
 remains separately owned. This scoped dependency update adds no closure census.
 
+The parallel VHDL `CompositionWidthEmitter` delegates to
+`FSM::Backend::VHDL::WidthExpressionEmitter`. That kernel reuses integer width
+semantics and the existing VHDL parameter identifier primitive, preserving
+per-intermediate natural bounds and the top wrapper's namespace prerequisites.
+Direct source-aware range conversion remains separately owned; the dated
+closure census is unchanged.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

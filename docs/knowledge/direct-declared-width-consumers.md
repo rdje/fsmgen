@@ -11,12 +11,13 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; docs/audits/scoped-late-width-sizing-20261027.json.gz;
-  docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py;
-  docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz;
-  docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm;
-  perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+  docs/audits/shared-vhdl-width-kernel-20261027.json.gz; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz;
+  perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz;
+  docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz;
+  docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py;
+  docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm;
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
+  t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -137,5 +138,15 @@ top-scope/diagnostic wrapper. Ordered actual lookups, static arithmetic folds an
 default-one vector rank preserve; foreign targets and unknown/mismatched scopes
 refuse. Returned range text retains no caller graph. Actual existing composition
 success/refusal/caller products conserve. Direct captured-plan preparation and
-declaration activation remain .3.3.2.3/.3; VHDL kernel extraction is .3.3.2.2.
+declaration activation remain .3.3.2.3/.3.
 Reverify: `prove -Iperl t/2168-shared-verilog-width-kernel.t t/2135-composition-symbolic-port-ranges.t`.
+
+VHDL::WidthExpressionEmitter now shares the existing portable prepared width
+walk in direct_module/composition_top scope. Its composition wrapper preserves
+top diagnostics and declaration/namespace prerequisites. The integer evaluator
+retains natural bounds at every intermediate step, positive final width and mod
+formatting; selected roots reuse VHDL::ParameterBindingEmitter identifier checks.
+Actual composition success/refusal/caller products preserve, including recursive
+caller topology captured as a deterministic reference graph. Direct raw
+conversion and captured direct plans remain inactive. Reverify:
+`prove -Iperl t/2169-shared-vhdl-width-kernel.t t/2139-composition-vhdl-port-ranges.t`.
