@@ -140,8 +140,9 @@ Caller inputs remain read-only and returned text retains no caller graph.
 C<context>, C<scope_description> and C<required_scope_kind> let a narrower wrapper
 retain its diagnostic and scope policy. The composition wrapper keeps its top
 boundary. Canonical declaration/name/provenance preparation remains the caller's
-obligation. This helper alone does not prepare direct source captures, activate
-direct ranges or extend public source/report contracts. Full compiler/override/
-runtime qualification remains separately owned.
+obligation. Direct captured-source/target preparation now supplies these
+contracts to direct port emission. This kernel alone neither attests capture
+authorship nor changes source/report schemas. Storage/computed shapes and full
+compiler/override/runtime qualification remain separately owned.
 
 =cut

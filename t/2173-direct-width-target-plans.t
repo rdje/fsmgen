@@ -10,6 +10,7 @@ use FSM::CoreAST;
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::VHDL;
 use FSM::DirectDeclaredWidthSupport;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
 
 my $class = 'FSM::DirectDeclaredWidthSupport';
 ok($class->can('prepare_declarations'), 'direct target declaration preparation exists')
@@ -23,42 +24,33 @@ sub fixture {
     my $text = "(?fsm:$module_name (+params (W $value) (COPY W) (SAME $value))"
         ." $extra (+size ($signal_name $width_token) (SOURCE $value)) (idle (<-= ($signal_name SOURCE))))";
     my $a = FSM::Adapter::FSMGenFull->new(debug => 0); my $m = $a->parse_fsm(scalar Lispish::multi(\$text));
-    my $dt = FSM::HDL::FlattenedDT->new(debug => 0); my $sv = $dt->generate_systemverilog($m);
-    my $mapped = $language eq 'vhdl'
-        ? FSM::HDL::FlattenedDT::Backend::VHDL::_plan_generated_vhdl_identifiers($sv)
-        : {text => $sv, identifier_map => {}};
-    my $parsed = FSM::HDL::FlattenedDT::Backend::VHDL::_parse_module($mapped->{text});
-    my @parameters = FSM::HDL::FlattenedDT::Backend::VHDL::_parse_generics($parsed->{parameters});
-    my @ports = FSM::HDL::FlattenedDT::Backend::VHDL::_parse_ports($parsed->{ports});
-    my @signals = FSM::HDL::FlattenedDT::Backend::VHDL::_parse_signal_declarations($parsed->{body}, {map {$_->{name} => 1} @ports});
-    my @constants = FSM::HDL::FlattenedDT::Backend::VHDL::_parse_constants($parsed->{body});
-    my %declarations = map {$_->{name} => {name => $_->{name},
-        width => $_->{scalar} ? 1 : $_->{msb} - $_->{lsb} + 1,
-        signed => $_->{signed} // 0, declared_type_name => undef, declared_type_spec => undef}} (@ports, @signals);
-    # Keep the backend planner's declared-type evidence while independently
-    # checking its actual rendered numeric width through the converter parser.
-    my $planner = $dt->{enable_graph_module_planning_support};
-    my $port_plan = $planner->build_module_declaration_plan($m);
-    my $storage = $planner->build_internal_signal_declaration_plan($m, $port_plan->{declared_port_signals});
-    my %metadata = map {$_->{name} => $_} (@{$port_plan->{base_ports}}, @{$port_plan->{inputs}}, @{$port_plan->{outputs}});
-    for my $group ('signal', 'aux') {
-        for my $name (keys %{$storage->{"${group}_decls"}}) {
-            $metadata{$name} = {width => $storage->{"${group}_decls"}{$name},
-                declared_type_name => $storage->{"${group}_declared_type_name"}{$name},
-                declared_type_spec => $storage->{"${group}_declared_type_spec"}{$name}};
+    my $dt = FSM::HDL::FlattenedDT->new(debug => 0);
+    my $capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+    my $sv;
+    {
+        local $dt->{declared_width_declaration_capture} = $capture;
+        $sv = $dt->generate_systemverilog($m);
+    }
+    my $snapshot = $capture->snapshot;
+    my $ns = $snapshot->{target_namespace};
+    my $declarations = $snapshot->{target_declarations};
+    if ($language eq 'vhdl') {
+        my $mapped = FSM::HDL::FlattenedDT::Backend::VHDL::_plan_generated_vhdl_identifiers($sv);
+        my $mapping = $mapped->{identifier_map};
+        $ns->{module_name} = $mapping->{$ns->{module_name}} // $ns->{module_name};
+        for my $bucket (qw(parameter_names ports signals constants types)) {
+            $ns->{$bucket} = [map {$mapping->{$_} // $_} @{$ns->{$bucket}}];
         }
+        my %renamed;
+        for my $name (keys %$declarations) {
+            my $target = $mapping->{$name} // $name;
+            $renamed{$target} = {%{$declarations->{$name}}, name => $target};
+        }
+        $declarations = \%renamed;
+        $ns->{identifier_map} = $mapping;
     }
-    for my $name (keys %metadata) {
-        my $target = $mapped->{identifier_map}{$name} // $name;
-        my $record = $declarations{$target} or die "missing actual rendered declaration $target";
-        die "actual rendered width differs for $target" unless $record->{width} == $metadata{$name}{width};
-        $record->{$_} = $metadata{$name}{$_} for qw(declared_type_name declared_type_spec);
-    }
-    my $ns = {module_name => $parsed->{name}, identifier_map => $mapped->{identifier_map},
-        parameter_names => [map {$_->{name}} @parameters], ports => [map {$_->{name}} @ports],
-        signals => [map {$_->{name}} @signals], constants => [map {$_->{name}} @constants], types => []};
     return {fsm_module => $m, assignment_analysis => $dt->{assignment_analysis},
-        target_language => $language, target_namespace => $ns, target_declarations => \%declarations};
+        target_language => $language, target_namespace => $ns, target_declarations => $declarations};
 }
 sub run_plan { return $class->prepare_declarations(%{$_[0]}) }
 sub snapshot {

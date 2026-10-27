@@ -273,9 +273,12 @@ contains physical C<source_name>, C<declaration_kind> (port or signal) and the
 proved C<width_plan>. Independent static/type rows stay on their fixed path.
 Caller-made target records remain a contract, not provenance attestation.
 
-Computed helper shapes and declaration activation remain separate work;
-ordinary runtime generation does not import this helper yet. Full compiler,
-override and runtime qualification remains separately owned. Whole backend
+The direct Verilog-family post-flattening owner now consumes these checks for
+captured declarations before returning HDL. Port ranges retain actual selected
+names and vector rank; complete actual target qualification and comparison with
+the emitted port plans reject late same-default ancestry changes. Storage,
+computed helper shapes and source-aware VHDL ranges remain separately owned.
+Full compiler, override and runtime qualification remains pending. Whole backend
 release is not claimed: task C<ISF-REDUCTION-DELIVERY.25> owns the independent
 context/helper back-reference cycle reproduced without these preparation calls.
 

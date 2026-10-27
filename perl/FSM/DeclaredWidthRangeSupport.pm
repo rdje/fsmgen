@@ -133,8 +133,9 @@ parameter payloads and static payloads hiding mutable dependencies refuse.
 VHDL also requires portable natural payloads and arithmetic-only operators;
 the existing kernel checks each intermediate value. No new evaluator, numeric
 ancestry inference or raw HDL substitution is introduced. Consistency proof
-does not attest arbitrary caller authorship. Actual module membership, full
-target namespaces, declaration activation and complete compiler/runtime
-qualification remain separate work.
+does not attest arbitrary caller authorship. Actual module membership and full target namespaces are checked by
+C<DirectDeclaredWidthSupport>; direct Verilog-family port emission now consumes
+those plans. Storage/computed shapes, source-aware VHDL ranges and complete
+compiler/runtime qualification remain separately owned.
 
 =cut

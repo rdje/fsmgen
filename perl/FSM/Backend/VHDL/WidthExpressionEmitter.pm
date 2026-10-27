@@ -147,7 +147,8 @@ caller's obligation; this helper does not attest arbitrary caller-made hashes.
 
 C<context>, C<scope_description> and C<required_scope_kind> preserve a narrower
 wrapper's diagnostics and scope policy. Composition keeps its top boundary.
-Direct captured-plan preparation, source-aware conversion, direct ranges and
-complete compiler/override/runtime qualification remain separate work.
+Captured direct-plan preparation is handled by separate source/target helpers.
+Source-aware VHDL conversion, direct VHDL ranges and complete compiler/override/
+runtime qualification remain separately owned.
 
 =cut

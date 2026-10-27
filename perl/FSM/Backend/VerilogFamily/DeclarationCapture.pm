@@ -97,8 +97,9 @@ FSM::Backend::VerilogFamily::DeclarationCapture - Opt-in actual direct emission 
 =head1 DESCRIPTION
 
 An explicitly supplied C<declared_width_declaration_capture> on a direct backend
-context receives actual declaration events from the existing emitters. Ordinary
-generation installs no collector. C<begin_module> starts a new transaction;
+context receives actual declaration events from the existing emitters. Direct
+captured-parameter/width preparation also installs a per-generation collector;
+legacy uncaptured generation retains its existing path. C<begin_module> starts a new transaction;
 generation reset invalidates previous state and only full successful assembly
 calls C<complete>. Failed or incomplete generations supply no C<snapshot>.
 

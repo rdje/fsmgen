@@ -64,6 +64,21 @@ sub generate_header ($self, $fsm_module) {
 sub generate_module_declaration ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $module_plan = $ctx->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
+    if (my $source_plan = $ctx->{direct_declared_width_source_plan}) {
+        for my $port (@{$module_plan->{base_ports} || []}) {
+            my $signal_plan = $source_plan->{signals}{$port->{name}};
+            my $width_plan = $signal_plan ? $signal_plan->{width_plan} : undef;
+            die "Direct symbolic system port width '$port->{name}' is unsupported\n"
+                if $width_plan && $width_plan->{profile} eq 'symbolic';
+        }
+        for my $port (@{$module_plan->{inputs} || []}, @{$module_plan->{outputs} || []}) {
+            my $signal_plan = $source_plan->{signals}{$port->{name}};
+            my $width_plan = $signal_plan ? $signal_plan->{width_plan} : undef;
+            next unless $width_plan && $width_plan->{profile} eq 'symbolic';
+            $port->{declared_width_plan} = $width_plan;
+            $ctx->{direct_declared_width_emitted_ports}{$port->{name}} = $width_plan;
+        }
+    }
     $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(
         module_name => $fsm_module->name,
     );
@@ -233,6 +248,7 @@ sub _render_module_port_plan ($port_plan, $aggregate_typedef_lookup = undef) {
 
     my $width = $port_plan->{width} || 1;
     my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+    $width_str = $port_plan->{declared_width_plan}{range_text} if $port_plan->{declared_width_plan};
     my $signed_str = ($port_plan->{signed} // 0) ? "signed " : "";
     my $type_keyword = _state_model_keyword($port_plan->{state_model});
     if (defined $type_keyword) {

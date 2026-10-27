@@ -45,7 +45,7 @@ sub generate_captured {
     local $dt->{declared_width_declaration_capture} = $capture;
     return $dt->generate_systemverilog($m);
 }
-my $source = q{(?fsm:decl_capture (+params (W 8) (COPY W)) (+size (DATA (param COPY)) (SOURCE 8)) (idle (<-= (DATA (+ SOURCE 8'd1)))))};
+my $source = q{(?fsm:decl_capture (+params (W 8) (COPY W)) (+size (DATA 8) (SOURCE 8)) (idle (<-= (DATA (+ SOURCE 8'd1)))))};
 subtest 'actual emitted membership and numeric metadata capture without changing HDL' => sub {
     for my $text ($source,
         '(?fsm:aggregate_capture (+types (type frame_t (record (payload (bits 8))))) (+size (DATA frame_t) (OUT 8)) (idle (= (OUT DATA))))') {

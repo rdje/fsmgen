@@ -45,6 +45,11 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use Carp qw(confess);
+use JSON::PP ();
+use Scalar::Util qw(blessed);
+use FSM::DirectDeclaredWidthSupport;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
 
 use constant STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN_MARKER =>
     'FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN';
@@ -75,9 +80,19 @@ Generate the full direct SystemVerilog module after decision-tree flattening.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $capture = $ctx->{declared_width_declaration_capture};
+    my $prepare_widths = _needs_declared_width_preparation($ctx, $fsm_module);
+    my $capture = $ctx->{declared_width_declaration_capture}
+        // ($prepare_widths ? FSM::Backend::VerilogFamily::DeclarationCapture->new : undef);
+    local $ctx->{declared_width_declaration_capture} = $capture;
+    local $ctx->{direct_declared_width_source_plan};
+    local $ctx->{direct_declared_width_emitted_ports} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
+    if ($prepare_widths) {
+        $ctx->{direct_declared_width_source_plan} = FSM::DirectDeclaredWidthSupport->prepare_module(
+            fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
+            target_language => 'systemverilog');
+    }
 
     my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
@@ -98,7 +113,52 @@ sub generate_systemverilog_module ($self, $fsm_module) {
         ->generate_systemverilog_tail($fsm_module);
 
     $capture->complete if $capture;
+    if ($prepare_widths) {
+        my $ok = eval {
+            my $qualified = FSM::DirectDeclaredWidthSupport->prepare_declarations(
+                fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
+                target_language => 'systemverilog', %{$capture->snapshot});
+            my %expected = map {$_ => $qualified->{ranges}{$_}{width_plan}}
+                grep {$qualified->{ranges}{$_}{declaration_kind} eq 'port'} keys %{$qualified->{ranges}};
+            my $json = JSON::PP->new->canonical;
+            confess "Direct captured widths do not match the actual emitted port identities\n"
+                unless $json->encode(\%expected) eq $json->encode($ctx->{direct_declared_width_emitted_ports});
+            1;
+        };
+        unless ($ok) {
+            my $error = $@;
+            $capture->invalidate;
+            die $error;
+        }
+    }
     return $hdl;
+}
+
+sub _needs_declared_width_preparation ($ctx, $module) {
+    return 0 unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule');
+    for my $map ($module->parameter_default_sources, $module->parameter_default_bindings) {
+        return 1 if ref($map) eq 'HASH' && keys %$map;
+    }
+    my @signals = values %{$module->signals || {}};
+    for my $lhs (values %{$ctx->{lhs_ast_map} || {}}) {
+        push @signals, $lhs->signal if blessed($lhs) && $lhs->can('signal');
+    }
+    for my $signal (@signals) {
+        next unless blessed($signal) && $signal->can('declared_width_binding');
+        my $binding = $signal->declared_width_binding;
+        return 1 if $binding && grep {$_->{kind} eq 'parameter'} @{$binding->{observations}};
+        my $requirements = $signal->declared_width_requirements;
+        if ($requirements) {
+            for my $entry (@{$requirements->{requirements}}) {
+                my $capture = $entry->{width_capture};
+                return 1 if $capture && grep {$_->{kind} eq 'parameter'} @{$capture->{observations}};
+            }
+        }
+        # A revoked source may have lost both current private getters. Declared
+        # parameters plus authored width source still require proof, not fallback.
+        return 1 if keys(%{$module->parameters}) && defined($signal->declared_width_source);
+    }
+    return 0;
 }
 
 =head2 prepare_consolidated_intermediate_stage

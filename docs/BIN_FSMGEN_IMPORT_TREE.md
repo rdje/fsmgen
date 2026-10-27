@@ -89,6 +89,14 @@ per-intermediate natural bounds and the top wrapper's namespace prerequisites.
 Direct source-aware range conversion remains separately owned; the dated
 closure census is unchanged.
 
+The direct post-flattening Verilog-family owner now imports
+`FSM::DirectDeclaredWidthSupport` and `VerilogFamily::DeclarationCapture` for
+captured source/target preparation and actual emission snapshots. The source
+helper imports DeclaredWidthRangeSupport/DeclaredWidthBindingSupport, joining
+the canonical width walk and both shared target kernels. Direct Verilog-family
+ports consume the selected ranges; storage/computed shapes and source-aware
+VHDL integration remain separate. This scoped update adds no closure census.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

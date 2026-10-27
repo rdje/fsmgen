@@ -124,8 +124,8 @@ source-environment helper. Target name reservation remains a backend policy at
 its original validation boundary; source ownership stays lexical. The ordinary
 direct symbol resolver now also exposes a detached observation of the branch it
 actually selected: static symbol or immediate parameter root/path. The existing
-payload API keeps its precedence and values. This private prerequisite does not
-yet publish declared-width bindings or activate symbolic ranges.
+payload API keeps its precedence and values. This observation alone does not publish bindings; the capture and direct-port
+consumers below now use it without changing ordinary resolver precedence.
 
 `WidthExpressionSupport` now has a private opt-in capture method that follows
 the existing prefix and infix evaluator walk. It retains structured literals,
@@ -376,10 +376,40 @@ now supplies it directly from the existing emitters: actual parameter order,
 ports, state declarations, storage, enable/intermediate wires and allocated
 aggregate type names. No HDL parsing or second generation pass supplies these
 records. Only completed generation exposes a detached snapshot; reset, failure
-or incomplete numeric rows withhold prior/partial results. Ordinary generation
-installs no collector and keeps its existing HDL. These plans do not yet
-activate direct HDL declarations. Port emission, computed helper shapes and
-full qualification remain separate work.
+or incomplete numeric rows withhold prior/partial results. Captured direct
+parameter/width preparation now installs this collector for one generation;
+legacy uncaptured generation keeps its existing path.
+
+Direct SystemVerilog and compatibility Verilog ports now consume the proved
+ranges. Selected parameter names and arithmetic remain in input/output ranges,
+including an explicit vector when the selected width defaults to one. Fixed
+literals, static selections and named types keep independent numeric/type
+ranges. Before returning HDL, complete actual target snapshots are qualified
+again and compared with the emitted port identities. A same-default source
+replacement cannot bless already emitted text. Combined mutable requirements,
+stale captures, namespace conflicts and symbolic clock/reset widths refuse.
+
+Run the [one-bit input/output fixture](../../../t/data/ial0-direct-symbolic-ports.fsm):
+
+```bash
+./bin/fsmgen --quiet --strict --check --json t/data/ial0-direct-symbolic-ports.fsm
+./bin/fsmgen --quiet --strict --language systemverilog --output .artifacts/direct_symbolic_ports.sv t/data/ial0-direct-symbolic-ports.fsm
+./bin/fsmgen --quiet --strict --language verilog --output .artifacts/direct_symbolic_ports.v t/data/ial0-direct-symbolic-ports.fsm
+```
+
+Its port block includes:
+
+```systemverilog
+input  wire FIXED,
+input  wire [(W - 1):0] INPUT_PORT,
+output reg  [(COPY - 1):0] next_DATA
+```
+
+Port emission has focused checks and native generation evidence. Internal
+storage, computed helper shapes and complete external override/runtime
+qualification remain pending. The source-aware VHDL range integration is also
+pending: symbolic direct ports currently refuse in that converter before a new
+artifact is returned; an existing destination remains unchanged.
 
 The target-plan ownership check exposed an independent backend retention defect:
 ordinary numeric generation keeps a context/helper back-reference cycle and its
@@ -442,11 +472,11 @@ RESIDUE : natural := (TOTAL mod WIDTH);
 PAD : std_logic_vector(7 downto 0) := "10100101"
 ```
 
-This preserves default relationships only. Direct signal ranges still use
-selected concrete widths; even a parameter-dependent width defaulting to one
-currently emits a scalar declaration. A distinct equal literal width creates no
-relationship. Symbolic ranges and external override/runtime qualification
-remain successors. The standalone SystemVerilog-text converter
+This qualifies VHDL default relationships. Direct Verilog-family ports now
+preserve captured symbolic ranges and default-one vector rank; internal storage
+and computed shapes remain successors. A distinct equal literal width creates
+no relationship. Direct VHDL symbolic ports and complete external
+override/runtime qualification remain pending. The standalone SystemVerilog-text converter
 keeps its existing static/integer-expression profile because it has no Core
 source bindings. See the direct-backend chapter for the separately owned
 reserved-identifier emission defect.
@@ -511,8 +541,9 @@ keeps executable aggregate roots named and is runnable:
 ./bin/fsmgen --quiet --strict --output .artifacts/sv/static_aggregate_defaults.sv t/data/ial0-static-aggregate-defaults.fsm
 ```
 
-VHDL, generic signal ranges and complete external override/runtime qualification
-remain separate work. Header text alone is not a complete generic-width guarantee.
+VHDL, generic storage/computed shapes and complete external override/runtime
+qualification remain separate work. Verilog-family port ranges are implemented;
+header text alone is not a complete generic-width guarantee.
 
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of
@@ -697,9 +728,9 @@ aggregate default, malformed selector or non-positive result is rejected.
 
 This form is confined to direct `+size` width expressions. It is not a general
 parameter-value operator or an extension to `+types`. The original selector
-tree survives in Core width-source metadata. Current HDL still emits the
-evaluated width; generic HDL ranges and override propagation remain follow-on
-work. The complete collision example can be checked with:
+tree survives in Core width-source metadata. Direct Verilog-family ports now
+retain the selected parameter names and vector rank; internal/computed ranges,
+source-aware VHDL conversion and complete override behavior remain follow-on work. The complete collision example can be checked with:
 
 ```sh
 ./bin/fsmgen --quiet --strict --check --json t/corpus/direct_size_parameter_selection.fsm

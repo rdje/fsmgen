@@ -12,6 +12,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
   perl/FSM/DirectDeclaredWidthSupport.pm; t/2172-direct-width-module-source-plans.t; docs/audits/direct-width-module-source-plans-20261027.json.gz;
@@ -34,13 +35,15 @@ there; the current numeric plans cannot reconstruct it from equal widths.
 The receipt's actual resettable source has WIDTH1, an explicit data_port
 parameter selector and an independent literal-width input. The selector tree
 survives on its Signal while the independent literal has no authored width
-record; both declarations still emit scalar HDL. Module signals alone is not
+record; the retained predecessor emitted both as scalar HDL. Current direct
+Verilog-family ports preserve captured symbolic vector rank, including width1. Module signals alone is not
 an exhaustive source for assigned outputs: the actual Signal is also reached
 through the canonical adapter registry and assignment AST.
 
-ModulePlanningSupport owns direct port/internal plans. ScaffoldEmitter and
-InternalDeclarationEmitter currently render numeric ranges; direct VHDL parses
-those generated numeric declarations. CompositionWidthEmitter already has
+ModulePlanningSupport owns direct port/internal plans. ScaffoldEmitter now
+consumes captured symbolic port ranges; InternalDeclarationEmitter still renders
+numeric storage ranges. Direct VHDL symbolic port conversion remains pending
+and refuses rather than returning an artifact. CompositionWidthEmitter already has
 captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
 direct consumer integration; computed shapes and full qualification stay .3.4/.6.
@@ -60,7 +63,7 @@ Reverify:
 Actual <-=/<=-/<=+ auxiliary copies overwrite an independently declared auxiliary
 source record with data(param W), while legacy max-width refinement still retains
 both numeric requirements. Equal-default param X and literal-eight declarations
-then have identical selected Signal products; opposing W/X defaults demonstrate
+then had identical selected Signal products in that retained predecessor epoch; opposing W/X defaults demonstrate
 the lost constraint still matters numerically. Clean/one-bit/named-type and
 renamed late-sizing controls retain their distinct boundaries. The P1 private
 retention defect is now repaired under .3.3.1.2.2.3.3.4; numeric behavior remains
@@ -184,8 +187,15 @@ exposes detached namespace/numeric-type snapshots; reset, failed/incomplete or
 duplicate transactions withhold old/partial results. No HDL parsing or second
 generation pass supplies them. Actual ordinary/captured artifacts conserve
 against authenticated predecessor owners under the Date-only comparison.
-Direct activation and computed shapes remain successors; ordinary generation
-installs no collector or captured range activation yet. Existing whole backend retention is separately owned under
+Direct Verilog-family ports now consume the proved ranges, retaining actual
+selected roots, arithmetic and default-one vector rank. Captured declarations
+install the collector for one generation. Complete actual target qualification
+and exact emitted-plan comparison reject late same-default ancestry changes;
+combined/stale/namespace and symbolic system-width profiles refuse before success.
+Fixed/type/legacy and static VHDL defaults conserve. Native strict check plus
+SystemVerilog/Verilog outputs qualify the one-bit fixture; symbolic VHDL refuses
+and preserves an existing destination. Storage/computed shapes, source-aware
+VHDL ranges and full override/runtime qualification remain successors. Existing whole backend retention is separately owned under
 .25 and the flattened-backend-owner-cycle card; isolated target plans retain no
 caller target records or never-installed physical Core copy. Reverify:
-`prove -Iperl t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
+`prove -Iperl t/2175-direct-symbolic-port-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.

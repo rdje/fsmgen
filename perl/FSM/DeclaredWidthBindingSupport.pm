@@ -127,7 +127,9 @@ results retain neither Signal nor caller environment.
 Canonical producer authorship and full declaration/target provenance remain
 caller obligations. This proves internal capture consistency, not authenticity
 of arbitrary caller-made records, target legality or a symbolic range profile.
-Target adaptation, module plans, source/declaration activation and complete
-compiler/override/runtime qualification remain separate work.
+Target adaptation and module/target preparation live in separate shared helpers;
+direct Verilog-family ports now consume those proved plans. Storage/computed
+shapes, source-aware VHDL ranges and complete compiler/override/runtime
+qualification remain separately owned.
 
 =cut

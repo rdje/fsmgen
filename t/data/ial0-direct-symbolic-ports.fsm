@@ -1,0 +1,10 @@
+(?fsm:direct_symbolic_ports
+  (+params (W 1) (COPY W) (SAME 1))
+  (+size
+    (DATA (param COPY))
+    (INPUT_PORT (param W))
+    (FIXED 1)
+    (FIXED_VALUE 1))
+  (idle
+    (<-= (DATA INPUT_PORT))
+    (= (FIXED_VALUE FIXED))))
