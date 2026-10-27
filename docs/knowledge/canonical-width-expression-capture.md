@@ -7,10 +7,16 @@ answers:
   - "how does direct declared-width resolution capture scope and actual lookup selection?"
   - "how are private Core declared-width bindings cloned and invalidated?"
   - "when are direct source width bindings published after validation?"
+  - "how are declared width capture observations proved before target rendering?"
 date: 2026-10-27
 status: current
 tags: [widths, source-capture, parameters, namespaces]
-evidence: perl/FSM/Adapter/FSMGenFull.pm; t/2162-direct-source-width-binding-publication.t; docs/audits/source-width-publication-20261027.json.gz; perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull/SignalManager.pm; t/2161-core-declared-width-binding-lifecycle.t; docs/audits/core-width-binding-lifecycle-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; t/2160-direct-declared-width-capture.t; docs/audits/direct-declared-width-capture-20261027.json.gz; perl/FSM/WidthExpressionSupport.pm; t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
+evidence: >-
+  docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/Adapter/FSMGenFull.pm;
+  t/2162-direct-source-width-binding-publication.t; docs/audits/source-width-publication-20261027.json.gz; perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull/SignalManager.pm;
+  t/2161-core-declared-width-binding-lifecycle.t; docs/audits/core-width-binding-lifecycle-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm;
+  t/2160-direct-declared-width-capture.t; docs/audits/direct-declared-width-capture-20261027.json.gz; perl/FSM/WidthExpressionSupport.pm;
+  t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -75,3 +81,15 @@ objects receive bindings even when absent from module.signals. Selected complete
 native check/semantic products are byte-identical, HDL differs only in Date,
 and old source/default/numeric/caller JSON products conserve. Reverify:
 `prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t t/50-language-contract-size-section-boundary.t`.
+
+DeclaredWidthBindingSupport::prove_signal now consumes an actual coherent Core
+Signal getter and explicit direct declaration environment. It clones plain data,
+checks source scope/membership and re-derives the canonical capture walk using
+strict frozen observations only. Entrypoint/token/kind/order, complete nested
+payload/binding structure and selected width must match. Selected parameter
+root/path payloads match actual declarations through the existing selection/path
+helpers; static choices never borrow same-valued parameter membership. No live
+manager resolution runs. Returned capture and ordered parameter identities stay
+plain/detached and retain no Signal/environment owner. The proof does not attest
+arbitrary caller-made provenance or activate target ranges. Reverify:
+`prove -Iperl t/2170-declared-width-binding-proof.t t/2160-direct-declared-width-capture.t`.

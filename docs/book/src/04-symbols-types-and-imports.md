@@ -257,12 +257,21 @@ header; a physical module name never supplies ownership. For example:
 use lib 'perl';
 use Lispish;
 use FSM::Adapter::FSMGenFull;
+use FSM::DeclaredWidthBindingSupport;
+use FSM::ParameterDefaultEnvironmentSupport;
 my $source = '(?fsm:late_case (+params (W 8)) (idle (<-= (data 0))))';
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
 $adapter->parse_fsm(scalar Lispish::multi(\$source));
 $adapter->{parser}->parse_size_section_in_scope(
     ['+size', [['data', ['param', ['W']]]]],
     {kind => 'direct_module', owner => 'late_case'});
+my $module = $adapter->{parser}->get_fsm_module;
+my $environment = FSM::ParameterDefaultEnvironmentSupport->build_direct_environment(
+    parameters => $module->parameters, sources => $module->parameter_default_sources,
+    bindings => $module->parameter_default_bindings);
+my $proof = FSM::DeclaredWidthBindingSupport->prove_signal(
+    signal => $adapter->{signal_manager}->get_signal('next_data'),
+    environment => $environment);
 ```
 
 Scope preflight refuses malformed or incompatible records before mutation.
@@ -303,6 +312,17 @@ identifier primitive; complete declaration/namespace preparation remains the
 caller's responsibility. Current composition output, refusal messages and caller
 graphs preserve. The shared helper adds no direct converter or source admission;
 captured-plan preparation and source-aware declaration conversion remain next.
+
+The private `DeclaredWidthBindingSupport::prove_signal` check now validates an
+actual coherent Signal capture against an explicit declaration environment. It
+re-derives the captured evaluator walk with strict frozen observations: lookup
+entrypoint, selected identity, order, nested payload structure, binding and
+default width must agree. Selected parameter root/path payloads must also match
+the declared environment. It performs no live namespace lookup and never chooses
+a relationship from equal numbers. Static selections stay pinned beside
+same-named parameters. Returned capture and ordered parameter-reference records
+are plain and detached. This proves consistency; producer authorship, target
+legality, contract adaptation and backend range activation remain separate.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:

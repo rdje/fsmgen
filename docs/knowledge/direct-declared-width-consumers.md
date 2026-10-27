@@ -11,13 +11,13 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  docs/audits/shared-vhdl-width-kernel-20261027.json.gz; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz;
-  perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz;
-  docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz;
-  docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py;
-  docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm;
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
-  t/2111-ial0-parameter-width-selection.t
+  docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; docs/audits/shared-vhdl-width-kernel-20261027.json.gz;
+  perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm;
+  docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz;
+  docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz;
+  docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz;
+  perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -150,3 +150,11 @@ Actual composition success/refusal/caller products preserve, including recursive
 caller topology captured as a deterministic reference graph. Direct raw
 conversion and captured direct plans remain inactive. Reverify:
 `prove -Iperl t/2169-shared-vhdl-width-kernel.t t/2139-composition-vhdl-port-ranges.t`.
+
+DeclaredWidthBindingSupport now proves coherent actual Signal captures against
+frozen lookup observations and declared root/path payloads, reusing canonical
+width evaluation without live namespace selection. Canonical capture proof is
+.3.3.2.3.1; structured target-contract adaptation and actual module/target plan
+assembly remain .2/.3 before direct declaration activation. No ordinary runtime
+consumer imports this new helper yet. Reverify:
+`prove -Iperl t/2170-declared-width-binding-proof.t t/2160-direct-declared-width-capture.t`.
