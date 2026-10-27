@@ -10,7 +10,7 @@ answers:
 date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
-evidence: docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+evidence: docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -40,8 +40,8 @@ Signal associations and publishes primary declared_width_binding records only
 after complete module validation; facade failures clear them too. Original
 header scope survives physical renaming. Old source/numeric/public products
 conserve; literal/type branches acquire no parameter relationship. Eligible
-auxiliary propagation is implemented; explicit scoped late sizing remains
-.3.3.1.2.2.3.3.3 before target range kernels .3.3.2.
+auxiliary propagation and explicit scoped late sizing are implemented with
+focused checks before target range kernels .3.3.2.
 Reverify:
 `prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
 
@@ -101,8 +101,25 @@ remain unattested; declarations and unexplained numeric floors invent no edge.
 Distinct immediate edges retain separate snapshots even for equivalent original
 captures; combined-shape reduction stays .3.4. Reverify:
 `prove -Iperl t/2166-immediate-width-copy-origins.t t/2164-direct-source-width-requirements.t t/2165-direct-auxiliary-width-bindings.t t/2163-core-declared-width-requirements.t`.
-The scoped entrypoint .2.2 must preserve all authored and other-origin records,
+The scoped entrypoint .2.2 preserves all authored and other-origin records,
 replacing only opaque generated records attested to that same actual immediate
 source under original lexical scope; unknown older records stay conservative.
-The saved policies are prototypes, not an implemented API. Reverify:
+The saved policies describe diagnostic prototypes at their recorded epoch.
+Reverify:
 `python3 -B docs/audits/scoped-late-width-contract-20261027.py --self-test`.
+
+Private Parser parse_size_section_in_scope(size_ast, scope) now shares canonical
+copied scope validation and the actual final requirement/binding publisher.
+Malformed/incompatible scopes refuse before mutation. Accepted calls snapshot
+current compatible actual records, clear metadata, seed revocable events and
+publish only after complete success. Nested same-scope calls reuse outer staging.
+Only opaque generated requirements attested to the same actual immediate source
+may be replaced; all authored and other-origin records remain, and larger
+unexplained numeric floors stay opaque. Scalar/list/void and no-op contracts are
+preserved; ordinary calls create no capture context. Failed accepted sizing or
+publication clears all derived records, preserving the numeric/source prefix.
+The legacy named-type ordering asymmetry is reproduced and owned by .24 before
+.6: early assignment auxiliaries omit Core type metadata while late sizing copies
+it. The new scoped path preserves the actual legacy late getters; requirements
+retain the same type origin. Reverify:
+`prove -Iperl t/2167-scoped-late-width-sizing.t t/2165-direct-auxiliary-width-bindings.t t/2162-direct-source-width-binding-publication.t t/2160-direct-declared-width-capture.t`.

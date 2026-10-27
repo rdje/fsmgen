@@ -241,14 +241,47 @@ identity. Older records without the field, or with a null field, remain
 unattested. Ordinary declarations and unexplained numeric floors invent no
 copy origin. Distinct actual edges stay separate even if their original captured
 expressions are identical; combined-shape qualification owns any later reduction.
-Scoped updates will preserve authored and other-origin
+Scoped updates preserve authored and other-origin
 requirements, replacing only earlier opaque inference attested to the same
-immediate source. These are diagnostic policy results; the scoped entrypoint is
-not implemented yet. Replay the saved contract with:
+immediate source. Replay the earlier diagnostic policy contract with:
 
 ```bash
 python3 -B docs/audits/scoped-late-width-contract-20261027.py --self-test
 ```
+
+The private parser entrypoint `parse_size_section_in_scope(size_ast, scope)` now
+supports explicit late sizing. The scope must name the original direct source
+header; a physical module name never supplies ownership. For example:
+
+```perl
+use lib 'perl';
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+my $source = '(?fsm:late_case (+params (W 8)) (idle (<-= (data 0))))';
+my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+$adapter->parse_fsm(scalar Lispish::multi(\$source));
+$adapter->{parser}->parse_size_section_in_scope(
+    ['+size', [['data', ['param', ['W']]]]],
+    {kind => 'direct_module', owner => 'late_case'});
+```
+
+Scope preflight refuses malformed or incompatible records before mutation.
+Accepted transactions stage current compatible records, perform real sizing,
+and publish only after complete success. A sizing or publication failure clears
+all derived records while retaining the existing numeric/source failure prefix.
+Nested calls in a same-scope source transaction defer publication to outer source
+validation. Scalar/list/void return contexts and valid no-ops retain their legacy
+contracts. Ordinary unscoped calls stay unscoped.
+
+Late sizing preserves independent literal/type/parameter declarations and other
+copy paths. Older opaque records without an attested immediate origin stay
+conservative; larger unexplained numeric floors remain opaque. The existing
+named-type ordering asymmetry is retained: assignment-created auxiliaries omit
+the parent's Core type metadata, while legacy late sizing copies it. Their
+numeric widths and private type requirements agree in the reproduced case.
+Task `ISF-REDUCTION-DELIVERY.24` owns impact analysis and a deliberate consistency
+repair before full qualification. Symbolic ranges and combined shapes remain
+separate compiler work.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:

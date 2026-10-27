@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
-- next_action: Implement explicitly scoped atomic late sizing from current compatible actual records. Preserve authored/other-origin constraints; replace only same-source attested opaque inference and keep unresolved numeric floors.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.2`
+- next_action: Inspect and split the shared declared-range target kernels before direct consumer activation. Reuse complete actual source captures; preserve composition behavior, scope/name policies and withheld combined shapes.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
-- blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol-lifetime and VHDL-keyword repairs precede .6.
+- blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol-lifetime, VHDL-keyword and auxiliary-type consistency repairs precede .6.

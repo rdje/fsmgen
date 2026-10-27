@@ -145,8 +145,14 @@ derive only from a single complete captured requirement matching actual Core
 source/width/type state. Independent and opaque combined constraints do not lend
 one parent binding. Fresh retries capture current lexical declarations; larger
 inherited numeric floors stay opaque. Numeric widths, legacy source/type getters
-and public report schemas remain unchanged. Scoped late sizing and symbolic HDL
-ranges have separate compiler integration owners.
+and public report schemas remain unchanged. Private
+C<parser-E<gt>parse_size_section_in_scope($size_ast, $scope)> supports explicit
+original lexical scope for late sizing. Scope preflight precedes mutation;
+accepted sizing publishes atomically and clears derived records on failure.
+Nested source transactions defer publication to outer validation. Authored and
+other-origin requirements remain; only same-source attested opaque inference
+may be replaced. Ordinary unscoped calls and return contexts stay unchanged.
+Symbolic HDL ranges and combined shapes remain separate compiler work.
 
 =item debug_summary()
 

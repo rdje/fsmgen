@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -1712,9 +1712,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Backend/source bytes remain unchanged. knowledge-map: OK and mandatory scripts/check_doctrines.sh with normal hooks gate the bounded task/fact/book decomposition; no symbolic range or external qualification claim is added.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Capture complete actual direct declared-width lookup provenance without changing selected widths.`
   Acceptance: `Reuse the canonical width evaluator and real SignalManager namespace selection. Preserve original authored source getters, numeric values and JSON kinds; add detached private binding/lookup evidence in lexical source scope. Never infer selection from equal values or post-hoc namespace existence. Propagate only actual declared origins to relevant Signal objects, including assignment targets absent from module signals. Preserve named-type precedence, explicit param selectors, success/refusal/retry invalidation and caller/callback ownership. Split first if needed; focused controls and synchronized book/facts qualify capture, not HDL range activation.`
+  Verification: `Actual direct declared-width provenance capture and coherent private publication are implemented through all children with focused checks. The real symbol/evaluator walk, lexical scope, declared and immediate copy origins, actual assignment objects and retry/ownership boundaries retain distinctions and selected old products. Explicit scoped late sizing is complete; independent, revoked or opaque combined profiles remain withheld for computed-shape work. Target ranges and full/public/runtime qualification are not claimed.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.1, ISF-REDUCTION-DELIVERY.3.3.1.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.1`
@@ -1730,11 +1732,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=6 Tests=17 for T2155/T2111/T507/T509/T510/T511. Complete actual payload/default/source/binding/width products are byte-identical. Syntax and guarded book/POD/source freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate this prerequisite; no width activation or full compiler/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain detached direct width bindings from actual canonical resolution.`
   Acceptance: `After .1.1, capture expression structure and complete ordered actual lookups through the existing width evaluator, including nested/static selections and explicit versus bare parameter identities. Keep declared_width_source and numeric/getter contracts unchanged; introduce private scope/lookup/binding evidence with no public schema expansion. Capture from actual evaluation, never replay raw source to guess selection. Named type and independent literal declarations acquire no parameter relationship. Carry evidence to actual declared/assignment Signal objects and legitimate recorded origin copies; malformed, replaced or failed retries expose no stale partial contract. Qualify repeated references, same-name type/static/parameter controls, scalar paths, aliases, one-bit defaults, source conservation and callback lifetimes. If unsafe, split capture kernel and parser/Core integration before code. Commit before target rendering.`
-  Verification: `Actual symbol observations are committed at 53489038c. WidthExpressionSupport owns both prefix and infix evaluation; binding capture must follow that actual walk without a second evaluator or resolver replay. Split opt-in kernel capture from parser/Core publication before code, retaining ordinary interfaces and payload/source conservation. Daily census completes at 6c3a1c822.`
-  Commit: `pending`
+  Verification: `Canonical prefix/infix width capture and direct parser/Core/auxiliary/scoped-late integration are implemented. Captures follow the actual evaluator once, retaining ordered selected identities and immutable scoped structure; no equal-value/source-replay or physical-name inference is used. Child focused tests and selected comparisons qualify the supported coherent profiles, withholding combined or opaque derived shapes. Target rendering/computed propagation and full qualification remain separate.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
 
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2`
 
@@ -1751,11 +1753,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2156/T2128/T2111. Complete canonical ordinary products/callbacks/caller kinds match predecessor under the declared trace-location boundary; final held-result ownership controls pass. Syntax and guarded book/POD/source freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate capture only; parser/Core and full qualification remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Publish actual direct declared-width captures on detached Core Signal records.`
   Acceptance: `After .2.1, connect the actual SignalManager observation hook and declared-only parameter hook in direct width resolution. Preserve numeric width and existing declared_width_source/getter JSON contracts, named-type precedence and static/literal behavior. Attach lexical direct_module scope and actual declared origin to new private binding records; carry them to real assignment Signal objects and legitimate origin copies. Replaced/failed retries expose no stale partial contract. Validate same-name static/type/parameter controls, bare/explicit selectors, repeated references, scalar paths, aliases, one-bit widths, source conservation, getters and callback lifetime. Split producer/lifecycle work first if unsafe; no HDL activation or public schema changes. Commit before target kernels.`
-  Verification: `The opt-in canonical capture kernel is implemented with focused checks. Inspect actual declaration fast paths and publication/lifecycle boundaries before source integration; no parser/Core binding publication is claimed yet.`
-  Commit: `pending`
+  Verification: `The actual width resolver integrates canonical lookup observations and declared-only selectors, with detached lexical Core publication and real origin propagation. Named/literal/static/parameter controls, repeated/path/alias/one-bit expressions and failure/ownership lifecycle qualify through all completed children. Old selected numeric/source/default/native products conserve. This is implemented with focused checks, not full generic range or runtime qualification; target kernels follow under .3.3.2.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
 
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.2, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3`
 
@@ -1785,11 +1787,11 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish and invalidate private width binding records on actual Core Signals.`
   Acceptance: `After .2.2, attach lexical scope and declared signal origin to detached captured records from actual +size resolution. Keep existing declared_width_source/numeric getters and public report schemas unchanged. Add a private cloned getter and registration/invalidation lifecycle; a replaced or refused retry cannot expose stale partial bindings. Preserve legitimate source-origin copies and actual assignment targets absent from module signals. Focused actual source/Core/getter/failed retry/physical copy and caller/lifetime controls, exact old source/semantic products and synchronized documentation qualify publication only. Target ranges remain .3.3.2-.4; full qualification .6.`
-  Verification: `Opt-in declaration resolver is committed at 70dc82f07. Core Signal stores private source snapshots; SignalManager refines existing objects in place and copies explicit source metadata. Split the holder/registration lifecycle from automatic parser transaction and legitimate auxiliary-origin propagation before code. Preserve legacy max-width refinement and old source/getter contracts. New bindings carry the captured scope/tree/lookups plus actual declaration signal/expression, never infer origins from names or equal values.`
-  Commit: `pending`
+  Verification: `Detached Core binding/requirement holders, registry lifecycle, atomic complete-source publication and real auxiliary/scoped-late propagation are implemented. Actual assigned objects, original lexical scopes, namespace/source identity, failures/retries and plain getter/caller ownership qualify in child focused checks. Selected numeric/source/native/public products conserve with intended private metadata changes. Revoked or combined/opaque shapes do not borrow a binding. Target ranges and computed shapes remain successors; full qualification remains .6.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.2, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.1`
@@ -1819,11 +1821,11 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Carry bindings through legitimate recorded source-origin auxiliary copies.`
   Acceptance: `Propagate only actual existing rm/mr/next/q origin records in both size-before-assignment and late-size branches. Keep original declaration signal/scope independent of physical auxiliary names, static/named-type cases and unrelated equal widths. Verify actual assignment targets absent from module signals, getter/copy isolation and invalidation on replaced/refused source retries. Commit before shared target range kernels; generic HDL/public/full qualification stays later.`
-  Verification: `Primary capture and separate actual-event requirements now publish atomically after complete validation. The P1 .4 repair retains explicit auxiliary declarations and generated contributions before legacy overwrite, using immutable snapshots and revocable actual-object events. Eligible primary/auxiliary bindings now consume single coherent recorded requirements without later live-source/name/equal-width guesses; independent and opaque combined shapes remain withheld under .3.4. Direct late sizing outside a full source transaction needs explicit original lexical scope under .3, never a physical module-name fallback. Ordinary unscoped calls remain legacy. Both orderings, real aliases and failure clearing precede target ranges.`
-  Commit: `pending`
+  Verification: `Actual source-origin requirements and coherent single bindings propagate through real next/q assignment and sizing copy events, including explicit scoped late sizing. The P1 declaration-loss repair retains independent auxiliary constraints before legacy overwrite; mutation versions prevent stale resurrection and original declarations remain separate from immediate copy edges. All children are implemented with focused checks and selected product conservation. Combined or unknown shapes remain withheld pending .3.4; target rendering and full qualification remain separate.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.2, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.1`
@@ -1852,11 +1854,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=19. Whole expected source bindings, actual chains/identity/default/namespace/version/refusal/retry/owner controls pass. Legacy comparison has only independently expected private additions; native check/semantic and ordinary products conserve, HDL normalizes only Date. Guarded book/POD/source checks pass; normal hook qualifies final index. No full/public/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Support legitimate late sizing with explicit lexical source scope.`
   Acceptance: `Add the smallest private scoped sizing entrypoint needed for recorded late auxiliary branches, reusing canonical scope validation and source transaction publication. Ordinary unscoped calls remain unchanged; never derive lexical scope from a renamed module or equal widths. Propagate real parent/auxiliary origins only and clear failed scoped transactions. Qualify late and normal orderings, scalar/type/literal boundaries, original-scope preservation and exact legacy return/numeric/source contracts before target kernels.`
-  Verification: `pending origin propagation`
-  Commit: `pending`
+  Verification: `The diagnostic contract, immediate registry-edge attestation and private scoped sizing entrypoint are complete. Actual normal/late contexts, original lexical ownership after physical rename, independent/type/literal/collision/floor boundaries and accepted failure clearing qualify with focused checks. Ordinary unscoped behavior and return/numeric/source/type contracts preserve; .24 owns the legacy type metadata asymmetry. No target range/full qualification claim.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.1`
@@ -1872,11 +1874,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Runtime compiler source is unchanged. Saved actual-source policy/caller/context/scope controls and reader self-test pass; knowledge-map: OK and final staged doctrine integrity qualify discovery through the normal authoritative hook. Explicit scoped API and full/native/public/runtime qualification remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Add the explicitly scoped late-sizing transaction with qualified retention semantics.`
   Acceptance: `Implement only the .1 qualified scope/replay contract, reusing canonical scope validation, actual sizing/copy branches and atomic requirement/binding publication. Preserve ordinary unscoped scalar/list/void/no-op/numeric/source behavior; never infer scope from a physical module name. Qualify actual late ordering, independent/type/literal/inferred boundaries, failure/retry/owner isolation and old public products with focused checks. Combined shapes and full qualification remain separately owned.`
-  Verification: `The .1 actual scoped-replay prototypes show that fresh contexts lose explicit auxiliaries, blind removal of generated requirements loses another real copy path, and preserving all requirements safely withholds clean late bindings behind obsolete opaque inference. Preserve all authored requirements. Add an optional immediate copy-origin field captured at the actual existing copy event, separate from original declaration identity. Older records without the field remain conservative. The scoped transaction may replace only opaque generated requirements attested to the same actual immediate source in the original scope; every authored requirement, including authored generated snapshots, and every other-origin contribution remain. Larger unaccounted numeric floors stay opaque. Qualify the new field before the entrypoint.`
-  Commit: `pending`
+  Verification: `Immediate actual copy-origin attestation and explicitly scoped atomic replay are implemented through both children. Replay preserves all authored/other-origin and unknown older requirements, replacing only same-source attested opaque inference. Actual order/collision/scope/context/failure/owner focused checks pass; target ranges and combined shapes remain successors. Legacy named-type ordering is preserved and separately owned by .24 before .6.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.1`
@@ -1892,12 +1894,17 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=23 for origin, source, binding and holder contracts. Whole independent records, real collisions/chains/equivalent edges, actual-object impostor, null/legacy/hostile/copy controls pass. Selected legacy/native products conserve, HDL normalizes only Date; guarded book/POD/source checks pass. Normal hook qualifies final index; no scoped/full/public/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish scoped late sizing atomically with conservative same-origin opaque replacement.`
   Acceptance: `Require explicit validated original lexical scope. Snapshot only current compatible actual registry records before clearing metadata, seed revocable actual-object events and reuse actual sizing/copy branches. Preserve every authored requirement and other copy-origin contribution; replace only opaque generated records attested to the same actual immediate source, keeping larger unresolved numeric floors. Reject mismatched scopes without inventing ownership from renamed modules. Preserve scalar/list/void/no-op/legacy numeric/source behavior, clear failed scoped transactions and keep ordinary unscoped calls unchanged. Qualify normal/late ordering, independent/collision/type/literal/floor and invalid scope/retry/caller/getter/owner controls before range kernels.`
-  Verification: `pending copy-origin storage`
-  Commit: `pending`
+  Verification: `Private parse_size_section_in_scope now reuses canonical copied scope validation and the actual final publisher. Invalid/incompatible scopes refuse before mutation. Accepted calls snapshot current compatible actual records, clear derived metadata, seed revocable events and publish only after complete sizing success. Nested same-scope source calls reuse staging and defer to outer validation. Scope never comes from a renamed physical module. Same-source actual registry identity permits replacing only attested opaque generated inference; all authored, other-origin and older unattested requirements remain. Larger unexplained numeric floors stay opaque. Scalar/list/void context, valid no-ops, ordinary unscoped behavior and old numeric/source prefix contracts preserve. A helper guard is corrected during implementation to avoid autovivifying a capture context in ordinary unscoped calls; repeated unscoped controls qualify the absence of leftover context. New T2167 initially fails the missing entrypoint. The first integration check then exposes legacy named-type ordering: early auxiliary assignment construction omits Core type metadata while late sizing copies it. Root cause is the existing different registration attributes, not the new scoped transaction; preserve exact old late getters, retain the independent normal control and own P2 AUX-TYPE-ORDERING under .24 before .6, earlier if target ranges need it. Final focused All tests successful Files=4 Tests=22 covers actual normal/late parameter/literal/type orders across audited operators, equal/independent/collision/floor/older-edge cases, scope/caller/getter isolation, exact return contexts, accepted partial/publication failures, retry/unaffected/nested transaction ownership and params-only weak parser release. The exact book example executes with an independent actual auxiliary-binding assertion. Complete selected normal/unscoped legacy source/Core/caller and ordinary resolver/source/default/caller products remain byte-identical to preserved predecessors; raw refusals retain separately under the established first-source-location boundary. Native selected one-bit strict check/semantic JSON match completely; HDL normalizes only Date with actual output paths preserved in recipes. Guarded book/POD build and source projection pass. Re-derive: actual scoped parser/registry/size/copy/publisher and selected native products. Falsify: complete normal/late and literal expected collision/context/failure controls, canonical scope refusals, actual registry identity and held ownership, plus pre-activation RED and retained first integration failure. Durability: tracked code/test/POD/book/fact and docs/audits/scoped-late-width-sizing-20261027.json.gz with exact predecessor/current sources, book example, complete streams/epochs/recipes and comparisons. Source declared-width capture/publication is implemented with focused checks; target rendering, combined shapes and full/public/runtime qualification remain successors/.6. Normal authoritative hook gates the completed source lane before shared target kernels.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3.2.2: support explicitly scoped late sizing`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub _generated_width_requirements identifies 4acdd1347. Ordinary late sizing has no explicit lexical transaction while real copy requirements now support conservative attested replay. New T2167 fails the absent entrypoint; actual registration differences explain the retained named-type ordering failure and owned .24 repair.
+  - [x] **ADDRESSED (verified)** — Share scope validation/publication and add explicit atomic scoped sizing with compatible record replay, same-source attested opaque replacement and nested staging. Preserve all authored/other-origin/unknown requirements and old contexts/numeric/source contracts; clear accepted transaction failures and leave invalid preflight state intact.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=22. Complete actual order/collision/type/floor/scope/context/refusal/retry/nested/owner controls pass. Exact book example executes; selected legacy/native/ordinary products conserve, HDL normalizes only Date. Guarded book/POD/source checks pass and normal hook qualifies final index. Named-type consistency is owned .24; no full/public/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4`
   Status: `done`
@@ -2331,6 +2338,13 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup identifies 495e394d1c; the native prior record and actual receipt UTC prove daily admission after the clean symbol-selection checkpoint. Neither suffix nor age provides disposal authority.
   - [x] **ADDRESSED (verified)** — Run the authenticated published collector and independent rg membership, retain every candidate, save the exclusive receipt, update only the latest record and book saved-reader route. Saved hostile controls refuse.
   - [x] **NO REGRESSION** — Saved published-contract replay passes without walking or deleting. knowledge-map: OK and mandatory staged scripts/check_doctrines.sh with normal hooks gate maintenance; no source/native/compiler evidence is replayed or discarded.
+
+- ID: `ISF-REDUCTION-DELIVERY.24`
+  Status: `pending`
+  Goal: `Resolve auxiliary named-type metadata ordering asymmetry without losing legacy shape contracts.`
+  Acceptance: `P2 before .6, earlier if target-range integration is blocked. Reproduce actual source with data word_t(bits8) and <-= versus initially unsized source followed by ordinary late +size(data word_t). Both produce numeric width8 and the same declared private requirements, but assignment-created next_data omits declared_type_name/spec while late sizing copies them. Investigate signed/state/type/report/HDL impact through public interfaces; choose and qualify consistent propagation with explicit compatibility updates, then synchronize book/discovery and close. Keep the scoped-entry slice's old numeric/source/type getters unchanged; this separate task owns any intentional legacy correction. Include <=-/<=+ and independent auxiliary type constraints before closure.`
+  Verification: `Open AUX-TYPE-ORDERING. Actual T2167 initially exposes next_data type_name null/type_spec null in normal ordering versus word_t/bits8 after late sizing. Existing assignment copy branches register width/output/source only, while existing size-time auxiliary branches also copy signed/state/type fields. The scoped path matches the original unscoped late branch exactly; no new runtime regression is classified from this difference. The fixed test preserves both actual legacy controls, with raw first failure retained under .artifacts/scoped-late-width-sizing-20261027/focused.log. Own sign/state/report/HDL impact and a deliberate compatibility repair before .6, or activate immediately if .3.3.2 needs it.`
+  Commit: `pending`
 
 ## Blockers
 

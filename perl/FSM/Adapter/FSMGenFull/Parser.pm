@@ -124,17 +124,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my $module;
     my $ok = eval {
         $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
-        for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
-            next unless $self->_width_event_is_current($pending);
-            $pending->{signal}->set_declared_width_requirements($pending->{record});
-            my $entries = $pending->{record}{requirements};
-            # A max of independent requirements is not the last expression,
-            # even when their selected defaults happen to be equal.
-            next unless @$entries == 1 && defined($entries->[0]{width_capture});
-            my $entry = $entries->[0];
-            $pending->{signal}->set_declared_width_binding({%{$entry->{width_capture}},
-                signal => $entry->{signal}, expression => $entry->{expression}});
-        }
+        $self->_publish_declared_width_requirements;
         1;
     };
     my $error = $@;
@@ -143,6 +133,20 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         die $error;
     }
     return $module;
+}
+
+sub _publish_declared_width_requirements($self) {
+    for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
+        next unless $self->_width_event_is_current($pending);
+        $pending->{signal}->set_declared_width_requirements($pending->{record});
+        my $entries = $pending->{record}{requirements};
+        # Independent requirements are not the last expression, even when
+        # their selected defaults happen to be equal.
+        next unless @$entries == 1 && defined($entries->[0]{width_capture});
+        my $entry = $entries->[0];
+        $pending->{signal}->set_declared_width_binding({%{$entry->{width_capture}},
+            signal => $entry->{signal}, expression => $entry->{expression}});
+    }
 }
 
 sub _invalidate_declared_width_bindings($self) {
@@ -206,6 +210,19 @@ sub _generated_width_requirements($self, $signal, $signal_name, $width) {
         $entry->{copy_origin} = $signal_name if $attested;
     }
     return $entries;
+}
+
+sub _width_requirements_before_copy($self, $target, $source, $source_key) {
+    my $entries = $self->_width_requirements_before($target);
+    my $context = $self->{_declared_width_capture_context};
+    return $entries unless $context && $context->{late_sizing};
+    my $registered = $self->{signal_manager}->get_signal($source_key);
+    return $entries unless $source && $registered && refaddr($source) == refaddr($registered);
+    return [grep {
+        !($_->{kind} eq 'generated' && defined($_->{copy_origin}) && $_->{copy_origin} eq $source_key
+            && !defined($_->{expression}) && !defined($_->{width_capture})
+            && !defined($_->{declared_type_name}) && !defined($_->{declared_type_spec}))
+    } @$entries];
 }
 
 sub _stage_width_requirements($self, $signal, $entries) {
@@ -927,6 +944,59 @@ sub parse_size_section($self, $size_ast) {
     return $context ? @result : $result;
 }
 
+sub parse_size_section_in_scope($self, $size_ast, $source_scope) {
+    my $scope = _copy_declared_width_scope($source_scope);
+    my $json = JSON::PP->new->canonical;
+    if (my $active = $self->{_declared_width_capture_context}) {
+        Carp::confess "Scoped late sizing cannot replace an active declaration scope.\n"
+            unless $json->encode($scope) eq $json->encode($active->{scope});
+        local $active->{late_sizing} = 1;
+        return $self->parse_size_section($size_ast);
+    }
+    my @prior;
+    for my $name ($self->{signal_manager}->get_all_signal_names) {
+        my $signal = $self->{signal_manager}->get_signal($name);
+        my $record = $signal->declared_width_requirements;
+        my $binding = $signal->declared_width_binding;
+        for my $known (grep {defined} ($record, $binding)) {
+            Carp::confess "Scoped late sizing requires records in the supplied original direct-module scope.\n"
+                unless $json->encode($scope) eq $json->encode($known->{scope});
+        }
+        push @prior, {signal => $signal, record => $record} if $record;
+    }
+    # Preserve legacy no-op return contexts and completed metadata. Scope
+    # preflight still applies, without starting a mutation transaction.
+    return $self->parse_size_section($size_ast)
+        if ref($size_ast) eq 'ARRAY' && (!defined($size_ast->[1])
+            || (ref($size_ast->[1]) eq 'ARRAY' && !@{$size_ast->[1]}));
+
+    my $context = wantarray;
+    my ($result, @result);
+    $self->_invalidate_declared_width_bindings;
+    local $self->{_declared_width_capture_context} = {scope => $scope, requirements => {}, late_sizing => 1};
+    my $ok = eval {
+        for my $old (@prior) {
+            $self->{_declared_width_capture_context}{requirements}{refaddr($old->{signal})}
+                = $self->_width_event($old->{signal}, record => $old->{record});
+        }
+        if ($context) {
+            @result = $self->parse_size_section($size_ast);
+        } elsif (defined $context) {
+            $result = $self->parse_size_section($size_ast);
+        } else {
+            $self->parse_size_section($size_ast);
+        }
+        $self->_publish_declared_width_requirements;
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        $self->_invalidate_declared_width_bindings;
+        die $error;
+    }
+    return $context ? @result : $result;
+}
+
 sub _parse_size_section($self, $size_ast) {
     my (undef, $size_entries) = @$size_ast;
 
@@ -1030,7 +1100,8 @@ sub _parse_size_section($self, $size_ast) {
         # even when +size appears after assignment actions.
         my $next_aux = "next_$resolved_sig";
         if ($self->{signal_manager}->get_signal($next_aux)) {
-            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($next_aux));
+            my $prior = $self->_width_requirements_before_copy(
+                $self->{signal_manager}->get_signal($next_aux), $declared_signal, $resolved_sig);
             my $generated = $self->_generated_width_requirements($declared_signal, $resolved_sig, $width_contract->{width});
             my $aux_signal = $self->{signal_manager}->register_signal(
                 $next_aux,
@@ -1048,7 +1119,8 @@ sub _parse_size_section($self, $size_ast) {
         }
         my $q_aux = "${resolved_sig}_r";
         if ($self->{signal_manager}->get_signal($q_aux)) {
-            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($q_aux));
+            my $prior = $self->_width_requirements_before_copy(
+                $self->{signal_manager}->get_signal($q_aux), $declared_signal, $resolved_sig);
             my $generated = $self->_generated_width_requirements($declared_signal, $resolved_sig, $width_contract->{width});
             my $aux_signal = $self->{signal_manager}->register_signal(
                 $q_aux,
@@ -1298,7 +1370,11 @@ sub resolve_declared_width_contract($self, %args) {
 }
 
 sub capture_declared_width_contract($self, %args) {
-    my $source_scope = $args{scope};
+    my $scope = _copy_declared_width_scope($args{scope});
+    return $self->_resolve_declared_width_contract($scope, %args);
+}
+
+sub _copy_declared_width_scope($source_scope) {
     Carp::confess "Declared width capture requires an explicit direct-module scope.\n"
         unless ref($source_scope) eq 'HASH';
     # Inspect copied scalars so validation cannot change the caller's flags.
@@ -1307,7 +1383,7 @@ sub capture_declared_width_contract($self, %args) {
         unless join(',', sort keys %$scope) eq 'kind,owner'
             && !ref($scope->{kind}) && ($scope->{kind} // '') eq 'direct_module'
             && defined($scope->{owner}) && !ref($scope->{owner}) && length($scope->{owner});
-    return $self->_resolve_declared_width_contract($scope, %args);
+    return $scope;
 }
 
 sub _resolve_declared_width_contract($self, $capture_scope, %args) {
