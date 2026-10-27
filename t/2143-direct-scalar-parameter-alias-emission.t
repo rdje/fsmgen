@@ -14,13 +14,15 @@ my $path = 't/data/ial0-scalar-parameter-aliases.fsm';
 my $raw = Lispish::multi($path); my $raw_before = $json->encode($raw);
 my $module = FSM::Adapter::FSMGenFull->new(debug => 0)->parse_fsm($raw);
 my $parameters = $module->parameters; my $sources = $module->parameter_default_sources;
-my $before = $json->encode({parameters => $parameters, sources => $sources});
+my $bindings = $module->parameter_default_bindings;
+my $before = $json->encode({parameters => $parameters, sources => $sources, bindings => $bindings});
 my %capture;
 sub copy { $json->decode($json->encode($_[0])) }
 sub lines_for { [FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter::_render_module_parameter_lines($_[0])] }
 sub header_module {
     FSM::CoreAST::FSMModule->new(name => 'copied_physical_module',
-        parameters => $_[0], _parameter_default_sources => $_[1]);
+        parameters => $_[0], _parameter_default_sources => $_[1],
+        _parameter_default_bindings => $_[2] // $bindings);
 }
 
 subtest 'actual source emits selected aliases through both Verilog-family backends' => sub {
@@ -36,13 +38,14 @@ subtest 'actual source emits selected aliases through both Verilog-family backen
             like($hdl, qr/parameter \Q$name\E = 16\b/, "$target $name keeps its independent numeric default");
         }
         like($hdl, qr/parameter BITS = 8'hA5\b/, "$target sized root retains its existing literal");
-        like($hdl, qr/parameter SUM = \(16 \+ 1\)/, "$target operator-default relationship remains explicitly pending");
+        like($hdl, qr/parameter SUM = \(W \+ 1\)/, "$target scalar operator default now retains its declared root");
         like($hdl, qr/parameter W = 16,\s+parameter BOUND = W,\s+parameter CHAIN = BOUND/s,
             "$target emits forward alias dependencies before their consumers");
         like($hdl, qr/\bOUT\s*=\s*BOUND\b/, "$target executable parameter reference keeps the R11 contract");
         $capture{hdl}{$target} = $hdl;
     }
-    is($json->encode({parameters => $module->parameters, sources => $module->parameter_default_sources}),
+    is($json->encode({parameters => $module->parameters, sources => $module->parameter_default_sources,
+        bindings => $module->parameter_default_bindings}),
         $before, 'complete parameter/source JSON kinds and values remain unchanged');
     is($json->encode($raw), $raw_before, 'original parsed caller stays unchanged');
 };
@@ -55,7 +58,9 @@ subtest 'metadata observations select identity independently of cached numeric e
     my $selected = copy($sources);
     $selected->{BOUND}{expression} = ['SAME'];
     $selected->{BOUND}{references} = [{parameter => 'SAME', token => 'SAME', suffix => ''}];
-    like(join("\n", @{lines_for(header_module($parameters, $selected))}), qr/parameter BOUND = SAME\b/,
+    my $selected_bindings = copy($bindings);
+    @{$selected_bindings->{BOUND}}{qw(parameter token)} = ('SAME', 'SAME');
+    like(join("\n", @{lines_for(header_module($parameters, $selected, $selected_bindings))}), qr/parameter BOUND = SAME\b/,
         'equal-default independent selection changes the emitted binding');
     my $static = FSM::CoreAST::FSMModule->new(name => 'legacy', parameters => {Z => '32', A => {value_text => '8'}});
     my $static_before = $json->encode($static->parameters);
@@ -70,14 +75,19 @@ subtest 'inconsistent alias observations and dependency cycles refuse contextual
         ['wrong expression', sub {$_[0]{BOUND}{expression} = ['SAME']}, qr/alias.*(?:observation|expression)/i],
         ['missing target', sub {$_[0]{BOUND}{expression} = ['MISSING']; $_[0]{BOUND}{references} = [{parameter => 'MISSING', token => 'MISSING', suffix => ''}]}, qr/alias.*declared/i],
         ['wrong declaration', sub {$_[0]{BOUND}{parameter} = 'OTHER'}, qr/alias.*declaration/i],
-        ['cycle', sub {$_[0]{W}{expression} = ['CHAIN']; $_[0]{W}{references} = [{parameter => 'CHAIN', token => 'CHAIN', suffix => ''}]}, qr/default alias.*cycle/i],
+        ['cycle', sub {
+            $_[0]{W}{expression} = ['CHAIN'];
+            $_[0]{W}{references} = [{parameter => 'CHAIN', token => 'CHAIN', suffix => ''}];
+            $_[1]{W} = {kind => 'parameter', scope => copy($bindings->{BOUND}{scope}),
+                parameter => 'CHAIN', token => 'CHAIN', suffix => ''};
+        }, qr/default.*dependency cycle/i],
     ) {
         my ($label, $change, $pattern) = @$case;
-        my $input = copy($sources); $change->($input);
-        my $snapshot = $json->encode($input);
-        my $ok = eval {lines_for(header_module($parameters, $input)); 1};
+        my $input = copy($sources); my $input_bindings = copy($bindings); $change->($input, $input_bindings);
+        my $snapshot = $json->encode([$input, $input_bindings]);
+        my $ok = eval {lines_for(header_module($parameters, $input, $input_bindings)); 1};
         ok(!$ok, "$label refuses"); like($@, $pattern, "$label names the actual alias contract");
-        is($json->encode($input), $snapshot, "$label preserves caller records");
+        is($json->encode([$input, $input_bindings]), $snapshot, "$label preserves caller records");
     }
     my $aggregate = copy($parameters); $aggregate->{W}{value_kind} = 'list';
     my $ok = eval {lines_for(header_module($aggregate, $sources)); 1};
@@ -90,7 +100,7 @@ subtest 'inconsistent alias observations and dependency cycles refuse contextual
 };
 
 if (my $path = $ENV{FSMGEN_DIRECT_ALIAS_CAPTURE}) {
-    $capture{parameters} = $parameters; $capture{sources} = $sources;
+    $capture{parameters} = $parameters; $capture{sources} = $sources; $capture{bindings} = $bindings;
     open my $out, '>', $path or die $!; print {$out} $json->encode(\%capture), "\n" or die $!;
     close $out or die $!;
 }

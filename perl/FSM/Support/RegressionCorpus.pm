@@ -9,6 +9,22 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'feature.direct_scalar_default_relationships',
+        relpath => 't/data/ial0-scalar-default-expressions.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'scalar_default_expressions',
+        expected_hdl_patterns => [
+            qr/parameter FIRST_PLUS = \(ALIAS \+ 1\)/,
+            qr/parameter NESTED = \(\(W \+ 16\) - \(SAME \* 2\)\)/,
+            qr/parameter MASK = \(BITS \^ 8'h0F\)/,
+            qr/parameter OTHER = SAME/,
+        ],
+    },
+    {
         id => 'feature.composition_scalar_rtl_parameters',
         relpath => 't/corpus/composition_scalar_rtl_parameters.fsm',
         family => 'language_feature_fixture',

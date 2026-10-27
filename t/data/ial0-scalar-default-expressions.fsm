@@ -1,0 +1,17 @@
+(?fsm:scalar_default_expressions
+  (+system (clock clk))
+  (+constants (FIXED 16))
+  (+params
+    (FIRST_PLUS (add ALIAS 1))
+    (W 16)
+    (SAME 16)
+    (ALIAS W)
+    (OTHER SAME)
+    (NESTED (- (+ W FIXED) (* SAME 2)))
+    (STATIC_SUM (+ FIXED 1))
+    (BITS 8'hA5)
+    (MASK (xor BITS 8'h0F))
+    (LITERAL 16)
+    (ZERO 0))
+  (+size (OUT 32))
+  (idle (= (OUT FIRST_PLUS))))

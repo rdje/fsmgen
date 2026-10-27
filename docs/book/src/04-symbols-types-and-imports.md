@@ -117,14 +117,14 @@ scope. Declaration replacement invalidates the entire derived binding map;
 failed nonempty resolution retries expose no stale or partial binding snapshot.
 Normalized parameter values and the existing authored-source records retain
 their previous shapes and JSON kinds. Private bindings add no public report
-fields and do not yet supply general-default HDL relationships.
+fields. Direct headers consume the supported scalar relationships described below.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated
 dependencies. Its `text` result keeps the canonical normalizer's scalar kind
-for target interpolation. The composition wrapper keeps its narrower scope;
-direct-header integration is the next consumer. Aggregate/path target profiles
+for target interpolation. Direct Verilog-family headers now use the same helper;
+the composition wrapper keeps its narrower scope. Aggregate/path target profiles
 and complete override/runtime qualification remain separately owned.
 
 The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
@@ -149,13 +149,31 @@ checks ordinary, forward, chained and sized scalar aliases:
 ./bin/fsmgen --quiet --strict --output .artifacts/sv/scalar_parameter_aliases.sv t/data/ial0-scalar-parameter-aliases.fsm
 ```
 
-Malformed alias observations, missing/non-scalar targets and dependency cycles
-refuse instead of emitting an invented identifier. General operator defaults
-such as `(+ W 1)`, aggregate/path relationships, VHDL and generic signal ranges
-remain separately owned; their existing default-only behavior is unchanged by
-this bounded consumer. Normalized Core values still describe the selected
-defaults. External override/runtime qualification remains pending, so named
-alias text alone is not a complete generic-width guarantee.
+Supported scalar operator defaults preserve their actual operands too.
+`(FIRST_PLUS (add ALIAS 1))` emits `parameter FIRST_PLUS = (ALIAS + 1)`;
+chained defaults retain the immediate parameter name. Nested arithmetic and
+bitwise operators keep parentheses and static selections. The complete
+[scalar-default fixture](../../../t/data/ial0-scalar-default-expressions.fsm)
+is a named supported corpus contract:
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/sv/scalar_default_expressions.sv t/data/ial0-scalar-default-expressions.fsm
+```
+
+Captured sources require complete source and canonical binding maps. Explicit
+compiler copies carry both maps; physical renaming preserves their source
+owner. Declaration replacement invalidates the binding map and requires fresh
+resolution before another captured header can be emitted. Missing membership,
+foreign ownership, inconsistent observations, reserved captured declaration
+names and dependency cycles refuse. Legacy programmatic literals retain their
+existing formatting.
+
+Aggregate defaults, parameter member/index selections and expressions containing
+aggregate operands retain their selected-default profile. Their mutable generic
+relationships remain unqualified, including scalar results from aggregate
+operands. VHDL, generic signal ranges and complete external override/runtime
+qualification remain separate work. Normalized Core values still describe the
+selected defaults; named header text alone is not a complete generic-width guarantee.
 
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of

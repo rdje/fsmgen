@@ -1525,8 +1525,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    389,
-    'catalog retains the independently recounted supported-smoke entries including the maintained unary-reduction owner',
+    392,
+    'catalog retains the independently recounted supported-smoke entries through scalar default headers',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1535,13 +1535,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    167,
-    'catalog records expected failures including storage keyword rejection',
+    169,
+    'catalog records independently recounted expected failures through parameter source boundaries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    379,
-    'catalog retains the independently recounted positive strict-mode acceptance entries including the maintained unary-reduction owner',
+    382,
+    'catalog retains the independently recounted positive strict-mode entries through scalar default headers',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

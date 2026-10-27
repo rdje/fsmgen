@@ -536,9 +536,9 @@ semantic JSON, repo-relative read-only MCP, public verifier, repository-local
 output, explicit unmatched-neighbor diagnostics, and assertion-enabled
 10/8/2/8/2/`44332211`/`88776655` runtime. Focused t/1540 owns byte/lowering/
 report/residue/strict/schedule/artifact/semantic/read-only-MCP/repository-local-
-output/verifier/diagnostic alias parity without a second simulation. Current
-totals are 332 protocol fixtures and 373 supported-smoke/strict-supported
-fixtures; the AHB inventory is 56 paths split 28 `.ppif` / 28 `.ahb`.
+output/verifier/diagnostic alias parity without a second simulation. At that
+two-window checkpoint, totals were 332 protocol fixtures and 373 supported-smoke/strict-supported
+fixtures; the AHB inventory was 56 paths split 28 `.ppif` / 28 `.ahb`.
 
 ## Capability manifest
 
@@ -904,6 +904,7 @@ public catalog schema. See the book's data manipulation chapter for examples.
 | `feature.test_selector_symbolic_default` | [t/corpus/test_selector_symbolic_default.fsm](t/corpus/test_selector_symbolic_default.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.direct_scalar_default_relationships` | [t/data/ial0-scalar-default-expressions.fsm](t/data/ial0-scalar-default-expressions.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.composition_scalar_rtl_parameters` | [t/corpus/composition_scalar_rtl_parameters.fsm](t/corpus/composition_scalar_rtl_parameters.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `feature.implicit_composition_system_autowire` | [t/corpus/implicit_composition_system_autowire.fsm](t/corpus/implicit_composition_system_autowire.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |

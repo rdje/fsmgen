@@ -22,5 +22,6 @@ serialized schema.
 The composition wrapper keeps its narrower scope and diagnostics; complete
 existing composition expression/declaration products retain their JSON kinds.
 Foreign scopes, incomplete declarations, recursive trees, aggregate/path and
-raw scalar-expression profiles refuse. Direct header integration, generic
+raw scalar-expression profiles refuse in this scalar helper. Direct headers
+consume the supported scalar trees; aggregate/path header profiles, generic
 ranges and full external/runtime qualification remain separate consumers.

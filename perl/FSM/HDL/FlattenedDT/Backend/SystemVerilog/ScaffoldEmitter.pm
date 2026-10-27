@@ -11,11 +11,14 @@ module backend. This package renders the stable top-of-module sections that
 surround the richer enable-graph logic: file header, module declaration, state
 encoding localparams, and the state register block.
 
-Direct scalar parameter-root aliases use retained default-source observations,
-with dependency ordering and unchanged alphabetical ties. Literal/static and
-unqualified general-default forms keep their existing rendering. This bounded
-consumer does not implement general expression/path defaults, generic signal
-ranges or external override qualification.
+Captured scalar default trees use the shared canonical renderer, retaining
+parameter roots, operators, literal/static selections and dependency order with
+unchanged alphabetical ties. Consumed scalar trees require source/binding
+membership, lexical ownership and observed reference agreement; missing
+invalidated snapshots refuse. Legacy
+programmatic literals retain their existing rendering. Aggregate/path defaults
+keep the prior selected-default profile pending their separate consumer;
+generic signal ranges and external override qualification remain successors.
 
 =cut
 
@@ -25,7 +28,10 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use Scalar::Util qw(refaddr);
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
+use FSM::Backend::VerilogFamily::ParameterBindingEmitter;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Debug;
 
 sub new ($class, %args) {
@@ -109,7 +115,11 @@ sub _render_module_parameter_lines ($fsm_module) {
         ? ($fsm_module->parameter_default_sources // {}) : {};
     die "Module parameter default alias sources require a declaration map\n"
         unless ref($sources) eq 'HASH';
-    my (%values, %aliases);
+    my $bindings = $fsm_module->can('parameter_default_bindings')
+        ? ($fsm_module->parameter_default_bindings // {}) : {};
+    die "Module parameter defaults require a canonical binding map\n"
+        unless ref($bindings) eq 'HASH';
+    my (%values, %aliases, %dependencies);
     for my $parameter_name (sort keys %$parameters) {
         my $parameter_info = $parameters->{$parameter_name};
         my $value_text = ref($parameter_info) eq 'HASH'
@@ -125,23 +135,108 @@ sub _render_module_parameter_lines ($fsm_module) {
         die "Module parameter default alias '$name' requires an emitted declared target\n"
             unless exists $values{$aliases{$name}};
         $values{$name} = $aliases{$name};
+        $dependencies{$name} = {$aliases{$name} => 1};
+    }
+
+    if (keys(%$sources) || keys(%$bindings)) {
+        my $environment = _captured_parameter_environment($parameters, $sources, $bindings);
+        for my $name (sort keys %values) {
+            next unless ($parameters->{$name}{value_kind} // '') eq 'scalar';
+            my $references = $sources->{$name}{references};
+            # Aggregate/path relationships retain their existing selected-
+            # default profile until the separately owned aggregate consumer.
+            next if grep {length($_->{suffix})
+                || ($parameters->{$_->{parameter}}{value_kind} // '') ne 'scalar'} @$references;
+            next if _binding_has_aggregate_structure($bindings->{$name});
+            my $lowered = FSM::Backend::VerilogFamily::ParameterBindingEmitter->lower_expression(
+                binding => $bindings->{$name}, environment => $environment);
+            my $actual = $lowered->{parameter_references};
+            die "Module parameter default '$name' changes reference observations\n"
+                unless @$actual == @$references
+                    && !grep {$actual->[$_] ne $references->[$_]{parameter}} 0 .. $#$references;
+            die "Module parameter default '$name' requires emitted declared dependencies\n"
+                if grep {!exists $values{$_}} @$actual;
+            $values{$name} = $lowered->{text};
+            $dependencies{$name} = {map {$_ => 1} @$actual};
+        }
     }
 
     # Keep existing alphabetical ties while moving an emitted alias dependency
-    # before its consumer. Source observations, not equal defaults, add edges.
+    # before its consumer. Actual captured references add dependency edges.
     my @names = sort keys %values;
     my (%emitted, @order);
     while (@order < @names) {
         my $next;
         for my $name (@names) {
             next if $emitted{$name};
-            next if exists($aliases{$name}) && !$emitted{$aliases{$name}};
+            next if grep {!$emitted{$_}} keys %{$dependencies{$name} // {}};
             $next = $name; last;
         }
-        die "Module parameter default alias dependency cycle\n" unless defined $next;
+        die "Module parameter default dependency cycle\n" unless defined $next;
         push @order, $next; $emitted{$next} = 1;
     }
     return map {"  parameter $_ = $values{$_}"} @order;
+}
+
+sub _captured_parameter_environment ($parameters, $sources, $bindings) {
+    die "Module parameter defaults require complete source and binding membership\n"
+        unless keys(%$parameters) == keys(%$sources) && keys(%$parameters) == keys(%$bindings)
+            && !grep {!exists($sources->{$_}) || !exists($bindings->{$_})} keys %$parameters;
+    my $owner;
+    for my $name (sort keys %$parameters) {
+        my ($info, $source, $binding) = ($parameters->{$name}, $sources->{$name}, $bindings->{$name});
+        die "Module parameter default '$name' requires normalized declaration evidence\n"
+            unless ref($info) eq 'HASH' && defined($info->{value_kind}) && !ref($info->{value_kind})
+                && $info->{value_kind} =~ /\A(?:scalar|list|map)\z/
+                && ref($info->{value_payload}) eq 'HASH'
+                && defined($info->{value_text}) && !ref($info->{value_text}) && length($info->{value_text});
+        die "Module parameter default '$name' requires an actual source declaration\n"
+            unless ref($source) eq 'HASH' && ($source->{parameter} // '') eq $name
+                && defined($source->{source_module}) && !ref($source->{source_module})
+                && length($source->{source_module}) && ref($source->{references}) eq 'ARRAY';
+        $owner //= $source->{source_module};
+        die "Module parameter default '$name' has a foreign source scope\n"
+            unless $source->{source_module} eq $owner;
+        die "Module parameter default '$name' requires a canonical binding record\n"
+            unless ref($binding) eq 'HASH' && defined($binding->{kind}) && !ref($binding->{kind})
+                && $binding->{kind} =~ /\A(?:literal|parameter|static_symbol|payload|operator|list|map)\z/;
+        die "Module parameter default '$name' requires a target identifier\n"
+            unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+        die "Module parameter default '$name' is reserved in SystemVerilog\n"
+            if grep {$_ eq 'SystemVerilog'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
+        for my $reference (@{$source->{references}}) {
+            die "Module parameter default '$name' has malformed reference observations\n"
+                unless ref($reference) eq 'HASH'
+                    && !grep {!defined($reference->{$_}) || ref($reference->{$_})} qw(parameter token suffix);
+            die "Module parameter default '$name' has inconsistent reference observations\n"
+                unless exists($parameters->{$reference->{parameter}})
+                    && $reference->{token} eq $reference->{parameter}.$reference->{suffix};
+        }
+    }
+    return {scope => {kind => 'direct_module', owner => $owner}, parameters => $parameters,
+        declaration_order => [sort keys %$parameters]};
+}
+
+sub _binding_has_aggregate_structure ($node, $active = undef) {
+    # Select the separately owned aggregate profile without evaluating a value.
+    # Other malformed scalar forms still reach the shared renderer's refusals.
+    return 0 unless ref($node) eq 'HASH';
+    $active //= {};
+    my $identity = refaddr($node);
+    die "Module parameter default has a cyclic binding tree\n" if $active->{$identity};
+    local $active->{$identity} = 1;
+    my $kind = $node->{kind} // '';
+    return 1 if $kind eq 'list' || $kind eq 'map';
+    my $payload = $kind eq 'payload' ? $node->{value}
+        : $kind eq 'static_symbol' ? $node->{value_payload} : undef;
+    return 1 if ref($payload) eq 'HASH' && ($payload->{kind} // '') =~ /\A(?:list|map)\z/;
+    my $aggregate = 0;
+    if ($kind eq 'operator' && ref($node->{operands}) eq 'ARRAY') {
+        for my $operand (@{$node->{operands}}) {
+            $aggregate = _binding_has_aggregate_structure($operand, $active) || $aggregate;
+        }
+    }
+    return $aggregate;
 }
 
 sub _direct_scalar_default_alias ($name, $info, $source, $parameters) {
@@ -163,8 +258,8 @@ sub _direct_scalar_default_alias ($name, $info, $source, $parameters) {
     }
     my $expression = $source->{expression};
     $expression = $expression->[0] while ref($expression) eq 'ARRAY' && @$expression == 1;
-    # Operators and aggregate/path defaults keep their existing fixed-default
-    # path until the separately owned general relationship consumer is ready.
+    # This remains a bounded source-observation consistency check. Canonical
+    # scalar operators are rendered separately by the captured-tree consumer.
     return undef unless defined($expression) && !ref($expression)
         && $expression =~ /\A[A-Za-z_]\w*\z/ && @$references;
     die "Module parameter default alias '$name' has inconsistent expression observations\n"

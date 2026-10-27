@@ -747,8 +747,8 @@ metadata-foundation IAL0 control, `BOUND=W` and `BOUND=16` produce identical
 normalized records when `W=16`; that epoch emitted `BOUND=16` in both cases. Core now retains
 the authored expression and direct parameter references in separate detached
 source records, alongside the unchanged normalized values. HDL default
-propagation now preserves direct scalar root aliases in Verilog-family headers.
-General expressions, ranges and actual override behavior remain unqualified;
+propagation now preserves IAL0 scalar roots and scalar operator defaults in Verilog-family headers.
+Aggregate/path expressions, ranges and actual override behavior remain unqualified;
 see the Symbols, Types and Imports chapter for the precise bounded consumer.
 The direct-root declaration graph now shares one canonical helper for future
 composition reuse, preserving defaults and source records while removing retained

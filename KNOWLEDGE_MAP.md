@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1281** facts · **7088** unique questions · **7265** answer occurrences · **197** topic shards.
+> **1283** facts · **7092** unique questions · **7269** answer occurrences · **198** topic shards.
 
 Query first:
 
@@ -177,6 +177,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ram-guard` | 1 | 7 | [`ram-guard.md`](knowledge-map/generated/ram-guard.md) |
 | `readme-nearly` | 1 | 13 | [`readme-nearly.md`](knowledge-map/generated/readme-nearly.md) |
 | `record-value` | 2 | 32 | [`record-value.md`](knowledge-map/generated/record-value.md) |
+| `regression-corpus` | 1 | 2 | [`regression-corpus.md`](knowledge-map/generated/regression-corpus.md) |
 | `required-specforge` | 1 | 2 | [`required-specforge.md`](knowledge-map/generated/required-specforge.md) |
 | `semantic-introspection` | 1 | 81 | [`semantic-introspection.md`](knowledge-map/generated/semantic-introspection.md) |
 | `semantic-public` | 1 | 3 | [`semantic-public.md`](knowledge-map/generated/semantic-public.md) |
@@ -189,7 +190,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `task-tree` | 6 | 38 | [`task-tree.md`](knowledge-map/generated/task-tree.md) |
 | `test-subprocess` | 1 | 166 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
 | `trial2-legacy` | 1 | 5 | [`trial2-legacy.md`](knowledge-map/generated/trial2-legacy.md) |
-| `verilog-scalar` | 2 | 4 | [`verilog-scalar.md`](knowledge-map/generated/verilog-scalar.md) |
+| `verilog-scalar` | 3 | 6 | [`verilog-scalar.md`](knowledge-map/generated/verilog-scalar.md) |
 | `vhdl-backend` | 1 | 5 | [`vhdl-backend.md`](knowledge-map/generated/vhdl-backend.md) |
 | `vhdl-deferred` | 1 | 20 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |
 | `vhdl-external` | 1 | 1 | [`vhdl-external.md`](knowledge-map/generated/vhdl-external.md) |
