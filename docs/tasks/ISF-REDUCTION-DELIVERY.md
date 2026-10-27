@@ -1610,9 +1610,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=11 for shared/direct and existing VHDL composition preparation. Successful declaration/actual captures and extracted bodies compare byte-exact; both modules syntax OK and guarded mdBook/POD build/freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks qualify this private extraction; full source/runtime/transport matrices remain .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare direct-module captured generic declarations and exact VHDL namespace/profile admission.`
   Acceptance: `After .1, prepare direct Core default bindings without changing their original lexical owner or normalized getters. Validate complete source/binding/declaration membership, actual dependency observations and VHDL case-insensitive target namespace against module/ports/signals/generated types. Reuse shared canonical arithmetic rendering and select the relationship-bearing natural profile explicitly; existing unrelated static literal/vector profiles must remain owned by their current path. Refuse unsupported mutable typed/sized/bitwise/aggregate/path relationships and stale captures before backend success. Prove actual source/copy/static-name/equal-default/cache/malformed controls with focused checks, synchronize POD/book/facts and commit. No header text rewriting or invented composition scope; converter activation remains .3 and full qualification .6.`
+  Verification: `Shared natural rendering is committed at 99c2adeba6d134bba2dd371f70a620f6afbee916. Direct captured-source membership/ownership validation currently lives in ScaffoldEmitter::_captured_parameter_environment with a Verilog-specific reservation check; VHDL must reuse its canonical source contract without importing a private target consumer or duplicating it. Separately, direct VHDL normalizes generated identifiers before parsing target declarations, so source names alone do not describe the emitted target namespace. Split shared source-environment validation from direct profile/actual-target-namespace preparation before code. Core::signals and effective_system_contract describe authored signals/system ports; generated intermediate/type names remain backend-owned and must be supplied by the actual target planning/conversion boundary, not guessed from Core. Static profiles and standalone conversion remain unchanged; no source or VHDL admission in this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.2.5.2: split direct source and VHDL namespace preparation`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.2.5.2.1, ISF-REDUCTION-DELIVERY.3.2.5.2.2`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _captured_parameter_environment identifies 2a1adfef75a162a7434c0b733f0caffcc355911d and the shared-source checks inside the Verilog scaffold. Direct VHDL::_normalize_generated_vhdl_identifiers runs before _parse_module/_parse_ports, establishing the distinct actual target-name boundary.
+  - [x] **ADDRESSED (verified)** — Split backend-neutral source-environment validation from direct natural/static profile selection and explicit actual target namespace preparation. Preserve original lexical owners, static conversion contracts and shared scalar evaluator; generated names remain backend-owned.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl and knowledge-map: OK qualify ownership/navigation; mandatory staged scripts/check_doctrines.sh and normal hooks gate measured task-evidence growth without baseline or ceiling changes. No implementation or source admission changes.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5.2.1`
+  Status: `pending`
+  Goal: `Share direct captured parameter source-environment validation across backend consumers.`
+  Acceptance: `Extract ScaffoldEmitter::_captured_parameter_environment source/binding/declaration membership, lexical ownership, normalized kinds and observed-reference validation into a format-neutral helper. Keep Verilog-family target identifier/reservation checks at their original per-declaration position through an explicit transient validator callback. Preserve diagnostics, alphabetical declaration ties, actual parsed/copy/stale/refusal behavior and original source/Core JSON kinds; do not add an evaluator, new Core state or public schema. Qualify the actual existing header products and independent environment/namespace callback/scope/refusal controls, including missing bindings after declaration replacement. Synchronize POD/book/fact/import map and commit after focused checks. VHDL profile preparation remains .2, converter activation .3.2.5.3 and complete qualification .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5.2.2`
+  Status: `pending`
+  Goal: `Prepare direct canonical natural generics against an explicit actual VHDL target namespace.`
+  Acceptance: `After .1, consume actual Core getters/shared captured-source validation and an explicit namespace from the backend target planning/conversion boundary. Retain source owner independently of physical/normalized module names. Select relationship-bearing natural preparation from actual captured parameter references; retain unrelated static literal/vector defaults on the existing static profile. Validate exact emitted parameter membership, case-insensitive parameter/module/port/signal/constant/generated-type conflicts and source/reference agreement. Reuse the shared natural renderer for dependencies and bounded legality; refuse unsupported mutable typed/sized/bitwise/aggregate/path relationships and stale captures before success. Never guess generated names from Core or infer dependencies from HDL text. Focused actual source/copy/cache/static/malformed/target-name controls and independent declaration expectations qualify preparation. Synchronize POD/book/facts and commit; converter integration remains .3.2.5.3 and full matrices .6.`
   Verification: `pending`
   Commit: `pending`
 
