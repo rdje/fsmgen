@@ -276,9 +276,15 @@ tool validation.
 
 Current boundary: validation focuses on SystemVerilog using Verilator and
 Yosys. The direct VHDL scaffold is regression-tested through deterministic
-text and CLI routing, but not externally validated by GHDL yet. The current
-environment blocker is reconfirmed by
-`BACKEND-API-VALIDATION-FRONTIER.102.1`.
+text and CLI routing; general direct-profile GHDL qualification remains open.
+A focused 2026-10-27 diagnosis used the authenticated repository-local GHDL
+6.0.0 LLVM-JIT tool: the native CLI emits a reserved signal name `OUT` from
+`t/corpus/direct_rhs_concat_pack.fsm` and reports success, but GHDL rejects
+that declaration. Replacing only `OUT` with `DATA_PORT` produces an artifact
+that passes analysis. Use valid VHDL names in direct sources pending repair
+`ISF-REDUCTION-DELIVERY.22.2`, scheduled before full qualification. This is
+analysis of those artifacts, with no elaboration or runtime claim. The
+separate portable VIAL fixture retains its own exact tool qualification.
 
 ### Warning-Clean External Validation For Every Historical Sample
 

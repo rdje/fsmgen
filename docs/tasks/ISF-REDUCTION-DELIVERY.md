@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -1989,6 +1989,30 @@ do not start broad suites between implementation slices.
   - [x] **ADDRESSED (verified)** — Actual census and independent membership pass; saved hostile member/path/type/removal controls refuse. Update latest-only record and book replay route, preserving every candidate.
   - [x] **NO REGRESSION** — Saved census replay and knowledge-map: OK pass; scripts/check_doctrines.sh and normal hooks gate this maintenance commit. Feature/source/HDL admission is unchanged.
 
+
+- ID: `ISF-REDUCTION-DELIVERY.22`
+  Status: `active`
+  Goal: `Own direct VHDL declarations that violate the repository keyword policy before full qualification.`
+  Children: `ISF-REDUCTION-DELIVERY.22.1, ISF-REDUCTION-DELIVERY.22.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.22.1`
+  Status: `done`
+  Goal: `Reproduce the suspected reserved-identifier artifact through the native VHDL interface.`
+  Acceptance: `While selecting valid legacy controls for .3.2.5.3, T1420 expects a raw signal OUT although the shared VHDL identifier policy rejects OUT. Reproduce with the existing public direct_rhs_concat_pack source and CLI under the RAM guard, compare emitted declarations against the authoritative policy and a valid-name source control without editing the shipped source. Retain exact source/command/output identities and available compiler boundary; inspect only local public backend/identifier policy code. Determine the precise normalizer/admission locus, own the repair with a release condition and commit diagnosis before resuming required converter integration. Do not claim external syntax validation if GHDL is unavailable.`
+  Verification: `Native strict CLI returns success and emits signal OUT from the unchanged direct_rhs_concat_pack source. The authoritative VHDL policy rejects OUT. A word-exact OUT-to-DATA_PORT source control also emits successfully. Repository-local exact GHDL 6.0.0 LLVM-JIT archive/binary hashes, size, same-volume paths and version authenticate the tool before analysis: original fails at the OUT declaration; valid-name control passes. No PATH-based absence is inferred. Normalizer skips all basic-shaped identifiers and renderer emits the declaration without keyword admission; its lexeme inventory contains SV grammar, so globally renaming keywords is unsafe. Historical a0e7149d57 qualifies a separate exact portable VIAL fixture and is not invalidated by this direct artifact. Tracked docs/audits/direct-vhdl-reserved-identifier-20261027.json.gz retains recipes, exact inputs/identities, native/compiler outputs, normalization and limits. Re-derive: native/policy/compiler; falsify: valid-name source control; durability: receipt/fact/book/task/Git. Repair .22.2 is P1 before .6, earlier only if required integration blocks. No elaboration, runtime or general VHDL qualification is claimed. Commit diagnosis and resume .3.2.5.3.`
+  Commit: `ISF-REDUCTION-DELIVERY.22.1: diagnose direct VHDL reserved identifier emission`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _normalize_generated_vhdl_identifiers identifies a0e7149d57. Actual normalizer skips basic-shaped OUT before keyword validation; the renderer emits it unchanged.
+  - [x] **ADDRESSED (verified)** — Native and authenticated GHDL analysis isolate the existing defect against the valid-name source control. Preserve exact receipt and schedule .22.2 before .6; this diagnosis does not claim the repair.
+  - [x] **NO REGRESSION** — Historical portable VIAL qualification remains scoped to its own fixture. knowledge-map: OK and scripts/check_doctrines.sh gate the documentation-only diagnosis; backend bytes stay unchanged.
+
+- ID: `ISF-REDUCTION-DELIVERY.22.2`
+  Status: `pending`
+  Goal: `Repair direct VHDL reserved-identifier handling and its misleading legacy expectations.`
+  Acceptance: `P1 before .6 direct VHDL qualification: after the actual diagnosis, select the smallest policy-consistent fail-closed or declaration-aware target naming repair, preserving legitimate source/backend contracts and SV grammar tokens. Never globally rename language keywords from a token inventory. Update affected legacy controls, native/API diagnostics, book/source/discovery boundaries and meaningful known-bad/valid-name controls. Own required compiler qualification or its exact availability blocker; no full CI or broad naming campaign before required feature implementation. Activate earlier only if required integration checks demonstrate this defect blocks delivery.`
+  Verification: `Confirmed by completed .22.1 native and exact GHDL analysis; original OUT declaration fails while DATA_PORT control passes. Required integration remains .3.2.5.3; repair scheduled before .6.`
+  Commit: `pending`
 
 ## Blockers
 

@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **6** facts · **119** uniquely owned question entries.
+> **7** facts · **121** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="does direct VHDL lower unary OR AND XOR reductions?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="does direct VHDL lower unary reduction OR expressions?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
 - q="does direct VHDL reduce signed vectors?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
+- q="does direct VHDL reject a signal named OUT?" · facts=[direct-vhdl-reserved-identifiers](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)
 - q="does direct VHDL support AMBA requester?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
 - q="does direct VHDL support AMBA wrap arithmetic?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
 - q="does direct VHDL support XOR chains?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
@@ -120,6 +121,7 @@
 - q="which existing VHDL helper owns canonical natural generic arithmetic?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
 - q="which test characterizes direct VHDL reduction expressions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="which unary reduction operands still fail in direct VHDL?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
+- q="why can direct VHDL generation succeed but GHDL reject a reserved identifier?" · facts=[direct-vhdl-reserved-identifiers](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)
 - q="why did direct VHDL select vector fold helpers?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="why does FSMGen emit fsmgen_direct_vhdl_reduce_or?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why does named-drive VHDL contain a vertical bar before drive_start?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
@@ -161,6 +163,13 @@ _Historical direct VHDL unary-reduction token leak in named-drive enables_
 
 - **date:** 2026-07-30 · **status:** historical
 - **source and verification:** [`docs/knowledge/direct-vhdl-reduction-expression-token-leak.md`](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
+
+### direct-vhdl-reserved-identifiers
+
+_Direct VHDL currently emits basic-shaped reserved names without keyword admission_
+
+- **date:** 2026-10-27 · **status:** current
+- **source and verification:** [`docs/knowledge/direct-vhdl-reserved-identifiers.md`](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)
 
 ### direct-vhdl-scaffold
 
