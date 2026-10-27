@@ -64,11 +64,16 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=35 for complete lifecycle, literal proof coverage, equivalent/distinct commands, real roots, failures, missing executables and same-size/mtime changed inputs. Syntax, source sync and guarded book build pass; the mandatory normal hook validates the staged integration.
 
 - ID: `COMMIT-GATE-PERFORMANCE.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Remove duplicate complete live-document validation from the composed doctrine run.`
   Acceptance: `Keep standalone README validation complete. Compose routing/entrypoint checks with the already required LIVE-DOCUMENT-SIZE result through explicit driver dependency/command semantics. A missing or failed prerequisite must reject the composed gate; no unchecked environment flag or stale receipt may assert success. Preserve project-neutral checker boundaries, bootstrap wiring, full required logical coverage and readable diagnostics. Genuine malformed route/live-document controls and real integration qualify the change; synchronize docs and commit.`
-  Verification: `pending .2`
-  Commit: `pending`
+  Verification: `git log -S LIVE_DOCUMENT_CHECKER identifies 18e2dcbc6: README always delegates the complete suite already registered as LIVE-DOCUMENT-SIZE. Add explicit --routing-only for composed routing/landing-page checks; standalone default remains full. The driver accepts the composed README result only after actual same-invocation LIVE success; its internal prerequisite starts false, no env/receipt can assert it. Collect-all still executes routing diagnostics after prerequisite failure and rejects README; fail-fast rejects sooner. All tests successful Files=2 Tests=16 for real standalone/partial route, excessive pressure, adapter proof, malformed route and staged/worktree controls plus driver modes; after refining collect-all diagnostics, Files=1 Tests=6 pass for complete registry/modes/failed and missing prerequisites. Partial scope is explicit and never prints complete pressure success. CGP-D1 fixed: real Git staged/worktree positive and negative controls use the existing Git directory with separate same-volume fixture index/objects, without init/config/commit or real-index writes. Initial tests expose stale task growth declarations and an incorrect expected diagnostic spelling; correct declarations within unchanged ceilings and the oracle, retain raw failures. Syntax, source projection and final guarded book build pass. Re-derive: call graph and actual standalone/composed outcomes. Falsify: missing/failed prerequisite, actual bad destination/marker and real index disagreement. Durability: code/tests/docs and docs/audits/commit-gate-performance-3-20261027.json.gz; normal final hook qualifies staged integration. Comparative timing remains .4; no full CI/hosted claim.`
+  Commit: `COMMIT-GATE-PERFORMANCE.3: compose README routing with verified pressure checks`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S LIVE_DOCUMENT_CHECKER identifies 18e2dcbc6. README delegates the entire live-document suite after the driver already registered and executed it. The affected negative test also creates a separate Git repository contrary to the director's boundary.
+  - [x] **ADDRESSED (verified)** — Explicit routing-only composition requires actual same-invocation live-document success and preserves collect-all diagnostics, complete standalone validation and visible partial scope. Replace the Git fixture with this repository's isolated alternate index/object store and close CGP-D1.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=16, followed by Files=1 Tests=6 for the final collect-all refinement. Real stale markers, excessive destination pressure, missing/failed prerequisites, complete registry modes and actual index/worktree disagreement reject. Source sync and final guarded book build pass; the normal mandatory hook validates the final stage.
 
 - ID: `COMMIT-GATE-PERFORMANCE.4`
   Status: `pending`
@@ -87,3 +92,13 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
 
 - None. Full source/native/API/MCP/external/runtime/hosted qualification remains
   separately owned by the preserved required-delivery tasks.
+
+## Owned defects
+
+- `CGP-D1` — fixed and verified in .3, P1 policy compliance in the directly affected README test.
+  Reproduce by reading the staged-result subtest in
+  `t/1553-readme-routed-destination-pressure.t`: it calls git init/config/add/commit
+  in a new fixture repository. That conflicts with the director's write boundary.
+  Own and repair in .3 before running it: retain genuine Git staged/worktree
+  rejection using this repository's Git directory with an isolated same-volume
+  alternate index/object store; no other repository or real index writes.

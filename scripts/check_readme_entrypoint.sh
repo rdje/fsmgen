@@ -32,13 +32,21 @@ set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-if [ "$#" -gt 0 ]; then
-  if [ "$#" -ne 2 ] || [ "$1" != "--root" ] || [ ! -d "$2" ]; then
-    printf 'Usage: %s [--root REPOSITORY_ROOT]\n' "$0" >&2
-    exit 2
-  fi
-  ROOT_DIR="$(cd "$2" && pwd)"
-fi
+routing_only=0
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --routing-only) routing_only=1; shift ;;
+    --root)
+      if [ "$#" -lt 2 ] || [ ! -d "$2" ]; then
+        printf 'readme-entrypoint: --root requires a repository directory\n' >&2
+        exit 2
+      fi
+      ROOT_DIR="$(cd "$2" && pwd)"; shift 2 ;;
+    *)
+      printf 'Usage: %s [--root REPOSITORY_ROOT] [--routing-only]\n' "$0" >&2
+      exit 2 ;;
+  esac
+done
 cd "${ROOT_DIR}"
 
 MAX_REFS="${README_MAX_LEAF_REFS_PER_LINE:-1}"
@@ -229,7 +237,9 @@ else
   fi
 fi
 
-if [ ! -x "${LIVE_DOCUMENT_CHECKER}" ]; then
+if [ "${routing_only}" -eq 1 ]; then
+  ok 'routing-only mode; live-document pressure validation is a separate obligation'
+elif [ ! -x "${LIVE_DOCUMENT_CHECKER}" ]; then
   note "common live-document checker is missing or not executable: scripts/check_live_document_size.sh"
 elif ! "${LIVE_DOCUMENT_CHECKER}" --root "${ROOT_DIR}"; then
   note "common live-document size-containment check failed"
@@ -237,6 +247,8 @@ fi
 
 if [ "${fail}" -eq 0 ]; then
   printf 'readme-entrypoint: all README entry-point invariants hold\n'
-  printf 'readme-entrypoint: all routed-destination pressure invariants hold\n'
+  if [ "${routing_only}" -eq 0 ]; then
+    printf 'readme-entrypoint: all routed-destination pressure invariants hold\n'
+  fi
 fi
 exit "${fail}"

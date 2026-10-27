@@ -43,6 +43,25 @@ subtest 'minimal marker-to-surface routes pass without duplicated budgets' => su
     like($output, qr/surface shipped_behavior: actual files=1,/, 'common checker owns destination measurement');
 };
 
+subtest 'routing-only mode is explicit and standalone validation stays complete' => sub {
+    my $fixture = make_fixture();
+    my ($ok, $output) = run_checker($fixture, '--routing-only');
+    ok($ok, 'valid routing-only fixture passes') or diag($output);
+    like($output, qr/routing-only mode; live-document pressure validation is a separate obligation/, 'partial scope is explicit');
+    unlike($output, qr/all routed-destination pressure invariants hold/, 'partial mode never claims complete pressure validation');
+    unlike($output, qr/all live-document size-containment invariants hold/, 'partial mode does not repeat the complete suite');
+    write_file($fixture, 'bounded.md', join('', map {"line $_\n"} 1 .. 101));
+    ($ok, $output) = run_checker($fixture, '--routing-only');
+    ok($ok, 'destination pressure remains a separate mandatory obligation');
+    ($ok, $output) = run_checker($fixture);
+    ok(!$ok, 'standalone default actually rejects excessive destination pressure');
+    like($output, qr/surface active_resume max lines is 101/, 'real destination failure is named');
+    mutate_file($fixture, 'README.md', sub {$_[0] =~ s/^marker-active-index\n//m});
+    ($ok, $output) = run_checker($fixture, '--routing-only');
+    ok(!$ok, 'partial routing still rejects an actual stale marker');
+    like($output, qr/route active_index: README\.md marker is absent/, 'routing failure remains visible');
+};
+
 subtest 'project adapter executes delegated verifier before proving it to the core' => sub {
     my $fixture = make_fixture();
     write_file(
@@ -144,11 +163,29 @@ subtest 'undeclared author hint and wrong route kind fail closed' => sub {
 
 subtest 'staged resulting tree cannot diverge from checked structural inputs' => sub {
     my $fixture = make_fixture();
-    run_git($fixture, 'init');
-    run_git($fixture, 'config', 'user.name', 'Fixture');
-    run_git($fixture, 'config', 'user.email', 'fixture@example.invalid');
+    # Keep genuine Git index semantics without creating or amending another repo.
+    # The real Git directory is read-only; fixture blobs/index stay project-local.
+    my ($paths_ok, undef, undef, $paths_out, $paths_err) = run(command => [
+        'git', '-C', $repo_root, 'rev-parse', '--absolute-git-dir',
+        '--path-format=absolute', '--git-path', 'objects',
+    ]);
+    die join('', @{$paths_err || []}) if !$paths_ok;
+    my ($git_dir, $objects) = split /\n/, join('', @{$paths_out || []});
+    my $storage = create_project_tempdir(purpose => 'readme-alternate-index');
+    make_path("$storage/objects");
+    local $ENV{GIT_DIR} = $git_dir;
+    local $ENV{GIT_WORK_TREE} = $fixture;
+    local $ENV{GIT_INDEX_FILE} = "$storage/index";
+    local $ENV{GIT_OBJECT_DIRECTORY} = "$storage/objects";
+    local $ENV{GIT_ALTERNATE_OBJECT_DIRECTORIES} = $objects;
+    local $ENV{GIT_OPTIONAL_LOCKS} = 0;
+    run_git($fixture, 'read-tree', '--empty');
     run_git($fixture, 'add', '.');
-    run_git($fixture, 'commit', '-m', 'fixture baseline');
+    my ($baseline_ok, undef, undef, $baseline_out, $baseline_err) = run(
+        command => [$resulting_checker, '--root', $fixture],
+    );
+    ok($baseline_ok, 'isolated index agrees with its actual fixture worktree')
+        or diag(join('', @{$baseline_out || []}, @{$baseline_err || []}));
     write_file(
         $fixture,
         'evidence.md',
@@ -456,9 +493,9 @@ sub mutate_surface_record {
 }
 
 sub run_checker {
-    my ($root) = @_;
+    my ($root, @extra) = @_;
     my ($ok, undef, undef, $stdout, $stderr) = run(
-        command => [$checker, '--root', $root],
+        command => [$checker, '--root', $root, @extra],
     );
     return ($ok ? 1 : 0, join('', @{$stdout || []}, @{$stderr || []}));
 }

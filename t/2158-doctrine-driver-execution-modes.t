@@ -30,9 +30,10 @@ if [[ -f "$FSMGEN_DOCTRINE_TEST_ROOT/failure-selection" ]]; then
     selected="${selected// /}"
 fi
 [[ "$selected" == '} . $id . q{' ]] && exit 7
-exit 0
-};
-    close $out or die $!; chmod 0755, "$root/$path" or die $!;
+} . ($id eq 'README-ENTRYPOINT'
+    ? qq{[[ "\$*" == --routing-only ]] || exit 9\n} : '') . qq{exit 0\n};
+    close $out or die $!;
+    chmod 0755, "$root/$path" or die $!;
 }
 sub run_driver {
     local $ENV{FSMGEN_DOCTRINE_TEST_ROOT} = $root;
@@ -84,6 +85,17 @@ subtest 'changed input after a passed preflight is freshly rejected, with size a
     select_failure('NONE');
 };
 
+subtest 'README composition requires an actual passed live-document result' => sub {
+    select_failure('LIVE-DOCUMENT-SIZE');
+    my ($status, $text) = run_driver();
+    isnt($status, 0, 'a failed prerequisite rejects the complete gate');
+    like($text, qr/README-ENTRYPOINT requires successful LIVE-DOCUMENT-SIZE in this invocation/, 'missing prerequisite is explicit');
+    is_deeply(executed($text), \@expected, 'collect-all still executes routing and all independent diagnostics');
+    like($text, qr/\[doctrine\] FAIL: README-ENTRYPOINT/, 'routing alone cannot satisfy a failed pressure prerequisite');
+    unlike($text, qr/\[doctrine\] all doctrine checks passed/, 'prerequisite failure cannot produce complete success');
+    select_failure('NONE');
+};
+
 subtest 'invalid invocation and missing registry members cannot skip enforcement' => sub {
     my ($status, $text) = run_driver('--skip-check');
     isnt($status, 0, 'unknown flag refuses'); is_deeply(executed($text), [], 'no execution is misreported');
@@ -91,5 +103,9 @@ subtest 'invalid invocation and missing registry members cannot skip enforcement
     ($status, $text) = run_driver('--fail-fast');
     isnt($status, 0, 'missing mandatory executable rejects');
     unlike($text, qr/\[doctrine\] all doctrine checks passed/, 'incomplete registry is never green');
+    unlink "$root/scripts/check_live_document_size.sh" or die $!;
+    ($status, $text) = run_driver();
+    isnt($status, 0, 'missing live-document prerequisite rejects the complete gate');
+    like($text, qr/LIVE-DOCUMENT-SIZE registry path missing/, 'missing prerequisite is named by the meta-check');
 };
 done_testing();

@@ -302,6 +302,17 @@ For local timing and prompt failure feedback:
 scripts/check_doctrines.sh --timings --fail-fast
 ```
 
+The driver checks live-document pressure once and requires its success in the
+same invocation to accept the composed README result. Collect-all mode retains
+routing diagnostics even after a failed prerequisite. Missing or failed prerequisite
+validation rejects the complete gate. Standalone README checks remain complete:
+
+```bash
+scripts/check_readme_entrypoint.sh
+# Routing diagnostics only; pressure validation is a separate obligation:
+scripts/check_readme_entrypoint.sh --routing-only
+```
+
 The live-document wrapper also shares equivalent read-only verifier executions
 within that invocation. Every declared proof obligation still receives its own
 result, including failures. Distinct commands remain distinct. A later run

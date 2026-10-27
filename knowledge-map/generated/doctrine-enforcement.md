@@ -1,12 +1,13 @@
 # Knowledge Map: `doctrine-enforcement`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **9** uniquely owned question entries.
+> **2** facts · **10** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can a passed preflight replace final commit validation?" · facts=[doctrine-enforcement-one-authoritative-commit-gate](../../docs/decisions/current/continuity/0122-one-authoritative-final-index-commit-gate.md)
 - q="how are repeated live-document verifier executions shared?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
+- q="how does the doctrine driver avoid repeating README pressure validation?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="must the complete doctrine suite run both before and inside every commit?" · facts=[doctrine-enforcement-one-authoritative-commit-gate](../../docs/decisions/current/continuity/0122-one-authoritative-final-index-commit-gate.md)
 - q="what did doctrine enforcement adoption ship?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="what is DOCTRINE-ENFORCEMENT-ADOPTION.1?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)

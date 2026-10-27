@@ -151,8 +151,18 @@ scripts/check_doctrines.sh --timings --fail-fast
 observation metadata. It does not change the validation verdict. `--fail-fast`
 rejects on the first failure and explicitly reports that remaining checks were
 not run; successful runs still execute the entire registry. Without flags the
-driver continues through failures for complete CI diagnostics. No result is
+driver continues through independent checks after failures for complete CI diagnostics. No result is
 cached between invocations; changed inputs are freshly checked.
+
+The driver composes `README-ENTRYPOINT --routing-only` with the successful
+`LIVE-DOCUMENT-SIZE` result from the same invocation. An internal prerequisite
+starts unproved and is set only after that actual check passes. Missing or
+failed prerequisites reject the composed gate; collect-all mode still runs
+routing diagnostics. No environment flag or earlier
+receipt can assert success. Standalone `scripts/check_readme_entrypoint.sh`
+still runs complete route/landing-page and live-document pressure validation.
+Its explicit `--routing-only` mode reports that pressure is a separate obligation
+and never claims complete pressure success.
 
 The live-document wrapper explicitly selects read-only verifier sharing within
 one invocation. Identical executable paths run once under the fixed project

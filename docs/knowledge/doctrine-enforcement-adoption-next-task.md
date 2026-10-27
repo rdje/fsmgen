@@ -7,6 +7,7 @@ answers:
   - "what is DOCTRINE_ENFORCEMENT.md?"
   - "what is TOOLBOX.md?"
   - "how are repeated live-document verifier executions shared?"
+  - "how does the doctrine driver avoid repeating README pressure validation?"
   - "where should FSMGEN adopt doctrine enforcement?"
   - "what should TOOLBOX.md contain for FSMGEN?"
 date: 2026-10-27
@@ -46,3 +47,13 @@ results fail every consumer. Default standalone behavior stays per-role; a new
 invocation never reuses success. Contracts: `live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md`;
 implementation: `scripts/run_live_document_adapter_verifiers.pl` and the neutral
 checker. Reverify: `prove -Iperl t/1554-live-document-size-doctrine.t t/2159-live-document-adapter-sharing.t`.
+
+The driver requires actual `LIVE-DOCUMENT-SIZE` success within that invocation
+before accepting README `--routing-only`; its internal prerequisite begins false.
+Missing/failed prerequisites reject the complete run; collect-all still runs
+routing diagnostics. Standalone
+`scripts/check_readme_entrypoint.sh` still delegates complete pressure validation.
+Explicit partial mode never claims pressure success. Reverify:
+`prove -Iperl t/1553-readme-routed-destination-pressure.t t/2158-doctrine-driver-execution-modes.t`.
+The staged-result test uses the same repository's Git directory, an isolated
+project-local alternate index/object store, and no fixture repository commits.
