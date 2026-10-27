@@ -36,6 +36,7 @@ sub prepare_module ($class, %args) {
     for my $name (sort keys %$analysis) {
         my $entry = $analysis->{$name};
         my $lhs = ref($entry) eq 'HASH' ? $entry->{lhs_ast} : undef;
+        next if _is_state_control_assignment($module, $name, $entry, $lhs, \%signals);
         confess "Direct module width assignment '$name' requires a normalized SignalRef\n"
             unless blessed($lhs) && $lhs->isa('FSM::CoreAST::SignalRef');
         _add_signal(\%signals, $lhs->signal);
@@ -100,6 +101,35 @@ sub prepare_module ($class, %args) {
     return $json->decode($json->encode({profile => $symbolic ? 'symbolic' : 'fixed',
         target_language => $language, source_scope => $scope,
         signal_order => [sort keys %plans], signals => \%plans, parameter_references => \@parameters}));
+}
+
+sub _is_state_control_assignment ($module, $name, $entry, $lhs, $signals) {
+    return 0 unless blessed($lhs) && $lhs->isa('FSM::AST::SignalRef')
+        && $lhs->is_fsm_state_next;
+    confess "Direct module width has an invalid compiler state-control reference\n"
+        unless $name eq 'next_state' && $lhs->name eq $name && !exists($signals->{$name});
+    my %states = map {$_->name => uc($_->name)}
+        grep {$_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/}
+        @{$module->states};
+    confess "Direct module width state control requires actual transition assignments\n"
+        unless keys(%states) && ref($entry->{assignments}) eq 'ARRAY' && @{$entry->{assignments}};
+    for my $row (@{$entry->{assignments}}) {
+        my $transition = ref($row) eq 'HASH' ? $row->{is_state_trans} : undef;
+        my $intent = ref($row) eq 'HASH' ? $row->{assignment_intent} : undef;
+        my $origin = ref($row) eq 'HASH' ? $row->{source_provenance} : undef;
+        my $target = ref($origin) eq 'HASH' ? $origin->{raw_target_state} : undef;
+        confess "Direct module width has an inconsistent compiler state-control family\n"
+            unless defined($transition) && !ref($transition) && $transition eq '1'
+                && ref($intent) eq 'HASH' && ($intent->{assignment_family} // '') eq 'state_transition'
+                && ($intent->{operator_symbol} // '') eq '<-'
+                && ($intent->{sequencing} // '') eq 'clocked'
+                && ($intent->{register_style} // '') eq 'output_named'
+                && ($row->{operator} // '') eq '<-'
+                && ref($origin) eq 'HASH' && ($origin->{origin} // '') eq 'state_transition'
+                && defined($target) && !ref($target) && exists($states{$target})
+                && defined($row->{rhs}) && !ref($row->{rhs}) && $row->{rhs} eq $states{$target};
+    }
+    return 1;
 }
 
 sub _add_signal ($signals, $signal) {
@@ -246,6 +276,15 @@ contains physical C<name>, numeric C<width>, C<signed>, C<state_model>,
 C<declared_type_name>, C<declared_type_spec> and optional captured C<width_plan>.
 The result retains no Core module, Signal or backend analysis graph.
 
+Compiler state-transition LHS nodes retain their existing flagged
+C<FSM::AST::SignalRef> control representation. Only the exact C<next_state>
+identity with no source Signal collision, a nonempty complete transition family,
+matching clocked output-register intent/provenance and an actual fixed state
+target encoding is excluded from source data-width membership. Malformed,
+foreign, empty or mixed control families refuse; ordinary data LHS nodes still
+require canonical Core SignalRef ownership. This is a caller contract, not
+attestation of caller-made control objects.
+
 This is source-object preparation. Complete analysis membership is a caller
 contract, not attestation of caller-made objects. Actual target names and full
 declaration namespaces are checked by C<prepare_declarations>, described below.
@@ -278,7 +317,8 @@ captured declarations before returning HDL. Port and source-owned storage ranges
 retain actual selected names and vector rank; complete actual target
 qualification and comparison with the emitted port/storage plans reject late
 same-default ancestry changes. Backend-only computed helper shapes and
-source-aware VHDL ranges remain separately owned.
+complete generated specialization remain separately owned. The direct VHDL
+source converter now uses paired plans for its bounded combinational profile.
 Full compiler, override and runtime qualification remains pending. Whole backend
 release is not claimed: task C<ISF-REDUCTION-DELIVERY.25> owns the independent
 context/helper back-reference cycle reproduced without these preparation calls.

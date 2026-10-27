@@ -457,7 +457,7 @@ subset. A parameter used only by a width can therefore receive a `natural`
 declaration in that prepared plan; an equal independent literal stays static.
 Incomplete, stale, renamed or inconsistent width inputs refuse. This optional
 preparation is covered by the [width-root regression](../../../t/2177-direct-vhdl-width-generic-roots.t);
-the direct converter still needs its source-aware declaration integration.
+the source-aware converter now supplies these actual inputs for its bounded symbolic profile.
 
 The private [DirectDeclarationPlan](../../../perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm)
 now pairs complete actual emitted declarations with the converter's normalized
@@ -478,8 +478,8 @@ equivalent expression or numeric substitute refuses. Parsed declarations carry
 separate VHDL range/type strings beside their selected numeric behavior bounds.
 Static rows preserve the existing parser products. The
 [parser regression](../../../t/2179-direct-vhdl-declaration-parser.t) includes
-actual generated sources and altered-text controls. Renderer activation remains
-pending; standalone symbolic raw-text conversion and public reports are unchanged.
+actual generated sources and altered-text controls. The bounded source-aware renderer
+now consumes the paired plan; standalone symbolic raw-text conversion and public reports are unchanged.
 External override/runtime and full qualification remain separately owned.
 
 Private declaration rendering now consumes that canonical VHDL type. Whole-target
@@ -488,8 +488,7 @@ selected numeric default; sized unsigned literals zero-extend or truncate before
 target signedness conversion. This preserves vector rank at a default of one.
 The [target-rank regression](../../../t/2180-direct-vhdl-target-rank.t) checks
 actual paired declarations and static controls. Selected symbolic literal target
-lvalues and X/Z literals refuse. Other expression consumers and source converter
-activation remain pending; this preparation adds no public source admission.
+lvalues and X/Z literals refuse. Generated computed shapes remain separately owned.
 
 Private symbolic unsigned comparisons with sized literals now use numeric vector
 overloads at the actual operand lengths, in either operand order. Decimal equality
@@ -498,9 +497,8 @@ Comparison-result literals use the actual symbolic target's `'length`. Static
 products preserve; negative comparisons retain their existing arithmetic refusal,
 and signed symbolic sized comparisons refuse pending qualification. The
 [comparison-rank regression](../../../t/2181-direct-vhdl-comparison-rank.t)
-checks actual paired declarations and independent expected target text. Remaining
-conditions, assignments and source converter activation are separately owned;
-external generic override/runtime qualification remains pending.
+checks actual paired declarations and independent expected target text.
+External generic override/runtime qualification remains pending.
 
 Private symbolic Boolean conditions now reduce whole vectors through the existing
 OR helper, including when the selected default is one. Logical grouping,
@@ -511,7 +509,7 @@ their expression consumers. Selected, bitwise, vector-pair, decimal-relational a
 negated-comparison leaves remain withheld. Static condition products preserve.
 The [condition-rank regression](../../../t/2182-direct-vhdl-condition-rank.t)
 checks actual paired declarations, whole expected Boolean strings and helper
-closure. Source activation remains pending.
+closure. Complete generated intermediate-shape propagation remains pending.
 
 Private symbolic assignments now resize unsigned vector sources to the actual
 whole target length, preserving zero extension and low-bit truncation across
@@ -524,9 +522,44 @@ defaults, with independent expected target text and unchanged static controls.
 Selected operands or lvalues, signed-vector resizing, arithmetic, concatenation
 and other computed expressions refuse before selected numeric widths can be
 mistaken for elaborated relationships. Symbolic vector-pair and decimal-relational
-conditions remain withheld. Source converter activation and generated internal
-shape propagation remain separate work; compiler/override/runtime qualification
-is still pending.
+conditions remain withheld. Generated internal shape propagation and
+compiler/override/runtime qualification remain pending.
+
+Direct VHDL source generation now joins its actual completed declaration capture,
+assignment analysis and normalized target mapping to that paired parser and
+renderer. The bounded combinational profile preserves symbolic port/storage
+ranges and width-root natural generics, including vector rank at a selected
+default of one. Fixed source products keep their existing conversion path.
+The [source regression](../../../t/2184-direct-vhdl-symbolic-source.t) checks
+complete expected port/generic blocks, actual mux defaults/transfers, source
+capture kinds, backend reuse and whole fixed-product preservation.
+
+Compiler-owned transition references use their existing flagged control AST.
+The width preflight validates their complete transition family and actual fixed
+state encoding separately from canonical source data Signals. Wrong references,
+foreign state targets and mixed/inconsistent families refuse. This does not
+turn an ordinary data reference into a compiler state-control node.
+
+Symbolic modules with allocated auxiliary registers or intermediate expressions
+remain withheld until those generated shapes propagate correctly. This is a
+conservative allocation boundary, including unrelated helpers. A symbolic FSM
+with no captured transition also refuses pending state-hold repair. These
+refusals happen before any VHDL artifact returns; raw symbolic text gains no
+source authority. Full transport, compiler, override and runtime qualification
+remain pending.
+
+The explicit self-loop in this complete example gives the state logic its
+required transition drive:
+
+```lisp
+{{#include ../../../t/data/ial0-direct-symbolic-comb.fsm}}
+```
+
+Generate it through the strict CLI:
+
+```bash
+./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/vhdl/direct_symbolic_comb.vhdl t/data/ial0-direct-symbolic-comb.fsm
+```
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It

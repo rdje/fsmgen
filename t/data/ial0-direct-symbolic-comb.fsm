@@ -1,0 +1,7 @@
+(?fsm:direct__symbolic_comb
+  (+params (W 1) (COPY W) (SAME 1))
+  (+interface (output DATA))
+  (+size (DATA (param COPY)) (INPUT_PORT (param W)))
+  (idle
+    (= (DATA INPUT_PORT))
+    (-> idle)))

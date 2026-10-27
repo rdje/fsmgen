@@ -10,6 +10,9 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Backend::VHDL::DirectParameterEmitter;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
+use FSM::Backend::VHDL::DirectDeclarationPlan;
+use FSM::DirectDeclaredWidthSupport;
 
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
@@ -23,25 +26,68 @@ sub new ($class, %args) {
 sub generate_vhdl ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("[VHDL.pm][generate_vhdl()] Starting flattened DT direct VHDL generation for " . $fsm_module->name, 3);
+    my $capture = $ctx->{declared_width_declaration_capture}
+        // FSM::Backend::VerilogFamily::DeclarationCapture->new;
+    local $ctx->{declared_width_declaration_capture} = $capture;
     my $sv_hdl = $ctx->{orchestrator}->generate_systemverilog($fsm_module);
-    return $self->_convert_systemverilog_to_vhdl($sv_hdl, $fsm_module);
+    my $snapshot;
+    if (keys %{$fsm_module->parameters}) {
+        my $source = eval {FSM::DirectDeclaredWidthSupport->prepare_module(
+            fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
+            target_language => 'systemverilog')};
+        confess _unsupported("direct source width preparation failed: $@") if $@;
+        if ($source->{profile} eq 'symbolic') {
+            _validate_symbolic_generated_shapes($ctx, $fsm_module);
+            $snapshot = $capture->snapshot;
+        }
+    }
+    return $self->_convert_systemverilog_to_vhdl($sv_hdl, $fsm_module, $snapshot);
+}
+
+sub _validate_symbolic_generated_shapes ($ctx, $fsm_module) {
+    # Use actual allocation owners, never a helper-name suffix or equality of
+    # selected widths. Even unrelated allocated helpers remain withheld until
+    # their dependency propagation is qualified.
+    my $internal = $ctx->{enable_graph_module_planning_support}->build_internal_signal_declaration_plan(
+        $fsm_module, $ctx->{declared_port_signals});
+    confess _unsupported('symbolic source auxiliary register shapes require separate qualification')
+        if keys %{$internal->{aux_decls}};
+    confess _unsupported('symbolic source intermediate computed shapes require separate qualification')
+        if keys %{$ctx->{intermediate_signals}};
+    my $state = $ctx->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
+    confess _unsupported('symbolic source without transitions requires qualified state-hold lowering')
+        if $state->{has_state_registers} && !exists($ctx->{assignment_analysis}{next_state});
+    return;
 }
 
 sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     return $self->_convert_systemverilog_to_vhdl($sv_hdl);
 }
 
-sub _convert_systemverilog_to_vhdl ($self, $sv_hdl, $fsm_module = undef) {
+sub _convert_systemverilog_to_vhdl ($self, $sv_hdl, $fsm_module = undef, $capture = undef) {
     my $identifiers = _plan_generated_vhdl_identifiers($sv_hdl);
     $sv_hdl = $identifiers->{text};
     my %aggregate_type_widths = _parse_packed_struct_typedef_widths($sv_hdl);
     my $module = _parse_module($sv_hdl);
+    my ($plan, $parsed);
+    if (defined $capture) {
+        $plan = eval {FSM::Backend::VHDL::DirectDeclarationPlan->prepare(
+            fsm_module => $fsm_module, declaration_capture => $capture,
+            assignment_analysis => $self->{flattened_dt}{assignment_analysis},
+            identifier_map => $identifiers->{identifier_map})};
+        confess _unsupported("direct declaration preparation failed: $@") if $@;
+        $parsed = _parse_direct_declarations($sv_hdl, $plan);
+    }
     my @generics = _parse_generics($module->{parameters});
-    my @ports = _parse_ports($module->{ports}, \%aggregate_type_widths);
+    my @ports = $parsed ? @{$parsed->{ports}} : _parse_ports($module->{ports}, \%aggregate_type_widths);
     my $body = $module->{body};
     my @constants = _parse_constants($body);
-    my @signals = _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
-    if (defined($fsm_module) && keys %{$fsm_module->parameters}) {
+    my @signals = $parsed ? @{$parsed->{signals}}
+        : _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
+    if ($plan) {
+        @generics = _direct_generics_from_plan(\@generics, $plan->{generic_plan});
+    }
+    elsif (defined($fsm_module) && keys %{$fsm_module->parameters}) {
         @generics = _prepare_direct_generics(
             $fsm_module,
             {
@@ -91,7 +137,10 @@ sub _prepare_direct_generics ($fsm_module, $namespace, $generics) {
         );
     };
     confess _unsupported("direct generic preparation failed: $@") if $@;
+    return _direct_generics_from_plan($generics, $plan);
+}
 
+sub _direct_generics_from_plan ($generics, $plan) {
     my %by_name = map { $_->{name} => $_ } @$generics;
     for my $declaration (@{$plan->{natural_declarations}}) {
         $by_name{$declaration->{name}} = {
@@ -103,8 +152,8 @@ sub _prepare_direct_generics ($fsm_module, $namespace, $generics) {
     return map { $by_name{$_} } @{$plan->{parameter_order}};
 }
 
-# Private preparation only. The public converter does not supply a source plan
-# until declaration rendering and expression type rank are integrated together.
+# The source-aware path supplies an actual completed paired plan. Public raw
+# conversion has no source authority and keeps the bounded numeric parser.
 sub _parse_direct_declarations ($sv_hdl, $plan) {
     confess _unsupported('direct declaration parsing requires a prepared paired plan')
         unless ref($plan) eq 'HASH' && ref($plan->{ranges}) eq 'HASH'
@@ -1954,8 +2003,7 @@ Decimal equality uses numeric scalar overloads rather than truncating literals
 to a selected default. Boolean result literals use the symbolic target's
 C<'length>. Independent static products preserve. Negative comparisons keep
 the existing arithmetic refusal, and signed symbolic sized comparisons refuse
-pending qualification. Remaining expression consumers and source activation
-are pending.
+pending qualification. Generated computed-shape propagation remains pending.
 
 Private symbolic Boolean conditions reduce whole vectors with the existing OR
 helper. Structured logical grouping, negation, conjunction and disjunction keep
@@ -1963,7 +2011,7 @@ Boolean precedence; negated vector truth tests zero rather than negating a
 Boolean test for one. The symbolic profile reserves the OR helper before the
 existing collision check. Qualified comparison/reduction leaves share existing
 consumers. Unqualified selected, bitwise, vector-pair, decimal-relational and
-negated-comparison leaves refuse before source activation. Static condition
+negated-comparison leaves refuse. Static condition
 products and their helper inventory retain their existing conversion path.
 
 Private symbolic assignments resize unsigned vectors to actual whole-target
@@ -1972,14 +2020,25 @@ whole-vector reduction results extend from one bit; scalar destinations take
 the low source bit. Target signedness applies after unsigned resizing. Complete
 atom grouping preserves the conversion. Selected operands/lvalues, signed-vector
 resizing and other computed expressions refuse before numeric selected-default
-width logic. Independent static assignment products preserve. Source converter
-activation and generated internal shape propagation remain separately owned.
+width logic. Independent static assignment products preserve. Generated internal
+shape propagation remains separately owned.
 
-This private path consumes a prepared source contract; it does not attest an
-arbitrary caller-made plan. Inputs are read-only and the result retains no
-mutable plan graph. The public raw converter and direct generation do not yet
-activate it. Rendering and expression rank integration remain separately owned;
-symbolic raw-text conversion still refuses. External compiler, override and
-runtime qualification is not implied by private parsing.
+C<generate_vhdl> installs a per-generation actual declaration collector and joins
+completed source analysis and normalized identifiers through the paired plan for
+symbolic declarations. Width roots select natural generics. Independent fixed
+source and public raw-text products keep the existing numeric conversion path.
+Symbolic raw text has no source authority and remains unsupported.
+
+Actual allocated auxiliary registers and intermediate expressions conservatively
+refuse until generated shapes propagate; even unrelated helpers are withheld.
+Symbolic FSMs without captured transitions refuse pending state-hold repair.
+Compiler-owned fixed state-control references pass the separate complete-family
+proof in C<DirectDeclaredWidthSupport>; ordinary source data still requires Core
+SignalRef ownership. Bounded source/Core and strict CLI checks do not imply
+external compiler, override, runtime or complete transport qualification.
+
+The internal preparation helpers consume a source contract, not attestation of
+arbitrary caller-made plans. Returned records retain no mutable plan graph;
+inputs remain read-only.
 
 =cut

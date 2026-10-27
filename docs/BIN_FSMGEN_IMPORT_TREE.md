@@ -2,6 +2,13 @@
 
 This is a live architecture note.
 
+Scoped update on `2026-10-28`: the direct VHDL backend imports
+`FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
+collector and canonical direct width support. Completed source analysis and
+normalized target declarations select bounded symbolic conversion; actual
+allocated auxiliary/intermediate shapes and no-transition symbolic FSMs refuse.
+Raw symbolic conversion remains unsupported. This adds no fresh closure census.
+
 Use it to keep one current, high-signal picture of:
 - what [bin/fsmgen](bin/fsmgen) actually does,
 - which project-owned packages sit in its transitive import tree,

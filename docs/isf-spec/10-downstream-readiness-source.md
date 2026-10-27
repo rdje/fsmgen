@@ -299,8 +299,13 @@ General source rules:
   plain-decimal root aliases and bounded natural arithmetic against actual
   normalized target declarations. Related defaults emit `natural`; independent
   literal/vector/negative defaults retain static conversion. Unsupported sized,
-  bitwise, aggregate/path relationships refuse. Direct signal ranges, complete
-  source/transport and external override/runtime qualification remain pending.
+  bitwise, aggregate/path relationships refuse. Bounded direct combinational
+  source generation now retains captured symbolic port/storage ranges and actual
+  target-length unsigned transfers. Compiler state-control references require
+  complete fixed transition-family proof. Allocated auxiliary/intermediate shapes
+  and no-transition symbolic FSMs refuse before an artifact returns; raw symbolic
+  conversion remains unsupported. Generated internal shapes, complete transport
+  and external compiler/override/runtime qualification remain pending.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

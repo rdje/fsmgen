@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **126** uniquely owned question entries.
+> **7** facts · **129** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -123,13 +123,16 @@
 - q="what owns the direct VHDL reduction expression defect?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
 - q="where do direct VHDL module generic defaults currently come from?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
 - q="which direct VHDL generic declarations use natural preparation?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
+- q="which direct VHDL symbolic source shapes now generate through the CLI?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="which existing VHDL helper owns canonical natural generic arithmetic?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
+- q="which task owns the direct no-transition state-hold repair?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="which test characterizes direct VHDL reduction expressions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="which unary reduction operands still fail in direct VHDL?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why can direct VHDL generation succeed but GHDL reject a reserved identifier?" · facts=[direct-vhdl-reserved-identifiers](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)
 - q="why did direct VHDL select vector fold helpers?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="why does FSMGen emit fsmgen_direct_vhdl_reduce_or?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why does named-drive VHDL contain a vertical bar before drive_start?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
+- q="why does source-aware symbolic VHDL require a captured transition?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="why is scalar unary reduction an identity?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 
 ## Facts
@@ -145,7 +148,7 @@ _Direct VHDL generic conversion and canonical composition preparation are distin
 
 _Direct VHDL preparation separates related natural declarations from static defaults_
 
-- **date:** 2026-10-27 · **status:** current
+- **date:** 2026-10-28 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-parameter-profiles.md`](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 
 ### direct-vhdl-reduction-expression-lowering-behavior
