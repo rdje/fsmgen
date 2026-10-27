@@ -168,6 +168,22 @@ without an active source context still supplies no inferred scope. Auxiliary
 origin propagation is the next compiler slice; public reports and numeric HDL
 remain unchanged in this publication step.
 
+The auxiliary-origin audit found a separate preservation gap. When a generated
+`next_data` or `data_r` output also has an explicit size declaration, legacy
+numeric refinement retains both size requirements, while its old source getter
+is replaced by the parent's origin. An independent parameter and an equal-valued
+literal can therefore leave identical selected source records. Copying the
+parent's binding alone would lose the explicit constraint. P1 task
+`ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4` owns private constraint preservation before
+propagation and symbolic admission; existing numeric behavior is unchanged.
+
+The bounded source/Core observations and rejecting saved-record controls can be
+replayed without generating new artifacts:
+
+```bash
+python3 -B docs/audits/auxiliary-width-origin-contract-20261027.py --self-test
+```
+
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
 identities and JSON kinds. Missing, conflicting or opaque dependency records

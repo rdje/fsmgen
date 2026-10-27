@@ -1819,10 +1819,46 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry bindings through legitimate recorded source-origin auxiliary copies.`
   Acceptance: `Propagate only actual existing rm/mr/next/q origin records in both size-before-assignment and late-size branches. Keep original declaration signal/scope independent of physical auxiliary names, static/named-type cases and unrelated equal widths. Verify actual assignment targets absent from module signals, getter/copy isolation and invalidation on replaced/refused source retries. Commit before shared target range kernels; generic HDL/public/full qualification stays later.`
   Verification: `Primary source capture is staged until complete module validation, so auxiliary construction during state parsing cannot read a published primary getter yet. Queue actual source-Signal/auxiliary associations at the existing recorded-origin branches, then propagate after primary installation. Preserve scope/original declaration identity without name/equal-width guesses. Direct late sizing outside a full source transaction needs an explicit caller-provided source scope, not a physical module-name fallback; own that private scoped entrypoint if needed. Ordinary unscoped direct calls remain legacy. Extend failure clearing to any new queued origin associations; qualify both orderings and genuine aliases before target ranges.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.2, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.1`
+  Status: `done`
+  Goal: `Qualify actual auxiliary copy origins and declaration conflicts before propagation.`
+  Acceptance: `Probe real rm/mr/next/q sources and late sizing, including independently varied explicit auxiliary declarations. Bind actual source/target objects and old source/getter/numeric products to the executed copy branches. Determine whether conflicting or unknown origins need an owned prerequisite before symbolic emission. Select immutable per-event provenance rather than live-source lookup after later replacement; never equate namespaces from equal defaults. Preserve raw sources/results and scope/shape limits, synchronize task/fact/book and commit the bounded contract before implementation.`
+  Verification: `Actual <-=/<=-/<=+ probes expose a P1 provenance defect: an explicit next_data/data_r(param X) record is overwritten by data(param W), while numeric auxiliary width still retains both requirements. Independently opposed defaults give8/16/16 for W/X8/8,16/8,8/16; equal defaults alone hide the missing X origin. Single-slot parameter-X versus literal-eight variants retain identical selected Signal width/source/binding products. Clean/one-bit/named-type and renamed late-size controls preserve their bounded distinctions; unscoped direct sizing supplies no guessed scope. All33 actual source cases succeed with complete caller JSON conservation. The saved reader independently freezes case identity/geometry/origin expectations, verifies the paired-slot equality and rejects missing-case/wrong-width/wrong-origin/false-binding alterations. Source, original and control epochs, recipe, current selected code hashes and source texts retain in docs/audits/auxiliary-width-origin-contract-20261027.json.gz; the sibling .py re-derives and challenges saved observations without new writes. git log -S identifies 98f4d88257 at the existing source-copy branches. Schedule immediate P1 .3.3.4 to preserve explicit and generated requirements privately before alias propagation; ordinary numeric behavior is correct and remains unchanged. Select immutable event snapshots with final active actual-object ownership, never final live-source lookup that retroactively rebinds an earlier copy. Explicitly declared literal/type/independent-parameter auxiliaries cannot borrow their parent's relationship. Scoped late sizing remains .3.3.3 with explicit original lexical owner; multi-constraint shape rendering stays separately qualified .3.4. Re-derive: actual source/Core/copy branch products. Falsify: literal expected table, independently varied defaults and actual single-slot/type/late/one-bit contrasts plus saved hostile observations. Durability: tracked reader/packet/task/fact/book/Git. Book/source build and knowledge-map: OK qualify this audit with the normal mandatory hook; no runtime code repair, generic HDL/native/API/MCP/full-profile closure is claimed.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.1: qualify auxiliary width origin boundaries`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _declared_width_source identifies 98f4d88257. Existing auxiliary copy branches replace the explicit source record even as max-width numeric refinement preserves both requirements; actual opposed/single-slot controls bind the loss to those writes.
+  - [x] **ADDRESSED (verified)** — Seal actual source/caller/Core observations and a rejecting reader, select immutable per-event/final-active provenance, and own immediate P1 .3.3.4 before propagation. Preserve the numeric contract and document the unresolved source-retention boundary; no repair is inferred from this audit.
+  - [x] **NO REGRESSION** — Runtime compiler source is unchanged. Actual bounded source controls and saved-reader negative cases pass; knowledge-map: OK and guarded book/source checks qualify current discovery. Normal mandatory hook validates final staged task/docs/claim integrity; symbolic/transport/full-profile verification remains deferred.
+
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.2`
+  Status: `pending`
+  Goal: `Propagate immutable actual auxiliary origin snapshots in complete source transactions.`
+  Acceptance: `After .1, stage origin snapshots at the actual existing copy events with real object identity and current authoritative declaration ownership. Publish only the final active record per actual Signal, retaining replacement invalidation and no retroactive rebinding to a later source origin. Preserve explicit literal/type/independent-parameter declarations and handle any owned conflict prerequisite before admission. Qualify clean alias chains, version/replacement/unknown-source controls, old products and source failure clearing; no target emission yet.`
+  Verification: `pending audited contract`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.3`
+  Status: `pending`
+  Goal: `Support legitimate late sizing with explicit lexical source scope.`
+  Acceptance: `Add the smallest private scoped sizing entrypoint needed for recorded late auxiliary branches, reusing canonical scope validation and source transaction publication. Ordinary unscoped calls remain unchanged; never derive lexical scope from a renamed module or equal widths. Propagate real parent/auxiliary origins only and clear failed scoped transactions. Qualify late and normal orderings, scalar/type/literal boundaries, original-scope preservation and exact legacy return/numeric/source contracts before target kernels.`
+  Verification: `pending origin propagation`
+  Commit: `pending`
+
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4`
+  Status: `pending`
+  Goal: `Preserve explicit auxiliary declaration constraints before generated-origin copies overwrite legacy records.`
+  Acceptance: `P1 immediate successor after the .1 contract audit, before .2 propagation or symbolic range admission. Actual <-=/<=-/<=+ sources with data(param W) and next_data/data_r(param X) retain max-width numeric geometry while the legacy source getter is replaced by data(param W), losing the independent X origin. Preserve actual explicit and generated requirements privately before overwrite, including equal-default and literal/type controls, without changing old numeric/source/public products. Never bind an independently declared auxiliary solely to its parent. Use immutable event/source object identity and final active ownership; stale records cannot revive by matching final values or strings. Add coherent fail-closed profile boundaries until any multi-constraint shape rendering is separately qualified under .3.4. Qualify all observed branches, opposing defaults, old product conservation, getters/copies/retries and source failure clearing; commit before propagation.`
+  Verification: `Open defect AUX-WIDTH-DECLARATION-LOSS: nine actual source cases pass, with W/X pairs8/8,16/8,8/16 across <-=,<=-,<=+. Auxiliary numeric widths8,16,16 retain both constraints, but every auxiliary source getter reports only data(param W) and its new binding is absent. An unguarded parent binding copy would discard X, including hidden equal-default relationships. Raw source/caller/products are saved under .artifacts/auxiliary-width-origin-contract-20261027/first.json; .1 will seal the authenticated contract packet before this repair.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2`
