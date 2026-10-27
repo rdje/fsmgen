@@ -43,9 +43,12 @@ observation/declared-only hooks. Only those branches add width_capture with
 scope, width, binding and observations. Ordinary source/contracts and JSON kinds
 conserve; failed retries and held-result parser release qualify.
 
-Automatic primary source/Core publication is now implemented under
-ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.2. No source grammar, public schema or symbolic
-HDL range is activated by the opt-in resolver or this private publication.
+Eligible primary/auxiliary source/Core publication and explicitly scoped late
+sizing are implemented under ISF-REDUCTION-DELIVERY.3.3.1. Private requirements
+retain separate declared and actual immediate copy origins; independent/opaque
+combined shapes remain withheld. See direct-declared-width-consumers for the
+current qualified replay/lifecycle boundaries. No source grammar, public schema
+or symbolic HDL range is activated by this private publication.
 
 Core Signal declared_width_binding now stores an explicit plain detached
 envelope: captured scope/width/binding/observations plus actual declaration
@@ -56,8 +59,8 @@ explicit source/type replacement invalidate private metadata, preserving old
 max-width/numeric/source behavior; absent-type unchanged inference preserves it.
 Explicit whole-registry clearing supports later failed source transactions.
 Canonical graph semantics remain with actual producer/target proof, not this
-holder. Normal source publication now stages the actual primary associations;
-auxiliary copies remain .3.3.1.2.2.3.3. Reverify:
+holder. Normal source publication stages actual current requirement events;
+coherent primary and auxiliary bindings share the same publisher. Reverify:
 `prove -Iperl t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
 
 Actual source capture uses the decoded original header scope. Static/type/define/
@@ -65,7 +68,9 @@ parameter environments resolve before +size; captured real Signal associations
 publish only after all parser validation. Later facade failure clears them too.
 Nonempty declarative environment replacement and failed direct size retries
 invalidate snapshots; empty legacy no-ops preserve them. No source scope is
-inferred for direct sizing outside the active source context. Actual assignment
+inferred for ordinary unscoped direct sizing. The explicit scoped entrypoint
+validates original lexical scope and stages accepted late sizing atomically.
+Actual assignment
 objects receive bindings even when absent from module.signals. Selected complete
 native check/semantic products are byte-identical, HDL differs only in Date,
 and old source/default/numeric/caller JSON products conserve. Reverify:

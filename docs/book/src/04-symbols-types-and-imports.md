@@ -283,6 +283,18 @@ Task `ISF-REDUCTION-DELIVERY.24` owns impact analysis and a deliberate consisten
 repair before full qualification. Symbolic ranges and combined shapes remain
 separate compiler work.
 
+The private Verilog-family `WidthExpressionEmitter` now shares prepared range
+rendering between explicit direct-module and composition-top scope. Its existing
+composition wrapper retains the top-scope boundary and port diagnostics. The
+kernel reuses the canonical width evaluator and shared parameter renderer:
+actual names, ordered lookups, static folding and explicit arithmetic folds
+retain their meaning, including vector rank at a one-bit default. Numeric width
+caches cannot replace a captured range. Unknown scopes, foreign targets,
+type conflicts, missing/extra lookups and invalid arithmetic refuse. Caller
+records remain detached from returned text. This extraction keeps current
+composition output and leaves direct capture-to-plan preparation, direct range
+emission and the shared VHDL range kernel as subsequent work.
+
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
 

@@ -10,7 +10,13 @@ answers:
 date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
-evidence: docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+evidence: >-
+  docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; docs/audits/scoped-late-width-sizing-20261027.json.gz;
+  docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.py;
+  docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz;
+  docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm;
+  perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -123,3 +129,13 @@ The legacy named-type ordering asymmetry is reproduced and owned by .24 before
 it. The new scoped path preserves the actual legacy late getters; requirements
 retain the same type origin. Reverify:
 `prove -Iperl t/2167-scoped-late-width-sizing.t t/2165-direct-auxiliary-width-bindings.t t/2162-direct-source-width-binding-publication.t t/2160-direct-declared-width-capture.t`.
+
+VerilogFamily::WidthExpressionEmitter now owns the existing prepared width walk,
+using WidthExpressionSupport and shared ParameterBindingEmitter for explicit
+direct_module/composition_top scopes. CompositionWidthEmitter is the narrower
+top-scope/diagnostic wrapper. Ordered actual lookups, static arithmetic folds and
+default-one vector rank preserve; foreign targets and unknown/mismatched scopes
+refuse. Returned range text retains no caller graph. Actual existing composition
+success/refusal/caller products conserve. Direct captured-plan preparation and
+declaration activation remain .3.3.2.3/.3; VHDL kernel extraction is .3.3.2.2.
+Reverify: `prove -Iperl t/2168-shared-verilog-width-kernel.t t/2135-composition-symbolic-port-ranges.t`.

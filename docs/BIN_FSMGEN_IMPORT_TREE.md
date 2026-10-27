@@ -75,6 +75,13 @@ the existing ParameterBindingSupport/ParameterDeclarationSupport contracts,
 reusing their scoped binding and declared-reference selection. No fresh closure
 census is inferred.
 
+The Verilog-family `CompositionWidthEmitter` now delegates its prepared range
+walk to `FSM::Backend::VerilogFamily::WidthExpressionEmitter`. The shared kernel
+uses `WidthExpressionSupport` for integer semantics and `ParameterBindingEmitter`
+for selected scalar roots in explicit direct/composition scope. The composition
+wrapper keeps its top-scope and diagnostic policy; direct declaration activation
+remains separately owned. This scoped dependency update adds no closure census.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes
