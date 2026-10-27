@@ -13,8 +13,9 @@ encoding localparams, and the state register block.
 
 Captured default trees use the shared canonical renderer, retaining
 parameter roots, operators, literal/static selections and dependency order with
-unchanged alphabetical ties. Consumed scalar trees require source/binding
-membership, lexical ownership and observed reference agreement; missing
+unchanged alphabetical ties. Shared ParameterDefaultEnvironmentSupport checks
+source/binding membership, lexical ownership and observed reference agreement;
+this consumer retains Verilog-family name reservation. Missing
 invalidated snapshots refuse. Legacy
 programmatic literals retain their existing rendering. Immutable aggregate
 subtrees fold through the canonical value evaluator. Mutable aggregate/path
@@ -31,6 +32,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
 use FSM::Backend::VerilogFamily::ParameterBindingEmitter;
+use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Debug;
 
@@ -173,42 +175,12 @@ sub _render_module_parameter_lines ($fsm_module) {
 }
 
 sub _captured_parameter_environment ($parameters, $sources, $bindings) {
-    die "Module parameter defaults require complete source and binding membership\n"
-        unless keys(%$parameters) == keys(%$sources) && keys(%$parameters) == keys(%$bindings)
-            && !grep {!exists($sources->{$_}) || !exists($bindings->{$_})} keys %$parameters;
-    my $owner;
-    for my $name (sort keys %$parameters) {
-        my ($info, $source, $binding) = ($parameters->{$name}, $sources->{$name}, $bindings->{$name});
-        die "Module parameter default '$name' requires normalized declaration evidence\n"
-            unless ref($info) eq 'HASH' && defined($info->{value_kind}) && !ref($info->{value_kind})
-                && $info->{value_kind} =~ /\A(?:scalar|list|map)\z/
-                && ref($info->{value_payload}) eq 'HASH'
-                && defined($info->{value_text}) && !ref($info->{value_text}) && length($info->{value_text});
-        die "Module parameter default '$name' requires an actual source declaration\n"
-            unless ref($source) eq 'HASH' && ($source->{parameter} // '') eq $name
-                && defined($source->{source_module}) && !ref($source->{source_module})
-                && length($source->{source_module}) && ref($source->{references}) eq 'ARRAY';
-        $owner //= $source->{source_module};
-        die "Module parameter default '$name' has a foreign source scope\n"
-            unless $source->{source_module} eq $owner;
-        die "Module parameter default '$name' requires a canonical binding record\n"
-            unless ref($binding) eq 'HASH' && defined($binding->{kind}) && !ref($binding->{kind})
-                && $binding->{kind} =~ /\A(?:literal|parameter|static_symbol|payload|operator|list|map)\z/;
-        die "Module parameter default '$name' requires a target identifier\n"
-            unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
-        die "Module parameter default '$name' is reserved in SystemVerilog\n"
-            if grep {$_ eq 'SystemVerilog'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
-        for my $reference (@{$source->{references}}) {
-            die "Module parameter default '$name' has malformed reference observations\n"
-                unless ref($reference) eq 'HASH'
-                    && !grep {!defined($reference->{$_}) || ref($reference->{$_})} qw(parameter token suffix);
-            die "Module parameter default '$name' has inconsistent reference observations\n"
-                unless exists($parameters->{$reference->{parameter}})
-                    && $reference->{token} eq $reference->{parameter}.$reference->{suffix};
-        }
-    }
-    return {scope => {kind => 'direct_module', owner => $owner}, parameters => $parameters,
-        declaration_order => [sort keys %$parameters]};
+    return FSM::ParameterDefaultEnvironmentSupport->build_direct_environment(
+        parameters=>$parameters, sources=>$sources, bindings=>$bindings,
+        validate_declaration_name=>sub ($name) {
+            die "Module parameter default '$name' is reserved in SystemVerilog\n"
+                if grep {$_ eq 'SystemVerilog'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
+        });
 }
 
 sub _direct_scalar_default_alias ($name, $info, $source, $parameters) {

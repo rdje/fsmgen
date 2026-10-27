@@ -66,7 +66,9 @@ The Verilog-family `CompositionBindingEmitter` now imports
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` for the shared scalar
 walk. The composition wrapper keeps its narrower scope and diagnostics; direct
 headers now consume captured scalar and immutable aggregate defaults; mutable
-aggregate/path relationships explicitly refuse. No fresh closure census is inferred.
+aggregate/path relationships explicitly refuse. Shared captured-source checks
+now live in `FSM::ParameterDefaultEnvironmentSupport`; the scaffold supplies its
+original Verilog name-reservation callback. No fresh closure census is inferred.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.

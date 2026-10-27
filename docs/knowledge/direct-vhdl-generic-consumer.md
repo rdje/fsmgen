@@ -29,4 +29,6 @@ module and port/signal declarations. New generic preparation must take actual
 target namespace evidence from that backend boundary. Core signal/system
 getters do not enumerate backend-owned intermediates or generated type names;
 they cannot substitute for the target namespace. Captured source-environment
-validation is being shared from the Verilog scaffold under `.3.2.5.2.1`.
+validation now lives in ParameterDefaultEnvironmentSupport; the
+`direct-parameter-default-environment` card owns that contract. Direct VHDL
+namespace/profile preparation still consumes the actual backend target view.

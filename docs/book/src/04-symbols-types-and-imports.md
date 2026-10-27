@@ -119,13 +119,18 @@ Normalized parameter values and the existing authored-source records retain
 their previous shapes and JSON kinds. Private bindings add no public report
 fields. Direct headers consume the supported scalar relationships described below.
 
+Captured declaration/source/binding membership is validated through one shared
+source-environment helper. Target name reservation remains a backend policy at
+its original validation boundary; source ownership stays lexical.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated
 dependencies. Its `text` result keeps the canonical normalizer's scalar kind
 for target interpolation. Direct Verilog-family headers now use the same helper;
-the composition wrapper keeps its narrower scope. Aggregate/path target profiles
-and complete override/runtime qualification remain separately owned.
+the composition wrapper keeps its narrower scope. Its direct `lower_default`
+profile folds immutable aggregate subtrees and refuses mutable aggregate/path
+defaults. Complete override/runtime qualification remains separately owned.
 
 The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
 exercises qualified constants, enum members and a nested aggregate leaf:
