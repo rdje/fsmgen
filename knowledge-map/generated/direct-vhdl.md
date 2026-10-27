@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **115** uniquely owned question entries.
+> **5** facts · **117** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -114,6 +114,8 @@
 - q="what does DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.1 select?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="what happens to complemented reductions like (~|VECTOR)?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="what owns the direct VHDL reduction expression defect?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
+- q="where do direct VHDL module generic defaults currently come from?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
+- q="which existing VHDL helper owns canonical natural generic arithmetic?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
 - q="which test characterizes direct VHDL reduction expressions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="which unary reduction operands still fail in direct VHDL?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why did direct VHDL select vector fold helpers?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
@@ -122,6 +124,13 @@
 - q="why is scalar unary reduction an identity?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 
 ## Facts
+
+### direct-vhdl-generic-consumer
+
+_Direct VHDL generic conversion and canonical composition preparation are distinct consumers_
+
+- **date:** 2026-10-27 · **status:** current
+- **source and verification:** [`docs/knowledge/direct-vhdl-generic-consumer.md`](../../docs/knowledge/direct-vhdl-generic-consumer.md)
 
 ### direct-vhdl-reduction-expression-lowering-behavior
 

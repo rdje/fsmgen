@@ -1584,10 +1584,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=6 Tests=7506 for directly affected headers, private profiles, semantic contracts and structural corpus accounting. Native strict static generation and actual mutable refusal/no-output checks pass; the edited book snippet and guarded mdBook/POD build pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit; broad source/native/API/MCP/external/runtime qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Consume supported direct-module generic defaults through the bounded VHDL profile.`
   Acceptance: `After canonical bindings and the prior default-profile adjudication, reuse the existing prepared natural-generic arithmetic/alias contract rather than introducing another evaluator. Preserve actual scope/dependency order and immutable static selections; reject unsupported typed/sized/bitwise/aggregate/path profiles before output instead of emitting unrelated selected-default text. Preserve existing static VHDL behavior. Focused direct native text, matching profile controls and known-bad refusal checks qualify implementation; synchronize support discovery/book boundaries and commit. Complete external/runtime/public matrices remain .3.6/.6.`
-  Verification: `pending prior default consumers`
+  Verification: `Verilog-family aggregate/default profiles close with focused checks at 886b1c0aad6af0f14c15efb08b0521f71facd22f. Actual direct VHDL generation first emits SystemVerilog, normalizes generated names and parses generic defaults from that text; its legacy literal/integer converter is not a canonical source binding consumer. The composition natural-generic preparer already renders canonical arithmetic/aliases with bounded values and a case-insensitive structural namespace. git log -S locates their respective introductions at a05d941d5199e63373c99d50f94e412e274b7dd0 and 98b3700a5c3207831d283df288461f2b1acb527f. Split shared rendering, direct source/namespace preparation and converter integration before code, preserving the raw conversion API and static profile. No new evaluator, invented composition scope, raw source escape hatch or lexical dependency inference. Full runtime/public matrices remain .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.2.5: split direct VHDL generic boundaries`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.2.5.1, ISF-REDUCTION-DELIVERY.3.2.5.2, ISF-REDUCTION-DELIVERY.3.2.5.3`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _sv_parameter_default_to_vhdl' identifies a05d941d5199e63373c99d50f94e412e274b7dd0; git log -S 'VHDL natural generic' identifies 98b3700a5c3207831d283df288461f2b1acb527f. Direct generation converts generated SystemVerilog generic text while the canonical natural renderer remains composition-scoped.
+  - [x] **ADDRESSED (verified)** — Split shared canonical rendering, direct source/namespace preparation and VHDL converter integration into dependency-ordered leaves. Preserve static/raw-conversion contracts and prohibit fake source scopes or a second evaluator. No product behavior change in this decomposition.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl and knowledge-map: OK qualify ownership/navigation; mandatory staged scripts/check_doctrines.sh and normal hooks gate measured task/card growth within unchanged baselines and ceilings.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5.1`
+  Status: `pending`
+  Goal: `Share canonical natural-valued VHDL binding rendering across explicit source scopes.`
+  Acceptance: `Extract the existing arithmetic/scalar walk and integer/identifier validation into a shared VHDL helper with explicit direct_module/composition_top environments. Keep the composition wrapper scope, structural namespace, declaration order, lower_actual checks and diagnostic meanings intact. Preserve actual aliases, static selections, left-folded arithmetic, modulo spelling, ordered repeated references and bounded per-intermediate legality; no new evaluator or source string parser. Qualify actual direct Core bindings and exact existing composition declaration/actual products, independent text/type/value/refusal expectations, wrong caches, scope/type/range/zero/cycle controls and caller JSON conservation. Update POD/book/fact/import map and commit after focused checks. No direct source admission or converter integration yet; complete external/runtime/public qualification remains .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5.2`
+  Status: `pending`
+  Goal: `Prepare direct-module captured generic declarations and exact VHDL namespace/profile admission.`
+  Acceptance: `After .1, prepare direct Core default bindings without changing their original lexical owner or normalized getters. Validate complete source/binding/declaration membership, actual dependency observations and VHDL case-insensitive target namespace against module/ports/signals/generated types. Reuse shared canonical arithmetic rendering and select the relationship-bearing natural profile explicitly; existing unrelated static literal/vector profiles must remain owned by their current path. Refuse unsupported mutable typed/sized/bitwise/aggregate/path relationships and stale captures before backend success. Prove actual source/copy/static-name/equal-default/cache/malformed controls with focused checks, synchronize POD/book/facts and commit. No header text rewriting or invented composition scope; converter activation remains .3 and full qualification .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.5.3`
+  Status: `pending`
+  Goal: `Consume prepared direct natural generics through the bounded VHDL backend.`
+  Acceptance: `After .2, thread prepared direct generic declarations through direct VHDL generation and the converter using an explicit internal argument, preserving the existing standalone raw-conversion API. Join prepared names/order/types/default text with generated module identity and actual declarations; do not infer source relationships from SystemVerilog text or post-process output HDL. Retain ordinary static VHDL literal/vector behavior and generated-name normalization while refusing unsupported captured relationship profiles before returning an artifact. Focused source/Core/VHDL text, native supported/refused checks, exact predecessor and static conversion controls qualify integration; synchronize directly affected corpus/book/downstream/discovery boundaries. Full external/override/runtime/native/API/MCP matrices remain .6. Commit before generic ranges .3.3.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3`

@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.2.5`
-- next_action: Consume canonical direct defaults through the existing bounded VHDL generic profile; preserve static behavior and fail closed for unsupported mutable relationships. Ranges and full verification follow.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.2.5.1`
+- next_action: Share the existing canonical natural-valued VHDL renderer across explicit scopes; direct generic preparation and converter integration follow. Preserve static behavior; full verification remains .6.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.
