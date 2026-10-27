@@ -168,19 +168,27 @@ foreign ownership, inconsistent observations, reserved captured declaration
 names and dependency cycles refuse. Legacy programmatic literals retain their
 existing formatting.
 
-Aggregate defaults, parameter member/index selections and expressions containing
-aggregate operands retain their selected-default profile. Their mutable generic
-relationships remain unqualified, including scalar results from aggregate
-operands. VHDL, generic signal ranges and complete external override/runtime
-qualification remain separate work. Normalized Core values still describe the
-selected defaults; named header text alone is not a complete generic-width guarantee.
+Direct SystemVerilog and compatibility Verilog headers support immutable
+aggregate default subtrees: literal lists/records, captured constants and their
+leafwise operations or comparisons. Packed members retain their declared
+order. A scalar expression around a folded static subtree still preserves its
+actual scalar parameter roots, for example `(1'b1 + W)`.
 
-The private direct-default profile now prepares immutable aggregate subtrees
-with the canonical value evaluator, including packed list/record ordering and
-scalar comparison results. Scalar parameter names around such static subtrees
-survive. Mutable aggregate roots, member/index selections and constructors with
-parameter-valued members have an explicit refusal profile. Direct header
-integration remains pending; the selected-default boundary above still applies.
+Defaults that depend on mutable aggregate parameters, member/index selections,
+or parameter-valued aggregate members refuse before HDL is returned. This also
+covers scalar results from mutable aggregate comparisons. A selected default
+layout alone cannot qualify an override-sensitive packed relationship. Parsing
+and normalized Core values still describe the selected semantic defaults.
+
+The complete [static aggregate fixture](../../../t/data/ial0-static-aggregate-defaults.fsm)
+keeps executable aggregate roots named and is runnable:
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/sv/static_aggregate_defaults.sv t/data/ial0-static-aggregate-defaults.fsm
+```
+
+VHDL, generic signal ranges and complete external override/runtime qualification
+remain separate work. Header text alone is not a complete generic-width guarantee.
 
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of
@@ -189,10 +197,12 @@ being guessed. Use `0b00001110`, `8'b00001110`, or `0d1110` explicitly.
 Parameter values may also use bounded operator expressions:
 
 ```lisp
-(+params
-  (WIDTH 16)
+(+constants
   (BYTES (8'hA5 8'h3C))
   (BYTE_MASK (8'hF0 8'h0F))
+  (FRAME ((meta ((mode 2'b10))))))
+(+params
+  (WIDTH 16)
   (COUNT_PLUS_ONE (+ WIDTH 1))
   (BYTE_PLUS_ONE (+ BYTES[1] 1))
   (MODE_PLUS_ONE (+ FRAME.meta.mode 1))
@@ -222,8 +232,9 @@ bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`, plus `add`,
 list/record aggregate shapes. They also support binary aggregate comparison
 with `==` and `!=` between matching list/record shapes.
 
-Those expressions are folded leaf-by-leaf into one aggregate value before
-backend lowering.
+Normalization folds those expressions leaf-by-leaf into selected aggregate
+values. Direct HDL emission requires immutable aggregate operands; actual
+mutable aggregate parameter dependencies refuse through the profile above.
 
 Unary bitwise complement is also supported on one aggregate operand through
 `(~ VALUE)` or `(not VALUE)`. It keeps the same list/record shape and scalar

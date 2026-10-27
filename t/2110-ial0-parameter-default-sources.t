@@ -115,16 +115,21 @@ subtest 'canonical graph refusals and public products remain bounded' => sub {
         ok(!$ok, 'invalid dependency remains rejected'); like($@, $case->[1], 'canonical refusal is preserved');
     }
     my $intent = FSM::IR::IntentHIRBuilder->build_from_fsm_module(fsm_module => $module)->as_hashref;
-    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($module);
+    my $ok = eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($module); 1};
+    my $hdl_error = $@;
+    ok(!$ok, 'mixed aggregate default source requires a supported generic backend profile');
+    like($hdl_error, qr/aggregate.*mutable parameter/i, 'mutable aggregate dependencies cannot fall back to selected HDL values');
     unlike($json->encode($intent), qr/"(?:_?parameter_default_sources|source_module|references)"\s*:/, 'private metadata stays out of IntentHIR');
-    like($hdl, qr/parameter FORWARD = W\b/, 'direct scalar alias now reaches HDL through retained source observations');
+    my $scalar = parse_text('(?fsm:scalar_alias (+params (W 16) (FORWARD W)))');
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($scalar);
+    like($hdl, qr/parameter FORWARD = W\b/, 'supported scalar alias source still reaches HDL through retained observations');
     unlike($hdl, qr/parameter_default_sources\s*[=:]/, 'source metadata is not emitted as HDL declarations');
     if (my $path = $ENV{FSMGEN_PARAMETER_DEFAULT_CAPTURE}) {
         $hdl =~ s/^\/\/ Date: .*$/\/\/ Date: <timestamp>/m;
         my $root = abs_path('.');
         open my $out, '>', $path or die $!;
         print {$out} $json->encode({raw_ast => $raw, parameters => $module->parameters,
-            manager_parameters => $adapter->{signal_manager}{params}, intent => $intent, hdl => $hdl,
+            manager_parameters => $adapter->{signal_manager}{params}, intent => $intent, hdl => $hdl, mixed_source_hdl_error => $hdl_error,
             sources => sources($module), loaded => {map {$_ => File::Spec->abs2rel(abs_path($INC{$_}), $root)}
                 qw(FSM/CoreAST.pm FSM/Adapter/FSMGenFull/Parser.pm FSM/ParameterValueSupport.pm)}}), "\n" or die $!;
         close $out or die $!;

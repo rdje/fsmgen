@@ -19,6 +19,8 @@ membership and lexical ownership are required; a declaration update clears the
 binding map and prevents stale fallback. Physical copies retain source scope.
 
 The named corpus fixture covers actual native and emitted header shape.
-Aggregate/path relationships and expressions containing aggregate operands keep
-the selected-default profile pending their own consumer. Generic ranges, VHDL
-and complete external override/runtime/public qualification remain separate.
+Immutable aggregate operands now fold through the direct default profile;
+mutable aggregate/path dependencies explicitly refuse, including scalar
+comparison results. The `direct-aggregate-default-profile` card owns that
+boundary. Generic ranges, VHDL and complete external override/runtime/public
+qualification remain separate.

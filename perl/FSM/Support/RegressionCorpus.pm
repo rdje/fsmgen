@@ -9,6 +9,22 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'feature.direct_static_aggregate_defaults',
+        relpath => 't/data/ial0-static-aggregate-defaults.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'static_aggregate_defaults',
+        expected_hdl_patterns => [
+            qr/parameter ITEMS = 16'b1010010100111100/,
+            qr/parameter FRAME = 10'b1010100011/,
+            qr/parameter SUM = 16'b1010011000111110/,
+            qr/parameter MIXED = \(1'b1 \+ W\)/,
+        ],
+    },
+    {
         id => 'feature.direct_scalar_default_relationships',
         relpath => 't/data/ial0-scalar-default-expressions.fsm',
         family => 'language_feature_fixture',

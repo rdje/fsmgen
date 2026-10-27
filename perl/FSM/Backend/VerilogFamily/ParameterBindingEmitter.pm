@@ -110,7 +110,7 @@ sub _validate_static_payload ($context, $payload, $active = undef) {
         my $order = _map_order($context, $payload);
         _validate_static_payload($context, $payload->{members}{$_}, $active) for @$order;
     } else {
-        confess "$context->{diagnostic} requires a literal payload; '$kind' is unsupported\n";
+        confess "$context->{diagnostic} requires a scalar literal payload or static aggregate; '$kind' is unsupported\n";
     }
 }
 

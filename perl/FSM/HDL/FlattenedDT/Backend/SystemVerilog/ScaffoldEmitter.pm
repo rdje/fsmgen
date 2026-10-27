@@ -11,14 +11,15 @@ module backend. This package renders the stable top-of-module sections that
 surround the richer enable-graph logic: file header, module declaration, state
 encoding localparams, and the state register block.
 
-Captured scalar default trees use the shared canonical renderer, retaining
+Captured default trees use the shared canonical renderer, retaining
 parameter roots, operators, literal/static selections and dependency order with
 unchanged alphabetical ties. Consumed scalar trees require source/binding
 membership, lexical ownership and observed reference agreement; missing
 invalidated snapshots refuse. Legacy
-programmatic literals retain their existing rendering. Aggregate/path defaults
-keep the prior selected-default profile pending their separate consumer;
-generic signal ranges and external override qualification remain successors.
+programmatic literals retain their existing rendering. Immutable aggregate
+subtrees fold through the canonical value evaluator. Mutable aggregate/path
+relationships refuse before a header is returned; generic signal ranges and
+external override qualification remain successors.
 
 =cut
 
@@ -28,7 +29,6 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-use Scalar::Util qw(refaddr);
 use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
 use FSM::Backend::VerilogFamily::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
@@ -141,14 +141,8 @@ sub _render_module_parameter_lines ($fsm_module) {
     if (keys(%$sources) || keys(%$bindings)) {
         my $environment = _captured_parameter_environment($parameters, $sources, $bindings);
         for my $name (sort keys %values) {
-            next unless ($parameters->{$name}{value_kind} // '') eq 'scalar';
             my $references = $sources->{$name}{references};
-            # Aggregate/path relationships retain their existing selected-
-            # default profile until the separately owned aggregate consumer.
-            next if grep {length($_->{suffix})
-                || ($parameters->{$_->{parameter}}{value_kind} // '') ne 'scalar'} @$references;
-            next if _binding_has_aggregate_structure($bindings->{$name});
-            my $lowered = FSM::Backend::VerilogFamily::ParameterBindingEmitter->lower_expression(
+            my $lowered = FSM::Backend::VerilogFamily::ParameterBindingEmitter->lower_default(
                 binding => $bindings->{$name}, environment => $environment);
             my $actual = $lowered->{parameter_references};
             die "Module parameter default '$name' changes reference observations\n"
@@ -215,28 +209,6 @@ sub _captured_parameter_environment ($parameters, $sources, $bindings) {
     }
     return {scope => {kind => 'direct_module', owner => $owner}, parameters => $parameters,
         declaration_order => [sort keys %$parameters]};
-}
-
-sub _binding_has_aggregate_structure ($node, $active = undef) {
-    # Select the separately owned aggregate profile without evaluating a value.
-    # Other malformed scalar forms still reach the shared renderer's refusals.
-    return 0 unless ref($node) eq 'HASH';
-    $active //= {};
-    my $identity = refaddr($node);
-    die "Module parameter default has a cyclic binding tree\n" if $active->{$identity};
-    local $active->{$identity} = 1;
-    my $kind = $node->{kind} // '';
-    return 1 if $kind eq 'list' || $kind eq 'map';
-    my $payload = $kind eq 'payload' ? $node->{value}
-        : $kind eq 'static_symbol' ? $node->{value_payload} : undef;
-    return 1 if ref($payload) eq 'HASH' && ($payload->{kind} // '') =~ /\A(?:list|map)\z/;
-    my $aggregate = 0;
-    if ($kind eq 'operator' && ref($node->{operands}) eq 'ARRAY') {
-        for my $operand (@{$node->{operands}}) {
-            $aggregate = _binding_has_aggregate_structure($operand, $active) || $aggregate;
-        }
-    }
-    return $aggregate;
 }
 
 sub _direct_scalar_default_alias ($name, $info, $source, $parameters) {

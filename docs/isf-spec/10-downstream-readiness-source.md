@@ -291,7 +291,11 @@ General source rules:
   source. ISF module carriers now emit prepared scoped width/default plans,
   including parameter selectors, captured defaults and immutable static aliases.
   Generated-top captured-scope forwarding, generic HDL widths, override-driven
-  specialization and complete public qualification remain pending.
+  specialization and complete public qualification remain pending. Direct
+  Verilog-family headers fold immutable aggregate defaults and explicitly
+  refuse mutable aggregate/path dependencies, including scalar results from
+  aggregate comparisons; normalized semantic defaults alone do not qualify
+  an override-sensitive generic relationship.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

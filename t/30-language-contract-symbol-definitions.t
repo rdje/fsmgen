@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
+use JSON::PP;
 use File::Spec;
 use File::Temp qw/ tempdir /;
 use FindBin;
@@ -16,7 +17,7 @@ use FSM::IR::IntentHIRBuilder;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
-my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
+my $symbol_source = <<'FSM';
 (?fsm:symbol_contract
   (+constants
     (C0 8'3)
@@ -114,6 +115,8 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
   )
 )
 FSM
+
+my ($adapter, $fsm_module) = parse_fsm_with_adapter($symbol_source);
 
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
 is($symbol_summary->{constants}, 9, '+constants summary count is correct');
@@ -234,19 +237,42 @@ assert_condition_parameter_equality(
     'condition using P0 keeps a parameter reference'
 );
 
-my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
+my $generated = eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module); 1};
+ok(!$generated, 'mutable aggregate default relationships require a qualified emission profile');
+like($@, qr/aggregate.*mutable parameter/i, 'generic emission explicitly refuses selected-default aggregate freezing');
+
+# Keep the source-semantic assertions above on the original authored graph.
+# Exercise static aggregate HDL and executable named roots with an independently
+# authored immutable equivalent instead of discarding the captured provenance.
+my $static_source = $symbol_source;
+for my $replacement (
+    ['(P_AGG_FROM_PARAM P_LIST)', '(P_AGG_FROM_PARAM BYTE_PAIR)'],
+    ['(+ P_LIST[0] 1)', '(+ BYTE_PAIR[0] 1)'],
+    ['(- P_AGG_EXPR_ADD BYTE_ONE_TWO)', '(- (+ BYTE_PAIR BYTE_ONE_TWO) BYTE_ONE_TWO)'],
+    ['(/ P_AGG_EXPR_ADD BYTE_ONE_TWO)', '(/ (+ BYTE_PAIR BYTE_ONE_TWO) BYTE_ONE_TWO)'],
+    ['(% P_AGG_EXPR_ADD BYTE_ONE_TWO)', '(% (+ BYTE_PAIR BYTE_ONE_TWO) BYTE_ONE_TWO)'],
+    ['(xor P_AGG_EXPR_AND BYTE_MASK)', '(xor (and BYTE_PAIR BYTE_MASK) BYTE_MASK)'],
+) {
+    is(($static_source =~ s/\Q$replacement->[0]\E/$replacement->[1]/g), 1,
+        'static HDL source replaces exactly one declared mutable aggregate relationship');
+}
+my (undef, $static_module) = parse_fsm_with_adapter($static_source);
+my $canonical_json = JSON::PP->new->canonical;
+is($canonical_json->encode($static_module->parameters), $canonical_json->encode($params),
+    'independently authored static equivalent preserves complete selected parameter values and JSON kinds');
+my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($static_module);
 like($hdl, qr/module\s+symbol_contract\b/s, 'symbol-contract FSM generates HDL through the active backend');
 like($hdl, qr/module\s+symbol_contract\s*#\(/s, 'direct SystemVerilog module emits a parameter block');
 like($hdl, qr/parameter\s+P0\s*=\s*8\b/s, 'direct SystemVerilog module declares scalar decimal parameter');
 like($hdl, qr/parameter\s+P_HEX\s*=\s*'h10\b/s, 'direct SystemVerilog module declares canonical unsized hex parameter');
 like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares packed aggregate parameter');
 like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*P_FORWARD_BASE\b/s, 'direct SystemVerilog module preserves the forward sibling default relation');
-like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares sibling aggregate parameter default');
+like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares the equivalent immutable aggregate default');
 like($hdl, qr/parameter\s+P_EXPR\s*=\s*\(P0 \+ 1\)/s, 'direct SystemVerilog module preserves the scalar default operand');
 like($hdl, qr/parameter\s+P_EXPR_AGG_LEAF\s*=\s*\(8'h3C \+ 1\)/s, 'direct SystemVerilog module declares aggregate-leaf scalar parameter expression default');
 like($hdl, qr/parameter\s+P_EXPR_CHAIN\s*=\s*\(P_EXPR \* 2\)/s, 'direct SystemVerilog module preserves the immediate chained default operand');
 like($hdl, qr/parameter\s+P_EXPR_NESTED_AGG_LEAF\s*=\s*\(2'b10 \+ 8'h3C\)/s, 'direct SystemVerilog module declares nested aggregate-leaf scalar parameter expression default');
-like($hdl, qr/parameter\s+P_EXPR_PARAM_AGG_LEAF\s*=\s*\(8'hA5 \+ 1\)/s, 'direct SystemVerilog module declares aggregate parameter-leaf scalar expression default');
+like($hdl, qr/parameter\s+P_EXPR_PARAM_AGG_LEAF\s*=\s*\(8'hA5 \+ 1\)/s, 'direct SystemVerilog module declares the equivalent static aggregate-leaf scalar default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_AND\s*=\s*16'b1010000000001100\b/s, 'direct SystemVerilog module declares folded aggregate bitwise list expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_ADD\s*=\s*16'b1010011000111110\b/s, 'direct SystemVerilog module declares folded aggregate add expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_SUB\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares folded aggregate subtract expression default');
@@ -257,7 +283,7 @@ like($hdl, qr/parameter\s+P_AGG_EXPR_OR\s*=\s*3'b111\b/s, 'direct SystemVerilog 
 like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_LIST\s*=\s*16'b0101101011000011\b/s, 'direct SystemVerilog module declares folded aggregate unary complement list expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_LITERAL\s*=\s*16'b1111000000001111\b/s, 'direct SystemVerilog module declares folded aggregate unary complement literal expression default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_NOT_RECORD\s*=\s*3'b010\b/s, 'direct SystemVerilog module declares folded aggregate unary complement record expression default');
-like($hdl, qr/parameter\s+P_AGG_EXPR_PARAM_XOR\s*=\s*16'b0101000000000011\b/s, 'direct SystemVerilog module declares folded aggregate bitwise parameter-operand expression default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_PARAM_XOR\s*=\s*16'b0101000000000011\b/s, 'direct SystemVerilog module declares the equivalent static aggregate bitwise default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_EQ_LIST\s*=\s*1'b1\b/s, 'direct SystemVerilog module declares folded aggregate list equality default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_EQ_RECORD_FALSE\s*=\s*1'b0\b/s, 'direct SystemVerilog module declares folded aggregate record false equality default');
 like($hdl, qr/parameter\s+P_AGG_EXPR_NE_LIST\s*=\s*1'b1\b/s, 'direct SystemVerilog module declares folded aggregate list inequality default');

@@ -1,0 +1,16 @@
+(?fsm:static_aggregate_defaults
+  (+system (clock clk))
+  (+constants
+    (PAIR (8'hA5 8'h3C))
+    (SMALL (8'h01 8'h02)))
+  (+params
+    (W 16)
+    (ITEMS (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (data (4'hA 4'h3))))
+    (STATIC PAIR)
+    (SUM (+ PAIR SMALL))
+    (INVERT (~ PAIR))
+    (MATCH (== PAIR PAIR))
+    (MIXED (+ (== PAIR PAIR) W)))
+  (+size (OUT 1) (PACKED_OUT 16))
+  (idle (= (OUT MATCH)) (= (PACKED_OUT ITEMS))))
