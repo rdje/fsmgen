@@ -263,6 +263,10 @@ The [source fixture](../../../t/data/composition-vhdl-natural-generics.fsm) and
 cover actual parsed/imported Plan/IR and independent order, cache and namespace
 controls. External override legality and full qualification remain pending.
 
+The canonical natural-valued binding walk is shared with direct-module private
+preparation. The composition wrapper retains its namespace and child-type
+checks; direct VHDL source admission and converter integration remain pending.
+
 Validated RTL, FSM and standalone-DT child overrides now retain the matched
 declaration's canonical `declaration_default_value_text`, `payload`, `kind`,
 `width` and `type_spec`, with the same `declaration_default_value_` prefix.

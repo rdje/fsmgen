@@ -4,14 +4,12 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(refaddr);
 use JSON::PP ();
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::ParameterValueSupport;
-use FSM::WidthExpressionSupport;
-use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::Backend::VHDL::ParameterBindingEmitter;
 
 sub lower_declarations ($class, %args) {
     my $structural = $args{structural};
@@ -65,11 +63,11 @@ sub lower_declarations ($class, %args) {
             && !grep {!exists $bindings->{$_}} @$order;
     my (%lowered,%dependencies);
     for my $name (@$order) {
-        my $state = {environment=>$environment, scope=>$scope, active=>{}, references=>[]};
-        my ($text) = _render($state, $bindings->{$name});
-        $lowered{$name} = {name=>$name, type=>'natural', default_text=>$text,
-            parameter_references=>$state->{references}};
-        $dependencies{$name} = {map {$_=>1} @{$state->{references}}};
+        my $binding = FSM::Backend::VHDL::ParameterBindingEmitter->lower_expression(
+            environment=>$environment, binding=>$bindings->{$name});
+        $lowered{$name} = {name=>$name, type=>'natural', default_text=>$binding->{text},
+            parameter_references=>$binding->{parameter_references}};
+        $dependencies{$name} = {map {$_=>1} @{$binding->{parameter_references}}};
     }
     my (%emitted,@result);
     while (@result < @$order) {
@@ -85,13 +83,7 @@ sub lower_declarations ($class, %args) {
 }
 
 sub _identifier ($name) {
-    confess "VHDL generic namespace requires a basic identifier\n"
-        unless defined($name) && !ref($name) && $name =~ /\A[A-Za-z](?:[A-Za-z0-9]|_[A-Za-z0-9])*\z/;
-    confess "VHDL generic namespace identifier '$name' is reserved\n"
-        if grep {$_ eq 'VHDL'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
-    confess "VHDL generic namespace identifier '$name' hides a generated type\n"
-        if grep {lc($name) eq $_} qw(natural std_logic std_logic_vector signed);
-    return $name;
+    return FSM::Backend::VHDL::ParameterBindingEmitter->validate_identifier($name);
 }
 
 sub lower_actual ($class, %args) {
@@ -124,91 +116,12 @@ sub lower_actual ($class, %args) {
         unless $json->encode($type) eq $json->encode($canonical->{value_type_spec})
             && (!exists($override->{declaration_default_value_width})
                 || $json->encode($override->{declaration_default_value_width}) eq $json->encode($canonical->{value_width}));
-    my $state = {environment=>$environment, scope=>$environment->{scope}, active=>{}, references=>[]};
-    my ($actual) = _render($state, $override->{binding_expression});
-    return $actual;
-}
-
-sub _bounded_natural ($value) {
-    confess "VHDL natural generic default is outside the portable integer range\n"
-        unless defined($value) && $value->bcmp(0) >= 0 && $value->bcmp('2147483647') <= 0;
-    return $value;
+    return FSM::Backend::VHDL::ParameterBindingEmitter->lower_expression(
+        environment=>$environment, binding=>$override->{binding_expression})->{text};
 }
 
 sub _integer_payload ($payload) {
-    confess "VHDL natural generic requires a decimal scalar payload\n"
-        unless ref($payload) eq 'HASH' && ($payload->{kind} // '') =~ /\A(?:scalar|scalar_expr)\z/
-            && defined($payload->{payload}) && !ref($payload->{payload})
-            && $payload->{payload} =~ /\A[0-9_\s()+*\/%-]+\z/;
-    return _bounded_natural(FSM::WidthExpressionSupport->new->evaluate_constant_integer_payload(
-        $payload, 'VHDL natural generic payload'));
-}
-
-sub _assert_scope ($state, $scope) {
-    confess "VHDL generic binding has a foreign or missing scope\n"
-        unless ref($scope) eq 'HASH' && ($scope->{kind} // '') eq $state->{scope}{kind}
-            && ($scope->{owner} // '') eq $state->{scope}{owner};
-}
-
-sub _render ($state, $node) {
-    confess "VHDL generic renderer requires a canonical binding node\n" unless ref($node) eq 'HASH';
-    my $identity = refaddr($node);
-    confess "VHDL generic binding contains a cyclic tree\n" if $state->{active}{$identity};
-    local $state->{active}{$identity} = 1;
-    my $kind = $node->{kind} // '';
-    if ($kind eq 'literal') {
-        confess "VHDL natural generic requires a plain nonnegative decimal source literal\n"
-            unless defined($node->{token}) && !ref($node->{token}) && $node->{token} =~ /\A\+?\d[\d_]*\z/;
-        my $value = _bounded_natural(FSM::WidthExpressionSupport->new->parse_constant_integer_literal($node->{token}));
-        return ($value->bstr, $value);
-    }
-    if ($kind eq 'parameter') {
-        _assert_scope($state, $node->{scope});
-        my $name = _identifier($node->{parameter});
-        confess "VHDL generic binding requires an actual declared parameter\n"
-            unless exists $state->{environment}{parameters}{$name};
-        confess "VHDL generic binding requires an exact scalar parameter token\n"
-            unless defined($node->{token}) && !ref($node->{token}) && $node->{token} eq $name
-                && defined($node->{suffix}) && !ref($node->{suffix}) && $node->{suffix} eq '';
-        my $value = _integer_payload($state->{environment}{parameters}{$name}{value_payload});
-        push @{$state->{references}}, $name;
-        return ($name, $value);
-    }
-    if ($kind eq 'static_symbol') {
-        _assert_scope($state, $node->{scope});
-        confess "VHDL generic static binding requires a source token\n"
-            unless defined($node->{token}) && !ref($node->{token}) && length($node->{token});
-        my $value = _integer_payload($node->{value_payload});
-        return ($value->bstr, $value);
-    }
-    if ($kind eq 'payload') {
-        my $value = _integer_payload($node->{value});
-        return ($value->bstr, $value);
-    }
-    if ($kind eq 'operator') {
-        my $operator = FSM::ParameterValueSupport->normalize_expression_operator($node->{operator});
-        my $source = FSM::ParameterValueSupport->normalize_expression_operator($node->{source_operator});
-        confess "VHDL natural generic requires a canonical arithmetic operator and matching source alias\n"
-            unless defined($operator) && defined($source) && $operator eq $node->{operator}
-                && $source eq $operator && $operator =~ /\A[+*\/%-]\z/;
-        confess "VHDL natural generic operator requires at least two operands\n"
-            unless ref($node->{operands}) eq 'ARRAY' && @{$node->{operands}} >= 2;
-        my (@texts,@values);
-        for my $operand (@{$node->{operands}}) {
-            my ($text,$value) = _render($state, $operand);
-            push @texts,$text; push @values,$value;
-        }
-        my $value = shift @values;
-        for my $operand (@values) {
-            $value = _bounded_natural(FSM::WidthExpressionSupport->new->apply_constant_width_operator(
-                $operator, [$value, $operand], 'VHDL natural generic default'));
-        }
-        my $text = shift @texts;
-        my $vhdl_operator = $operator eq '%' ? 'mod' : $operator;
-        $text = "($text $vhdl_operator $_)" for @texts;
-        return ($text,$value);
-    }
-    confess "VHDL natural generic has unsupported binding kind '$kind'\n";
+    return FSM::Backend::VHDL::ParameterBindingEmitter->validate_integer_payload($payload);
 }
 
 1;
@@ -220,7 +133,9 @@ FSM::Backend::VHDL::CompositionParameterEmitter - Prepared canonical natural-val
 =head1 DESCRIPTION
 
 Prepares captured scalar top defaults and child actuals for direct VHDL
-structural emission. Source admission remains separate. The bounded profile selects C<natural> generics with plain
+structural emission through the shared C<FSM::Backend::VHDL::ParameterBindingEmitter>.
+The wrapper retains composition-top scope, structural namespace and child
+declaration checks. Source admission remains separate. The bounded profile selects C<natural> generics with plain
 nonnegative decimal literals, scalar aliases, captured decimal static payloads
 and canonical C<+>, C<->, C<*>, C</>, C<%> arithmetic. Modulo renders as C<mod>;
 explicit left-associated parentheses retain operand order. Rendered arithmetic

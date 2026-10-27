@@ -48,7 +48,10 @@ the historical closure census below is unchanged.
 
 The VHDL structural emitter now imports
 `FSM::Backend::VHDL::CompositionParameterEmitter` for prepared natural top
-defaults and declaration-qualified integer child actuals, plus
+defaults and declaration-qualified integer child actuals. The generic wrapper
+now delegates arithmetic/scalar rendering and primitive validation to shared
+`FSM::Backend::VHDL::ParameterBindingEmitter`, with explicit direct/composition
+scopes; direct generic admission/converter integration remain pending. It also uses
 `FSM::Backend::VHDL::CompositionWidthEmitter` for captured scalar port ranges.
 Source admission remains guarded; no fresh closure count is inferred.
 
@@ -62,8 +65,8 @@ detached private Core bindings. Historical import counts below are unchanged.
 The Verilog-family `CompositionBindingEmitter` now imports
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` for the shared scalar
 walk. The composition wrapper keeps its narrower scope and diagnostics; direct
-headers now import the shared helper for captured scalar defaults. Aggregate/path
-profiles remain successors. No fresh closure census is inferred.
+headers now consume captured scalar and immutable aggregate defaults; mutable
+aggregate/path relationships explicitly refuse. No fresh closure census is inferred.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
