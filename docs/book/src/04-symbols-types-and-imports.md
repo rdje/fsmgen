@@ -171,8 +171,10 @@ PAD : std_logic_vector(7 downto 0) := "10100101"
 ```
 
 This preserves default relationships only. Direct signal ranges still use
-selected concrete widths; symbolic ranges and external override/runtime
-qualification remain successors. The standalone SystemVerilog-text converter
+selected concrete widths; even a parameter-dependent width defaulting to one
+currently emits a scalar declaration. A distinct equal literal width creates no
+relationship. Symbolic ranges and external override/runtime qualification
+remain successors. The standalone SystemVerilog-text converter
 keeps its existing static/integer-expression profile because it has no Core
 source bindings. See the direct-backend chapter for the separately owned
 reserved-identifier emission defect.

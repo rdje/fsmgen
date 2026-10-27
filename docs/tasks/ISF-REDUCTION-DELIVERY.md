@@ -1698,10 +1698,111 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=7351 for integration/profile/process/accounting. Three full static predecessor products are byte-exact; whole captured source JSON kinds survive. Guarded book/POD and source freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks gate commit; broad external/runtime/transport qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit retained parameter-dependent declared signal ranges through supported HDL backends.`
   Acceptance: `After default relationships, carry actual Core declared_width_source trees and selected parameter identities through direct ports/storage and backend declarations. Reuse existing width evaluation for selected defaults while emitting supported symbolic ranges, including one-bit defaults, arithmetic and same-name type/static controls. Preserve unrelated equal-width declarations and named types. Guard unsupported profile/shape combinations before artifact success; source text is never post-processed. Focused actual source/carrier/Core/HDL checks, synchronized profile/book contracts and commit precede dependent internal widths.`
-  Verification: `Default relationships now implemented with focused checks; inspect actual declared-range producers and backend consumers, query canonical cards, and split source/Verilog/VHDL scope before implementation. Full qualification remains .6.`
+  Verification: `Default relationships close at b2601fe46 with focused checks. git log -S identifies authored Signal width retention at 98f4d88257 and composition symbolic rendering at 076ee7017. Actual resettable source with WIDTH1 retains the explicit param selector on data_port while independent_port literal1 has no source record; both HDL declarations remain scalar. Module signals alone is not exhaustive for assigned outputs: use actual Signal objects through canonical registry/assignment AST routes, never infer source from numeric declaration plans. Parser source records contain expression/resolved width but no complete selected namespace observations; shared SignalManager selection and WidthExpressionSupport must provide those without duplicated precedence/evaluation. Composition already has detached lookup contracts and bounded target range renderers. Split actual provenance capture, shared scoped rendering, direct Verilog declarations and source-aware VHDL/natural-width integration before code. Preserve source/getter/numeric/static contracts; selected-one-bit vector rank, aliases, target mappings and behavioral type metadata need explicit treatment. Generated dependent internal shapes remain .3.4; full qualification .6. Receipt docs/audits/direct-declared-range-split-20261027.json.gz retains probe/recipes/identities and first probe corrections. Re-derive: code and actual source/backend. Falsify: same-valued independent literal. Durability: receipt/fact/book/task/Git. Initial integrity gate rejects pending statuses on the new containers; set containers active while executable leaves remain pending. Mandatory doctrines/hooks gate this decomposition, with no implementation or new support claim.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3: split direct symbolic range boundaries`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.3.1, ISF-REDUCTION-DELIVERY.3.3.2, ISF-REDUCTION-DELIVERY.3.3.3, ISF-REDUCTION-DELIVERY.3.3.4`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _declared_width_source identifies 98f4d88257; git log -S sub lower_range identifies 076ee7017. Actual direct plans discard source relationships into numeric declarations, while retained authored trees have no complete selected-lookup contract.
+  - [x] **ADDRESSED (verified)** — Decompose source provenance, target kernels and direct Verilog/VHDL declaration consumers. Qualify the current one-bit source boundary against an independent equal literal and preserve all compatibility/full-verification owners before code.
+  - [x] **NO REGRESSION** — Backend/source bytes remain unchanged. knowledge-map: OK and mandatory scripts/check_doctrines.sh with normal hooks gate the bounded task/fact/book decomposition; no symbolic range or external qualification claim is added.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1`
+  Status: `active`
+  Goal: `Capture complete actual direct declared-width lookup provenance without changing selected widths.`
+  Acceptance: `Reuse the canonical width evaluator and real SignalManager namespace selection. Preserve original authored source getters, numeric values and JSON kinds; add detached private binding/lookup evidence in lexical source scope. Never infer selection from equal values or post-hoc namespace existence. Propagate only actual declared origins to relevant Signal objects, including assignment targets absent from module signals. Preserve named-type precedence, explicit param selectors, success/refusal/retry invalidation and caller/callback ownership. Split first if needed; focused controls and synchronized book/facts qualify capture, not HDL range activation.`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.1.1, ISF-REDUCTION-DELIVERY.3.3.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.1`
+  Status: `pending`
+  Goal: `Expose actual symbol selection behind the unchanged direct payload resolver.`
+  Acceptance: `Inspect the existing SignalManager resolver contract and introduce the smallest shared observation boundary that identifies the selected immutable static symbol versus immediate parameter root/path. Existing payload resolution must delegate to the same precedence/selection implementation and retain detached payloads, missing-name behavior, errors and JSON kinds. Preserve aggregate/static/constant/define/enum/parameter/path precedence; do not duplicate lookup or expand a parameter alias into another identity. Known same-name and equal-value controls, exact pre/post actual resolver/default/width products and lifetime/caller checks qualify this private prerequisite. No parser width metadata or HDL support change; commit before .1.2.`
+  Verification: `pending exact selector contract inspection`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2`
+  Status: `pending`
+  Goal: `Retain detached direct width bindings from actual canonical resolution.`
+  Acceptance: `After .1.1, capture expression structure and complete ordered actual lookups through the existing width evaluator, including nested/static selections and explicit versus bare parameter identities. Keep declared_width_source and numeric/getter contracts unchanged; introduce private scope/lookup/binding evidence with no public schema expansion. Capture from actual evaluation, never replay raw source to guess selection. Named type and independent literal declarations acquire no parameter relationship. Carry evidence to actual declared/assignment Signal objects and legitimate recorded origin copies; malformed, replaced or failed retries expose no stale partial contract. Qualify repeated references, same-name type/static/parameter controls, scalar paths, aliases, one-bit defaults, source conservation and callback lifetimes. If unsafe, split capture kernel and parser/Core integration before code. Commit before target rendering.`
+  Verification: `pending .1.1`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.2`
+  Status: `active`
+  Goal: `Share bounded width rendering with explicit direct and composition scopes.`
+  Acceptance: `After .1, reuse the existing width evaluator and composition range kernels. Preserve composition wrappers, diagnostics, arithmetic/static folding, lookup order, one-bit vector rank and caller ownership. Prepare direct ranges only from complete captured contracts matching source scope and real selected parameter declarations; reject hidden/unsupported symbolic payloads rather than freeze defaults. No second evaluator or HDL-text inference. Split target kernels and direct admission into separate commits; full compilation remains .6.`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.2.1, ISF-REDUCTION-DELIVERY.3.3.2.2, ISF-REDUCTION-DELIVERY.3.3.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.2.1`
+  Status: `pending`
+  Goal: `Share the existing Verilog-family scoped width kernel behind its composition wrapper.`
+  Acceptance: `Extract only reusable traversal/rendering with explicit scope and shared ParameterBindingEmitter. Preserve complete old composition success/refusal products, wrapper contract and focused known-bad/default-one/static controls. Keep direct generation inactive; synchronize POD/book/fact and commit.`
+  Verification: `pending source capture`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.2.2`
+  Status: `pending`
+  Goal: `Share the existing portable VHDL width kernel behind its composition wrapper.`
+  Acceptance: `Keep natural bounds, per-intermediate arithmetic, positive final width, modulo spelling, explicit vector rank and original composition namespace prerequisites. Preserve complete old success/refusal products and raw direct converter contract. Support explicit source scope without inventing a composition top; keep direct activation pending and commit.`
+  Verification: `pending source capture`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.2.3`
+  Status: `pending`
+  Goal: `Prepare direct declared range plans from captured identities and target profiles.`
+  Acceptance: `Join actual declared width bindings and selected direct parameter environment with explicit target names. Validate complete references, origin/scope, declaration/type consistency, selected defaults and supported symbolic shapes. Equal-width literals/static/named types stay independent; actual mutable selected roots retain names even at width1. Refuse unsupported paths/bitwise/typed target profiles before artifact success; no number-based ancestry or text substitution. Detached expected plans, hostile snapshots and caller conservation qualify preparation before backend activation.`
+  Verification: `pending .1 and shared kernels`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.3`
+  Status: `active`
+  Goal: `Consume prepared declared ranges in direct Verilog-family ports and explicit storage.`
+  Acceptance: `Carry actual Signal-origin evidence through declaration plans; do not substitute module signals for complete assignment-target objects or infer aliases from equal widths. Keep unrelated fixed and declared-type behavior and compatibility Verilog policy. Only source-declared ranges belong here; computed generated helper widths remain .3.4. Each consumer commit includes native supported/refused controls, exact unaffected outputs and book/corpus/fact synchronization.`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.3.1, ISF-REDUCTION-DELIVERY.3.3.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.3.1`
+  Status: `pending`
+  Goal: `Emit prepared symbolic direct module port ranges.`
+  Acceptance: `After .2.3, thread source-owned prepared ranges through actual port plans and scaffold emission, retaining vector rank at selected width1. Test actual input/output roles, aliases/arithmetic, static/type/same-value controls, unsupported target profiles and compatibility output before commit. Do not infer source from generated text.`
+  Verification: `pending range preparation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.3.2`
+  Status: `pending`
+  Goal: `Emit prepared symbolic ranges for explicitly declared direct storage.`
+  Acceptance: `Use actual declared Signal and assignment-target metadata in internal declaration plans. Preserve explicit storage roles, signed/state-model/named types and independent same-width declarations. Admit only recorded declared origins; generated computed/auxiliary shape specialization remains .3.4. Keep actual source controls and full static predecessor outputs; update book/corpus contracts and commit.`
+  Verification: `pending port activation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4`
+  Status: `active`
+  Goal: `Consume captured direct ranges through source-aware VHDL conversion.`
+  Acceptance: `After direct range preparation and Verilog declaration integration, keep standalone raw conversion bounded. Actual captured width roots must qualify natural generic declarations without borrowing static vector/negative evidence. Carry both selected numeric behavior metadata and prepared VHDL type/range metadata through the converter; retain vector rank at selected width1. Verify actual normalized target mapping and generated declaration consistency through structured parsing, never HDL post-processing. Preserve unrelated static products; compiled override/runtime matrices remain .6.`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.4.1, ISF-REDUCTION-DELIVERY.3.3.4.2, ISF-REDUCTION-DELIVERY.3.3.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.1`
+  Status: `pending`
+  Goal: `Select natural direct generics from actual captured width consumers.`
+  Acceptance: `Extend private generic preparation using proved width-reference identities in addition to default dependencies. Qualify bounded natural roots and their true declaration defaults, target mapping and source scope; unrelated static generics keep prior types. Independently expected root-union and hostile width-contract controls qualify preparation before converter activation.`
+  Verification: `pending captured range plans`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.2`
+  Status: `pending`
+  Goal: `Prepare source-aware VHDL declaration parsing for symbolic direct ranges.`
+  Acceptance: `Join actual normalized port/storage declarations with complete captured range plans. Validate the generated declaration shape against the prepared Verilog profile, keep numeric default metadata for existing behavioral conversion, and carry separate canonical VHDL range/type metadata. Arbitrary raw-text symbolic ranges remain unsupported. Preserve old conversion products and focused malformed/missing/foreign mapping controls; commit preparation separately if integration is unsafe.`
+  Verification: `pending .4.1 and Verilog consumers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.3`
+  Status: `pending`
+  Goal: `Emit canonical direct VHDL declared ranges with correct vector type metadata.`
+  Acceptance: `Activate prepared source-aware declaration plans in the direct renderer and directly affected expression/type conversions. A width1 selected default remains a vector; assignments and conditions must honor that type rank. Keep static/raw conversion byte contracts and physical-name/source-scope separation. Focused source/Core/native supported/refused controls and lowering-clean book examples qualify implementation. Record remaining generated internal shape work in .3.4 and all full compiler/override/runtime/transport matrices in .6.`
+  Verification: `pending .4.2`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4`

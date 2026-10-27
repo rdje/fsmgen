@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3`
-- next_action: Inspect retained declared-width producers and direct backend consumers through canonical cards, then split symbolic range integration into safe source/Verilog/VHDL slices before code. Full qualification remains .6.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.1.1`
+- next_action: Inspect and expose actual SignalManager symbol-selection observations behind the unchanged payload resolver. Preserve precedence, payloads and immediate identities; qualify this private prerequisite before width capture .3.3.1.2.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.
