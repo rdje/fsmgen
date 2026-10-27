@@ -227,6 +227,22 @@ and withholds a single binding. Explicit scoped late sizing and symbolic ranges
 remain subsequent compiler work; combined-shape rendering remains separately
 qualified.
 
+The scoped late-sizing contract audit also exercises overlapping auxiliary names:
+`next_data_r` can be the next output of `data_r` and the registered output of
+`next_data`. Current source retention keeps both real contributions. Starting a
+fresh sizing context would lose existing declarations; clearing every generated
+requirement would lose an independent copy path. Preserving all records is safe,
+but earlier opaque inference can then withhold a clean late binding. The next
+private prerequisite records the immediate actual copy origin separately from
+the original declaration. Scoped updates will preserve authored and other-origin
+requirements, replacing only earlier opaque inference attested to the same
+immediate source. These are diagnostic policy results; the scoped entrypoint is
+not implemented yet. Replay the saved contract with:
+
+```bash
+python3 -B docs/audits/scoped-late-width-contract-20261027.py --self-test
+```
+
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
 
