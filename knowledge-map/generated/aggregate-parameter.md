@@ -16,5 +16,5 @@
 
 _Semantic parameter and generic aggregate comparison support_
 
-- **date:** 2026-06-05 · **status:** current
+- **date:** 2026-10-27 · **status:** current
 - **source and verification:** [`docs/knowledge/aggregate-parameter-comparison.md`](../../docs/knowledge/aggregate-parameter-comparison.md)
