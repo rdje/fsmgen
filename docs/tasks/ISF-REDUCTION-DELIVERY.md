@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -1939,9 +1939,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=28. Complete audited legacy products and native strict check/semantic JSON conserve byte-for-byte; HDL normalizes only Date. Opposed/equal/literal/type/one-bit/order/chain/replacement/failure/caller/getter/owner controls and guarded book/POD/source checks pass. Normal hook qualifies the final index; full/public/runtime verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Share bounded width rendering with explicit direct and composition scopes.`
   Acceptance: `After .1, reuse the existing width evaluator and composition range kernels. Preserve composition wrappers, diagnostics, arithmetic/static folding, lookup order, one-bit vector rank and caller ownership. Prepare direct ranges only from complete captured contracts matching source scope and real selected parameter declarations; reject hidden/unsupported symbolic payloads rather than freeze defaults. No second evaluator or HDL-text inference. Split target kernels and direct admission into separate commits; full compilation remains .6.`
+  Verification: `Shared scoped Verilog-family/VHDL kernels, frozen capture proof, bounded adaptation and actual module/target preparation are implemented with focused checks through all children. Composition wrappers preserve their established products. Direct declarations, computed shapes and full/compiler/runtime qualification remain successors.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.2.3.3.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.2.1, ISF-REDUCTION-DELIVERY.3.3.2.2, ISF-REDUCTION-DELIVERY.3.3.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.1`
@@ -1969,12 +1971,13 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=8. Complete actual composition success/refusal/caller products match predecessor under the declared error-location boundary, including cycle topology. Independent range/arithmetic/namespace/scope/lookup/owner controls and guarded book/POD/source checks pass; normal hook qualifies final staged doctrines. No direct/full/compiler/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare direct declared range plans from captured identities and target profiles.`
   Acceptance: `Join actual declared width bindings and selected direct parameter environment with explicit target names. Validate complete references, origin/scope, declaration/type consistency, selected defaults and supported symbolic shapes. Equal-width literals/static/named types stay independent; actual mutable selected roots retain names even at width1. Refuse unsupported paths/bitwise/typed target profiles before artifact success; no number-based ancestry or text substitution. Detached expected plans, hostile snapshots and caller conservation qualify preparation before backend activation.`
-  Verification: `Source capture and both scoped target kernels are implemented. Split canonical capture proof, target-contract adaptation and actual module/target plan assembly before admission. The proof re-derives only the captured evaluator walk with strict frozen observation replay, never live namespace resolution or equality-based selection; require actual selected parameter payloads and source scope to match the supplied declaration environment. Adapt only proved structured bindings to existing target contracts, then join actual Signal/module/target namespaces. Keep fixed/type behavior independent and unsupported/combined shapes guarded. No backend activation in this parent.`
-  Commit: `pending`
+  Verification: `Frozen observation proof, bounded target adaptation and actual Signal/module/target namespace assembly are implemented through children with focused checks. Mutable selected names and one-bit vector rank preserve; static/type controls remain independent and unsupported/combined shapes refuse. No direct declaration activation or full/compiler/runtime qualification.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.2.3.3.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.2.3.1, ISF-REDUCTION-DELIVERY.3.3.2.3.2, ISF-REDUCTION-DELIVERY.3.3.2.3.3`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.3.1`
   Status: `done`
@@ -2001,12 +2004,13 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=12. Whole target plans, actual aliases/path/nested producer controls, language/typed/stale/overflow refusals and caller/weak-owner conservation pass. Exact book example, guarded book/POD build and source-reference freshness pass; existing ordinary runtime code remains unchanged. Normal hook qualifies final staged doctrines; no source/full/compiler/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare detached direct declared-range plans from actual module parameters, Signals and target namespaces.`
   Acceptance: `Use actual captured Core declarations/default proof, complete Signal and assignment-target membership, original lexical scope and backend-owned target name maps. Join .1/.2 to both shared target kernels with explicit supported profiles. Independent fixed/literal/static/named-type declarations keep their old plans; combined/opaque or stale parameter-dependent shapes cannot silently freeze defaults. Validate real selected defaults and target namespace/type consistency before returning detached expected plans. Keep direct emitters inactive until .3.3.3/.4, qualify actual source/native preparation and hostile snapshots, and own any computed-shape prerequisite under .3.4 before activation.`
-  Verification: `Bounded target adapter is implemented with focused checks in .2. Actual module/target membership assembly is next; backend declarations stay inactive.`
-  Commit: `children below`
+  Verification: `Actual module and assignment-target Signal collection plus explicit target namespace/declaration joins are implemented with focused checks. Ambiguous/stale/combined mutable and mismapped target records refuse; detached ranges preserve selected identity and physical/lexical separation. P1 existing backend ownership is separately scheduled under .25. Source/backend declaration activation and complete qualification remain successors.`
+  Commit: `child commits; final integration ISF-REDUCTION-DELIVERY.3.3.2.3.3.2`
   Children: `ISF-REDUCTION-DELIVERY.3.3.2.3.3.1, ISF-REDUCTION-DELIVERY.3.3.2.3.3.2`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.3.3.1`
   Status: `done`
@@ -2021,11 +2025,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=12. Independently expected whole actual plans, default-one/eight/alias/fixed/type/static controls, identity/stale/combined/scope/malformed refusals and full caller/weak-owner conservation pass. Exact book example, guarded book/POD build and source-reference freshness pass. Normal hook qualifies final index; ordinary runtime sources remain unchanged and no full/compiler/runtime claim is made.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join prepared source-owned width plans to explicit actual backend declaration namespaces.`
   Acceptance: `Consume .1 with backend-owned module identity, target mapping, full parameter/port/signal/constant/type membership and declaration records. Check selected default width/type consistency and actual emitted membership; selected mutable root renaming remains bounded/refused. Reuse existing target identifier policies, reject namespace conflicts and keep lexical source ownership independent of physical module names. Return complete detached range plans only after actual target checks. Qualify real planner/converter namespace products without activating HDL declarations; keep computed helper specialization and full verification separate.`
-  Verification: `Source-object preparation is implemented with focused checks in .1. Join it to actual backend target namespaces and declaration consistency next, without declaration activation.`
-  Commit: `pending`
+  Verification: `prepare_declarations now joins proved actual source plans to explicit backend namespace and declaration snapshots. Shared identifier policies check reserved names and target collisions; VHDL folds case. Complete parameter and Signal mappings, numeric width/signedness/type agreement and optional state-model agreement precede detached port/storage range plans. Selected roots cannot rename; physical module/Signal names remain independent of lexical scope. Fixed/type/static rows keep their old paths. Initial T2173 fails the absent method; its new fixture also reports a caller builtin-name ambiguity, corrected to snapshot before the first integration run. Actual generated HDL, normalized converter declarations and independent canonical planner type metadata qualify expected plans and rendered widths. Focused All tests successful Files=2 Tests=12; final explicit dependency check Files=1 Tests=6. Hostile membership/mapping/width/sign/type/namespace/root-rename cases conserve all callers. The first whole-module weak control exposes an existing numeric backend retaining cycle, independently reproduced without this helper and with an isolated planner back-edge/weak-edge control. P1 BACKEND-OWNER-CYCLE is owned and scheduled under .25 before .6; a never-installed physical Core copy isolates the passing new-result ownership check. Complete epochs and the independent replay reader retain in docs/audits/direct-width-target-plans-20261027.json.gz/.py; failed initial test source bytes are reconstructible, not separately captured. Exact book example, guarded book/POD build and source references pass. Re-derive: actual backend namespace/rendered declarations and source proof. Falsify: whole independent plans, fixed/type/same-default and hostile/isolated-owner controls. Durability: tracked implementation/test/POD/book/facts/task and exact receipt/replay. This closes bounded preparation with focused checks, not declaration activation, whole backend release or full/compiler/runtime qualification. First authoritative hook rejects newly reached shard warning pressure; declare measured owned warning debt under .26 with unchanged targets/ceilings and retain the exact rejection before rerunning the final hook.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.2.3.3.2: join widths to actual target declarations`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _target_namespace identifies e505952348 in DirectParameterEmitter. Source width plans exist but no join checks actual emitted declaration names/widths; initial T2173 diagnoses absent prepare_declarations. Actual weak controls independently isolate the existing context/planner back-edge cycle now owned under .25.
+  - [x] **ADDRESSED (verified)** — Join actual target namespace/declaration snapshots with proved source plans; require complete mappings and matching numeric width/signed/type records, shared identifier legality and unchanged mutable root names. Keep lexical scope independent and fixed/type rows unchanged; return detached port/storage ranges. Own the independent backend cycle rather than claim whole release.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=12 and final Files=1 Tests=6. Whole actual target plans, rendered-width/planner metadata agreement, fixed/type/same-default controls and hostile/caller/isolated-owner checks pass. Independent cycle replay reproduces .25; exact book example, guarded book/POD/source checks pass. Normal hook qualifies final index; no activation/full/compiler/runtime claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.3`
   Status: `active`
@@ -2037,7 +2046,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Emit prepared symbolic direct module port ranges.`
   Acceptance: `After .2.3, thread source-owned prepared ranges through actual port plans and scaffold emission, retaining vector rank at selected width1. Test actual input/output roles, aliases/arithmetic, static/type/same-value controls, unsupported target profiles and compatibility output before commit. Do not infer source from generated text.`
-  Verification: `pending range preparation`
+  Verification: `Bounded actual source/target range preparation is complete with focused checks under .3.3.2. Port plan/scaffold consumption is the next implementation slice; storage/computed/VHDL and full verification remain separate.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.3.2`
@@ -2407,6 +2416,20 @@ do not start broad suites between implementation slices.
   Acceptance: `P2 before .6, earlier if target-range integration is blocked. Reproduce actual source with data word_t(bits8) and <-= versus initially unsized source followed by ordinary late +size(data word_t). Both produce numeric width8 and the same declared private requirements, but assignment-created next_data omits declared_type_name/spec while late sizing copies them. Investigate signed/state/type/report/HDL impact through public interfaces; choose and qualify consistent propagation with explicit compatibility updates, then synchronize book/discovery and close. Keep the scoped-entry slice's old numeric/source/type getters unchanged; this separate task owns any intentional legacy correction. Include <=-/<=+ and independent auxiliary type constraints before closure.`
   Verification: `Open AUX-TYPE-ORDERING. Actual T2167 initially exposes next_data type_name null/type_spec null in normal ordering versus word_t/bits8 after late sizing. Existing assignment copy branches register width/output/source only, while existing size-time auxiliary branches also copy signed/state/type fields. The scoped path matches the original unscoped late branch exactly; no new runtime regression is classified from this difference. The fixed test preserves both actual legacy controls, with raw first failure retained under .artifacts/scoped-late-width-sizing-20261027/focused.log. Own sign/state/report/HDL impact and a deliberate compatibility repair before .6, or activate immediately if .3.3.2 needs it.`
   Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.25`
+  Status: `pending`
+  Goal: `Repair P1 BACKEND-OWNER-CYCLE so released direct backend contexts and modules are not retained by helper back-references.`
+  Acceptance: `Scheduled after required feature implementation and before .6/full qualification under decision0121, earlier if repeated integration becomes resource-blocking. Reproduce ordinary params-only parsing versus numeric backend generation without any new target-plan helper; retain weak module/backend controls. Trace context-owned helper to context back-edges, including ModulePlanningSupport, across success/failure and reused contexts. Choose an explicit ownership contract rather than weakening every field blindly; preserve standalone helper lifetime and public generation behavior. Qualify actual release plus held independent helper/analysis/results, repeated generation, failures and focused unchanged HDL products. Update canonical/book/task evidence and commit verified repair; no global leak-free or measured memory/throughput claim without separate evidence.`
+  Verification: `Discovered by the actual-module weak test in T2173, whose successful plan-content assertions do not prove whole backend release. Root-cause control in docs/audits/direct-width-target-plans-20261027.json.gz never calls prepare_declarations: parsed_only releases the module; numeric_backend retains both backend and module. An isolated context->{planner}->flattened_dt->{context} pair retains planner/context/module; weakening only that isolated planner back-edge releases all. FlattenedDT::new owns ModulePlanningSupport and many other context-bound helpers, while ModulePlanningSupport::new stores a strong flattened_dt reference. This independently establishes an existing retaining cycle; complete graph/ownership repair remains pending here. New plan ownership tests use a physical Core copy never installed in that backend, retaining actual Signal observations but isolating new-result ownership. Current target helper does not repair or introduce the ordinary numeric cycle.`
+  Commit: `pending repair`
+
+- ID: `ISF-REDUCTION-DELIVERY.26`
+  Status: `pending`
+  Goal: `Contain generated Knowledge Map shard membership before its existing rollover threshold without losing canonical facts or questions.`
+  Acceptance: `Schedule after required feature implementation and before .6, earlier if the existing rollover threshold is reached. Measure deterministic topic membership and retained question/card routes through the canonical generator/checker. Select a bounded topic/index containment design only after that evidence; preserve complete canonical fact identities, questions, query parity and local output ownership. Do not rename cards merely to game pressure or raise a ceiling by arithmetic. Run focused exact pre/post membership/query controls and commit the actual remedy; until then keep finite warning debt with this live owner under unchanged health targets and enforcement ceilings.`
+  Verification: `The first target-plan commit hook rejects fact_index_shards at its existing file-count warning threshold after the new backend-owner fact creates a deterministic topic. Actual generated collection has 205 files against the reviewed 256 target/ceiling. Declare warning_debt, immutable predecessor-HEAD baseline and finite actual-plus-ratchet growth with this live owner; no health or hard limit changes. The existing total-byte ceiling 8MiB versus target 4MiB requires a 2MiB byte ratchet under the stale-headroom rule, while the actual generated total remains below its target. Exact old/current metrics, declaration source and rejected hook retain in the target-plan receipt. This records owned warning remediation, not completed containment or a reason to drop the new fact.`
+  Commit: `pending containment`
 
 ## Blockers
 

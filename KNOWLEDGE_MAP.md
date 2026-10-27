@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1294** facts · **7124** unique questions · **7301** answer occurrences · **204** topic shards.
+> **1295** facts · **7126** unique questions · **7303** answer occurrences · **205** topic shards.
 
 Query first:
 
@@ -64,6 +64,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `downstream-consumer` | 1 | 8 | [`downstream-consumer.md`](knowledge-map/generated/downstream-consumer.md) |
 | `engineer-selects` | 1 | 2 | [`engineer-selects.md`](knowledge-map/generated/engineer-selects.md) |
 | `explicit-system` | 1 | 8 | [`explicit-system.md`](knowledge-map/generated/explicit-system.md) |
+| `flattened-backend` | 1 | 2 | [`flattened-backend.md`](knowledge-map/generated/flattened-backend.md) |
 | `flattened-generation` | 1 | 5 | [`flattened-generation.md`](knowledge-map/generated/flattened-generation.md) |
 | `fsmgen-end` | 1 | 4 | [`fsmgen-end.md`](knowledge-map/generated/fsmgen-end.md) |
 | `fsmgen-hir` | 1 | 6 | [`fsmgen-hir.md`](knowledge-map/generated/fsmgen-hir.md) |

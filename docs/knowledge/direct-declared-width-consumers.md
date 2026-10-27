@@ -11,6 +11,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
   perl/FSM/DirectDeclaredWidthSupport.pm; t/2172-direct-width-module-source-plans.t; docs/audits/direct-width-module-source-plans-20261027.json.gz;
   perl/FSM/DeclaredWidthRangeSupport.pm; t/2171-declared-width-range-adapter.t; docs/audits/direct-width-range-adapter-20261027.json.gz;
   docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; docs/audits/shared-vhdl-width-kernel-20261027.json.gz;
@@ -168,6 +169,15 @@ name. Copied module parameter maps pass canonical observation proof; coherent
 bindings join the bounded adapter with original lexical scope. Fixed/type/static
 controls preserve, while combined mutable requirements and stale/missing binding
 records refuse. Module plans are detached and retain no Core/backend owners.
-Actual target namespace/declaration consistency remains .3.3.2.3.3.2 before
-activation; ordinary runtime consumers do not import these new helpers yet. Reverify:
-`prove -Iperl t/2172-direct-width-module-source-plans.t t/2171-declared-width-range-adapter.t`.
+prepare_declarations now joins actual namespace/declaration snapshots, checking
+mapped parameter/Signal membership, reserved names/collisions, numeric default
+widths, signedness and declared types. VHDL folds case; selected mutable root
+renaming refuses while physical module/Signal mappings remain independent of
+source ownership. Detached target plans identify symbolic port/storage ranges
+and independent fixed declarations. Actual numeric rendered widths independently
+match backend planner metadata in the focused contract. Direct activation and
+computed shapes remain successors; ordinary runtime consumers do not import
+these helpers yet. Existing whole backend retention is separately owned under
+.25 and the flattened-backend-owner-cycle card; isolated target plans retain no
+caller target records or never-installed physical Core copy. Reverify:
+`prove -Iperl t/2173-direct-width-target-plans.t t/2172-direct-width-module-source-plans.t`.

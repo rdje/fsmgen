@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::DeclaredWidthRangeSupport;
+use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub prepare_module ($class, %args) {
@@ -112,6 +113,104 @@ sub _add_signal ($signals, $signal) {
     $signals->{$name} = $signal;
 }
 
+sub prepare_declarations ($class, %args) {
+    my $source = $class->prepare_module(%args);
+    my $json = JSON::PP->new->canonical->allow_nonref;
+    my $target = eval {$json->decode($json->encode({namespace => $args{target_namespace},
+        declarations => $args{target_declarations}}))};
+    confess "Direct width target preparation requires JSON-safe namespace/declaration records: $@" if $@;
+    my ($namespace, $declarations) = @{$target}{qw(namespace declarations)};
+    confess "Direct width target preparation requires explicit namespace and declaration maps\n"
+        unless ref($namespace) eq 'HASH' && ref($namespace->{identifier_map}) eq 'HASH'
+            && ref($declarations) eq 'HASH';
+    my $language = $source->{target_language};
+    my $mapping = $namespace->{identifier_map};
+    my $module_name = _target_identifier($language, $namespace->{module_name});
+    my $physical_module = $args{fsm_module}->name;
+    confess "Direct width target module mapping does not match the physical module\n"
+        unless defined($physical_module) && !ref($physical_module)
+            && ($mapping->{$physical_module} // $physical_module) eq $module_name;
+    my $key = sub ($name) {return $language eq 'vhdl' ? lc($name) : $name};
+    my %reserved = $language eq 'vhdl'
+        ? map {$_ => 'generated type'} qw(natural std_logic std_logic_vector signed) : ();
+    $reserved{$key->($module_name)} = 'module';
+    my %roles;
+    for my $bucket (qw(ports signals constants types parameter_names)) {
+        confess "Direct width target namespace requires '$bucket' as an array\n"
+            unless ref($namespace->{$bucket}) eq 'ARRAY';
+        for my $raw (@{$namespace->{$bucket}}) {
+            my $name = _target_identifier($language, $raw);
+            my $identity = $key->($name);
+            confess "Direct width target '$name' collides with $reserved{$identity}\n"
+                if exists($reserved{$identity});
+            $reserved{$identity} = $bucket;
+            $roles{$name} = $bucket if $bucket eq 'ports' || $bucket eq 'signals';
+        }
+    }
+    my %emitted = map {$_ => 1} @{$namespace->{parameter_names}};
+    my %parameters;
+    for my $name (sort keys %{$args{fsm_module}->parameters}) {
+        my $target_name = _target_identifier($language, $mapping->{$name} // $name);
+        confess "Direct width target parameter mapping has duplicate membership\n" if $parameters{$target_name}++;
+    }
+    confess "Direct width target emitted parameter membership does not match source mapping\n"
+        unless keys(%parameters) == keys(%emitted) && !grep {!exists($emitted{$_})} keys %parameters;
+    for my $name (@{$source->{parameter_references}}) {
+        confess "Direct width target parameter '$name' renaming is unsupported\n"
+            unless ($mapping->{$name} // $name) eq $name;
+    }
+    confess "Direct width target declaration membership does not match its namespace\n"
+        unless keys(%roles) == keys(%$declarations) && !grep {!exists($declarations->{$_})} keys %roles;
+    for my $name (sort keys %roles) {
+        my $record = $declarations->{$name};
+        confess "Direct width target declaration '$name' requires its actual name, positive width and signed flag\n"
+            unless ref($record) eq 'HASH' && defined($record->{name}) && !ref($record->{name})
+                && $record->{name} eq $name && defined($record->{width}) && !ref($record->{width})
+                && $record->{width} =~ /\A[0-9]+\z/ && $record->{width} > 0
+                && defined($record->{signed}) && !ref($record->{signed}) && $record->{signed} =~ /\A[01]\z/;
+    }
+    my (%signal_targets, %ranges, @fixed, %claimed);
+    for my $name (@{$source->{signal_order}}) {
+        my $target_name = _target_identifier($language, $mapping->{$name} // $name);
+        confess "Direct width source Signal '$name' has no actual target declaration\n"
+            unless exists($roles{$target_name});
+        confess "Direct width target declaration '$target_name' has multiple source Signal owners\n"
+            if $claimed{$target_name}++;
+        my $signal = $source->{signals}{$name};
+        my $record = $declarations->{$target_name};
+        confess "Direct width target declaration '$target_name' disagrees with observed source width or signedness\n"
+            unless $record->{width} == $signal->{width} && $record->{signed} == $signal->{signed};
+        for my $field (qw(declared_type_name declared_type_spec)) {
+            confess "Direct width target declaration '$target_name' disagrees with source $field\n"
+                unless $json->encode($record->{$field}) eq $json->encode($signal->{$field});
+        }
+        confess "Direct width target declaration '$target_name' disagrees with source state model\n"
+            if exists($record->{state_model})
+                && $json->encode($record->{state_model}) ne $json->encode($signal->{state_model});
+        $signal_targets{$name} = $target_name;
+        my $width_plan = $signal->{width_plan};
+        if ($width_plan && $width_plan->{profile} eq 'symbolic') {
+            $ranges{$target_name} = {source_name => $name,
+                declaration_kind => $roles{$target_name} eq 'ports' ? 'port' : 'signal', width_plan => $width_plan};
+        } else {
+            push @fixed, $target_name;
+        }
+    }
+    return $json->decode($json->encode({profile => $source->{profile}, target_language => $language,
+        source_scope => $source->{source_scope}, module_name => $module_name,
+        parameter_references => $source->{parameter_references}, signal_targets => \%signal_targets,
+        fixed_signals => \@fixed, ranges => \%ranges}));
+}
+
+sub _target_identifier ($language, $name) {
+    return FSM::Backend::VHDL::ParameterBindingEmitter->validate_identifier($name) if $language eq 'vhdl';
+    confess "Direct width target requires a simple declaration identifier\n"
+        unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    confess "Direct width target declaration '$name' is reserved in SystemVerilog\n"
+        if grep {$_ eq 'SystemVerilog'} @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($name)};
+    return $name;
+}
+
 sub _join_scope ($current, $candidate, $json) {
     confess "Direct module width captures have conflicting original source scope\n"
         if defined($$current) && $json->encode($$current) ne $json->encode($candidate);
@@ -149,8 +248,35 @@ The result retains no Core module, Signal or backend analysis graph.
 
 This is source-object preparation. Complete analysis membership is a caller
 contract, not attestation of caller-made objects. Actual target names and full
-declaration namespaces, computed helper shapes and declaration activation
-remain separate work; ordinary runtime generation does not import this helper
-yet. Full compiler, override and runtime qualification remains separately owned.
+declaration namespaces are checked by C<prepare_declarations>, described below.
+
+C<prepare_declarations> takes the same source arguments plus a backend-owned
+C<target_namespace> and C<target_declarations> map. The namespace contains the
+actual C<module_name>, original-to-target C<identifier_map> and complete target
+C<parameter_names>, C<ports>, C<signals>, C<constants> and C<types> name arrays.
+The declaration map covers exactly the ports and signals. Each row has its
+actual C<name>, positive C<width>, boolean C<signed> and optional declared-type
+name/spec and state model. Captured declaration metadata must be supplied from
+the backend plan; it cannot be reconstructed by equal numeric widths.
+
+Shared identifier policies check reserved names, namespace collisions and
+VHDL case folding. Complete emitted parameter membership must match the actual
+source mapping. Selected width roots cannot be renamed. Physical module and
+signal mappings remain separate from lexical scope. Every actual source Signal
+must match one target declaration with the same observed width, signedness and
+declared type; a supplied state model must agree too.
+
+The detached target result contains C<profile>, C<target_language>,
+C<source_scope>, actual C<module_name>, ordered unique C<parameter_references>,
+C<signal_targets>, C<fixed_signals> and C<ranges>. Each symbolic range entry
+contains physical C<source_name>, C<declaration_kind> (port or signal) and the
+proved C<width_plan>. Independent static/type rows stay on their fixed path.
+Caller-made target records remain a contract, not provenance attestation.
+
+Computed helper shapes and declaration activation remain separate work;
+ordinary runtime generation does not import this helper yet. Full compiler,
+override and runtime qualification remains separately owned. Whole backend
+release is not claimed: task C<ISF-REDUCTION-DELIVERY.25> owns the independent
+context/helper back-reference cycle reproduced without these preparation calls.
 
 =cut

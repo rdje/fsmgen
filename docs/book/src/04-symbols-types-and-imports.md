@@ -355,9 +355,24 @@ captured ranges are prepared. Original source scope survives a physical module
 rename. Fixed/type declarations stay independent, while combined mutable
 requirements and missing or stale captures refuse before numeric fallback.
 The returned module plan is detached from Core and backend objects.
-These private plans do not yet activate direct HDL declarations. Complete
-actual target namespaces, declaration consistency and backend integration
-remain next; computed helper shapes and full qualification are separate work.
+The private `prepare_declarations` entrypoint now joins these source plans to
+explicit backend namespace and declaration records. It checks complete mapped
+parameter and Signal membership, reserved names, target collisions (including
+VHDL case folding), observed widths, signedness and declared types. Selected
+width roots retain their names; actual Signal and physical module names can use
+the backend's mapping without replacing original source scope. The detached
+result identifies port/storage ranges and the independent fixed declarations.
+The target input contract is documented in the helper's API reference; it must
+come from the actual backend boundary. These plans do not yet activate direct
+HDL declarations. Backend integration, computed helper shapes and full
+qualification remain separate work.
+
+The target-plan ownership check exposed an independent backend retention defect:
+ordinary numeric generation keeps a context/helper back-reference cycle and its
+module after callers leave scope. A control that never invokes the new plan
+helper reproduces it. Task `ISF-REDUCTION-DELIVERY.25` owns repair before full
+qualification. Detached plan ownership passes in isolation; whole backend
+release is not claimed.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
