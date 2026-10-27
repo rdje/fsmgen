@@ -8,6 +8,7 @@ answers:
   - "what is TOOLBOX.md?"
   - "how are repeated live-document verifier executions shared?"
   - "how does the doctrine driver avoid repeating README pressure validation?"
+  - "what performance improvement is verified for commit gates?"
   - "where should FSMGEN adopt doctrine enforcement?"
   - "what should TOOLBOX.md contain for FSMGEN?"
 date: 2026-10-27
@@ -57,3 +58,12 @@ Explicit partial mode never claims pressure success. Reverify:
 `prove -Iperl t/1553-readme-routed-destination-pressure.t t/2158-doctrine-driver-execution-modes.t`.
 The staged-result test uses the same repository's Git directory, an isolated
 project-local alternate index/object store, and no fixture repository commits.
+
+Workflow qualification records execution-work reduction, not an isolated elapsed
+speedup. The saved complete runs pass the same registered doctrines and retain
+every unique core/adapter obligation; the reader derives actual delegated
+executions and rejects altered proof/check/source/timing controls. The slower
+optimized observation is retained with targeted stage timings, demonstrated
+host contention and changed input-state limits. A matched quiet-host wall
+comparison is missing; no universal speed percentage is earned. Reverify:
+`python3 -B docs/audits/commit-gate-performance-20261027/verify.py --self-test`.

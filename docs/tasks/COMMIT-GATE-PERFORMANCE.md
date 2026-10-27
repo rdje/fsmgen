@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `COMMIT-GATE-PERFORMANCE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity; user-requested delivery workflow`
 - Created: `2026-10-27`
 - Last updated: `2026-10-27`
@@ -35,7 +35,7 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
 ## Task Tree
 
 - ID: `COMMIT-GATE-PERFORMANCE`
-  Status: `active`
+  Status: `done`
   Goal: `Deliver materially faster mandatory local verification without weakened checks.`
   Children: `COMMIT-GATE-PERFORMANCE.1, COMMIT-GATE-PERFORMANCE.2, COMMIT-GATE-PERFORMANCE.3, COMMIT-GATE-PERFORMANCE.4`
 
@@ -76,11 +76,24 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=16, followed by Files=1 Tests=6 for the final collect-all refinement. Real stale markers, excessive destination pressure, missing/failed prerequisites, complete registry modes and actual index/worktree disagreement reject. Source sync and final guarded book build pass; the normal mandatory hook validates the final stage.
 
 - ID: `COMMIT-GATE-PERFORMANCE.4`
-  Status: `pending`
-  Goal: `Qualify the completed workflow and record observed runtime improvement.`
+  Status: `done`
+  Goal: `Qualify reduced execution work and record actual timings with their limits.`
+  Children: `COMMIT-GATE-PERFORMANCE.4.1`
   Acceptance: `After implementation, compare actual baseline and optimized runs with source/input/command identities, per-check timings, complete logical and physical execution inventories, and explicit host/cache/state limits. Independent timing/call-count and genuine bad-input/failure controls must challenge the speed and coverage claims. Do not claim a universal speedup or full CI/publication success. Confirm normal hook validation, clean commits and bounded current docs; close this activity and restore the preserved source-delivery frontier.`
-  Verification: `pending implementation`
-  Commit: `pending`
+  Verification: `All required normal hooks pass through .3, including every registered doctrine and fresh task acceptance. Actual baseline/optimized complete profiles pass all12 registered checks and retain all7 unique core and17 adapter proof roles. Saved raw logs derive live suites2 to1 and physical delegated programs48 to14 per driver invocation; cadence source/transition receipts prove mandatory full local runs2 to1 per commit. Baseline parent wall78.336s agrees with independent POSIX78.33s; optimized120.834s agrees with120.80s. Do not call this an elapsed improvement: baseline used prior index/worktree controls after a setup-add mistake; selected staged states and host load differ. .4.1 finds actual competing work (load34.68 on12 logical CPUs, sibling repo cwd observed read-only), and stage trace locates existing authentication cost; unchanged authentication implementation is independently Git-diff confirmed. The initial wall comparison is invalid evidence of a speedup. No matched quiet-host leg, exact causal partition or general percentage is claimed. Saved reader independently enumerates complete registry/proof roles, validates source hashes and parent/POSIX timing, and rejects four missing-check/missing-proof/altered-source/NaN controls; prior actual production negative controls and marker counts remain retained. The three new book count rows carry derived-gate dispositions under the declared general-book review group, with distinct production/oracle/durability paths. Source projection and guarded book build pass. Re-derive: exact sources/raw timings/physical execution inventory. Falsify: independent timing/literal role list/actual failing inputs and saved-reader controls; retain the slower run. Durability: docs/audits/commit-gate-performance-20261027/{receipt.json.gz,verify.py} and preceding slice receipts. Full CI/hosted/publication qualification stays with required source delivery. Close this workflow activity and restore ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after the final normal hook/commit.`
+  Commit: `COMMIT-GATE-PERFORMANCE.4: qualify reduced work and retain timing limits`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S execute_core_verifier identifies 25c815326 and the original repeated execution. Actual complete logs establish the duplication; .4.1 diagnoses the unexpected wall result as an invalid comparison with demonstrated host contention and changed selected states, retaining the missing isolation leg explicitly.
+  - [x] **ADDRESSED (verified)** — Qualify the authoritative hook, read-only sharing and explicit README composition with complete raw coverage, exact source identities and independently checked execution inventory. Preserve the slower observation and claim reduced work only; close CGP-D1/CGP-D2 and restore the owned source frontier.
+  - [x] **NO REGRESSION** — All tests successful in the retained production focused checks (Files=2 Tests=35 and Files=2 Tests=16 plus final driver Files=1 Tests=6). Production code is unchanged in this qualification slice. The fresh saved reader rejects four actual altered-receipt controls and verifies complete registry/proof coverage, source hashes and independent timing agreement. Book/source checks pass; the final normal hook qualifies final staged documentation and evidence.
+
+- ID: `COMMIT-GATE-PERFORMANCE.4.1`
+  Status: `done`
+  Goal: `Root-cause unexpectedly slow optimized live-document validation before claiming speed improvement.`
+  Acceptance: `The first optimized complete run passes but takes 120.834s, with 100.442s inside LIVE-DOCUMENT-SIZE despite fewer physical calls. Profile actual child stages with independent elapsed timing and inspect exact process/input identities. Resolve a code regression if present; if host or input workload explains it, demonstrate that cause and limit the comparison honestly. Preserve all checks and own any new defect before closing.`
+  Verification: `Targeted timestamped Bash execution passes and locates8.05s adapter dispatch,35.50s neutral core,6.11s reference authority and25.73s ceiling authentication. Read-only process/load evidence demonstrates external CPU contention (load34.68,12 logical CPUs, concurrent sibling-repository jobs); no external work is stopped or changed. Git diff confirms all authentication implementation unchanged since baseline. POSIX CPU work is63.93s optimized versus73.16s baseline while wall grows, consistent with contention/wait and input-state confounding. Exact causal partition is not isolated: close the invalid-comparison defect by narrowing claims to verified work reduction, preserve all evidence, and explicitly withhold elapsed-speedup claims. No software regression is established by the unmatched timings.`
+  Commit: `owned by .4 qualification`
 
 ## Decisions
 
@@ -102,3 +115,9 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
   Own and repair in .3 before running it: retain genuine Git staged/worktree
   rejection using this repository's Git directory with an isolated same-volume
   alternate index/object store; no other repository or real index writes.
+
+- `CGP-D2` — resolved in .4.1 as invalid benchmark interpretation, P1 performance qualification. Reproduce with the saved
+  optimized profile command/report: all doctrines pass but wall120.834s exceeds
+  the earlier observed78.336s; live validation takes100.442s. Do not attribute
+  improvement from call counts alone. .4.1 retains source/stage/host evidence and
+  the missing isolation leg; signoff asserts reduced execution work only.

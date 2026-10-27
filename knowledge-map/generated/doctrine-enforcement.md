@@ -1,7 +1,7 @@
 # Knowledge Map: `doctrine-enforcement`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **10** uniquely owned question entries.
+> **2** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -13,6 +13,7 @@
 - q="what is DOCTRINE-ENFORCEMENT-ADOPTION.1?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="what is DOCTRINE_ENFORCEMENT.md?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="what is TOOLBOX.md?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
+- q="what performance improvement is verified for commit gates?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="what should TOOLBOX.md contain for FSMGEN?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 - q="where should FSMGEN adopt doctrine enforcement?" · facts=[doctrine-enforcement-adoption-next-task](../../docs/knowledge/doctrine-enforcement-adoption-next-task.md)
 

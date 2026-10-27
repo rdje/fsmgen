@@ -320,6 +320,29 @@ always validates again; no pass receipt is cached. Standalone neutral and
 adapter runners retain per-role execution unless explicitly selected with
 `--share-read-only-verifiers`, which requires stable validation inputs.
 
+The saved workflow qualification preserves the complete logical coverage while
+reducing repeated execution within a doctrine run:
+
+| Observed work per complete doctrine run | Before | After |
+| --- | ---: | ---: |
+| Registered doctrine checks passed | 12 | 12 |
+| Complete live-document suites | 2 | 1 |
+| Delegated program executions inside those suites | 48 | 14 |
+
+Re-derive these counts from the saved raw logs and source identities; challenge
+them with the reader's independent literal proof/registry inventory, missing
+proof/check, altered source and invalid timing controls. The tracked receipt
+and reader preserve this evidence:
+
+```bash
+python3 -B docs/audits/commit-gate-performance-20261027/verify.py --self-test
+```
+
+These are execution counts, not an elapsed-speedup guarantee. The receipt retains
+a slower optimized timing too: host contention and different selected input
+states prevent an isolated wall-time comparison. A matched quiet-host timing
+leg is missing; no elapsed percentage, full CI or hosted success is claimed.
+
 
 Timings describe each executed check. A failure rejects the run and reports
 that later checks were not run; success still requires the complete registry.
