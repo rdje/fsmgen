@@ -139,10 +139,13 @@ analysis failure clears those snapshots as well. Separate private width
 requirements retain actual literal/type/expression declarations and generated
 copy contributions before the legacy source record is overwritten. Copy events
 freeze original requirements; mutation versions prevent stale pending records
-from reviving after matching-state replacement. Unrecorded contributions remain
-explicitly opaque. Numeric widths, legacy source/type getters and public report
-schemas remain unchanged. Auxiliary binding propagation, scoped late sizing and
-symbolic HDL ranges have separate compiler integration owners.
+from reviving after matching-state replacement. Primary and auxiliary bindings
+derive only from a single complete captured requirement matching actual Core
+source/width/type state. Independent and opaque combined constraints do not lend
+one parent binding. Fresh retries capture current lexical declarations; larger
+inherited numeric floors stay opaque. Numeric widths, legacy source/type getters
+and public report schemas remain unchanged. Scoped late sizing and symbolic HDL
+ranges have separate compiler integration owners.
 
 =item debug_summary()
 

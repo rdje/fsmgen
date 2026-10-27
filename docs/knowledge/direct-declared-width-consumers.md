@@ -9,7 +9,7 @@ answers:
 date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
-evidence: docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+evidence: docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
 ---
 
@@ -38,8 +38,9 @@ canonical selected observation walk. Successful source parsing now stages real
 Signal associations and publishes primary declared_width_binding records only
 after complete module validation; facade failures clear them too. Original
 header scope survives physical renaming. Old source/numeric/public products
-conserve; literal/type branches acquire no parameter relationship. Auxiliary
-origin propagation remains .3.3.1.2.2.3.3, before target range kernels .3.3.2.
+conserve; literal/type branches acquire no parameter relationship. Eligible
+auxiliary propagation is implemented; explicit scoped late sizing remains
+.3.3.1.2.2.3.3.3 before target range kernels .3.3.2.
 Reverify:
 `prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
 
@@ -70,6 +71,17 @@ mutation versions plus installation state revoke stale pending requirements and
 primary bindings even after matching-state replacement. Current records publish
 only after complete success; all new maps clear on invalidation. Both sizing
 orders and real copy chains retain independent origins. Ordinary unscoped late
-sizing remains legacy. Auxiliary binding propagation/scoped late sizing/range
-admission and computed shape rendering remain separately owned successors.
+sizing remains legacy. Scoped late sizing/range admission and computed shape
+rendering remain separately owned successors.
 Reverify: `prove -Iperl t/2164-direct-source-width-requirements.t t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.
+
+Eligible primary and auxiliary bindings now derive from the same current
+requirement map; no separate pending-primary map can bypass combined constraints.
+A single captured requirement must still agree with the actual legacy source,
+width and absent type through Core coherence checks. Real copy chains retain the
+original declaration; static/type/parameter namespaces and one-bit captures stay
+distinct. Independent or opaque requirements withhold a single binding, including
+repeated primary declarations with equal defaults. Fresh retries use current
+lexical declarations; an inherited larger numeric floor remains explicitly
+opaque. Final event versions preserve immutable copies and reject stale source
+replacement. Reverify: `prove -Iperl t/2165-direct-auxiliary-width-bindings.t t/2164-direct-source-width-requirements.t t/2162-direct-source-width-binding-publication.t`.

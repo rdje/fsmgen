@@ -120,17 +120,20 @@ sub parse_fsm($self, $raw_ast) {
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     $self->_invalidate_declared_width_bindings;
-    local $self->{_declared_width_capture_context} = {scope => undef, bindings => {}, requirements => {}};
+    local $self->{_declared_width_capture_context} = {scope => undef, requirements => {}};
     my $module;
     my $ok = eval {
         $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
-        for my $pending (values %{$self->{_declared_width_capture_context}{bindings}}) {
-            next unless $self->_width_event_is_current($pending);
-            $pending->{signal}->set_declared_width_binding($pending->{binding});
-        }
         for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
             next unless $self->_width_event_is_current($pending);
             $pending->{signal}->set_declared_width_requirements($pending->{record});
+            my $entries = $pending->{record}{requirements};
+            # A max of independent requirements is not the last expression,
+            # even when their selected defaults happen to be equal.
+            next unless @$entries == 1 && defined($entries->[0]{width_capture});
+            my $entry = $entries->[0];
+            $pending->{signal}->set_declared_width_binding({%{$entry->{width_capture}},
+                signal => $entry->{signal}, expression => $entry->{expression}});
         }
         1;
     };
@@ -145,7 +148,6 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
 sub _invalidate_declared_width_bindings($self) {
     $self->{signal_manager}->clear_declared_width_bindings;
     if (my $context = $self->{_declared_width_capture_context}) {
-        $context->{bindings} = {};
         $context->{requirements} = {};
     }
 }
@@ -178,6 +180,10 @@ sub _width_requirements_before($self, $signal) {
     my $event = $context->{requirements}{refaddr($signal)};
     return _copy_width_requirement_data($event->{record}{requirements})
         if $event && $self->_width_event_is_current($event);
+    # Previous source transactions are not declarations in this lexical scope.
+    # Staging will retain an opaque floor if their numeric width is larger than
+    # the current requirements. A revoked event in this transaction stays opaque.
+    return [] unless $event;
     # An unrecorded numeric contribution has no attested source relationship.
     # Keep it opaque rather than borrowing the legacy last-source getter.
     return [_opaque_width_requirement($signal->name, $signal->width)];
@@ -187,7 +193,8 @@ sub _generated_width_requirements($self, $signal, $signal_name, $width) {
     return [] unless $self->{_declared_width_capture_context};
     my $entries = $signal && $signal->width == $width
         ? $self->_width_requirements_before($signal)
-        : [_opaque_width_requirement($signal_name, $width)];
+        : [];
+    $entries = [_opaque_width_requirement($signal_name, $width)] unless @$entries;
     $_->{kind} = 'generated' for @$entries;
     return $entries;
 }
@@ -1001,12 +1008,6 @@ sub _parse_size_section($self, $size_ast) {
             _declared_width_source => $declared_width_source,
             (defined $reset_value ? (attributes => { reset_value => $reset_value }) : ()),
         );
-        if ($capture_context && $width_contract->{width_capture} && $declared_width_source) {
-            $capture_context->{bindings}{refaddr($declared_signal)} = $self->_width_event($declared_signal,
-                binding => _copy_width_requirement_data({%{$width_contract->{width_capture}},
-                    signal => $declared_width_source->{signal},
-                    expression => $declared_width_source->{expression}}));
-        }
         if ($capture_context) {
             $self->_stage_width_requirements($declared_signal, [@$prior_requirements, {
                 kind => 'declaration', signal => $resolved_sig, expression => $authored_width,

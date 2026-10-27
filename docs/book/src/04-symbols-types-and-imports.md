@@ -142,8 +142,8 @@ The constant fast path consumes its actual exact decimal observation without
 replaying general lookup, evaluation or target formatting. Expression capture
 uses the canonical walk and declared-only parameter selector. Ordinary parser
 calls, source getters and numeric values stay unchanged. Successful full source
-parsing now publishes these private primary declaration bindings; propagation
-through auxiliary origins and symbolic HDL activation remain pending.
+parsing now publishes eligible private primary and auxiliary bindings from the
+recorded actual requirements. Symbolic HDL activation remains pending.
 
 Core Signals now provide private `declared_width_binding` storage for explicitly
 supplied compiler records. The envelope adds the actual declaration signal and
@@ -164,9 +164,8 @@ objects held by assignment targets, including targets absent from the module's
 signal map. A parser or later facade-analysis failure clears the records;
 nonempty environment replacement and failed direct sizing retries invalidate
 old snapshots while legacy empty no-ops retain them. Ordinary direct sizing
-without an active source context still supplies no inferred scope. Auxiliary
-origin propagation is the next compiler slice; public reports and numeric HDL
-remain unchanged in this publication step.
+without an active source context still supplies no inferred scope. Public reports
+and numeric HDL remain unchanged by this private publication.
 
 The auxiliary-origin audit found a separate preservation gap. When a generated
 `next_data` or `data_r` output also has an explicit size declaration, legacy
@@ -212,8 +211,21 @@ The same retention applies to `data_r` produced by `<=-` or `<=+`, including an
 auxiliary declared before its parent is sized. This closes the private retention
 defect. Combined symbolic shape rendering remains separately qualified; the
 requirements do not fabricate a single parent binding. Ordinary unscoped late
-sizing still supplies no guessed lexical scope. Auxiliary binding propagation,
-explicit scoped late sizing and symbolic ranges remain subsequent compiler work.
+sizing still supplies no guessed lexical scope.
+
+Primary declarations and auxiliary copies now publish `declared_width_binding`
+only when their current event contains a single complete captured requirement
+and the actual legacy source, width and type state agree. Clean copies and copy
+chains retain the original declaration signal and lexical owner, including a
+parameter defaulting to a single bit. Static observations remain static; named
+types and unrecorded inference acquire no borrowed parameter relationship.
+Independent auxiliary constraints and repeated independent primary declarations
+remain separate, even with equal defaults, and do not publish a single binding.
+Fresh source retries capture the current lexical declarations rather than
+importing prior parses' origins. A larger inherited numeric floor stays opaque
+and withholds a single binding. Explicit scoped late sizing and symbolic ranges
+remain subsequent compiler work; combined-shape rendering remains separately
+qualified.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
