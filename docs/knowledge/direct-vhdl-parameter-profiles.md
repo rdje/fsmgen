@@ -8,8 +8,8 @@ answers:
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
-evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; t/2177-direct-vhdl-width-generic-roots.t; docs/audits/direct-vhdl-width-roots-20261027.json.gz; t/2153-direct-vhdl-parameter-profiles.t; t/2154-direct-vhdl-generic-integration.t; perl/FSM/ParameterDefaultEnvironmentSupport.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2177-direct-vhdl-width-generic-roots.t t/2153-direct-vhdl-parameter-profiles.t t/2173-direct-width-target-plans.t
+evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm; t/2178-direct-vhdl-declaration-plan.t; docs/audits/direct-vhdl-declaration-plan-20261027.json.gz; t/2177-direct-vhdl-width-generic-roots.t; t/2154-direct-vhdl-generic-integration.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2178-direct-vhdl-declaration-plan.t t/2177-direct-vhdl-width-generic-roots.t t/2173-direct-width-target-plans.t
 ---
 
 DirectParameterEmitter prepares declarations from proved source observations
@@ -39,3 +39,12 @@ literal/vector/negative defaults stay static. Missing/stale/renamed/inconsistent
 inputs refuse. Omitting both inputs preserves the existing default-only profile.
 This is private preparation: the direct converter does not yet supply width
 context, and symbolic source-aware conversion remains .3.3.4.2/.3.
+
+DirectDeclarationPlan now pairs original emitted SystemVerilog ranges with
+normalized VHDL ranges and types, re-proving complete actual source/target
+declarations before preparing natural generics against those same target rows.
+Numeric width/signed/type metadata and lexical scope preserve; selected width1
+retains vector rank. Fixed/type rows gain no invented relationship. Actual
+capture/mapping, stale/foreign/collision, caller and isolated owner controls
+qualify private preparation. Captures are a caller contract, not text-provenance
+attestation. Parser consumption remains .3.3.4.2.2; renderer activation is .3.

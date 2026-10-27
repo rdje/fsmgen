@@ -459,6 +459,22 @@ Incomplete, stale, renamed or inconsistent width inputs refuse. This optional
 preparation is covered by the [width-root regression](../../../t/2177-direct-vhdl-width-generic-roots.t);
 the direct converter still needs its source-aware declaration integration.
 
+The private [DirectDeclarationPlan](../../../perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm)
+now pairs complete actual emitted declarations with the converter's normalized
+identifier map. Canonical source and VHDL width proofs check both namespaces
+against the same actual Signals. Each selected row retains its exact source
+range spelling, numeric width and signedness beside a separate VHDL range and
+vector type. A selected default of one remains a vector; independently fixed
+and named-type declarations retain their numeric/type metadata. Width-selected
+natural generic preparation uses the same target records. Original lexical
+scope stays distinct from normalized physical names. Missing, stale, foreign,
+renamed or conflicting inputs refuse, and returned records retain no caller
+owners. The [paired-plan regression](../../../t/2178-direct-vhdl-declaration-plan.t)
+qualifies this preparation with actual port and storage captures. Private parser
+consumption and renderer activation remain pending; standalone symbolic raw-text
+conversion and public reports are unchanged. External override/runtime and full
+qualification remain separately owned.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated
