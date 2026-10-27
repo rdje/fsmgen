@@ -15,10 +15,16 @@ sub integer_from_literal_like ($class, $literal_like) {
     return $parts->{value}->copy;
 }
 
-sub positive_integer_from_literal_like ($class, $literal_like) {
+sub positive_integer_from_literal_like ($class, $literal_like, $decimal_ref = undef) {
+    if (defined $decimal_ref) {
+        confess "Positive integer decimal output requires a scalar reference.\n"
+            unless ref($decimal_ref) eq 'SCALAR' || ref($decimal_ref) eq 'REF';
+        $$decimal_ref = undef;
+    }
     my $value = $class->integer_from_literal_like($literal_like);
     return undef unless defined $value;
     return undef unless $value->bcmp(0) > 0;
+    $$decimal_ref = sprintf('%s', $value->bstr) if defined $decimal_ref;
     return 0 + $value->bstr;
 }
 
@@ -384,3 +390,21 @@ sub _digits_for_radix ($class, $value, $radix, $width = undef, $pad = 0) {
 }
 
 1;
+
+=head1 NAME
+
+FSM::Package::IntegerLiteralSupport - Shared integer literal parsing and target normalization
+
+=head2 positive_integer_from_literal_like($value, $decimal_ref = undef)
+
+Returns the existing native numeric positive integer, or undef for an invalid
+or non-positive literal-like value. An optional plain scalar output reference
+receives exact decimal text from that same parsed integer, with an explicit
+string kind. It is cleared before resolution so refusal leaves no stale output.
+The ordinary two-argument class invocation retains its existing behavior.
+
+The exact decimal output describes intrinsic integer value. Target literal
+normalization separately checks declared bit-width legality; callers must not
+reconstruct a width-selection observation from target-formatted HDL text.
+
+=cut

@@ -133,7 +133,10 @@ operators, selected payload expressions and complete ordered actual lookups.
 Repeated references remain separate; namespace identity comes from the
 resolver's observation, and captured records stay detached. Ordinary width
 evaluation keeps its existing interface and callbacks. Direct parser/Core
-publication and symbolic HDL activation remain separate pending work.
+publication and symbolic HDL activation remain separate pending work. The
+scalar-constant sizing fast path now also exposes its actual constant selection
+and exact decimal integer through the shared literal parser. Its existing numeric
+accessor and the parser's earlier named-type precedence remain unchanged.
 
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate

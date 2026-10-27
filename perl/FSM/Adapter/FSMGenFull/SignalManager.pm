@@ -369,11 +369,24 @@ sub resolve_type_width($self, $type_name) {
 }
 
 sub resolve_positive_integer_scalar($self, $symbol_name) {
+    return $self->_positive_integer_scalar_selection($symbol_name, 0);
+}
+
+sub resolve_positive_integer_scalar_observation($self, $symbol_name) {
+    return undef if ref($symbol_name);
+    return $self->_positive_integer_scalar_selection($symbol_name, 1);
+}
+
+sub _positive_integer_scalar_selection($self, $symbol_name, $capture) {
     return undef unless defined $symbol_name;
     return undef unless exists $self->{constants}{$symbol_name};
-    return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
-        $self->{constants}{$symbol_name},
-    );
+    my $decimal;
+    my $width = FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+        $self->{constants}{$symbol_name}, $capture ? \$decimal : undef);
+    return $width unless $capture;
+    return undef unless defined $width;
+    return {width => $width, observation => {kind => 'static_symbol', token => $symbol_name,
+        value_payload => {kind => 'scalar', payload => $decimal}}};
 }
 
 sub resolve_positive_integer_width_symbol($self, $symbol_name) {
@@ -516,5 +529,21 @@ precedence, missing-name behavior and payload kinds. The record has no lexical
 scope or target provenance; source consumers must provide those separately.
 It captures no width expression, changes no public report schema and activates
 no symbolic HDL range support.
+
+
+=head2 resolve_positive_integer_scalar_observation($name)
+
+Returns a detached C<width> plus C<observation> for the actual constant-only
+positive scalar width fast path, or undef when no positive constant is selected.
+The observation contains C<kind=static_symbol>, C<token> and a scalar
+C<value_payload> with exact decimal text from the same canonical integer parse.
+It describes intrinsic width value, including legacy literal-like inputs;
+target formatting has separate declared bit-width validation.
+
+C<resolve_positive_integer_scalar> delegates to the same selector and retains
+its native numeric return. Types, parameters, aggregate payloads, defines and
+enum tables cannot substitute for the selected constant. The parser's earlier
+named-type branch remains separate. No lexical scope, source binding publication
+or target admission is supplied by this private record.
 
 =cut
