@@ -2161,10 +2161,37 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for target rank, private paired parsing and existing direct generic integration. Static/scalar products, oversized and X/Z refusals preserve. Book/POD build and source freshness pass; normal final-index scripts/check_doctrines.sh hook qualifies commit. Source activation and full compiler/override/runtime/publication are pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Activate paired direct VHDL conversion with complete expression type-rank handling.`
-  Acceptance: `After private type/literal preparation, wire actual completed capture, assignment analysis, normalized mapping and paired parser into direct generation without exposing raw symbolic conversion. Qualify conditions, equality/comparisons, reductions, assignments and supported selected lvalues against actual symbolic vector rank, including default1. Identify generated numeric helper/computed shapes separately under .3.4 and fail closed where their missing relationship would make an admitted artifact invalid. Preserve fixed/static/raw complete artifacts and physical/source identity separation. Split further by actual consumer boundary before implementation if needed; small native/default/refusal checks and lowering-clean book examples qualify activation, while full external/override/runtime/publication matrices remain .6.`
-  Verification: `pending private type/literal preparation`
+  Acceptance: `Join actual completed capture, assignment analysis, normalized mapping and paired parser without exposing raw symbolic conversion. Qualify conditions, comparisons, reductions, assignments and supported selections against actual symbolic vector rank. Keep unresolved computed shapes withheld under .3.4, static/raw products unchanged and full qualification in .6.`
+  Verification: `Split by comparison, remaining expression and source activation boundaries before implementation; private target types/literals are already prepared.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.3.4.3.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.1`
+  Status: `done`
+  Goal: `Prepare symbolic direct VHDL literal comparisons and comparison-result target rank privately.`
+  Acceptance: `Use actual paired parsed declarations at selected defaults1/8. Symbolic unsigned sized-literal comparisons use numeric vector overloads without default-sized padding/truncation; decimal equality uses numeric scalar overloads, preserving negative unsigned refusal. Boolean comparison results use actual symbolic target length. Preserve whole static scalar/vector products and complete caller JSON kinds, malformed/XZ refusals and reversed operand orientation. Signed symbolic sized comparisons remain explicitly withheld until qualified. No public converter activation or new source/API/MCP/corpus admission; remaining expression consumers and full compiler/override/runtime qualification stay owned. Synchronize book/POD/fact, retain initial RED and focused GREEN, then commit.`
+  Verification: `Actual paired declarations at defaults1/8 now select numeric unsigned vector overloads for sized-literal comparisons, numeric scalar overloads for decimal equality and actual target length for Boolean results. Independent whole text expectations cover each operator and orientation, ports/storage, literal-width contrasts, static products, malformed/XZ/negative/signed-sized refusals and complete caller JSON kinds. Original RED reaches default-sized strings and aborts on decimal7 at selected width1. Initial sandbox launch cannot inspect processes; approved first launch trips unchanged host88 cutoff before tests. A subsequent guarded launch reaches the actual RED. First post-edit run exposes an overreaching signed-negative test expectation; preserve the existing arithmetic refusal and correct that oracle. The corrected unchanged test also fails against an exact predecessor module whose loaded path/digest are authenticated before execution; this is a module-only overlay with current unchanged dependencies. Final focused checks report All tests successful Files=3 Tests=12. Existing static comparison provider assertions may skip; no new compiler/runtime inference. Book/POD build and source-reference freshness pass. Re-derive actual source/capture/paired parser and private expressions; falsify independent complete expected strings, authentic predecessor RED and literal/static/caller/refusal controls; durability tracked module/regression/fixture/POD/book/fact/task and docs/audits/direct-vhdl-comparison-rank-20261027.json.gz. Complete original worktree and raw-root streams are explicit retention limits. Mandatory final-index hook qualifies commit. No source/API/MCP/corpus admission or public converter activation, full compiler/override/runtime/transport/publication claim; remaining expression consumers and activation stay .2/.3-owned.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.1: preserve private symbolic VHDL comparison rank`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual T2181 Perl diagnostic at t/2181-direct-vhdl-comparison-rank.t line 67 reaches _literal_bits after selected-default comparison sizing; earlier assertions expose default-sized vector strings. _sv_unsigned_vector_comparison_literals_to_vhdl and _vhdl_decimal_equality_literal use numeric selected bounds rather than symbolic rank. Original RED and authenticated predecessor-module RED retain in the dated audit; guard refusals and corrected negative-comparison oracle remain distinct.
+  - [x] **ADDRESSED (verified)** — Private symbolic unsigned sized comparisons use numeric vector overloads at actual lengths; decimal equality uses numeric scalar overloads without truncating too-wide literals. Boolean results use target length. Complete expected text, operand orientation, selected-default contrast, caller-kind and malformed/negative/signed-sized controls pass. Other expression consumers and public source activation remain pending.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=12 for private comparison rank, directly affected literal-rank preparation and existing static unsigned comparisons. Book/POD build and source-reference freshness pass; normal hook runs scripts/check_doctrines.sh on final staged state. Full compiler/override/runtime/publication qualification stays owned and unclaimed.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.2`
+  Status: `pending`
+  Goal: `Prepare remaining symbolic conditions, assignments, selections and computed-shape refusals.`
+  Acceptance: `After comparison preparation, preserve actual symbolic vector rank in bare/logical conditions, reductions and assignments; integrate supported selected lvalues or name an explicit refusal before activation. Do not borrow selected numeric equality as elaborated shape proof for arithmetic, intermediate or mixed-width assignments. Split at actual consumers if needed; focused actual-source/static/refusal controls and synchronized documentation qualify private preparation before source activation.`
+  Verification: `pending comparison preparation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.3`
+  Status: `pending`
+  Goal: `Activate actual paired source-aware direct VHDL generation.`
+  Acceptance: `After private expression consumers qualify, capture actual source generation, pass complete assignment/declaration context through normalized pairing and parsing, and use width-aware natural generics. Preserve fixed/static/raw artifacts, physical/source identity and atomic unsupported refusals. Small native/default/Core controls and lowering-clean book examples qualify activation; generated helper/computed propagation and full compiler/override/runtime/publication remain .3.4/.6.`
+  Verification: `pending remaining expression consumers`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4`

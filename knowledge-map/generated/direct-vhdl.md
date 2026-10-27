@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **123** uniquely owned question entries.
+> **7** facts · **124** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -110,6 +110,7 @@
 - q="does reduction lowering widen the public FSM grammar?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="how are normalized target names checked without replacing lexical parameter scope?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="how do private direct VHDL literal assignments retain symbolic vector rank at default one?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
+- q="how do private symbolic VHDL comparisons avoid selected-default sizing?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="how does direct VHDL reduce a std_logic_vector?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="how should direct VHDL handle unary OR AND XOR reductions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="is VHDL still not implemented?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)

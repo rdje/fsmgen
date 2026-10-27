@@ -6,6 +6,7 @@ answers:
   - "can a direct VHDL generic used only by captured widths select natural preparation?"
   - "how are normalized target names checked without replacing lexical parameter scope?"
   - "how do private direct VHDL literal assignments retain symbolic vector rank at default one?"
+  - "how do private symbolic VHDL comparisons avoid selected-default sizing?"
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
@@ -63,3 +64,13 @@ symbolic literal lvalues and X/Z literals refuse. T2180 independently expects
 actual paired target types/literals and preserves static products. Other
 expression consumers and public source activation remain pending. Reverify with
 `prove -Iperl t/2180-direct-vhdl-target-rank.t t/2179-direct-vhdl-declaration-parser.t`.
+
+Private symbolic unsigned sized-literal comparisons use numeric unsigned
+vector overloads, preserving actual lengths and operand orientation. Decimal
+equality uses numeric scalar overloads, and Boolean result literals use the
+symbolic target length. Static products preserve. Negative comparisons keep
+the existing arithmetic refusal; signed symbolic sized comparisons remain
+withheld. T2181 qualifies actual paired declarations with independent complete
+text expectations and caller-kind controls. Other expression consumers and
+source converter activation remain pending; full override/runtime stays owned.
+Reverify: `prove -Iperl t/2181-direct-vhdl-comparison-rank.t t/2180-direct-vhdl-target-rank.t`.

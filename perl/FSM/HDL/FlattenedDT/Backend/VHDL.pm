@@ -974,10 +974,17 @@ sub _sv_unsigned_vector_comparison_literals_to_vhdl ($expr, $decls_by_name) {
     my $operands = sub {
         my ($name, $text) = @_;
         my $decl = $decls_by_name->{$name};
-        return ($name, $text) unless $decl && !$decl->{scalar} && !$decl->{signed};
+        return ($name, $text) unless $decl && !$decl->{scalar};
+        confess _unsupported('signed symbolic sized comparison requires separate qualification')
+            if exists($decl->{vhdl_type}) && $decl->{signed};
+        return ($name, $text) if $decl->{signed};
         my $parsed = _parse_sized_literal($text);
         # Validate the authored literal at its own width before extending it.
         my $bits = _literal_bits_value($parsed, force_vector => 1);
+        # numeric_std compares unsigned vectors numerically at their actual
+        # lengths. Padding at the selected default would lose that contract.
+        return ("unsigned($name)", "unsigned'($bits)")
+            if exists($decl->{vhdl_type});
         my $signal_width = _decl_width($decl);
         if ($signal_width >= $parsed->{width}) {
             substr($bits, 1, 0, '0' x ($signal_width - $parsed->{width}));
@@ -1006,6 +1013,19 @@ sub _sv_unsigned_vector_comparison_literals_to_vhdl ($expr, $decls_by_name) {
 
 sub _sv_decimal_equality_literals_to_vhdl ($expr, $decls_by_name) {
     my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    my $operands = sub {
+        my ($name, $value) = @_;
+        my $decl = $decls_by_name->{$name};
+        return ($name, $value) unless defined($decl);
+        if (exists($decl->{vhdl_type})) {
+            confess _unsupported("negative equality literal '$value' is outside the unsigned direct VHDL scaffold")
+                if !$decl->{signed} && $value < 0;
+            # The numeric scalar overload checks representability instead of
+            # truncating an out-of-range literal to the signal's length.
+            return ($decl->{signed} ? $name : "unsigned($name)", $value);
+        }
+        return ($name, _vhdl_decimal_equality_literal($value, $decl));
+    };
     my $converted = $expr;
     $converted =~ s{
         \b($identifier)\b
@@ -1013,10 +1033,8 @@ sub _sv_decimal_equality_literals_to_vhdl ($expr, $decls_by_name) {
         (-?\d+)(?!\s*')
     }{
         my ($name, $operator, $value) = ($1, $2, $3);
-        my $decl = $decls_by_name->{$name};
-        defined($decl)
-            ? $name . $operator . _vhdl_decimal_equality_literal($value, $decl)
-            : $&;
+        my ($signal, $literal) = $operands->($name, $value);
+        $signal . $operator . $literal;
     }gex;
     $converted =~ s{
         (?<![A-Za-z0-9_'])(-?\d+)
@@ -1024,10 +1042,8 @@ sub _sv_decimal_equality_literals_to_vhdl ($expr, $decls_by_name) {
         \b($identifier)\b
     }{
         my ($value, $operator, $name) = ($1, $2, $3);
-        my $decl = $decls_by_name->{$name};
-        defined($decl)
-            ? _vhdl_decimal_equality_literal($value, $decl) . $operator . $name
-            : $&;
+        my ($signal, $literal) = $operands->($name, $value);
+        $literal . $operator . $signal;
     }gex;
     return $converted;
 }
@@ -1037,10 +1053,13 @@ sub _vhdl_decimal_equality_literal ($value, $decl) {
         if $decl->{scalar} && $value !~ /\A[01]\z/;
     return "'$value'" if $decl->{scalar};
 
-    my $width = _decl_width($decl);
+    my $width = exists($decl->{vhdl_type})
+        ? "$decl->{name}'length" : _decl_width($decl);
     return "to_signed($value, $width)" if $decl->{signed};
     confess _unsupported("negative equality literal '$value' is outside the unsigned direct VHDL scaffold")
         if $value < 0;
+    return "std_logic_vector(to_unsigned($value, $width))"
+        if exists($decl->{vhdl_type});
     return _literal_bits_value({
         width => $width,
         base => 'd',
@@ -1777,7 +1796,16 @@ target's C<'length>, rather than its selected numeric default. Supported sized
 literals are unsigned and zero-extend or truncate through C<resize> before
 conversion to target signedness. Selected symbolic literal target lvalues are
 withheld pending their separate integration; existing malformed and X/Z literal
-refusals remain. Other expression consumers and source activation are pending.
+refusals remain.
+
+Private symbolic unsigned vector/sized-literal comparisons now use numeric
+unsigned overloads at the actual operand lengths, in either operand order.
+Decimal equality uses numeric scalar overloads rather than truncating literals
+to a selected default. Boolean result literals use the symbolic target's
+C<'length>. Independent static products preserve. Negative comparisons keep
+the existing arithmetic refusal, and signed symbolic sized comparisons refuse
+pending qualification. Remaining expression consumers and source activation
+are pending.
 
 This private path consumes a prepared source contract; it does not attest an
 arbitrary caller-made plan. Inputs are read-only and the result retains no

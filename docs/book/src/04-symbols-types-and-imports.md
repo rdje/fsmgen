@@ -491,6 +491,17 @@ actual paired declarations and static controls. Selected symbolic literal target
 lvalues and X/Z literals refuse. Other expression consumers and source converter
 activation remain pending; this preparation adds no public source admission.
 
+Private symbolic unsigned comparisons with sized literals now use numeric vector
+overloads at the actual operand lengths, in either operand order. Decimal equality
+uses numeric scalar overloads without truncating the literal to a selected default.
+Comparison-result literals use the actual symbolic target's `'length`. Static
+products preserve; negative comparisons retain their existing arithmetic refusal,
+and signed symbolic sized comparisons refuse pending qualification. The
+[comparison-rank regression](../../../t/2181-direct-vhdl-comparison-rank.t)
+checks actual paired declarations and independent expected target text. Remaining
+conditions, assignments and source converter activation are separately owned;
+external generic override/runtime qualification remains pending.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated
