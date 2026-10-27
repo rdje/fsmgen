@@ -511,7 +511,22 @@ their expression consumers. Selected, bitwise, vector-pair, decimal-relational a
 negated-comparison leaves remain withheld. Static condition products preserve.
 The [condition-rank regression](../../../t/2182-direct-vhdl-condition-rank.t)
 checks actual paired declarations, whole expected Boolean strings and helper
-closure. Source activation and remaining assignment/shape consumers stay pending.
+closure. Source activation remains pending.
+
+Private symbolic assignments now resize unsigned vector sources to the actual
+whole target length, preserving zero extension and low-bit truncation across
+independent widths. Scalar sources and whole-vector reduction results extend
+from one bit; a scalar destination takes the source vector's low bit. Target
+signedness is applied after unsigned resizing. Complete grouping preserves the
+same conversion. The [assignment-rank regression](../../../t/2183-direct-vhdl-assignment-rank.t)
+checks actual paired ports, storage and register assignments at distinct selected
+defaults, with independent expected target text and unchanged static controls.
+Selected operands or lvalues, signed-vector resizing, arithmetic, concatenation
+and other computed expressions refuse before selected numeric widths can be
+mistaken for elaborated relationships. Symbolic vector-pair and decimal-relational
+conditions remain withheld. Source converter activation and generated internal
+shape propagation remain separate work; compiler/override/runtime qualification
+is still pending.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-27`
+- Last updated: `2026-10-28`
 - Owner: repo-local workflow
 
 ## Goal
@@ -2181,10 +2181,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=12 for private comparison rank, directly affected literal-rank preparation and existing static unsigned comparisons. Book/POD build and source-reference freshness pass; normal hook runs scripts/check_doctrines.sh on final staged state. Full compiler/override/runtime/publication qualification stays owned and unclaimed.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare remaining symbolic conditions, assignments, selections and computed-shape refusals.`
   Acceptance: `After comparison preparation, preserve actual symbolic vector rank in bare/logical conditions, reductions and assignments; integrate supported selected lvalues or name an explicit refusal before activation. Do not borrow selected numeric equality as elaborated shape proof for arithmetic, intermediate or mixed-width assignments. Split at actual consumers; focused actual-source/static/refusal controls and synchronized documentation qualify preparation before source activation.`
-  Verification: `Split symbolic Boolean conditions from assignment/shape consumers before implementation.`
+  Verification: `Private Boolean and assignment consumers are implemented with focused checks through both children. Computed/selected/signed boundaries refuse explicitly; source activation remains .3 and full qualification .6.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.2.1, ISF-REDUCTION-DELIVERY.3.3.4.3.2.2.2`
 
@@ -2201,17 +2201,22 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=14 for symbolic condition rank, existing literal comparisons and reduction readiness. Static condition/helper products, complete expected Boolean strings and malformed/collision controls pass. Book/POD build, source-reference freshness and syntax OK pass; normal hook runs scripts/check_doctrines.sh on final staged state. No full compiler/override/runtime/publication claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare symbolic assignments, selections and remaining computed-shape refusals before source activation.`
   Acceptance: `After private Boolean preparation, integrate proved symbolic assignments and supported selections or explicit refusal. Name vector-pair/decimal-relational/selected condition boundaries that remain unsupported. Use canonical relationships rather than numeric equality for arithmetic and mixed-width/internal targets; withhold missing computed shapes under .3.4. Preserve whole static/raw artifacts and independent widths; focused actual-source/Core/refusal checks and synchronized documentation precede activation .3.`
-  Verification: `pending symbolic Boolean preparation`
-  Commit: `pending`
+  Verification: `Actual paired unsigned assignments now resize to actual whole-target length, including width1 vector rank and independent-width zero extension/truncation before target signedness conversion. Scalar sources and whole-vector reduction results extend from one bit; scalar targets take the low source bit. Grouping and actual generated sequential assignment consumption preserve. Selected operands/lvalues, signed-vector resizing, unknown and computed expressions refuse before selected numeric fallback. Initial untouched-module T2183 is RED Files1 Tests3 failed1-2; retain exact initial test and complete streams. First integration uses the wrong shared parenthesis accessor; second reveals caller JSON-kind mutation through static width arithmetic. Correct both production paths without weakening the oracle. Final current-only grouping/bare-reduction controls extend the original cohort. Focused All tests successful Files=5 Tests=18 covers assignment, condition, comparison, literal and direct generic integration; both changed Perl files syntax OK. Book/POD build and source-reference freshness pass. Re-derive actual source/capture/paired declarations and sequential consumer; falsify independent whole strings, original RED, mixed widths/ranks, static/caller/hostile controls; durability tracked source/test/fixture/POD/book/fact and docs/audits/direct-vhdl-assignment-rank-20261028.json.gz. Complete original worktree/raw-root streams and external compiler/four-state runtime remain explicit gaps. Private backend sync only: source/API/MCP/corpus admission and reports remain unchanged; activation .3 and generated computed shapes .3.4 stay owned, full qualification .6 remains unclaimed. Startup claim template matches retained review; cleanup is not due at actual UTC. Normal final-index doctrines/hook gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.2.2: preserve private symbolic VHDL assignment rank`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original T2183 Perl diagnostic at t/2183-direct-vhdl-assignment-rank.t line 48 exposes unconverted scalar/vector transfers and reduction-result rank; lines69/71 expose computed and selected expressions accepted through numeric/default fallback. The new private dispatcher gates whole targets before comparison/reduction rewriting. Retain original RED plus the parenthesis-accessor and caller-kind integration failures in the dated audit.
+  - [x] **ADDRESSED (verified)** — Resize unsigned sources at actual target length, extend scalar/reduction results, truncate vector-to-scalar at the low bit and convert destination signedness afterward. Selected/signed/computed/unresolved forms refuse before numeric fallback. Actual paired default contrasts, sequential consumers, independent whole target strings and complete caller-kind/static controls pass; no source activation or generated-shape admission follows.
+  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=18 for T2183/T2182/T2181/T2180/T2154; changed module and test syntax OK. Book/POD build and source-reference freshness pass. Mandatory final-index scripts/check_doctrines.sh and normal hook qualify commit; full compiler/override/runtime/publication remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.4.3.2.3`
   Status: `pending`
   Goal: `Activate actual paired source-aware direct VHDL generation.`
   Acceptance: `After private expression consumers qualify, capture actual source generation, pass complete assignment/declaration context through normalized pairing and parsing, and use width-aware natural generics. Preserve fixed/static/raw artifacts, physical/source identity and atomic unsupported refusals. Small native/default/Core controls and lowering-clean book examples qualify activation; generated helper/computed propagation and full compiler/override/runtime/publication remain .3.4/.6.`
-  Verification: `pending remaining expression consumers`
+  Verification: `Private consumers are qualified with focused checks. Next join actual source capture and paired parsing, with explicit refusals for missing generated computed shapes; full qualification stays .6.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4`

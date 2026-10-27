@@ -983,6 +983,15 @@ sub _sv_symbolic_condition_to_vhdl ($expr, $ctx, $negated = 0) {
 
 sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
+    if (!$ctx->{boolean_context}) {
+        my $decls = $ctx->{decls_by_name} || {};
+        my $target = _decl_for_lvalue($ctx->{target_lhs}, $decls);
+        if (($target && exists($target->{vhdl_type}))
+            || _condition_uses_symbolic_declaration($trimmed, $decls)) {
+            my $assignment = _sv_symbolic_assignment_to_vhdl($trimmed, $ctx, $target);
+            return $assignment if defined $assignment;
+        }
+    }
     if (!$ctx->{boolean_context} && _has_comparison_operator($trimmed)) {
         my $decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
         my ($true, $false) = $decl
@@ -995,8 +1004,6 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
         if $trimmed =~ /~/;
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     if ($target_decl && exists($target_decl->{vhdl_type})) {
-        confess _unsupported('selected symbolic target lvalues require separate type-rank integration')
-            unless $ctx->{target_lhs} eq $target_decl->{name};
         if (my $literal = _parse_sized_literal($trimmed)) {
             my $bits = _literal_bits_value($literal, force_vector => 1);
             my $type = $target_decl->{signed} ? 'signed' : 'std_logic_vector';
@@ -1052,6 +1059,51 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
         if $arithmetic_residue =~ /[+\-*\/%]/ || $arithmetic_residue =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _sv_symbolic_assignment_to_vhdl ($expr, $ctx, $target) {
+    confess _unsupported('symbolic assignment requires a resolved target declaration')
+        unless $target && defined($ctx->{target_lhs});
+    confess _unsupported('selected symbolic target lvalues require separate type-rank integration')
+        unless $ctx->{target_lhs} eq $target->{name};
+    confess _unsupported('selected symbolic assignment operands require separate shape qualification')
+        if $expr =~ /\[/;
+    # Existing literal and Boolean-result consumers already use actual target
+    # length. Keep those authorities, after checking the complete lvalue.
+    return undef if $expr =~ /^-?\d+$/ || _parse_sized_literal($expr)
+        || _has_comparison_operator($expr);
+
+    my $atom = $expr;
+    while ($atom =~ /^\(/) {
+        my $group = _consume_parenthesized($atom, 0, 'symbolic assignment');
+        last unless $group->{next} == length($atom);
+        $atom = _trim($group->{content});
+    }
+    my $decls = $ctx->{decls_by_name} || {};
+    my ($operand, $scalar);
+    if ($atom =~ /^[A-Za-z_][A-Za-z0-9_]*$/ && $decls->{$atom}) {
+        my $source = $decls->{$atom};
+        $operand = $atom;
+        $scalar = $source->{scalar};
+        # A one-bit destination takes the low bit regardless of source sign.
+        return $scalar ? $operand : "$operand($source->{lsb})" if $target->{scalar};
+        # Signed resize preserves the sign bit when narrowing; that is not
+        # assignment truncation. Do not route it through numeric-width logic.
+        confess _unsupported('signed source in symbolic assignment requires separate shape qualification')
+            if !$scalar && $source->{signed};
+    }
+    elsif ($expr =~ /^\(/ && $atom =~ /^(~?)([|&^])\s*([A-Za-z_][A-Za-z0-9_]*|\(\s*[A-Za-z_][A-Za-z0-9_]*\s*\))$/) {
+        $operand = _sv_reduction_to_vhdl($expr, $1, $2, $3, $decls);
+        $scalar = 1;
+    }
+    else {
+        confess _unsupported("symbolic assignment expression '$expr' requires separate computed-shape qualification");
+    }
+    return $operand if $target->{scalar};
+    my $unsigned = $scalar ? "unsigned'(0 => $operand)" : "unsigned($operand)";
+    my $width = exists($target->{vhdl_type}) ? "$target->{name}'length" : _decl_width({%$target});
+    my $type = $target->{signed} ? 'signed' : 'std_logic_vector';
+    return "$type(resize($unsigned, $width))";
 }
 
 sub _has_comparison_operator ($expr) {
@@ -1913,6 +1965,15 @@ existing collision check. Qualified comparison/reduction leaves share existing
 consumers. Unqualified selected, bitwise, vector-pair, decimal-relational and
 negated-comparison leaves refuse before source activation. Static condition
 products and their helper inventory retain their existing conversion path.
+
+Private symbolic assignments resize unsigned vectors to actual whole-target
+lengths, with zero extension and low-bit truncation. Scalar sources and
+whole-vector reduction results extend from one bit; scalar destinations take
+the low source bit. Target signedness applies after unsigned resizing. Complete
+atom grouping preserves the conversion. Selected operands/lvalues, signed-vector
+resizing and other computed expressions refuse before numeric selected-default
+width logic. Independent static assignment products preserve. Source converter
+activation and generated internal shape propagation remain separately owned.
 
 This private path consumes a prepared source contract; it does not attest an
 arbitrary caller-made plan. Inputs are read-only and the result retains no

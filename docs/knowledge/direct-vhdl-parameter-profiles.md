@@ -8,6 +8,7 @@ answers:
   - "how do private direct VHDL literal assignments retain symbolic vector rank at default one?"
   - "how do private symbolic VHDL comparisons avoid selected-default sizing?"
   - "how do private symbolic VHDL conditions retain whole-vector truth?"
+  - "how do private symbolic VHDL assignments preserve unsigned sizing?"
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
@@ -85,3 +86,12 @@ products and helper inventory preserve. Actual paired declarations, complete
 independent Boolean strings, caller kinds and malformed/helper controls qualify
 T2182. Source activation and remaining assignment/shape consumers stay pending.
 Reverify: `prove -Iperl t/2182-direct-vhdl-condition-rank.t t/2181-direct-vhdl-comparison-rank.t`.
+
+Private symbolic assignments resize unsigned sources to actual target length,
+zero-extending or truncating low bits before target signedness conversion.
+Scalars and reductions extend from one bit; scalar destinations take the low
+source bit. Selections, signed-vector resizing and computed expressions refuse
+before numeric default logic. T2183 checks actual paired ports/storage/registers,
+independent whole strings, caller kinds and static/refusal controls. Source
+activation and generated computed-shape propagation remain separately owned.
+Reverify: `prove -Iperl t/2183-direct-vhdl-assignment-rank.t t/2180-direct-vhdl-target-rank.t`.
