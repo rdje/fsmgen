@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.2`
-- next_action: Resolve opt-in direct declaration captures through actual type/constant/expression branches, preserving ordinary numeric/source contracts. Use fixed actual fast-path observations and canonical expression capture; Core publication follows in .2.3.
+- active_work_unit: `COMMIT-GATE-PERFORMANCE.2`
+- next_action: Deduplicate equivalent deterministic read-only delegated verifiers within one invocation, preserving every proof role and failure. Qualify command/root distinctions and fresh-input rejection; resume ISF .3.3.1.2.2.2 after workflow completion.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
-- blockers: Remaining requests block SPECFORGE. Independent publication defects stay deferred until required validation/publication; full CI, authorized push/exact-SHA hosted qualification and post-push macOS review remain later work.
+- blockers: None for gate streamlining. Required source features and their full/publication qualification remain owned by ISF-REDUCTION-DELIVERY and its coordination trees.

@@ -135,6 +135,25 @@ Run the local doctrine gate with:
 scripts/check_doctrines.sh
 ```
 
+The mandatory pre-commit hook is the authoritative full local gate after its
+Knowledge Map and focused-index generation/staging. A successful normal commit
+requires every registered check to pass. An identical manual full preflight is
+optional; it grants no permission to skip the final hook. CI independently runs
+the complete diagnostic mode. Decision `0122` and `COMMIT.md` own this cadence.
+
+For measured local feedback:
+
+```bash
+scripts/check_doctrines.sh --timings --fail-fast
+```
+
+`--timings` reports wall, user and system seconds for each executed check as
+observation metadata. It does not change the validation verdict. `--fail-fast`
+rejects on the first failure and explicitly reports that remaining checks were
+not run; successful runs still execute the entire registry. Without flags the
+driver continues through failures for complete CI diagnostics. No result is
+cached between invocations; changed inputs are freshly checked.
+
 ## Task-Acceptance Evidence Gate
 
 `TASK_ACCEPTANCE.md` is the project-neutral standard. The checker embeds no

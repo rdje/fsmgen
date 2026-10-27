@@ -54,9 +54,11 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
   (e.g. `ISF-SWAP: …`, `MEMORY-ARCHITECTURE-ADOPTION.4: …`).
 - **The mdBook (`docs/book/`) is user-facing** — keep it synced in the same slice with
   runnable, lowering-clean examples (`docs/decisions/0006`).
-- **Before committing, run `scripts/check_doctrines.sh`** — git hooks and CI
-  run it too, including the memory-architecture and Knowledge Map gates, and a
-  non-compliant change fails the build and cannot merge. Activate the hooks
-  once per clone: `git config core.hooksPath .githooks`.
+- **Every commit must pass `scripts/check_doctrines.sh` in the pre-commit hook** —
+  it is the authoritative full local gate after derived indexes are staged.
+  Optional preflight is diagnostic; do not repeat the full gate merely to run it
+  again in the hook. CI independently enforces the same doctrines. Never bypass
+  the hook. Activate it once per clone: `git config core.hooksPath .githooks`.
+  Follow `COMMIT.md` and decision `0122`.
 
 Nothing important may live only in this conversation — route it to a layer and commit.

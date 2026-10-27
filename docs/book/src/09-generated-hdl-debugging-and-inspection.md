@@ -290,6 +290,23 @@ project-data locality. The local pre-commit hook regenerates the Knowledge Map
 root and topic shards before running the driver, and hosted regression CI runs
 the same driver before the broader regression gate.
 
+The mandatory pre-commit hook is the authoritative full local gate after derived
+indexes are staged. A successful commit requires every registered doctrine to
+pass. Follow `COMMIT.md`; an identical manual full preflight is optional and
+cannot replace the final hook. Hooks must be enabled with
+`git config core.hooksPath .githooks`.
+
+For local timing and prompt failure feedback:
+
+```bash
+scripts/check_doctrines.sh --timings --fail-fast
+```
+
+Timings describe each executed check. A failure rejects the run and reports
+that later checks were not run; success still requires the complete registry.
+The default mode continues through failures for full CI diagnostics. Each
+invocation validates current inputs; there is no persistent pass cache.
+
 Before diagnosing something that may already be known, query the map with the
 words you would naturally ask:
 

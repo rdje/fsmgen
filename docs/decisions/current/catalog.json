@@ -1451,6 +1451,28 @@
       },
       "path": "docs/decisions/current/continuity/0121-required-specforge-delivery-controls-task-selection.md",
       "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 2754,
+        "line_bytes": 145,
+        "lines": 54,
+        "sha256": "a4a1c6dedacbde7655f4254295864962527109ab54e5f20d674a0604a25a95ac"
+      },
+      "id": "0122",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": "doctrine-enforcement-one-authoritative-commit-gate",
+        "knowledge_status": "current",
+        "questions": [
+          "must the complete doctrine suite run both before and inside every commit?",
+          "can a passed preflight replace final commit validation?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0122-one-authoritative-final-index-commit-gate.md",
+      "type": "convention/governance"
     }
   ],
   "schema_version": 1,

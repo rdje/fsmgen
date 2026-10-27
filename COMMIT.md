@@ -171,10 +171,19 @@ push, consume the GitHub result before treating the push follow-up as complete:
    - If the completed activity belongs to a task-tree leaf, identify the leaf ID in the subject or first body line.
 7. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
-8. Run `scripts/check_doctrines.sh` against the staged index. This includes
-   `TASK-ACCEPTANCE`; do not treat its docs-only exemption as a code-slice pass.
+8. Verify the mandatory hook is enabled: `git config --get core.hooksPath`
+   must resolve to `.githooks` (activate once per clone as directed by AGENTS.md).
+   The pre-commit hook is the authoritative full local gate. It regenerates and
+   stages derived indexes, then runs every registered doctrine against the final
+   staged state, including `TASK-ACCEPTANCE`. A code slice cannot use its docs-only
+   exemption. Do not bypass the hook or accept an earlier preflight as its result.
+   Optional `scripts/check_doctrines.sh --timings --fail-fast` is diagnostic;
+   an identical manual full run is not required before a normal hooked commit.
 9. Commit using:
    - `git --no-pager commit -F git_message_brief.txt`
+   - Consume the hook result. Success requires every registered check to pass;
+     on failure the commit is rejected, remaining checks may be unrun, and the
+     owning slice stays in flight until repaired. Decision `0122` owns this rule.
 10. Truncate message file:
    - `truncate -s 0 git_message_brief.txt`
 11. Verify final state:

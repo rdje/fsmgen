@@ -18,4 +18,4 @@ git add -A -- "${knowledge_map_paths[@]}"
 focused_document_index="$("$ROOT/scripts/focused_document_index.pl" --print-output)"
 git add -A -- "$focused_document_index"
 
-"$ROOT/scripts/check_doctrines.sh"
+"$ROOT/scripts/check_doctrines.sh" --timings --fail-fast

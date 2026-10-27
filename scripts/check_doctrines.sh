@@ -28,10 +28,14 @@ DOCTRINES=(
 usage() {
   cat <<'USAGE'
 Usage:
-  scripts/check_doctrines.sh [--list|--help]
+  scripts/check_doctrines.sh [--timings] [--fail-fast]
+  scripts/check_doctrines.sh --list|--help
 
 Runs every registered FSMGEN doctrine check and exits nonzero if any doctrine
 is breached. The registry lives in this script.
+--timings emits wall/user/system seconds for each executed check.
+--fail-fast stops on the first failed check; success still requires all checks.
+Without flags, every check runs for complete CI diagnostics.
 USAGE
 }
 
@@ -43,23 +47,36 @@ list_doctrines() {
   done
 }
 
-case "${1:-}" in
-  "")
-    ;;
-  --list)
-    list_doctrines
-    exit 0
-    ;;
-  --help|-h)
-    usage
-    exit 0
-    ;;
-  *)
-    printf '[doctrine] FAIL: unknown argument: %s\n' "$1" >&2
-    usage >&2
-    exit 2
-    ;;
-esac
+doctrine_timings=0
+doctrine_fail_fast=0
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    --timings) doctrine_timings=1 ;;
+    --fail-fast) doctrine_fail_fast=1 ;;
+    --list)
+      [[ "$#" -eq 1 ]] || { usage >&2; exit 2; }
+      list_doctrines
+      exit 0
+      ;;
+    --help|-h) usage; exit 0 ;;
+    *)
+      printf '[doctrine] FAIL: unknown argument: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+run_registered_check() {
+  local doctrine_id="$1" doctrine_path="$2"
+  if [[ "${doctrine_timings}" -eq 1 ]]; then
+    local TIMEFORMAT="[doctrine] TIME: ${doctrine_id} real_s=%3R user_s=%3U sys_s=%3S"
+    time "${ROOT_DIR}/${doctrine_path}"
+  else
+    "${ROOT_DIR}/${doctrine_path}"
+  fi
+}
 
 fail=0
 meta_fail=0
@@ -87,11 +104,15 @@ fi
 for entry in "${DOCTRINES[@]}"; do
   IFS='|' read -r id path description <<< "${entry}"
   printf '[doctrine] RUN:  %s - %s\n' "${id}" "${description}"
-  if "${ROOT_DIR}/${path}"; then
+  if run_registered_check "${id}" "${path}"; then
     printf '[doctrine] PASS: %s\n' "${id}"
   else
     printf '[doctrine] FAIL: %s\n' "${id}" >&2
     fail=1
+    if [[ "${doctrine_fail_fast}" -eq 1 ]]; then
+      printf '[doctrine] fail-fast: remaining checks were not run\n' >&2
+      break
+    fi
   fi
 done
 
