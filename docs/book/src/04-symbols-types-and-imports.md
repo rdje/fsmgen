@@ -258,6 +258,7 @@ use lib 'perl';
 use Lispish;
 use FSM::Adapter::FSMGenFull;
 use FSM::DeclaredWidthBindingSupport;
+use FSM::DeclaredWidthRangeSupport;
 use FSM::ParameterDefaultEnvironmentSupport;
 my $source = '(?fsm:late_case (+params (W 8)) (idle (<-= (data 0))))';
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
@@ -272,6 +273,10 @@ my $environment = FSM::ParameterDefaultEnvironmentSupport->build_direct_environm
 my $proof = FSM::DeclaredWidthBindingSupport->prove_signal(
     signal => $adapter->{signal_manager}->get_signal('next_data'),
     environment => $environment);
+my $range_plan = FSM::DeclaredWidthRangeSupport->prepare_signal(
+    signal => $adapter->{signal_manager}->get_signal('next_data'),
+    environment => $environment, target_language => 'vhdl');
+# $range_plan->{range_text} is '((W - 1) downto 0)'.
 ```
 
 Scope preflight refuses malformed or incompatible records before mutation.
@@ -321,8 +326,22 @@ default width must agree. Selected parameter root/path payloads must also match
 the declared environment. It performs no live namespace lookup and never chooses
 a relationship from equal numbers. Static selections stay pinned beside
 same-named parameters. Returned capture and ordered parameter-reference records
-are plain and detached. This proves consistency; producer authorship, target
-legality, contract adaptation and backend range activation remain separate.
+are plain and detached. This proves consistency; producer authorship and full
+target declaration legality remain caller responsibilities.
+
+The private `DeclaredWidthRangeSupport::prepare_signal` adapter now turns that
+proved binding into a bounded SystemVerilog, Verilog or VHDL range plan. It
+retains selected scalar root names and repeated order, inlines pinned static
+trees, and delegates arithmetic and target text to the shared width kernels.
+Symbolic widths retain vector rank at a default of one. Fully static captures
+return a fixed plan with the existing numeric rank and no new range text.
+Mutable paths, aggregate or unsupported typed roots, symbol-bearing parameter
+payloads and static payloads hiding mutable dependencies refuse explicitly.
+VHDL additionally requires portable natural payloads and arithmetic operators,
+with bounds checked at each intermediate step. Caller defaults remain unchanged.
+These detached private plans do not yet activate direct HDL declarations;
+actual module membership, complete target namespaces and backend integration
+remain the next steps.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:

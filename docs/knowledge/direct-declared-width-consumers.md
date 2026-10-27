@@ -11,6 +11,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  perl/FSM/DeclaredWidthRangeSupport.pm; t/2171-declared-width-range-adapter.t; docs/audits/direct-width-range-adapter-20261027.json.gz;
   docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; docs/audits/shared-vhdl-width-kernel-20261027.json.gz;
   perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm;
   docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz;
@@ -151,10 +152,16 @@ caller topology captured as a deterministic reference graph. Direct raw
 conversion and captured direct plans remain inactive. Reverify:
 `prove -Iperl t/2169-shared-vhdl-width-kernel.t t/2139-composition-vhdl-port-ranges.t`.
 
-DeclaredWidthBindingSupport now proves coherent actual Signal captures against
+DeclaredWidthBindingSupport proves coherent actual Signal captures against
 frozen lookup observations and declared root/path payloads, reusing canonical
-width evaluation without live namespace selection. Canonical capture proof is
-.3.3.2.3.1; structured target-contract adaptation and actual module/target plan
-assembly remain .2/.3 before direct declaration activation. No ordinary runtime
-consumer imports this new helper yet. Reverify:
-`prove -Iperl t/2170-declared-width-binding-proof.t t/2160-direct-declared-width-capture.t`.
+width evaluation without live namespace selection. DeclaredWidthRangeSupport
+now adapts the proved structured graph to shared target contracts and range text.
+Selected scalar roots retain their actual names, aliases, repeated order and
+one-bit vector rank; pinned static trees inline without bypassing target-owned
+intermediate checks. Fully static captures keep fixed numeric/rank plans.
+Mutable paths, unsupported scalar/type/target profiles, symbol-bearing parameter
+payloads and static payloads hiding mutable dependencies refuse. Caller defaults
+remain unchanged and plans retain no Signal/environment owner. Actual module
+membership/target namespaces remain .3.3.2.3.3 before declaration activation;
+no ordinary runtime consumer imports these new helpers yet. Reverify:
+`prove -Iperl t/2171-declared-width-range-adapter.t t/2170-declared-width-binding-proof.t`.
