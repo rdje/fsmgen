@@ -96,8 +96,10 @@ sub register_signal($self, $signal_name, %attributes) {
                     && (defined($normalized_attrs{declared_type_name}) || defined($existing->{declared_type_name})))
                 || (exists($normalized_attrs{declared_type_spec})
                     && (defined($normalized_attrs{declared_type_spec}) || defined($existing->{declared_type_spec})));
-            $existing->clear_declared_width_binding
-                if $width_refines || $type_replaced || exists($normalized_attrs{_declared_width_source});
+            if ($width_refines || $type_replaced || exists($normalized_attrs{_declared_width_source})) {
+                $existing->clear_declared_width_binding;
+                $existing->clear_declared_width_requirements;
+            }
             
             # Update width if the new width is more specific (larger) than existing
             if (defined($normalized_attrs{width}) && $normalized_attrs{width} > ($existing->width || 1)) {
@@ -126,6 +128,8 @@ sub register_signal($self, $signal_name, %attributes) {
             $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
             $existing->set_declared_width_binding($normalized_attrs{_declared_width_binding})
                 if exists $normalized_attrs{_declared_width_binding};
+            $existing->set_declared_width_requirements($normalized_attrs{_declared_width_requirements})
+                if exists $normalized_attrs{_declared_width_requirements};
             
             # Merge semantic attributes
             if (ref($normalized_attrs{attributes}) eq 'HASH') {
@@ -165,7 +169,10 @@ sub get_signal($self, $signal_name) {
 }
 
 sub clear_declared_width_bindings($self) {
-    $_->clear_declared_width_binding for values %{$self->{signal_registry}};
+    for my $signal (values %{$self->{signal_registry}}) {
+        $signal->clear_declared_width_binding;
+        $signal->clear_declared_width_requirements;
+    }
     return $self;
 }
 

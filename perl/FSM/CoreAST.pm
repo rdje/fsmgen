@@ -47,6 +47,8 @@ package FSM::CoreAST::Signal;
         my $self = bless $hash_to_bless, $class;
         $self->set_declared_width_binding($args{_declared_width_binding})
             if exists $args{_declared_width_binding};
+        $self->set_declared_width_requirements($args{_declared_width_requirements})
+            if exists $args{_declared_width_requirements};
         
         return $self;
     }
@@ -121,6 +123,96 @@ package FSM::CoreAST::Signal;
             && $binding->{signal} eq $source->{signal};
         my $json = JSON::PP->new->canonical->allow_nonref;
         return $json->encode($binding->{expression}) eq $json->encode($source->{expression});
+    }
+
+    # Requirements preserve separate contributions to a max-width decision.
+    # They are not one effective symbolic binding or permission to emit a range.
+    sub declared_width_requirements($self) {
+        return undef unless exists $self->{_declared_width_requirements};
+        my $state = eval {$self->_declared_width_requirements_state};
+        return undef if $@ || $state ne $self->{_declared_width_requirements_state};
+        return _copy_declared_width_requirements($self->{_declared_width_requirements});
+    }
+
+    sub clear_declared_width_requirements($self) {
+        delete $self->{_declared_width_requirements};
+        delete $self->{_declared_width_requirements_state};
+        return $self;
+    }
+
+    sub set_declared_width_requirements($self, $requirements) {
+        $self->clear_declared_width_requirements;
+        return $self unless defined $requirements;
+        my $copy = _copy_declared_width_requirements($requirements);
+        return $self unless defined($self->{_width}) && !ref($self->{_width})
+            && Scalar::Util::looks_like_number($self->{_width}) && $self->{_width} == $copy->{width};
+        my $state = eval {$self->_declared_width_requirements_state};
+        Carp::confess "Declared width requirements need plain installation state: $@" if $@;
+        $self->{_declared_width_requirements} = $copy;
+        $self->{_declared_width_requirements_state} = $state;
+        return $self;
+    }
+
+    sub _declared_width_requirements_state($self) {
+        return JSON::PP->new->canonical->allow_nonref->encode([
+            $self->{_width}, $self->{_declared_width_source},
+            $self->{declared_type_name}, $self->{declared_type_spec},
+        ]);
+    }
+
+    sub _copy_declared_width_requirements($requirements) {
+        my $json = JSON::PP->new->canonical->allow_nonref;
+        my $copy = eval {$json->decode($json->encode($requirements))};
+        Carp::confess "Declared width requirements need plain JSON data: $@" if $@;
+        my $positive_integer = sub ($value) {
+            return defined($value) && !ref($value) && $json->encode($value) =~ /\A[0-9]/
+                && Scalar::Util::looks_like_number($value) && $value > 0 && int($value) == $value;
+        };
+        Carp::confess "Declared width requirements need a complete requirement envelope.\n"
+            unless ref($copy) eq 'HASH' && join(',', sort keys %$copy) eq 'requirements,scope,width'
+                && $positive_integer->($copy->{width})
+                && ref($copy->{requirements}) eq 'ARRAY' && @{$copy->{requirements}};
+        my $scope = $copy->{scope};
+        Carp::confess "Declared width requirements need an explicit direct-module scope.\n"
+            unless ref($scope) eq 'HASH' && join(',', sort keys %$scope) eq 'kind,owner'
+                && !ref($scope->{kind}) && ($scope->{kind} // '') eq 'direct_module'
+                && defined($scope->{owner}) && !ref($scope->{owner}) && length($scope->{owner});
+        my $max_width = 0;
+        for my $entry (@{$copy->{requirements}}) {
+            Carp::confess "Declared width requirements need complete declaration/generated snapshots.\n"
+                unless ref($entry) eq 'HASH'
+                    && join(',', sort keys %$entry) eq 'declared_type_name,declared_type_spec,expression,kind,signal,width,width_capture'
+                    && !ref($entry->{kind}) && ($entry->{kind} // '') =~ /\A(?:declaration|generated)\z/
+                    && defined($entry->{signal}) && !ref($entry->{signal}) && length($entry->{signal})
+                    && $positive_integer->($entry->{width})
+                    && (!ref($entry->{expression}) || ref($entry->{expression}) eq 'ARRAY')
+                    && (defined($entry->{expression}) || $entry->{kind} eq 'generated');
+            $max_width = $entry->{width} if $entry->{width} > $max_width;
+            my $type_name = $entry->{declared_type_name};
+            my $type_spec = $entry->{declared_type_spec};
+            if (defined($type_name) || defined($type_spec)) {
+                Carp::confess "Declared width requirements need a complete named-type snapshot.\n"
+                    unless defined($type_name) && !ref($type_name) && length($type_name)
+                        && ref($type_spec) eq 'HASH' && !defined($entry->{width_capture});
+            }
+            if (defined $entry->{width_capture}) {
+                my $capture = $entry->{width_capture};
+                my $valid = eval {
+                    die "incomplete capture\n" unless ref($capture) eq 'HASH'
+                        && join(',', sort keys %$capture) eq 'binding,observations,scope,width';
+                    _copy_declared_width_binding({%$capture, signal => $entry->{signal}, expression => $entry->{expression}});
+                    die "capture width/scope mismatch\n" unless $capture->{width} == $entry->{width}
+                        && $json->encode($capture->{scope}) eq $json->encode($scope);
+                    1;
+                };
+                Carp::confess "Declared width requirements need a matching canonical capture: $@" unless $valid;
+            }
+        }
+        Carp::confess "Declared width requirements must account for the observed effective width.\n"
+            unless $copy->{width} == $max_width;
+        # Canonical graph meaning and target admissibility remain producer and
+        # consumer obligations. This holder never re-evaluates source syntax.
+        return $copy;
     }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
@@ -2488,6 +2580,14 @@ C<expression>, its frontend token tree; and C<resolved_width>, its evaluated wid
 at declaration time. Bare decimal widths and named types retain their existing
 contracts. This source record does not classify parameter dependencies, resize HDL,
 or extend the sanitized semantic-report schema.
+
+Private C<declared_width_requirements> stores explicitly supplied, detached
+declaration/generated width snapshots separately from one coherent binding.
+Its scope and observed maximum width are explicit. Literal/type distinctions
+and canonical captures are retained without evaluation. Replacement clears old
+records before validation; registry source/type/width changes and transaction
+clearing invalidate them. Getter exposure requires unchanged installation state.
+This holder alone neither captures parser events nor admits symbolic HDL ranges.
 
 =head3 Expressions  
 Flexible expression system supporting all boolean operations, comparisons, and

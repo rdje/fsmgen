@@ -54,3 +54,13 @@ retention before propagation/range admission. Use immutable event snapshots and
 final active actual-object ownership; a later live-source lookup cannot supply
 an earlier copy's identity. Reverify:
 `python3 -B docs/audits/auxiliary-width-origin-contract-20261027.py --self-test`.
+
+The opt-in Core declared_width_requirements holder now retains ordered separate
+declaration/generated snapshots with lexical scope and observed maximum width.
+Each keeps origin/expression/type/capture distinctions; it supplies no combined
+symbolic expression or new source admission. Plain copies detach callers and
+getters, failed replacement clears, and actual registry width/source/type writes
+or source-transaction clearing invalidate every record. Getter state anchors
+withhold privately diverged installations. Ordinary objects add no field.
+Parser event capture remains .3.3.1.2.2.3.3.4.2; the audit defect stays open.
+Reverify: `prove -Iperl t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.

@@ -177,6 +177,19 @@ parent's binding alone would lose the explicit constraint. P1 task
 `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4` owns private constraint preservation before
 propagation and symbolic admission; existing numeric behavior is unchanged.
 
+The private Core `declared_width_requirements` holder now stores separate
+declaration and generated requirements under the original lexical scope. Each
+snapshot retains its origin, authored expression, observed width, named-type
+information and optional canonical capture. Literal, named-type and inferred
+generated contributions remain distinct. The envelope must account for the
+observed effective width; it does not supply a combined symbolic expression.
+Inputs and getter results are detached. Failed replacement clears the old
+record, and width/source/type replacement or failed source transactions clear
+the metadata. The getter withholds records after private installation-state
+divergence. Ordinary constructors acquire no inferred records. Parser event
+capture remains the next repair slice; this storage contract alone does not
+resolve the audit finding or admit symbolic ranges.
+
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
 
