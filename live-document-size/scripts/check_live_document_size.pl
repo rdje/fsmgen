@@ -13,7 +13,7 @@ use JSON::PP;
 
 my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $ledgers_arg,
     $evidence_maps_arg, $retention_contracts_arg, $derived_state_arg,
-    $coverage_stdin, $help);
+    $coverage_stdin, $share_read_only, $help);
 my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
@@ -25,6 +25,7 @@ GetOptions(
     'retention-contracts=s' => \$retention_contracts_arg,
     'derived-state=s' => \$derived_state_arg,
     'coverage-stdin!' => \$coverage_stdin,
+    'share-read-only-verifiers' => \$share_read_only,
     'adapter-proof=s@' => \@adapter_proofs,
     'help|h'          => \$help,
 ) or usage(2);
@@ -52,7 +53,7 @@ sub usage {
 Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE
        --archives FILE --ledgers FILE --evidence-maps FILE
        --retention-contracts FILE --derived-state FILE
-       [--coverage-stdin]
+       [--coverage-stdin] [--share-read-only-verifiers]
 USAGE
     exit $status;
 }
@@ -264,6 +265,7 @@ for my $proof (@adapter_proofs) {
     problem("adapter proof is declared more than once: $proof") if $adapter_proof{$proof}++;
 }
 
+my %read_only_result;
 sub execute_core_verifier {
     my ($label, $relative, $guidance) = @_;
     $guidance //= '';
@@ -271,33 +273,45 @@ sub execute_core_verifier {
         problem("$label core verifier is absent or not executable: $relative$guidance");
         return;
     }
-    my $pid = fork();
-    if (!defined $pid) {
-        problem("$label cannot fork core verifier $relative: $!$guidance");
-        return;
-    }
-    if ($pid == 0) {
-        chdir $root or do {
-            print STDERR "live-doc-size: $label cannot enter project root: $!\n";
-            exit 126;
-        };
-        open STDIN, '<', File::Spec->devnull() or exit 126;
-        my $absolute = root_path($relative);
-        my $status = system {$absolute} $absolute;
-        if ($status == -1) {
-            print STDERR "live-doc-size: $label cannot execute $relative: $!\n";
-            exit 126;
+    my $absolute = root_path($relative);
+    # The explicit mode asserts stable inputs and read-only commands. Root,
+    # environment, no arguments and null stdin are fixed for this invocation.
+    # Retain failure status too: every consuming role must still fail visibly.
+    my $shared = $share_read_only && exists $read_only_result{$absolute};
+    my $result;
+    if ($shared) {
+        $result = $read_only_result{$absolute};
+    } else {
+        my $pid = fork();
+        if (!defined $pid) {
+            problem("$label cannot fork core verifier $relative: $!$guidance");
+            return;
         }
-        exit(128 + ($status & 127)) if $status & 127;
-        exit($status >> 8);
+        if ($pid == 0) {
+            chdir $root or do {
+                print STDERR "live-doc-size: $label cannot enter project root: $!\n";
+                exit 126;
+            };
+            open STDIN, '<', File::Spec->devnull() or exit 126;
+            my $status = system {$absolute} $absolute;
+            if ($status == -1) {
+                print STDERR "live-doc-size: $label cannot execute $relative: $!\n";
+                exit 126;
+            }
+            exit(128 + ($status & 127)) if $status & 127;
+            exit($status >> 8);
+        }
+        waitpid($pid, 0);
+        $result = $?;
+        $read_only_result{$absolute} = $result if $share_read_only;
     }
-    waitpid($pid, 0);
-    if ($? != 0) {
-        my $status = $? & 127 ? 'signal ' . ($? & 127) : 'exit ' . ($? >> 8);
+    if ($result != 0) {
+        my $status = $result & 127 ? 'signal ' . ($result & 127) : 'exit ' . ($result >> 8);
         problem("$label core verifier failed ($status): $relative$guidance");
         return;
     }
-    ok_note("$label core verifier executed: $relative");
+    my $action = $shared ? 'result shared within invocation' : 'executed';
+    ok_note("$label core verifier $action: $relative");
 }
 
 sub verify_execution {

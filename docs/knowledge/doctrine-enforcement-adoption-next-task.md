@@ -6,6 +6,7 @@ answers:
   - "what did doctrine enforcement adoption ship?"
   - "what is DOCTRINE_ENFORCEMENT.md?"
   - "what is TOOLBOX.md?"
+  - "how are repeated live-document verifier executions shared?"
   - "where should FSMGEN adopt doctrine enforcement?"
   - "what should TOOLBOX.md contain for FSMGEN?"
 date: 2026-10-27
@@ -36,3 +37,12 @@ Current registry membership derives from `scripts/check_doctrines.sh --list`.
 Decision `0122` makes the final pre-commit hook authoritative; optional local
 `--timings --fail-fast` feedback keeps complete success coverage and default CI
 diagnostics. No preflight result is cached or reused as hook permission.
+
+The live-document wrapper opts both local adapter and neutral core into
+`--share-read-only-verifiers`: exact executable paths share results only within
+one process under fixed root/environment/no arguments/null stdin and stable
+read-only validation inputs. Each proof role is still required, and failed core
+results fail every consumer. Default standalone behavior stays per-role; a new
+invocation never reuses success. Contracts: `live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md`;
+implementation: `scripts/run_live_document_adapter_verifiers.pl` and the neutral
+checker. Reverify: `prove -Iperl t/1554-live-document-size-doctrine.t t/2159-live-document-adapter-sharing.t`.

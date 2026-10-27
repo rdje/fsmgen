@@ -52,11 +52,16 @@ Resume ISF-REDUCTION-DELIVERY.3.3.1.2.2.2 after this task is complete.
   - [x] **NO REGRESSION** — All tests successful Files=1 Tests=5 for complete registry, default/timed/fail-fast outcomes, changed content, missing executables and unknown flags. Bash syntax, bootstrap, task/decision integrity and guarded book/source checks pass. The transition retains manual staged scripts/check_doctrines.sh plus the normal final hook before adopting the new cadence.
 
 - ID: `COMMIT-GATE-PERFORMANCE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Execute equivalent read-only delegated verifiers once per invocation.`
   Acceptance: `Inspect exact root/command/proof contracts before sharing work in adapter and neutral core runners. Preserve every logical proof ID, scope diagnostic and failure, with no cross-run cache or skipped required role. Verify equivalent commands share execution, distinct commands/roots do not, and failed or changed inputs cannot produce success. Retain standalone package behavior and focused existing lifecycle checks; measure actual executions and update the contract/docs before commit. Split only if needed for safe review.`
-  Verification: `pending .1`
-  Commit: `pending`
+  Verification: `git log -S execute_core_verifier identifies 25c815326: each role independently executes its declared command despite fixed root/environment/no args/null stdin. Existing doctrine contracts require deterministic read-only checks. Add explicit --share-read-only-verifiers to adapter and neutral runners; the project wrapper selects it, default standalone per-role behavior remains unchanged. Exact executable paths share only process-local results under stable validation inputs; distinct paths stay distinct even with identical bytes. Every proof token remains emitted and every core failure remains attributed to each consuming role; missing/executable checks stay per obligation. All tests successful Files=2 Tests=35 for existing lifecycle and new sharing controls. Fixture physical calls fall from seven to two with all seven proof IDs retained; later same-size/same-whole-second-mtime changed verdicts are freshly rejected, distinct roots really execute, absent/non-executable commands reject, and shared failures never produce green. Perl/Bash syntax, source projection and guarded book build pass. Re-derive: runner control flow and actual marker counts. Falsify: independent expected proof list, separate executable paths and fresh failed inputs. Durability: tests/contracts and docs/audits/commit-gate-performance-2-20261027.json.gz; actual final hook supplies required composed integration. No cross-run cache, generic speedup, full CI or hosted claim.`
+  Commit: `COMMIT-GATE-PERFORMANCE.2: share equivalent read-only verifier executions`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S execute_core_verifier identifies 25c815326. Adapter/core loops execute the same declared verifier repeatedly with fixed root/environment/arguments/stdin. The exact call graph and original read-only doctrine contract establish the safe sharing boundary.
+  - [x] **ADDRESSED (verified)** — Explicit per-invocation read-only sharing preserves every proof token and per-role failed result, while standalone defaults remain per-role and new invocations always execute again. Synchronize neutral contract, local doctrine, fact route and mdBook.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=35 for complete lifecycle, literal proof coverage, equivalent/distinct commands, real roots, failures, missing executables and same-size/mtime changed inputs. Syntax, source sync and guarded book build pass; the mandatory normal hook validates the staged integration.
 
 - ID: `COMMIT-GATE-PERFORMANCE.3`
   Status: `pending`

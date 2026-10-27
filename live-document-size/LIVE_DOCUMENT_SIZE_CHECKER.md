@@ -268,6 +268,24 @@ closed. `external:` is a visible degraded result and cannot produce a local
 green result. Ordinary measured rows use
 `builtin:budget`; file retrievals continue to use `builtin:file`.
 
+## Equivalent read-only executions
+
+By default, the neutral core executes each `core:` obligation separately.
+`--share-read-only-verifiers` explicitly asserts that all delegated commands are
+read-only with respect to validation inputs and those inputs stay stable for the
+whole invocation. Diagnostic logs may be written if they are not validation
+inputs. Under that contract, identical executable paths share one result within
+this process. The project root, environment, no command arguments and null stdin
+are fixed. Distinct executable paths remain distinct even when bytes match.
+Every role still reports its own result; a shared failure fails every consumer.
+Missing or non-executable paths are checked for each obligation.
+
+An adopting adapter runner may implement the same explicit contract while
+emitting every distinct proof token only after actual successful execution.
+Neither mode creates a persisted result or authorizes reuse across invocations,
+roots or changed input states. New invocations always execute again. A workflow
+that changes validation inputs during the run must retain per-role execution.
+
 ## Coverage input
 
 With `--coverage-stdin`, the checker reads a NUL-separated list of project-
@@ -304,7 +322,7 @@ ceiling-increase authority: the former accounts for legitimate product-scope
 change on deliberately uncapped aggregate axes, while the latter expands an
 otherwise fixed contract boundary.
 
-An adopting wrapper must discover and execute every `adapter:` verifier on
+An adopting wrapper must discover and qualify every `adapter:` obligation on
 every run, pass only the proof tokens emitted after successful execution, and
 remain reachable through the project's one unconditional commit/CI driver.
 The core deliberately rejects a proof token that no current declaration

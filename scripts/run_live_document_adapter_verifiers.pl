@@ -8,7 +8,7 @@ use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry, $archives, $ledgers, $derived_state, $help);
+my ($root_arg, $registry, $archives, $ledgers, $derived_state, $share_read_only, $help);
 $registry = 'doctrine/live_document_size/surfaces.jsonl';
 $archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
 $ledgers = 'doctrine/live_document_size/ledger_manifests.jsonl';
@@ -19,6 +19,7 @@ GetOptions(
     'archives=s' => \$archives,
     'ledgers=s'  => \$ledgers,
     'derived-state=s' => \$derived_state,
+    'share-read-only-verifiers' => \$share_read_only,
     'help|h'     => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -35,7 +36,7 @@ sub usage {
     print STDERR <<'USAGE';
 Usage: run_live_document_adapter_verifiers.pl [--root DIR]
        [--registry FILE] [--archives FILE] [--ledgers FILE]
-       [--derived-state FILE]
+       [--derived-state FILE] [--share-read-only-verifiers]
 USAGE
     exit $status;
 }
@@ -76,6 +77,7 @@ sub read_jsonl {
     return \@records;
 }
 
+my %executed_read_only;
 sub execute_adapter {
     my ($proof_id, $relative) = @_;
     die "live-doc-adapter-verifier: unsafe adapter verifier for $proof_id: $relative\n"
@@ -83,6 +85,14 @@ sub execute_adapter {
     my $absolute = root_path($relative);
     die "live-doc-adapter-verifier: adapter verifier is absent or not executable for $proof_id: $relative\n"
         if !-f $absolute || !-x $absolute;
+    # Opt-in asserts stable validation inputs and read-only commands. The root,
+    # environment, null stdin and argument-free command are fixed for this run;
+    # use the exact executable path, never a proof id or a persistent receipt.
+    if ($share_read_only && $executed_read_only{$absolute}) {
+        print STDERR "live-doc-adapter-verifier: shared execution for $proof_id: $relative\n";
+        print "$proof_id\n";
+        return;
+    }
     my $pid = fork();
     die "live-doc-adapter-verifier: cannot fork $relative: $!\n" if !defined $pid;
     if ($pid == 0) {
@@ -97,6 +107,7 @@ sub execute_adapter {
         my $status = $? & 127 ? 'signal ' . ($? & 127) : 'exit ' . ($? >> 8);
         die "live-doc-adapter-verifier: adapter verifier failed ($status) for $proof_id: $relative\n";
     }
+    $executed_read_only{$absolute} = 1 if $share_read_only;
     print "$proof_id\n";
 }
 

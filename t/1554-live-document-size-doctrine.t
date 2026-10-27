@@ -46,6 +46,50 @@ subtest 'JSONL fixture covers every lifecycle and retrieval-file descriptor' => 
         'complete graph closes');
 };
 
+subtest 'read-only sharing preserves each role, failures, roots and fresh inputs' => sub {
+    my $fixture = make_fixture();
+    write_file($fixture, 'bin/freshness', <<'SCRIPT');
+#!/bin/sh
+printf 'ran\n' >> shared-invocations
+read -r verdict < verdict
+[ "$verdict" = PASS ]
+SCRIPT
+    chmod 0755, "$fixture/bin/freshness" or die $!;
+    write_file($fixture, 'verdict', "PASS\n");
+    mutate_record($fixture, 'registry/surfaces.jsonl', 'bounded_entry', sub {
+        $_[0]{currency} = {contract_id => 'shared_current', verifier => 'core:bin/freshness'};
+    });
+    my ($ok, $output) = run_checker($fixture);
+    ok($ok, 'default standalone behavior stays complete') or diag($output);
+    is(slurp("$fixture/shared-invocations"), "ran\nran\n", 'default runs both proof roles');
+    unlink "$fixture/shared-invocations" or die $!;
+    ($ok, $output) = run_checker($fixture, share_read_only => 1);
+    ok($ok, 'explicit read-only composition passes') or diag($output);
+    is(slurp("$fixture/shared-invocations"), "ran\n", 'one physical execution for equivalent commands');
+    like($output, qr/surface bounded_entry currency shared_current core verifier executed/, 'first role is explicit');
+    like($output, qr/surface projection freshness core verifier result shared within invocation/, 'second role remains explicit');
+    ok(-f "$fixture/version-ran", 'distinct command still executes');
+    my @before = stat "$fixture/verdict";
+    write_file($fixture, 'verdict', "FAIL\n");
+    utime $before[8], $before[9], "$fixture/verdict" or die $!;
+    is(-s "$fixture/verdict", $before[7], 'changed input preserves byte count');
+    is((stat("$fixture/verdict"))[9], $before[9], 'changed input preserves whole-second mtime');
+    unlink "$fixture/shared-invocations" or die $!;
+    ($ok, $output) = run_checker($fixture, share_read_only => 1);
+    ok(!$ok, 'fresh invocation rejects changed validation input');
+    is(slurp("$fixture/shared-invocations"), "ran\n", 'failed result executes once');
+    like($output, qr/surface bounded_entry currency shared_current core verifier failed/, 'failure remains on first role');
+    like($output, qr/surface projection freshness core verifier failed/, 'shared failure remains on second role');
+    unlike($output, qr/all live-document size-containment invariants hold/, 'no false green result');
+    chmod 0644, "$fixture/bin/freshness" or die $!;
+    ($ok, $output) = run_checker($fixture, share_read_only => 1);
+    ok(!$ok, 'missing executable permission is freshly rejected');
+    my $other = make_fixture();
+    ($ok, $output) = run_checker($other, share_read_only => 1);
+    ok($ok, 'distinct root has its own actual validation') or diag($output);
+    ok(-f "$other/freshness-ran", 'other root verifier really executes');
+};
+
 subtest 'maintained reference bounds reads and parts while authorizing exact aggregate change' => sub {
     my $missing_rationale = make_fixture();
     mutate_record($missing_rationale, 'registry/surfaces.jsonl', 'maintained', sub {
@@ -1384,6 +1428,7 @@ sub run_checker {
         '--retention-contracts', 'registry/retention.jsonl',
         '--derived-state', 'registry/derived-state.jsonl',
     );
+    push @command, '--share-read-only-verifiers' if $options{share_read_only};
     my $input = '';
     if ($options{coverage}) {
         push @command, '--coverage-stdin';

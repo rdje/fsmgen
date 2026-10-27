@@ -302,6 +302,14 @@ For local timing and prompt failure feedback:
 scripts/check_doctrines.sh --timings --fail-fast
 ```
 
+The live-document wrapper also shares equivalent read-only verifier executions
+within that invocation. Every declared proof obligation still receives its own
+result, including failures. Distinct commands remain distinct. A later run
+always validates again; no pass receipt is cached. Standalone neutral and
+adapter runners retain per-role execution unless explicitly selected with
+`--share-read-only-verifiers`, which requires stable validation inputs.
+
+
 Timings describe each executed check. A failure rejects the run and reports
 that later checks were not run; success still requires the complete registry.
 The default mode continues through failures for full CI diagnostics. Each

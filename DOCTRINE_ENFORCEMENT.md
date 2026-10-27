@@ -154,6 +154,13 @@ not run; successful runs still execute the entire registry. Without flags the
 driver continues through failures for complete CI diagnostics. No result is
 cached between invocations; changed inputs are freshly checked.
 
+The live-document wrapper explicitly selects read-only verifier sharing within
+one invocation. Identical executable paths run once under the fixed project
+root/environment and argument-free command; every proof ID and failure remains
+required. Validation inputs must stay stable throughout the run. Standalone
+neutral/adapter runners retain per-role execution unless explicitly passed
+`--share-read-only-verifiers`. No result is persisted or reused by a later run.
+
 ## Task-Acceptance Evidence Gate
 
 `TASK_ACCEPTANCE.md` is the project-neutral standard. The checker embeds no

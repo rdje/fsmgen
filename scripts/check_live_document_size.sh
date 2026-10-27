@@ -15,6 +15,7 @@ fi
 CORE="${SCRIPT_DIR}/../live-document-size/scripts/check_live_document_size.pl"
 ARGS=(
   --root "${PROJECT_ROOT}"
+  --share-read-only-verifiers
   --registry doctrine/live_document_size/surfaces.jsonl
   --routes doctrine/readme_entrypoint/routed_destinations.jsonl
   --archives doctrine/live_document_size/archive_descriptors.jsonl
@@ -26,6 +27,7 @@ ARGS=(
 
 ADAPTER_OUTPUT="$(perl "${SCRIPT_DIR}/run_live_document_adapter_verifiers.pl" \
   --root "${PROJECT_ROOT}" \
+  --share-read-only-verifiers \
   --registry doctrine/live_document_size/surfaces.jsonl \
   --archives doctrine/live_document_size/archive_descriptors.jsonl \
   --ledgers doctrine/live_document_size/ledger_manifests.jsonl \
