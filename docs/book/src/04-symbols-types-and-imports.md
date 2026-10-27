@@ -482,6 +482,15 @@ actual generated sources and altered-text controls. Renderer activation remains
 pending; standalone symbolic raw-text conversion and public reports are unchanged.
 External override/runtime and full qualification remain separately owned.
 
+Private declaration rendering now consumes that canonical VHDL type. Whole-target
+decimal and sized-literal assignments use the target's `'length` instead of its
+selected numeric default; sized unsigned literals zero-extend or truncate before
+target signedness conversion. This preserves vector rank at a default of one.
+The [target-rank regression](../../../t/2180-direct-vhdl-target-rank.t) checks
+actual paired declarations and static controls. Selected symbolic literal target
+lvalues and X/Z literals refuse. Other expression consumers and source converter
+activation remain pending; this preparation adds no public source admission.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated

@@ -852,6 +852,7 @@ sub _decl_hash (%args) {
 }
 
 sub _vhdl_type_for_decl ($decl) {
+    return $decl->{vhdl_type} if exists($decl->{vhdl_type});
     return 'std_logic' if $decl->{scalar};
     return _vhdl_type($decl->{msb}, $decl->{lsb}, $decl->{signed});
 }
@@ -899,16 +900,28 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     confess _unsupported("bitwise complement expression '$expr' is outside the direct VHDL scaffold")
         if $trimmed =~ /~/;
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
+    if ($target_decl && exists($target_decl->{vhdl_type})) {
+        confess _unsupported('selected symbolic target lvalues require separate type-rank integration')
+            unless $ctx->{target_lhs} eq $target_decl->{name};
+        if (my $literal = _parse_sized_literal($trimmed)) {
+            my $bits = _literal_bits_value($literal, force_vector => 1);
+            my $type = $target_decl->{signed} ? 'signed' : 'std_logic_vector';
+            # Supported sized literals are unsigned. Resize before applying
+            # target signedness so a high source bit never sign-extends.
+            return "$type(resize(unsigned'($bits), $target_decl->{name}'length))";
+        }
+    }
     if ($target_decl && $target_decl->{scalar} && $trimmed =~ /^-?\d+$/) {
         my $low_bit = substr($trimmed, -1) =~ /[13579]\z/ ? 1 : 0;
         return "'$low_bit'";
     }
-    return 'to_signed(' . $trimmed . ', ' . _decl_width($target_decl) . ')'
-        if $target_decl && !$target_decl->{scalar} && $target_decl->{signed} && $trimmed =~ /^-?\d+$/;
-    return 'std_logic_vector(to_signed(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
-        if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^-\d+$/;
-    return 'std_logic_vector(to_unsigned(' . $trimmed . ', ' . _decl_width($target_decl) . '))'
-        if $target_decl && !$target_decl->{scalar} && !$target_decl->{signed} && $trimmed =~ /^\d+$/;
+    if ($target_decl && !$target_decl->{scalar} && $trimmed =~ /^-?\d+$/) {
+        my $width = exists($target_decl->{vhdl_type})
+            ? "$target_decl->{name}'length" : _decl_width($target_decl);
+        return "to_signed($trimmed, $width)" if $target_decl->{signed};
+        return "std_logic_vector(to_signed($trimmed, $width))" if $trimmed =~ /^-/;
+        return "std_logic_vector(to_unsigned($trimmed, $width))";
+    }
 
     return _simple_arithmetic_to_vhdl($trimmed, $ctx)
         if _has_arithmetic_operator($trimmed);
@@ -1757,6 +1770,14 @@ C<msb>, C<lsb>, C<signed> and C<scalar> fields for behavioral conversion, with
 separate C<vhdl_range> and C<vhdl_type> strings from the canonical target plan.
 A selected width of one retains vector rank. Independent static rows preserve
 the existing numeric parser products, including JSON scalar kinds.
+
+C<_vhdl_type_for_decl> consumes the canonical C<vhdl_type> when present.
+Whole symbolic target decimal and sized-literal assignments use the actual
+target's C<'length>, rather than its selected numeric default. Supported sized
+literals are unsigned and zero-extend or truncate through C<resize> before
+conversion to target signedness. Selected symbolic literal target lvalues are
+withheld pending their separate integration; existing malformed and X/Z literal
+refusals remain. Other expression consumers and source activation are pending.
 
 This private path consumes a prepared source contract; it does not attest an
 arbitrary caller-made plan. Inputs are read-only and the result retains no

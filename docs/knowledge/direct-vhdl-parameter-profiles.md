@@ -5,6 +5,7 @@ answers:
   - "which direct VHDL generic declarations use natural preparation?"
   - "can a direct VHDL generic used only by captured widths select natural preparation?"
   - "how are normalized target names checked without replacing lexical parameter scope?"
+  - "how do private direct VHDL literal assignments retain symbolic vector rank at default one?"
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
@@ -54,3 +55,11 @@ at width1, preserving complete static parser products and scalar kinds. Altered
 text controls reject missing/extra/duplicate/foreign declarations, wrong roles,
 ranges and numeric substitutions. Renderer activation remains separately owned;
 public symbolic raw conversion still refuses.
+
+Private declaration rendering now consumes canonical vhdl_type. Whole-target
+decimal and sized literals use target length, preserving vector rank at default1;
+unsigned sized literals resize before target signedness conversion. Selected
+symbolic literal lvalues and X/Z literals refuse. T2180 independently expects
+actual paired target types/literals and preserves static products. Other
+expression consumers and public source activation remain pending. Reverify with
+`prove -Iperl t/2180-direct-vhdl-target-rank.t t/2179-direct-vhdl-declaration-parser.t`.
