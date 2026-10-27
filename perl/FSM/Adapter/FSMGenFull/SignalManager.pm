@@ -7,7 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Carp ();
 use Data::Dumper;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::ScalarWidthSupport;
@@ -97,6 +97,7 @@ sub register_signal($self, $signal_name, %attributes) {
                 || (exists($normalized_attrs{declared_type_spec})
                     && (defined($normalized_attrs{declared_type_spec}) || defined($existing->{declared_type_spec})));
             if ($width_refines || $type_replaced || exists($normalized_attrs{_declared_width_source})) {
+                ++$self->{_declared_width_revisions}{refaddr($existing)};
                 $existing->clear_declared_width_binding;
                 $existing->clear_declared_width_requirements;
             }
@@ -170,10 +171,15 @@ sub get_signal($self, $signal_name) {
 
 sub clear_declared_width_bindings($self) {
     for my $signal (values %{$self->{signal_registry}}) {
+        ++$self->{_declared_width_revisions}{refaddr($signal)};
         $signal->clear_declared_width_binding;
         $signal->clear_declared_width_requirements;
     }
     return $self;
+}
+
+sub _declared_width_revision($self, $signal) {
+    return $self->{_declared_width_revisions}{refaddr($signal)} // 0;
 }
 
 sub get_all_signal_names($self) {

@@ -135,9 +135,14 @@ Main entry point for parsing FSMGen AST structures.
 Successful source parsing retains private declared-width bindings on the actual
 Core Signals. Resolution uses the decoded source module's lexical scope and
 stages records until complete parser validation succeeds. A later facade
-analysis failure clears those snapshots as well. Literal/named-type contracts,
-numeric widths and public report schemas remain unchanged; auxiliary-origin
-propagation and symbolic HDL ranges have separate compiler integration owners.
+analysis failure clears those snapshots as well. Separate private width
+requirements retain actual literal/type/expression declarations and generated
+copy contributions before the legacy source record is overwritten. Copy events
+freeze original requirements; mutation versions prevent stale pending records
+from reviving after matching-state replacement. Unrecorded contributions remain
+explicitly opaque. Numeric widths, legacy source/type getters and public report
+schemas remain unchanged. Auxiliary binding propagation, scoped late sizing and
+symbolic HDL ranges have separate compiler integration owners.
 
 =item debug_summary()
 

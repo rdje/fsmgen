@@ -7,7 +7,8 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
+use JSON::PP ();
 use FSM::CoreAST;
 use parent 'FSM::WidthExpressionSupport';
 use FSM::Package::ExpressionOperatorSupport ();
@@ -119,12 +120,17 @@ sub parse_fsm($self, $raw_ast) {
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     $self->_invalidate_declared_width_bindings;
-    local $self->{_declared_width_capture_context} = {scope => undef, bindings => []};
+    local $self->{_declared_width_capture_context} = {scope => undef, bindings => {}, requirements => {}};
     my $module;
     my $ok = eval {
         $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
-        for my $pending (@{$self->{_declared_width_capture_context}{bindings}}) {
+        for my $pending (values %{$self->{_declared_width_capture_context}{bindings}}) {
+            next unless $self->_width_event_is_current($pending);
             $pending->{signal}->set_declared_width_binding($pending->{binding});
+        }
+        for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
+            next unless $self->_width_event_is_current($pending);
+            $pending->{signal}->set_declared_width_requirements($pending->{record});
         }
         1;
     };
@@ -138,8 +144,72 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
 
 sub _invalidate_declared_width_bindings($self) {
     $self->{signal_manager}->clear_declared_width_bindings;
-    $self->{_declared_width_capture_context}{bindings} = []
-        if $self->{_declared_width_capture_context};
+    if (my $context = $self->{_declared_width_capture_context}) {
+        $context->{bindings} = {};
+        $context->{requirements} = {};
+    }
+}
+
+sub _width_event($self, $signal, %payload) {
+    return {signal => $signal, %payload,
+        revision => $self->{signal_manager}->_declared_width_revision($signal),
+        state => $signal->_declared_width_requirements_state};
+}
+
+sub _width_event_is_current($self, $event) {
+    return $event->{revision} == $self->{signal_manager}->_declared_width_revision($event->{signal})
+        && $event->{state} eq $event->{signal}->_declared_width_requirements_state;
+}
+
+sub _copy_width_requirement_data($value) {
+    my $json = JSON::PP->new->canonical->allow_nonref;
+    return $json->decode($json->encode($value));
+}
+
+sub _opaque_width_requirement($signal_name, $width) {
+    return {kind => 'generated', signal => $signal_name, width => 0 + $width,
+        expression => undef, width_capture => undef,
+        declared_type_name => undef, declared_type_spec => undef};
+}
+
+sub _width_requirements_before($self, $signal) {
+    my $context = $self->{_declared_width_capture_context};
+    return [] unless $context && $signal;
+    my $event = $context->{requirements}{refaddr($signal)};
+    return _copy_width_requirement_data($event->{record}{requirements})
+        if $event && $self->_width_event_is_current($event);
+    # An unrecorded numeric contribution has no attested source relationship.
+    # Keep it opaque rather than borrowing the legacy last-source getter.
+    return [_opaque_width_requirement($signal->name, $signal->width)];
+}
+
+sub _generated_width_requirements($self, $signal, $signal_name, $width) {
+    return [] unless $self->{_declared_width_capture_context};
+    my $entries = $signal && $signal->width == $width
+        ? $self->_width_requirements_before($signal)
+        : [_opaque_width_requirement($signal_name, $width)];
+    $_->{kind} = 'generated' for @$entries;
+    return $entries;
+}
+
+sub _stage_width_requirements($self, $signal, $entries) {
+    my $context = $self->{_declared_width_capture_context} or return;
+    my $json = JSON::PP->new->canonical;
+    my %seen;
+    my @requirements = grep {!$seen{$json->encode($_)}++} @$entries;
+    my $max_width = 0;
+    for my $entry (@requirements) {
+        $max_width = $entry->{width} if $entry->{width} > $max_width;
+    }
+    if ($max_width < $signal->width) {
+        push @requirements, _opaque_width_requirement($signal->name, $signal->width);
+    } elsif ($max_width > $signal->width) {
+        delete $context->{requirements}{refaddr($signal)};
+        return;
+    }
+    my $record = _copy_width_requirement_data({scope => $context->{scope}, width => 0 + $signal->width,
+        requirements => \@requirements});
+    $context->{requirements}{refaddr($signal)} = $self->_width_event($signal, record => $record);
 }
 
 sub _parse_fsm_module($self, $fsm_ast, $is_flat_ast, $root_kind) {
@@ -919,6 +989,7 @@ sub _parse_size_section($self, $size_ast) {
                 resolved_width => $width_contract->{width}};
         }
 
+        my $prior_requirements = $self->_width_requirements_before($self->{signal_manager}->get_signal($resolved_sig));
         my $declared_signal = $self->{signal_manager}->register_signal(
             $resolved_sig,
             width => $width_contract->{width},
@@ -931,19 +1002,27 @@ sub _parse_size_section($self, $size_ast) {
             (defined $reset_value ? (attributes => { reset_value => $reset_value }) : ()),
         );
         if ($capture_context && $width_contract->{width_capture} && $declared_width_source) {
-            push @{$capture_context->{bindings}}, {
-                signal => $declared_signal,
-                binding => {%{$width_contract->{width_capture}},
+            $capture_context->{bindings}{refaddr($declared_signal)} = $self->_width_event($declared_signal,
+                binding => _copy_width_requirement_data({%{$width_contract->{width_capture}},
                     signal => $declared_width_source->{signal},
-                    expression => $declared_width_source->{expression}},
-            };
+                    expression => $declared_width_source->{expression}}));
+        }
+        if ($capture_context) {
+            $self->_stage_width_requirements($declared_signal, [@$prior_requirements, {
+                kind => 'declaration', signal => $resolved_sig, expression => $authored_width,
+                width => $width_contract->{width}, width_capture => $width_contract->{width_capture},
+                declared_type_name => $width_contract->{declared_type_name},
+                declared_type_spec => $width_contract->{declared_type_spec},
+            }]);
         }
 
         # Keep rm/mr auxiliary outputs width-aligned with their parent signal
         # even when +size appears after assignment actions.
         my $next_aux = "next_$resolved_sig";
         if ($self->{signal_manager}->get_signal($next_aux)) {
-            $self->{signal_manager}->register_signal(
+            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($next_aux));
+            my $generated = $self->_generated_width_requirements($declared_signal, $resolved_sig, $width_contract->{width});
+            my $aux_signal = $self->{signal_manager}->register_signal(
                 $next_aux,
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
@@ -955,10 +1034,13 @@ sub _parse_size_section($self, $size_ast) {
                 width_declared => 1,
                 _declared_width_source => $declared_width_source,
             );
+            $self->_stage_width_requirements($aux_signal, [@$prior, @$generated]);
         }
         my $q_aux = "${resolved_sig}_r";
         if ($self->{signal_manager}->get_signal($q_aux)) {
-            $self->{signal_manager}->register_signal(
+            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($q_aux));
+            my $generated = $self->_generated_width_requirements($declared_signal, $resolved_sig, $width_contract->{width});
+            my $aux_signal = $self->{signal_manager}->register_signal(
                 $q_aux,
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
@@ -970,6 +1052,7 @@ sub _parse_size_section($self, $size_ast) {
                 width_declared => 1,
                 _declared_width_source => $declared_width_source,
             );
+            $self->_stage_width_requirements($aux_signal, [@$prior, @$generated]);
         }
     }
 }
@@ -3497,13 +3580,16 @@ sub parse_signal_action($self, $action) {
         for my $target_base_spec (@target_base_specs) {
             my $aux_output_name = "next_$target_base_spec->{name}";
             my $width_source_signal = $self->{signal_manager}->get_signal($target_base_spec->{name});
-            $self->{signal_manager}->register_signal(
+            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($aux_output_name));
+            my $generated = $self->_generated_width_requirements($width_source_signal, $target_base_spec->{name}, $target_base_spec->{width});
+            my $aux_signal = $self->{signal_manager}->register_signal(
                 $aux_output_name,
                 width => $target_base_spec->{width},
                 is_output => 1,
                 is_aux_output => 1,
                 _declared_width_source => $width_source_signal ? $width_source_signal->declared_width_source : undef,
             );
+            $self->_stage_width_requirements($aux_signal, [@$prior, @$generated]);
         }
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
@@ -3544,13 +3630,16 @@ sub parse_signal_action($self, $action) {
         for my $target_base_spec (@target_base_specs) {
             my $aux_output_name = $target_base_spec->{name} . '_r';
             my $width_source_signal = $self->{signal_manager}->get_signal($target_base_spec->{name});
-            $self->{signal_manager}->register_signal(
+            my $prior = $self->_width_requirements_before($self->{signal_manager}->get_signal($aux_output_name));
+            my $generated = $self->_generated_width_requirements($width_source_signal, $target_base_spec->{name}, $target_base_spec->{width});
+            my $aux_signal = $self->{signal_manager}->register_signal(
                 $aux_output_name,
                 width => $target_base_spec->{width},
                 is_output => 1,
                 is_aux_output => 1,
                 _declared_width_source => $width_source_signal ? $width_source_signal->declared_width_source : undef,
             );
+            $self->_stage_width_requirements($aux_signal, [@$prior, @$generated]);
         }
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,

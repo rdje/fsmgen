@@ -48,11 +48,11 @@ source record with data(param W), while legacy max-width refinement still retain
 both numeric requirements. Equal-default param X and literal-eight declarations
 then have identical selected Signal products; opposing W/X defaults demonstrate
 the lost constraint still matters numerically. Clean/one-bit/named-type and
-renamed late-sizing controls retain their distinct boundaries. This is a P1
-provenance defect, not a numeric behavior defect; .3.3.1.2.2.3.3.4 owns private
-retention before propagation/range admission. Use immutable event snapshots and
-final active actual-object ownership; a later live-source lookup cannot supply
-an earlier copy's identity. Reverify:
+renamed late-sizing controls retain their distinct boundaries. The P1 private
+retention defect is now repaired under .3.3.1.2.2.3.3.4; numeric behavior remains
+unchanged. The audit packet describes its predecessor epoch. Immutable event
+snapshots and final active actual-object ownership prevent later live-source
+lookup from supplying an earlier copy's identity. Audit reverify:
 `python3 -B docs/audits/auxiliary-width-origin-contract-20261027.py --self-test`.
 
 The opt-in Core declared_width_requirements holder now retains ordered separate
@@ -62,5 +62,14 @@ symbolic expression or new source admission. Plain copies detach callers and
 getters, failed replacement clears, and actual registry width/source/type writes
 or source-transaction clearing invalidate every record. Getter state anchors
 withhold privately diverged installations. Ordinary objects add no field.
-Parser event capture remains .3.3.1.2.2.3.3.4.2; the audit defect stays open.
-Reverify: `prove -Iperl t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.
+The Parser now captures declarations and actual copy events into a local map
+keyed by Signal identity. Immutable copied requirements retain every separate
+contribution to the legacy numeric maximum; deduplication requires identical
+whole snapshots. Unrecorded contributions are explicitly opaque. Registry
+mutation versions plus installation state revoke stale pending requirements and
+primary bindings even after matching-state replacement. Current records publish
+only after complete success; all new maps clear on invalidation. Both sizing
+orders and real copy chains retain independent origins. Ordinary unscoped late
+sizing remains legacy. Auxiliary binding propagation/scoped late sizing/range
+admission and computed shape rendering remain separately owned successors.
+Reverify: `prove -Iperl t/2164-direct-source-width-requirements.t t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.

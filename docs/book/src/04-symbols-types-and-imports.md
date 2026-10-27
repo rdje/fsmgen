@@ -173,9 +173,9 @@ The auxiliary-origin audit found a separate preservation gap. When a generated
 numeric refinement retains both size requirements, while its old source getter
 is replaced by the parent's origin. An independent parameter and an equal-valued
 literal can therefore leave identical selected source records. Copying the
-parent's binding alone would lose the explicit constraint. P1 task
-`ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3.4` owns private constraint preservation before
-propagation and symbolic admission; existing numeric behavior is unchanged.
+parent's binding alone would lose the explicit constraint. The parser now
+preserves those separate private requirements before the legacy overwrite;
+existing numeric behavior is unchanged.
 
 The private Core `declared_width_requirements` holder now stores separate
 declaration and generated requirements under the original lexical scope. Each
@@ -186,9 +186,34 @@ observed effective width; it does not supply a combined symbolic expression.
 Inputs and getter results are detached. Failed replacement clears the old
 record, and width/source/type replacement or failed source transactions clear
 the metadata. The getter withholds records after private installation-state
-divergence. Ordinary constructors acquire no inferred records. Parser event
-capture remains the next repair slice; this storage contract alone does not
-resolve the audit finding or admit symbolic ranges.
+divergence. Ordinary constructors acquire no inferred records.
+
+Actual scoped size declarations now retain literal, type and captured-expression
+snapshots. Generated copies freeze the source requirements at the copy event,
+using the actual Signal objects. A later source replacement cannot rebind an
+earlier copy. Mutation versions revoke pending records even if later fields
+match their former values. Only current records publish after complete source
+validation; parser/facade failure and environment replacement clear them. Earlier
+contributions to the legacy maximum remain separate; only identical complete
+snapshots are deduplicated. Unrecorded contributions explicitly lack an authored
+expression and cannot supply an inferred parameter relationship.
+
+For example, this source retains the independent `X` requirement alongside the
+generated `W` requirement on `next_data`, while keeping its existing numeric HDL:
+
+```lisp
+(?fsm:aux_origin
+ (+params (W 8) (X 16))
+ (+size (data (param W)) (next_data (param X)))
+ (idle (<-= (data 0))))
+```
+
+The same retention applies to `data_r` produced by `<=-` or `<=+`, including an
+auxiliary declared before its parent is sized. This closes the private retention
+defect. Combined symbolic shape rendering remains separately qualified; the
+requirements do not fabricate a single parent binding. Ordinary unscoped late
+sizing still supplies no guessed lexical scope. Auxiliary binding propagation,
+explicit scoped late sizing and symbolic ranges remain subsequent compiler work.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
