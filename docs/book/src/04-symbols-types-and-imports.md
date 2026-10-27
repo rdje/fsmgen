@@ -449,6 +449,16 @@ natural-valued declarations and preserve independent static defaults. Direct
 VHDL generation consumes that plan against actual normalized target names,
 separately from lexical source ownership. Complete qualification remains pending.
 
+Private generic preparation also accepts paired `assignment_analysis` and
+`target_declarations` inputs from the actual backend boundary. It re-proves
+captured source widths and complete target declarations against the same
+namespace, then joins their selected parameter roots to the default-dependency
+subset. A parameter used only by a width can therefore receive a `natural`
+declaration in that prepared plan; an equal independent literal stays static.
+Incomplete, stale, renamed or inconsistent width inputs refuse. This optional
+preparation is covered by the [width-root regression](../../../t/2177-direct-vhdl-width-generic-roots.t);
+the direct converter still needs its source-aware declaration integration.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated

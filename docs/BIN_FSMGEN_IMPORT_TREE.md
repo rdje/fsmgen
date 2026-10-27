@@ -94,8 +94,11 @@ The direct post-flattening Verilog-family owner now imports
 captured source/target preparation and actual emission snapshots. The source
 helper imports DeclaredWidthRangeSupport/DeclaredWidthBindingSupport, joining
 the canonical width walk and both shared target kernels. Direct Verilog-family
-ports consume the selected ranges; storage/computed shapes and source-aware
-VHDL integration remain separate. This scoped update adds no closure census.
+ports and source-owned storage consume the selected ranges; computed shapes and
+source-aware VHDL integration remain separate. VHDL DirectParameterEmitter now
+imports the same source/target helper for opt-in captured width-root preparation;
+its existing converter caller remains default-only. This scoped update adds no
+closure census.
 
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.

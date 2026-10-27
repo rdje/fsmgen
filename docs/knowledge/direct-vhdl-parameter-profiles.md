@@ -3,12 +3,13 @@ id: direct-vhdl-parameter-profiles
 title: Direct VHDL preparation separates related natural declarations from static defaults
 answers:
   - "which direct VHDL generic declarations use natural preparation?"
+  - "can a direct VHDL generic used only by captured widths select natural preparation?"
   - "how are normalized target names checked without replacing lexical parameter scope?"
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
-evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; t/2153-direct-vhdl-parameter-profiles.t; t/2154-direct-vhdl-generic-integration.t; perl/FSM/ParameterDefaultEnvironmentSupport.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2153-direct-vhdl-parameter-profiles.t t/2152-direct-binding-observation-proof.t t/2150-shared-vhdl-parameter-binding-renderer.t
+evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; t/2177-direct-vhdl-width-generic-roots.t; docs/audits/direct-vhdl-width-roots-20261027.json.gz; t/2153-direct-vhdl-parameter-profiles.t; t/2154-direct-vhdl-generic-integration.t; perl/FSM/ParameterDefaultEnvironmentSupport.pm
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2177-direct-vhdl-width-generic-roots.t t/2153-direct-vhdl-parameter-profiles.t t/2173-direct-width-target-plans.t
 ---
 
 DirectParameterEmitter prepares declarations from proved source observations
@@ -29,3 +30,12 @@ attestation. The direct backend now consumes this plan with its actual normalize
 module/declarations/mapping; standalone raw conversion retains its existing
 integer/static behavior. T2154 and native supported/refused controls qualify
 that coupling. Full external override/runtime/transport checks remain .6.
+
+Optional paired assignment_analysis/target_declarations now qualify actual
+captured widths through DirectDeclaredWidthSupport against the same complete
+target namespace. Proved width roots join the existing default-reference subset
+before natural rendering. Width-only roots select natural; equal independent
+literal/vector/negative defaults stay static. Missing/stale/renamed/inconsistent
+inputs refuse. Omitting both inputs preserves the existing default-only profile.
+This is private preparation: the direct converter does not yet supply width
+context, and symbolic source-aware conversion remains .3.3.4.2/.3.

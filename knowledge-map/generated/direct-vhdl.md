@@ -1,10 +1,11 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **121** uniquely owned question entries.
+> **7** facts · **122** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="can a direct VHDL generic used only by captured widths select natural preparation?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="does --language vhdl work for direct FSM roots?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
 - q="does FSM source accept one-operand OR AND XOR?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="does VHDL generation success prove syntactically valid VHDL?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)

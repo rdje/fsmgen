@@ -9,6 +9,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
+use FSM::DirectDeclaredWidthSupport;
 
 sub _identifier ($name) {
     return FSM::Backend::VHDL::ParameterBindingEmitter->validate_identifier($name);
@@ -64,6 +65,15 @@ sub lower_declarations ($class,%args) {
     confess "Direct VHDL generic preparation requires captured maps\n"
         unless ref($parameters) eq 'HASH' && ref($sources) eq 'HASH' && ref($bindings) eq 'HASH';
     my $targets=_target_namespace($module,$parameters,$args{target_namespace});
+    my $widths;
+    if (exists($args{assignment_analysis}) || exists($args{target_declarations})) {
+        confess "Direct VHDL width consumers require assignment analysis and target declarations together\n"
+            unless exists($args{assignment_analysis}) && exists($args{target_declarations});
+        $widths=FSM::DirectDeclaredWidthSupport->prepare_declarations(
+            fsm_module=>$module, target_language=>'vhdl',
+            assignment_analysis=>$args{assignment_analysis},
+            target_namespace=>$args{target_namespace}, target_declarations=>$args{target_declarations});
+    }
     unless (keys(%$sources) || keys(%$bindings)) {
         my @names=@{$args{target_namespace}{parameter_names}};
         return {profile=>'legacy_static',source_scope=>undef,parameter_order=>\@names,
@@ -73,6 +83,7 @@ sub lower_declarations ($class,%args) {
         parameters=>$parameters,sources=>$sources,bindings=>$bindings);
     my $environment=$proof->{environment};
     my (%related,%dependencies);
+    $related{$_}=1 for @{$widths ? $widths->{parameter_references} : []};
     for my $name (@{$environment->{declaration_order}}) {
         my $references=$proof->{reference_observations}{$name};
         $related{$name}=1 if @$references;
@@ -143,6 +154,15 @@ static literal/vector declarations retain their existing converter path,
 including generated identifier normalization. Related source identifiers must
 already be valid VHDL names and retain identity in the target mapping. Physical
 module names remain separate from captured lexical source ownership.
+
+Optional C<assignment_analysis> and C<target_declarations> must be supplied
+together. They opt into complete actual source/target width qualification by
+C<FSM::DirectDeclaredWidthSupport::prepare_declarations>, using the same
+C<target_namespace>. Its proved width roots join the default-dependency subset
+before natural rendering. Missing, stale, foreign, renamed or inconsistent
+width/declaration captures refuse; no caller-provided root-name list selects a
+generic. Omitting both inputs preserves the default-only preparation contract.
+The direct converter does not yet supply this optional width context.
 
 The detached result contains C<profile> (static, natural, mixed or
 legacy_static), C<source_scope>, dependency-ordered target C<parameter_order>,
