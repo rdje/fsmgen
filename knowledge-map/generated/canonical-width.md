@@ -1,10 +1,11 @@
 # Knowledge Map: `canonical-width`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **5** uniquely owned question entries.
+> **2** facts · **6** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="how are private Core declared-width bindings cloned and invalidated?" · facts=[canonical-width-expression-capture](../../docs/knowledge/canonical-width-expression-capture.md)
 - q="how do nested infix width payload lookups retain immediate identity?" · facts=[canonical-width-expression-capture](../../docs/knowledge/canonical-width-expression-capture.md)
 - q="how does direct declared-width resolution capture scope and actual lookup selection?" · facts=[canonical-width-expression-capture](../../docs/knowledge/canonical-width-expression-capture.md)
 - q="how is the direct sizing scalar-constant fast path captured without namespace borrowing?" · facts=[canonical-width-constant-observations](../../docs/knowledge/canonical-width-constant-observations.md)

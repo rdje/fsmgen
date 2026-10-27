@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed);
+use JSON::PP ();
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport ();
 
@@ -44,6 +45,8 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{fanout_signals} = _clone_structured_value($args{fanout_signals} // []);
         
         my $self = bless $hash_to_bless, $class;
+        $self->set_declared_width_binding($args{_declared_width_binding})
+            if exists $args{_declared_width_binding};
         
         return $self;
     }
@@ -56,6 +59,69 @@ package FSM::CoreAST::Signal;
     sub declared_type_name($self) { $self->{declared_type_name} }
     sub declared_type_spec($self) { return _clone_structured_value($self->{declared_type_spec}) }
     sub declared_width_source($self) { return _clone_structured_value($self->{_declared_width_source}) }
+    sub declared_width_binding($self) {
+        my $binding = $self->{_declared_width_binding};
+        return undef unless $self->_declared_width_binding_matches($binding);
+        return _copy_declared_width_binding($binding);
+    }
+
+    sub clear_declared_width_binding($self) {
+        delete $self->{_declared_width_binding};
+        return $self;
+    }
+
+    sub set_declared_width_binding($self, $binding) {
+        # A failed replacement must not expose the previous binding.
+        $self->clear_declared_width_binding;
+        return $self unless defined $binding;
+        my $copy = _copy_declared_width_binding($binding);
+        $self->{_declared_width_binding} = $copy
+            if $self->_declared_width_binding_matches($copy);
+        return $self;
+    }
+
+    sub _copy_declared_width_binding($binding) {
+        my $json = JSON::PP->new->canonical->allow_nonref;
+        my $copy = eval {$json->decode($json->encode($binding))};
+        Carp::confess "Declared width binding requires plain JSON data: $@"
+            if $@;
+        Carp::confess "Declared width binding requires a complete declaration envelope.\n"
+            unless ref($copy) eq 'HASH'
+                && join(',', sort keys %$copy) eq 'binding,expression,observations,scope,signal,width'
+                && defined($copy->{signal}) && !ref($copy->{signal}) && length($copy->{signal})
+                && defined($copy->{expression})
+                && (!ref($copy->{expression}) || ref($copy->{expression}) eq 'ARRAY')
+                && ref($copy->{binding}) eq 'HASH' && ref($copy->{observations}) eq 'ARRAY'
+                && defined($copy->{width}) && !ref($copy->{width})
+                && $json->encode($copy->{width}) =~ /\A[0-9]/
+                && Scalar::Util::looks_like_number($copy->{width})
+                && $copy->{width} > 0 && int($copy->{width}) == $copy->{width};
+        my $scope = $copy->{scope};
+        Carp::confess "Declared width binding requires an explicit direct-module scope.\n"
+            unless ref($scope) eq 'HASH' && join(',', sort keys %$scope) eq 'kind,owner'
+                && !ref($scope->{kind}) && ($scope->{kind} // '') eq 'direct_module'
+                && defined($scope->{owner}) && !ref($scope->{owner}) && length($scope->{owner});
+        # The producer owns canonical graph semantics; target preparation must
+        # prove its observations. This holder enforces plain detached storage
+        # and coherence with the actual declaration, without evaluation.
+        return $copy;
+    }
+
+    sub _declared_width_binding_matches($self, $binding) {
+        my $source = $self->{_declared_width_source};
+        return 0 unless ref($binding) eq 'HASH' && ref($source) eq 'HASH';
+        return 0 if defined($self->{declared_type_name}) || defined($self->{declared_type_spec});
+        for my $value ($binding->{width}, $source->{resolved_width}, $self->{_width}) {
+            return 0 unless defined($value) && !ref($value) && Scalar::Util::looks_like_number($value);
+        }
+        return 0 unless $binding->{width} == $source->{resolved_width}
+            && $binding->{width} == $self->{_width};
+        return 0 unless defined($binding->{signal}) && !ref($binding->{signal})
+            && defined($source->{signal}) && !ref($source->{signal})
+            && $binding->{signal} eq $source->{signal};
+        my $json = JSON::PP->new->canonical->allow_nonref;
+        return $json->encode($binding->{expression}) eq $json->encode($source->{expression});
+    }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }

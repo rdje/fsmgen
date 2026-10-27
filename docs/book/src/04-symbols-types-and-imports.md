@@ -144,6 +144,18 @@ uses the canonical walk and declared-only parameter selector. Ordinary parser
 calls, source getters and numeric values stay unchanged; automatic Core
 publication and symbolic HDL activation remain separate pending work.
 
+Core Signals now provide private `declared_width_binding` storage for explicitly
+supplied compiler records. The envelope adds the actual declaration signal and
+expression to the captured scope, width, binding tree and observations. Input
+and getter copies are plain and detached. The getter exposes a binding only
+when its declaration source, effective width and absence of declared type agree;
+a physical copy can retain a different original declaration name. Failed
+replacement clears the old record. Registry width refinement or explicit source/
+type replacement invalidates the binding while preserving existing numeric and
+source getters. Ordinary inference with unchanged width and absent type keeps
+it. Canonical graph proof remains the producer and target preparer's job;
+normal source parsing has not yet enabled this publication.
+
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
 identities and JSON kinds. Missing, conflicting or opaque dependency records

@@ -89,6 +89,15 @@ sub register_signal($self, $signal_name, %attributes) {
         # AST signal references see the updated width/attributes.
         if (%normalized_attrs) {
             fsm_debug("        NEW ATTRIBUTES: " . Dumper(\%normalized_attrs), 3);
+
+            my $width_refines = defined($normalized_attrs{width})
+                && $normalized_attrs{width} > ($existing->width || 1);
+            my $type_replaced = (exists($normalized_attrs{declared_type_name})
+                    && (defined($normalized_attrs{declared_type_name}) || defined($existing->{declared_type_name})))
+                || (exists($normalized_attrs{declared_type_spec})
+                    && (defined($normalized_attrs{declared_type_spec}) || defined($existing->{declared_type_spec})));
+            $existing->clear_declared_width_binding
+                if $width_refines || $type_replaced || exists($normalized_attrs{_declared_width_source});
             
             # Update width if the new width is more specific (larger) than existing
             if (defined($normalized_attrs{width}) && $normalized_attrs{width} > ($existing->width || 1)) {
@@ -115,6 +124,8 @@ sub register_signal($self, $signal_name, %attributes) {
             }
             $existing->{clock_domain} = $normalized_attrs{clock_domain} if exists $normalized_attrs{clock_domain};
             $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
+            $existing->set_declared_width_binding($normalized_attrs{_declared_width_binding})
+                if exists $normalized_attrs{_declared_width_binding};
             
             # Merge semantic attributes
             if (ref($normalized_attrs{attributes}) eq 'HASH') {
@@ -151,6 +162,11 @@ sub get_or_create_signal($self, $signal_name, %attributes) {
 
 sub get_signal($self, $signal_name) {
     return $self->{signal_registry}{$signal_name};
+}
+
+sub clear_declared_width_bindings($self) {
+    $_->clear_declared_width_binding for values %{$self->{signal_registry}};
+    return $self;
 }
 
 sub get_all_signal_names($self) {

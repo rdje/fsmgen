@@ -36,5 +36,7 @@ lexical direct_module scope. It preserves the actual constant-only fast branch
 and reuses canonical expression capture with real selected observations. Fixed
 literal/type results and all ordinary contracts remain unchanged. This private
 result is not yet published on Core Signals: .3.3.1.2.2.3 owns automatic source
-association/invalidation before target kernels may consume it. Reverify:
+association/invalidation before target kernels may consume it. The Core holder
+and registry invalidation are now implemented separately; automatic source
+publication is .3.3.1.2.2.3.2 and actual auxiliary origin copies are .3. Reverify:
 `prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t`.

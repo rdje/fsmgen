@@ -1785,10 +1785,38 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish and invalidate private width binding records on actual Core Signals.`
   Acceptance: `After .2.2, attach lexical scope and declared signal origin to detached captured records from actual +size resolution. Keep existing declared_width_source/numeric getters and public report schemas unchanged. Add a private cloned getter and registration/invalidation lifecycle; a replaced or refused retry cannot expose stale partial bindings. Preserve legitimate source-origin copies and actual assignment targets absent from module signals. Focused actual source/Core/getter/failed retry/physical copy and caller/lifetime controls, exact old source/semantic products and synchronized documentation qualify publication only. Target ranges remain .3.3.2-.4; full qualification .6.`
-  Verification: `pending .2.2`
+  Verification: `Opt-in declaration resolver is committed at 70dc82f07. Core Signal stores private source snapshots; SignalManager refines existing objects in place and copies explicit source metadata. Split the holder/registration lifecycle from automatic parser transaction and legitimate auxiliary-origin propagation before code. Preserve legacy max-width refinement and old source/getter contracts. New bindings carry the captured scope/tree/lookups plus actual declaration signal/expression, never infer origins from names or equal values.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.1, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.2, ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.1`
+  Status: `done`
+  Goal: `Store detached private declared-width bindings with coherent source/width lifecycle.`
+  Acceptance: `Add a private Core Signal getter/setter for plain closed binding envelopes containing scope, width, canonical binding/observations and actual declaration signal/expression. Clone before inspection; reject callbacks/cycles/malformed envelopes and clear a replaced binding before failed replacement. Require the source snapshot, effective width and named-type state to agree before exposing a binding; genuine origin copies may have different physical names. SignalManager clears binding metadata on effective width refinement or explicit source/type replacement, installs only coherent fresh metadata and offers explicit whole-registry clearing for failed source transactions. Keep all old numeric/max-width/source/type/getter contracts, ordinary Signal shapes and publication unchanged. Canonical graph semantics remain the actual producer/target-kernel obligation; this holder does not replay evaluation or attest arbitrary callers. Qualify setters/getters/copies, same-width different-origin replacement, stale private width/source changes, invalid payloads and held-record ownership. Commit this holder before automatic source publication.`
+  Verification: `Core Signal now clones a closed plain envelope for declared_width_binding: scope, width, binding, observations and actual declaration signal/expression. The setter clears old metadata before validation; callbacks/cycles/malformed scopes/shapes or a string-valued width refuse with no old/partial binding. Getter exposure requires exact source expression/origin, effective width and absent declared type; copied physical names do not supply origin. Canonical graph semantics remain producer/target proof, not holder attestation. SignalManager clears bindings on actual max-width refinement, explicit source replacement or meaningful type replacement, installs only coherent fresh data, and clears the entire actual registry for future failed transactions. Unchanged smaller inference/null type/role updates preserve coherent binding; old max-width/source/type behavior stays intact. Ordinary constructors/source parsing add no metadata field. T2161 first fails on the absent holder and goes GREEN. All tests successful Files=3 Tests=15 for holder/producer/parameter source; final added null-type/multi-object/type-spec/width-kind controls pass Files=1 Tests=7. Independent full envelope, getters/caller mutation, same-value changed source, mismatched width/type, failed setter/retry, actual registry objects and held plain-result manager/Signal release pass. Complete selected ordinary contracts, first refusal messages, source/default/Signal getters and caller JSON kinds are byte-identical to 70dc82f07; raw error traces retain separately under the prior first-location boundary. Syntax and guarded book/source freshness pass. Re-derive: actual canonical producer and Core/manager state. Falsify: independent literal record and hostile source/type/width/schema/callback/cycle/retry/owner cases. Durability: tracked code/fixed test/facts/book and docs/audits/core-width-binding-lifecycle-20261027.json.gz with exact predecessor/current sources, products, recipes and logs. Source transactions and auxiliary copies stay .3.2/.3; full/public/HDL/runtime qualification remains .6. Commit through the normal authoritative hook before source activation.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.1: retain coherent private Core width bindings`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _declared_width_source identifies 98f4d88257. Core/registry only retain authored source, and in-place width/declaration refinements need an explicit binding lifecycle. T2161 initially fails on the absent getter/setter.
+  - [x] **ADDRESSED (verified)** — Add plain detached coherent binding storage, failed-replacement clearing, actual-registry refinement/source/type invalidation and explicit whole-registry clearing. Preserve original declaration identity across physical copies and all old fields; source publication remains separate.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 and final controls Files=1 Tests=7. Independent complete records, invalid schema/callback/cycle/width-kind/source/type inputs, retry/getter/copy/owner and multi-object registry cases pass; selected ordinary products and JSON kinds remain byte-exact. Syntax and guarded book/source checks pass; the normal mandatory hook qualifies the final stage. No full/public/runtime claim.
+
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.2`
+  Status: `pending`
+  Goal: `Publish actual source width bindings atomically across successful declaration parsing.`
+  Acceptance: `Use actual lexical module ownership and opt-in resolver at +size, retaining the old source/numeric fields and public products. Stage new private bindings until the complete source declaration transaction succeeds; failed or replaced retries expose no stale/partial bindings while preserving legacy numeric/source failure behavior. Keep unrelated successful declarations across multiple valid sections, clear invalid source contexts explicitly, and own declaration-environment replacement boundaries before activation. Actual source/assigned Signal membership, same-name/one-bit/default cases and complete ordinary/public product conservation qualify; no target emission yet.`
+  Verification: `pending holder`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.3.1.2.2.3.3`
+  Status: `pending`
+  Goal: `Carry bindings through legitimate recorded source-origin auxiliary copies.`
+  Acceptance: `Propagate only actual existing rm/mr/next/q origin records in both size-before-assignment and late-size branches. Keep original declaration signal/scope independent of physical auxiliary names, static/named-type cases and unrelated equal widths. Verify actual assignment targets absent from module signals, getter/copy isolation and invalidation on replaced/refused source retries. Commit before shared target range kernels; generic HDL/public/full qualification stays later.`
+  Verification: `pending source publication`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.3.2`
