@@ -1,0 +1,14 @@
+(?fsm:direct_symbolic_storage
+  (+params (W 1) (COPY W) (SAME 1))
+  (+types (type signed_word (four_state (signed (bits 4)))))
+  (+interface (internal SPARE) (internal TYPED))
+  (+size
+    (DATA (param COPY))
+    (INPUT_PORT (param W))
+    (SPARE (+ (param W) 1))
+    (TYPED signed_word)
+    (FIXED 1)
+    (FIXED_VALUE 1))
+  (idle
+    (<-= (DATA INPUT_PORT))
+    (= (FIXED_VALUE FIXED))))

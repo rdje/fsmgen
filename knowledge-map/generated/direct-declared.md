@@ -1,10 +1,11 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="do direct symbolic internal storage ranges retain assignment-target captures?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="does a direct parameter-dependent width defaulting to one retain a vector range?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="is the Core module signals map exhaustive for declared assignment targets?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do actual direct backend declaration snapshots come from?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)

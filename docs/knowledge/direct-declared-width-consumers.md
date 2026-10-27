@@ -3,6 +3,7 @@ id: direct-declared-width-consumers
 title: Direct declared ranges retain source trees but numeric declaration plans need captured lookup identities
 answers:
   - "where do direct symbolic declared-width consumers need integration?"
+  - "do direct symbolic internal storage ranges retain assignment-target captures?"
   - "where do actual direct backend declaration snapshots come from?"
   - "does a direct parameter-dependent width defaulting to one retain a vector range?"
   - "is the Core module signals map exhaustive for declared assignment targets?"
@@ -12,6 +13,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
@@ -41,8 +43,10 @@ an exhaustive source for assigned outputs: the actual Signal is also reached
 through the canonical adapter registry and assignment AST.
 
 ModulePlanningSupport owns direct port/internal plans. ScaffoldEmitter now
-consumes captured symbolic port ranges; InternalDeclarationEmitter still renders
-numeric storage ranges. Direct VHDL symbolic port conversion remains pending
+consumes captured symbolic port ranges; InternalDeclarationEmitter consumes
+source-owned captured storage ranges, including actual assignment targets absent
+from module membership. Backend-only helpers retain their numeric shape.
+Direct VHDL symbolic port conversion remains pending
 and refuses rather than returning an artifact. CompositionWidthEmitter already has
 captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
@@ -194,8 +198,12 @@ and exact emitted-plan comparison reject late same-default ancestry changes;
 combined/stale/namespace and symbolic system-width profiles refuse before success.
 Fixed/type/legacy and static VHDL defaults conserve. Native strict check plus
 SystemVerilog/Verilog outputs qualify the one-bit fixture; symbolic VHDL refuses
-and preserves an existing destination. Storage/computed shapes, source-aware
+and preserves an existing destination. Direct source-owned storage now consumes
+the same proved range plans, preserving explicit internal roles, arithmetic and
+default-one vector rank. Final emitted storage-plan comparison also rejects
+late same-default identity changes. Signed/state/type/fixed declarations preserve.
+Computed shapes, source-aware
 VHDL ranges and full override/runtime qualification remain successors. Existing whole backend retention is separately owned under
 .25 and the flattened-backend-owner-cycle card; isolated target plans retain no
 caller target records or never-installed physical Core copy. Reverify:
-`prove -Iperl t/2175-direct-symbolic-port-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
+`prove -Iperl t/2176-direct-symbolic-storage-ranges.t t/2175-direct-symbolic-port-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.

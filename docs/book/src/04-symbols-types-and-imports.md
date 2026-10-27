@@ -380,12 +380,12 @@ or incomplete numeric rows withhold prior/partial results. Captured direct
 parameter/width preparation now installs this collector for one generation;
 legacy uncaptured generation keeps its existing path.
 
-Direct SystemVerilog and compatibility Verilog ports now consume the proved
-ranges. Selected parameter names and arithmetic remain in input/output ranges,
+Direct SystemVerilog and compatibility Verilog ports and source-owned internal
+storage now consume the proved ranges. Selected names and arithmetic remain,
 including an explicit vector when the selected width defaults to one. Fixed
 literals, static selections and named types keep independent numeric/type
 ranges. Before returning HDL, complete actual target snapshots are qualified
-again and compared with the emitted port identities. A same-default source
+again and compared with the emitted port/storage identities. A same-default source
 replacement cannot bless already emitted text. Combined mutable requirements,
 stale captures, namespace conflicts and symbolic clock/reset widths refuse.
 
@@ -405,9 +405,25 @@ input  wire [(W - 1):0] INPUT_PORT,
 output reg  [(COPY - 1):0] next_DATA
 ```
 
-Port emission has focused checks and native generation evidence. Internal
-storage, computed helper shapes and complete external override/runtime
-qualification remain pending. The source-aware VHDL range integration is also
+The [storage fixture](../../../t/data/ial0-direct-symbolic-storage.fsm) adds an
+explicit unused internal and an independently typed signed four-state control.
+Run the same commands above with that source and a distinct output path. Its
+internal declarations include:
+
+```systemverilog
+reg [(COPY - 1):0] DATA;
+reg [((W + 1) - 1):0] SPARE;
+logic signed [3:0] TYPED;
+```
+
+Assignment-target storage is included even when absent from the Core module's
+signal map. Explicit internal roles stay internal; fixed/static/type ranges
+retain their existing declaration paths. Backend-only helpers acquire no
+symbolic range by matching numeric widths.
+
+Port/storage emission has focused checks and native generation evidence.
+Computed helper shapes and complete external override/runtime qualification
+remain pending. The source-aware VHDL range integration is also
 pending: symbolic direct ports currently refuse in that converter before a new
 artifact is returned; an existing destination remains unchanged.
 
@@ -472,9 +488,9 @@ RESIDUE : natural := (TOTAL mod WIDTH);
 PAD : std_logic_vector(7 downto 0) := "10100101"
 ```
 
-This qualifies VHDL default relationships. Direct Verilog-family ports now
-preserve captured symbolic ranges and default-one vector rank; internal storage
-and computed shapes remain successors. A distinct equal literal width creates
+This qualifies VHDL default relationships. Direct Verilog-family ports
+and source-owned storage now preserve captured symbolic ranges and default-one vector
+rank; computed shapes remain successors. A distinct equal literal width creates
 no relationship. Direct VHDL symbolic ports and complete external
 override/runtime qualification remain pending. The standalone SystemVerilog-text converter
 keeps its existing static/integer-expression profile because it has no Core

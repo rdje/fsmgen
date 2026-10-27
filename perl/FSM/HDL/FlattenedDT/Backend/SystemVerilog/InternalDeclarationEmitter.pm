@@ -48,6 +48,16 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %signal_declared_type_spec = %{$declaration_plan->{signal_declared_type_spec} || {}};
     my %aux_declared_type_spec = %{$declaration_plan->{aux_declared_type_spec} || {}};
     my %enable_decls = _enable_wire_declarations($ctx, \%signal_decls, \%aux_decls);
+    my %width_plans;
+    if (my $source_plan = $ctx->{direct_declared_width_source_plan}) {
+        for my $name (sort(keys(%signal_decls), keys(%aux_decls))) {
+            my $signal_plan = $source_plan->{signals}{$name};
+            my $width_plan = $signal_plan ? $signal_plan->{width_plan} : undef;
+            next unless $width_plan && $width_plan->{profile} eq 'symbolic';
+            $width_plans{$name} = $width_plan;
+            $ctx->{direct_declared_width_emitted_signals}{$name} = $width_plan;
+        }
+    }
 
     return "" unless (%signal_decls || %aux_decls || %enable_decls);
     $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state(
@@ -80,6 +90,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
         \%signal_declared_type_name,
         \%signal_declared_type_spec,
         $aggregate_typedef_lookup,
+        \%width_plans,
     );
 
     if (%aux_decls) {
@@ -91,6 +102,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
             \%aux_declared_type_name,
             \%aux_declared_type_spec,
             $aggregate_typedef_lookup,
+            \%width_plans,
         );
     }
     if (%enable_decls) {
@@ -158,7 +170,7 @@ sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared
     return @entries;
 }
 
-sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = undef, $declared_type_name_map = undef, $declared_type_spec_map = undef, $aggregate_typedef_lookup = undef) {
+sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = undef, $declared_type_name_map = undef, $declared_type_spec_map = undef, $aggregate_typedef_lookup = undef, $width_plans = undef) {
     my $hdl = "";
     for my $signal_name (sort keys %{$decls || {}}) {
         my $typedef_name = FSM::Backend::VerilogFamily::TypeDeclarationSupport->aggregate_typedef_name_for({
@@ -173,6 +185,7 @@ sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = un
 
         my $width = $decls->{$signal_name} || 1;
         my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+        $width_str = $width_plans->{$signal_name}{range_text} if $width_plans && $width_plans->{$signal_name};
         my $signed_str = ($signed_map && ($signed_map->{$signal_name} // 0)) ? "signed " : "";
         my $state_model = $state_model_map ? $state_model_map->{$signal_name} : undef;
         my $type_keyword = _state_model_keyword($state_model);
@@ -213,5 +226,8 @@ C<FSM::HDL::FlattenedDT> backend context.
 Renders the SystemVerilog internal declaration block from the enable-graph
 declaration plan, including both direct internal storage declarations and the
 auxiliary helper register family used by the direct generated-module backend.
+Captured source-owned storage consumes its proved symbolic range, including
+vector rank at a selected width of one. Backend-only helpers keep their existing
+numeric shape; no width relationship is inferred from equal numeric widths.
 
 =cut

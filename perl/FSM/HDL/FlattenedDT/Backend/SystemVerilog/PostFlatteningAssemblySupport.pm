@@ -86,6 +86,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{declared_width_declaration_capture} = $capture;
     local $ctx->{direct_declared_width_source_plan};
     local $ctx->{direct_declared_width_emitted_ports} = {};
+    local $ctx->{direct_declared_width_emitted_signals} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
     if ($prepare_widths) {
@@ -123,6 +124,10 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             my $json = JSON::PP->new->canonical;
             confess "Direct captured widths do not match the actual emitted port identities\n"
                 unless $json->encode(\%expected) eq $json->encode($ctx->{direct_declared_width_emitted_ports});
+            my %expected_signals = map {$_ => $qualified->{ranges}{$_}{width_plan}}
+                grep {$qualified->{ranges}{$_}{declaration_kind} eq 'signal'} keys %{$qualified->{ranges}};
+            confess "Direct captured widths do not match the actual emitted storage identities\n"
+                unless $json->encode(\%expected_signals) eq $json->encode($ctx->{direct_declared_width_emitted_signals});
             1;
         };
         unless ($ok) {
