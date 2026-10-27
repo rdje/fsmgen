@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-26`
+- Last updated: `2026-10-27`
 - Owner: repo-local workflow
 
 ## Goal
@@ -1547,10 +1547,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=7476 for header/alias/source/symbol and directly affected catalog integrity checks. Complete Core parameter/source/binding JSON products remain exact before/after. Native strict examples, selected generated-carrier check, syntax and guarded mdBook/POD build/freshness pass. Mandatory staged scripts/check_doctrines.sh and normal hooks qualify commit; broad source/runtime/API/MCP matrices remain .3.6/.6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve or explicitly refuse dependent aggregate and selected-path default profiles.`
   Acceptance: `After .3, use actual declared payload/type evidence and existing aggregate lowering contracts to select supported backend aggregate/path relationships. Preserve aggregate shape, member/index semantics and immediate parameter identity; refuse profiles that would silently freeze mutable dependencies. Keep ordinary static aggregate and executable aggregate semantics intact. Split target-specific implementation first if needed; focused independently expected member/shape/default/refusal controls and book/corpus applicability qualify each commit. Full compiled override/runtime cases remain .3.6/.6.`
-  Verification: `pending scalar relationship consumer`
+  Verification: `Scalar consumer 2a1adfef75a162a7434c0b733f0caffcc355911d skips aggregate/path trees and references, including scalar results with aggregate operands. Split the canonical static-aggregate profile from header integration before implementation. Select a conservative profile: evaluate immutable aggregate trees with the existing canonical value evaluator; explicitly refuse aggregate/path defaults with actual mutable parameter references until a separately qualified packed-layout relationship exists. Do not infer immutability from equal defaults or erase immediate identities. Ordinary static aggregates and executable references remain supported. No source grammar/report/API/MCP schema changes; full source/corpus/transport/runtime verification remains .6. Initial staged doctrines reject task-evidence line/byte allowance exhaustion; retain complete log/patch in docs/audits/aggregate-default-profile-split-20261027.json.gz and declare measured growth plus the existing ratchet step with unchanged baselines/ceilings. Startup claim template compares byte-identical with its retained review; README and containment are locally adopted. Latest cleanup UTC is not yet 24 hours old at startup.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.2.4: split aggregate default profile boundaries`
+  Children: `ISF-REDUCTION-DELIVERY.3.2.4.1, ISF-REDUCTION-DELIVERY.3.2.4.2`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _binding_has_aggregate_structure identifies 2a1adfef75a162a7434c0b733f0caffcc355911d; direct ScaffoldEmitter skips aggregate/path bindings instead of preserving or refusing mutable relationships.
+  - [x] **ADDRESSED (verified)** — Split canonical immutable-aggregate preparation and explicit mutable-profile refusal from direct header/corpus integration. Preserve static and executable aggregate controls, caller snapshots and original lexical scopes; no implementation or support expansion in this decomposition.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl, knowledge-map: OK and mandatory staged scripts/check_doctrines.sh plus normal hooks gate this ownership-only slice. No broad feature verification runs.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.4.1`
+  Status: `pending`
+  Goal: `Prepare immutable aggregate default rendering and fail-closed mutable aggregate profiles.`
+  Acceptance: `Add a direct-scope default-profile entrypoint alongside the unchanged shared scalar renderer. Inspect actual canonical bindings and declared payload kinds recursively, validate scopes/tokens/member order and cycles, and distinguish aggregate/path operands even for scalar results. Reconstruct immutable canonical value inputs and reuse ParameterValueSupport rather than a second evaluator or cached result text. Refuse aggregate/path trees with mutable parameter references contextually, retaining source identity. Qualify actual parsed list/map/static/leafwise/comparison defaults, nested scalar controls, wrong caches, malformed scopes/structures/cycles and complete caller JSON conservation. Update POD/book/fact; no direct header or composition admission change yet. Focused checks only; full runtime/public matrices remain .6.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.2.4.2`
+  Status: `pending`
+  Goal: `Integrate explicit aggregate default profiles into direct Verilog-family headers.`
+  Acceptance: `After .1, replace aggregate/path selected-default skips with the canonical profile entrypoint. Preserve ordinary immutable aggregate packing, scalar defaults, dependency ordering, executable aggregate references and legacy programmatic literals. Refuse mutable aggregate/path relationships before returning HDL, including scalar comparisons and scalar members inside aggregate declarations. Qualify both target texts and actual native refusals with independent expected payload bits and exact predecessor controls. Update directly affected tests/corpus contracts, book and downstream boundary without weakening semantic-source expectations; distinguish parsed normalization from supported generic emission. Keep native/API/MCP schemas unchanged and record applicability. Full corpus/external/runtime/transport qualification remains .6. Commit before VHDL implementation.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.2.5`
