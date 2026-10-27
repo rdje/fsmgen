@@ -1142,6 +1142,23 @@ sub resolve_declared_width_token($self, %args) {
 }
 
 sub resolve_declared_width_contract($self, %args) {
+    return $self->_resolve_declared_width_contract(undef, %args);
+}
+
+sub capture_declared_width_contract($self, %args) {
+    my $source_scope = $args{scope};
+    Carp::confess "Declared width capture requires an explicit direct-module scope.\n"
+        unless ref($source_scope) eq 'HASH';
+    # Inspect copied scalars so validation cannot change the caller's flags.
+    my $scope = {%$source_scope};
+    Carp::confess "Declared width capture requires an explicit direct-module scope.\n"
+        unless join(',', sort keys %$scope) eq 'kind,owner'
+            && !ref($scope->{kind}) && ($scope->{kind} // '') eq 'direct_module'
+            && defined($scope->{owner}) && !ref($scope->{owner}) && length($scope->{owner});
+    return $self->_resolve_declared_width_contract($scope, %args);
+}
+
+sub _resolve_declared_width_contract($self, $capture_scope, %args) {
     my $signal_name = $args{signal_name} // 'signal';
     my $width_token = $args{width_token};
 
@@ -1168,26 +1185,48 @@ sub resolve_declared_width_contract($self, %args) {
             };
         }
 
-        my $resolved_scalar_width = $self->{signal_manager}->resolve_positive_integer_scalar($width_token);
-        return {
-            width => $resolved_scalar_width,
-            signed => 0,
-            state_model => undef,
-        } if defined $resolved_scalar_width && $resolved_scalar_width > 0;
+        my $selection = $capture_scope
+            ? $self->{signal_manager}->resolve_positive_integer_scalar_observation($width_token)
+            : undef;
+        my $resolved_scalar_width = $capture_scope
+            ? ($selection ? $selection->{width} : undef)
+            : $self->{signal_manager}->resolve_positive_integer_scalar($width_token);
+        if (defined $resolved_scalar_width && $resolved_scalar_width > 0) {
+            my $contract = {width => $resolved_scalar_width, signed => 0, state_model => undef};
+            if ($capture_scope) {
+                # This branch parsed the actual constant already. Its exact
+                # decimal observation supplies the binding without replaying
+                # ordinary namespace lookup, integer evaluation or formatting.
+                my $observation = $selection->{observation};
+                $contract->{width_capture} = {
+                    scope => {%$capture_scope}, width => $resolved_scalar_width,
+                    observations => [{lookup => 'symbol', %$observation}],
+                    binding => {kind => 'reference', observation_index => 0,
+                        value_expression => {kind => 'literal',
+                            token => $observation->{value_payload}{payload}}},
+                };
+            }
+            return $contract;
+        }
     }
 
     my $expression_error;
+    my $expression_capture;
     my $resolved_expression_width = eval {
-        $self->resolve_positive_width_expression(
-            $width_token,
-            "Width expression for '+size' signal '$signal_name'",
-        );
+        my $context = "Width expression for '+size' signal '$signal_name'";
+        if ($capture_scope) {
+            $expression_capture = $self->capture_positive_width_expression($width_token, $context);
+            $expression_capture->{width};
+        } else {
+            $self->resolve_positive_width_expression($width_token, $context);
+        }
     };
     $expression_error = $@ if $@;
     return {
         width => $resolved_expression_width,
         signed => 0,
         state_model => undef,
+        $capture_scope ? (width_capture => {scope => {%$capture_scope}, %$expression_capture}) : (),
     } if defined($resolved_expression_width) && $resolved_expression_width > 0;
 
     my $expression_detail = $expression_error
@@ -1208,6 +1247,10 @@ sub _resolve_width_parameter_payload($self, $name) {
 
 sub _resolve_width_symbol_payload($self, $name) {
     return $self->{signal_manager}->resolve_parameter_value_symbol_payload($name);
+}
+
+sub _resolve_width_symbol_observation($self, $name) {
+    return $self->{signal_manager}->resolve_parameter_value_symbol_observation($name);
 }
 
 sub canonicalize_scalar_type_spec($self, %args) {

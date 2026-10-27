@@ -132,11 +132,17 @@ the existing prefix and infix evaluator walk. It retains structured literals,
 operators, selected payload expressions and complete ordered actual lookups.
 Repeated references remain separate; namespace identity comes from the
 resolver's observation, and captured records stay detached. Ordinary width
-evaluation keeps its existing interface and callbacks. Direct parser/Core
-publication and symbolic HDL activation remain separate pending work. The
-scalar-constant sizing fast path now also exposes its actual constant selection
-and exact decimal integer through the shared literal parser. Its existing numeric
-accessor and the parser's earlier named-type precedence remain unchanged.
+evaluation keeps its existing interface and callbacks. The direct parser now
+provides private `capture_declared_width_contract` with an explicit
+`{kind => 'direct_module', owner => 'source_name'}` scope. Selected constants
+and general expressions add detached `width_capture` records containing scope,
+resolved width, structured binding and ordered actual lookup observations.
+Literal and named-type branches retain their existing fixed/type contracts.
+The constant fast path consumes its actual exact decimal observation without
+replaying general lookup, evaluation or target formatting. Expression capture
+uses the canonical walk and declared-only parameter selector. Ordinary parser
+calls, source getters and numeric values stay unchanged; automatic Core
+publication and symbolic HDL activation remain separate pending work.
 
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate

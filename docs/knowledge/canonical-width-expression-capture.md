@@ -4,11 +4,12 @@ title: Opt-in width capture records actual prefix and infix evaluation structure
 answers:
   - "where can canonical width evaluation capture actual selected bindings?"
   - "how do nested infix width payload lookups retain immediate identity?"
+  - "how does direct declared-width resolution capture scope and actual lookup selection?"
 date: 2026-10-27
 status: current
 tags: [widths, source-capture, parameters, namespaces]
-evidence: perl/FSM/WidthExpressionSupport.pm; t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2156-canonical-width-expression-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t
+evidence: perl/FSM/Adapter/FSMGenFull/Parser.pm; t/2160-direct-declared-width-capture.t; docs/audits/direct-declared-width-capture-20261027.json.gz; perl/FSM/WidthExpressionSupport.pm; t/2156-canonical-width-expression-capture.t; docs/audits/canonical-width-expression-capture-20261027.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t
 ---
 
 capture_positive_width_expression returns detached width, binding and
@@ -31,5 +32,15 @@ Held plain results retain neither evaluator nor callbacks. Exact ordinary
 values/refusals/callback order/caller kinds match the predecessor; full raw
 error traces remain retained with location-only comparison boundaries.
 
-Direct parser/Core publication remains ISF-REDUCTION-DELIVERY.3.3.1.2.2. This
-kernel alone activates no source grammar, public schema or symbolic HDL ranges.
+Direct Parser capture_declared_width_contract now accepts an explicit detached
+{kind => direct_module, owner => source_name} scope. Literal/type branches keep
+their exact ordinary contracts. Constant fast-path capture uses the actual
+parsed scalar observation and exact decimal token without resolver/evaluator
+replay; general expressions reuse the canonical capture and actual manager
+observation/declared-only hooks. Only those branches add width_capture with
+scope, width, binding and observations. Ordinary source/contracts and JSON kinds
+conserve; failed retries and held-result parser release qualify.
+
+Automatic source/Core publication remains
+ISF-REDUCTION-DELIVERY.3.3.1.2.2.3. No source grammar, public schema or symbolic
+HDL range is activated by this opt-in resolver.

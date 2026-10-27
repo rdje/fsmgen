@@ -30,3 +30,11 @@ those generated numeric declarations. CompositionWidthEmitter already has
 captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
 direct consumer integration; computed shapes and full qualification stay .3.4/.6.
+
+The direct Parser now offers opt-in capture_declared_width_contract with explicit
+lexical direct_module scope. It preserves the actual constant-only fast branch
+and reuses canonical expression capture with real selected observations. Fixed
+literal/type results and all ordinary contracts remain unchanged. This private
+result is not yet published on Core Signals: .3.3.1.2.2.3 owns automatic source
+association/invalidation before target kernels may consume it. Reverify:
+`prove -Iperl t/2160-direct-declared-width-capture.t t/2128-shared-integer-width-evaluator.t t/2111-ial0-parameter-width-selection.t`.

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1294** facts · **7118** unique questions · **7295** answer occurrences · **204** topic shards.
+> **1294** facts · **7119** unique questions · **7296** answer occurrences · **204** topic shards.
 
 Query first:
 
@@ -30,7 +30,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `backend-language` | 10 | 52 | [`backend-language.md`](knowledge-map/generated/backend-language.md) |
 | `bin-fsmgen` | 1 | 14 | [`bin-fsmgen.md`](knowledge-map/generated/bin-fsmgen.md) |
 | `canonical-integer` | 1 | 2 | [`canonical-integer.md`](knowledge-map/generated/canonical-integer.md) |
-| `canonical-width` | 2 | 4 | [`canonical-width.md`](knowledge-map/generated/canonical-width.md) |
+| `canonical-width` | 2 | 5 | [`canonical-width.md`](knowledge-map/generated/canonical-width.md) |
 | `capability-manifest` | 1 | 3 | [`capability-manifest.md`](knowledge-map/generated/capability-manifest.md) |
 | `check-json` | 1 | 3 | [`check-json.md`](knowledge-map/generated/check-json.md) |
 | `ci-perl` | 1 | 16 | [`ci-perl.md`](knowledge-map/generated/ci-perl.md) |
