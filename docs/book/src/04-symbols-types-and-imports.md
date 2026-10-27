@@ -261,6 +261,7 @@ use FSM::DeclaredWidthBindingSupport;
 use FSM::DeclaredWidthRangeSupport;
 use FSM::DirectDeclaredWidthSupport;
 use FSM::HDL::FlattenedDT;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
 use FSM::ParameterDefaultEnvironmentSupport;
 my $source = '(?fsm:late_case (+params (W 8)) (idle (<-= (data 0))))';
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
@@ -280,10 +281,17 @@ my $range_plan = FSM::DeclaredWidthRangeSupport->prepare_signal(
     environment => $environment, target_language => 'vhdl');
 # $range_plan->{range_text} is '((W - 1) downto 0)'.
 my $backend = FSM::HDL::FlattenedDT->new(debug => 0);
-$backend->generate_systemverilog($module);
+my $declaration_capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+{
+    local $backend->{declared_width_declaration_capture} = $declaration_capture;
+    $backend->generate_systemverilog($module);
+}
 my $module_width_plan = FSM::DirectDeclaredWidthSupport->prepare_module(
     fsm_module => $module, assignment_analysis => $backend->{assignment_analysis},
     target_language => 'vhdl');
+my $target_width_plan = FSM::DirectDeclaredWidthSupport->prepare_declarations(
+    fsm_module => $module, assignment_analysis => $backend->{assignment_analysis},
+    target_language => 'systemverilog', %{$declaration_capture->snapshot});
 ```
 
 Scope preflight refuses malformed or incompatible records before mutation.
@@ -363,9 +371,15 @@ width roots retain their names; actual Signal and physical module names can use
 the backend's mapping without replacing original source scope. The detached
 result identifies port/storage ranges and the independent fixed declarations.
 The target input contract is documented in the helper's API reference; it must
-come from the actual backend boundary. These plans do not yet activate direct
-HDL declarations. Backend integration, computed helper shapes and full
-qualification remain separate work.
+come from the actual backend boundary. The opt-in `DeclarationCapture` publisher
+now supplies it directly from the existing emitters: actual parameter order,
+ports, state declarations, storage, enable/intermediate wires and allocated
+aggregate type names. No HDL parsing or second generation pass supplies these
+records. Only completed generation exposes a detached snapshot; reset, failure
+or incomplete numeric rows withhold prior/partial results. Ordinary generation
+installs no collector and keeps its existing HDL. These plans do not yet
+activate direct HDL declarations. Port emission, computed helper shapes and
+full qualification remain separate work.
 
 The target-plan ownership check exposed an independent backend retention defect:
 ordinary numeric generation keeps a context/helper back-reference cycle and its

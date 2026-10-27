@@ -73,6 +73,9 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
     for my $signal_name (@{$sorted_signals}) {
         my $signal_info = $filtered_signals->{$signal_name};
         my $width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
+        $ctx->{declared_width_declaration_capture}->record_declaration('signals',
+            {name => $signal_name, width => $width, signed => 0})
+            if $ctx->{declared_width_declaration_capture};
 
         if ($width > 1) {
             $hdl .= "  wire [" . ($width - 1) . ":0] $signal_name;\n";

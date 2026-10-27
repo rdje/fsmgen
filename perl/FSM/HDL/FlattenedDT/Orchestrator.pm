@@ -18,6 +18,8 @@ sub new ($class, %args) {
 }
 sub reset_generation_state ($self) {
     my $ctx = $self->{flattened_dt};
+    $ctx->{declared_width_declaration_capture}->invalidate
+        if $ctx->{declared_width_declaration_capture};
 
     # Clear per-run generation state so one generator instance can be reused safely.
     $ctx->{state_enables} = {};

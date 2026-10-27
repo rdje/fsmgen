@@ -3,6 +3,7 @@ id: direct-declared-width-consumers
 title: Direct declared ranges retain source trees but numeric declaration plans need captured lookup identities
 answers:
   - "where do direct symbolic declared-width consumers need integration?"
+  - "where do actual direct backend declaration snapshots come from?"
   - "does a direct parameter-dependent width defaulting to one retain a vector range?"
   - "is the Core module signals map exhaustive for declared assignment targets?"
   - "why must explicit auxiliary width declarations be preserved before copying parent bindings?"
@@ -11,6 +12,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
   perl/FSM/DirectDeclaredWidthSupport.pm; t/2172-direct-width-module-source-plans.t; docs/audits/direct-width-module-source-plans-20261027.json.gz;
   perl/FSM/DeclaredWidthRangeSupport.pm; t/2171-declared-width-range-adapter.t; docs/audits/direct-width-range-adapter-20261027.json.gz;
@@ -175,9 +177,15 @@ widths, signedness and declared types. VHDL folds case; selected mutable root
 renaming refuses while physical module/Signal mappings remain independent of
 source ownership. Detached target plans identify symbolic port/storage ranges
 and independent fixed declarations. Actual numeric rendered widths independently
-match backend planner metadata in the focused contract. Direct activation and
-computed shapes remain successors; ordinary runtime consumers do not import
-these helpers yet. Existing whole backend retention is separately owned under
+match backend planner metadata in the focused contract. The opt-in VerilogFamily::DeclarationCapture publisher now records actual
+parameter order, ports, state/storage/enable/intermediate declarations and
+allocated typedef names across the existing emitters. Completed assembly alone
+exposes detached namespace/numeric-type snapshots; reset, failed/incomplete or
+duplicate transactions withhold old/partial results. No HDL parsing or second
+generation pass supplies them. Actual ordinary/captured artifacts conserve
+against authenticated predecessor owners under the Date-only comparison.
+Direct activation and computed shapes remain successors; ordinary generation
+installs no collector or captured range activation yet. Existing whole backend retention is separately owned under
 .25 and the flattened-backend-owner-cycle card; isolated target plans retain no
 caller target records or never-installed physical Core copy. Reverify:
-`prove -Iperl t/2173-direct-width-target-plans.t t/2172-direct-width-module-source-plans.t`.
+`prove -Iperl t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.

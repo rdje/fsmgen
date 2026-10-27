@@ -72,12 +72,19 @@ sub generate_module_declaration ($self, $fsm_module) {
             [ @{$module_plan->{base_ports} || []}, @{$module_plan->{inputs} || []}, @{$module_plan->{outputs} || []} ],
             $ctx->{verilog_family_typedef_state},
         );
+    my $capture = $ctx->{declared_width_declaration_capture};
+    if ($capture) {
+        $capture->record_typedefs($aggregate_typedef_lookup);
+        for my $port (@{$module_plan->{base_ports} || []}, @{$module_plan->{inputs} || []}, @{$module_plan->{outputs} || []}) {
+            $capture->record_declaration('ports', {%$port, signed => $port->{signed} // 0});
+        }
+    }
     my @base_ports = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{base_ports} || []};
     my @inputs = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{inputs} || []};
     my @outputs = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{outputs} || []};
 
     my @all_ports = (@base_ports, @inputs, @outputs);
-    my @parameter_lines = _render_module_parameter_lines($fsm_module);
+    my @parameter_lines = _render_module_parameter_lines($fsm_module, $capture);
     my $hdl = "";
     if (@$typedef_lines) {
         $hdl .= join("\n", @$typedef_lines) . "\n\n";
@@ -109,7 +116,7 @@ sub generate_module_declaration ($self, $fsm_module) {
     return $hdl;
 }
 
-sub _render_module_parameter_lines ($fsm_module) {
+sub _render_module_parameter_lines ($fsm_module, $capture = undef) {
     return unless $fsm_module && $fsm_module->can('parameters');
 
     my $parameters = $fsm_module->parameters || {};
@@ -170,6 +177,9 @@ sub _render_module_parameter_lines ($fsm_module) {
         }
         die "Module parameter default dependency cycle\n" unless defined $next;
         push @order, $next; $emitted{$next} = 1;
+    }
+    if ($capture) {
+        $capture->record_name('parameter_names', $_) for @order;
     }
     return map {"  parameter $_ = $values{$_}"} @order;
 }
@@ -243,6 +253,8 @@ sub generate_state_encoding ($self, $fsm_module) {
     my $state_plan = $self->{flattened_dt}->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
     my $hdl = "  // State encoding\n";
     for my $encoding (@{$state_plan->{encodings} || []}) {
+        $self->{flattened_dt}{declared_width_declaration_capture}->record_name('constants', $encoding->{localparam_name})
+            if $self->{flattened_dt}{declared_width_declaration_capture};
         $hdl .= "  localparam $encoding->{localparam_name} = $state_plan->{state_bits}'d$encoding->{encoded_value};\n";
     }
     $hdl .= "\n";
@@ -262,6 +274,10 @@ sub generate_state_register ($self, $fsm_module) {
     }
 
     my $hdl = "  // State registers\n";
+    if (my $capture = $self->{flattened_dt}{declared_width_declaration_capture}) {
+        $capture->record_declaration('signals', {name => $_, width => $state_plan->{state_bits}, signed => 0})
+            for qw(current_state next_state);
+    }
     $hdl .= "  reg [" . ($state_plan->{state_bits} - 1) . ":0] current_state, next_state;\n\n";
 
     $hdl .= "  // State sequential logic\n";

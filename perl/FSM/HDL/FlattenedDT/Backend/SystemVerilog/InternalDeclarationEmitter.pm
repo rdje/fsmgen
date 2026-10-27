@@ -63,6 +63,11 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
             \@typed_declaration_entries,
             $ctx->{verilog_family_typedef_state},
         );
+    if (my $capture = $ctx->{declared_width_declaration_capture}) {
+        $capture->record_typedefs($aggregate_typedef_lookup);
+        $capture->record_declaration('signals', $_) for @typed_declaration_entries;
+        $capture->record_declaration('signals', {name => $_, width => 1, signed => 0}) for sort keys %enable_decls;
+    }
 
     my $hdl = "  // Internal signal declarations\n";
     if (@$typedef_lines) {

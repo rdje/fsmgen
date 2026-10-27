@@ -75,6 +75,8 @@ Generate the full direct SystemVerilog module after decision-tree flattening.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
+    my $capture = $ctx->{declared_width_declaration_capture};
+    $capture->begin_module($fsm_module->name) if $capture;
     my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
 
     my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
@@ -95,6 +97,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     $hdl .= $ctx->{backend_sv_generation_tail_support}
         ->generate_systemverilog_tail($fsm_module);
 
+    $capture->complete if $capture;
     return $hdl;
 }
 
