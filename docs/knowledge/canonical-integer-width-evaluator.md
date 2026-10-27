@@ -4,7 +4,7 @@ title: Direct width arithmetic has one reusable canonical evaluator
 answers:
   - "where is the canonical bounded integer-width evaluator?"
   - "how does explicit parameter width selection avoid static namespace borrowing?"
-date: 2026-10-26
+date: 2026-10-27
 status: current
 tags: [widths, parameters, composition]
 evidence: perl/FSM/WidthExpressionSupport.pm; t/2128-shared-integer-width-evaluator.t; t/2131-composition-port-width-public-contract.t
@@ -28,7 +28,11 @@ change widths beside an earlier captured environment (test `t/2130-composition-p
 Optional width contracts now survive structural ports, IntentHIR/common signal
 analysis and plan snapshots. CompositionParameterContract advertises exact
 paths/keys; mismatched supplied IR and non-JSON snapshot references refuse.
-Both structural emitters call the shared pending-binding guard, which refuses
-known width contracts even without a top environment. Symbolic plans/HDL and
-full qualification remain separately pending in `ISF-REDUCTION-DELIVERY`. The
-[book](../book/src/14k-isf-language-and-scheduling.md) retains that boundary.
+The structural emitters now consume the supported captured scalar contracts
+through their scoped CompositionWidthEmitter profiles. The
+[[composition-scalar-binding-renderer]] card owns current composition support,
+source-admission guards and refusal boundaries. Direct declared-width binding
+capture and range activation remain separately owned by
+ISF-REDUCTION-DELIVERY.3.3; the new direct symbol-selection observation alone
+does not enable them. Full qualification remains .6. The
+[book](../book/src/14k-isf-language-and-scheduling.md) retains those boundaries.

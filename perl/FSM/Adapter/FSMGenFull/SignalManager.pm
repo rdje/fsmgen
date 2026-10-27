@@ -251,31 +251,42 @@ sub resolve_declared_parameter_payload($self, $name) {
 }
 
 sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
+    my $observation = $self->resolve_parameter_value_symbol_observation($symbol_name);
+    return defined($observation) ? $observation->{value_payload} : undef;
+}
+
+sub resolve_parameter_value_symbol_observation($self, $symbol_name) {
+    return _clone_type_spec($self->_select_parameter_value_symbol($symbol_name));
+}
+
+sub _select_parameter_value_symbol($self, $symbol_name) {
     return undef unless defined $symbol_name && !ref($symbol_name);
 
     my $aggregate_payload = $self->resolve_aggregate_symbol_payload($symbol_name);
-    return $aggregate_payload if defined $aggregate_payload;
+    return {kind => 'static_symbol', token => $symbol_name, value_payload => $aggregate_payload}
+        if defined $aggregate_payload;
 
     if (exists $self->{constants}{$symbol_name}) {
-        return _literal_to_parameter_payload($self->{constants}{$symbol_name});
+        return {kind => 'static_symbol', token => $symbol_name,
+            value_payload => _literal_to_parameter_payload($self->{constants}{$symbol_name})};
     }
 
     if (exists $self->{defines}{$symbol_name}) {
-        return _literal_to_parameter_payload($self->{defines}{$symbol_name});
+        return {kind => 'static_symbol', token => $symbol_name,
+            value_payload => _literal_to_parameter_payload($self->{defines}{$symbol_name})};
     }
 
     if ($symbol_name =~ /^([a-zA-Z_]\w*)\.([a-zA-Z_]\w*)$/) {
         my ($enum_name, $member_name) = ($1, $2);
         if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
-            return {
-                kind => 'scalar',
-                payload => $self->{enums}{$enum_name}{$member_name},
-            };
+            return {kind => 'static_symbol', token => $symbol_name,
+                value_payload => {kind => 'scalar', payload => $self->{enums}{$enum_name}{$member_name}}};
         }
     }
 
     if (exists $self->{params}{$symbol_name}) {
-        return _clone_type_spec($self->{params}{$symbol_name}{value_payload})
+        return {kind => 'parameter', token => $symbol_name, parameter => $symbol_name,
+            suffix => '', value_payload => $self->{params}{$symbol_name}{value_payload}}
             if ref($self->{params}{$symbol_name}) eq 'HASH'
                 && ref($self->{params}{$symbol_name}{value_payload}) eq 'HASH';
     }
@@ -287,10 +298,9 @@ sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
             && ref($self->{params}{$param_name}) eq 'HASH'
             && ref($self->{params}{$param_name}{value_payload}) eq 'HASH'
         ) {
-            return FSM::ParameterValueSupport->resolve_payload_path(
-                $self->{params}{$param_name}{value_payload},
-                $suffix,
-            );
+            return {kind => 'parameter', token => $symbol_name, parameter => $param_name,
+                suffix => $suffix, value_payload => FSM::ParameterValueSupport->resolve_payload_path(
+                    $self->{params}{$param_name}{value_payload}, $suffix)};
         }
     }
 
@@ -486,5 +496,25 @@ when none exists. Unlike C<resolve_parameter_value_symbol_payload>, this helper
 does not search constants, defines, enums, types or aggregate source symbols.
 The width parser uses it for C<(param NAME)> and applies its existing scalar,
 integer and positive-width checks. It does not perform generic HDL propagation.
+
+=head2 resolve_parameter_value_symbol_observation($name)
+
+Returns a detached record describing the actual branch selected by the ordinary
+parameter-value symbol resolver. C<kind> is C<static_symbol> or C<parameter>;
+each record retains C<token> and C<value_payload>. Parameter records additionally
+retain the immediate C<parameter> root and C<suffix>, empty for a root lookup.
+Alias defaults do not replace that immediate identity. No eligible selection
+returns undef. A selected legacy constant/define whose payload is undef still
+shadows later branches; an absent leaf can likewise retain its selected parameter
+root with an undef payload. Consumers must check the payload before treating
+an observation as a resolved value.
+
+The existing C<resolve_parameter_value_symbol_payload> delegates to this same
+selector and returns only its payload. Aggregate symbols, constants, defines,
+enum members, exact parameter keys and parameter paths keep their original
+precedence, missing-name behavior and payload kinds. The record has no lexical
+scope or target provenance; source consumers must provide those separately.
+It captures no width expression, changes no public report schema and activates
+no symbolic HDL range support.
 
 =cut

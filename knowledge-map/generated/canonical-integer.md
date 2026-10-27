@@ -14,5 +14,5 @@
 
 _Direct width arithmetic has one reusable canonical evaluator_
 
-- **date:** 2026-10-26 · **status:** current
+- **date:** 2026-10-27 · **status:** current
 - **source and verification:** [`docs/knowledge/canonical-integer-width-evaluator.md`](../../docs/knowledge/canonical-integer-width-evaluator.md)

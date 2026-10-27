@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1290** facts · **7107** unique questions · **7284** answer occurrences · **202** topic shards.
+> **1291** facts · **7109** unique questions · **7286** answer occurrences · **203** topic shards.
 
 Query first:
 
@@ -56,6 +56,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `direct-parameter` | 1 | 2 | [`direct-parameter.md`](knowledge-map/generated/direct-parameter.md) |
 | `direct-port` | 1 | 4 | [`direct-port.md`](knowledge-map/generated/direct-port.md) |
 | `direct-structural` | 3 | 13 | [`direct-structural.md`](knowledge-map/generated/direct-structural.md) |
+| `direct-symbol` | 1 | 2 | [`direct-symbol.md`](knowledge-map/generated/direct-symbol.md) |
 | `direct-vhdl` | 7 | 121 | [`direct-vhdl.md`](knowledge-map/generated/direct-vhdl.md) |
 | `doc-paths` | 1 | 6 | [`doc-paths.md`](knowledge-map/generated/doc-paths.md) |
 | `doctrine-enforcement` | 1 | 6 | [`doctrine-enforcement.md`](knowledge-map/generated/doctrine-enforcement.md) |

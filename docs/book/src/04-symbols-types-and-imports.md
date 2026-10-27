@@ -121,7 +121,11 @@ fields. Direct headers consume the supported scalar relationships described belo
 
 Captured declaration/source/binding membership is validated through one shared
 source-environment helper. Target name reservation remains a backend policy at
-its original validation boundary; source ownership stays lexical.
+its original validation boundary; source ownership stays lexical. The ordinary
+direct symbol resolver now also exposes a detached observation of the branch it
+actually selected: static symbol or immediate parameter root/path. The existing
+payload API keeps its precedence and values. This private prerequisite does not
+yet capture declared-width bindings or activate symbolic ranges.
 
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
