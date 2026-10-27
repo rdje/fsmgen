@@ -11,6 +11,7 @@ date: 2026-10-27
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  perl/FSM/DirectDeclaredWidthSupport.pm; t/2172-direct-width-module-source-plans.t; docs/audits/direct-width-module-source-plans-20261027.json.gz;
   perl/FSM/DeclaredWidthRangeSupport.pm; t/2171-declared-width-range-adapter.t; docs/audits/direct-width-range-adapter-20261027.json.gz;
   docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; docs/audits/shared-vhdl-width-kernel-20261027.json.gz;
   perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm;
@@ -161,7 +162,12 @@ one-bit vector rank; pinned static trees inline without bypassing target-owned
 intermediate checks. Fully static captures keep fixed numeric/rank plans.
 Mutable paths, unsupported scalar/type/target profiles, symbol-bearing parameter
 payloads and static payloads hiding mutable dependencies refuse. Caller defaults
-remain unchanged and plans retain no Signal/environment owner. Actual module
-membership/target namespaces remain .3.3.2.3.3 before declaration activation;
-no ordinary runtime consumer imports these new helpers yet. Reverify:
-`prove -Iperl t/2171-declared-width-range-adapter.t t/2170-declared-width-binding-proof.t`.
+remain unchanged and plans retain no Signal/environment owner. DirectDeclaredWidthSupport now joins actual module Signals and normalized
+assignment-target SignalRefs, rejecting distinct objects claiming one physical
+name. Copied module parameter maps pass canonical observation proof; coherent
+bindings join the bounded adapter with original lexical scope. Fixed/type/static
+controls preserve, while combined mutable requirements and stale/missing binding
+records refuse. Module plans are detached and retain no Core/backend owners.
+Actual target namespace/declaration consistency remains .3.3.2.3.3.2 before
+activation; ordinary runtime consumers do not import these new helpers yet. Reverify:
+`prove -Iperl t/2172-direct-width-module-source-plans.t t/2171-declared-width-range-adapter.t`.

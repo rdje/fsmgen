@@ -259,6 +259,8 @@ use Lispish;
 use FSM::Adapter::FSMGenFull;
 use FSM::DeclaredWidthBindingSupport;
 use FSM::DeclaredWidthRangeSupport;
+use FSM::DirectDeclaredWidthSupport;
+use FSM::HDL::FlattenedDT;
 use FSM::ParameterDefaultEnvironmentSupport;
 my $source = '(?fsm:late_case (+params (W 8)) (idle (<-= (data 0))))';
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
@@ -277,6 +279,11 @@ my $range_plan = FSM::DeclaredWidthRangeSupport->prepare_signal(
     signal => $adapter->{signal_manager}->get_signal('next_data'),
     environment => $environment, target_language => 'vhdl');
 # $range_plan->{range_text} is '((W - 1) downto 0)'.
+my $backend = FSM::HDL::FlattenedDT->new(debug => 0);
+$backend->generate_systemverilog($module);
+my $module_width_plan = FSM::DirectDeclaredWidthSupport->prepare_module(
+    fsm_module => $module, assignment_analysis => $backend->{assignment_analysis},
+    target_language => 'vhdl');
 ```
 
 Scope preflight refuses malformed or incompatible records before mutation.
@@ -339,9 +346,18 @@ Mutable paths, aggregate or unsupported typed roots, symbol-bearing parameter
 payloads and static payloads hiding mutable dependencies refuse explicitly.
 VHDL additionally requires portable natural payloads and arithmetic operators,
 with bounds checked at each intermediate step. Caller defaults remain unchanged.
-These detached private plans do not yet activate direct HDL declarations;
-actual module membership, complete target namespaces and backend integration
-remain the next steps.
+The private `DirectDeclaredWidthSupport::prepare_module` collector now joins
+actual module Signals with the Signals held by normalized assignment targets.
+The module's signal map alone can omit an assigned storage object. Shared
+object identity deduplicates; distinct objects claiming one physical name
+refuse. Copied module defaults pass their canonical observation proof before
+captured ranges are prepared. Original source scope survives a physical module
+rename. Fixed/type declarations stay independent, while combined mutable
+requirements and missing or stale captures refuse before numeric fallback.
+The returned module plan is detached from Core and backend objects.
+These private plans do not yet activate direct HDL declarations. Complete
+actual target namespaces, declaration consistency and backend integration
+remain next; computed helper shapes and full qualification are separate work.
 
 The bounded source/Core observations and rejecting saved-record controls can be
 replayed without generating new artifacts:
