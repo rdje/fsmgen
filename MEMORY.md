@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.4.2.2`
-- next_action: Consume paired declaration plans in private source-aware VHDL parsing, checking exact generated ranges and membership while retaining numeric metadata and raw-text refusal.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.3.4.3`
+- next_action: Activate paired source-aware VHDL declaration parsing and canonical range rendering, including vector type rank at selected width1; preserve bounded raw conversion.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword and auxiliary-type consistency repairs precede .6.

@@ -105,9 +105,9 @@ retain numeric metadata without acquiring a symbolic range.
 
 Missing, stale, foreign, inconsistent, duplicate, conflicting or unsupported
 captures and mappings refuse before any result. Inputs are read-only and no
-Core, Signal, backend or caller graph is retained. This private preparation is
-not installed in the converter yet: exact generated declaration-text validation,
-parser consumption and rendering have separate owners. Raw-text symbolic
+Core, Signal, backend or caller graph is retained. The private VHDL declaration
+parser now consumes this result and checks generated text membership and exact
+source ranges. Converter activation and rendering remain separately owned. Raw-text symbolic
 conversion and public reports remain unchanged; external compiler, override and
 runtime qualification remains pending.
 

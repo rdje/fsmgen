@@ -470,10 +470,17 @@ natural generic preparation uses the same target records. Original lexical
 scope stays distinct from normalized physical names. Missing, stale, foreign,
 renamed or conflicting inputs refuse, and returned records retain no caller
 owners. The [paired-plan regression](../../../t/2178-direct-vhdl-declaration-plan.t)
-qualifies this preparation with actual port and storage captures. Private parser
-consumption and renderer activation remain pending; standalone symbolic raw-text
-conversion and public reports are unchanged. External override/runtime and full
-qualification remain separately owned.
+qualifies this preparation with actual port and storage captures. The private
+parser now checks complete normalized declaration membership, port/storage roles,
+numeric widths and signedness against that plan. Symbolic ranges must match the
+prepared source spelling exactly, including at a selected default of one; an
+equivalent expression or numeric substitute refuses. Parsed declarations carry
+separate VHDL range/type strings beside their selected numeric behavior bounds.
+Static rows preserve the existing parser products. The
+[parser regression](../../../t/2179-direct-vhdl-declaration-parser.t) includes
+actual generated sources and altered-text controls. Renderer activation remains
+pending; standalone symbolic raw-text conversion and public reports are unchanged.
+External override/runtime and full qualification remain separately owned.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It

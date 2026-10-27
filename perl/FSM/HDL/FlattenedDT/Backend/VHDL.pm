@@ -103,6 +103,71 @@ sub _prepare_direct_generics ($fsm_module, $namespace, $generics) {
     return map { $by_name{$_} } @{$plan->{parameter_order}};
 }
 
+# Private preparation only. The public converter does not supply a source plan
+# until declaration rendering and expression type rank are integrated together.
+sub _parse_direct_declarations ($sv_hdl, $plan) {
+    confess _unsupported('direct declaration parsing requires a prepared paired plan')
+        unless ref($plan) eq 'HASH' && ref($plan->{ranges}) eq 'HASH'
+            && ref($plan->{target_namespace}) eq 'HASH'
+            && ref($plan->{target_declarations}) eq 'HASH';
+    my $namespace = $plan->{target_namespace};
+    my $module = _parse_module($sv_hdl);
+    confess _unsupported('direct declaration module disagrees with its prepared namespace')
+        unless $module->{name} eq $namespace->{module_name};
+    my %types = _parse_packed_struct_typedef_widths($sv_hdl);
+    my @generics = _parse_generics($module->{parameters});
+    my @ports = _parse_ports($module->{ports}, \%types, $plan->{ranges});
+    my @constants = _parse_constants($module->{body});
+    my @signals = _parse_signal_declarations($module->{body},
+        {map {$_->{name} => 1} @ports}, $plan->{ranges});
+    my %groups = (parameter_names => [map {$_->{name}} @generics],
+        ports => [map {$_->{name}} @ports], signals => [map {$_->{name}} @signals],
+        constants => [map {$_->{name}} @constants], types => [keys %types]);
+    my %seen;
+    for my $role (qw(parameter_names ports signals constants types)) {
+        confess _unsupported("direct declaration namespace requires '$role' membership")
+            unless ref($namespace->{$role}) eq 'ARRAY';
+        for my $name (@{$groups{$role}}) {
+            confess _unsupported("duplicate direct declaration '$name'") if $seen{$name}++;
+        }
+        my @expected = sort @{$namespace->{$role}};
+        my @actual = sort @{$groups{$role}};
+        confess _unsupported("direct declaration $role membership disagrees with its prepared namespace")
+            unless join("\0", @actual) eq join("\0", @expected);
+    }
+    my %decls = map {$_->{name} => $_} (@ports, @signals);
+    confess _unsupported('direct declaration record membership disagrees with generated text')
+        unless join("\0", sort keys %decls) eq join("\0", sort keys %{$plan->{target_declarations}});
+    for my $name (sort keys %decls) {
+        # Arithmetic may set Perl scalar numeric flags. Compare local copies so
+        # independent parsed bounds and supplied records keep their JSON kinds.
+        my $actual = {%{$decls{$name}}};
+        my $expected = {%{$plan->{target_declarations}{$name}}};
+        confess _unsupported("direct declaration '$name' width disagrees with its prepared record")
+            unless _decl_width($actual) == $expected->{width};
+        confess _unsupported("direct declaration '$name' signedness disagrees with its prepared record")
+            unless ($actual->{signed} // 0) == $expected->{signed};
+    }
+    for my $name (sort keys %{$plan->{ranges}}) {
+        confess _unsupported("direct symbolic declaration '$name' is absent from generated membership")
+            unless exists($decls{$name}) && exists($decls{$name}{vhdl_type});
+    }
+    return {module => $module, generics => \@generics, ports => \@ports,
+        constants => \@constants, signals => \@signals};
+}
+
+sub _parse_planned_range ($name, $role, $signed, $range, $plan, %attributes) {
+    confess _unsupported("direct symbolic declaration '$name' has the wrong role")
+        unless $plan->{declaration_kind} eq $role;
+    confess _unsupported("direct symbolic declaration '$name' has the wrong signedness")
+        unless $signed == $plan->{signed};
+    confess _unsupported("direct symbolic declaration '$name' range disagrees with its prepared source spelling")
+        unless $range eq $plan->{source_range};
+    return _decl_hash(name => $name, %attributes, signed => $signed,
+        msb => $plan->{width} - 1, lsb => 0,
+        vhdl_range => $plan->{target_range}, vhdl_type => $plan->{target_type});
+}
+
 sub _normalize_generated_vhdl_identifiers ($sv_hdl) {
     return _plan_generated_vhdl_identifiers($sv_hdl)->{text};
 }
@@ -227,7 +292,7 @@ sub _parse_generics ($parameter_text) {
     return @generics;
 }
 
-sub _parse_ports ($port_text, $aggregate_type_widths = {}) {
+sub _parse_ports ($port_text, $aggregate_type_widths = {}, $ranges = undef) {
     my @ports;
 
     for my $raw_line (split /\n/, $port_text) {
@@ -235,6 +300,15 @@ sub _parse_ports ($port_text, $aggregate_type_widths = {}) {
         $line =~ s/^\s+|\s+$//g;
         $line =~ s/,\s*$//;
         next unless length $line;
+
+        if (defined($ranges) && $line =~ /^(input\s+(?:wire|bit|logic)|output(?:\s+(?:reg|wire|logic))?)\s+(?:(signed)\s+)?(\[[^\]]+\]\s+)?([A-Za-z_][A-Za-z0-9_]*)$/) {
+            my ($prefix, $signed, $range, $name) = ($1, $2, $3, $4);
+            if (exists($ranges->{$name})) {
+                push @ports, _parse_planned_range($name, 'port', defined($signed) ? 1 : 0,
+                    $range // '', $ranges->{$name}, direction => $prefix =~ /^input/ ? 'in' : 'out');
+                next;
+            }
+        }
 
         if ($line =~ /^input\s+logic\s+signed\s+\[(\d+):(\d+)\]\s+([A-Za-z_][A-Za-z0-9_]*)$/) {
             push @ports, _decl_hash(name => $3, direction => 'in', signed => 1, msb => $1, lsb => $2);
@@ -348,13 +422,31 @@ sub _parse_constants ($body) {
     return @constants;
 }
 
-sub _parse_signal_declarations ($body, $port_names) {
+sub _parse_signal_declarations ($body, $port_names, $ranges = undef) {
     my @signals;
 
     for my $raw_line (split /\n/, $body) {
         my $line = _strip_line_comment($raw_line);
         $line =~ s/^\s+|\s+$//g;
         next unless length $line;
+
+        if (defined($ranges) && $line =~ /^(reg|wire|bit|logic)\s+(?:(signed)\s+)?(\[[^\]]+\]\s+)?(.+);$/) {
+            my ($kind, $signed, $range, $names) = ($1, $2, $3, $4);
+            for my $name (split /,/, $names) {
+                $name = _trim($name);
+                confess _unsupported("direct declaration '$name' has a duplicate port/storage role")
+                    if $port_names->{$name};
+                if (exists($ranges->{$name})) {
+                    push @signals, _parse_planned_range($name, 'signal', defined($signed) ? 1 : 0,
+                        $range // '', $ranges->{$name}, kind => $kind);
+                } else {
+                    # Use the unchanged numeric parser for every independent row.
+                    push @signals, _parse_signal_declarations(
+                        "$kind " . (defined($signed) ? 'signed ' : '') . ($range // '') . "$name;", {});
+                }
+            }
+            next;
+        }
 
         next unless $line =~ /^(reg|wire|bit|logic)\s+(?:(signed)\s+)?(?:\[(\d+):(\d+)\]\s+)?(.+);$/;
         my ($kind, $signed_keyword, $msb, $lsb, $names_text) = ($1, $2, $3, $4, $5);
@@ -1645,3 +1737,32 @@ sub _unsupported ($message) {
 }
 
 1;
+
+=head1 NAME
+
+FSM::HDL::FlattenedDT::Backend::VHDL - Bounded direct generated-SystemVerilog conversion
+
+=head1 PRIVATE DECLARATION PREPARATION
+
+C<_parse_direct_declarations> accepts normalized generated SystemVerilog and a
+paired C<FSM::Backend::VHDL::DirectDeclarationPlan> result. It checks the physical
+module and complete parameter, port, storage, constant and aggregate-type name
+membership. Duplicate declarations, port/storage role changes, selected numeric
+width or signedness changes, and missing symbolic rows refuse.
+
+Symbolic declarations must match their prepared source range spelling exactly;
+equivalent arithmetic text or a selected-default numeric substitute is not the
+captured declaration. Returned declaration hashes retain selected numeric
+C<msb>, C<lsb>, C<signed> and C<scalar> fields for behavioral conversion, with
+separate C<vhdl_range> and C<vhdl_type> strings from the canonical target plan.
+A selected width of one retains vector rank. Independent static rows preserve
+the existing numeric parser products, including JSON scalar kinds.
+
+This private path consumes a prepared source contract; it does not attest an
+arbitrary caller-made plan. Inputs are read-only and the result retains no
+mutable plan graph. The public raw converter and direct generation do not yet
+activate it. Rendering and expression rank integration remain separately owned;
+symbolic raw-text conversion still refuses. External compiler, override and
+runtime qualification is not implied by private parsing.
+
+=cut

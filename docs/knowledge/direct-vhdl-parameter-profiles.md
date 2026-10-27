@@ -8,8 +8,8 @@ answers:
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
-evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm; t/2178-direct-vhdl-declaration-plan.t; docs/audits/direct-vhdl-declaration-plan-20261027.json.gz; t/2177-direct-vhdl-width-generic-roots.t; t/2154-direct-vhdl-generic-integration.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2178-direct-vhdl-declaration-plan.t t/2177-direct-vhdl-width-generic-roots.t t/2173-direct-width-target-plans.t
+evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/2179-direct-vhdl-declaration-parser.t; docs/audits/direct-vhdl-declaration-parser-20261027.json.gz; t/2178-direct-vhdl-declaration-plan.t; docs/audits/direct-vhdl-declaration-plan-20261027.json.gz; t/2177-direct-vhdl-width-generic-roots.t; t/2154-direct-vhdl-generic-integration.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2179-direct-vhdl-declaration-parser.t t/2178-direct-vhdl-declaration-plan.t t/2154-direct-vhdl-generic-integration.t
 ---
 
 DirectParameterEmitter prepares declarations from proved source observations
@@ -47,4 +47,10 @@ Numeric width/signed/type metadata and lexical scope preserve; selected width1
 retains vector rank. Fixed/type rows gain no invented relationship. Actual
 capture/mapping, stale/foreign/collision, caller and isolated owner controls
 qualify private preparation. Captures are a caller contract, not text-provenance
-attestation. Parser consumption remains .3.3.4.2.2; renderer activation is .3.
+attestation. The private parser now checks complete normalized name membership,
+port/storage roles, exact symbolic source ranges and selected numeric widths and
+signedness. It retains separate canonical VHDL type/range strings and vector rank
+at width1, preserving complete static parser products and scalar kinds. Altered
+text controls reject missing/extra/duplicate/foreign declarations, wrong roles,
+ranges and numeric substitutions. Renderer activation remains separately owned;
+public symbolic raw conversion still refuses.
