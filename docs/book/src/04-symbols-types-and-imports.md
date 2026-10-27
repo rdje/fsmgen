@@ -502,6 +502,17 @@ checks actual paired declarations and independent expected target text. Remainin
 conditions, assignments and source converter activation are separately owned;
 external generic override/runtime qualification remains pending.
 
+Private symbolic Boolean conditions now reduce whole vectors through the existing
+OR helper, including when the selected default is one. Logical grouping,
+negation, conjunction and disjunction preserve precedence; negated vector truth
+compares the reduction with zero. The symbolic profile reserves that helper before
+the existing collision check. Qualified literal comparisons and reductions reuse
+their expression consumers. Selected, bitwise, vector-pair, decimal-relational and
+negated-comparison leaves remain withheld. Static condition products preserve.
+The [condition-rank regression](../../../t/2182-direct-vhdl-condition-rank.t)
+checks actual paired declarations, whole expected Boolean strings and helper
+closure. Source activation and remaining assignment/shape consumers stay pending.
+
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
 retains selected names, static payloads, operator parentheses and repeated

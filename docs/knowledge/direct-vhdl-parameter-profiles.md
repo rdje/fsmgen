@@ -7,6 +7,7 @@ answers:
   - "how are normalized target names checked without replacing lexical parameter scope?"
   - "how do private direct VHDL literal assignments retain symbolic vector rank at default one?"
   - "how do private symbolic VHDL comparisons avoid selected-default sizing?"
+  - "how do private symbolic VHDL conditions retain whole-vector truth?"
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
@@ -74,3 +75,13 @@ withheld. T2181 qualifies actual paired declarations with independent complete
 text expectations and caller-kind controls. Other expression consumers and
 source converter activation remain pending; full override/runtime stays owned.
 Reverify: `prove -Iperl t/2181-direct-vhdl-comparison-rank.t t/2180-direct-vhdl-target-rank.t`.
+
+Private symbolic Boolean conditions fold whole vectors through the existing OR
+helper, reserving it before collision validation. Logical grouping and precedence
+preserve; negated vector truth tests zero. Qualified literal comparisons and
+reductions reuse existing consumers. Selected, bitwise, vector-pair,
+decimal-relational and negated-comparison leaves remain withheld. Static condition
+products and helper inventory preserve. Actual paired declarations, complete
+independent Boolean strings, caller kinds and malformed/helper controls qualify
+T2182. Source activation and remaining assignment/shape consumers stay pending.
+Reverify: `prove -Iperl t/2182-direct-vhdl-condition-rank.t t/2181-direct-vhdl-comparison-rank.t`.

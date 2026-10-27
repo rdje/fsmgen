@@ -874,6 +874,9 @@ sub _sv_lvalue_to_vhdl ($lhs) {
 sub _sv_condition_to_vhdl ($expr, $ctx = {}) {
     my $trimmed = _trim($expr);
 
+    return _sv_symbolic_condition_to_vhdl($trimmed, $ctx)
+        if _condition_uses_symbolic_declaration($trimmed, $ctx->{decls_by_name} || {});
+
     if ($trimmed =~ /^!([A-Za-z_][A-Za-z0-9_]*)$/) {
         return "$1 = '0'";
     }
@@ -885,6 +888,97 @@ sub _sv_condition_to_vhdl ($expr, $ctx = {}) {
     my $converted = _sv_expr_to_vhdl($trimmed, {%$ctx, boolean_context => 1});
     return $converted if $converted =~ /=/ || _has_comparison_operator($trimmed);
     return "($converted) = '1'";
+}
+
+# Symbolic vectors retain vector rank even at a selected width of one.
+# Keep the static converter's products separate while parsing Boolean operators
+# structurally; a textual scalar substitution cannot preserve their precedence.
+sub _condition_uses_symbolic_declaration ($expr, $decls) {
+    for my $name ($expr =~ /\b([A-Za-z_][A-Za-z0-9_]*)\b/g) {
+        return 1 if exists($decls->{$name}) && exists($decls->{$name}{vhdl_type});
+    }
+    return 0;
+}
+
+sub _split_condition_terms ($expr, $operator) {
+    my (@terms, $start, $depth);
+    $start = $depth = 0;
+    for (my $pos = 0; $pos < length($expr); $pos++) {
+        my $char = substr($expr, $pos, 1);
+        $depth++ if $char eq '(';
+        $depth-- if $char eq ')';
+        confess _unsupported('unbalanced symbolic condition parentheses') if $depth < 0;
+        if (!$depth && substr($expr, $pos, 2) eq $operator) {
+            push @terms, substr($expr, $start, $pos - $start);
+            $start = $pos + 2;
+            $pos++;
+        }
+    }
+    confess _unsupported('unbalanced symbolic condition parentheses') if $depth;
+    push @terms, substr($expr, $start);
+    return \@terms;
+}
+
+sub _sv_symbolic_condition_to_vhdl ($expr, $ctx, $negated = 0) {
+    my $trimmed = _trim($expr);
+    confess _unsupported('empty symbolic condition operand') unless length($trimmed);
+    while (substr($trimmed, 0, 1) eq '(') {
+        my $group = _consume_parenthesized($trimmed, 0, 'symbolic condition');
+        last unless $group->{next} == length($trimmed);
+        # Reduction parentheses belong to the existing reduction consumer.
+        last if $group->{content} =~ /\A\s*~?[|&^]/;
+        $trimmed = _trim($group->{content});
+    }
+    confess _unsupported('empty symbolic condition group') unless length($trimmed);
+    for my $operator ('||', '&&') {
+        my $terms = _split_condition_terms($trimmed, $operator);
+        if (@$terms > 1) {
+            my $join = (($operator eq '||') != $negated) ? ' or ' : ' and ';
+            return join($join, map {
+                '(' . _sv_symbolic_condition_to_vhdl($_, $ctx, $negated) . ')'
+            } @$terms);
+        }
+    }
+    if ($trimmed =~ /\A!(?!=)\s*(.+)\z/s) {
+        my $operand = $1;
+        confess _unsupported('negated symbolic condition requires an atom or complete parenthesized operand')
+            unless $operand =~ /\A!*\s*[A-Za-z_][A-Za-z0-9_]*\z/
+                || substr($operand, 0, 1) eq '(';
+        return _sv_symbolic_condition_to_vhdl($operand, $ctx, !$negated);
+    }
+    my $decls = $ctx->{decls_by_name} || {};
+    my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    if ($trimmed =~ /\A$identifier\z/ && exists($decls->{$trimmed})) {
+        my $decl = $decls->{$trimmed};
+        my $operand = $trimmed;
+        if (!$decl->{scalar}) {
+            $operand = "std_logic_vector($operand)" if $decl->{signed};
+            $operand = _vector_reduction_helper_name('|') . "($operand)";
+        }
+        return "$operand = '" . ($negated ? '0' : '1') . "'";
+    }
+    my $selected = qr/$identifier(?:\[[0-9]+(?::[0-9]+)?\])?/;
+    if ($trimmed =~ /\A\(\s*(~?)\s*([|&^])\s*($selected|\(\s*$selected\s*\))\s*\)\z/) {
+        my ($complement, $operator, $operand) = ($1, $2, $3);
+        if ($operand =~ /($identifier)\[/) {
+            my $decl = $decls->{$1};
+            confess _unsupported('selected symbolic reduction conditions require separate qualification')
+                if $decl && exists($decl->{vhdl_type});
+        }
+        $complement = $complement ? '' : '~' if $negated;
+        return _sv_reduction_to_vhdl($trimmed, $complement, $operator, $operand, $decls, 1);
+    }
+    if (!_condition_uses_symbolic_declaration($trimmed, $decls)) {
+        my $converted = _sv_condition_to_vhdl($trimmed, $ctx);
+        return $negated ? "not ($converted)" : $converted;
+    }
+    my $sized = qr/[0-9]+'[bBdDhH][0-9A-Fa-f_xXzZ]+/;
+    my $comparison = qr/(?:==|!=|<=|>=|<|>)/;
+    my $qualified = $trimmed =~ /\A(?:$identifier\s*$comparison\s*$sized|$sized\s*$comparison\s*$identifier)\z/
+        || $trimmed =~ /\A(?:$identifier\s*(?:==|!=)\s*-?[0-9]+|-?[0-9]+\s*(?:==|!=)\s*$identifier)\z/;
+    confess _unsupported("symbolic condition leaf '$trimmed' requires separate expression qualification")
+        if !$qualified || $negated;
+    return _sv_expr_to_vhdl($trimmed, {%$ctx, boolean_context => 1});
 }
 
 sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
@@ -1170,6 +1264,10 @@ sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_b
 
 sub _required_vector_reduction_helpers ($body, $decls_by_name) {
     my %required;
+    # Reserve whole-vector truth before process conversion/rendering so the
+    # same collision check covers both explicit and implicit reductions.
+    $required{'|'} = 1
+        if grep { exists($_->{vhdl_type}) } values %$decls_by_name;
     while ($body =~ /\(\s*~?\s*([|&^])\s*(?:([A-Za-z_][A-Za-z0-9_]*)|\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\))\s*\)/g) {
         my ($operator, $operand) = ($1, $2 // $3);
         my $decl = $decls_by_name->{$operand};
@@ -1806,6 +1904,15 @@ C<'length>. Independent static products preserve. Negative comparisons keep
 the existing arithmetic refusal, and signed symbolic sized comparisons refuse
 pending qualification. Remaining expression consumers and source activation
 are pending.
+
+Private symbolic Boolean conditions reduce whole vectors with the existing OR
+helper. Structured logical grouping, negation, conjunction and disjunction keep
+Boolean precedence; negated vector truth tests zero rather than negating a
+Boolean test for one. The symbolic profile reserves the OR helper before the
+existing collision check. Qualified comparison/reduction leaves share existing
+consumers. Unqualified selected, bitwise, vector-pair, decimal-relational and
+negated-comparison leaves refuse before source activation. Static condition
+products and their helper inventory retain their existing conversion path.
 
 This private path consumes a prepared source contract; it does not attest an
 arbitrary caller-made plan. Inputs are read-only and the result retains no
