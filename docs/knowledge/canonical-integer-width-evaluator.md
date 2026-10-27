@@ -17,7 +17,11 @@ supplies the existing SignalManager namespaces through explicit hooks.
 The helper's ordinary-symbol callback resolves bare symbols, including those
 inside infix scalar payloads. Its declared-parameter callback alone resolves
 `(param NAME)`. It preserves existing aliases, arity, precedence, scalar-only
-payloads, nonnegative intermediate results and positive final widths.
+payloads, nonnegative completed operator results and positive final widths.
+
+The optional structured capture method is described by
+[[canonical-width-expression-capture]]. It preserves ordinary evaluation;
+direct declared-width publication remains pending.
 
 Composition verbose Port expressions now reuse it after import/default
 resolution. Explicit `(param NAME)` keeps declaration identity separate from

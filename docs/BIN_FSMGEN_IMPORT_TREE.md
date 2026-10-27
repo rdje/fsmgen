@@ -339,7 +339,10 @@ leak source-only spellings such as `2'3` or `20'x1` into generated SV.
 [perl/FSM/WidthExpressionSupport.pm](perl/FSM/WidthExpressionSupport.pm) owns
 the canonical bounded integer-width evaluator inherited by the direct parser;
 the parser supplies its SignalManager namespaces through explicit hooks.
-Composition port integration remains pending.
+Composition port resolution now shares that evaluator. JSON::PP supplies detached
+opt-in width binding/lookup captures; direct parser/Core publication remains
+pending, while ordinary payload hooks stay unchanged. These scoped additions
+imply no fresh import-closure census.
 The newest parameter/generic semantic-value slice keeps
 [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm)
 as the scalar/aggregate literal, bounded scalar-expression, matching-shape

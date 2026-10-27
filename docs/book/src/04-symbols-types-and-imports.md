@@ -125,7 +125,15 @@ its original validation boundary; source ownership stays lexical. The ordinary
 direct symbol resolver now also exposes a detached observation of the branch it
 actually selected: static symbol or immediate parameter root/path. The existing
 payload API keeps its precedence and values. This private prerequisite does not
-yet capture declared-width bindings or activate symbolic ranges.
+yet publish declared-width bindings or activate symbolic ranges.
+
+`WidthExpressionSupport` now has a private opt-in capture method that follows
+the existing prefix and infix evaluator walk. It retains structured literals,
+operators, selected payload expressions and complete ordered actual lookups.
+Repeated references remain separate; namespace identity comes from the
+resolver's observation, and captured records stay detached. Ordinary width
+evaluation keeps its existing interface and callbacks. Direct parser/Core
+publication and symbolic HDL activation remain separate pending work.
 
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
