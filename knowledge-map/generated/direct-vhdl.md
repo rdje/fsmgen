@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **5** facts · **117** uniquely owned question entries.
+> **6** facts · **119** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -106,6 +106,7 @@
 - q="does direct VHDL support vector sized literal generic defaults?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
 - q="does named-drive VHDL still contain (|drive_zero_start)?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="does reduction lowering widen the public FSM grammar?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
+- q="how are normalized target names checked without replacing lexical parameter scope?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="how does direct VHDL reduce a std_logic_vector?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="how should direct VHDL handle unary OR AND XOR reductions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="is VHDL still not implemented?" · facts=[direct-vhdl-scaffold](../../docs/knowledge/direct-vhdl-scaffold.md)
@@ -115,6 +116,7 @@
 - q="what happens to complemented reductions like (~|VECTOR)?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="what owns the direct VHDL reduction expression defect?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
 - q="where do direct VHDL module generic defaults currently come from?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
+- q="which direct VHDL generic declarations use natural preparation?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="which existing VHDL helper owns canonical natural generic arithmetic?" · facts=[direct-vhdl-generic-consumer](../../docs/knowledge/direct-vhdl-generic-consumer.md)
 - q="which test characterizes direct VHDL reduction expressions?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 - q="which unary reduction operands still fail in direct VHDL?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
@@ -131,6 +133,13 @@ _Direct VHDL generic conversion and canonical composition preparation are distin
 
 - **date:** 2026-10-27 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-generic-consumer.md`](../../docs/knowledge/direct-vhdl-generic-consumer.md)
+
+### direct-vhdl-parameter-profiles
+
+_Direct VHDL preparation separates related natural declarations from static defaults_
+
+- **date:** 2026-10-27 · **status:** current
+- **source and verification:** [`docs/knowledge/direct-vhdl-parameter-profiles.md`](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 
 ### direct-vhdl-reduction-expression-lowering-behavior
 

@@ -21,8 +21,10 @@ now delegating the scalar/arithmetic walk and primitive checks to shared
 `FSM::Backend::VHDL::ParameterBindingEmitter`. The shared helper admits explicit
 direct-module/composition-top environments; the wrapper retains composition-top
 scope, case-insensitive structural namespaces and child-declaration checks.
-Direct source preparation and converter integration remain `.3.2.5.2`/`.3`;
-the standalone converter and existing static profile retain their contracts.
+Direct natural/static declaration preparation is now implemented separately
+by DirectParameterEmitter; `direct-vhdl-parameter-profiles` owns its contract.
+Direct converter activation remains `.3.2.5.3`; standalone conversion and the
+existing static profile retain their contracts.
 
 Generated identifiers are normalized before the direct converter parses the
 module and port/signal declarations. New generic preparation must take actual
@@ -31,4 +33,5 @@ getters do not enumerate backend-owned intermediates or generated type names;
 they cannot substitute for the target namespace. Captured source-environment
 validation now lives in ParameterDefaultEnvironmentSupport; the
 `direct-parameter-default-environment` card owns that contract. Direct VHDL
-namespace/profile preparation still consumes the actual backend target view.
+namespace/profile preparation consumes the actual backend target view, with
+source ownership kept independent of target identifier mapping.

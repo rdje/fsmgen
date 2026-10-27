@@ -126,8 +126,10 @@ its original validation boundary; source ownership stays lexical.
 The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
 identities and JSON kinds. Missing, conflicting or opaque dependency records
-refuse. This proof supports direct VHDL profile preparation; namespace/profile
-selection and converter activation remain pending.
+refuse. Private direct VHDL preparation now uses this proof to select related
+natural-valued declarations and preserve independent static defaults. It checks
+actual target namespace/mapping separately from lexical source ownership;
+converter activation and complete qualification remain pending.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
