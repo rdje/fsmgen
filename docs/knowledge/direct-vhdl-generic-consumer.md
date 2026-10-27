@@ -7,14 +7,17 @@ answers:
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, generics, lowering]
-evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm; perl/FSM/Backend/VHDL/ParameterBindingEmitter.pm; t/2150-shared-vhdl-parameter-binding-renderer.t; t/2136-composition-vhdl-natural-generics.t
+evidence: perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm; perl/FSM/Backend/VHDL/ParameterBindingEmitter.pm; t/2150-shared-vhdl-parameter-binding-renderer.t; t/2154-direct-vhdl-generic-integration.t; t/2136-composition-vhdl-natural-generics.t
 reverify: rg -n 'generate_systemverilog|_normalize_generated_vhdl_identifiers|_parse_generics|ParameterBindingEmitter|_captured_parameter_environment' perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm perl/FSM/Backend/VHDL/CompositionParameterEmitter.pm perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm
 ---
 
 Direct VHDL generation first emits SystemVerilog, normalizes generated names
 and parses parameter declarations from that text. Its standalone converter
 supports the existing bounded static literal/integer-expression surface.
-That path does not consume the Core's canonical scoped default bindings.
+The generator now supplies the Core module through a private source-aware
+conversion path. After parsing actual normalized names/declarations, it joins
+DirectParameterEmitter's proved natural plan with the static rows. Only the
+standalone raw-text API lacks the Core environment and retains the old profile.
 
 CompositionParameterEmitter prepares canonical `natural` defaults and actuals,
 now delegating the scalar/arithmetic walk and primitive checks to shared
@@ -23,8 +26,10 @@ direct-module/composition-top environments; the wrapper retains composition-top
 scope, case-insensitive structural namespaces and child-declaration checks.
 Direct natural/static declaration preparation is now implemented separately
 by DirectParameterEmitter; `direct-vhdl-parameter-profiles` owns its contract.
-Direct converter activation remains `.3.2.5.3`; standalone conversion and the
-existing static profile retain their contracts.
+Completed `.3.2.5.3` activates that plan for direct generation; standalone
+conversion and unrelated static defaults retain their contracts. T2154 and
+native supported/refused controls qualify the integration; full override,
+external/runtime/transport verification remains .6.
 
 Generated identifiers are normalized before the direct converter parses the
 module and port/signal declarations. New generic preparation must take actual

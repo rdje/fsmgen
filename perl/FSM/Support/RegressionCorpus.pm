@@ -9,6 +9,23 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'feature.direct_vhdl_natural_defaults',
+        relpath => 't/data/ial0-direct-vhdl-natural-defaults.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'direct_natural_defaults',
+        expected_hdl_patterns => [
+            qr/parameter WIDTH = 16/,
+            qr/parameter COPY = WIDTH/,
+            qr/parameter TOTAL = \(COPY \+ 2\)/,
+            qr/parameter RESIDUE = \(TOTAL % WIDTH\)/,
+            qr/parameter _PAD = 8'hA5/,
+        ],
+    },
+    {
         id => 'feature.direct_static_aggregate_defaults',
         relpath => 't/data/ial0-static-aggregate-defaults.fsm',
         family => 'language_feature_fixture',

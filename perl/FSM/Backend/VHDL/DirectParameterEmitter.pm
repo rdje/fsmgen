@@ -152,8 +152,10 @@ unsupported typed/sized/bitwise/aggregate/path relationships, stale bindings,
 cycles and namespace mismatches refuse. Legacy programmatic declarations gain
 no invented source scope. Caller records remain read-only.
 
-This private preparer neither activates the direct converter nor changes
-native/API/MCP report schemas. Actual target/source coupling, external overrides
-and full runtime/transport qualification remain separately owned.
+The direct VHDL generator consumes this private plan through its source-aware
+conversion boundary and supplies the actual normalized target namespace. The
+standalone raw-text converter retains its existing static contract. No
+native/API/MCP report schema changes. External overrides and full
+runtime/transport qualification remain separately owned.
 
 =cut

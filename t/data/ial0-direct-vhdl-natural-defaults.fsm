@@ -1,0 +1,6 @@
+(?fsm:direct_natural_defaults
+  (+system (clock clk) (sreset reset))
+  (+params (COPY WIDTH) (WIDTH 16) (SAME 16) (_PAD 8'hA5)
+    (NEG -1) (TOTAL (+ COPY 2)) (RESIDUE (% TOTAL WIDTH)))
+  (+size (data_port 1))
+  (idle (= (data_port 0))))

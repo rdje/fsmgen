@@ -1525,8 +1525,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    393,
-    'catalog retains the independently recounted supported-smoke entries through immutable aggregate default headers',
+    394,
+    'catalog retains the independently recounted supported-smoke entries through direct natural generic defaults',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -1540,8 +1540,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    383,
-    'catalog retains the independently recounted positive strict-mode entries through immutable aggregate default headers',
+    384,
+    'catalog retains the independently recounted positive strict-mode entries through direct natural generic defaults',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester

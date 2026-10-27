@@ -51,7 +51,9 @@ The VHDL structural emitter now imports
 defaults and declaration-qualified integer child actuals. The generic wrapper
 now delegates arithmetic/scalar rendering and primitive validation to shared
 `FSM::Backend::VHDL::ParameterBindingEmitter`, with explicit direct/composition
-scopes; direct generic admission/converter integration remain pending. It also uses
+scopes. The direct VHDL backend now imports DirectParameterEmitter for captured
+natural/static generic plans against its actual normalized namespace; standalone
+raw conversion keeps its existing contract. The structural emitter also uses
 `FSM::Backend::VHDL::CompositionWidthEmitter` for captured scalar port ranges.
 Source admission remains guarded; no fresh closure count is inferred.
 

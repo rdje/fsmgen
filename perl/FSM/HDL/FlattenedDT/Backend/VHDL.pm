@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::Backend::VHDL::DirectParameterEmitter;
 
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
@@ -23,11 +24,16 @@ sub generate_vhdl ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("[VHDL.pm][generate_vhdl()] Starting flattened DT direct VHDL generation for " . $fsm_module->name, 3);
     my $sv_hdl = $ctx->{orchestrator}->generate_systemverilog($fsm_module);
-    return $self->convert_systemverilog_to_vhdl($sv_hdl);
+    return $self->_convert_systemverilog_to_vhdl($sv_hdl, $fsm_module);
 }
 
 sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
-    $sv_hdl = _normalize_generated_vhdl_identifiers($sv_hdl);
+    return $self->_convert_systemverilog_to_vhdl($sv_hdl);
+}
+
+sub _convert_systemverilog_to_vhdl ($self, $sv_hdl, $fsm_module = undef) {
+    my $identifiers = _plan_generated_vhdl_identifiers($sv_hdl);
+    $sv_hdl = $identifiers->{text};
     my %aggregate_type_widths = _parse_packed_struct_typedef_widths($sv_hdl);
     my $module = _parse_module($sv_hdl);
     my @generics = _parse_generics($module->{parameters});
@@ -35,6 +41,21 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     my $body = $module->{body};
     my @constants = _parse_constants($body);
     my @signals = _parse_signal_declarations($body, { map { $_->{name} => 1 } @ports });
+    if (defined($fsm_module) && keys %{$fsm_module->parameters}) {
+        @generics = _prepare_direct_generics(
+            $fsm_module,
+            {
+                module_name => $module->{name},
+                identifier_map => $identifiers->{identifier_map},
+                parameter_names => [map { $_->{name} } @generics],
+                ports => [map { $_->{name} } @ports],
+                signals => [map { $_->{name} } @signals],
+                constants => [map { $_->{name} } @constants],
+                types => [],
+            },
+            \@generics,
+        );
+    }
     my %decls_by_name = map { $_->{name} => $_ } (@ports, @signals);
     my %vector_reduction_helpers = _required_vector_reduction_helpers($body, \%decls_by_name);
     _validate_vector_reduction_helper_names(
@@ -61,7 +82,32 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
     );
 }
 
+sub _prepare_direct_generics ($fsm_module, $namespace, $generics) {
+    my $plan = eval {
+        FSM::Backend::VHDL::DirectParameterEmitter->lower_declarations(
+            fsm_module => $fsm_module,
+            target_namespace => $namespace,
+            target_language => 'vhdl',
+        );
+    };
+    confess _unsupported("direct generic preparation failed: $@") if $@;
+
+    my %by_name = map { $_->{name} => $_ } @$generics;
+    for my $declaration (@{$plan->{natural_declarations}}) {
+        $by_name{$declaration->{name}} = {
+            name => $declaration->{name},
+            type => $declaration->{type},
+            default => $declaration->{default_text},
+        };
+    }
+    return map { $by_name{$_} } @{$plan->{parameter_order}};
+}
+
 sub _normalize_generated_vhdl_identifiers ($sv_hdl) {
+    return _plan_generated_vhdl_identifiers($sv_hdl)->{text};
+}
+
+sub _plan_generated_vhdl_identifiers ($sv_hdl) {
     my $lexeme = qr{
         "(?:\\.|[^"\\])*"
         | //[^\n]*
@@ -101,12 +147,11 @@ sub _normalize_generated_vhdl_identifiers ($sv_hdl) {
         $replacement{$original} = $candidate;
     }
 
-    return $sv_hdl unless %replacement;
     $sv_hdl =~ s{($lexeme)}{
         my $token = $1;
         exists($replacement{$token}) ? $replacement{$token} : $token;
     }gex;
-    return $sv_hdl;
+    return {text => $sv_hdl, identifier_map => \%replacement};
 }
 
 sub _is_vhdl_basic_identifier ($value) {

@@ -7,7 +7,7 @@ answers:
 date: 2026-10-27
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
-evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; t/2153-direct-vhdl-parameter-profiles.t; perl/FSM/ParameterDefaultEnvironmentSupport.pm
+evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; t/2153-direct-vhdl-parameter-profiles.t; t/2154-direct-vhdl-generic-integration.t; perl/FSM/ParameterDefaultEnvironmentSupport.pm
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2153-direct-vhdl-parameter-profiles.t t/2152-direct-binding-observation-proof.t t/2150-shared-vhdl-parameter-binding-renderer.t
 ---
 
@@ -25,5 +25,7 @@ programmatic declarations acquire no invented scope.
 
 Actual normalized backend declarations and independent plan expectations
 qualify private preparation. Caller-made namespace records are not provenance
-attestation. Direct converter activation, native source qualification and full
-external override/runtime/transport checks remain separate successors.
+attestation. The direct backend now consumes this plan with its actual normalized
+module/declarations/mapping; standalone raw conversion retains its existing
+integer/static behavior. T2154 and native supported/refused controls qualify
+that coupling. Full external override/runtime/transport checks remain .6.

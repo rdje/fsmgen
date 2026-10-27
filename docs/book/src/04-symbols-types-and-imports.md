@@ -127,9 +127,9 @@ The private `prove_binding_observations` check now verifies that recorded
 references cover the complete canonical binding tree, retaining immediate
 identities and JSON kinds. Missing, conflicting or opaque dependency records
 refuse. Private direct VHDL preparation now uses this proof to select related
-natural-valued declarations and preserve independent static defaults. It checks
-actual target namespace/mapping separately from lexical source ownership;
-converter activation and complete qualification remain pending.
+natural-valued declarations and preserve independent static defaults. Direct
+VHDL generation consumes that plan against actual normalized target names,
+separately from lexical source ownership. Complete qualification remains pending.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It
@@ -139,6 +139,43 @@ for target interpolation. Direct Verilog-family headers now use the same helper;
 the composition wrapper keeps its narrower scope. Its direct `lower_default`
 profile folds immutable aggregate subtrees and refuses mutable aggregate/path
 defaults. Complete override/runtime qualification remains separately owned.
+
+Direct VHDL now emits related plain-decimal scalar defaults as `natural`
+generics. Each selected default and arithmetic intermediate must remain in
+`0..2147483647`; the supported relationships are root aliases and `+`, `-`,
+`*`, `/`, `%` arithmetic. Dependencies precede consumers. A same-valued
+independent literal stays `integer`; unrelated sized literals retain their
+`std_logic` or `std_logic_vector` type, and independent negative literals stay
+on the existing static path. Sized, bitwise, aggregate and path relationships
+refuse when they cannot satisfy the natural profile. Related source names must
+already be valid VHDL identifiers; independent generated names still normalize.
+
+The [complete direct VHDL fixture](../../../t/data/ial0-direct-vhdl-natural-defaults.fsm)
+contains forward aliases, arithmetic, a distinct equal literal, a vector default
+and a negative static control:
+
+```bash
+./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/direct_natural_defaults.vhd t/data/ial0-direct-vhdl-natural-defaults.fsm
+```
+
+Its generic block includes:
+
+```vhdl
+NEG : integer := -1;
+SAME : integer := 16;
+WIDTH : natural := 16;
+COPY : natural := WIDTH;
+TOTAL : natural := (COPY + 2);
+RESIDUE : natural := (TOTAL mod WIDTH);
+PAD : std_logic_vector(7 downto 0) := "10100101"
+```
+
+This preserves default relationships only. Direct signal ranges still use
+selected concrete widths; symbolic ranges and external override/runtime
+qualification remain successors. The standalone SystemVerilog-text converter
+keeps its existing static/integer-expression profile because it has no Core
+source bindings. See the direct-backend chapter for the separately owned
+reserved-identifier emission defect.
 
 The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
 exercises qualified constants, enum members and a nested aggregate leaf:

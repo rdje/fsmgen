@@ -295,7 +295,12 @@ General source rules:
   Verilog-family headers fold immutable aggregate defaults and explicitly
   refuse mutable aggregate/path dependencies, including scalar results from
   aggregate comparisons; normalized semantic defaults alone do not qualify
-  an override-sensitive generic relationship.
+  an override-sensitive generic relationship. Direct VHDL now consumes captured
+  plain-decimal root aliases and bounded natural arithmetic against actual
+  normalized target declarations. Related defaults emit `natural`; independent
+  literal/vector/negative defaults retain static conversion. Unsupported sized,
+  bitwise, aggregate/path relationships refuse. Direct signal ranges, complete
+  source/transport and external override/runtime qualification remain pending.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
