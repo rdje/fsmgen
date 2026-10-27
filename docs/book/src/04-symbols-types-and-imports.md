@@ -175,6 +175,13 @@ operands. VHDL, generic signal ranges and complete external override/runtime
 qualification remain separate work. Normalized Core values still describe the
 selected defaults; named header text alone is not a complete generic-width guarantee.
 
+The private direct-default profile now prepares immutable aggregate subtrees
+with the canonical value evaluator, including packed list/record ordering and
+scalar comparison results. Scalar parameter names around such static subtrees
+survive. Mutable aggregate roots, member/index selections and constructors with
+parameter-valued members have an explicit refusal profile. Direct header
+integration remains pending; the selected-default boundary above still applies.
+
 One new hardening rule applies in these value lanes: obviously bitstring-like
 bare `0/1` tokens such as `00001110` or `10000000` are rejected instead of
 being guessed. Use `0b00001110`, `8'b00001110`, or `0d1110` explicitly.
