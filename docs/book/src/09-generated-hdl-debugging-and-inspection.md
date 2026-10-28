@@ -375,8 +375,12 @@ knowledge-map/scripts/query_knowledge_map.sh --no-cache 'GHDL validation'
 ```
 
 `KNOWLEDGE_MAP.md` is the bounded browse page for topic counts and shard links;
-the cards under `docs/knowledge/` remain canonical. For a direct document-
-pressure census, run:
+the cards under `docs/knowledge/` remain canonical. Keep stable card identities,
+questions and evidence/reverify routes when consolidating repeated prose. Retain
+exact original sources and check current semantic coverage before removal; the
+[card consolidation receipt](../../../docs/audits/knowledge-card-consolidation-20261028.json.gz)
+records a bounded example. This preserves current retrieval without increasing
+surface allowances. For a direct document-pressure census, run:
 
 ```bash
 scripts/check_live_document_size.sh
