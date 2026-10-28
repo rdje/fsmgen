@@ -7,7 +7,8 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
+use JSON::PP ();
 use FSM::CoreAST;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::Debug;
@@ -60,6 +61,74 @@ sub _stage_intermediate_width_allocation($self, $signal, $operator, $operands, $
         signal => $signal, record => $record, track => 1)};
     return unless $holder;
     push @$events, {signal_name => $signal->name, holder => $holder};
+}
+
+sub _allocation_registry_matches($self, $signal) {
+    return unless $signal && refaddr($self->{signal_manager}->get_signal($signal->name) // {}) == refaddr($signal);
+    my $ast = $signal->driving_ast;
+    return unless blessed($ast) && $ast->isa('FSM::CoreAST::BinaryOp');
+    for my $operand ($ast->left, $ast->right) {
+        return unless blessed($operand) && $operand->isa('FSM::CoreAST::SignalRef');
+        my $source = $operand->signal;
+        return unless $source && refaddr($self->{signal_manager}->get_signal($source->name) // {}) == refaddr($source);
+    }
+    return 1;
+}
+
+sub _allocation_transition($self, $signal, $attribute, $value, $write) {
+    my $events = $self->{_intermediate_width_allocation_capture};
+    return $write->() unless $events && $signal;
+    my $json = JSON::PP->new->canonical;
+    my $identity = sprintf('%x', refaddr($signal));
+    my @current;
+    for my $event (@$events) {
+        my $result = $self->{signal_manager}->get_signal($event->{signal_name});
+        next unless $self->_allocation_registry_matches($result);
+        my $record = FSM::IntermediateWidthAllocationSupport->current_core(signal => $result, holder => $event->{holder});
+        next unless $record;
+        my $state = $json->decode($event->{holder}{state});
+        next unless grep {$_->{object_identity} eq $identity} ($state->{signal}, @{$state->{operands}});
+        push @current, [$event, $result, $record, $state];
+    }
+    my $revision = $signal->_intermediate_width_allocation_revision;
+    my $returned = $write->();
+    return $returned unless $signal->_intermediate_width_allocation_revision == $revision + 1;
+    for my $candidate (@current) {
+        my ($event, $result, $record, $state) = @$candidate;
+        next unless $self->_allocation_registry_matches($result);
+        my $after = eval {FSM::IntermediateWidthAllocationSupport->prepare_core(signal => $result, record => $record)};
+        next unless $after;
+        my @changed = grep {$_->{object_identity} eq $identity} ($state->{signal}, @{$state->{operands}});
+        next if grep {$_->{revision} != $revision} @changed;
+        ++$_->{revision} for @changed;
+        if ($state->{signal}{object_identity} eq $identity) {
+            ++$state->{revision};
+            $state->{roles}{$attribute} = $value if defined $attribute;
+        }
+        # The known operation may change only its exact revision and declared
+        # role attribute. Width/type/constraint/AST/other-source deltas refuse.
+        next unless $json->encode($state) eq $after->{state};
+        $event->{holder} = $after;
+    }
+    return $returned;
+}
+
+sub _register_unannotated_reference($self, $name) {
+    return $self->_allocation_transition($self->{signal_manager}->get_signal($name), 'is_output', '', sub {
+        $self->{signal_manager}->register_signal($name, width => undef, is_output => '');
+    });
+}
+
+sub _set_analyzed_signal_role($self, $signal, $role) {
+    return $self->_allocation_transition($signal, 'signal_role', $role, sub {
+        $signal->set_attribute('signal_role', $role);
+    });
+}
+
+sub _set_published_width_metadata($self, $signal, $kind, $record) {
+    my $setter = {requirements => 'set_declared_width_requirements', binding => 'set_declared_width_binding'}->{$kind};
+    confess "Unknown published width metadata kind\n" unless $setter;
+    return $self->_allocation_transition($signal, undef, undef, sub {$signal->$setter($record)});
 }
 
 sub parse_condition($self, $condition) {
@@ -656,10 +725,10 @@ sub parse_scalar_expression($self, $scalar, %options) {
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
         
         my $signal_name = $base_name;
-        my $signal = $self->{signal_manager}->register_signal($signal_name, 
-            width => $width,
-            is_output => defined($output_marker)
-        );
+        my $signal = !$member_name && !$slice && !$width_annotation && !defined($output_marker)
+            ? $self->_register_unannotated_reference($signal_name)
+            : $self->{signal_manager}->register_signal($signal_name,
+                width => $width, is_output => defined($output_marker));
         
         if ($slice) {
             if ($slice =~ /\[(\d+):(\d+)\]/) {
@@ -1185,9 +1254,14 @@ contract. Events contain plain detached state and scalar identity fingerprints,
 not Core owner references; they publish no Signal policy. Validated result and
 operand revision counters revoke events on supported matching-state mutations.
 Nesting refuses; success or exception restores the builder's prior state.
-Unsupported shapes retain ordinary allocation without events. Later parser
-reference registration currently revokes earlier events conservatively; qualified
-reference/classifier transitions and complete facade publication remain successors.
+Unsupported shapes retain ordinary allocation without events. The exact bare
+unannotated reference registration, final Parser width requirement/binding
+publication and Analyzer role operations can refresh a still-current event.
+Before each operation, actual registry identities and the whole event must match;
+afterward, only its exact revision and authorized role delta may differ. External,
+annotated, late, extra-source or stale writes cannot borrow that refresh. Ordinary
+uncaptured paths use the same legacy writes. Automatic capture and completed
+Parser/facade Signal publication remain separate successors.
 
 An unknown exact width retains the existing placeholder behavior. Selected
 numeric widths do not create a declared-width binding or prove a mutable

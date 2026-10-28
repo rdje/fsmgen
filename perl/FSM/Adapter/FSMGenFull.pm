@@ -34,7 +34,8 @@ sub new($class, %args) {
     
     my $signal_analyzer = FSM::Adapter::FSMGenFull::SignalAnalyzer->new(
         debug => $debug,
-        signal_manager => $signal_manager
+        signal_manager => $signal_manager,
+        expression_builder => $expression_builder,
     );
     
     my $self = bless {

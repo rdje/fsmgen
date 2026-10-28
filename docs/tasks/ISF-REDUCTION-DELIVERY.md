@@ -2240,11 +2240,39 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2200/T2199/T2198. Authenticated ordinary predecessor/current source HDL, declaration snapshots and Core/public metadata match. Legacy Core cycle remains independently owned by .31. POD/book/source freshness and mandatory normal doctrine hook gate commit; complete source publication/full .6 stay pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish proved parser allocation contracts only across completed validation and role classification.`
   Acceptance: `After actual birth events, join Parser/facade completion and the actual INTERNAL_INTERMEDIATE role write. Qualify exact ordinary source-reference registration and classifier-only transitions against current staged proofs before/after the actual operation; repeated expression reads currently register semantic attributes and conservatively revoke earlier events. Do not bypass general matching-write revocation. Reprove current object/AST/operand/width/type/constraint state and every supported intervening write; allow only the explicit qualified classifier transition, not arbitrary matching-state mutation. Parser/facade failure or reuse clears old/partial candidates and published records. Preserve ordinary HDL/snapshots/caller kinds after only owned metadata and precise unsupported boundaries, with focused source/error/retry controls, synchronized docs and commit.`
   Verification: `pending birth journal`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.1`
+  Status: `done`
+  Goal: `Qualify exact parser-owned reference, width-publication and classifier transitions of current staged events.`
+  Acceptance: `After committed birth journal, refresh only events proved current before a known parser operation and identical afterward except its exact revision/allowed attribute delta. Wire unannotated bare-reference registration, actual final declared requirement/binding publication and actual Analyzer role writes through dedicated operations; external matching writes, changed widths/type/constraints/objects and stale events must not revive. Preserve numeric/attribute/JSON and ordinary uncaptured products. Real Parser/Analyzer/failed/late/repeated/hostile controls and synchronized source/POD/book/fact precede commit; no automatic facade capture or Core publication yet.`
+  Verification: `Dedicated builder operations now surround exact bare unannotated reference registration, actual final Parser requirement/binding setters and actual Analyzer role assignments. Only events current before the operation, with actual registry result/operand identities, can refresh across its exact revision and allowed role delta. Full after-state equality protects width/type/constraint/AST/other-source identity. External/annotated/late/stale writes and an injected extra matching write to the other operand cannot borrow refresh. Ordinary uncaptured source performs the same legacy writes; standalone Analyzer without builder remains supported. Final unchanged T2201 against exact predecessor fails its real Parser/Analyzer currentness control; other new-operation controls skip. T2201/T2200 pass All tests successful Files=2 Tests=8. Existing T2162 declared-width publication controls also pass. Actual parameter/default/binding/width/attribute JSON kinds preserve; authenticated ordinary predecessor/current whole HDL, declaration snapshots and Core metadata match under Date-only normalization. Error restores scoped state and publishes nothing. Re-derive actual source phases; falsify exact predecessor, external/annotated/constraint and injected extra-source mutation; durability tracked source/tests/POD/book/fact/task and exact source/log receipt docs/audits/parser-allocation-transitions-20261028.json.gz. Automatic source capture and complete Core policy publication stay the next child; generic target/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.1: qualify actual source allocation transitions`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final unchanged predecessor T2201 reports failed actual reference/width-publication/classifier currentness at t/2201-parser-allocation-transitions.t line 49. Existing Parser final metadata setters and Analyzer role writes advance operand/result revisions after actual fresh birth; bare-reference registration also performs a relevant matching write.
+  - [x] **ADDRESSED (verified)** — Refresh only a currently proved event around the exact installed parser operation and its one revision/allowed-role change. Whole after-state and registry identities must match. External, annotated, stale and injected other-source writes refuse; no late equality reconstructs intent.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=8 for T2201/T2200. Existing T2162 declared-width publication controls pass; actual parameter/default/width/attribute kinds preserve, standalone Analyzer works, and authenticated ordinary whole native/declaration/Core products match. POD/book/source freshness and normal doctrine hook gate commit; automatic publication/full .6 stay pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Publish actual source allocation policy atomically after complete Parser/facade success.`
+  Acceptance: `Activate scoped capture across real Parser and facade lifecycle, publish only current actual-object event records without invalidating dependency events, and clear previous/partial policy on every failure/reuse path. Direct Parser and facade boundaries must be explicit and focused; preserve ordinary products after only owned new metadata. Actual source failure/role failure/retry/late/context/renamed controls, docs and commit close publication.`
+  Verification: `pending qualified transitions`
   Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Close composed actual source policy publication before factorizer integration.`
+  Acceptance: `Join focused actual fresh birth/current transition/publication/atomicity controls; only proved binary whole-reference allocations close. May join final publisher commit. Full target/API/corpus qualification remains .6.`
+  Verification: `pending publication`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.4`
   Status: `pending`

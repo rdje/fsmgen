@@ -139,13 +139,14 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
 sub _publish_declared_width_requirements($self) {
     for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
         next unless $self->_width_event_is_current($pending);
-        $pending->{signal}->set_declared_width_requirements($pending->{record});
+        $self->{expression_builder}->_set_published_width_metadata(
+            $pending->{signal}, 'requirements', $pending->{record});
         # A combined set may share one complete original capture, while its
         # actual immediate copy edges remain separately retained. Independent
         # requirements must never borrow the last same-default expression.
         my $binding = FSM::DeclaredWidthBindingSupport->equivalent_requirement_binding(
             signal => $pending->{signal});
-        $pending->{signal}->set_declared_width_binding($binding);
+        $self->{expression_builder}->_set_published_width_metadata($pending->{signal}, 'binding', $binding);
     }
 }
 

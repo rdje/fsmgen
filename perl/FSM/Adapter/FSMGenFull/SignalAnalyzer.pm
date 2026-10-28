@@ -16,6 +16,7 @@ sub new($class, %args) {
     return bless {
         debug => $args{debug} // 0,
         signal_manager => $args{signal_manager},
+        expression_builder => $args{expression_builder},
     }, $class;
 }
 
@@ -45,7 +46,11 @@ sub analyze_signal_roles($self, $fsm_module) {
                 if ($system->{declare_ports} // 1)
                     && grep {defined($_) && $_ eq $signal_name} @{$system}{qw(clock reset)};
         }
-        $signal->set_attribute('signal_role', $role);
+        if ($self->{expression_builder}) {
+            $self->{expression_builder}->_set_analyzed_signal_role($signal, $role);
+        } else {
+            $signal->set_attribute('signal_role', $role);
+        }
         
         my $contexts_str = join(',', @{$usage->{contexts} || []});
         fsm_debug("  Signal '$signal_name': $role (refs:$usage->{referenced_in_conditions}, assigns:$usage->{assigned_to}, output_marker:$usage->{has_output_marker}, intermediate:$usage->{is_intermediate}, contexts:[$contexts_str])", 3);

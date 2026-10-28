@@ -70,7 +70,10 @@ parser/factorizer allocation publication and generic range consumers remain
 separate implementation steps. An internal builder callback can now journal
 fresh binary allocations as plain data without publishing them. Matching helper
 or operand writes revoke staged intent; slices cannot assert whole-signal policy.
-Reference/classifier transitions and facade integration remain pending.
+Current journal events now survive only the exact bare-reference, final width
+metadata and classifier operations, after full state checks around each write.
+External or stale writes cannot borrow that refresh. Automatic source capture
+and completed facade publication remain pending.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

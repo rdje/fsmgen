@@ -63,7 +63,7 @@ subtest 'fresh names and bounded eligible shapes preserve ordinary allocation' =
             });
             is(scalar @{$packet->{events}}, 2, 'each actual allocation gets an independent event');
             isnt($packet->{events}[0]{signal_name}, $packet->{events}[1]{signal_name}, 'repeated expressions get fresh names');
-            ok(!defined(current($manager, $packet->{events}[0])), 'later actual source registration conservatively revokes earlier event');
+            ok(current($manager, $packet->{events}[0]), 'qualified bare source registration preserves earlier current event');
             ok(current($manager, $packet->{events}[1]), 'latest fresh allocation remains current');
             isnt($packet->{events}[0]{signal_name}, $occupied->name, 'fresh allocator skips occupied actual candidate');
             is($occupied->width, 32, 'occupied opaque signal preserves its independent floor');
