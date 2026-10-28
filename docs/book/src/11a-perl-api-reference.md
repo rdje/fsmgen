@@ -203,7 +203,14 @@ while the outer arithmetic helper still retains its selected numeric width.
 These forms do not yet provide parameter-correct helper propagation; use the
 bounded whole-operand kernels above only within their stated relationship.
 Computed arithmetic graph ownership is next, followed by n-ary source-holder
-proof. Logical/comparison wrappers retain one-bit results; that scalar result
+proof. Actual lifecycle observations locate the missing contract before width
+selection: original nested candidates receive no whole-reference birth, and
+substitution replaces their child trees with typed helper references while the
+root width is still unresolved. Parent inference can normalize a child
+recursively; the child's held intrinsic event exists before collection publishes
+completed policy. New graph proof must bind that original ownership and exact
+substitution edge, then use current dependency events. A later numeric width or
+printed child range cannot recreate those events. Logical/comparison wrappers retain one-bit results; that scalar result
 alone supplies no allocation proof for a vector operand. Full override/runtime
 qualification remains deferred.
 

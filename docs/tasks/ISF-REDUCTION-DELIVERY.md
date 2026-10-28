@@ -2380,18 +2380,53 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Exact Git/source/child/current-owner assertions pass; knowledge-map: OK and book/source freshness gate this continuity slice. Normal final-index doctrines remain mandatory. No implementation or full .6 qualification change.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Trace actual computed-helper birth, substitution and first inference ownership.`
   Acceptance: `Before producer code, observe real fresh original candidate rows/ASTs, actual substitution to typed IntermediateSignalRef edges, collection/current row identities and first unresolved numeric inference for n-ary/nested arithmetic. Preserve every existing normalization/cache/registry publication and dependency epoch contract. Retain bounded exact causal evidence and select explicit original-tree/substitution lineage requirements; do not mint later birth from selected widths or names. No behavior, graph admission or broad verification change; update canonical facts/book/task and commit.`
-  Verification: `pending owned causal producer trace`
-  Commit: `pending graph lifecycle prerequisite`
+  Verification: `Actual nested candidates lack original birth, then gain typed substituted child edges while widths remain unresolved. Child held events precede completed collection policy; n-ary child-first and nested parent-recursive inference paths retain. Corrected read-only traces match genuinely uninstrumented full source/HDL/events under explicit hash seeds; plain/fixed controls preserve. Re-derive actual lifecycle; falsify original/substituted and held/completed boundaries plus known-bad logger; durability docs/audits/computed-graph-lifecycle-20261028.json.gz. Register separate original graph birth, intrinsic dependency proof and completed policy slices. No graph policy/range/full .6 claim.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2: bind computed graph lifecycle requirements`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _factorizer_width_birth_capsule -- perl/FSM/HDL/ASTFactorization.pm identifies c9cde4dae. Actual original nested candidates have no whole-reference birth; owned substitution replaces their trees before numeric inference, and parent normalization can recurse into still-incomplete child policy.
+  - [x] **ADDRESSED (verified)** — Retain exact causal rows/typed edges/inference/publication evidence and register separate graph birth, intrinsic and completed-policy contracts. Diagnose and repair list-context corruption in the probe; invalid captures are retained and excluded from graph facts.
+  - [x] **NO REGRESSION** — Corrected traced/uninstrumented complete source/HDL/event products match and loaded owners equal exact Git/current bytes. Scalar-safe event-kind assertions reject the original malformed capture. knowledge-map: OK, book/source freshness and normal final-index doctrines qualify this metadata-bearing prerequisite; no production/full .6 change.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2.1`
+  Status: `done`
+  Goal: `Repair optional getter list-context corruption in the lifecycle probe.`
+  Acceptance: `The first trace logs Odd number of elements in anonymous hash at trace.pl line 96; an absent parent event becomes the string completed_policy. Optional getters return an empty list when embedded in a hash constructor. Preserve initial malformed captures as invalid evidence, force scalar optional fields and read-only absent-map observations, compare genuinely uninstrumented products and rerun. No production behavior change or use of corrupted event fields as graph facts.`
+  Verification: `Original trace.pl line 96 warning and event=completed_policy are retained as invalid logging evidence. Explicit scalar optional getters and safe absent-map reads produce warning-free corrected traces; the kind oracle rejects the known-bad capture and full uninstrumented products match.`
+  Commit: `joined to parent lifecycle prerequisite`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify current actual computed arithmetic graph allocation producers.`
   Acceptance: `After .2, split safe producer slices as needed. Bind fresh original ownership and exact substitution lineage to current typed ordered computed edges. First intrinsic inference must join actual dependency rows/events in one context/epoch, plain source leaf identities and exact max widths; independent native/cached floors, stale/copied/foreign/cyclic graphs and unowned publications cannot create or revive proof. Preserve existing source/whole-operand allocation behavior and owner-local plain capsules. Publish completed current graph policy only after successful collection, with failure/reset/reuse clearing. Source n-ary and range emission stay separate; focused causal/lifecycle controls, POD/book/fact and commit per slice.`
   Verification: `pending causal lineage contract`
   Commit: `pending graph producer slices`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1`
+  Status: `pending`
+  Goal: `Record original computed arithmetic births and owned substitution lineage.`
+  Acceptance: `Use actual fresh unresolved nested arithmetic candidates and the existing substitution transformation, before any numeric inference. Keep the whole-reference birth API/record unchanged; add an explicit separate closed graph-birth capsule with ordered typed original tree/source identity and exact current candidate/AST/edge ownership. Advance it only through actual owned substitution while widths remain unresolved, binding generated references to the actual selected child candidates. Same-width/text copies, later observations, forged/foreign/stale/self/cyclic lineage and unsupported literal/type/operator trees cannot mint or refresh it. Retain only owner-local plain data and detached diagnostics. Focused real-source/tamper/lifecycle/native controls plus POD/book/facts and commit; no graph policy/event/range admission yet.`
+  Verification: `Fresh original nested roots lack birth and typed substitution occurs before first inference: docs/audits/computed-graph-lifecycle-20261028.json.gz.`
+  Commit: `pending original graph birth`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2`
+  Status: `pending`
+  Goal: `Join first intrinsic graph inference to current actual dependency events.`
+  Acceptance: `After .1, bind actual parent unresolved input and exact typed generated edges to current actual child rows/events during the same recursive inference epoch. Handle child-first and parent-recursive normalization without treating completed policy as available early; distinguish held events temporarily taken/restored during owned cache reads. Verify exact max against plain source leaves and every independent result/operand floor/type/opaque constraint. Reject cycles, copied/foreign/stale or unproved numeric children and unsupported publications; plain capsules add no owner graph. Preserve existing numeric selection and whole-reference producers. Focused causal/order/currentness/refusal checks, synchronized contracts and commit; no completed graph or range claim yet.`
+  Verification: `Actual child held event precedes collection completion; nested parent may recursively normalize it. Original trace and corrected logging evidence retained in the lifecycle receipt.`
+  Commit: `pending transitive intrinsic inference`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
+  Status: `pending`
+  Goal: `Publish completed current graph allocation through owned normalization and registry boundaries.`
+  Acceptance: `After .2, preserve only exact current graph events through actual width/source publications, registry copies/rebuilds, cache reads and collection success. Bind dependency identities/revisions and transitive source state; matching-state source writes or changed child/current registry events revoke every dependent policy. Partial/failing/reset/reused generations expose no prior graph policy; new constraints or copied metadata cannot revive it. Keep ordinary whole-source APIs and numeric HDL stable, with graph target publication/range admission still separate. Focused live currentness/failure/reuse/native controls, POD/book/facts and commit close graph producers.`
+  Verification: `pending first intrinsic graph events`
+  Commit: `pending completed graph producer`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
   Status: `pending`
