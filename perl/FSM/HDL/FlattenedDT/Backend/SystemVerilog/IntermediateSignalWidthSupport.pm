@@ -94,6 +94,11 @@ sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {
             unless ref($all_intermediate_signals->{$name}) eq 'HASH'
                 && $self->factorized_width_inference_event($name, $all_intermediate_signals->{$name});
     }
+    for my $name (keys %{$self->{_graph_inference_events}}) {
+        delete $self->{_graph_inference_events}{$name}
+            unless ref($all_intermediate_signals->{$name}) eq 'HASH'
+                && $self->factorized_graph_inference_event($name, $all_intermediate_signals->{$name});
+    }
     for my $name (keys %{$all_intermediate_signals || {}}) {
         my $holder = eval {FSM::IntermediateWidthAllocationSupport->prepare_source_intermediate(
             context => $self->{flattened_dt}, signal_name => $name,
@@ -161,7 +166,8 @@ alone does not retain their containing original map and cannot recreate an
 expired view. Ordinary generation releases the view, and generation failure
 clears partial holders through the existing orchestrator abort. This is a row
 lifetime contract, not a claim about whole-backend ownership cycles. Separate
-completed graph policy and symbolic range admission remain pending.
+completed graph policy follows successful collection through its separate getter;
+graph target events and symbolic range admission remain pending.
 
 =cut
 
@@ -172,6 +178,25 @@ sub factorized_graph_inference_event ($self, $signal_name, $signal_info) {
     return FSM::IntermediateWidthGraphInferenceSupport->current_inference(
         width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
         holder => $events->{$signal_name});
+}
+
+=head2 factorized_graph_width_allocation
+
+Return a detached current completed graph allocation record only after successful
+collection, pruning and final registry publication in the current epoch. The
+actual canonical row view and complete current graph proof must still exist.
+Before collection completion, held intrinsic events supply no completed policy.
+Source/row/constraint changes, expired weak views and new/failed/reset generations
+withhold; equal metadata or later numeric widths cannot create or revive proof.
+The existing C<intermediate_width_allocation> and whole-reference APIs keep their
+profiles. Graph target events and symbolic range admission remain separate.
+
+=cut
+
+sub factorized_graph_width_allocation ($self, $signal_name, $signal_info) {
+    return undef unless $self->{_width_inference_complete}
+        && $self->{_width_inference_complete} == $self->{_width_inference_epoch};
+    return $self->factorized_graph_inference_event($signal_name, $signal_info);
 }
 
 =head2 factorized_width_allocation

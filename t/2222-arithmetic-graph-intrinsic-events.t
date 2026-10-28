@@ -114,7 +114,7 @@ subtest 'actual first intrinsic graph events are separate from completed policy'
             is($p->{source_after}, $p->{source_before}, 'source maps and declared width contracts conserve');
             my $name = $p->{observed}{name};
             is($p->{ctx}{backend_sv_intermediate_width_support}->intermediate_width_allocation($name, $p->{all}{$name}),
-                undef, 'intrinsic graph event does not complete selected policy');
+                undef, 'ordinary allocation API retains its whole-reference profile');
             is_deeply($p->{ctx}{backend_sv_intermediate_width_support}->factorized_graph_inference_event($name, $p->{all}{$name}),
                 $record, 'qualified registry publication preserves proof while the fixture retains actual rows');
             my $range = $width == 1 ? '' : '[7:0] ';

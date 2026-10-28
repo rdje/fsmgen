@@ -202,12 +202,13 @@ while the outer arithmetic helper still retains its selected numeric width.
 `(& A B C)` creates a source-owned nested AST with a numeric helper too.
 These forms do not yet provide parameter-correct helper propagation; use the
 bounded whole-operand kernels above only within their stated relationship.
-Completed arithmetic graph policy/publication is next, followed by n-ary source-holder
-proof. Original nested candidates receive a separate graph birth; substitution
+Transitive source/target graph range proof and emission are next, followed by
+n-ary source-holder proof. Original nested candidates receive a separate graph birth; substitution
 binds their typed helper references while the root width is still unresolved.
 Parent inference can normalize a child recursively. Current graph intrinsic
 events now join that ownership to held child proofs before collection completes
-policy. Transitive completed policy and target ranges remain pending. A later
+policy. Separate completed graph policy now follows successful collection;
+transitive target range proof and emission remain pending. A later
 numeric width or printed child range cannot recreate those earlier events. Logical/comparison wrappers
 retain one-bit results; that scalar result alone supplies no allocation proof for
 a vector operand. Full override/runtime
@@ -230,7 +231,7 @@ not create graph birth or prove allocation. Each private tree walk admits
 at most 64 binary levels and 4096 visited nodes; larger trees receive no new
 metadata. Private graph input and ready frames now validate source constraints
 and actual current child proofs; graph intrinsic events now qualify separately.
-Completed graph policy remains pending.
+Completed graph policy uses its separate current getter after collection.
 These diagnostics change no HDL, target events or current range admission.
 
 `IntermediateWidthGraphInferenceSupport` separates pending unresolved parent input
@@ -276,8 +277,19 @@ extends its canonical row lifetime. Retaining only the filtered map keeps row
 objects alive without keeping the containing original map; current graph proof
 then withholds. Rendering failure clears graph holders, and fresh backend reuse
 re-establishes the ordinary lifecycle. Focused checks now qualify this existing
-handoff without a new rebind or strong owner reference. Completed graph policy,
-graph target events and symbolic graph ranges remain pending.
+handoff without a new rebind or strong owner reference.
+
+`factorized_graph_width_allocation($name, $actual_info)` now returns the current
+closed graph max record only after successful collection, sampled-value pruning
+and final registry publication in that epoch. Current intrinsic events alone
+supply no early completed policy. The original weak row view and complete graph
+proof must remain valid; copied metadata, source/constraint changes, expired
+views and failed/reset/new generations withhold. Returned records detach, and
+later matching numeric values cannot recreate policy. The ordinary
+`intermediate_width_allocation` and whole-reference methods retain their existing
+profiles. This completes the bounded graph producer foundation with focused
+checks. Graph target events, transitive symbolic ranges and independent final
+graph closure remain next; full override/runtime qualification is deferred.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

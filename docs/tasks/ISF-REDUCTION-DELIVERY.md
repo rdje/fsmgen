@@ -2332,11 +2332,11 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1: retain closed holder/lifecycle history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify current actual computed arithmetic graph allocation producers.`
   Acceptance: `After .2, split safe producer slices as needed. Bind fresh original ownership and exact substitution lineage to current typed ordered computed edges. First intrinsic inference must join actual dependency rows/events in one context/epoch, plain source leaf identities and exact max widths; independent native/cached floors, stale/copied/foreign/cyclic graphs and unowned publications cannot create or revive proof. Preserve existing source/whole-operand allocation behavior and owner-local plain capsules. Publish completed current graph policy only after successful collection, with failure/reset/reuse clearing. Source n-ary and range emission stay separate; focused causal/lifecycle controls, POD/book/fact and commit per slice.`
-  Verification: `pending causal lineage contract`
-  Commit: `pending graph producer slices`
+  Verification: `Original graph birth/substitution, intrinsic/cache events, exact normalizer/registry publications, prepared weak lifetime and separate current completed policy have focused checks. Complete sources/negative/native evidence retain in graph-policy-20261028 and predecessor receipts. Target/ranges, other source families and full .6 remain live.`
+  Commit: `completed through ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1`
@@ -2417,11 +2417,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20; alternate traversal Files=1 Tests=6. Native source/HDL/target/completed policies conserve; guarded depth and known-bad controls qualify the cost repair. POD/book/facts and mandatory hooks gate commit; .3.3 owns policy/publication.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish completed current graph allocation through owned normalization and registry boundaries.`
   Acceptance: `After .2, preserve only exact current graph events through actual width/source publications, registry copies/rebuilds, cache reads and collection success. Bind dependency identities/revisions and transitive source state; matching-state source writes or changed child/current registry events revoke every dependent policy. Partial/failing/reset/reused generations expose no prior graph policy; new constraints or copied metadata cannot revive it. Keep ordinary whole-source APIs and numeric HDL stable, with graph target publication/range admission still separate. Focused live currentness/failure/reuse/native controls, POD/book/facts and commit close graph producers.`
-  Verification: `Intrinsic graph/cache events pass focused checks in arithmetic-graph-intrinsic-20261028; exact publication transitions remain pending.`
-  Commit: `pending completed graph producer`
+  Verification: `Original graph birth/substitution, intrinsic/cache events, exact normalizer/registry publications, prepared weak lifetime and separate current completed policy have focused checks. Complete sources/negative/native evidence retain in graph-policy-20261028 and predecessor receipts. Target/ranges, other source families and full .6 remain live.`
+  Commit: `completed through ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1`
@@ -2473,18 +2473,23 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=1 Tests=3. Actual plain/observed HDL matches; removing only weak storage fails the same lifecycle checks. Exact production code comparison after POD removal, book/fact and normal doctrines qualify this focused boundary; completed graph policy is next.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete graph allocation policy after successful current collection and handoff.`
   Acceptance: `Expose separate current completed graph policy only after qualified collection/pruning/registry/view boundaries; failure/reset/new epoch/reuse revoke old policy. Preserve ordinary APIs and all native products. Focused complete lifecycle/refusal/POD/book/facts and commit; target/ranges stay later.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Separate current graph policy follows actual successful collection/pruning/registry completion. No early policy; copied/stale/floored/source/failure/reset/reuse cases withhold. Full native products preserve except new policy diagnostics. Re-derive actual boundary, falsify predecessor and early-guard variant, retain sources/logs in docs/audits/graph-policy-20261028.json.gz. Graph target/ranges and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5: complete current graph allocation policy`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Predecessor T2226 reports Can't locate object method factorized_graph_width_allocation at ./t/2226-arithmetic-graph-policy-completion.t line 32. Held graph events had no separate completion API; the early-guard variant fails the no-early-policy assertion at line 69.
+  - [x] **ADDRESSED (verified)** — Revalidate/prune graph holders at actual collection completion and expose a separate current getter behind the successful epoch marker. Preserve exact weak ownership, source/dependency proof and ordinary allocation profiles; stale or matching copied values cannot create policy.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2226/T2222/T2205); alternate traversal Files=1 Tests=3. Exact native source/HDL/target/old policy products preserve except new completed graph diagnostics. POD/book/fact and mandatory hooks qualify this producer foundation; target/range/full .6 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
   Status: `pending`
   Goal: `Prepare canonical transitive computed arithmetic source and target ranges.`
   Acceptance: `After actual current graph policies, recursively join exact selected typed edges/child events to complete source/target constraints and identical frozen leaf relationships. Preserve child/root identities, actual ordered operators, result/operand independent widths, default-one rank and source roles. Detect cycles, stale edges, foreign or merely numeric/printed child ranges and independent constraints. Return detached private plans only, with complete input/source/currentness rechecks. No caller graph laundering, arithmetic emission or binary VHDL activation; focused native/private/atomic controls plus synced docs precede commit.`
-  Verification: `pending current graph allocation`
+  Verification: `Actual completed graph allocation now has focused checks through .3.3.5. Selected graph target events and canonical transitive source/target proof remain pending.`
   Commit: `pending transitive canonical proof`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
