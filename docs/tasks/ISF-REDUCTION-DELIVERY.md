@@ -2099,7 +2099,7 @@ do not start broad suites between implementation slices.
   Status: `active`
   Goal: `Repair demonstrated vector-guard truthiness/width loss before symbolic relationship propagation.`
   Acceptance: `Probe parsed Core &/| guards against the normal n-ary bitwise expression contract and actual native selectors, including disjoint one/two bit masks and nested comparisons. If actual semantics change during capture, own and repair that required-delivery blocker immediately. Preserve authored bitwise versus logical operations, recursive negation, one-bit simplifications and aliases; qualify distinct literal truth controls, one/wider widths, actual emitted operator/selector associations and caller JSON kinds. Retain genuine original RED and focused directly affected capture/AST checks with book/POD/fact sync; external runtime/full public/corpus qualification remains .6. No optional inversion or computed VHDL expansion.`
-  Verification: `Parser-hoisted source width/truthiness repair closes .1 with focused native proof. Its exact GHDL consumer check owns a preexisting fixed VHDL type failure in immediate next .3. Fixed guard repair closes .3 with selected native GHDL proof. Programmatic binary capture coercion remains a separate hypothesis in .2; do not attribute the hoisted source path to it. Required implementation/full qualification ordering remains unchanged.`
+  Verification: `Parser-hoisted source width/truthiness repair closes .1 with focused native proof. Its exact GHDL consumer check owns a preexisting fixed VHDL type failure in immediate next .3. Fixed guard repair closes .3 with selected native GHDL proof. Programmatic Core opcode coercion is independently proved/repaired in .2.1; immediate .2.2 owns typed-literal loss. Do not attribute the hoisted source path to either conversion. Required implementation/full qualification ordering remains unchanged.`
   Commit: `pending`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
@@ -2117,10 +2117,37 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2192/T2074/T208. Native fixed/selected-param probes and strict book source succeed; unknown widths and reduction/literal/operand contracts preserve. Module/test syntax, mdBook/POD/source freshness and mandatory final-index hooks gate commit. One failing fixed VHDL diagnosis is explicitly owned; full external/public/corpus qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify programmatic Core binary guard opcodes separately from parser-hoisted source expressions.`
   Acceptance: `After .1, reproduce actual Core-authored binary &/| guards through the public backend, using independent literal values and nested comparisons to distinguish vector from logical semantics. Decide whether CaptureSupport coercion is a real supported-contract defect; repair and qualify if demonstrated, otherwise retain the exact scope finding. Do not attribute parser-hoisted paths to that conversion. Focused caller/native/AST controls and documentation/commit close this child; no full runtime/public/corpus claim.`
-  Verification: `pending actual Core caller proof`
+  Verification: `Actual public constructor/backend chain independently proves &/| coercion, now repaired by child .1 with focused checks. Existing aliases already render correctly. Typed binary literal radix/width loss is a separate proved defect owned by immediate .2; .3 closes bounded composition only after both prerequisites. Parsed hoisted source remains separate control.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1`
+  Status: `done`
+  Goal: `Preserve actual Core bitwise binary guard semantics at capture.`
+  Acceptance: `Actual public constructors/backend reproduce A & B becoming A && B. Preserve bitwise versus logical symbols recursively. Published Core bitwise aliases already render correctly through the actual native consumer; retain their complete products and ordinary comparison/logical/unary/source controls and caller kinds. Distinguishing disjoint AND and nested OR-value assertions plus exact native helper/selector widths at one/wider widths qualify; full external runtime remains .6. Preserve original RED, update book/POD/fact and commit before typed literals.`
+  Verification: `Actual public Core constructors/backend reproduce scalar A_and_B = A && B from vector Core A & B. Removing only &/| from logical-constructor branches preserves actual bitwise opcodes; published aliases already rendered correctly and remain unchanged. Final qualified original T2194 RED fails all four subtests; repaired T2194/T2189/T2192/T207 pass All tests successful Files=4 Tests=12. Independent literal tables distinguish disjoint AND values and nested OR comparisons, with recursive negation, one/wider actual helpers/selectors and caller-kind/reuse controls. Native before/after probe retains exact products. Oracle corrections use actual unsized assignment selector names and unchanged XOR A_op_B identity; original/corrected streams retain in docs/audits/core-binary-guard-opcodes-20261028.json.gz. Re-derive actual constructor/capture/native chain; falsify literal values and original implementation; durability tracked test/audit/POD/book/fact. Separately observed typed binary literal becomes decimal11; immediate .2 owns cause/fix. Full external/runtime/API/MCP/corpus stays .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1: preserve Core bitwise guard opcodes`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Qualified original T2194 reports at t/2194-core-binary-guard-opcodes.t line 68: got && expected &. CaptureSupport::convert_condition_to_ast routes &/| through logical constructors. Actual public Core/native probe emits scalar A && B from vector A & B, changing disjoint-mask truth; nested value comparisons independently distinguish OR coercion.
+  - [x] **ADDRESSED (verified)** — Only actual &&/|| use logical constructors. Bitwise symbols recurse unchanged; native result helpers/whole-value selectors preserve exact widths, aliases and caller graphs/kinds. Independent original/current assertions pass; actual source hoisting remains separately controlled. Typed literal radix/width failure is retained and owned by immediate .2, not claimed repaired.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=12 for T2194/T2189/T2192/T207. Existing unary, source/parser-width, capture, alias, scalar and caller/reuse controls pass. Syntax, POD/book/source freshness and normal hook gate commit; full .6 remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2`
+  Status: `pending`
+  Goal: `Preserve actual Core literal width and radix during condition capture.`
+  Acceptance: `P1 immediate after opcode .1, before width propagation. Actual public Core typed binary literal 00000011 width8/radix binary renders 8'b11, but convert_condition_to_ast passes only value to Utils::literal, causing native comparison to decimal11. Retain actual typed literal meaning and width through the canonical literal contract without changing unsized scalar source products; test binary/hex/octal/decimal, zero/one and nested public operands with caller-kind controls. Preserve first native failure and source loci, qualify exact emitted comparison and focused literal/capture consumers, sync book/POD/fact and commit. No general Core admission or external/full qualification claim.`
+  Verification: `Original CORE/CAPTURE/native stream retains in core-binary-guard-opcodes audit. CaptureSupport literal branch reads only value and creates an untyped runtime Literal; Core emits the original radix/width via IntegerLiteralSupport. Independent cause is actual value3 becoming decimal11, not binary opcode coercion. Immediate repair owns this defect and its exact literal contract.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
+  Status: `pending`
+  Goal: `Close programmatic guard qualification after opcode and literal prerequisites.`
+  Acceptance: `After .1/.2 focused checks and commits, review their composed actual public Core/native products, confirm parsed hoisted source remains a separate control, close parent only for these bounded guards and restore symbolic bitwise relationships. No broad/external/full regression expansion; record exact remaining .6 gaps and commit a bounded closure if not safely joined to .2.`
+  Verification: `pending prerequisites`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`

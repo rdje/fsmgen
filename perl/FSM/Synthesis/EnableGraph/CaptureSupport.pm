@@ -651,6 +651,14 @@ symbols C<^>, C<&> and C<|>, logical C<!>, private complement C<~> and unary
 C<+>/C<-> retain their operation recursively. Existing C<not>/C<neg>/C<pos>
 spellings normalize to C<!>/C<->/C<+>. Missing, reference-valued, empty or
 unsupported unary operators refuse instead of borrowing a negation default.
+Binary C<&>/C<|> retain vector operations recursively; they never borrow the
+C<&&>/C<||> logical constructors. Published Core bitwise aliases retain their
+existing downstream rendering. Nested comparisons consume actual bitwise values,
+and wider native guard helpers retain vector width before whole-value state gating.
+Typed Core literal width/radix preservation is separately owned; this opcode repair
+does not qualify that path. Parsed source can already hoist a bitwise expression
+into a SignalRef, so it is a distinct caller path.
+
 This conversion contract does not admit optional source inversion or qualify
 external execution of arbitrary Core nodes.
 
@@ -694,9 +702,9 @@ sub convert_condition_to_ast ($self, $condition_node) {
         my $result;
         if ($op eq '==') {
             $result = FSM::AST::Utils::equals_op($left_ast, $right_ast);
-        } elsif ($op eq '&&' || $op eq '&') {
+        } elsif ($op eq '&&') {
             $result = FSM::AST::Utils::and_op($left_ast, $right_ast);
-        } elsif ($op eq '||' || $op eq '|') {
+        } elsif ($op eq '||') {
             $result = FSM::AST::Utils::or_op($left_ast, $right_ast);
         } else {
             $result = FSM::AST::BinaryOp->new($op, $left_ast, $right_ast);
