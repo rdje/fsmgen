@@ -80,7 +80,11 @@ and generic range consumers remain separate implementation steps.
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing
 candidate row keys preserve. A later cached width remains independent; birth
-records carry no selected policy. Actual inference and target joins remain pending.
+records carry no selected policy. The width resolver now captures selected
+intrinsic-max events at the first qualified AST inference, with complete plain
+unsigned operands and no native/cached target constraint. Copied/stale inputs and
+matching supported source mutations withhold. Owned normalization/cache
+preservation and completed target joins remain pending.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

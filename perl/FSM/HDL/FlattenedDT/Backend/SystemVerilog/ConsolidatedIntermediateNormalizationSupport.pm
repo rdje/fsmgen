@@ -71,6 +71,8 @@ sub new ($class, %args) {
 Normalize runtime ASTs, widths, dependencies, rendered expressions, and
 live-usage metadata across the consolidated signal set so downstream phases can
 consume one AST-first cache.
+The default width owner starts a fresh private inference epoch. Injected legacy
+width providers keep their original method contract and supply no new provenance.
 
 =cut
 
@@ -78,6 +80,8 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    $width_support->_begin_factorized_width_inference
+        if $width_support->can('_begin_factorized_width_inference');
 
     for my $signal_name (keys %{$all_intermediate_signals || {}}) {
         my $signal_info = $all_intermediate_signals->{$signal_name};

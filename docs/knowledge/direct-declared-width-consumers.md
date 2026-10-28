@@ -12,10 +12,12 @@ answers:
   - "why did guard XOR become NOT?"
   - "how are explicit Core intermediate width allocation contracts held?"
   - "how are factorizer allocation births retained?"
+  - "how are factorizer width inference events captured?"
 date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  t/2205-factorizer-width-inference.t; docs/audits/factorizer-width-inference-20261028.json.gz;
   t/2204-factorizer-width-births.t; docs/audits/factorizer-width-births-20261028.json.gz; perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; t/2202-source-allocation-publication.t; docs/audits/source-allocation-publication-20261028.json.gz; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
@@ -76,10 +78,10 @@ success publishes; invalidation clears every new map. Both sizing orders/copy
 chains retain origins. Ordinary unscoped late sizing stays legacy; computed shapes
 remain separately owned.
 
-Core binary_operand_max (T2198) binds actual helper/AST/ordered unsliced operands and source/result revisions.
-Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no extra owner graph.
-Equal widths install nothing. INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; others withhold.
-Only known bare-reference/final-width/classifier writes refresh current births. Factorizer binary births retain unresolved ownership; selected inference/event/range joins remain pending.
+Core binary_operand_max (T2198) binds actual helper/AST/ordered whole operands and source/result revisions.
+Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
+Equal widths install nothing. Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify.
+Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Owned cache/copy and target/range joins stay pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

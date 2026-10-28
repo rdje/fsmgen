@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2318,11 +2318,39 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2204/T1887. Actual raw-Core/backend and source native HDL/declaration/ordinary row/public width products and source policies match authenticated predecessor; plain birth state retains no owner graph in the isolated control. POD/book/source freshness, preserved question/recipe routes and normal doctrine hook gate commit; selected inference/target/full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind current actual factorizer births only to qualified intrinsic-width inference and preserve it through normalization.`
   Acceptance: `Join actual pure AST inference to current birth/registry identities and all plain unsigned operand declarations. Native/cached/context/fallback/unknown constraints cannot assert intrinsic max even at equal defaults. Preserve proven policy across only actual normalization-owned writes/copies; stale/conflicting/private foreign states withhold. Real raw-Core backend, repeated cache resolution, opaque/context/scalar/wider and detached/no-extra-owner controls plus unchanged native products, POD/book/fact and commit qualify before event join.`
-  Verification: `pending actual birth events`
+  Verification: `Actual unresolved births committed at c9cde4dae with clean tree. Trace a bounded actual raw-Core generation first: normalization and declaration both call the width resolver, which can relabel inferred output as cached. Establish actual metadata identities and canonical registry copy points before minting/retaining selected policy.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.1`
+  Status: `done`
+  Goal: `Retain actual intrinsic binary width-inference events without admitting opaque cached or native constraints.`
+  Acceptance: `At the actual first AST-inference branch, require current real factorizer birth/registry/runtime/defining association and complete plain unsigned whole operand membership. Retain exact selected intrinsic-max event and actual source/result identities/state as plain data, preserving all numeric selection paths. Missing/unknown/native/cached/context/foreign/stale/type/compound constraints cannot assert that event even at equal defaults. Trace actual calls and qualify original/current Core/runtime/source and independent floor controls; no generic range or full qualification. Split cache/normalization completion into the next child rather than infer ownership from late labels.`
+  Verification: `Actual bounded raw-Core trace proves first unresolved resolution in normalization and later cached resolution in declaration use the same input metadata, with distinct canonical/backend copies updated between them. The default normalizer now starts a private epoch; the actual first AST branch captures current actual birth, complete plain unsigned operands and exact selected maximum only when input/canonical/backend widths are unresolved and no native result constraint exists. Plain frames anchor backend/module/metadata/AST/source identities and call/source revisions. Native/cached/canonical/registered floors including equal defaults, unknown/signed/stale membership, copied metadata and matching supported source mutation before/during observation withhold. T2205/T220/T225 pass All tests successful Files=3 Tests=6; injected legacy normalization providers retain their original contract. Final unchanged predecessor native generation succeeds but the event getter is absent. Authenticated predecessor/current source/raw-Core whole HDL (Date-only), captured declarations, existing row/public-width data, births and source policies match under fixed hash conditions; only qualified initial observations are added. Current event intentionally withholds after later cache/copy calls: .2 owns their qualification before completed policy/target admission. Related card prose preserves all facts/questions/recipes with exact before/after sources; canonical byte allowance is saturated and immediate .32 owns semantic consolidation before .2. Re-derive actual kernel branch/trace; falsify predecessor and independent floor/identity/source mutation controls; durability source/tests/POD/book/fact/task and exact source/log receipt docs/audits/factorizer-width-inference-20261028.json.gz. No generic range, completed normalization policy or full .6 qualification closes.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.1: capture actual intrinsic width events`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final unchanged predecessor T2205 reports Can't locate object method factorized_width_inference_event via package FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport at t/2205-factorizer-width-inference.t line 51. The retained actual trace shows runtime inference becoming a later cached label, so numeric/label equality cannot establish the original selection event.
+  - [x] **ADDRESSED (verified)** — Gate plain current frames around actual first AST inference, retain exact selected max only for complete plain operands and unresolved independent result metadata, and anchor actual identities plus call/source revisions. Matching source mutation inside inference cannot mint an event; copied/stale/native/cache constraints withhold. No symbolic admission is enabled.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=6 for T2205/T220/T225. Authenticated ordinary source/raw-Core HDL/declaration/row/public-width/birth/source-policy products conserve; legacy injected width providers keep their contract. POD/book/source freshness and normal doctrine hook gate commit. Owned cache/copy completion, target/range joins and full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2`
+  Status: `pending`
+  Goal: `Preserve current actual inference policy only through owned cache and normalization writes/copies.`
+  Acceptance: `After actual intrinsic event, qualify exact resolver cache reads and normalizer registry copies with current before/after proof. Bind all canonical target width constraints, source identity/type/width state and actual object/AST membership; unknown copied records or new independent native/cached/context floors withhold. Surface only completed current policy for the later target-event join, preserve raw/native ordinary products and caller kinds, synchronize POD/book/fact and commit.`
+  Verification: `pending actual inference event`
   Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.3`
+  Status: `pending`
+  Goal: `Close composed selected factorizer allocation provenance before actual target-event join.`
+  Acceptance: `Join focused actual birth/inference/owned normalization/cache/currentness controls and old native products only for proved binary whole-reference profiles. May close with final producer commit; target/range/external/API/corpus qualification remains separately owned.`
+  Verification: `pending completed current policy`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.4`
   Status: `pending`
@@ -2798,6 +2826,13 @@ do not start broad suites between implementation slices.
   Goal: `Repair existing Core fanin/fanout ownership cycles before full qualification.`
   Acceptance: `P1 after required features and before .6, earlier if source integration becomes resource-blocking. Ordinary builder parse_expression creates helper driving AST to operand Signals while _update_fanout_relationships adds strong source fanout edges back to the helper. A weak ordinary helper/source survives dropping builder/registry/caller refs; explicitly removing only test fanout edges releases it. Reproduce exact baseline and establish intended standalone navigation/ownership before selecting repair; preserve fanin/fanout APIs, actual source semantics, held independent AST/results and success/failure/reuse. Focused lifetime and functional controls, book/fact and commit close. No blanket weakening or global leak-free claim.`
   Verification: `Actual birth-journal weak test exposes pre-existing Core::_update_fanout_relationships strong reciprocal graph, independent of plain JSON events. Exact ordinary predecessor/current control and source evidence retain with parser-allocation-birth-journal-20261028 receipt. Journal release assertion isolates those existing edges explicitly; it does not claim whole Core graph release. Repair is owned here under director0121 scheduling.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.32`
+  Status: `pending`
+  Goal: `Consolidate saturated canonical width-fact prose before the next selected-policy slice.`
+  Acceptance: `Immediately after .3.4.3.2.2.2.3.3.1 commits, before .3.4.3.2.2.2.3.3.2 implementation/docs. Canonical cards are at their existing aggregate byte allowance. Perform a bounded semantic consolidation of related current width cards, preserving every current fact, old question, command and canonical source route; retain complete exact before/after sources and a reviewed semantic disposition. Reconcile richer canonical POD/audits before demoting duplicated explanation. Keep card/file/line/byte/width ceilings and allowances unchanged, prove all retrieval/recipe identities and current source contracts, generate/check maps and mandatory gates, commit, then resume owned cache/copy completion. Do not delete facts, drop questions, mechanically pack arbitrary prose or claim indefinite headroom.`
+  Verification: `The current inference-event fact update fits only after related opcode/literal narration consolidation; measured canonical bytes equal the existing allowance. .29 remains its own bounded prior consolidation, and .26 still owns generated shard pressure. This new leaf owns the next canonical working-set operation as a demonstrated documentation prerequisite to required feature delivery.`
   Commit: `pending`
 
 ## Blockers

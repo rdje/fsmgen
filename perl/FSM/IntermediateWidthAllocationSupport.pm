@@ -153,6 +153,106 @@ sub current_core ($class, %args) {
     return $@ ? undef : $record;
 }
 
+sub _factorized_metadata_state ($metadata, $ast) {
+    return unless ref($metadata) eq 'HASH';
+    return if grep {defined($metadata->{$_}) && ref($metadata->{$_})} qw(width_source source);
+    return if defined($metadata->{width}) && !defined(_width($metadata->{width}));
+    return if $metadata->{signed} || defined($metadata->{declared_type_name}) || defined($metadata->{declared_type_spec});
+    return if defined($metadata->{constraints})
+        && (ref($metadata->{constraints}) ne 'ARRAY' || @{$metadata->{constraints}});
+    return if grep {defined($metadata->{$_})} qw(_declared_width_source _declared_width_binding _declared_width_requirements);
+    return if defined($metadata->{type}) && (ref($metadata->{type}) || $metadata->{type} ne 'wire');
+    my %asts;
+    for my $key (qw(ast runtime_ast defining_ast driving_ast)) {
+        next unless exists $metadata->{$key};
+        my $node = $metadata->{$key};
+        return unless blessed($node) && refaddr($node) == refaddr($ast);
+        $asts{$key} = sprintf('%x', refaddr($node));
+    }
+    return {identity => sprintf('%x', refaddr($metadata)), asts => \%asts,
+        width => $metadata->{width}, width_source => $metadata->{width_source}, source => $metadata->{source},
+        result_constraints => {map {$_ => $metadata->{$_}} qw(type signed state_model constraints
+            declared_type_name declared_type_spec _declared_width_source _declared_width_binding _declared_width_requirements)}};
+}
+
+sub factorized_inference_frame ($class, %args) {
+    return unless defined(_width($args{epoch})) && defined(_width($args{revision}));
+    my $context = $args{context};
+    return unless blessed($context) && $context->isa('FSM::HDL::FlattenedDT');
+    my $module = $context->{fsm_module};
+    my $factorizer = $context->{ast_factorizer};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule')
+        && blessed($factorizer) && $factorizer->isa('FSM::HDL::ASTFactorization');
+    my $name = $args{signal_name};
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    my $signals = $module->signals;
+    return unless ref($signals) eq 'HASH' && !exists($signals->{$name});
+    my $birth = $factorizer->_current_intermediate_width_birth($name) or return;
+    my $entry = $factorizer->{intermediate_signals}{$name};
+    my $ast = $entry->{ast};
+    my $info = $args{signal_info};
+    return unless ref($info) eq 'HASH' && ($info->{source} // '') eq 'ast_factorization'
+        && blessed($info->{ast}) && refaddr($info->{ast}) == refaddr($ast)
+        && blessed($info->{runtime_ast}) && refaddr($info->{runtime_ast}) == refaddr($ast)
+        && ($info->{runtime_ast_source} // '') eq 'substituted_ast';
+    my (@sources, @descriptors);
+    my @operands = ($ast->left, $ast->right);
+    for my $index (0, 1) {
+        my $operand = $operands[$index];
+        # Generated-reference width lookup has another registry precedence;
+        # this bounded event covers actual module Signal references only.
+        return unless UNIVERSAL::isa($operand, 'FSM::AST::SignalRef')
+            || UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef');
+        my $source = $signals->{$birth->{record}{source_names}[$index]};
+        my $descriptor = _descriptor($source) or return;
+        return unless $descriptor->{name} eq $birth->{record}{source_names}[$index];
+        return if UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef') && refaddr($operand->signal) != refaddr($source);
+        push @sources, $source;
+        push @descriptors, $descriptor;
+    }
+    my $info_state = _factorized_metadata_state($info, $ast) or return;
+    my $entry_state = _factorized_metadata_state($entry, $ast) or return;
+    my $registry = $context->{intermediate_signals};
+    return if defined($registry) && ref($registry) ne 'HASH';
+    my $registered = ref($registry) eq 'HASH' ? $registry->{$name} : undef;
+    my $registered_state = defined($registered) ? _factorized_metadata_state($registered, $ast) : undef;
+    return if defined($registered) && !$registered_state;
+    my $frame = {
+        shape => {operator => $birth->{record}{operator}, source_names => $birth->{record}{source_names}},
+        context_identity => sprintf('%x', refaddr($context)), module_identity => sprintf('%x', refaddr($module)),
+        epoch => $args{epoch}, revision => $args{revision}, birth_state => $birth->{state},
+        signal_info => $info_state, factorizer_entry => $entry_state, registered => $registered_state,
+        source_signals => \@descriptors,
+    };
+    my $json = JSON::PP->new->canonical;
+    my $copy = $json->decode($json->encode($frame));
+    if ($args{track}) {$_->_track_intermediate_width_allocation for @sources}
+    return $copy;
+}
+
+sub prepare_factorized_inference ($class, %args) {
+    my $frame = $class->factorized_inference_frame(%args) or return;
+    my $maximum = _maximum(map {$_->{width}} @{$frame->{source_signals}});
+    my $width = $args{selected_width};
+    return unless defined(_width($width)) && _width($width) eq $maximum
+        && defined(_width($frame->{signal_info}{width})) && _width($frame->{signal_info}{width}) eq $maximum;
+    my $record = _copy_record({kind => 'binary_operand_max', %{$frame->{shape}}, selected_width => $width});
+    return {record => $record, state => JSON::PP->new->canonical->encode($frame)};
+}
+
+sub current_factorized_inference ($class, %args) {
+    my $holder = $args{holder};
+    return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state';
+    my $record = eval {
+        my $copy = _copy_record($holder->{record});
+        my $current = $class->prepare_factorized_inference(%args, selected_width => $copy->{selected_width}, track => 0) or return;
+        return unless defined($holder->{state}) && !ref($holder->{state}) && $holder->{state} eq $current->{state}
+            && JSON::PP->new->canonical->encode($copy) eq JSON::PP->new->canonical->encode($current->{record});
+        $copy;
+    };
+    return $@ ? undef : $record;
+}
+
 1;
 
 =head1 NAME
@@ -230,5 +330,31 @@ record. Reusing an escaped capsule cannot bypass a later revocation revision.
 Runnable lifecycle/opaque-context controls:
 
   scripts/run_with_ram_guard.sh -- prove -Iperl t/2198-core-intermediate-width-allocation.t
+
+=head2 factorized_inference_frame
+
+Internal plain-data observation of an actual backend normalization epoch, current
+factorizer birth, exact metadata/AST associations and complete plain unsigned
+module operands. Native result declarations, generated-reference lookup, named
+or signed types, authored result constraints and missing/foreign membership
+withhold. Optional C<track> starts source revocation counters only after the
+complete frame can be serialized. Returned data retains no owner references.
+
+=head2 prepare_factorized_inference
+
+Validate a producer-supplied intrinsic selection against that current frame and
+the exact positive operand maximum, returning a detached C<{record, state}>.
+This validator does not attest branch execution. Only the actual width resolver's
+first unresolved AST-inference branch installs the observation; native/cached
+constraints cannot supply it from numeric equality. State includes the epoch,
+call revision, actual input/canonical/backend metadata identities and source
+mutation revisions. This enables no symbolic range or target profile.
+
+=head2 current_factorized_inference
+
+Return the detached selected record only while the entire held frame agrees.
+Subsequent cache calls, registry copies, source writes or epoch reset withhold
+until separately qualified. Owned cache/normalization preservation remains a
+successor; this observation is not completed generic allocation admission.
 
 =cut

@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3`
-- next_action: Join current actual factorizer births to intrinsic AST width inference, preserving independent native/cached/context constraints and normalization ownership before target-event/range integration.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.32`
+- next_action: Consolidate saturated canonical width-fact prose without losing facts/questions/commands or increasing budgets, then resume .3.4.3.2.2.2.3.3.2 owned cache/copy completion.
 - in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

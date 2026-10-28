@@ -41,6 +41,71 @@ use FSM::Debug;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use Scalar::Util qw(blessed);
+use JSON::PP ();
+use FSM::IntermediateWidthAllocationSupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
+
+sub _begin_factorized_width_inference ($self) {
+    ++$self->{_width_inference_epoch};
+    $self->{_width_inference_events} = {};
+    $self->{_width_inference_revisions} = {};
+}
+
+=head2 factorized_width_inference_event
+
+Return a detached current intrinsic binary max event for the actual metadata
+object in this normalization epoch. Only a current actual factorizer birth,
+complete plain unsigned module operands and first unresolved AST inference can
+mint it. Native/cached/opaque target constraints, missing/type/stale inputs and
+supported source mutation during inference withhold, including equal defaults.
+Plain capsules add no mutable owner graph. Ordinary numeric selection preserves.
+
+This bounded producer records the initial inference point. Later resolver calls
+advance its revision; registry copies also invalidate the held frame. Owned
+cache/normalization completion and target-event/range joins remain successors.
+
+=cut
+
+sub factorized_width_inference_event ($self, $signal_name, $signal_info) {
+    return unless $self->{_width_inference_epoch}
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    return FSM::IntermediateWidthAllocationSupport->current_factorized_inference(
+        context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
+        epoch => $self->{_width_inference_epoch}, revision => $self->{_width_inference_revisions}{$signal_name},
+        holder => $self->{_width_inference_events}{$signal_name});
+}
+
+sub _unresolved_factorized_input_frame ($self, $signal_name, $signal_info, $signal_registry) {
+    return unless $self->{_width_inference_epoch} && ref($signal_info) eq 'HASH'
+        && !defined($signal_info->{width}) && defined($signal_info->{width_source})
+        && !ref($signal_info->{width_source}) && $signal_info->{width_source} eq 'unresolved_factorization_ast'
+        && ref($signal_registry) eq 'HASH' && ref($signal_registry->{$signal_name}) eq 'HASH'
+        && $signal_registry->{$signal_name} == $signal_info;
+    my %args = (context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
+        epoch => $self->{_width_inference_epoch}, revision => $self->{_width_inference_revisions}{$signal_name});
+    my $frame = eval {FSM::IntermediateWidthAllocationSupport->factorized_inference_frame(%args)} or return;
+    for my $row ($frame->{factorizer_entry}, $frame->{registered}) {
+        next unless $row;
+        return if defined($row->{width})
+            || (defined($row->{width_source}) && $row->{width_source} ne 'unresolved_factorization_ast');
+    }
+    return eval {FSM::IntermediateWidthAllocationSupport->factorized_inference_frame(%args, track => 1)};
+}
+
+sub _record_factorized_inference ($self, $signal_name, $signal_info, $width, $source, $frame) {
+    return unless $frame;
+    my $holder = eval {FSM::IntermediateWidthAllocationSupport->prepare_factorized_inference(
+        context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info, selected_width => $width,
+        epoch => $self->{_width_inference_epoch}, revision => $self->{_width_inference_revisions}{$signal_name})} or return;
+    my $identity = $frame->{signal_info}{identity};
+    for my $row ($frame->{signal_info}, $frame->{factorizer_entry}, $frame->{registered}) {
+        next unless $row && $row->{identity} eq $identity;
+        $row->{width} = $width;
+        $row->{width_source} = $source;
+    }
+    $self->{_width_inference_events}{$signal_name} = $holder
+        if JSON::PP->new->canonical->encode($frame) eq $holder->{state};
+}
 
 =head2 new
 
@@ -69,6 +134,9 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
 
+    ++$self->{_width_inference_revisions}{$signal_name} if $self->{_width_inference_epoch};
+    my ($input_frame, $intrinsic_inference);
+
     $signal_registry //= {};
     $seen_signals //= {};
     if ($seen_signals->{$signal_name}++) {
@@ -96,10 +164,13 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     if (!defined($resolved_width) || $resolved_width < 1) {
         my $runtime_ast = $ctx->{backend_sv_intermediate_recovery_support}->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
         if ($runtime_ast && blessed($runtime_ast)) {
+            $input_frame = $self->_unresolved_factorized_input_frame($signal_name, $signal_info, $signal_registry)
+                unless $native_signal_info;
             my $ast_width = $self->infer_width_from_intermediate_ast($runtime_ast, $signal_registry, $seen_signals);
             if (defined($ast_width) && $ast_width > 0) {
                 $resolved_width = $ast_width;
                 $width_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
+                $intrinsic_inference = 1;
             }
         }
     }
@@ -114,6 +185,9 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         $signal_info->{width} = $resolved_width;
         $signal_info->{width_source} = $width_source;
     }
+
+    $self->_record_factorized_inference($signal_name, $signal_info, $resolved_width, $width_source, $input_frame)
+        if $intrinsic_inference && !$native_signal_info;
 
     fsm_debug("[IntermediateSignalWidthSupport.pm][resolve_intermediate_signal_width()] Resolved width $resolved_width for '$signal_name' via $width_source", 3);
     return $resolved_width;

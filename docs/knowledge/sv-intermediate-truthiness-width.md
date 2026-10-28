@@ -37,12 +37,9 @@ Paired VHDL proves plain unsigned operands, scalar results and exact assignments
 
 Parser bitwise widths use the exact AST width before registration (T2192). Core and emitted widths agree; vector guards test the whole value.
 
-Core binary &/| formerly became logical &&/|| in condition capture (T2194).
-Actual operations now survive recursively; native helpers retain vector widths
-and whole-value gating. Existing alias/source/unary/caller controls pass.
-Typed Core literals formerly lost width/radix through bare value capture, turning
-binary value3 into decimal11. Capture now carries Core canonical spelling (T2195);
-actual typed/native and parsed guards retain value/width/radix, ordinary unsized products and caller kinds. The literal audit retains original RED; full .6 stays open.
+Core binary &/| formerly became logical &&/|| in condition capture (T2194); nested operators, vector helpers and whole-value gating now preserve.
+Alias/source/unary/caller controls pass. Bare value capture lost width/radix, changing binary value3 to decimal11; Core canonical spelling now preserves both (T2195).
+Actual typed/native and parsed guards retain value/width/radix, ordinary unsized products and caller kinds. The literal audit retains original RED; full .6 stays open.
 
 Runtime comparison text now groups bare &/| children on either side (T2196).
 Independent rendered literal outcomes and caller controls pass; typed native HDL
