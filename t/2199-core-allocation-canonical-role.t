@@ -13,11 +13,11 @@ sub parsed {
     return FSM::Adapter::FSMGenFull->new(debug=>0)->parse_fsm(scalar Lispish::multi(\$source));
 }
 sub helper {my ($module)=@_;return grep {$_->get_attribute('is_intermediate')} values %{$module->signals}}
-subtest 'actual facade helper roles qualify the explicit allocation holder without publication' => sub {
+subtest 'actual facade helper roles qualify current allocation contracts' => sub {
     for my $width (1,8) {for my $op ('&','|','^') {
         my $module=parsed($width,$op);my @helpers=helper($module);is(scalar(@helpers),1,'actual parser creates one helper');
         my $signal=$helpers[0];is($signal->get_attribute('signal_role'),'INTERNAL_INTERMEDIATE','actual classifier supplies canonical uppercase role');
-        ok(!defined($signal->intermediate_width_allocation),'parser publication remains inactive before explicit supplied contract');
+        is_deeply($signal->intermediate_width_allocation, {kind=>'binary_operand_max',operator=>$op,source_names=>['A','B'],selected_width=>$width}, 'completed facade publishes actual canonical helper contract');
         my $before=$json->encode([$module->parameters,$module->parameter_default_sources,$module->parameter_default_bindings,
             $signal->width,$signal->attributes]);
         my $record={kind=>'binary_operand_max',operator=>$op,source_names=>['A','B'],selected_width=>$width};

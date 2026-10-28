@@ -60,20 +60,22 @@ grouped products preserve; the checked native factored HDL is unchanged. This
 bounded repair does not close arbitrary mixed arithmetic/unary text rendering.
 
 An internal [intermediate allocation holder](perl-api/FSM/IntermediateWidthAllocationSupport.html)
-now records an explicit current binary max-allocation contract. It binds the
-actual Core helper, AST and ordered operand objects, with revocation on relevant
-matching-state writes. Actual parsed helpers carrying `INTERNAL_INTERMEDIATE`
-are eligible, as are unspecified and legacy lowercase intermediate roles; other
-explicit roles are withheld. Opaque equal-width metadata installs nothing. Getter and
-replacement records detach; the capsule adds no mutable owner graph. Actual
-parser/factorizer allocation publication and generic range consumers remain
-separate implementation steps. An internal builder callback can now journal
-fresh binary allocations as plain data without publishing them. Matching helper
-or operand writes revoke staged intent; slices cannot assert whole-signal policy.
-Current journal events now survive only the exact bare-reference, final width
-metadata and classifier operations, after full state checks around each write.
-External or stale writes cannot borrow that refresh. Automatic source capture
-and completed facade publication remain pending.
+records an explicit current binary max-allocation contract. It binds the actual
+Core helper, AST and ordered unsliced operand objects. Matching helper or operand
+writes revoke it. Parsed helpers with `INTERNAL_INTERMEDIATE`, unspecified roles
+and legacy lowercase intermediate roles qualify; other explicit roles withhold.
+Opaque equal-width metadata installs nothing. Records detach and add no owner graph.
+
+The source builder journals eligible fresh binary allocations. Still-current
+events cross only exact bare-reference, final width-metadata and classifier
+operations, with full state checks around each write. External, annotated or
+stale writes cannot borrow that refresh. Direct Parser success publishes at its
+existing registry/AST boundary; the facade waits through role and interface
+completion. Source, phase or publication failure and parse reuse clear prior or
+partial policy. Publishing an inner helper preserves a dependent helper's epoch.
+N-ary, literal, sliced, signed, named and unknown shapes remain outside this
+binary whole-reference profile. Factorizer provenance, actual target-event joins
+and generic range consumers remain separate implementation steps.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

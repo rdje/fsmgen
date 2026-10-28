@@ -15,7 +15,7 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
+  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; t/2202-source-allocation-publication.t; docs/audits/source-allocation-publication-20261028.json.gz; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
@@ -77,8 +77,8 @@ remain separately owned.
 
 Intermediate_width_allocation separately holds explicit binary_operand_max intent (T2198),
 binding actual helper/unsliced Core AST/ordered operands and tracked source/result revisions.
-Detached scoped builder birth journals publish nothing; source/result matching writes revoke. No extra owner graph or policy
-arises from equal widths. Canonical INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; other roles withhold. Scoped current events cross only known bare-reference/final-width/classifier writes; automatic publishers/ranges remain pending.
+Fresh scoped builder journals publish only after Parser success or full facade completion; failure/reuse clears. No extra owner graph or policy
+arises from equal widths. Canonical INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; other roles withhold. Scoped current events cross only known bare-reference/final-width/classifier writes; source publication preserves dependency epochs; factorizer/event joins/ranges remain pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

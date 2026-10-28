@@ -51,27 +51,33 @@ sub new($class, %args) {
 
 # Main entry point - parse FSM from Lispish output
 sub parse_fsm($self, $raw_ast) {
+    $self->{signal_manager}->clear_intermediate_width_allocations;
     fsm_trace_enter('FSMGenFull facade parse_fsm()', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     
     # Phase 1: Parse the AST and build the CoreAST structures
     my $fsm_module;
     my $ok = eval {
-        $fsm_module = $self->{parser}->parse_fsm($raw_ast);
+        my $packet = $self->{expression_builder}->_capture_intermediate_width_allocations(sub {
+            $fsm_module = $self->{parser}->parse_fsm($raw_ast);
     
-        if (!$fsm_module) {
-            fsm_error('Parser returned undefined FSM module');
-            Carp::confess "Failed to parse FSM module from AST";
-        }
+            if (!$fsm_module) {
+                fsm_error('Parser returned undefined FSM module');
+                Carp::confess "Failed to parse FSM module from AST";
+            }
     
-        # Phase 2: Analyze signal roles and attach interface
-        $self->{signal_analyzer}->analyze_signal_roles($fsm_module);
-        $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
+            # Phase 2: Analyze signal roles and attach interface
+            $self->{signal_analyzer}->analyze_signal_roles($fsm_module);
+            $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
+            return $fsm_module;
+        });
+        $self->{expression_builder}->_publish_intermediate_width_allocations($packet->{events});
         1;
     };
     my $error = $@;
     unless ($ok) {
         $self->{signal_manager}->clear_declared_width_bindings;
+        $self->{signal_manager}->clear_intermediate_width_allocations;
         die $error;
     }
     
@@ -154,6 +160,16 @@ Nested source transactions defer publication to outer validation. Authored and
 other-origin requirements remain; only same-source attested opaque inference
 may be replaced. Ordinary unscoped calls and return contexts stay unchanged.
 Symbolic HDL ranges and combined shapes remain separate compiler work.
+
+Eligible fresh binary bitwise helpers also publish private intrinsic-max allocation
+contracts from the actual builder birth journal. Known reference, final width
+publication and classifier operations refresh only events current before and
+coherent after the exact write. Direct Parser success publishes at its existing
+registry/AST boundary; this facade defers through role and interface completion.
+Source, phase or publication failure and parse reuse clear previous/partial
+allocation records. Staged installation preserves dependency epochs, while
+external matching writes still revoke. These records establish no generic range
+or target-profile admission; factorizer and actual target-event joins follow.
 
 =item debug_summary()
 

@@ -131,6 +131,14 @@ sub _set_published_width_metadata($self, $signal, $kind, $record) {
     return $self->_allocation_transition($signal, undef, undef, sub {$signal->$setter($record)});
 }
 
+sub _publish_intermediate_width_allocations($self, $events) {
+    for my $event (@$events) {
+        my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
+        next unless $self->_allocation_registry_matches($signal);
+        $signal->_publish_staged_intermediate_width_allocation($event->{holder});
+    }
+}
+
 sub parse_condition($self, $condition) {
     if (!defined $condition) {
         return undef;
@@ -1260,8 +1268,14 @@ publication and Analyzer role operations can refresh a still-current event.
 Before each operation, actual registry identities and the whole event must match;
 afterward, only its exact revision and authorized role delta may differ. External,
 annotated, late, extra-source or stale writes cannot borrow that refresh. Ordinary
-uncaptured paths use the same legacy writes. Automatic capture and completed
-Parser/facade Signal publication remain separate successors.
+uncaptured builder paths use the same legacy writes. Completed direct Parser
+calls now own capture and publication; an enclosing facade transaction defers
+publication through actual role and interface completion. Failures and parse
+reuse clear previous/partial policy. Publication installs only the already current
+tracked birth, without a new semantic revision that would invalidate dependent
+helpers. Direct Parser retains its existing registry/AST boundary and does not
+gain facade interface membership. Factorizer provenance, target event joins and
+generic range consumers remain separate successors.
 
 An unknown exact width retains the existing placeholder behavior. Selected
 numeric widths do not create a declared-width binding or prove a mutable

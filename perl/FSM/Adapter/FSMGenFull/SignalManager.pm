@@ -185,6 +185,11 @@ sub clear_declared_width_bindings($self) {
     return $self;
 }
 
+sub clear_intermediate_width_allocations($self) {
+    $_->clear_intermediate_width_allocation for values %{$self->{signal_registry}};
+    return $self;
+}
+
 sub _declared_width_revision($self, $signal) {
     return $self->{_declared_width_revisions}{refaddr($signal)} // 0;
 }

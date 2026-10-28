@@ -131,8 +131,9 @@ FSM::IntermediateWidthAllocationSupport - Explicit current Core intermediate all
 
 This private helper validates a producer-supplied allocation contract. Equal
 selected widths alone install nothing and do not attest an allocator's intent.
-The actual parser/factorizer publishers and symbolic range consumers are separate
-successors. This helper enables no source or target profile.
+The completed direct source Parser/facade publisher uses tracked current births.
+Factorizer provenance and symbolic range consumers remain separate successors.
+This validator alone enables no source or target profile.
 
 The closed record is C<{kind =E<gt> binary_operand_max, operator, source_names,
 selected_width}>. The operator is canonical binary C<&>, C<|> or C<^> and

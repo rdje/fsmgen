@@ -278,6 +278,9 @@ relevant role/constraint, authored-metadata and registry width/type/source write
 revoke an installed contract even for matching-state replacements.
 Explicit installation also tracks operand revisions; matching source writes
 invalidate the contract without adding references to the source owner graph.
+The completed source producer can privately publish a current staged birth
+without a fresh semantic revision; this preserves dependent helper epochs.
+It does not weaken the explicit setter's replacement/revocation contract.
 
 =cut
 
@@ -309,6 +312,16 @@ invalidate the contract without adding references to the source owner graph.
 
     sub _track_intermediate_width_allocation($self) {
         $self->{_intermediate_width_allocation_revision} //= 0;
+    }
+
+    sub _publish_staged_intermediate_width_allocation($self, $holder) {
+        my $record = FSM::IntermediateWidthAllocationSupport->current_core(signal => $self, holder => $holder);
+        return 0 unless $record;
+        # Source completion publishes the already tracked birth without a new
+        # semantic write, so dependent staged helpers keep their exact epoch.
+        $self->{_intermediate_width_allocation} = FSM::IntermediateWidthAllocationSupport->prepare_core(
+            signal => $self, record => $record, track => 1);
+        return 1;
     }
 
     # FANIN CONE ACCESS: Core signal-AST relationship methods

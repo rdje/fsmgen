@@ -48,6 +48,7 @@ sub get_fsm_module($self) {
 }
 
 sub parse_fsm($self, $raw_ast) {
+    $self->{signal_manager}->clear_intermediate_width_allocations;
     $self->_invalidate_declared_width_bindings;
     fsm_trace_enter('Parser parse_fsm() entry', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
@@ -120,17 +121,29 @@ sub parse_fsm($self, $raw_ast) {
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
+    $self->{signal_manager}->clear_intermediate_width_allocations;
     $self->_invalidate_declared_width_bindings;
     local $self->{_declared_width_capture_context} = {scope => undef, requirements => {}};
     my $module;
     my $ok = eval {
-        $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
-        $self->_publish_declared_width_requirements;
+        my $parse = sub {
+            $module = $self->_parse_fsm_module($fsm_ast, $is_flat_ast, $root_kind);
+            $self->_publish_declared_width_requirements;
+            return $module;
+        };
+        my $builder = $self->{expression_builder};
+        if (exists $builder->{_intermediate_width_allocation_capture}) {
+            $parse->();
+        } else {
+            my $packet = $builder->_capture_intermediate_width_allocations($parse);
+            $builder->_publish_intermediate_width_allocations($packet->{events});
+        }
         1;
     };
     my $error = $@;
     unless ($ok) {
         $self->_invalidate_declared_width_bindings;
+        $self->{signal_manager}->clear_intermediate_width_allocations;
         die $error;
     }
     return $module;
