@@ -142,6 +142,46 @@ sub _add_signal ($signals, $signal) {
     $signals->{$name} = $signal;
 }
 
+sub prepare_binary_operand_relationship ($class, %args) {
+    my $names = $args{source_names};
+    confess "Direct binary width relationship requires two actual operand names\n"
+        unless ref($names) eq 'ARRAY' && @$names == 2
+            && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_)} @$names;
+    my $source = $class->prepare_module(%args);
+    my $module = $args{fsm_module};
+    my @operands;
+    for my $name (@$names) {
+        my $signal = $module->signals->{$name};
+        confess "Direct binary width relationship requires actual plain unsigned module operand '$name'\n"
+            unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal')
+                && !$signal->signed && !defined($signal->state_model)
+                && !defined($signal->declared_type_name) && !defined($signal->declared_type_spec)
+                && defined($signal->type) && !ref($signal->type) && $signal->type =~ /\A(?:wire|reg)\z/;
+        my $constraints = $signal->constraints;
+        confess "Direct binary width relationship excludes constrained operand '$name'\n"
+            unless ref($constraints) eq 'ARRAY' && !@$constraints;
+        push @operands, $source->{signals}{$name};
+    }
+    my $json = JSON::PP->new->canonical;
+    my @symbolic = map {$_->{width_plan} && $_->{width_plan}{profile} eq 'symbolic' ? 1 : 0} @operands;
+    my $result = {profile => 'fixed', target_language => $source->{target_language},
+        source_scope => $source->{source_scope}, source_names => $names,
+        operand_widths => [map {$_->{width}} @operands], width_plan => undef};
+    if ($symbolic[0] || $symbolic[1]) {
+        confess "Direct binary width relationship requires identical mutable operand contracts\n"
+            unless $symbolic[0] && $symbolic[1];
+        my @relationships = map {
+            my %relationship = %{$_->{width_plan}};
+            delete $relationship{source_signal};
+            \%relationship;
+        } @operands;
+        confess "Direct binary width relationship requires identical mutable operand contracts\n"
+            unless $json->encode($relationships[0]) eq $json->encode($relationships[1]);
+        @{$result}{qw(profile width_plan)} = ('symbolic', $operands[0]{width_plan});
+    }
+    return $json->decode($json->encode($result));
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -320,6 +360,26 @@ attestation of caller-made control objects.
 This is source-object preparation. Complete analysis membership is a caller
 contract, not attestation of caller-made objects. Actual target names and full
 declaration namespaces are checked by C<prepare_declarations>, described below.
+
+C<prepare_binary_operand_relationship> is a source-only private prerequisite.
+It takes the same actual module/analysis/language inputs plus exactly two
+C<source_names>, re-derives canonical source/range plans and requires actual
+plain unsigned wire/reg operands without state, named type or constraints.
+Both fixed operands return a fixed profile with separate observed widths and
+no range. If either is mutable, both complete symbolic plans must be identical
+except for C<source_signal>: original scope, width contract/tree, ordered roots,
+observed width, rank and target range spelling all retain. Equal defaults,
+independent aliases, static floors and different trees refuse; no algebraic
+or numeric ancestry guess is used.
+
+The detached result contains C<profile>, C<target_language>, C<source_scope>,
+ordered duplicate-preserving C<source_names>, separate C<operand_widths> and
+C<width_plan>. A symbolic result carries the left operand's proved range as a
+representative, retaining its source identity and width-one vector rank. This
+proves neither allocation nor target membership and activates no helper range,
+including VHDL; the actual-context/event join and emission remain separate.
+Caller plans cannot replace actual source proof, and caller objects/kinds stay
+unchanged.
 
 C<prepare_declarations> takes the same source arguments plus a backend-owned
 C<target_namespace> and C<target_declarations> map. The namespace contains the

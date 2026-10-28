@@ -27,7 +27,7 @@ Component owners above are current evidence. The complete original card/proof in
 `python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/direct-declared-width-consumers.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
 Parser's detached Signal declared_width_source retains expression, resolved_width
-and original signal; named types retain their type contract. It lacks full actual
+and original signal; named types retain their type contract. Module parameter getters return clones. It lacks full actual
 parameter/static lookup provenance: equal numeric widths cannot reconstruct it.
 The resettable receipt uses WIDTH1, explicit data_port parameter selection and an
 independent literal-width input. Only the selector has an authored tree. Both
@@ -73,7 +73,7 @@ remain separately owned.
 Core binary_operand_max (T2198) binds actual helper/AST/ordered whole operands and source/result revisions.
 Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
 Equal widths install nothing. Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify.
-Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind actual Core/helper/AST/input/registry identity and state in that epoch; clones/foreign/stale inputs withhold. Actual selected binary events now join current policy; symbolic range proof stays pending.
+Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind actual Core/helper/AST/input/registry identity and state in that epoch; clones/foreign/stale inputs withhold. Actual selected binary events now join current policy; Private operand proof compares full frozen mutable contracts; allocation/target range joins stay pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

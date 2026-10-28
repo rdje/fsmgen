@@ -108,6 +108,12 @@ A final currentness check rejects supported source mutation during publication.
 Unknown copies, independent result floors and unsupported source profiles keep
 the old event shape. Only `width_allocation` extends qualified snapshots; HDL
 text and scalar VHDL behavior preserve. Symbolic range admission remains pending.
+Private `prepare_binary_operand_relationship` now re-derives canonical ranges
+from actual current module operands. Mutable plans must agree in every field
+except source-signal identity; equal defaults, independent aliases, static
+floors and different trees refuse. Both static operands keep separate fixed
+widths. The result is detached source-only data, retaining width-one vector
+rank; it proves no allocation/target membership and enables no helper emission.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

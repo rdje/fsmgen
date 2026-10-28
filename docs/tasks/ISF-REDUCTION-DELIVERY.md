@@ -2284,10 +2284,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for T2210/T2197/T2191. Complete authenticated native/source packets preserve after removing only the four new target fields; HDL, prior metadata, source policies, factorizer births and existing observations match. Old contextual widths and scalar VHDL/binary-refusal boundaries preserve. POD/book/source and normal final-index doctrines gate commit; range/emission/full .6 remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare detached symbolic binary range plans only from actual allocation and all operand constraints.`
   Acceptance: `After completed event policy, bind every source/target operand to canonical frozen scope/range proof, selected widths, plain unsigned type and complete actual membership. Only identical proved mutable relationships plus actual intrinsic-max allocation may share a result range. Equal defaults, independent aliases, static floors, context sizing, missing policy and stale identities refuse; keep vector rank at default one. Prepared source-owned/generated helper roles and fresh selected expression remain distinct; caller plans attest no provenance. Focused private proof and target/scalar/static/refusal controls, docs and commit precede emission.`
-  Verification: `pending event closure`
+  Verification: `Actual target events committed at 0cae69d38 with focused checks and exact old-data comparison. Existing prepare_module/prepare_declarations and DeclaredWidthRangeSupport own frozen source proof, complete target namespaces and detached plans. Separate actual-source operand relationship proof from the later current-context/event target join; neither slice activates emission.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.1`
+  Status: `done`
+  Goal: `Prove the same mutable width relationship from actual current operand source objects.`
+  Acceptance: `Re-derive existing canonical module/range plans from actual Core module and analysis, require two actual plain unsigned module operands, and compare complete frozen symbolic width contracts/scope/ordered roots/rank/target lowering rather than numeric defaults. Ignore only per-signal source identity when comparing relationships. Both fixed operands retain a fixed profile; one static floor, different mutable roots/aliases/trees, stale captures, missing/typed/signed/constrained operands refuse. Return detached source-only relationship data retaining default-one vector rank and caller kinds. This proves no allocation or target event; .2 owns those joins. Focused controls, POD/book/fact and commit.`
+  Verification: `prepare_binary_operand_relationship re-derives canonical module/range plans from actual Core sources and requires two plain unsigned module operands. Both static widths stay separate with no new range. If either is mutable, complete symbolic plans must agree except source_signal, retaining scope, exact tree, ordered roots, observed width, rank and target spelling. Equal defaults, COPY/SAME independent roots, static floors, different trees and missing/typed/constrained/stale sources refuse. Default-one rank and duplicate slots retain; output/caller data detach. T2211/T2173 pass All tests successful Files=2 Tests=10, including existing complete target plans and caller-kind controls. Authenticated predecessor lacks the private API. Initial stale control mutated the cloned parameters getter; actual accessor/source diagnosis and labeled failing fixture retain, then canonical owner mutation correctly refuses without a product repair. Re-derive actual source/frozen proof; falsify predecessor, alias/default/tree/profile controls and genuine stale mutation; durability source/test/POD/book/card/task and docs/audits/binary-operand-relationship-20261028.json.gz. This supplies source-only data, not allocation/target/HDL or VHDL helper admission. Actual-context/event range join .2 and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.1: prove frozen binary operand relationships`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated exact predecessor final T2211 reports Can't locate object method prepare_binary_operand_relationship via package FSM::DirectDeclaredWidthSupport at ./t/2211-binary-operand-relationship.t line 18. Existing per-signal plans need a source-only comparison preserving all frozen relationship fields rather than observed numeric equality. Labeled control diagnosis confirms parameters getters clone, so canonical owner mutation is required for a stale test.
+  - [x] **ADDRESSED (verified)** — Re-derive actual source/range plans and compare complete mutable plans except per-signal identity. Keep both static operands separate; reject alias/floor/tree/type/state/constraint/missing/stale profiles. Return detached representative source data with default-one vector rank, leaving allocation/target/emit proof to its owner.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2211/T2173, including independently expected complete existing target plans and caller source/default/binding/requirement kinds. Source-only VHDL range data does not admit a VHDL helper. POD/book/source freshness and normal final-index doctrine hook gate commit; actual range/event join and full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2`
+  Status: `pending`
+  Goal: `Join actual completed allocation events and complete target constraints to private detached binary ranges.`
+  Acceptance: `After .1, require current actual backend context/metadata and freshly revalidated selected policy/origin/text plus complete source/target namespace/declarations. Caller plans or numeric equality attest no provenance. Only identical proved mutable relationships share the representative operand range; source-owned versus factorized helper roles remain distinct. Refuse missing/stale/foreign/opaque/context/static-floor/alias/typed cases, preserve static/scalar controls and width-one vector rank. Return detached private data without emitter admission, synchronize docs and commit before .6 closure/emission handoff.`
+  Verification: `pending operand relationship .1`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.6`
