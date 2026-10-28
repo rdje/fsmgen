@@ -284,6 +284,11 @@ sub prepare_binary_intermediate_range ($class, %args) {
         width_plan => $relationship->{width_plan}}));
 }
 
+sub prepare_arithmetic_graph_intermediate_range ($class, %args) {
+    require FSM::DirectArithmeticGraphRangeSupport;
+    return FSM::DirectArithmeticGraphRangeSupport->prepare(%args);
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -501,6 +506,23 @@ It neither accepts caller range plans nor emits graph ranges or broadens VHDL
 admission. Actual selected child/event/declaration closure must independently
 join this source relationship before a graph range can be used. The binary API
 still requires exactly two C<source_names> and retains its result contract.
+
+C<prepare_arithmetic_graph_intermediate_range> delegates the private transitive
+join to C<FSM::DirectArithmeticGraphRangeSupport>. It takes the actual backend
+context, current root name/metadata, Verilog-family language and complete target
+namespace/declaration/intermediate-event records. Every typed computed edge must
+join a fresh selected arithmetic child event and current policy; expanding those
+edges must exactly reproduce the original bounded tree. All independent source,
+child and result constraints and selected widths must agree. The original-leaf
+relationship supplies the canonical frozen range, including default-one rank.
+
+The detached result retains the root policy/origin/expression, actual width,
+current ordered edges, original tree/leaves and range representative, plus
+children-before-parent C<node_order> and per-node plans. Source/target snapshots,
+canonical plans and complete current policy recheck at return. This method emits
+no HDL, admits no graph VHDL profile and requires the actual weak row view to
+remain current. Final deep-mutation/lifetime qualification and live graph range
+emission remain separately owned.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

@@ -2024,11 +2024,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3, Tests=14 (T2228/T2217/T2227); alternate traversal Files=1, Tests=4. Native HDL/source/target/old policy products equal after removing only new graph-policy fields. Missing final-check variant fails currentness assertion. Canonical graph ranges/emission and full .6 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare detached canonical transitive graph source/target range plans.`
   Acceptance: `Recursively join actual selected typed edges and current child policies to complete source/target constraints and identical frozen leaf relationships. Preserve root/child identities, ordered operators, independent floors and default-one rank. Cyclic/stale/foreign/numeric/printed-only evidence refuses; no graph emission or VHDL widening.`
-  Verification: `Split source-only original-leaf relationship and actual transitive selected-target join. No source-only relationship attests graph allocation or target membership. Full input/source-currentness closure remains .4.5.`
-  Commit: `pending`
+  Verification: `Source-only all-leaf frozen relationships and actual canonical selected graph source/target join now have focused checks through .4.4.2. Complete source/target/currentness checks are implemented; independent deep mutation/lifetime closure remains .4.5 before emission. No graph parent HDL or VHDL extension.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2: prepare canonical selected graph ranges`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1`
@@ -2052,11 +2052,24 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1: prove graph original-leaf relationships`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join actual selected graph and child events to canonical source/target range plans.`
   Acceptance: `Recursively prove the actual typed edge DAG, every selected current child policy and declaration, expanded original tree equality and source-only frozen leaf relationship. Preserve independent root/child/leaf widths, identities, duplicate slots and default-one rank. Cyclic/stale/foreign/numeric/printed-only evidence refuses. Return detached private plans only; final complete-input closure remains .4.5 before emission.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual selected typed DAG, current root/child policies, ordered expanded original trees, complete target membership and exact independent widths join canonical frozen leaf contracts. Full source/target/currentness rechecks and detached root/per-child plans pass focused checks. Re-derive actual join, falsify old API, walk-wide guard and skipped-child variants; preserve all sources/logs in docs/audits/graph-join-20261028.json.gz. Deep mutation/lifetime closure, graph emission/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2: prepare canonical selected graph ranges`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Predecessor reports missing prepare_arithmetic_graph_intermediate_range at ./t/2230-arithmetic-graph-intermediate-ranges.t line 48. Actual duplicate-computed trace first mints the whole child policy then loses it on the second sibling revisit: width resolver line 469 used a walk-wide post-increment seen flag, consuming the holder before a mistaken recursion return.
+  - [x] **ADDRESSED (verified)** — Join actual typed selected root/children to canonical current policy, fresh origin/text, full target membership, local maxima and exact original-tree expansion. Bind canonical all-leaf source relationships, preserve each child representative and snapshot/recheck source/target/currentness. Dynamically scope active resolver markers so shared children retain proof while real cycles still withhold.
+  - [x] **NO REGRESSION** — All tests successful Files=3, Tests=12 (T2230/T2205/T2228); alternate traversal Files=1, Tests=4. Exact 24-case native conservation; two added duplicate cases restore only current policy/diagnostics and existing whole-child symbolic range. Old-guard and skipped-child-currentness variants fail. Deep closure, graph parent emission and full .6 remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2.1`
+  Status: `done`
+  Goal: `Diagnose and resolve withholding for repeated computed arithmetic operands.`
+  Acceptance: `P1 immediate graph-join prerequisite. Actual (+ (+ A B) (+ A B)) at width eight produces no completed graph policy in T2230, although other computed graphs pass. Reproduce through actual native producer boundaries, identify the precise first loss and determine whether this is valid conservative withholding or a missed required duplicate-edge profile. Repair a bounded cause now or retain exact evidence and explicit priority/ownership if it requires a larger producer slice. Do not weaken target proof or substitute a fabricated policy.`
+  Verification: `Confirmed walk-wide seen flag misclassified completed sibling revisit as recursion after destructive holder take/revision. Dynamic local active marker preserves child cache/re-inference policy and computed graph policy. Actual repeat-computed native cases at one/eight restore only whole-child symbolic declaration and policy diagnostics; genuine active cycle terminates and mints no graph proof. Exact before trace, after products and restored-old-guard red control retain in graph-join-20261028 receipt.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2: prepare canonical selected graph ranges`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.5`
   Status: `pending`

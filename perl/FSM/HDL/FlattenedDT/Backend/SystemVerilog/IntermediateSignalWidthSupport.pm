@@ -167,7 +167,7 @@ expired view. Ordinary generation releases the view, and generation failure
 clears partial holders through the existing orchestrator abort. This is a row
 lifetime contract, not a claim about whole-backend ownership cycles. Separate
 completed graph policy follows successful collection through its separate getter;
-graph target events and symbolic range admission remain pending.
+selected graph target publication and symbolic range admission remain separate.
 
 =cut
 
@@ -450,6 +450,9 @@ sub new ($class, %args) {
 
 Normalize one intermediate signal width from native signal metadata, runtime
 AST inference, or cached width fallback.
+The recursion guard covers only active calls. Repeated sibling references to the
+same computed child are ordinary cache/re-inference reads and preserve current
+allocation proof; an actual active cycle still takes the conservative fallback.
 
 =cut
 
@@ -466,13 +469,14 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
 
     $signal_registry //= {};
     $seen_signals //= {};
-    if ($seen_signals->{$signal_name}++) {
+    if ($seen_signals->{$signal_name}) {
         my $cached_width = ($signal_info && defined($signal_info->{width}) && $signal_info->{width} > 0)
             ? $signal_info->{width}
             : 1;
         fsm_debug("[IntermediateSignalWidthSupport.pm][resolve_intermediate_signal_width()] Detected recursive width lookup for '$signal_name'; using cached width $cached_width", 3);
         return $cached_width;
     }
+    local $seen_signals->{$signal_name} = 1;
 
     my $resolved_width;
     my $width_source = 'default_1bit';

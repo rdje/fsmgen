@@ -332,7 +332,40 @@ The detached result uses the existing relationship fields and the first leaf's
 canonical range representative, preserving vector rank when its default is one.
 The graph record selects sources only; this helper proves no selected maximum,
 graph allocation or target membership. Actual transitive child/event/declaration
-closure remains pending. The binary relationship API keeps its existing arity.
+closure is separately checked below. The binary relationship API keeps its existing arity.
+
+The private `prepare_arithmetic_graph_intermediate_range` facade now joins that
+relationship to complete actual selected target records. Each computed edge
+must have its current arithmetic policy, selected expression and ordered origin;
+each source, child and result declaration must retain its independent plain
+profile and selected numeric width. Reconstructing the selected DAG must exactly
+match the original bounded arithmetic tree. A printed child range or equal
+numeric default supplies no child allocation proof. The detached result includes
+the original leaves/tree, root range representative and child plans in
+`node_order`, with each child's own first-leaf representative.
+
+For a retained actual prepared block, the call uses the current root row and the
+collector's complete snapshot:
+
+```perl
+my $plan = FSM::DirectDeclaredWidthSupport->prepare_arithmetic_graph_intermediate_range(
+    flattened_dt => $backend, signal_name => $root,
+    signal_info => $prepared->{all_intermediate_signals}{$root},
+    target_language => 'systemverilog', %{$capture->snapshot});
+```
+
+The original row map must remain owned; retaining a metadata row alone is
+insufficient. Complete source/target inputs, canonical plans and completed graph
+policy recheck before the plan returns. Repeated computed operands retain both
+ordered edge slots: the numeric resolver's active-call guard distinguishes a
+shared child from an actual recursive cycle. This restores the existing whole
+child's symbolic declaration in repeated-computed graphs, including vector rank
+at a default width of one. The computed parent retains its numeric declaration
+until graph emission is implemented. A real cycle retains conservative numeric
+fallback and creates no graph proof. The focused executable examples are
+in `t/2230-arithmetic-graph-intermediate-ranges.t`. Deep mutation/lifetime closure,
+actual graph range emission and full qualification remain pending. This private
+join emits no HDL and does not extend VHDL admission.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

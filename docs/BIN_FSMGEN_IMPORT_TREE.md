@@ -13,7 +13,11 @@ that schema for selected graph policy publication; its target checks traverse
 plain source/result profiles and recheck completed currentness. Symbolic graph
 ranges remain separate. `DirectDeclaredWidthSupport` now uses the same schema
 to select original leaves for source-only frozen width relationships; this
-adds no graph allocation or target attestation. The dated closure census is unchanged.
+adds no graph allocation or target attestation. A lazy direct facade now loads
+`DirectArithmeticGraphRangeSupport` for the separate canonical selected DAG and
+complete source/target join. The numeric resolver uses active-call recursion
+tracking so repeated computed children retain current policy. Live graph ranges
+remain pending. The dated closure census is unchanged.
 
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
