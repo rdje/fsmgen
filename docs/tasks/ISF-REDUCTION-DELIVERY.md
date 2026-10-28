@@ -2337,11 +2337,11 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Join qualified arithmetic allocation to canonical ranges and actual emission.`
   Acceptance: `After .2, prove all source/target constraints for selected arithmetic relationships, retaining actual operator and ordered operands. Consume only proved kernels at actual declarations/expressions and independently close final emitted records. Preserve literal sizing, signed/type/floor restrictions, default-one rank and truth behavior; unsupported relationships refuse promotion. Paired VHDL and full .6 remain separate.`
-  Verification: `Arithmetic producer is qualified under .2. Exact history prerequisite .1 preserves closed details; .2 owns selected target events, .3 private all-target ranges and .4 actual arithmetic emission/final closure. Other graph families and full .6 stay separately owned.`
-  Commit: `pending`
+  Verification: `Selected arithmetic events, private canonical complete source/target ranges and actual emission/final closure now have focused checks under .2-.4. Exact historical prerequisite .1 preserves old closed proof. Receipts arithmetic-target-events, arithmetic-range-proof and arithmetic-range-emission-20261028.json.gz compose this bounded consumer; no broad/full .6 claim. Remaining scalar/unary/n-ary/nested constraints proceed under .3.4.3.2.3.4.`
+  Commit: `closed with .4 actual emission`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.1`
@@ -2389,11 +2389,16 @@ do not start broad suites between implementation slices.
   Commit: `joined to parent private-proof slice`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume proved arithmetic ranges at actual emission with independent final closure.`
   Acceptance: `After .3, use current allocation/source proof at arithmetic declarations and independently reprove completed target/event identities, expressions, origins, roles and ranges. Preserve one generation, width-one vector rank/truth, fixed/legacy/type controls, failure/reuse and all constraints. Other unary/n-ary/nested graphs remain .3.4.3.2.3.4, binary VHDL .3.4.3.4 and full .6. Focused source/SV/Verilog/native refusals plus POD/book/facts and commit close this bounded arithmetic consumer.`
-  Verification: `pending private target range proof`
-  Commit: `pending`
+  Verification: `Actual canonical arithmetic declarations emit identical frozen ranges and independently close final origin/policy/text/role/range records. T2219/T2218/T2217/T2214/T2215: All tests successful Files=5 Tests=21. Authenticated predecessor fails three emitter subtests. Exact native deltas are only arithmetic declarations and default-one logical gates; full other HDL/source/producer/event controls conserve. Strict source check/SV/Verilog example and book pass. Re-derive actual consumers; falsify aliases/late changes/order/duplicate/fixed/lifecycle controls; durability docs/audits/arithmetic-range-emission-20261028.json.gz. Other graphs/VHDL/full .6 remain open.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4: emit proved arithmetic intermediate ranges`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2219 fails the actual arithmetic range assertion at ./t/2219-symbolic-arithmetic-intermediate-emission.t line 88. Declaration recovery only queried bitwise allocation and final assembly skipped arithmetic events, leaving numeric declarations and default-one scalar gates despite current private arithmetic proof.
+  - [x] **ADDRESSED (verified)** — Consume family-specific current arithmetic allocation/origin and canonical frozen source relationships at actual declarations. Independently qualify every selected mutable binary event against complete final target records and emitted-ledger fields; preserve one pass, default-one vector truth and failure/reuse.
+  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=21. Native comparison permits only arithmetic ranges/default-one logical gates; complete fixed/bitwise/scalar/source/producer/event controls conserve. Strict source check/SV/Verilog and book/POD pass. Final-index hook qualifies commit; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
   Status: `pending`

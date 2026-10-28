@@ -46,11 +46,11 @@ sub fixture {
     }
     return {ctx=>$ctx,module=>$module,capture=>$capture,name=>$name,info=>$all->{$name},hdl=>$hdl,snapshot=>$capture->snapshot,changed=>$changed};
 }
-subtest 'actual selected arithmetic event joins current origin and policy without range promotion' => sub {
+subtest 'actual selected arithmetic event joins current origin and policy for range consumption' => sub {
     my $p=fixture();my $name=$p->{name};
     is_deeply($p->{snapshot}{target_intermediates}{$name},{expression=>'A + B',arithmetic_origin=>origin(),width_allocation=>policy()},'actual emitter captures closed ordered origin and current allocation');
-    like($p->{hdl},qr/^  wire \[7:0\] \Q$name\E;$/m,'arithmetic declaration remains on its numeric path');
-    unlike($p->{hdl},qr/wire \[\(W - 1\):0\] \Q$name\E;/,'target publication alone enables no symbolic helper');
+    like($p->{hdl},qr/^  wire \[\(W - 1\):0\] \Q$name\E;$/m,'qualified arithmetic consumer retains the symbolic helper range');
+    is($p->{snapshot}{target_declarations}{$name}{width},8,'target event preserves its independently selected numeric width');
     my $copy=$p->{capture}->snapshot;
     $copy->{target_intermediates}{$name}{arithmetic_origin}{source_names}[0]='WRONG' if $copy->{target_intermediates}{$name}{arithmetic_origin};
     isnt($p->{capture}->snapshot->{target_intermediates}{$name}{arithmetic_origin}{source_names}[0]//'absent','WRONG','published target records detach');

@@ -101,16 +101,16 @@ subtest 'actual arithmetic events privately prove only the frozen operand relati
                 is($fresh->{width_plan}{width_contract}{expression}[1], 'W', 'returned range detaches');
             }
             my $name = $in->{signal_name};
-            like($in->{hdl}, qr/^  wire (?:\[7:0\] )?\Q$name\E;$/m,
-                'private preparation leaves actual arithmetic HDL numeric');
+            like($in->{hdl}, qr/^  wire \[\(W - 1\):0\] \Q$name\E;$/m,
+                'actual arithmetic consumer agrees with the independently prepared private range');
         }
     }
 };
 
 subtest 'numeric equality and incomplete or foreign actual events cannot supply proof' => sub {
     for my $right ('(param COPY)', '(param SAME)', '8', '(+ (param W) 0)') {
-        my $in = fixture('+', 8, '(param W)', $right);
-        ok(!eval {prepare($in); 1}, 'equal defaults, aliases, static floors and different trees refuse');
+        ok(!eval {my $in = fixture('+', 8, '(param W)', $right); prepare($in); 1},
+            'equal defaults, aliases, static floors and different trees refuse during emission or private proof');
     }
     for my $change (
         sub {$_[0]{signal_info} = {%{$_[0]{signal_info}}}},

@@ -351,8 +351,9 @@ sub binary_width_allocation ($self, $signal_name, $signal_info, $expression) {
 Return the optional current arithmetic policy using C<binary_arithmetic_origin>
 and the same completed-allocation, plain-source, exact-width and final-currentness
 checks as C<binary_width_allocation>. Keeping this publisher separate preserves
-the bitwise-only declaration consumer. Arithmetic target metadata alone neither
-changes the numeric helper declaration nor extends symbolic VHDL admission.
+the bitwise-only recovery method. A declaration consumer additionally proves
+the frozen source relationship and final target records before accepting a
+symbolic arithmetic range; target metadata alone extends no VHDL admission.
 
 =cut
 

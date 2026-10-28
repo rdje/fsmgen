@@ -139,7 +139,7 @@ Completed allocation/emission/target-proof task subtrees retain exact Git revisi
 digest and retention-contract retrieval through their live compact terminals.
 The bounded binary family now composes allocation, frozen source/target proof,
 actual declaration emission and final event closure. Symbolic truth stays vector
-aware at default one. Nested/n-ary/arithmetic and remaining scalar constraints,
+aware at default one. Nested/n-ary and remaining arithmetic/scalar constraints,
 other shapes and binary VHDL stay separately owned; full qualification is deferred.
 
 Arithmetic source expressions such as `(+ A B)` stay inline in the parser;
@@ -154,7 +154,7 @@ bitwise-only. Opaque operand constraints now withhold a shared inference frame
 before tracking, including the existing bitwise factorizer profile; later target
 publication already rejected that profile.
 
-Arithmetic declarations still retain numeric widths. Selected target events now
+Selected arithmetic target events now
 publish a separate `arithmetic_origin` with canonical operator and ordered whole
 operand names, plus `width_allocation` only while the actual producer policy is
 current. For example, `A + B` records `binary_arithmetic`, `+`, and `[A, B]`;
@@ -172,12 +172,29 @@ helper identity, plain unsigned declarations, exact intrinsic max, selected text
 and current policy must all agree. Computed operands remain outside this profile.
 Complete namespace, declaration and event inputs are checked again at return;
 an unchanged derived plan cannot hide a changed computed-helper width or event.
-Actual arithmetic range emission remains pending. Private preparation alone
-does not turn a numeric helper into a generic vector. The bitwise range consumer
-and scalar-only symbolic VHDL profile retain their existing boundaries.
+Actual arithmetic declarations now consume that proved range. For repeated
+`(+ A B)` guards with both operands sized by `(param W)`, the generated helper
+uses `wire [(W - 1):0] A_plus_B;` even when `W` defaults to one. Its assignment
+remains `A + B`; guards test the whole vector, zero/nonzero comparisons reduce
+the whole helper and equals-one stays exact equality. Ordered operands and
+duplicate slots preserve, including subtraction. Fixed helpers keep numeric
+declarations. Final assembly independently re-derives complete source/target
+proof and compares the emitted expression, origin, allocation role and range;
+late disagreement returns no HDL or completed collector snapshot. Failed
+generations can reuse the backend and collector after a fresh valid proof.
+The bitwise range consumer and scalar-only symbolic VHDL profile retain their
+existing boundaries. Other unary/n-ary/nested constraints remain separately owned.
 Comparison and logical negation helpers retain
 independently scalar results. Source acceptance and matching selected numeric
 widths cannot establish a mutable helper relationship.
+
+The runnable default-one source is `t/data/ial0-direct-symbolic-arithmetic.fsm`:
+
+```sh
+./bin/fsmgen --quiet --strict --check --json t/data/ial0-direct-symbolic-arithmetic.fsm
+./bin/fsmgen --quiet --strict --output .artifacts/sv/direct-arithmetic.sv t/data/ial0-direct-symbolic-arithmetic.fsm
+./bin/fsmgen --quiet --strict --language verilog --output .artifacts/verilog/direct-arithmetic.v t/data/ial0-direct-symbolic-arithmetic.fsm
+```
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

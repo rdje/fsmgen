@@ -64,7 +64,7 @@ sub new ($class, %args) {
 
 Render the prepared consolidated intermediate wire declarations from the
 prepared block contract.
-Actual current binary allocations with identical captured mutable operand
+Actual current bitwise/arithmetic allocations with identical captured mutable operand
 contracts consume the representative symbolic range, including vector rank at
 width one. Other declarations retain numeric shapes. A detached emitted-plan
 ledger records the selected expression, ordered operands, allocation role and
@@ -104,9 +104,20 @@ sub _binary_symbolic_range ($self, $name, $info, $width) {
     my $ctx = $self->{flattened_dt};
     my $source_plan = $ctx->{direct_declared_width_source_plan} or return;
     my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
-    return unless $recovery && $recovery->can('binary_width_allocation');
+    return unless $recovery;
     my $expression = $recovery->render_intermediate_signal_expression($name, $info);
-    my $policy = $recovery->binary_width_allocation($name, $info, $expression) or return;
+    my ($policy, $origin_method, $origin_key);
+    for my $family (
+        ['binary_width_allocation', 'binary_bitwise_origin', 'bitwise_origin'],
+        ['arithmetic_width_allocation', 'binary_arithmetic_origin', 'arithmetic_origin'],
+    ) {
+        my ($allocation_method, $method, $key) = @$family;
+        next unless $recovery->can($allocation_method);
+        my $candidate = $recovery->$allocation_method($name, $info, $expression) or next;
+        ($policy, $origin_method, $origin_key) = ($candidate, $method, $key);
+        last;
+    }
+    return unless $policy;
     return unless grep {
         my $operand = $source_plan->{signals}{$_};
         $operand && $operand->{width_plan} && $operand->{width_plan}{profile} eq 'symbolic';
@@ -120,7 +131,8 @@ sub _binary_symbolic_range ($self, $name, $info, $width) {
     confess "Direct binary emitted range disagrees with selected allocation width\n"
         unless FSM::IntermediateWidthAllocationSupport->matches_selected_widths(
             $policy, $width, @{$relationship->{operand_widths}});
-    my $origin = $recovery->binary_bitwise_origin($name, $info, $expression);
+    my $origin = $recovery->can($origin_method)
+        ? $recovery->$origin_method($name, $info, $expression) : undef;
     confess "Direct binary emitted range requires its actual binary origin\n" unless $origin;
     my $role = ($info->{source} // '') eq 'fsmgen_parsing' ? 'source_intermediate'
         : ($info->{source} // '') eq 'ast_factorization' ? 'factorized_intermediate' : undef;
@@ -133,7 +145,7 @@ sub _binary_symbolic_range ($self, $name, $info, $width) {
         module_name => $ctx->{fsm_module}->name, target_name => $name, declaration_kind => 'signal',
         allocation_role => $role, source_names => $policy->{source_names},
         operand_targets => $policy->{source_names}, width_allocation => $policy,
-        bitwise_origin => $origin, expression => $expression, width_plan => $relationship->{width_plan}}));
+        $origin_key => $origin, expression => $expression, width_plan => $relationship->{width_plan}}));
     $ctx->{direct_declared_width_emitted_binary_ranges}{$name} = $emitted;
     return $emitted->{width_plan};
 }

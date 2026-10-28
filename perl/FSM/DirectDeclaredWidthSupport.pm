@@ -505,8 +505,9 @@ current allocation proof. This API emits no HDL and admits no binary VHDL helper
 Live Verilog-family declarations separately consume current allocation/source
 proof; final assembly invokes this complete-target proof independently and
 requires exact agreement with the detached emitted-plan ledger before success.
-That live consumer currently admits only bitwise origins. Arithmetic private
-plans do not change numeric helper HDL or activate arithmetic range emission.
+That live consumer admits the same bitwise/arithmetic origin families with
+identical frozen mutable operand contracts. Fixed helpers retain numeric HDL;
+other unary/n-ary/nested relationships remain outside this direct profile.
 
 C<prepare_declarations> takes the same source arguments plus a backend-owned
 C<target_namespace> and C<target_declarations> map. The namespace contains the
