@@ -12,22 +12,22 @@ answers:
 date: 2026-10-29
 status: current
 tags: [agent-runtime, ram, process-safety, prove, fsmgen, continuity]
-evidence: scripts/run_with_ram_guard.sh; README.md; COMMIT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/2011-ram-guard-stdin.t; docs/audits/ram-guard-stdin-maintained-use-20260930.json; docs/audits/ram-race-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t t/1811-ram-guard-fixture-runtime.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
+evidence: scripts/run_with_ram_guard.sh; COMMIT.md; docs/audits/ram-guard-stdin-maintained-use-20260930.json; docs/audits/ram-containment-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t t/1811-ram-guard-fixture-runtime.t t/2234-ram-guard-descendant-containment.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
 ---
 
-Heavy Perl/prove/fsmgen: `scripts/run_with_ram_guard.sh` or equivalent.
-Defaults: 88% host/4096 MiB/descendant (user danger 90%). Trips require logged
-caveats and focused checks; cap changes require user. Fork races can outlive exit137.
+Broad Perl/prove/fsmgen: `scripts/run_with_ram_guard.sh` or equivalent.
+88% host/4096 MiB/descendant; danger 90%; cap changes need user.
+Log trips; retry focused. Python3 owns a session before launch;
+startup refuses at cutoff. Census includes orphaned nested groups; TERM/freeze/rescan/KILL catches forks. Deliberate session escape needs monitoring.
+T2234 rejects the old PPID race; old unmonitored outputs stay unqualified. Fix inspection/cleanup failures.
 
-Stdin preserves pipe/file bytes, EOF, interpreter programs and independent fds.
-Bare async Bash used `/dev/null`: zero exit could mean no execution.
-T2011 recovers ce4d0029028a3e25f517ea93632cf50f2712354a: independent failure control.
-Repaired inputs pass cutoff/telemetry/signal/cleanup controls.
+Stdin: pipe/file bytes, EOF, programs, independent fds. Async Bash
+used `/dev/null`: zero exit could mean no execution. T2011's exact
+ce4d0029028a3e25f517ea93632cf50f2712354a control fails; repaired stdin passes
+cutoff/telemetry/signal/cleanup checks.
 
-The fixed-revision audit covers tracked root-repository basename references and explicit
-continued stdin recipes. Rejected empty captures use named-script evidence.
-Historical ephemeral/dynamic impacts remain unknown; reviewed scope/interfaces
-remain. Inventory control encoding stops; structural/branch-copy/streamed repair
-passes all fixed inputs under the same guard. Original allocation is unobserved;
-no runtime role/permission is granted.
+Fixed audit: tracked root basenames/continued stdin recipes. Empty captures
+reject; named scripts supply evidence. Ephemeral/dynamic impact unknown; scope/interfaces persist. Inventory encoding control stops;
+structural/branch-copy/streamed repair passes fixed inputs with unchanged guard.
+Original allocation is unobserved; no runtime role/permission.

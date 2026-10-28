@@ -599,12 +599,24 @@ The command prints `guarded stdin`. Guard diagnostics go to standard error, and
 the command's exit status is preserved. The memory cutoffs remain 88% of host
 occupied capacity and 4096 MiB RSS per descendant. A cutoff returns exit 137.
 
-An observed fork race can leave a child running after that return: the current
-PID-tree snapshot can miss a newly spawned child and lose it when its parent
-exits. Heavy runtime verification is suspended until owned descendant containment
-is repaired. The exact diagnosis and parked implementation are retained in
-`docs/audits/ram-race-20261029.json.gz`; after-cutoff products are unqualified.
-The limits remain unchanged. Exit status alone does not prove descendant cleanup.
+The launcher requires Python 3. It establishes a dedicated session before
+releasing the command, keeps its session leader alive after command exit, and
+monitors session members including orphaned children in nested process groups.
+Over-limit startup refuses before launching the payload. On a cutoff it sends
+TERM, then repeatedly freezes and inspects remaining session members before KILL;
+this catches children forked by TERM handlers. Monitor cancellation also cleans
+its session; the private leader detects loss of the shell monitor.
+The original command's exit status is returned after its remaining children finish.
+Programs that deliberately leave this session require their own equivalent monitor.
+An inspection or cleanup diagnostic must be resolved before accepting the run.
+
+The previous PPID-tree snapshot could miss a new child, lose it after its parent
+exited, and return exit 137 while that child continued. Exact diagnosis and parked
+feature sources are retained in `docs/audits/ram-race-20261029.json.gz`.
+The repair's deterministic controls freeze a real census before forcing a fork,
+exercise TERM-handler forks and orphaned nested groups, and reject the exact old
+guard. After-cutoff products from the original incident remain unqualified until
+rerun; exit status alone never qualifies a command result.
 
 A receipt marked `complete` records all listed command outcomes. Qualification
 also requires successful command statuses and a complete suite result.
@@ -631,7 +643,7 @@ separate inherited descriptor alongside the existing cutoff and cleanup tests:
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t \
-  t/1811-ram-guard-fixture-runtime.t
+  t/1811-ram-guard-fixture-runtime.t t/2234-ram-guard-descendant-containment.t
 ```
 
 ## Decision-store diagnostics

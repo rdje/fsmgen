@@ -97,7 +97,7 @@ subtest 'forced high occupied-capacity sample trips at the unchanged cutoff' => 
     );
 
     is($exit, 137, 'guard returns its documented trip status');
-    is($stdout, "pressured-child-started\n", 'pressured child starts before monitoring trips');
+    is($stdout, '', 'over-limit preflight starts no command');
     like($stderr, qr/host 96[.]0%; host cutoff 88%/,
         'Stats-compatible fixture reports 96.0% occupied capacity');
     like($stderr, qr/host memory 96[.]0% reached cutoff 88%/,

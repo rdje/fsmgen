@@ -32,7 +32,8 @@ Examples:
   scripts/run_with_ram_guard.sh -- prove -Iperl t/248-regression-corpus-accounting.t
   scripts/run_with_ram_guard.sh --process-max-rss-mb 3072 -- ./bin/fsmgen --check-json ppif/axi_aw_valid_ready.ppif
 
-The wrapper monitors the command and all descendants. A guard trip exits 137.
+The wrapper requires Python 3 and monitors an owned session, including nested
+process groups. A guard trip exits 137.
 Standard input is passed through to the command, including piped and file input.
 USAGE
 }
@@ -199,46 +200,10 @@ host_memory_pct() {
     return 1
 }
 
-list_tree_pids() {
-    root_pid="$1"
-    all_pids="$root_pid"
-    changed=1
-
-    while [ "$changed" -eq 1 ]; do
-        changed=0
-        ps_rows=$(ps -axo pid=,ppid= 2>/dev/null) || {
-            printf '%s\n' "$root_pid"
-            return 0
-        }
-        children=$(printf '%s\n' "$ps_rows" | awk -v roots="$all_pids" '
-            BEGIN {
-                count = split(roots, root_array, " ")
-                for (i = 1; i <= count; i++) {
-                    if (root_array[i] != "") {
-                        root[root_array[i]] = 1
-                    }
-                }
-            }
-            {
-                pid = $1
-                ppid = $2
-                if (root[ppid]) {
-                    print pid
-                }
-            }
-        ')
-        for child_pid in $children; do
-            case " $all_pids " in
-                *" $child_pid "*) ;;
-                *)
-                    all_pids="$all_pids $child_pid"
-                    changed=1
-                    ;;
-            esac
-        done
-    done
-
-    printf '%s\n' $all_pids
+# The launcher retains its session identity until all command members finish.
+# Reparented children and nested groups keep the same session membership.
+list_session_pids() {
+    python3 -B "${SCRIPT_DIR}/ram_guard_session.py" members "$root_pid"
 }
 
 rss_kb_for_pid() {
@@ -249,66 +214,121 @@ command_for_pid() {
     ps -o command= -p "$1" 2>/dev/null | sed -n '1p'
 }
 
-terminate_tree() {
-    reason="$1"
-    pids=$(list_tree_pids "$root_pid")
-    echo "ram-guard: $reason" >&2
-    echo "ram-guard: terminating PID tree: $(printf '%s ' $pids)" >&2
-    kill -TERM $pids 2>/dev/null || true
-    sleep "$grace_seconds"
-    pids=$(list_tree_pids "$root_pid")
-    if [ -n "$pids" ]; then
-        kill -KILL $pids 2>/dev/null || true
+terminate_session() {
+    echo "ram-guard: $1" >&2
+    echo "ram-guard: terminating owned session: $root_pid" >&2
+    if ! python3 -B "${SCRIPT_DIR}/ram_guard_session.py" terminate "$root_pid" "$grace_seconds"; then
+        echo "ram-guard: owned session cleanup is incomplete" >&2
+        return 1
     fi
+    wait "$root_pid" 2>/dev/null || true
 }
 
-ps -axo pid=,ppid= >/dev/null 2>&1 \
-    || die "process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval"
+ps -axo pid=,pgid=,stat= >/dev/null 2>&1 \
+    || die "session inspection is unavailable; rerun outside the sandbox or with process-inspection approval"
 ps -o rss= -p "$$" >/dev/null 2>&1 \
     || die "process RSS inspection is unavailable; rerun outside the sandbox or with process-inspection approval"
+command -v python3 >/dev/null 2>&1 || die "Python 3 is required for owned session supervision"
 initial_host_pct=$(host_memory_pct) \
     || die "host memory inspection is unavailable; use an equivalent active monitor before running heavyweight commands"
+if number_ge "$initial_host_pct" "$host_max_pct"; then
+    echo "ram-guard: host ${initial_host_pct}%; host cutoff ${host_max_pct}%; descendant RSS cutoff ${process_max_rss_mb} MiB" >&2
+    echo "ram-guard: host memory ${initial_host_pct}% reached cutoff ${host_max_pct}% before command launch" >&2
+    exit 137
+fi
 
 # Child workflows may record the effective active safety envelope without
 # re-parsing this launcher's command line or inventing a second guard state.
-# These values are evidence only; this wrapper remains the enforcing owner.
 export FSMGEN_RAM_GUARD_ACTIVE=1
 export FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT="$host_max_pct"
 export FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB="$process_max_rss_mb"
 
-# Explicit stdin redirection prevents Bash's asynchronous /dev/null fallback.
-"$@" <&0 &
-root_pid=$!
+guard_directory=$(mktemp -d "${FSMGEN_TMP_ROOT}/ram-guard.XXXXXXXX") \
+    || die "cannot create repository-local launcher handoff"
+root_pid=""
+session_ready=0
+cleanup_guard() {
+    saved_status=$?
+    trap - EXIT HUP INT TERM
+    if [ -n "$root_pid" ]; then
+        if [ "$session_ready" -eq 1 ]; then
+            terminate_session "monitor exiting before owned session completion"
+        else
+            kill -KILL "$root_pid" 2>/dev/null || true
+            wait "$root_pid" 2>/dev/null || true
+        fi
+    fi
+    rm -f -- "$guard_directory/ready" "$guard_directory/go" \
+        "$guard_directory/status" "$guard_directory/finish" "$guard_directory/"*.tmp
+    rmdir -- "$guard_directory" 2>/dev/null || true
+    exit "$saved_status"
+}
+trap cleanup_guard EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
+# The helper passes every inherited descriptor unchanged. The file handshake
+# avoids reserving a descriptor which may already belong to the caller.
+# Explicit stdin redirection prevents Bash's asynchronous /dev/null fallback.
+python3 -B "${SCRIPT_DIR}/ram_guard_session.py" launch "$guard_directory" "$$" "$@" <&0 &
+root_pid=$!
+attempt=0
+until [ -f "$guard_directory/ready" ]; do
+    kill -0 "$root_pid" 2>/dev/null || die "owned session launcher failed before readiness"
+    attempt=$((attempt + 1))
+    [ "$attempt" -le 1000 ] || die "owned session launcher readiness timed out"
+    sleep 0.01
+done
+read -r ready_pid < "$guard_directory/ready"
+[ "$ready_pid" = "$root_pid" ] || die "owned session launcher identity mismatch"
+group_id=$(ps -o pgid= -p "$root_pid" | awk 'NF { print $1; exit }')
+[ "$group_id" = "$root_pid" ] || die "owned session launcher did not establish its group"
+session_ready=1
+initial_members=$(list_session_pids) || die "owned session inspection failed before command launch"
+[ "$initial_members" = "$root_pid" ] || die "owned session identity mismatch before command launch"
+: > "$guard_directory/go"
 echo "ram-guard: PID $root_pid; host ${initial_host_pct}%; host cutoff ${host_max_pct}%; descendant RSS cutoff ${process_max_rss_mb} MiB; poll ${poll_seconds}s" >&2
 
-while kill -0 "$root_pid" 2>/dev/null; do
+while :; do
+    if ! kill -0 "$root_pid" 2>/dev/null; then
+        terminate_session "owned session supervisor exited before completion"
+        root_pid=""
+        exit 137
+    fi
+    pids=$(list_session_pids) || {
+        terminate_session "session inspection became unavailable"
+        root_pid=""
+        exit 137
+    }
+    if [ -f "$guard_directory/status" ] && [ "$pids" = "$root_pid" ]; then
+        : > "$guard_directory/finish"
+        wait "$root_pid"
+        command_status=$?
+        root_pid=""
+        exit "$command_status"
+    fi
     if host_pct=$(host_memory_pct); then
         if number_ge "$host_pct" "$host_max_pct"; then
-            terminate_tree "host memory ${host_pct}% reached cutoff ${host_max_pct}%"
-            wait "$root_pid" 2>/dev/null || true
+            terminate_session "host memory ${host_pct}% reached cutoff ${host_max_pct}%"
+            root_pid=""
             exit 137
         fi
     else
-        terminate_tree "host memory usage became unavailable while command was running"
-        wait "$root_pid" 2>/dev/null || true
+        terminate_session "host memory usage became unavailable while command was running"
+        root_pid=""
         exit 137
     fi
-
-    for pid in $(list_tree_pids "$root_pid"); do
+    for pid in $pids; do
         rss_kb=$(rss_kb_for_pid "$pid")
         [ -n "$rss_kb" ] || continue
         if [ "$rss_kb" -ge "$process_max_rss_kb" ]; then
             rss_mb=$(awk -v kb="$rss_kb" 'BEGIN { printf "%.1f", kb / 1024.0 }')
             command_text=$(command_for_pid "$pid")
-            terminate_tree "PID $pid RSS ${rss_mb} MiB reached cutoff ${process_max_rss_mb} MiB: ${command_text}"
-            wait "$root_pid" 2>/dev/null || true
+            terminate_session "PID $pid RSS ${rss_mb} MiB reached cutoff ${process_max_rss_mb} MiB: ${command_text}"
+            root_pid=""
             exit 137
         fi
     done
-
     sleep "$poll_seconds"
 done
-
-wait "$root_pid"
-exit $?
