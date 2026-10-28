@@ -325,8 +325,12 @@ General source rules:
   Bounded source VHDL now admits actual register next/q parent shapes, whole
   unsigned target-length transfers and zero resets, including vector rank at one.
   Missing/malformed/foreign/wrong-width origins refuse; pulse-delay widths remain
-  independent. Complete intermediate/reset/override/runtime qualification remains
-  separate from this focused source profile.
+  independent. Factored whole-SignalRef unary XOR/AND/OR intermediates now qualify
+  only with complete emitted events, agreeing actual AST origins, plain unsigned
+  source operands and exact assignment text. VHDL keeps the result scalar and
+  folds the generic operand's actual vector range, including default one.
+  Other computed/logical/type shapes refuse; complete intermediate/reset and
+  external override/runtime/transport qualification remain separate.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

@@ -2033,11 +2033,11 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3, ISF-REDUCTION-DELIVERY.3.4.3.4, ISF-REDUCTION-DELIVERY.3.4.3.5`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve and consume invariant scalar widths for actual whole-signal reduction intermediates under generic operand widths.`
   Acceptance: `Inspect actual selected defining/runtime ASTs, native width/cache fallbacks and prepared declaration/assignment emitters before changes. Begin with unary XOR/AND/OR on declared whole unsigned operands; scalar result width is one independently of operand W. Bind any admitted origin to the actual emitted expression and declaration, not helper names or equal defaults. Missing, conflicting, stale, stored-expression-only, foreign or unsupported shapes must not borrow that proof. Preserve operand ranges and actual generic semantics at default one/wider settings; repair a demonstrated default-sensitive rewrite before admission. Integrate only bounded source/paired consumers with focused native/Core/caller/refusal/static controls and book/POD sync; split a growing publication/consumer boundary before implementation. No full compiler/override/runtime/corpus/API/MCP claim; .6 retains qualification.`
-  Verification: `Git clean at 677bf38c7 before activation. Knowledge Map intermediate-width query routes only to the historical numeric render-time truthiness contract; T2074/decision0117 retain scalar reduction width foundations. A plain RHS reduction emits inline; repeated guards expose an actual scalar intermediate. The discovered P1 unary-capture miscompile is repaired by .1. Actual cache/runtime-AST and separate declaration/assign emitters remain the origin-consumer boundary for .2; generic VHDL-intermediate admission remains unqualified.`
-  Commit: `pending`
+  Verification: `Unary guard capture repair and actual scalar-origin publisher/consumer children close the bounded whole plain unsigned reduction profile. Focused one/wider native and paired controls pass; other intermediates and full external qualification remain owned by .3.4.3.2-.5/.6.`
+  Commit: `children below`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.1.1, ISF-REDUCTION-DELIVERY.3.4.3.1.2`
 
@@ -2054,11 +2054,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2189/T207/T2074; stronger final native-selector T2189 Files=1 Tests=3 passes. Changed module/new test syntax OK; strict native examples, mdBook/POD build and source-reference freshness qualify documentation. Mandatory final-index scripts/check_doctrines.sh/hook gates commit; external runtime and full API/MCP/corpus/publication remain .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify actual emitted scalar reduction intermediate origins and consume the bounded invariant shape.`
   Acceptance: `After capture-opcode repair, use actual defining/runtime AST and selected cached/rendered expression at the real declaration/assignment boundary. Preserve one-bit result independently of generic operand width, bind the consumed expression to the actual unsigned whole operand and reject missing/stale/foreign/unsupported compatibility fallbacks. Preserve every actual declaration and emitted semantic identity; no helper-name or numeric matching. Integrate only proved source/paired consumers with focused distinguishing controls, book/POD and commit. Full compiler/override/runtime/corpus/API/MCP remains .6.`
-  Verification: `Publisher .1 done; consumer .2 pending.`
-  Commit: `pending`
+  Verification: `Publisher .1 and bounded source/VHDL consumer .2 are committed through focused actual event/AST/source/assignment proof. Scalar result/generic operand rank and explicit refusal boundaries qualify; full external/public/corpus proof remains .6.`
+  Commit: `children below`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.1, ISF-REDUCTION-DELIVERY.3.4.3.1.2.2`
 
@@ -2075,11 +2075,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful: T2190/T2174/T2189 Files=3 Tests=11; final T2190/T208 Files=2 Tests=6; T2188 Files=1 Tests=5. Syntax/book/POD/source checks pass; normal hook gates commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume proved unsigned scalar reductions in paired VHDL.`
   Acceptance: `Parent .1.2 contracts apply: complete event/source/type/assignment proof, scalar result/generic operand rank, precise refusals, raw/static/caller/atomic controls and book/POD. Full qualification .6.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual source generation now snapshots completed intermediate events before admission. Complete live/event membership, closed scalar reduction origins, actual plain unsigned source declarations, one-bit result and fresh defining/runtime AST rendering must agree. Exact selected expressions match one actual continuous assignment before identifier normalization. Paired declarations keep generic whole-operand vector rank at default1/8 and scalar results; existing VHDL fold helpers use value range. Original T2191 aborts on a compound operand parsed outside its expected refusal; corrected oracle moves that earlier source failure inside eval. Final unchanged regression against exact committed VHDL predecessor cf14b55a2 fails top-level subtests1/3/4. First implementation run only fails an oracle omitting the existing harmless outer parentheses around helper calls; expected whole assignment corrected. Final focused All tests successful Files=3 Tests=13 for T2191/T2190/T2188. Native strict --language vhdl book fixture succeeds; actual logical refusal preserves an existing destination and leaves an absent destination absent. Initial --target typo fails before generation and is retained as command-oracle error, not a product defect. Malformed/missing/extra/stale/foreign/width/role/type/runtime and duplicate/missing/changed text controls refuse; complete caller, snapshot/plan JSON kinds, backend reuse and fixed raw artifacts conserve. Re-derive actual source/capture/paired generation; falsify final predecessor and distinguishing event/text/type controls; durability implementation/regression/book/POD/current facts and docs/audits/direct-vhdl-scalar-intermediates-20261028.json.gz. Complete prior cards/question subsets remain in receipt; no containment limits change. Full original worktree/raw-root streams and external compiler/override/runtime/API/MCP/corpus qualification remain missing under .6. Book build/POD/source freshness and normal final-index hooks gate commit; wider expression shapes continue .3.4.3.2.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.2: admit proved scalar reduction intermediates in VHDL`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final predecessor T2191 reports failed source generation at t/2191-direct-vhdl-scalar-intermediates.t line 46: VHDL::_validate_symbolic_generated_shapes blanket-refuses all intermediates despite the captured invariant reduction. Private paired conversion also accepts missing/duplicate/changed assignment text without binding it to actual events. Actual original/corrected source/test/native streams remain in the receipt.
+  - [x] **ADDRESSED (verified)** — Qualify complete live/emitted scalar origins against current typed ASTs and actual unsigned source declarations; compare exact emitted assignments before mapping. Keep scalar result and generic operand vector rank with full-range fold helpers. Final unchanged predecessor RED turns green, hostile origins/text/types refuse, and caller kinds/static artifacts conserve. No other computed or raw symbolic admission.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2191/T2190/T2188. Strict native VHDL example succeeds; actual logical refusal preserves existing/absent outputs. Syntax/book/POD/source checks and mandatory normal final-index doctrines gate commit. External runtime/override/compiler/public/corpus qualification stays .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2`
   Status: `pending`

@@ -37,14 +37,14 @@ sub generate_vhdl ($self, $fsm_module) {
             target_language => 'systemverilog')};
         confess _unsupported("direct source width preparation failed: $@") if $@;
         if ($source->{profile} eq 'symbolic') {
-            _validate_symbolic_generated_shapes($ctx, $fsm_module, $source);
             $snapshot = $capture->snapshot;
+            _validate_symbolic_generated_shapes($ctx, $fsm_module, $source, $snapshot);
         }
     }
     return $self->_convert_systemverilog_to_vhdl($sv_hdl, $fsm_module, $snapshot);
 }
 
-sub _validate_symbolic_generated_shapes ($ctx, $fsm_module, $source) {
+sub _validate_symbolic_generated_shapes ($ctx, $fsm_module, $source, $snapshot = undef) {
     # Register helpers carry actual allocation origins and have already passed
     # complete declaration/range/origin qualification in source generation.
     # Pulse and other unproved allocation families must not borrow that shape.
@@ -60,11 +60,77 @@ sub _validate_symbolic_generated_shapes ($ctx, $fsm_module, $source) {
                 && $origin->{kind} =~ /\A(?:register_next|register_q)\z/
                 && $parent && $internal->{aux_decls}{$name} == $parent->{width};
     }
-    confess _unsupported('symbolic source intermediate computed shapes require separate qualification')
-        if keys %{$ctx->{intermediate_signals}};
+    _validate_scalar_intermediate_shapes($ctx, $source, $snapshot);
     my $state = $ctx->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
     confess _unsupported('symbolic source without transitions requires qualified state-hold lowering')
         if $state->{has_state_registers} && !exists($ctx->{assignment_analysis}{next_state});
+    return;
+}
+
+sub _plain_unsigned_declaration ($row) {
+    return 0 unless ref($row) eq 'HASH';
+    my %copy = %$row; # Numeric/string checks must not change caller JSON kinds.
+    return defined($copy{width}) && !ref($copy{width}) && $copy{width} =~ /\A[0-9]+\z/ && $copy{width} > 0
+        && defined($copy{signed}) && !ref($copy{signed}) && $copy{signed} eq '0'
+        && !defined($copy{state_model}) && !defined($copy{declared_type_name}) && !defined($copy{declared_type_spec});
+}
+
+sub _validate_scalar_intermediate_shapes ($ctx, $source, $snapshot) {
+    my $live = $ctx->{intermediate_signals} // {};
+    my $events = ref($snapshot) eq 'HASH' ? $snapshot->{target_intermediates} : undef;
+    return unless keys(%$live) || defined($events);
+    confess _unsupported('symbolic source intermediate membership requires complete emitted events')
+        unless ref($events) eq 'HASH' && ref($snapshot->{target_declarations}) eq 'HASH'
+            && ref($snapshot->{target_namespace}) eq 'HASH'
+            && ref($snapshot->{target_namespace}{signals}) eq 'ARRAY'
+            && join("\0", sort keys %$live) eq join("\0", sort keys %$events);
+    my $declarations = $snapshot->{target_declarations};
+    for my $name (sort keys %$events) {
+        my $event = $events->{$name};
+        my $origin = ref($event) eq 'HASH' ? $event->{reduction_origin} : undef;
+        confess _unsupported("symbolic source intermediate '$name' requires a qualified scalar reduction origin")
+            unless ref($event) eq 'HASH' && join(',', sort keys %$event) eq 'expression,reduction_origin'
+                && defined($event->{expression}) && !ref($event->{expression}) && length($event->{expression})
+                && ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,operator,source_name'
+                && defined($origin->{kind}) && !ref($origin->{kind}) && $origin->{kind} eq 'scalar_reduction'
+                && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ /\A[&|^]\z/
+                && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($origin->{source_name});
+        my $operand = $origin->{source_name};
+        my $parent = $source->{signals}{$operand};
+        confess _unsupported("symbolic source intermediate '$name' requires an actual plain unsigned source operand and scalar result")
+            unless !exists($source->{signals}{$name}) && _plain_unsigned_declaration($parent)
+                && _plain_unsigned_declaration($declarations->{$operand})
+                && _plain_unsigned_declaration($declarations->{$name})
+                && defined($declarations->{$operand}{name}) && !ref($declarations->{$operand}{name})
+                && $declarations->{$operand}{name} eq $operand
+                && defined($declarations->{$name}{name}) && !ref($declarations->{$name}{name})
+                && $declarations->{$name}{name} eq $name
+                && 1 == grep {defined($_) && !ref($_) && $_ eq $name} @{$snapshot->{target_namespace}{signals}};
+        my ($width, $parent_width, $result_width) =
+            ($declarations->{$operand}{width}, $parent->{width}, $declarations->{$name}{width});
+        confess _unsupported("symbolic source intermediate '$name' disagrees with actual operand/result width")
+            unless $width == $parent_width && $result_width == 1;
+        my $actual = $ctx->{backend_sv_intermediate_recovery_support}->scalar_reduction_origin(
+            $name, $live->{$name}, $event->{expression});
+        confess _unsupported("symbolic source intermediate '$name' disagrees with its actual emitted reduction AST")
+            unless $actual && $actual->{operator} eq $origin->{operator} && $actual->{source_name} eq $operand;
+    }
+    return;
+}
+
+sub _validate_captured_intermediate_assignments ($sv_hdl, $capture) {
+    return unless exists($capture->{target_intermediates});
+    my $events = $capture->{target_intermediates};
+    confess _unsupported('captured intermediate assignments require an event map') unless ref($events) eq 'HASH';
+    my $module = _parse_module($sv_hdl);
+    my @assignments = _parse_continuous_assignments($module->{body});
+    for my $name (sort keys %$events) {
+        my $event = $events->{$name};
+        my @actual = grep {$_->{raw_lhs} eq $name} @assignments;
+        confess _unsupported("captured intermediate '$name' assignment disagrees with actual emitted text")
+            unless ref($event) eq 'HASH' && defined($event->{expression}) && !ref($event->{expression})
+                && @actual == 1 && $actual[0]{expr} eq $event->{expression};
+    }
     return;
 }
 
@@ -73,6 +139,7 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
 }
 
 sub _convert_systemverilog_to_vhdl ($self, $sv_hdl, $fsm_module = undef, $capture = undef) {
+    _validate_captured_intermediate_assignments($sv_hdl, $capture) if defined($capture);
     my $identifiers = _plan_generated_vhdl_identifiers($sv_hdl);
     $sv_hdl = $identifiers->{text};
     my %aggregate_type_widths = _parse_packed_struct_typedef_widths($sv_hdl);
@@ -2042,12 +2109,23 @@ the paired declaration plan. Whole unsigned transfers and zero resets consume
 the actual destination length, including vector rank at a selected width of one.
 The source guard checks actual allocation origins and matching parent widths;
 missing, foreign, malformed or unproved allocation shapes refuse. Pulse-delay
-and intermediate computed shapes remain withheld, including unrelated pipes.
+and other intermediate computed shapes remain withheld, including unrelated pipes.
 Symbolic FSMs without captured transitions refuse pending state-hold repair.
 Compiler-owned fixed state-control references pass the separate complete-family
 proof in C<DirectDeclaredWidthSupport>; ordinary source data still requires Core
 SignalRef ownership. Bounded source/Core and strict CLI checks do not imply
 external compiler, override, runtime or complete transport qualification.
+
+Factored whole-SignalRef unary XOR/AND/OR intermediates use completed actual
+C<target_intermediates> events. Complete live/emitted membership, closed origins,
+plain unsigned source operands and scalar result declarations must agree with
+the current defining/runtime ASTs and fresh rendering. Captured selected
+expressions must match exactly one actual continuous assignment before generated
+identifier normalization. Missing, duplicate, stale, foreign, typed/signed,
+logical or compound profiles refuse. Paired declarations keep scalar results
+and generic operand vector rank; existing fold helpers iterate C<value'range>.
+Inputs retain their JSON kinds. This bounded source guard adds no raw symbolic
+admission or external compiler/override/runtime qualification.
 
 The internal preparation helpers consume a source contract, not attestation of
 arbitrary caller-made plans. Returned records retain no mutable plan graph;

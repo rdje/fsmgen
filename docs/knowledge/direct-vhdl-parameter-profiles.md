@@ -91,13 +91,13 @@ Actual source-aware generation now joins the completed collector, assignment ana
 paired plan. T2184/T2188 qualify bounded unsigned source ranges, target-length transfers/zero resets,
 source capture kinds and backend reuse. Complete flagged compiler
 transition families with actual fixed state targets are separate from Core data Signal ownership.
-Register next/q allocations use proved parents; pulse/intermediate and no-transition shapes refuse
-pending task .27. Reverify: `prove -Iperl t/2188-direct-vhdl-register-helpers.t`. Raw symbolic text gains no source
+Register next/q uses proved parents; scalar whole unsigned reductions use actual AST/event proof
+(T2191). Other intermediates/pulses and no-transition shapes refuse (.27). Reverify:
+`prove -Iperl t/2188-direct-vhdl-register-helpers.t t/2191*.t`. Raw symbolic text gains no source
 authority; full transport/compiler/runtime qualification remains .6. See
 t/data/ial0-direct-symbolic-comb.fsm.
 
-The no-transition state-drive defect is owned by task .27. Native SV allocates state registers
-without a next_state drive because only transition captures create that assignment family. The
-complete source, producer loci and unobserved dynamic-impact boundary are retained in that task and
-the source-activation audit. New symbolic admission refuses this shape; fixed-source behavior
-remains unrepaired.
+Task .27 owns the missing no-transition next_state drive: SV allocates state registers,
+but only transitions create that assignment family. Its source, loci and unobserved
+dynamic impact remain in .27/source-activation audit. Symbolic source refuses;
+fixed-source behavior remains unrepaired.

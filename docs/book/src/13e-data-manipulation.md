@@ -94,9 +94,14 @@ defaults to one or a wider value; see the runnable
 [direct guard example](02-language-basics.md#guarded-blocks).
 The backend retains the actual declaration and selected expression together,
 attaching a reduction origin only when defining/runtime ASTs and emitted text
-agree. Cached text alone supplies no relationship. These focused capture checks
-preserve existing native HDL; generic VHDL intermediate consumption and complete
-external override/runtime qualification remain separate work.
+agree. Cached text alone supplies no relationship. Source-aware VHDL now accepts
+these factored reductions over plain unsigned whole operands: the operand keeps
+its generic vector range, the result is scalar, and the fold iterates over the
+actual operand range. Complete emitted event membership and assignment text must
+match the captured AST origins before conversion. Logical/computed origins,
+named/signed operand types and unrelated pulse helpers remain withheld. Focused
+one-bit/wider native checks and atomic refusals preserve existing products;
+complete external compiler/override/runtime qualification remains separate.
 
 The qualified generation subset uses declared fixed widths. The separate
 fixed runtime witness below qualifies both Verilog-family targets:

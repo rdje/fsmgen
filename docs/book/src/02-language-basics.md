@@ -458,11 +458,14 @@ drives both outputs from one parity predicate:
 
 ```bash
 ./bin/fsmgen --quiet --strict --output .artifacts/unary_reduction_guards.sv t/data/ial0-unary-reduction-guards.fsm
+./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/unary_reduction_guards.vhd t/data/ial0-unary-reduction-guards.fsm
 ```
 
-Focused checks cover the parsed operators and native selectors at one-bit and
-wider defaults. Generic VHDL intermediates and complete external override/runtime
-qualification remain separate work; see [Data Manipulation](13e-data-manipulation.md).
+Focused checks cover parsed operators and native selectors at one-bit and wider
+defaults. Source-aware VHDL also admits factored whole unsigned XOR/AND/OR
+reductions with proved emitted origins. Other computed intermediates and complete
+external override/runtime qualification remain separate work; see
+[Data Manipulation](13e-data-manipulation.md).
 
 Example with nested and compound guards:
 
