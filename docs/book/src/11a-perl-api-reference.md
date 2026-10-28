@@ -103,6 +103,9 @@ complete earlier test/audit locator lists and exact card sources remain in
 `docs/audits/width-card-evidence-20261028.json.gz`; each card includes a
 digest-checked recovery command. Current contract text and existing recheck
 commands remain directly readable in the cards.
+Completed allocation-producer task subtrees retain exact Git revision, file
+digest and retention-contract retrieval through their live compact terminals.
+Open target/range work stays in the live task tree.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
