@@ -2012,11 +2012,16 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish actual current graph policy on selected arithmetic target events.`
   Acceptance: `Join only the completed current producer to actual defining/runtime AST, selected expression and ordered origin. Preserve all source/result/child constraints and recheck full currentness after reads. Legacy providers/old allocation APIs preserve; no target range admission yet. Focused real publication/currentness/refusal/native controls and docs before commit.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual recovery/emitter joins fresh selected origin/text to completed current graph policy and plain transitive source/result profiles. Independent state-model numeric policies withhold at target. Full native products preserve after removing only 18 graph fields. Re-derive real publication, falsify predecessor and missing-final-check variant, retain fixture timing correction and all evidence in docs/audits/graph-target-20261028.json.gz. Canonical target range closure/emission/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.3: publish selected arithmetic graph policies`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor reports Can't locate object method arithmetic_graph_width_allocation at ./t/2228-arithmetic-graph-target-events.t line 72; completed graph intent had no selected target publisher. Numeric graph profiles deliberately retain independent state_model constraints. The initial fixture's late child write correctly revoked earlier numeric proof; an exact timing probe reproduces and the fixture now installs profiles before normalization.
+  - [x] **ADDRESSED (verified)** — Add separate optional graph recovery/emitter join with fresh selected origin/text, plain transitive source and collected/allocated/registered profiles, and final completed-policy revalidation. Independent numeric constraints, copies, floors and stale sources withhold; ordinary APIs and legacy events preserve.
+  - [x] **NO REGRESSION** — All tests successful Files=3, Tests=14 (T2228/T2217/T2227); alternate traversal Files=1, Tests=4. Native HDL/source/target/old policy products equal after removing only new graph-policy fields. Missing final-check variant fails currentness assertion. Canonical graph ranges/emission and full .6 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4`
   Status: `pending`

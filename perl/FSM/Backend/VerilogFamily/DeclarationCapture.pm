@@ -322,10 +322,11 @@ unsigned declarations for the result, current pair and every original leaf.
 Exact current-pair and original-leaf maxima must both match the selected/result
 width. Shared graph schema validation preserves scalar kinds, order and duplicate
 slots and uses the same bounds as original graph birth. Malformed or inconsistent
-data invalidates the transaction. These are schema/numeric checks; actual graph
-publication, source provenance, transitive selected-graph closure and symbolic
-range admission remain separately owned. The default publisher does not yet
-attach this field.
+data invalidates the transaction. These are schema/numeric checks. The default
+assignment publisher attaches this field only after current completed graph
+policy, fresh selected origin/text and plain transitive source/result checks.
+Transitive selected-target closure and symbolic range admission remain separately
+owned.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

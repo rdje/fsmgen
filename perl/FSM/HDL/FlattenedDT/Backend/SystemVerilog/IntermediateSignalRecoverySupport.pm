@@ -47,6 +47,7 @@ use FSM::Debug;
 use Scalar::Util qw(blessed);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 
 =head2 new
 
@@ -359,6 +360,71 @@ symbolic arithmetic range; target metadata alone extends no VHDL admission.
 
 sub arithmetic_width_allocation ($self, $signal_name, $signal_info, $expression) {
     return $self->_width_allocation_for_origin($signal_name, $signal_info, $expression, 'binary_arithmetic_origin');
+}
+
+=head2 arithmetic_graph_width_allocation
+
+Return a separate optional current completed graph policy for the actual selected
+arithmetic origin and expression. Traverse the current typed graph to require
+plain unsigned module sources and collected, allocated and registered result
+rows, including every computed child. Numeric graph inference alone may retain
+state-model constraints; this target publisher refuses them. Recheck the complete
+current policy after all AST, rendering and profile reads. Copied, stale, opaque
+or constrained inputs withhold. This publishes no symbolic range and does not
+broaden either ordinary binary policy API or VHDL admission.
+
+=cut
+
+sub arithmetic_graph_width_allocation ($self, $signal_name, $signal_info, $expression) {
+    my $origin = $self->binary_arithmetic_origin($signal_name, $signal_info, $expression) or return;
+    my $ctx = $self->{flattened_dt};
+    my $owner = $ctx->{backend_sv_intermediate_width_support};
+    return unless $owner && $owner->can('factorized_graph_width_allocation')
+        && $owner->can('_current_graph_inference_rows');
+    my $policy = $owner->factorized_graph_width_allocation($signal_name, $signal_info) or return;
+    $policy = FSM::IntermediateWidthGraphPolicySupport->copy_record($policy);
+    return unless $policy->{operator} eq $origin->{operator}
+        && $policy->{source_names}[0] eq $origin->{source_names}[0]
+        && $policy->{source_names}[1] eq $origin->{source_names}[1];
+    my $rows = $owner->_current_graph_inference_rows;
+    return unless ref($rows) eq 'HASH' && ref($rows->{$signal_name}) eq 'HASH'
+        && $rows->{$signal_name} == $signal_info;
+    my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
+    return unless $self->_plain_arithmetic_graph($signal_name, $rows, {}, \$budget, 0);
+    my $current = $owner->factorized_graph_width_allocation($signal_name, $signal_info) or return;
+    return unless JSON::PP->new->canonical->encode($policy) eq JSON::PP->new->canonical->encode($current);
+    return $current;
+}
+
+sub _plain_arithmetic_graph ($self, $name, $rows, $visited, $budget, $depth) {
+    return unless $depth <= FSM::IntermediateWidthGraphPolicySupport::MAX_BINARY_LEVELS()
+        && --$$budget >= 0;
+    return $visited->{$name} == 2 if $visited->{$name};
+    $visited->{$name} = 1;
+    my $ctx = $self->{flattened_dt};
+    my $info = $rows->{$name};
+    return unless ref($info) eq 'HASH';
+    my $ast = $info->{ast};
+    my $shape = _whole_signal_binary_arithmetic($ast) or return;
+    for my $row ($info, $ctx->{ast_factorizer}{intermediate_signals}{$name}, $ctx->{intermediate_signals}{$name}) {
+        return unless FSM::IntermediateWidthAllocationSupport::_factorized_metadata_state($row, $ast)
+            && !defined($row->{state_model});
+    }
+    my @nodes = ($ast->left, $ast->right);
+    for my $index (0, 1) {
+        my $node = $nodes[$index];
+        my $source_name = $shape->{source_names}[$index];
+        if (UNIVERSAL::isa($node, 'FSM::HDL::IntermediateSignalRef')) {
+            return unless $self->_plain_arithmetic_graph($source_name, $rows, $visited, $budget, $depth + 1);
+        } else {
+            my $signal = $ctx->{fsm_module}->signals->{$source_name};
+            my $descriptor = FSM::IntermediateWidthAllocationSupport::_descriptor($signal) or return;
+            return unless $descriptor->{name} eq $source_name && !defined($descriptor->{state_model})
+                && ref($descriptor->{constraints}) eq 'ARRAY' && !@{$descriptor->{constraints}};
+        }
+    }
+    $visited->{$name} = 2;
+    return 1;
 }
 
 sub _width_allocation_for_origin ($self, $signal_name, $signal_info, $expression, $origin_method) {

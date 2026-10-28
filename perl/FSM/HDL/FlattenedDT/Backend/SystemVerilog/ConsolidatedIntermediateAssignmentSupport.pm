@@ -61,6 +61,8 @@ Captured binary events publish separate bitwise/arithmetic syntactic origins
 and query the corresponding optional current-policy publisher.
 Only agreeing completed source/factorizer allocation proof adds width_allocation;
 legacy injected recovery providers and unrelated events keep their old shape.
+The separate optional graph publisher adds graph_width_allocation only for a
+current selected arithmetic graph with plain transitive source/result profiles.
 HDL text and symbolic range admission are unchanged.
 
 =cut
@@ -95,11 +97,14 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
                 ? $recovery_support->binary_width_allocation($signal_name, $signal_info, $expression)
                 : $arithmetic && $recovery_support->can('arithmetic_width_allocation')
                     ? $recovery_support->arithmetic_width_allocation($signal_name, $signal_info, $expression) : undef;
+            my $graph_allocation = !$allocation && $arithmetic && $recovery_support->can('arithmetic_graph_width_allocation')
+                ? $recovery_support->arithmetic_graph_width_allocation($signal_name, $signal_info, $expression) : undef;
             $capture->record_intermediate_assignment($signal_name,
                 {expression => $expression, ($origin ? (reduction_origin => $origin) : ()),
                     ($bitwise ? (bitwise_origin => $bitwise) : ()),
                     ($arithmetic ? (arithmetic_origin => $arithmetic) : ()),
-                    ($allocation ? (width_allocation => $allocation) : ())});
+                    ($allocation ? (width_allocation => $allocation) : ()),
+                    ($graph_allocation ? (graph_width_allocation => $graph_allocation) : ())});
         }
         fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3)
             if $trace_signal_detail;

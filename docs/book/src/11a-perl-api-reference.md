@@ -288,8 +288,8 @@ views and failed/reset/new generations withhold. Returned records detach, and
 later matching numeric values cannot recreate policy. The ordinary
 `intermediate_width_allocation` and whole-reference methods retain their existing
 profiles. This completes the bounded graph producer foundation with focused
-checks. Graph target events, transitive symbolic ranges and independent final
-graph closure remain next; full override/runtime qualification is deferred.
+checks. Transitive symbolic ranges and independent final graph closure remain
+next; full override/runtime qualification is deferred.
 
 The shared `IntermediateWidthGraphPolicySupport` now validates that closed graph
 record, original arithmetic tree and current edge pair. It preserves order,
@@ -297,14 +297,27 @@ duplicates and scalar JSON kinds, shares the existing birth walk bounds, and
 compares exact decimal maxima without native numeric rounding. Numeric helpers
 preserve invalid or missing width slots in graph and existing binary checks;
 those vectors withhold instead of accepting the remaining values or throwing
-an internal arity error. The collector
-accepts an optional `graph_width_allocation` schema only with the matching
+an internal arity error. The collector accepts an optional
+`graph_width_allocation` schema only with the matching
 arithmetic origin, a declared computed operand, no original self-leaf, complete
 plain unsigned membership and exact current-pair/original-leaf maxima. It is
 exclusive with ordinary `width_allocation`; malformed transactions expose no
 partial snapshot. This schema support supplies no producer provenance or range
-proof. Actual selected graph publication remains the next slice, so ordinary
-native event shapes and HDL are unchanged.
+proof.
+
+Actual consolidated assignments now publish `graph_width_allocation` through
+the separate `arithmetic_graph_width_allocation` recovery method. For example,
+`(+ A (* B C))` retains `B_mul_C` as an ordered current edge and the original
+three-leaf arithmetic tree in its graph policy. The selected expression and
+defining/runtime/cached arithmetic origins must agree with the completed current
+policy. Every source and collected, allocated and registered computed row must
+have a plain unsigned profile; numeric state-model evidence alone cannot publish
+this target field. A final complete-policy read rejects source or dependency
+changes during publication. Copied metadata, independent floors and mismatched
+selected text withhold; legacy recovery providers keep their existing events.
+The returned policy detaches. HDL text is unchanged. Canonical transitive
+source/target range proof and actual graph range emission remain pending, and
+the ordinary binary allocation and VHDL profiles retain their boundaries.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

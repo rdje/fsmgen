@@ -8,7 +8,10 @@ Scoped update on `2026-10-28`: actual factorization imports
 `VerilogFamily::DeclarationCapture` now share `IntermediateWidthGraphPolicySupport`
 for the closed original-tree/edge record, common walk bounds and exact numeric
 consistency. Collector graph schema support remains separate from actual selected
-graph publication and symbolic ranges. The dated closure census is unchanged.
+graph publication and symbolic ranges. The actual recovery owner now imports
+that schema for selected graph policy publication; its target checks traverse
+plain source/result profiles and recheck completed currentness. Symbolic graph
+ranges remain separate. The dated closure census is unchanged.
 
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
