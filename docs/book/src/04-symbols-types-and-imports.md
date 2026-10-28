@@ -393,8 +393,12 @@ Backend register helpers now retain a detached `width_origin` with their actual
 allocation kind (`register_next` or `register_q`) and assignment parent name.
 The planner supplies this identity at allocation; the collector checks its shape
 and complete parent membership. Pulse-delay and enable widths acquire no data
-ancestry. Existing HDL and numeric/type/state metadata preserve. Symbolic helper
-range consumption and VHDL helper admission remain separately qualified work.
+ancestry. Register next/q helper declarations now consume their parent's proved
+symbolic range, including vector rank at one. Final assembly checks complete
+numeric/type/state coherence and separate emitted range/allocation identities;
+an unchanged range cannot hide a changed helper family. Independent fixed
+helpers and cycle-counted pulse pipes stay numeric. VHDL helper admission and
+complete compiler/override/runtime qualification remain pending.
 
 Direct SystemVerilog and compatibility Verilog ports and source-owned internal
 storage now consume the proved ranges. Selected names and arithmetic remain,
@@ -436,6 +440,26 @@ Assignment-target storage is included even when absent from the Core module's
 signal map. Explicit internal roles stay internal; fixed/static/type ranges
 retain their existing declaration paths. Backend-only helpers acquire no
 symbolic range by matching numeric widths.
+
+The [register-helper fixture](../../../t/data/ial0-direct-symbolic-helpers.fsm)
+uses distinct register-output and register-input assignments. Run:
+
+```bash
+./bin/fsmgen --quiet --strict --language systemverilog --output .artifacts/direct_symbolic_helpers.sv t/data/ial0-direct-symbolic-helpers.fsm
+./bin/fsmgen --quiet --strict --language verilog --output .artifacts/direct_symbolic_helpers.v t/data/ial0-direct-symbolic-helpers.fsm
+```
+
+Its helper declarations include:
+
+```systemverilog
+reg [(COPY - 1):0] CAPTURED_q;
+reg [(W - 1):0] DATA_next;
+reg FIXED_q;
+```
+
+These are focused declaration/identity checks. General intermediate/reset
+propagation, generated specialization and external override/runtime proof remain
+separate obligations; this fixture does not promote the full generic profile.
 
 Port/storage emission has focused checks and native generation evidence.
 Computed helper shapes and complete external override/runtime qualification

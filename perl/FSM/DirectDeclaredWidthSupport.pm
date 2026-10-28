@@ -225,6 +225,36 @@ sub prepare_declarations ($class, %args) {
             push @fixed, $target_name;
         }
     }
+    for my $target_name (sort keys %$declarations) {
+        my $record = $declarations->{$target_name};
+        next unless exists($record->{width_origin});
+        my $origin = $record->{width_origin};
+        confess "Direct width auxiliary '$target_name' requires a closed signal-helper origin\n"
+            unless $roles{$target_name} eq 'signals' && ref($origin) eq 'HASH'
+                && join(',', sort keys %$origin) eq 'kind,source_name'
+                && defined($origin->{kind}) && !ref($origin->{kind})
+                && $origin->{kind} =~ /\A(?:register_next|register_q)\z/
+                && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($origin->{source_name});
+        confess "Direct width auxiliary '$target_name' conflicts with source Signal ownership\n"
+            if $claimed{$target_name};
+        my $name = $origin->{source_name};
+        my $parent = $source->{signals}{$name};
+        my $analysis = $args{assignment_analysis}{$name};
+        my $lhs = ref($analysis) eq 'HASH' ? $analysis->{lhs_ast} : undef;
+        confess "Direct width auxiliary '$target_name' requires its actual normalized assignment parent '$name'\n"
+            unless $parent && blessed($lhs) && $lhs->isa('FSM::CoreAST::SignalRef')
+                && $lhs->signal->name eq $name;
+        confess "Direct width auxiliary '$target_name' disagrees with parent width or signedness\n"
+            unless $record->{width} == $parent->{width} && $record->{signed} == $parent->{signed};
+        for my $field (qw(state_model declared_type_name declared_type_spec)) {
+            confess "Direct width auxiliary '$target_name' disagrees with parent $field\n"
+                unless $json->encode($record->{$field}) eq $json->encode($parent->{$field});
+        }
+        my $width_plan = $parent->{width_plan};
+        next unless $width_plan && $width_plan->{profile} eq 'symbolic';
+        $ranges{$target_name} = {source_name => $name, declaration_kind => 'signal',
+            width_plan => $width_plan, width_origin => $origin};
+    }
     return $json->decode($json->encode({profile => $source->{profile}, target_language => $language,
         source_scope => $source->{source_scope}, module_name => $module_name,
         parameter_references => $source->{parameter_references}, signal_targets => \%signal_targets,
@@ -314,11 +344,22 @@ contains physical C<source_name>, C<declaration_kind> (port or signal) and the
 proved C<width_plan>. Independent static/type rows stay on their fixed path.
 Caller-made target records remain a contract, not provenance attestation.
 
+Backend-only register-helper rows may carry the collector's optional closed
+C<width_origin> (C<register_next> or C<register_q>, plus actual C<source_name>).
+The parent must be an actual normalized Core assignment target in the source
+plan. Independent source ownership of the helper target refuses. Observed width,
+signedness, state model and declared type must match that parent. A symbolic
+parent supplies the helper range through its existing canonical plan; the range
+row additionally retains C<width_origin>. Fixed parents keep numeric helpers.
+Names and numeric equality never select a parent or allocation family. Actual
+producer completeness/authorship remains a caller obligation.
+
 The direct Verilog-family post-flattening owner now consumes these checks for
 captured declarations before returning HDL. Port and source-owned storage ranges
-retain actual selected names and vector rank; complete actual target
-qualification and comparison with the emitted port/storage plans reject late
-same-default ancestry changes. Backend-only computed helper shapes and
+retain actual selected names and vector rank. Register next/q helpers consume
+their recorded parent plans. Complete actual target qualification and comparison
+with emitted port/storage plans and separate helper-origin records reject late
+same-default ancestry or allocation-family changes. Other computed helper shapes and
 complete generated specialization remain separately owned. The direct VHDL
 source converter now uses paired plans for its bounded combinational profile.
 Full compiler, override and runtime qualification remains pending. Whole backend

@@ -313,8 +313,10 @@ General source rules:
   this prepared-range rule does not admit mixed assignment styles or change
   source/report/API/MCP/corpus contracts.
   Private backend declaration snapshots also retain actual register next/q
-  allocation origins. This prepares helper-range consumption; pulse-delay
-  widths and symbolic VHDL helper admission remain separate contracts.
+  allocation origins. SystemVerilog/Verilog helper ranges now consume their
+  proved parent shape with complete declaration and emitted-edge checks.
+  Pulse-delay widths remain independent; symbolic VHDL helper admission and
+  complete intermediate/reset/override qualification remain separate contracts.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

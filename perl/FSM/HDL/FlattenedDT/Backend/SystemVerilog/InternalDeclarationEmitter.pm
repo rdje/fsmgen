@@ -17,6 +17,7 @@ module boundary.
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -52,8 +53,13 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %width_plans;
     if (my $source_plan = $ctx->{direct_declared_width_source_plan}) {
         for my $name (sort(keys(%signal_decls), keys(%aux_decls))) {
-            my $signal_plan = $source_plan->{signals}{$name};
+            my $origin = $aux_width_origins->{$name};
+            confess "Direct symbolic auxiliary '$name' conflicts with independent source ownership\n"
+                if $origin && exists($source_plan->{signals}{$name});
+            my $source_name = $origin ? $origin->{source_name} : $name;
+            my $signal_plan = $source_plan->{signals}{$source_name};
             my $width_plan = $signal_plan ? $signal_plan->{width_plan} : undef;
+            $ctx->{direct_declared_width_emitted_helper_origins}{$name} = $origin if $origin;
             next unless $width_plan && $width_plan->{profile} eq 'symbolic';
             $width_plans{$name} = $width_plan;
             $ctx->{direct_declared_width_emitted_signals}{$name} = $width_plan;
@@ -231,10 +237,12 @@ Renders the SystemVerilog internal declaration block from the enable-graph
 declaration plan, including both direct internal storage declarations and the
 auxiliary helper register family used by the direct generated-module backend.
 Captured source-owned storage consumes its proved symbolic range, including
-vector rank at a selected width of one. Backend-only helpers keep their existing
-numeric shape; no width relationship is inferred from equal numeric widths.
-Their captured declaration rows retain optional allocation-time C<width_origin>
-metadata supplied by the module planner. It names actual register next/q parents;
-pulse-delay helpers and ordinary declarations do not borrow that relationship.
+vector rank at a selected width of one. Register next/q helpers consume the
+canonical plan of their actual allocation parent. Independent source ownership
+of a helper name refuses; final assembly rechecks complete numeric/type/state
+coherence and emitted range/origin identities before returning HDL. Other
+backend-only helpers keep numeric shapes. Captured rows retain optional
+allocation-time C<width_origin>; pulse-delay helpers and ordinary declarations
+do not borrow that relationship. Equal numeric widths never select ancestry.
 
 =cut

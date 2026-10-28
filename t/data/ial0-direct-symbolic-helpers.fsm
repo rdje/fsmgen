@@ -1,0 +1,13 @@
+(?fsm:direct_symbolic_helpers
+  (+params (W 1) (COPY W))
+  (+size
+    (DATA (param W))
+    (CAPTURED (param COPY))
+    (INPUT_PORT (param W))
+    (FIXED 1)
+    (FIXED_INPUT 1))
+  (idle
+    (<- (DATA INPUT_PORT))
+    (<= (CAPTURED INPUT_PORT))
+    (<= (FIXED FIXED_INPUT))
+    (-> idle)))

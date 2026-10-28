@@ -87,6 +87,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_source_plan};
     local $ctx->{direct_declared_width_emitted_ports} = {};
     local $ctx->{direct_declared_width_emitted_signals} = {};
+    local $ctx->{direct_declared_width_emitted_helper_origins} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
     if ($prepare_widths) {
@@ -116,9 +117,10 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     $capture->complete if $capture;
     if ($prepare_widths) {
         my $ok = eval {
+            my $snapshot = $capture->snapshot;
             my $qualified = FSM::DirectDeclaredWidthSupport->prepare_declarations(
                 fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
-                target_language => 'systemverilog', %{$capture->snapshot});
+                target_language => 'systemverilog', %$snapshot);
             my %expected = map {$_ => $qualified->{ranges}{$_}{width_plan}}
                 grep {$qualified->{ranges}{$_}{declaration_kind} eq 'port'} keys %{$qualified->{ranges}};
             my $json = JSON::PP->new->canonical;
@@ -128,6 +130,10 @@ sub generate_systemverilog_module ($self, $fsm_module) {
                 grep {$qualified->{ranges}{$_}{declaration_kind} eq 'signal'} keys %{$qualified->{ranges}};
             confess "Direct captured widths do not match the actual emitted storage identities\n"
                 unless $json->encode(\%expected_signals) eq $json->encode($ctx->{direct_declared_width_emitted_signals});
+            my %expected_origins = map {$_ => $snapshot->{target_declarations}{$_}{width_origin}}
+                grep {exists($snapshot->{target_declarations}{$_}{width_origin})} keys %{$snapshot->{target_declarations}};
+            confess "Direct captured auxiliary origins do not match the actual emitted helper identities\n"
+                unless $json->encode(\%expected_origins) eq $json->encode($ctx->{direct_declared_width_emitted_helper_origins});
             1;
         };
         unless ($ok) {

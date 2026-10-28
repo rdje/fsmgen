@@ -75,6 +75,8 @@ subtest 'actual backend namespace yields complete independently expected direct 
                 signal_targets => {DATA_PORT => 'DATA_PORT', SOURCE => 'SOURCE', next_DATA_PORT => 'next_DATA_PORT'},
                 fixed_signals => ['SOURCE'], ranges => {
                     DATA_PORT => {source_name => 'DATA_PORT', declaration_kind => 'signal', width_plan => $width},
+                    DATA_PORT_next => {source_name => 'DATA_PORT', declaration_kind => 'signal', width_plan => copy($width),
+                        width_origin => {kind => 'register_next', source_name => 'DATA_PORT'}},
                     next_DATA_PORT => {source_name => 'next_DATA_PORT', declaration_kind => 'port', width_plan => copy($width)}}}),
                 'whole independently expected source/target plan');
             is(snapshot($in), $before, 'complete source/default/namespace/declaration caller JSON kinds preserve');

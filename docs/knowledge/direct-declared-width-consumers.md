@@ -45,7 +45,7 @@ through the canonical adapter registry and assignment AST.
 ModulePlanningSupport owns direct port/internal plans. ScaffoldEmitter now
 consumes captured symbolic port ranges; InternalDeclarationEmitter consumes
 source-owned captured storage ranges, including actual assignment targets absent
-from module membership. Backend-only helpers retain their numeric shape.
+from module membership. Register helpers use parent ranges (T2187).
 Bounded source VHDL now follows direct-vhdl-parameter-profiles. CompositionWidthEmitter already has
 captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
@@ -202,8 +202,7 @@ and preserves an existing destination. Direct source-owned storage now consumes
 the same proved range plans, preserving explicit internal roles, arithmetic and
 default-one vector rank. Final emitted storage-plan comparison also rejects
 late same-default identity changes. Signed/state/type/fixed declarations preserve.
-Computed shapes, source-aware
-VHDL ranges and full override/runtime qualification remain successors. Existing whole backend retention is separately owned under
+Computed shapes and full override/runtime qualification remain successors. Existing whole backend retention is separately owned under
 .25 and the flattened-backend-owner-cycle card; isolated target plans retain no
 caller target records or never-installed physical Core copy. Reverify:
-`prove -Iperl t/2176-direct-symbolic-storage-ranges.t t/2175-direct-symbolic-port-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
+`prove -Iperl t/2187-symbolic-register-helper-ranges.t t/2176-direct-symbolic-storage-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
