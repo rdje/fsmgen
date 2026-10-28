@@ -148,8 +148,13 @@ The actual normalizer checkpoints current graph proof before its callback and
 refreshes only the exact allocator/registered width/source writes. Other fields,
 source changes and row replacement withhold; callback failure clears partial
 holders through normalizer abort. Transitive child publications preserve only
-still-current dependency proof. Registry copies and prepared-view handoff remain
-separate; this transition exposes no completed graph policy or symbolic range.
+still-current dependency proof. Registry merge/rebuild checkpoints validate all
+graphs before removing any child holder, then bind each actual installed row
+identity and complete merged metadata. Graph restoration follows dependencies
+after whole-reference child holders and all rows are installed. Equal foreign
+copies, copied row-view maps and changed sources/constraints cannot refresh.
+Prepared-view handoff remains separate; no completed graph policy or symbolic
+range is exposed by these transitions.
 
 =cut
 
@@ -300,6 +305,51 @@ sub _finish_factorized_registry_copy ($self, $name, $info, $checkpoint, $replace
     my $expected = JSON::PP->new->decode($checkpoint->{holder}{state});
     $expected->{registered} = {%{$checkpoint->{copy}}, identity => sprintf('%x', refaddr($replacement))};
     $self->_restore_factorized_inference($name, $info, $checkpoint->{holder}, $expected);
+}
+
+sub _checkpoint_graph_registry_copies ($self, $rows, $replace_registry = 0) {
+    return {} unless $self->{_width_inference_epoch};
+    my $view = $self->_current_graph_inference_rows;
+    my %checkpoints;
+    if (ref($rows) eq 'HASH' && ref($view) eq 'HASH' && $rows == $view) {
+        # Validate every graph while its child holders are still installed.
+        # Taking a child first would invalidate its parent before checkpointing.
+        for my $name (sort keys %$rows) {
+            my $record = $self->factorized_graph_inference_event($name, $rows->{$name}) or next;
+            my $copy = eval {FSM::IntermediateWidthAllocationSupport->factorized_registry_copy_state(
+                $rows->{$name}, $replace_registry ? undef : $self->{flattened_dt}{intermediate_signals}{$name})}
+                or next;
+            my $holder = $self->{_graph_inference_events}{$name};
+            $checkpoints{$name} = {holder => JSON::PP->new->decode(JSON::PP->new->encode($holder)), copy => $copy};
+        }
+    }
+    $self->{_graph_inference_events} = {};
+    return \%checkpoints;
+}
+
+sub _finish_graph_registry_copies ($self, $rows, $checkpoints, $installed_ids) {
+    return unless ref($rows) eq 'HASH' && ref($checkpoints) eq 'HASH' && ref($installed_ids) eq 'HASH';
+    my %pending = %$checkpoints;
+    my $json = JSON::PP->new;
+    while (%pending) {
+        my $progress;
+        for my $name (sort keys %pending) {
+            my $checkpoint = $pending{$name};
+            my $expected = $json->decode($checkpoint->{holder}{state});
+            my @graph_children = map {$_->{source_name}} grep {
+                $_->{kind} eq 'intermediate' && $_->{proof}{record}{kind} eq 'arithmetic_graph_operand_max'
+            } @{$expected->{dependencies}};
+            next if grep {exists($pending{$_})} @graph_children;
+            delete $pending{$name};
+            $progress = 1;
+            my $replacement = $self->{flattened_dt}{intermediate_signals}{$name};
+            next unless ref($replacement) eq 'HASH' && defined($installed_ids->{$name})
+                && !ref($installed_ids->{$name}) && $installed_ids->{$name} eq sprintf('%x', refaddr($replacement));
+            $expected->{registered} = {%{$checkpoint->{copy}}, identity => $installed_ids->{$name}};
+            $self->_restore_graph_inference_state($name, $rows->{$name}, $checkpoint->{holder}, $expected);
+        }
+        last unless $progress; # Cyclic or unsupported checkpoints install nothing.
+    }
 }
 
 sub _record_graph_inference ($self, $name, $info, $width, $source, $ready) {

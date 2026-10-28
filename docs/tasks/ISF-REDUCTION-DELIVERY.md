@@ -2449,17 +2449,22 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2223/T2222/T2206); alternate order Files=1 Tests=3. Native HDL/source/target/completed policy and earlier intrinsic records conserve. POD/book/fact and normal doctrines gate commit; registry/view/completed graph policy remain next.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve graph events through actual merged registry copies and rebuilds.`
   Acceptance: `Capture current graph holders before any dependent holder is taken or registry reset. Bind exact merged row identities/metadata, restore dependency-safe only after actual installs, reject partial/copied/stale/changed inputs and clear on failure. Whole policies/numeric products preserve.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Actual merge/rebuild restores current graph proof after exact installed row witnesses and dependency-safe completion. Copied maps/foreign rows/source/constraint/partial-failure changes withhold; native products preserve except current registry diagnostics. Re-derive actual writes, falsify predecessor/hostile changes, retain sources/logs in docs/audits/graph-registry-20261028.json.gz. Non-retaining prepare/render probe disproves the planned need for rebind; .4 now qualifies existing ownership. Completed policy/ranges/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3: preserve graph registry publications`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub _checkpoint_factorized_registry_copies locates whole-only copy refresh at 3ec89a901. Predecessor T2224 fails at line 76: graph proof disappears after actual registry rebuild. Taking dependent holders in arbitrary order cannot qualify transitive graphs.
+  - [x] **ADDRESSED (verified)** — Validate graphs together before holder removal/reset; witness exact replacements at actual assignments, then restore against complete merged state after children. Unknown changes withhold and failures clear. Real ownership probe corrects the unsupported rebind plan and schedules existing-contract qualification next.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2224/T2222/T2206); alternate order Files=1 Tests=3. Full native products preserve except registry diagnostics. Non-retaining prepare/render source/trace and parser-cursor correction retain in receipt. POD/book/fact and normal hooks gate commit; completed policy remains pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4`
   Status: `pending`
-  Goal: `Carry graph currentness into the actual weak prepared-row view.`
-  Acceptance: `At the real filtered-view handoff validate old current holders and exact retained row/dependency identities before weak rebind. Update only owned view identity/revision; no strong registry or owner graph, no copied/omitted dependencies or guessed aliases.`
-  Verification: `pending`
+  Goal: `Qualify existing prepared-block ownership and weak graph-row lifetime.`
+  Acceptance: `Lock actual prepare/render ownership and exact filtered-row aliases without adding observer retention. Current graph proof must remain available while the prepared block owns original rows and the weak view must end after ordinary generation. Preserve the existing handoff; no rebind without a demonstrated missing transition. Focused lifetime/currentness/refusal checks, canonical fact/POD/book and commit qualify this boundary before completed graph policy.`
+  Verification: `Current registry slice causal probe observes prepare/render at defaults one/eight without keeping maps/blocks: original all-row map remains owned, filtered map is distinct with identical row objects, graph events remain current, weak view is absent after generation. Plain and observed HDL match. Prior weak-view-death assumption was false; exact source/trace and parser-cursor observer correction retain in registry receipt. No rebind is needed on the observed path; lock existing contract next.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`

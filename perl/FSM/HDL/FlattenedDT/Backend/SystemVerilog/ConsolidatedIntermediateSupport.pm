@@ -43,7 +43,7 @@ no warnings 'experimental::signatures';
 
 use Data::Dumper;
 use FSM::Debug;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 
 =head2 new
 
@@ -329,12 +329,24 @@ every helper name while resolving dependency fallbacks. The optional private
 C<replace_registry> flag owns the existing final rebuild: current width events
 are checkpointed before reset and revalidated against the exact installed copy.
 Injected legacy width providers retain the ordinary copy behavior.
+For the default graph protocol, every current graph is checkpointed before any
+dependent holder is removed. Each assignment witnesses its exact replacement
+identity. Only after all actual copies and whole-reference restorations finish
+are graph holders restored in dependency order against those identities and
+complete merged state. Copied views, substituted equal rows, partial installs
+and changed source/constraint state cannot supply a refresh. This preserves
+intrinsic diagnostics, not completed graph policy or target range admission.
 
 =cut
 
 sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $replace_registry = 0) {
     my $ctx = $self->{flattened_dt};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $graph_protocol = $width_support && $width_support->can('_checkpoint_graph_registry_copies')
+        && $width_support->can('_finish_graph_registry_copies');
+    my $graph_checkpoints = $graph_protocol
+        ? $width_support->_checkpoint_graph_registry_copies($all_intermediate_signals, $replace_registry) : {};
+    my %installed_graph_ids;
     my $checkpoints = $width_support && $width_support->can('_checkpoint_factorized_registry_copies')
         ? $width_support->_checkpoint_factorized_registry_copies($all_intermediate_signals, $replace_registry) : {};
     $ctx->{intermediate_signals} = {} if $replace_registry;
@@ -353,10 +365,14 @@ sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $re
             name => $signal_name,
         };
         $ctx->{intermediate_signals}{$signal_name} = $replacement;
+        $installed_graph_ids{$signal_name} = sprintf('%x', refaddr($replacement))
+            if exists($graph_checkpoints->{$signal_name});
         $width_support->_finish_factorized_registry_copy(
             $signal_name, $signal_info, $checkpoints->{$signal_name}, $replacement)
             if $checkpoints->{$signal_name};
     }
+    $width_support->_finish_graph_registry_copies($all_intermediate_signals, $graph_checkpoints, \%installed_graph_ids)
+        if $graph_protocol;
 }
 
 =head2 prune_sampled_value_intermediate_chains

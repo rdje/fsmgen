@@ -13,22 +13,22 @@ answers:
   - "how are explicit Core intermediate width allocation contracts held?"
   - "how are factorizer allocation births retained?"
   - "how are factorizer width inference events captured?"
+  - "what owns graph proof rows?"
 date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz; docs/audits/arithmetic-graph-width-publication-20261028.json.gz;
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-registry-20261028.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/222[0-3]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/222[0-4]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
 ---
 
 Current owners are above. Exact original cards/proofs (baseline/digests) remain in `docs/audits/width-card-evidence-20261028.json.gz`; recover:
 
 `python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/direct-declared-width-consumers.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
-Parser's detached Signal declared_width_source retains expression/resolved_width/original signal;
-named types keep their contract; module parameter getters clone. Source text/equal widths lack
-parameter/static lookup provenance.
+Parser's Signal declared_width_source detaches expression/resolved_width/original signal; named types keep their contract.
+Module parameter getters clone; source text/equal widths lack parameter/static lookup provenance.
 The resettable receipt uses WIDTH1, explicit data_port parameter selection and an
 independent literal-width input. Only the selector has an authored tree. Both
 were formerly scalar HDL; captured Verilog-family ports now preserve symbolic
@@ -73,7 +73,7 @@ remain separately owned.
 Core binary_operand_max (T2198) binds helper/AST/ordered whole operands and source/result revisions.
 Scoped births publish on Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
 Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; equal widths install nothing.
-Owned bare-reference/final-width/classifier writes refresh births. Whole births stay unresolved; graph births retain original trees through owned substitution. Whole intrinsic events bind plain unsigned module operands without native/cache constraints. Owned width/registry/cache writes preserve events; collection success completes policy, failure/reset/reuse clears. Weak actual-row graph frames bind held transitive max events and owned normalizer writes before completed policy. Source attachments bind epoch/Core/helper/AST/input/registry identity/state; cloned/foreign/stale inputs withhold. Frozen/current bitwise/arithmetic events emit after source proof/final target reproof; complete target inputs recheck.
+Owned bare-reference/final-width/classifier writes refresh births. Whole births stay unresolved; graph births retain original trees through owned substitution. Whole intrinsic events bind plain unsigned module operands without native/cache constraints. Owned width/registry/cache writes retain events; collection success completes policy, failure/reset/reuse clears. Weak actual-row graph frames bind held transitive max events and owned normalizer/registry writes before completed policy. Prepared blocks own rows through render. Source attachments bind epoch/Core/helper/AST/input/registry identity/state; cloned/foreign/stale inputs withhold. Frozen/current bitwise/arithmetic events emit after source proof/final target reproof; complete target inputs recheck.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

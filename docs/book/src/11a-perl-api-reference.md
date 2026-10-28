@@ -261,8 +261,18 @@ child result. Operation-local observations retain no owner graph. Abort/new
 epochs clear holders. Actual normalizer width/source publications now checkpoint
 current graph proof and refresh only those allocator/registered fields. Source,
 constraint and row-identity changes withhold; publication failure clears partial
-holders and fresh backend reuse can capture new proof. Registry copies and
-prepared-view publication still require their separately owned integration; no completed
+holders and fresh backend reuse can capture new proof. Registry merges/rebuilds
+now checkpoint all current graphs before taking any child holder. Each actual
+assignment witnesses its replacement identity; dependency-ordered restoration
+starts after all rows and whole-reference holders are installed. Equal foreign
+row copies, copied view maps, source changes and partial installs withhold.
+Later matching copies cannot recreate missing proof. Failed collection clears
+partial holders and fresh reuse can qualify new events. The prepared block
+owns the original row map through rendering, alongside a distinct filtered map
+whose entries are the same actual rows. The graph view remains weak: real
+prepare/render observations retain current proof, and the view clears when
+ordinary generation releases that block. The existing handoff needs its
+focused lifecycle qualification before completed policy; no completed
 graph policy, graph target event or symbolic graph range is exposed yet.
 
 The book search covers the manual and this guide. Use the API index, coverage

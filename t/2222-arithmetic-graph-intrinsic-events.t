@@ -115,8 +115,8 @@ subtest 'actual first intrinsic graph events are separate from completed policy'
             my $name = $p->{observed}{name};
             is($p->{ctx}{backend_sv_intermediate_width_support}->intermediate_width_allocation($name, $p->{all}{$name}),
                 undef, 'intrinsic graph event does not complete selected policy');
-            is($p->{ctx}{backend_sv_intermediate_width_support}->factorized_graph_inference_event($name, $p->{all}{$name}),
-                undef, 'unqualified later registry publications do not refresh graph event');
+            is_deeply($p->{ctx}{backend_sv_intermediate_width_support}->factorized_graph_inference_event($name, $p->{all}{$name}),
+                $record, 'qualified registry publication preserves proof while the fixture retains actual rows');
             my $range = $width == 1 ? '' : '[7:0] ';
             like($p->{hdl}, qr/^  wire \Q$range$name\E;$/m, 'outer graph HDL remains selected numeric range');
         }
