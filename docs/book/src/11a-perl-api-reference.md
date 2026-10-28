@@ -196,6 +196,17 @@ The runnable default-one source is `t/data/ial0-direct-symbolic-arithmetic.fsm`:
 ./bin/fsmgen --quiet --strict --language verilog --output .artifacts/verilog/direct-arithmetic.v t/data/ial0-direct-symbolic-arithmetic.fsm
 ```
 
+The remaining computed-operand boundary is visible in `(+ A B C)` and
+`(+ A (* B C))`: the whole-source inner helper has a proved generic range,
+while the outer arithmetic helper still retains its selected numeric width.
+`(& A B C)` creates a source-owned nested AST with a numeric helper too.
+These forms do not yet provide parameter-correct helper propagation; use the
+bounded whole-operand kernels above only within their stated relationship.
+Computed arithmetic graph ownership is next, followed by n-ary source-holder
+proof. Logical/comparison wrappers retain one-bit results; that scalar result
+alone supplies no allocation proof for a vector operand. Full override/runtime
+qualification remains deferred.
+
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 

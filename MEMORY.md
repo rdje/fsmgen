@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
-- next_action: Inventory residual actual scalar/unary/n-ary/nested width constraints after bounded arithmetic emission, then split the next roadmap-aligned producer/proof/consumer slices.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2`
+- next_action: Split actual computed arithmetic graph ownership into producer/inference, canonical transitive proof and emission/final-closure leaves before changing code; preserve every independent constraint.
 - in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

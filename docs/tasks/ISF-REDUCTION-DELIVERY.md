@@ -2401,11 +2401,45 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=21. Native comparison permits only arithmetic ranges/default-one logical gates; complete fixed/bitwise/scalar/source/producer/event controls conserve. Strict source check/SV/Verilog and book/POD pass. Final-index hook qualifies commit; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining scalar/unary/n-ary/nested constraints and select other shapes.`
   Acceptance: `After the first arithmetic kernel, inventory residual actual scalar comparison/logical and admitted unary/n-ary/nested graphs. Preserve independent result/operand widths and value semantics, complete current provenance and explicit unsupported boundaries. Split necessary producer/proof/consumer tasks rather than guessing ancestry. No optional inversion, unqualified binary VHDL or early full verification. Close .2.3 only after required relationships are implemented or precisely qualified refusals, then select concat/select/shift .3.4.3.3.`
-  Verification: `pending implemented arithmetic kernel and residual inventory`
+  Verification: `Bounded arithmetic is implemented with focused checks. .1 identifies numeric computed arithmetic and nested source-bitwise roots; .2 owns computed graph repair, .3 source n-ary and .4 scalar/independent constraints. All remain required before family closure; no full .6 claim.`
   Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.1`
+  Status: `done`
+  Goal: `Select residual actual scalar and computed-operand graph boundaries.`
+  Acceptance: `After bounded whole-operand arithmetic emission, probe documented logical/comparison/reduction controls and n-ary/nested bitwise/arithmetic source graphs through real parsing, collection, current allocation and final target events at default one/eight. Retain exact source/HDL-or-refusal, actual AST class/operator/text, policies and source-kind conservation; distinguish scalar results from vector computed relationships. Do not infer ancestry from numeric equality or add unsupported unary complement/inversion. Use the bounded inventory to register the next producer/proof/consumer work, update canonical fact/book/frontier, and commit without broad CI or changing behavior.`
+  Verification: `Actual source graph inventory identifies scalar wrappers, current generic whole-source child helpers, numeric computed arithmetic roots and source-owned nested bitwise roots at defaults one/eight. Typed defining/runtime edge observation preserves all initial products and source kinds. Independent high-bit integer sizing witnesses show why default-only checks miss outer truncation; external override/runtime .6 is explicitly deferred. Re-derive actual graphs; falsify scalar/child/root/typed-edge contrasts; durability docs/audits/residual-operator-inventory-20261028.json.gz. Next .2 owns exact computed graph producer/proof/consumer work, then .3 source n-ary and .4 residual closure.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.1: select computed-operand graph frontier`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S binary_operand_max_shape -- perl/FSM/HDL/ASTFactorization.pm identifies 5f3af7c43; git log -S 'does not admit computed operand' -- perl/FSM/DirectDeclaredWidthSupport.pm identifies c3627ca11. Actual typed graph fixtures show current inner policies/ranges but no outer computed allocation; n-ary Core holders keep nested ASTs.
+  - [x] **ADDRESSED (verified)** — Retain exact actual graph/source/HDL/event observations and independent sizing witnesses, then register owned prioritized computed arithmetic, source n-ary and scalar/constraint successors. Synchronize book/current fact/frontier without claiming the pending graph implementation is fixed.
+  - [x] **NO REGRESSION** — Exact loaded-owner Git/current hashes and full initial-versus-typed-edge product/source equality pass; knowledge-map: OK passes for current cards and cached/direct queries. No production behavior changes. Book build and normal mandatory doctrines gate the metadata-bearing inventory; full .6 remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2`
+  Status: `pending`
+  Goal: `Repair numeric-width freezing across actual computed arithmetic helper graphs.`
+  Acceptance: `Reproduce (+ A B C), (- A B C) and (+ A (* B C)) with plain A/B/C sized by the same captured W. Current inner helpers have current policies/symbolic ranges but outer computed-operand helpers have no allocation policy and retain numeric widths; a later W override can truncate their results and guard truth. Split exact actual graph birth/inference ownership, canonical transitive source/target proof and actual emission/final closure before code. Bind typed ordered edges to current collected helper identities and dependency epochs; preserve independent numeric floors/literal/type/constraint semantics, detect cycles and reject stale/foreign/copied graph claims. Do not infer equivalence from names, equal defaults or an already printed child range. Focused source/target/lifecycle checks and book/fact sync per slice; no early full .6.`
+  Verification: `Actual default-one/eight reproductions and full products: docs/audits/residual-operator-inventory-20261028.json.gz. Highest next residual implementation priority.`
+  Commit: `pending exact graph producer/proof/consumer split`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3`
+  Status: `pending`
+  Goal: `Qualify actual n-ary and nested source-owned bitwise width relationships.`
+  Acceptance: `After computed arithmetic graph ownership, reproduce (& A B C): the parser creates one Core source helper with a nested binary AST, no whole-binary allocation and a numeric result declaration. Preserve actual ordered AST tree/leaf slots, operators and source-holder independent constraints. Split explicit producer/proof/consumer tasks; admit proved complete mutable relationships or retain precise refusal, never flatten ancestry from source text or selected width. Include negated n-ary wrappers, duplicate/order/currentness/default-one controls; paired VHDL and full .6 stay separate.`
+  Verification: `Actual source-owned nested-root reproduction: docs/audits/residual-operator-inventory-20261028.json.gz. Scheduled after computed arithmetic graph ownership.`
+  Commit: `pending source-holder slices`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4`
+  Status: `pending`
+  Goal: `Close residual scalar and independent literal/type constraints without inventing vector ancestry.`
+  Acceptance: `After computed arithmetic and source n-ary kernels, verify actual logical/comparison/negated wrappers retain one-bit results and whole-value operands with current graph provenance. Preserve separately sized literals, signed/type/state/opaque/floor constraints and canonical supported boundaries; implement required relationships or qualify precise refusals rather than silently promoting from defaults. Optional inversion remains deferred. Reconcile this family before selecting concat/select/shift; full external/corpus/override/runtime .6 remains deferred.`
+  Verification: `Initial scalar and composite controls retain one-bit results in the residual inventory; full family implementation closure is still pending.`
+  Commit: `pending residual closure`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
   Status: `pending`
