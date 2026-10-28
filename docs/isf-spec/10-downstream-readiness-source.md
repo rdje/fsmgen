@@ -334,7 +334,10 @@ General source rules:
   Parser-hoisted multi-operand bitwise helpers now retain exact selected result
   widths before registration, preserving whole-vector guard truth and actual
   declaration agreement. This repairs numeric metadata; it creates no symbolic
-  relationship for general computed helpers or new VHDL profile.
+  relationship for general computed helpers. Fixed VHDL scalar logical guards
+  now fold whole-vector operands before scalar combination, with exact consumed
+  helper reservation and case-insensitive collision refusal. A selected fixed
+  native compiler/runtime witness passes; complete qualification remains open.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

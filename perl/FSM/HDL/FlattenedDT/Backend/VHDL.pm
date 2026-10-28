@@ -1078,8 +1078,25 @@ sub _sv_symbolic_condition_to_vhdl ($expr, $ctx, $negated = 0) {
         if (!$decl->{scalar}) {
             $operand = "std_logic_vector($operand)" if $decl->{signed};
             $operand = _vector_reduction_helper_name('|') . "($operand)";
+            $ctx->{required_vector_reduction_helpers}{'|'} = 1
+                if ref($ctx->{required_vector_reduction_helpers}) eq 'HASH';
         }
+        return $negated ? "not ($operand)" : $operand if $ctx->{scalar_logic_value};
         return "$operand = '" . ($negated ? '0' : '1') . "'";
+    }
+    if ($ctx->{scalar_logic_value} && $trimmed =~ /\A($identifier)\[([0-9]+)\]\z/) {
+        my ($name, $index) = ($1, $2);
+        my $decl = $decls->{$name};
+        my ($high, $low) = $decl ? @{$decl}{qw(msb lsb)} : ();
+        confess _unsupported('fixed logical bit operand requires an actual in-range vector selection')
+            unless $decl && !$decl->{scalar} && defined($high) && defined($low)
+                && $index <= $high && $index >= $low;
+        my $operand = "$name($index)";
+        return $negated ? "not ($operand)" : $operand;
+    }
+    if ($ctx->{scalar_logic_value} && $trimmed =~ /\A(?:([01])|1'[bBdDhH]([01]))\z/) {
+        my $operand = "'" . ($1 // $2) . "'";
+        return $negated ? "not ($operand)" : $operand;
     }
     my $selected = qr/$identifier(?:\[[0-9]+(?::[0-9]+)?\])?/;
     if ($trimmed =~ /\A\(\s*(~?)\s*([|&^])\s*($selected|\(\s*$selected\s*\))\s*\)\z/) {
@@ -1090,8 +1107,11 @@ sub _sv_symbolic_condition_to_vhdl ($expr, $ctx, $negated = 0) {
                 if $decl && exists($decl->{vhdl_type});
         }
         $complement = $complement ? '' : '~' if $negated;
-        return _sv_reduction_to_vhdl($trimmed, $complement, $operator, $operand, $decls, 1);
+        return _sv_reduction_to_vhdl($trimmed, $complement, $operator, $operand, $decls,
+            $ctx->{scalar_logic_value} ? 0 : 1);
     }
+    confess _unsupported("fixed logical assignment operand '$trimmed' requires separate expression qualification")
+        if $ctx->{scalar_logic_value};
     if (!_condition_uses_symbolic_declaration($trimmed, $decls)) {
         my $converted = _sv_condition_to_vhdl($trimmed, $ctx);
         return $negated ? "not ($converted)" : $converted;
@@ -1122,6 +1142,9 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
             ? map { _vhdl_decimal_equality_literal($_, $decl) } (1, 0)
             : ("'1'", "'0'");
         return $true . ' when ' . _sv_condition_to_vhdl($trimmed, $ctx) . ' else ' . $false;
+    }
+    if (my $logical = _fixed_vector_logical_assignment($trimmed, $ctx)) {
+        return $logical->{expression};
     }
     $trimmed = _sv_reduction_expressions_to_vhdl($trimmed, $ctx);
     confess _unsupported("bitwise complement expression '$expr' is outside the direct VHDL scaffold")
@@ -1183,6 +1206,24 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
         if $arithmetic_residue =~ /[+\-*\/%]/ || $arithmetic_residue =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _fixed_vector_logical_assignment ($expr, $ctx) {
+    return if $ctx->{boolean_context} || $expr !~ /&&|\|\||!(?!=)/ || _has_comparison_operator($expr);
+    my $decls = $ctx->{decls_by_name} || {};
+    my $target = _decl_for_lvalue($ctx->{target_lhs}, $decls);
+    return unless $target && $target->{scalar} && !exists($target->{vhdl_type});
+    return if _condition_uses_symbolic_declaration($expr, $decls);
+    my $uses_fixed_vector = grep {my $decl = $decls->{$_}; $decl && !$decl->{scalar}}
+        $expr =~ /\b([A-Za-z_][A-Za-z0-9_]*)\b/g;
+    return unless $uses_fixed_vector;
+    my %required;
+    my $expression = _sv_symbolic_condition_to_vhdl($expr,
+        {%$ctx, scalar_logic_value => 1, required_vector_reduction_helpers => \%required});
+    # Explicit reductions and selected bits are already scalar. Preserve their
+    # existing output when no whole-vector truth conversion was consumed.
+    return unless keys %required;
+    return {expression => $expression, required_helpers => \%required};
 }
 
 sub _sv_symbolic_assignment_to_vhdl ($expr, $ctx, $target) {
@@ -1444,6 +1485,11 @@ sub _required_vector_reduction_helpers ($body, $decls_by_name) {
     # same collision check covers both explicit and implicit reductions.
     $required{'|'} = 1
         if grep { exists($_->{vhdl_type}) } values %$decls_by_name;
+    for my $assignment (_parse_continuous_assignments($body)) {
+        my $logical = _fixed_vector_logical_assignment($assignment->{expr},
+            {decls_by_name => $decls_by_name, target_lhs => $assignment->{raw_lhs}});
+        $required{$_} = 1 for $logical ? keys %{$logical->{required_helpers}} : ();
+    }
     while ($body =~ /\(\s*~?\s*([|&^])\s*(?:([A-Za-z_][A-Za-z0-9_]*)|\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\))\s*\)/g) {
         my ($operator, $operand) = ($1, $2 // $3);
         my $decl = $decls_by_name->{$operand};
@@ -1454,16 +1500,16 @@ sub _required_vector_reduction_helpers ($body, $decls_by_name) {
 }
 
 sub _validate_vector_reduction_helper_names ($required, $module_name, @declaration_groups) {
-    my %declared_names = ($module_name => 1);
+    my %declared_names = (lc($module_name) => 1);
     for my $group (@declaration_groups) {
-        $declared_names{$_->{name}} = 1 for @$group;
+        $declared_names{lc($_->{name})} = 1 for @$group;
     }
 
     for my $operator (grep { $required->{$_} } ('|', '&', '^')) {
         my $helper_name = _vector_reduction_helper_name($operator);
         confess _unsupported(
             "vector reduction helper name '$helper_name' collides with a generated declaration"
-        ) if $declared_names{$helper_name};
+        ) if $declared_names{lc($helper_name)};
     }
 }
 
@@ -2126,6 +2172,17 @@ logical or compound profiles refuse. Paired declarations keep scalar results
 and generic operand vector rank; existing fold helpers iterate C<value'range>.
 Inputs retain their JSON kinds. This bounded source guard adds no raw symbolic
 admission or external compiler/override/runtime qualification.
+
+Fixed scalar logical assignments with known whole-vector operands reuse the
+structural condition parser in a private C<scalar_logic_value> mode. Whole
+vectors consume the existing OR fold; signed operands first convert to
+C<std_logic_vector>. Logical operators therefore combine scalar C<std_logic>
+values. Grouping and negation preserve. Fixed vector rank, actual declarations
+and static in-range bit selections remain authoritative; unqualified leaves
+refuse. Helper dependencies are collected from the same consumed expression
+before case-insensitive VHDL namespace validation. Scalar-only, compatible
+vector-data, explicit reduction and comparison paths preserve their existing
+products. This fixed profile adds no symbolic computed-shape authority.
 
 The internal preparation helpers consume a source contract, not attestation of
 arbitrary caller-made plans. Returned records retain no mutable plan graph;

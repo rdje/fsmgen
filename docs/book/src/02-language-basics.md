@@ -480,13 +480,18 @@ and nested/n-ary expressions retain their own result widths.
 
 ```bash
 ./bin/fsmgen --quiet --strict --output .artifacts/bitwise_vector_guards.sv t/data/ial0-bitwise-vector-guards.fsm
+./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/bitwise_vector_guards.vhd t/data/ial0-bitwise-vector-guards.fsm
 ```
 
 Focused checks pass for SystemVerilog generation at fixed and selected parameter
-defaults. A fixed VHDL scalar/vector logical guard probe still has a compiler
-type error, owned by `.3.4.3.2.1.3`. Symbolic relationships for general computed
-intermediates and complete external compiler/override/runtime qualification
-remain separate work.
+defaults. Fixed VHDL logical guards fold each whole vector to a scalar before
+combining it with state enables; negation and grouping preserve. The consumed
+fold helper is reserved before checking names in VHDL's case-insensitive namespace.
+The fixed example passes GHDL analysis and its
+[high-bit/disjoint-input witness](../../../t/data/bitwise_vector_guard_tb.vhd).
+This selected witness does not qualify parameter overrides or unknown values.
+Symbolic relationships for general computed intermediates and complete external
+compiler/override/runtime qualification remain separate work.
 
 Example with nested and compound guards:
 

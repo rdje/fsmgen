@@ -21,23 +21,21 @@ reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2184-direct-vhdl-symbo
 ---
 
 DirectParameterEmitter uses proved observations and actual namespace/mapping.
-Related consumers/roots use natural rendering; equal defaults create no relation.
-Independent literal/vector/negative defaults keep static conversion and name normalization.
-Membership, case-insensitive conflicts and dependency order (alphabetical ties) are
-checked; lexical scope survives copies. Related root renaming, stale captures,
-cycles and unsupported natural relations refuse. Legacy declarations gain no scope.
+Related roots/consumers render natural; equal defaults prove no relation.
+Independent literal/vector/negative defaults retain static conversion/normalization.
+Membership, case-fold conflicts and dependency order (alphabetical ties) are checked;
+lexical scope survives copies. Related root renaming, stale captures, cycles and
+unsupported natural relations refuse. Legacy declarations gain no scope.
+Actual declarations and independent expectations qualify preparation; caller-made
+namespaces attest no provenance. T2154 checks native module/declaration/mapping
+coupling and supported/refused controls. Raw conversion stays integer/static;
+full external override/runtime/transport checks remain .6.
 
-Normalized declarations and independent expectations qualify preparation;
-caller-made namespaces attest no provenance. Native module/declaration/mapping
-coupling has T2154 and supported/refused controls. Raw conversion stays
-integer/static; full external override/runtime/transport checks remain .6.
-
-Paired optional assignment_analysis/target_declarations qualify captured widths
-against the same namespace through DirectDeclaredWidthSupport. Width-only and
-default-referenced roots join natural rendering; equal independent literals,
-vectors and negative defaults stay static. Missing/stale/renamed/inconsistent
-inputs refuse; omitting both preserves default-only preparation. Source-aware
-conversion supplies this context; remaining computed shapes are .3.4-owned.
+Paired assignment_analysis/target_declarations qualify captured widths against the
+same namespace via DirectDeclaredWidthSupport. Width-only/default-referenced roots
+render natural; independent literals/vectors/negative defaults stay static. Missing,
+stale, renamed or inconsistent inputs refuse. Omit both for default-only preparation.
+Source generation supplies context; remaining computed shapes belong to .3.4.
 
 DirectDeclarationPlan now pairs original emitted SystemVerilog ranges with normalized VHDL ranges
 and types, re-proving complete actual source/target declarations before preparing natural generics
@@ -82,20 +80,22 @@ expressions refuse before numeric default logic. T2183 checks actual paired port
 independent whole strings, caller kinds and static/refusal controls. Reverify: `prove -Iperl
 t/2183-direct-vhdl-assignment-rank.t t/2180-direct-vhdl-target-rank.t`.
 
-Actual source-aware generation now joins the completed collector, assignment analysis and normalized
-paired plan. T2184/T2188 qualify bounded unsigned source ranges, target-length transfers/zero resets,
-source capture kinds and backend reuse. Complete flagged compiler
-transition families with actual fixed state targets are separate from Core data Signal ownership.
+Source generation joins completed collector, analysis and normalized paired plan.
+T2184/T2188 check bounded unsigned ranges, target-length transfers/zero resets,
+caller kinds and backend reuse. Complete flagged compiler transition families with
+fixed state targets are separate from Core data Signal ownership.
 Register next/q uses proved parents; scalar whole unsigned reductions use actual AST/event proof
 (T2191). Other intermediates/pulses and no-transition shapes refuse (.27). Reverify:
 `prove -Iperl t/2188-direct-vhdl-register-helpers.t t/2191*.t`. Raw symbolic text gains no source
 authority; full transport/compiler/runtime qualification remains .6. See
 t/data/ial0-direct-symbolic-comb.fsm.
 
-Task .27 owns the missing no-transition next_state drive: SV allocates state registers,
-but only transitions create that assignment family. Its source, loci and unobserved
-dynamic impact remain in .27/source-activation audit. Symbolic source refuses;
-fixed-source behavior remains unrepaired.
+Task .27 owns missing no-transition next_state drive: state registers allocate,
+but only transitions add that assignment family. Source/loci/unobserved dynamic impact
+remain in .27/source-activation audit. Symbolic refuses; fixed behavior is unrepaired.
 
-Fixed logical scalar/vector guards currently emit ill-typed `and` (GHDL diagnosis).
-Task .3.4.3.2.1.3 owns the immediate repair; the .1 width-fix receipt retains proof.
+Fixed scalar/vector logical guards formerly emitted ill-typed `and`. T2193 now
+binds actual fixed declarations, whole-vector OR folds, scalar operators and
+case-fold helper refusal; signed operands cast first. Scalar/data/comparison
+products preserve. The selected native GHDL witness passes; full .6 stays open.
+Reverify T2193/T2182/T2191; fixed-vhdl-vector-logic audit retains RED/tool evidence.
