@@ -40,7 +40,7 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
@@ -60,9 +60,12 @@ mint it. Native/cached/opaque target constraints, missing/type/stale inputs and
 supported source mutation during inference withhold, including equal defaults.
 Plain capsules add no mutable owner graph. Ordinary numeric selection preserves.
 
-This bounded producer records the initial inference point. Later resolver calls
-advance its revision; registry copies also invalidate the held frame. Owned
-cache/normalization completion and target-event/range joins remain successors.
+The actual normalizer width publication and consolidated registry rebuild carry
+a still-current event through exact before/after checks. Registry-copy proof is
+captured before the owned reset, and binds the exact newly installed row and
+merged metadata. Independent floors, stale/copy identities and source mutations
+cannot refresh. Later resolver calls still advance its revision and withhold;
+cache/completion and target-event/range joins remain successors.
 
 =cut
 
@@ -105,6 +108,60 @@ sub _record_factorized_inference ($self, $signal_name, $signal_info, $width, $so
     }
     $self->{_width_inference_events}{$signal_name} = $holder
         if JSON::PP->new->canonical->encode($frame) eq $holder->{state};
+}
+
+sub _take_current_factorized_inference ($self, $signal_name, $signal_info) {
+    my $record = $self->factorized_width_inference_event($signal_name, $signal_info);
+    my $holder = delete $self->{_width_inference_events}{$signal_name};
+    return unless $record;
+    return JSON::PP->new->decode(JSON::PP->new->encode($holder));
+}
+
+sub _restore_factorized_inference ($self, $signal_name, $signal_info, $holder, $expected) {
+    return unless $holder;
+    my $current = eval {FSM::IntermediateWidthAllocationSupport->prepare_factorized_inference(
+        context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
+        selected_width => $holder->{record}{selected_width}, epoch => $self->{_width_inference_epoch},
+        revision => $self->{_width_inference_revisions}{$signal_name})} or return;
+    my $json = JSON::PP->new->canonical;
+    return unless $json->encode($expected) eq $current->{state}
+        && $json->encode($holder->{record}) eq $json->encode($current->{record});
+    $self->{_width_inference_events}{$signal_name} = $current;
+}
+
+sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publish) {
+    my $holder = $self->_take_current_factorized_inference($signal_name, $signal_info);
+    my $expected = $holder ? JSON::PP->new->decode($holder->{state}) : undef;
+    if ($expected) {
+        for my $row ($expected->{registered}, $expected->{factorizer_entry}) {
+            next unless $row;
+            $row->{width} = $signal_info->{width};
+            $row->{width_source} = $signal_info->{width_source};
+        }
+    }
+    $publish->();
+    $self->_restore_factorized_inference($signal_name, $signal_info, $holder, $expected);
+}
+
+sub _checkpoint_factorized_registry_copies ($self, $all_intermediate_signals, $replace_registry = 0) {
+    my %checkpoints;
+    for my $name (keys %{$all_intermediate_signals || {}}) {
+        my $info = $all_intermediate_signals->{$name};
+        my $holder = $self->_take_current_factorized_inference($name, $info) or next;
+        my $copy = eval {FSM::IntermediateWidthAllocationSupport->factorized_registry_copy_state(
+            $info, $replace_registry ? undef : $self->{flattened_dt}{intermediate_signals}{$name})} or next;
+        $checkpoints{$name} = {holder => $holder, copy => $copy};
+    }
+    return \%checkpoints;
+}
+
+sub _finish_factorized_registry_copy ($self, $name, $info, $checkpoint, $replacement) {
+    return unless $checkpoint && ref($replacement) eq 'HASH'
+        && ref($self->{flattened_dt}{intermediate_signals}{$name}) eq 'HASH'
+        && $self->{flattened_dt}{intermediate_signals}{$name} == $replacement;
+    my $expected = JSON::PP->new->decode($checkpoint->{holder}{state});
+    $expected->{registered} = {%{$checkpoint->{copy}}, identity => sprintf('%x', refaddr($replacement))};
+    $self->_restore_factorized_inference($name, $info, $checkpoint->{holder}, $expected);
 }
 
 =head2 new

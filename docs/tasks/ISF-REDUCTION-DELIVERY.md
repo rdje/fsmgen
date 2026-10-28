@@ -2338,10 +2338,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=6 for T2205/T220/T225. Authenticated ordinary source/raw-Core HDL/declaration/row/public-width/birth/source-policy products conserve; legacy injected width providers keep their contract. POD/book/source freshness and normal doctrine hook gate commit. Owned cache/copy completion, target/range joins and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve current actual inference policy only through owned cache and normalization writes/copies.`
   Acceptance: `After actual intrinsic event, qualify exact resolver cache reads and normalizer registry copies with current before/after proof. Bind all canonical target width constraints, source identity/type/width state and actual object/AST membership; unknown copied records or new independent native/cached/context floors withhold. Surface only completed current policy for the later target-event join, preserve raw/native ordinary products and caller kinds, synchronize POD/book/fact and commit.`
-  Verification: `pending actual inference event`
+  Verification: `Initial event producer is committed at f046c1af9. Exact pipeline inspection also finds a whole backend registry reset immediately before its second sync; capture current proof before that owned reset and qualify the actual resulting copy, rather than refreshing after an unexplained replacement. This leaf owns known publications/cache reads, completion/failure boundaries and focused before/after controls.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.1`
+  Status: `done`
+  Goal: `Carry current actual intrinsic events through owned width publication and exact registry rebuild.`
+  Acceptance: `Capture current held proof before each known operation, project only actual width/source publications or exact merged registry-copy fields/identity, and compare all remaining state afterward. Capture before the actual registry reset. Reject absent/stale/copied events and independent metadata/source mutations, including equal defaults. Keep plain detached capsules, native/source numeric HDL and injected-provider contracts unchanged. Focused actual normalizer/sync controls, POD/book/fact and commit. Later resolver/cache calls still invalidate until .2; no completed policy or target range admission.`
+  Verification: `Actual normalizer width publication now projects only width/source updates to the existing backend/canonical rows. Final sync checkpoints all current events before its owned reset, projects the exact merged copy, binds the actual replacement identity and compares the complete held frame. No event is minted or refreshed from independent floors, stale metadata, equal clones, source mutation or changes inside the copy window. Final predecessor modules are loaded from exact repository-local Git copies and authenticated; T2206 fails at both actual boundaries. Current T2206/T2205/T225 pass All tests successful Files=3 Tests=9, including legacy injected-provider normalization. Complete authenticated source/raw-Core HDL (Date-only), declarations, row metadata, source policies and factorizer births compare exactly. Capsules/getters detach and contain only JSON data. Re-derive actual owned operations/full frames; falsify predecessor and equal-floor/identity/constraint/source mutation controls; durability source/test/POD/book/fact and docs/audits/factorizer-width-publication-20261028.json.gz. Initial fixture accessor/list-context mistakes and corrected genuine RED are retained rather than treated as product defects. Later resolver calls still invalidate; cache/completion .2, target/range joins and full .6 remain open.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.1: preserve owned width publications`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated exact predecessor final test reports Failed test normalization preserves actual intrinsic event at ./t/2206-factorizer-width-publication.t line 63, and registry preserves actual intrinsic event at the same locus. The actual normalizer changes canonical/backend metadata and final collection resets/rebuilds the registry, invalidating the initial complete frame.
+  - [x] **ADDRESSED (verified)** — Current proof is removed before known publications, projected over only their named fields and exact new row, and restored only after whole-frame agreement. Checkpointing precedes the actual reset. Independent equal floors, clones, constraints and matching source writes before/during copy cannot borrow refresh. Complete native/source products conserve.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for T2206/T2205/T225; the initial-event/cache-refusal and injected legacy-provider contracts preserve. Exact authenticated source/raw-Core HDL/declarations/row/source-policy/birth products match. POD/book/source freshness and normal doctrine hook gate this slice; cache/completion and full qualification remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Qualify exact cache reads and successful completion/failure boundaries for selected policy.`
+  Acceptance: `After .1, preserve only current held events through exact owned resolver-cache writes and revisions; native/new independent floors, opaque copies, source/birth changes and recursive fallback withhold. Expose completed policy only after successful normalization/registry handoff, clear on failure/reuse, preserve source/raw-Core products, synchronize POD/book/fact and commit. Full external qualification stays .6.`
+  Verification: `pending .1`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.3`

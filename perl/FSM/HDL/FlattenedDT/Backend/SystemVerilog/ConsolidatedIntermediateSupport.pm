@@ -325,12 +325,19 @@ sub merge_fsmgen_parsed_intermediate_signals ($self, $all_intermediate_signals, 
 
 Mirror the merged consolidated intermediate set back into the live
 C<intermediate_signals> registry so downstream recovery helpers can recognize
-every helper name while resolving dependency fallbacks.
+every helper name while resolving dependency fallbacks. The optional private
+C<replace_registry> flag owns the existing final rebuild: current width events
+are checkpointed before reset and revalidated against the exact installed copy.
+Injected legacy width providers retain the ordinary copy behavior.
 
 =cut
 
-sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals) {
+sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $replace_registry = 0) {
     my $ctx = $self->{flattened_dt};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $checkpoints = $width_support && $width_support->can('_checkpoint_factorized_registry_copies')
+        ? $width_support->_checkpoint_factorized_registry_copies($all_intermediate_signals, $replace_registry) : {};
+    $ctx->{intermediate_signals} = {} if $replace_registry;
     $ctx->{intermediate_signals} //= {};
 
     for my $signal_name (keys %{ $all_intermediate_signals || {} }) {
@@ -340,11 +347,15 @@ sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals) {
             if defined($existing) && ref($existing) ne 'HASH';
         $existing ||= {};
 
-        $ctx->{intermediate_signals}{$signal_name} = {
+        my $replacement = {
             %$existing,
             %$signal_info,
             name => $signal_name,
         };
+        $ctx->{intermediate_signals}{$signal_name} = $replacement;
+        $width_support->_finish_factorized_registry_copy(
+            $signal_name, $signal_info, $checkpoints->{$signal_name}, $replacement)
+            if $checkpoints->{$signal_name};
     }
 }
 
@@ -479,8 +490,7 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     my $pruned_count = $self->prune_sampled_value_intermediate_chains(\%all_intermediate_signals);
     fsm_debug("CONSOL_INTER_SIG: [PRUNE] Removed $pruned_count sampled-value intermediate helper(s)", 3)
         if $pruned_count;
-    $ctx->{intermediate_signals} = {};
-    $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
+    $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals, 1);
 
     return \%all_intermediate_signals;
 }

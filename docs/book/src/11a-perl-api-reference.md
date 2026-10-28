@@ -83,8 +83,11 @@ candidate row keys preserve. A later cached width remains independent; birth
 records carry no selected policy. The width resolver now captures selected
 intrinsic-max events at the first qualified AST inference, with complete plain
 unsigned operands and no native/cached target constraint. Copied/stale inputs and
-matching supported source mutations withhold. Owned normalization/cache
-preservation and completed target joins remain pending.
+matching supported source mutations withhold. Exact normalizer width/source
+publications and the registry rebuild now preserve current events, checking
+proof before reset and binding the actual replacement row. Independent floors
+and copied/stale metadata cannot refresh. Cache reads, successful completion
+and target joins remain pending.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

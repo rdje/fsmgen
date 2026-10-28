@@ -240,6 +240,15 @@ sub prepare_factorized_inference ($class, %args) {
     return {record => $record, state => JSON::PP->new->canonical->encode($frame)};
 }
 
+sub factorized_registry_copy_state ($class, $signal_info, $existing) {
+    return unless ref($signal_info) eq 'HASH'
+        && (!defined($existing) || ref($existing) eq 'HASH');
+    my $copy = {%{$existing // {}}, %$signal_info};
+    my $state = _factorized_metadata_state($copy, $signal_info->{ast}) or return;
+    delete $state->{identity};
+    return JSON::PP->new->decode(JSON::PP->new->encode($state));
+}
+
 sub current_factorized_inference ($class, %args) {
     my $holder = $args{holder};
     return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state';
@@ -350,11 +359,19 @@ constraints cannot supply it from numeric equality. State includes the epoch,
 call revision, actual input/canonical/backend metadata identities and source
 mutation revisions. This enables no symbolic range or target profile.
 
+=head2 factorized_registry_copy_state
+
+Project only the width/type/AST fields selected by the actual merged registry
+copy, as detached plain data without a replacement identity. The publisher
+checks current proof before reset/copy, binds the newly created row identity
+and compares the full resulting frame. This projection alone mints no event.
+
 =head2 current_factorized_inference
 
 Return the detached selected record only while the entire held frame agrees.
-Subsequent cache calls, registry copies, source writes or epoch reset withhold
-until separately qualified. Owned cache/normalization preservation remains a
-successor; this observation is not completed generic allocation admission.
+Subsequent cache calls, unknown registry copies, source writes or epoch reset
+withhold. The actual normalizer and registry publisher qualify their own exact
+transitions; cache/completion remains a successor. This observation is not
+completed generic allocation admission.
 
 =cut

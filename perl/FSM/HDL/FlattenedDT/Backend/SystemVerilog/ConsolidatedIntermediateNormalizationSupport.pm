@@ -73,6 +73,8 @@ live-usage metadata across the consolidated signal set so downstream phases can
 consume one AST-first cache.
 The default width owner starts a fresh private inference epoch. Injected legacy
 width providers keep their original method contract and supply no new provenance.
+The default owner checks current proof around the exact width/source publication;
+other metadata and source changes cannot borrow that refresh.
 
 =cut
 
@@ -105,16 +107,23 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
     # any expression so a copied provisional value cannot drive simplification.
     for my $signal_name (keys %{$all_intermediate_signals || {}}) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        for my $registry (
-            $ctx->{intermediate_signals},
-            ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals})
-                ? $ctx->{ast_factorizer}->{intermediate_signals}
-                : undef,
-        ) {
-            next unless ref($registry) eq 'HASH';
-            next unless ref($registry->{$signal_name}) eq 'HASH';
-            $registry->{$signal_name}{width} = $signal_info->{width};
-            $registry->{$signal_name}{width_source} = $signal_info->{width_source};
+        my $publish = sub {
+            for my $registry (
+                $ctx->{intermediate_signals},
+                ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals})
+                    ? $ctx->{ast_factorizer}->{intermediate_signals}
+                    : undef,
+            ) {
+                next unless ref($registry) eq 'HASH';
+                next unless ref($registry->{$signal_name}) eq 'HASH';
+                $registry->{$signal_name}{width} = $signal_info->{width};
+                $registry->{$signal_name}{width_source} = $signal_info->{width_source};
+            }
+        };
+        if ($width_support->can('_with_factorized_width_publication')) {
+            $width_support->_with_factorized_width_publication($signal_name, $signal_info, $publish);
+        } else {
+            $publish->();
         }
     }
 
