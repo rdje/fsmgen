@@ -9,22 +9,21 @@ answers:
   - "does the RAM guard preserve piped and file standard input?"
   - "why can guarded stdin Python exit successfully without running its program?"
   - "why did the static inventory exceed the RAM guard?"
-date: 2026-10-18
+date: 2026-10-29
 status: current
 tags: [agent-runtime, ram, process-safety, prove, fsmgen, continuity]
-evidence: scripts/run_with_ram_guard.sh; README.md; COMMIT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/2011-ram-guard-stdin.t; docs/audits/ram-guard-stdin-maintained-use-20260930.json
+evidence: scripts/run_with_ram_guard.sh; README.md; COMMIT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; t/2011-ram-guard-stdin.t; docs/audits/ram-guard-stdin-maintained-use-20260930.json; docs/audits/ram-race-20261029.json.gz
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2011-ram-guard-stdin.t t/1595-agent-runtime-ram-guard-macos-metric.t t/1811-ram-guard-fixture-runtime.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
 ---
 
-Heavy Perl/prove/fsmgen needs `scripts/run_with_ram_guard.sh` or equivalent; defaults:
-88% host/4096 MiB per descendant, below the user's 90% danger zone. Trips stop
-broad work: log the caveat and use focused checks; another cap requires the user.
+Heavy Perl/prove/fsmgen: `scripts/run_with_ram_guard.sh` or equivalent.
+Defaults: 88% host/4096 MiB/descendant (user danger 90%). Trips require logged
+caveats and focused checks; cap changes require user. Fork races can outlive exit137.
 
 Stdin preserves pipe/file bytes, EOF, interpreter programs and independent fds.
-Bare asynchronous Bash used `/dev/null`, allowing zero exit without execution.
-T2011 recovers ce4d0029028a3e25f517ea93632cf50f2712354a as independent
-failure control; identical repaired inputs
-pass alongside cutoff/telemetry/signal/cleanup controls.
+Bare async Bash used `/dev/null`: zero exit could mean no execution.
+T2011 recovers ce4d0029028a3e25f517ea93632cf50f2712354a: independent failure control.
+Repaired inputs pass cutoff/telemetry/signal/cleanup controls.
 
 The fixed-revision audit covers tracked root-repository basename references and explicit
 continued stdin recipes. Rejected empty captures use named-script evidence.

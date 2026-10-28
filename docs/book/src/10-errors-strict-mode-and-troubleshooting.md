@@ -597,8 +597,14 @@ printf '%s\n' 'print "guarded stdin\n";' | scripts/run_with_ram_guard.sh -- perl
 
 The command prints `guarded stdin`. Guard diagnostics go to standard error, and
 the command's exit status is preserved. The memory cutoffs remain 88% of host
-occupied capacity and 4096 MiB RSS per descendant. A cutoff stops the command
-tree and returns the guard's documented failure status.
+occupied capacity and 4096 MiB RSS per descendant. A cutoff returns exit 137.
+
+An observed fork race can leave a child running after that return: the current
+PID-tree snapshot can miss a newly spawned child and lose it when its parent
+exits. Heavy runtime verification is suspended until owned descendant containment
+is repaired. The exact diagnosis and parked implementation are retained in
+`docs/audits/ram-race-20261029.json.gz`; after-cutoff products are unqualified.
+The limits remain unchanged. Exit status alone does not prove descendant cleanup.
 
 A receipt marked `complete` records all listed command outcomes. Qualification
 also requires successful command statuses and a complete suite result.

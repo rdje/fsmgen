@@ -2105,10 +2105,45 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful: initial T2232/T2231/T2230 Files=3, Tests=11; final T2232 including late-result constraint Files=1, Tests=3. Isolated source-snapshot current control under alternate traversal Files=1, Tests=1; both known-bad guards fail. Interrupted RAM runs remain non-results and exact recovery evidence retains. Default parent emission stays numeric; actual consumer/final closure and full .6 remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit actual graph ranges and independently compare completed selected target proof.`
   Acceptance: `Consume source declaration intent in the actual one-pass prepared declaration stage, retain a separate per-generation ledger, and expose graph vector rank to whole-value guard truth. Final assembly must independently prove complete selected graph target events and match every emitted root field. Preserve fixed/legacy profiles and atomic failure/reset/reuse; no VHDL broadening.`
-  Verification: `pending source declaration intent`
+  Verification: `Current source declaration intent agrees with completed target root proof. Own actual declaration consumer, separate graph ledger, symbolic guard rank and independent final selected target/root comparison before code. Initial T2233 runtime attempt was stopped before tests by the unchanged RAM guard at host 89.1 percent against 88; no test result is accepted. Later actual-emission smoke and T2233 completed successfully. T2232 negative source fixture now hits the intended frozen-contract refusal during live emission before its old oracle; move construction inside the refusal assertion, preserve the exact relationship diagnostic, and keep source-only T2229 setup on non-allocation guards. The combined run then hit RAM cutoff 88.0 percent; accept no unfinished results. Preserve interruptions and resume only unfinished checks under the same guard. T2230 and existing guard truth pass. The source-only T2229 fixture initially used unsupported logical-or syntax (ExpressionBuilder.pm line 1111); correct it to supported nested comparisons retaining all three Signals, without changing its relationship assertions. Also correct the stale API-reference sentence that still marks canonical transitive proof pending although .2.4 closed; keep remaining emission/full qualification boundaries accurate.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1`
+  Status: `active`
+  Goal: `Repair RAM-guard fork handoff and descendant containment before more graph verification.`
+  Acceptance: `P1 safety prerequisite. A real nested native runner survived an exit-137 host cutoff because PID enumeration missed a newly forked child, then root termination orphaned it before the second census. Preserve exact evidence, park the unrelated emission prototype, implement dedicated containment without touching unrelated processes or raising limits, and verify fork-race cleanup plus existing stdin/metric/status behavior before resuming graph work.`
+  Verification: `Actual guard PID 5307 reports termination of only 5307 at host 88.6, but the native child then prints five more case starts and COMPLETE after. Read-only process census confirms no owned comparison process remains. terminate_tree snapshots PPID descendants, signals the snapshot, then rediscovers from a possibly dead root. Those five after-cutoff products are unmonitored and cannot qualify the feature.`
+  Commit: `pending contained launcher repair`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.1`
+  Status: `done`
+  Goal: `Retain the actual guard-race diagnosis and park graph emission safely.`
+  Acceptance: `Preserve exact original/current feature files and all verification artifacts under immutable baseline ownership, quarantine five after-cutoff case products, retain stash identity and source restoration checks, and return the codebase to its committed feature baseline before the independent guard repair. No after-cutoff observation may be promoted to a passing guarded result.`
+  Verification: `docs/audits/ram-race-20261029.json.gz retains exact original/current source for all 14 feature paths, guard source, native driver/control source and raw logs. Stash 49ee82a10f04954555894c579d2db0eb830dc7d6 is an additional recovery path; independent SHA-256 checks confirm every implementation path matches immutable 803322211462ce7f2e8c3143dba69f5b7ee32947 again, with new files absent. Five after-cutoff products are quarantined; accepted before/after counts remain 26/21, with five retries explicitly pending. Re-derivation: retained actual log and current process/source census. Falsification: exact baseline/current hashes, quarantine membership and empty owned-process census. Durability: tracked packet, task, fact card, book and Git. No runtime repair or feature completion claim. Basic documentation/source-state checks pass; normal hooked gate follows.`
+  Commit: `this diagnosis/park slice`
+
+  Acceptance Checklist (diagnosis checkpoint):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual PID5307 cutoff log is followed by five child case starts and COMPLETE after; terminate_tree snapshots a PPID tree then rediscovers after parent death. git log -S 'pids=$(list_tree_pids' identifies introduction at 06c38fba703c53708875df14f501f1be3e94f891. The tracked packet retains the exact guard and drivers; the later empty owned-process census is termination evidence for this occurrence only.
+  - [x] **ADDRESSED (verified)** — Diagnosis/recovery only: independent SHA-256 checks return all 14 parked files to immutable 803322211 baseline, preserving exact prototype bytes and quarantined native observations. The book's false cleanup implication is corrected; actual containment repair remains the next leaf. Initial normal hook correctly refused missing fresh acceptance for the co-staged policy/disposition records; these boxes now own those records.
+  - [x] **NO REGRESSION** — knowledge-map: OK (1295 facts, 7151 unique questions, 7328 answer occurrences, 205 bounded topic shards; query parity verified). Book source references, claim inventory/disposition checks and diff whitespace checks pass. No production source delta or uncontained heavyweight run; mandatory hooked gate is consumed before advancing.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.2`
+  Status: `pending`
+  Goal: `Contain command descendants across fork and parent-exit races.`
+  Acceptance: `Establish an owned process group/session before command execution, preserve stdin and inherited descriptors, monitor and terminate owned descendants after parent loss, and refuse over-limit startup before launching work. Never signal the harness or unrelated processes. Preserve exact root status, metric and all resource limits; deterministic late-fork/orphan controls plus existing public runtime/stdin tests and docs precede a separate commit.`
+  Verification: `pending fresh implementation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.3`
+  Status: `pending`
+  Goal: `Restore the graph prototype and reverify only orphan-tainted or unfinished observations.`
+  Acceptance: `After the guard repair commits cleanly, restore the exact parked graph implementation paths without overwriting new guard task/memory records. Verify source hashes and owning frontier, re-run the five unmonitored after cases and unfinished CLI/rank/ledger controls under repaired containment, and finish the graph emission commit independently.`
+  Verification: `pending guard repair`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`

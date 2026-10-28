@@ -19,5 +19,5 @@
 
 _Agent heavyweight commands must use the RAM guard_
 
-- **date:** 2026-10-18 · **status:** current
+- **date:** 2026-10-29 · **status:** current
 - **source and verification:** [`docs/knowledge/agent-runtime-ram-guard.md`](../../docs/knowledge/agent-runtime-ram-guard.md)
