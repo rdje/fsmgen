@@ -45,7 +45,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use Scalar::Util qw(blessed);
-use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::IntermediateWidthAllocationSupport;
 
 =head2 new
 
@@ -242,21 +242,12 @@ sub _whole_signal_reduction ($node) {
 }
 
 sub _whole_signal_name ($operand) {
-    return unless blessed($operand) && ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
-    return if $operand->isa('FSM::AST::SignalRef') && ($operand->is_fsm_state_next || $operand->is_fsm_state_register);
-    my $name = $operand->isa('FSM::CoreAST::SignalRef') ? $operand->signal->name : $operand->name;
-    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
-    return $name;
+    return FSM::IntermediateWidthAllocationSupport->whole_signal_name($operand);
 }
 
 sub _whole_signal_binary_bitwise ($node) {
-    return unless blessed($node) && ($node->isa('FSM::AST::BinaryOp')
-        || $node->isa('FSM::CoreAST::BinaryOp') || $node->isa('FSM::HDL::SubstitutedBinaryOp'));
-    my $op = $node->operator;
-    return unless defined($op) && !ref($op) && $op =~ /\A[&|^]\z/;
-    my $left = _whole_signal_name($node->left) or return;
-    my $right = _whole_signal_name($node->right) or return;
-    return {kind => 'binary_bitwise', operator => $op, source_names => [$left, $right]};
+    my $shape = FSM::IntermediateWidthAllocationSupport->binary_whole_signal_shape($node) or return;
+    return {kind => 'binary_bitwise', %$shape};
 }
 
 =head2 scalar_reduction_origin
@@ -290,6 +281,10 @@ Return an optional detached binary XOR/AND/OR origin with both ordered whole
 SignalRef operands. Defining/runtime/cached ASTs and fresh selected rendering
 must agree. Duplicate operand slots preserve; text-only, logical, literal and
 compound operands gain no origin. This supplies no symbolic width/type proof.
+Shared typed recognition rejects explicit Core slices and runtime state wrappers;
+compatible intermediate references use their own interface without assumed
+Core Signal/state methods. Fresh rendering and actual declaration membership
+remain separate required joins.
 
 =cut
 

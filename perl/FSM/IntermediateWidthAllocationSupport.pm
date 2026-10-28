@@ -10,6 +10,38 @@ use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
+sub whole_signal_name ($class, $operand) {
+    return unless blessed($operand);
+    my $name;
+    if (UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef')) {
+        return if defined $operand->slice;
+        my $signal = $operand->signal;
+        return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+        $name = $signal->name;
+    } elsif (UNIVERSAL::isa($operand, 'FSM::AST::SignalRef')) {
+        return if $operand->is_fsm_state_next || $operand->is_fsm_state_register;
+        $name = $operand->name;
+    } elsif (UNIVERSAL::isa($operand, 'FSM::HDL::IntermediateSignalRef')) {
+        # This documented compatible reference intentionally has no Core
+        # Signal owner or runtime state-wrapper methods.
+        $name = $operand->signal_name;
+    } else {
+        return;
+    }
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    return $name;
+}
+
+sub binary_whole_signal_shape ($class, $node) {
+    return unless blessed($node) && ($node->isa('FSM::AST::BinaryOp')
+        || $node->isa('FSM::CoreAST::BinaryOp') || $node->isa('FSM::HDL::SubstitutedBinaryOp'));
+    my $operator = $node->operator;
+    return unless defined($operator) && !ref($operator) && $operator =~ /\A[&|^]\z/;
+    my $left = $class->whole_signal_name($node->left) or return;
+    my $right = $class->whole_signal_name($node->right) or return;
+    return {operator => $operator, source_names => [$left, $right]};
+}
+
 sub _width ($value) {
     return unless defined($value) && !ref($value) && $value =~ /\A[0-9]+\z/;
     my $text = "$value";
@@ -63,8 +95,8 @@ sub _capture ($signal) {
     return unless defined($operator) && !ref($operator) && $operator =~ /\A[&|^]\z/;
     my (@names, @sources, @references);
     for my $operand ($ast->left, $ast->right) {
-        return unless blessed($operand) && $operand->isa('FSM::CoreAST::SignalRef');
-        return if defined $operand->slice;
+        return unless blessed($operand) && UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef');
+        return unless __PACKAGE__->whole_signal_name($operand);
         my $source = $operand->signal;
         my $descriptor = _descriptor($source) or return;
         return if refaddr($source) == refaddr($signal) || $source->name eq $signal->name;
@@ -155,6 +187,22 @@ revocation revision must agree. Named/signed or other shapes remain unqualified.
 Context-widened/truncated results cannot assert this intrinsic-max contract.
 
 =head1 METHODS
+
+=head2 whole_signal_name
+
+Return a simple whole-reference name from an actual Core SignalRef with an
+actual Signal, runtime SignalRef, or documented compatible IntermediateSignalRef.
+Core slices, runtime state wrappers, invalid names and unrelated node classes
+withhold. Actual class ancestry distinguishes the compatible reference from the
+Core/runtime interfaces it advertises, so absent Signal/state methods are not
+assumed. No rendered-text fallback selects a name.
+
+=head2 binary_whole_signal_shape
+
+Return detached C<{operator, source_names}> syntax for canonical binary bitwise
+C<&>, C<|> or C<^> over those whole references. Core, runtime and substituted
+binary nodes retain both ordered slots, including duplicates. This shared shape
+boundary proves no allocator intent, object association, width or target legality.
 
 =head2 prepare_core
 

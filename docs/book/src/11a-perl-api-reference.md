@@ -77,6 +77,10 @@ N-ary, literal, sliced, signed, named and unknown shapes remain outside this
 binary whole-reference profile. Factorizer provenance, actual target-event joins
 and generic range consumers remain separate implementation steps.
 
+Whole-reference origins now share typed recognition: explicit Core slices and
+state wrappers withhold; compatible intermediate references use their own
+interface. This supplies syntactic shape before allocation and range proof.
+
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 

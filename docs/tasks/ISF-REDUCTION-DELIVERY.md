@@ -2286,11 +2286,46 @@ do not start broad suites between implementation slices.
   Commit: `joined ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish actual factorization allocation policy through width normalization without laundering cached context widths.`
   Acceptance: `After holder/parser producer, retain actual pure-expression allocation provenance from ASTFactorization candidate birth and the qualified width inference event. Normalization/cache copies must preserve current proof or revoke it on independent native/cached/context constraints, never reconstruct birth policy from late width_source/default equality. Preserve existing ordinary factorization, metadata/identity, caller graphs and selected widths; qualify actual raw-Core guards and opaque/private controls, sync docs and commit. N-ary/compound graphs stay separately owned until proved.`
-  Verification: `pending producers`
+  Verification: `Actual source producer committed at d119f8816 with clean tree. Factorizer candidates begin unresolved; backend native/cached/inferred selection and later normalization copies can rewrite labels. Before birth records, own a shared typed whole-operand shape boundary and actual sliced/compatible-reference controls; no selected-policy inference from numeric equality.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.1`
+  Status: `done`
+  Goal: `Share exact typed whole-signal bitwise shape recognition before factorizer birth capture.`
+  Acceptance: `Recover canonical actual Core/runtime/compatible intermediate reference shapes without rendered-text inference. Explicit Core slices, state wrappers, missing/invalid signal objects/names, logical/literal/compound operands withhold. Reproduce sliced Core defining AST paired with unsliced runtime AST through actual origin recovery; qualify compatible IntermediateSignalRef without assuming unsupported methods. Share one shape authority between recovery and later factorizer publisher, retaining ordered duplicate slots, detached records and ordinary numeric/rendered products. Focused original/current schema/recovery/native controls, POD/book/fact/audit and commit precede birth records; no allocation intent or target range admission.`
+  Verification: `Actual final pre-change T2203 fails the absent shared API, accepts sliced Core binary/scalar defining associations against unsliced runtime AST, and raises missing is_fsm_state_next on compatible IntermediateSignalRef. Shared typed whole_signal_name/binary_whole_signal_shape now distinguish actual Core/runtime/compatible class ancestry, reject explicit slices/state/invalid/compound/logical shapes and retain detached ordered duplicates. Core holder and both actual origin families share that boundary without inventing allocator intent or identity. T2203/T2197/T2190/T2198 pass All tests successful Files=4 Tests=16. Authenticated predecessor/current ordinary source HDL (Date-only), captured declarations, existing public/width metadata and source allocation policies match. Final source/log/interface evidence retains in docs/audits/whole-bitwise-shapes-20261028.json.gz. Re-derive actual typed recovery/holder; falsify pre-change actual sliced/compatible failures plus malformed/state/schema controls; durability tracked source/test/POD/book/fact/task and exact receipt. This prerequisite closes the discovered false-origin/interface defects; actual factorizer birth, selected policy and target/range/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.1: share typed whole-signal bitwise shapes`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final pre-change T2203 accepts sliced defining associations and reports Can't locate object method is_fsm_state_next via package FSM::HDL::IntermediateSignalRef at perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm line 246. The old helper omits Core slices and assumes runtime methods from advertised compatibility.
+  - [x] **ADDRESSED (verified)** — One typed whole-reference boundary handles actual Core/runtime/compatible ancestry, explicit slice/state/name rejection and detached ordered binary slots. Actual scalar/binary recovery and the Core holder share it. Matching text cannot lend a sliced defining AST a whole origin; compatible references use their actual interface.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=16 for T2203/T2197/T2190/T2198. Authenticated ordinary HDL/captured declarations/public width metadata and source policy conserve. POD/book/source freshness and normal doctrine hook gate commit; actual factorizer/target/range/full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Retain actual unresolved factorizer binary candidate birth intent without selecting widths.`
+  Acceptance: `At actual fresh candidate generation, retain closed detached birth association for eligible binary whole-reference shapes, anchored to actual owner/entry/AST identities. Existing candidate width remains unresolved; literals, compound/n-ary/state/slices and opaque/prebuilt metadata cannot invent a birth. Preserve ordinary candidate/AST/caller behavior and expose only current qualified access. Focused real factorizer/direct-source/Core controls and docs precede selected inference.`
+  Verification: `pending shared shape boundary`
   Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Bind current actual factorizer births only to qualified intrinsic-width inference and preserve it through normalization.`
+  Acceptance: `Join actual pure AST inference to current birth/registry identities and all plain unsigned operand declarations. Native/cached/context/fallback/unknown constraints cannot assert intrinsic max even at equal defaults. Preserve proven policy across only actual normalization-owned writes/copies; stale/conflicting/private foreign states withhold. Real raw-Core backend, repeated cache resolution, opaque/context/scalar/wider and detached/no-extra-owner controls plus unchanged native products, POD/book/fact and commit qualify before event join.`
+  Verification: `pending actual birth events`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.4`
+  Status: `pending`
+  Goal: `Close focused factorizer provenance and hand off actual target-event allocation join.`
+  Acceptance: `Join actual birth, selected inference and normalization currentness controls only for proved binary whole-reference profiles. May close with final producer commit. Unsupported shapes and full target/API/corpus/runtime qualification stay separately owned.`
+  Verification: `pending selected producer`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4`
   Status: `pending`
