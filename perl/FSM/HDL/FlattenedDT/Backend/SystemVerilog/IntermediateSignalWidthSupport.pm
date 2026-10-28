@@ -29,6 +29,11 @@ now owns runtime-AST lookup, rendered-expression recovery, and dependency
 recovery, while this package owns the narrower width side of the direct backend
 path.
 
+Normalization also binds a weak, epoch/revision-scoped view of its actual rows
+for private pending/ready arithmetic graph frames. It retains no registry and
+abort clears the association. These diagnostic frames do not install graph
+events, completed policies or symbolic range eligibility.
+
 =cut
 
 use v5.20;
@@ -40,9 +45,10 @@ no warnings 'experimental::signatures';
 use FSM::Debug;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
-use Scalar::Util qw(blessed refaddr);
+use Scalar::Util qw(blessed refaddr weaken);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphInferenceSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _begin_factorized_width_inference ($self) {
@@ -55,6 +61,29 @@ sub _abort_factorized_width_inference ($self) {
     $self->{_source_width_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
     delete $self->{_width_inference_complete};
+    delete @{$self}{qw(_graph_inference_rows _graph_inference_rows_epoch)};
+}
+
+sub _bind_graph_inference_rows ($self, $rows) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless $self->{_width_inference_epoch} && ref($rows) eq 'HASH'
+        && blessed($ctx) && $ctx->isa('FSM::HDL::FlattenedDT')
+        && ref($ctx->{backend_sv_intermediate_width_support}) eq ref($self)
+        && $ctx->{backend_sv_intermediate_width_support} == $self;
+    $self->{_graph_inference_rows} = $rows;
+    weaken($self->{_graph_inference_rows});
+    $self->{_graph_inference_rows_epoch} = $self->{_width_inference_epoch};
+    ++$self->{_graph_inference_rows_revision};
+    return 1;
+}
+
+sub _current_graph_inference_rows ($self) {
+    my $epoch = FSM::IntermediateWidthAllocationSupport::_width($self->{_width_inference_epoch});
+    my $view_epoch = FSM::IntermediateWidthAllocationSupport::_width($self->{_graph_inference_rows_epoch});
+    return undef unless defined($epoch) && defined($view_epoch) && $view_epoch eq $epoch
+        && defined(FSM::IntermediateWidthAllocationSupport::_width($self->{_graph_inference_rows_revision}))
+        && ref($self->{_graph_inference_rows}) eq 'HASH';
+    return $self->{_graph_inference_rows};
 }
 
 sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {

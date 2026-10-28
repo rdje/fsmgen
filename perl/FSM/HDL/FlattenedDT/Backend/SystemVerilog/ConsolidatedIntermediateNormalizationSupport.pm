@@ -73,6 +73,8 @@ live-usage metadata across the consolidated signal set so downstream phases can
 consume one AST-first cache.
 The default width owner starts a fresh private inference epoch. Injected legacy
 width providers keep their original method contract and supply no new provenance.
+The default owner receives a weak association to these exact collected rows for
+private graph input/dependency validation; equal copied registries do not qualify.
 The default owner checks current proof around the exact width/source publication;
 other metadata and source changes cannot borrow that refresh. Failure clears
 partial events before rethrowing the original error. Scalar/list/void caller
@@ -84,6 +86,8 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
     my $width_support = $self->{flattened_dt}{backend_sv_intermediate_width_support};
     $width_support->_begin_factorized_width_inference
         if $width_support->can('_begin_factorized_width_inference');
+    $width_support->_bind_graph_inference_rows($all_intermediate_signals)
+        if $width_support->can('_bind_graph_inference_rows');
     my $want = wantarray;
     my (@result, $result);
     my $ok = eval {

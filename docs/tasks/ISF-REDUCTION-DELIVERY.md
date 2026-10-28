@@ -2440,11 +2440,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Exact source/closure/current-owner assertions pass; knowledge-map: OK and book/source freshness qualify the unchanged current contracts. Normal final-index doctrines remain mandatory; no behavior, budget or full .6 change.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare current actual graph input and dependency frames without publishing policy.`
   Acceptance: `Introduce an epoch-bound non-owning view of the actual normalization rows; preserve original collected, factorizer and registered identities instead of assuming they are one object. Any locator must be weak and add no strong owner graph; plain proof capsules remain JSON-only. Use exact actual generated-reference width lookup precedence, current graph birth and actual selected child rows/held events. Separate pending unresolved parent input from ready post-child proof; preserve source/Core/AST/ordered-edge identity and every native/cache/floor/type/constraint requirement. Derive a stable dependency kernel only after validating the full current child event, distinguishing semantic/source revisions from exact owned cache/registry publication fields. Copied/stale/foreign/missing/cyclic rows or merely equal widths cannot supply frames. Focused real call-point/caller/lifetime/refusal/native checks and synchronized docs precede commit. No intrinsic graph event, completed policy, target or HDL change.`
-  Verification: `Lifecycle receipt proves distinct original/collected/registered rows and child-first/parent-recursive inference; implementation pending exact lookup and weak-view contract.`
-  Commit: `pending actual graph frames`
+  Verification: `Weak actual-row input/ready frames validate current held children before parent publication. Copied/stale/foreign/floored inputs refuse; source writes during later sibling reads now revoke earlier proof. Full native products equal authenticated predecessor; weak locator releases registry. Re-derive actual call points, falsify predecessor and stale-child controls, retain exact sources/logs in docs/audits/arithmetic-graph-frames-20261028.json.gz. No graph event/policy/range or full .6 claim.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2: validate pending and ready graph frames`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor reports Can't locate object method prepare_input at ./t/2221-arithmetic-graph-inference-frames.t line 57. Actual collected/factorizer/registered rows differ. The initial sibling control fails at t/2221-arithmetic-graph-inference-frames.t line 213: a later getter invalidated an already-read child without invalidating ready return.
+  - [x] **ADDRESSED (verified)** — Bind a weak epoch/view and actual unresolved rows; validate exact ordered inputs and full current child proof, then compare the complete dependency vector again. Independent registered/child floors, stale sources and copied views withhold; capsules detach and no event or range is installed.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20 for T2221/T2205/T2220/T2216. Full source/HDL/target/policy products equal authenticated predecessor; private frame/caller/lifetime controls pass. POD/book/fact and normal final-index doctrines gate commit; full qualification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
   Status: `pending`

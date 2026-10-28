@@ -230,9 +230,24 @@ their compatibility `isa` does not provide Core Signal methods.
 The original whole-reference birth API stays separate. Later numeric widths do
 not create graph birth or prove allocation. Each private tree walk admits
 at most 64 binary levels and 4096 visited nodes; larger trees receive no new
-metadata. Source width/type constraints and graph intrinsic/completed policy
-remain the next producer slices. This birth-only slice changes no HDL, target
-events, completed policies or current range admission.
+metadata. Private graph input and ready frames now validate source constraints
+and actual current child proofs; graph intrinsic/completed policy remains pending.
+These diagnostics change no HDL, target events or current range admission.
+
+`IntermediateWidthGraphInferenceSupport` separates pending unresolved parent input
+from ready dependency proof. The canonical width owner holds a weak association
+to the actual normalization rows: collected, factorizer and registered rows have
+distinct identities. Generated references use the passed registry before the
+factorizer fallback; only actual collected rows qualify here. Ordinary sources
+require module Signals. Ready frames validate current held child events, preserve
+ordered edges and independent constraints, and calculate the exact operand max
+before publishing the parent width. Complete dependency rechecks reject a source
+write during a later sibling read. Copied/stale rows, missing proofs and merely
+equal numeric widths withhold. Returned frames contain only detached JSON data;
+the weak association retains no registry and abort clears it. Child cache reads
+preserve the stable proof only after the full current child getter validates
+owned transient fields. No graph inference event or completed policy is installed
+by these private queries; integration at the actual resolver remains next.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
