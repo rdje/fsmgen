@@ -2357,11 +2357,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Exact source/child/owner assertions and knowledge-map: OK pass. Current code/policies, all budget limits and qualification boundaries are unchanged. Book/source freshness and normal final-index doctrine hook qualify the metadata-bearing continuity commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish selected arithmetic origins and current allocation policy in actual target events.`
   Acceptance: `Capture a separate closed binary_arithmetic origin for canonical + - * / % whole operands, agreeing defining/runtime/cached ASTs and fresh selected text. Join only current actual arithmetic policy; preserve widths as independent without policy. Extend collector membership/closed-family/constraint/atomic checks and old recovery-provider compatibility. Keep bitwise origins/Core scope and scalar VHDL boundaries; explicitly fence existing bitwise range closure so arithmetic event publication alone leaves HDL/numeric ranges unchanged. Focused actual source/collector/currentness/refusal/native controls, POD/book/fact and commit.`
-  Verification: `pending publisher`
-  Commit: `pending`
+  Verification: `Actual selected canonical arithmetic events join separate origins/current policies. T2217/T2216/T2197/T2208/T2191: All tests successful Files=5 Tests=24; added actual symbolic VHDL refusal passes. Authenticated predecessor fails three final regression subtests. Full native HDL/source/birth/policy/scalar products conserve; only arithmetic event fields change. Re-derive actual publication; falsify stale/conflicting/foreign/legacy/independent-width controls; durability docs/audits/arithmetic-target-events-20261028.json.gz. Numeric declarations and bitwise closure stay unchanged; arithmetic ranges/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2: publish selected arithmetic target events`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2217 reports missing arithmetic_origin at ./t/2217-arithmetic-target-events.t line 51. Actual allocation exists, but selected assignment recovery/publisher and closed collector have no arithmetic origin join.
+  - [x] **ADDRESSED (verified)** — Publish separate closed arithmetic origins and optional current policies; validate exclusive family/member/max contracts. Preserve legacy recovery providers, independent widths and bitwise-only range closure; actual arithmetic declarations remain numeric.
+  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=24; actual symbolic VHDL refusal also passes. Exact predecessor/native product comparison conserves all HDL/source/private producer fields and scalar controls; only declared arithmetic event fields change. Book/POD/card and normal final-index hook qualify commit; full .6 deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3`
   Status: `pending`

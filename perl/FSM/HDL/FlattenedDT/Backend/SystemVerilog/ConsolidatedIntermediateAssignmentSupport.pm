@@ -57,7 +57,8 @@ sub new ($class, %args) {
 Render the assign statements for the prepared consolidated intermediate block,
 skipping any signal that cannot currently be rendered back to SystemVerilog
 text.
-Captured binary events additionally query the optional current-policy publisher.
+Captured binary events publish separate bitwise/arithmetic syntactic origins
+and query the corresponding optional current-policy publisher.
 Only agreeing completed source/factorizer allocation proof adds width_allocation;
 legacy injected recovery providers and unrelated events keep their old shape.
 HDL text and symbolic range admission are unchanged.
@@ -88,11 +89,16 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
         if (my $capture = $ctx->{declared_width_declaration_capture}) {
             my $origin = $recovery_support->scalar_reduction_origin($signal_name, $signal_info, $expression);
             my $bitwise = $recovery_support->binary_bitwise_origin($signal_name, $signal_info, $expression);
+            my $arithmetic = $recovery_support->can('binary_arithmetic_origin')
+                ? $recovery_support->binary_arithmetic_origin($signal_name, $signal_info, $expression) : undef;
             my $allocation = $bitwise && $recovery_support->can('binary_width_allocation')
-                ? $recovery_support->binary_width_allocation($signal_name, $signal_info, $expression) : undef;
+                ? $recovery_support->binary_width_allocation($signal_name, $signal_info, $expression)
+                : $arithmetic && $recovery_support->can('arithmetic_width_allocation')
+                    ? $recovery_support->arithmetic_width_allocation($signal_name, $signal_info, $expression) : undef;
             $capture->record_intermediate_assignment($signal_name,
                 {expression => $expression, ($origin ? (reduction_origin => $origin) : ()),
                     ($bitwise ? (bitwise_origin => $bitwise) : ()),
+                    ($arithmetic ? (arithmetic_origin => $arithmetic) : ()),
                     ($allocation ? (width_allocation => $allocation) : ())});
         }
         fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3)

@@ -96,18 +96,28 @@ sub record_intermediate_assignment ($self, $name, $record) {
     my $copy = eval {$json->decode($json->encode($record))};
     $self->_fail('requires a closed JSON-safe intermediate expression event')
         if $@ || ref($copy) ne 'HASH'
-            || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin'
+            || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin' && $_ ne 'arithmetic_origin'
                 && $_ ne 'width_allocation'} keys %$copy;
     $self->_fail('requires actual nonempty intermediate expression text')
         unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
     $self->_fail('requires one coherent intermediate origin family')
-        if exists($copy->{reduction_origin}) && exists($copy->{bitwise_origin});
+        if 1 < grep {exists($copy->{$_})} qw(reduction_origin bitwise_origin arithmetic_origin);
     if (exists($copy->{bitwise_origin})) {
         my $origin = $copy->{bitwise_origin};
         $self->_fail('requires a closed binary bitwise intermediate origin')
             unless ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,operator,source_names'
                 && defined($origin->{kind}) && !ref($origin->{kind}) && $origin->{kind} eq 'binary_bitwise'
                 && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ /\A[&|^]\z/
+                && ref($origin->{source_names}) eq 'ARRAY' && @{$origin->{source_names}} == 2
+                && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_) || $_ eq $name}
+                    @{$origin->{source_names}};
+    }
+    if (exists($copy->{arithmetic_origin})) {
+        my $origin = $copy->{arithmetic_origin};
+        $self->_fail('requires a closed binary arithmetic intermediate origin')
+            unless ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,operator,source_names'
+                && defined($origin->{kind}) && !ref($origin->{kind}) && $origin->{kind} eq 'binary_arithmetic'
+                && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ m{\A[+*/%\-]\z}
                 && ref($origin->{source_names}) eq 'ARRAY' && @{$origin->{source_names}} == 2
                 && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_) || $_ eq $name}
                     @{$origin->{source_names}};
@@ -124,7 +134,7 @@ sub record_intermediate_assignment ($self, $name, $record) {
     if (exists($copy->{width_allocation})) {
         my $allocation = eval {FSM::IntermediateWidthAllocationSupport->copy_record($copy->{width_allocation})};
         $self->_fail('requires a closed binary width allocation policy') if $@ || !$allocation;
-        my $origin = $copy->{bitwise_origin};
+        my $origin = $copy->{bitwise_origin} // $copy->{arithmetic_origin};
         $self->_fail('width allocation requires its same ordered binary origin')
             unless $origin && $origin->{operator} eq $allocation->{operator}
                 && $origin->{source_names}[0] eq $allocation->{source_names}[0]
@@ -155,6 +165,11 @@ sub complete ($self) {
         if (exists($row->{bitwise_origin})) {
             my @operands = @{$row->{bitwise_origin}{source_names}};
             $self->_fail('binary bitwise intermediate requires actual declared operands')
+                if grep {!exists($self->{declarations}{$_})} @operands;
+        }
+        if (exists($row->{arithmetic_origin})) {
+            my @operands = @{$row->{arithmetic_origin}{source_names}};
+            $self->_fail('binary arithmetic intermediate requires actual declared operands')
                 if grep {!exists($self->{declarations}{$_})} @operands;
         }
         if (exists($row->{width_allocation})) {
@@ -244,9 +259,16 @@ are valid and do not imply an intrinsic maximum-width allocation policy.
 The event proves no mutable width equivalence or symbolic range eligibility.
 Malformed, conflicting or missing-operand records invalidate the transaction.
 
+The optional C<arithmetic_origin> uses the same ordered slots and syntactic
+checks with C<kind =E<gt> binary_arithmetic> and canonical C<+>, C<->, C<*>, C</>
+or C<%>. It is exclusive with both other origin families. Actual operand
+membership is required, while contextual widths remain independent without
+allocation policy. Arithmetic event publication alone enables no symbolic range.
+
 An optional C<width_allocation> additionally carries the separate closed
 C<{kind =E<gt> binary_operand_max, operator, source_names, selected_width}>
-policy. It requires the same ordered C<bitwise_origin>. On completion the actual
+policy. It requires the same ordered C<bitwise_origin> or C<arithmetic_origin>.
+On completion the actual
 result and both operand declarations must be plain unsigned, without state or
 named-type metadata, and their exact decimal widths must satisfy the selected
 intrinsic maximum. Scalar JSON kinds and duplicate slots preserve. Malformed,

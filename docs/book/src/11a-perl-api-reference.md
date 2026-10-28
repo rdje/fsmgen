@@ -154,9 +154,18 @@ bitwise-only. Opaque operand constraints now withhold a shared inference frame
 before tracking, including the existing bitwise factorizer profile; later target
 publication already rejected that profile.
 
-Arithmetic declarations still retain numeric widths and expression-only target
-events. Selected arithmetic origin/policy publication and source/target range
-consumption remain pending. Comparison and logical negation helpers retain
+Arithmetic declarations still retain numeric widths. Selected target events now
+publish a separate `arithmetic_origin` with canonical operator and ordered whole
+operand names, plus `width_allocation` only while the actual producer policy is
+current. For example, `A + B` records `binary_arithmetic`, `+`, and `[A, B]`;
+an independently widened result can retain that origin without allocation policy.
+Conflicting AST/text, copied metadata and source mutation cannot supply current
+policy. Collector completion checks actual operand membership and exact max
+widths whenever policy is present. Legacy injected providers retain their shape.
+Arithmetic source/target range consumption remains pending; publication alone
+does not turn a numeric helper into a generic vector. The bitwise range consumer
+and scalar-only symbolic VHDL profile retain their existing boundaries.
+Comparison and logical negation helpers retain
 independently scalar results. Source acceptance and matching selected numeric
 widths cannot establish a mutable helper relationship.
 

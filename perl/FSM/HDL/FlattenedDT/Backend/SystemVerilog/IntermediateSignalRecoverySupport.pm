@@ -251,6 +251,12 @@ sub _whole_signal_binary_bitwise ($node) {
     return {kind => 'binary_bitwise', %$shape};
 }
 
+sub _whole_signal_binary_arithmetic ($node) {
+    my $shape = FSM::IntermediateWidthAllocationSupport->binary_operand_max_shape($node) or return;
+    return unless $shape->{operator} =~ m{\A[+*/%\-]\z};
+    return {kind => 'binary_arithmetic', %$shape};
+}
+
 =head2 scalar_reduction_origin
 
 Return an optional detached syntactic origin for an actually emitted unary
@@ -290,12 +296,30 @@ remain separate required joins.
 =cut
 
 sub binary_bitwise_origin ($self, $signal_name, $signal_info, $expression) {
+    return $self->_binary_origin($signal_name, $signal_info, $expression, \&_whole_signal_binary_bitwise);
+}
+
+=head2 binary_arithmetic_origin
+
+Return a separate optional C<binary_arithmetic> origin for canonical C<+>, C<->,
+C<*>, C</> or C<%> over two ordered whole SignalRefs. The same defining, runtime,
+cached-AST and freshly selected text checks apply as for C<binary_bitwise_origin>.
+This syntactic record imposes no operand/result width relationship or symbolic
+range eligibility. Literal, compound, sliced and state operands withhold it.
+
+=cut
+
+sub binary_arithmetic_origin ($self, $signal_name, $signal_info, $expression) {
+    return $self->_binary_origin($signal_name, $signal_info, $expression, \&_whole_signal_binary_arithmetic);
+}
+
+sub _binary_origin ($self, $signal_name, $signal_info, $expression, $recognize) {
     return unless ref($signal_info) eq 'HASH' && defined($expression) && !ref($expression);
     my $runtime = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     my $defining = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
-    my $origin = _whole_signal_binary_bitwise($runtime) or return;
+    my $origin = $recognize->($runtime) or return;
     for my $node ($defining, map {$signal_info->{$_}} grep {exists($signal_info->{$_})} qw(ast defining_ast)) {
-        my $other = _whole_signal_binary_bitwise($node) or return;
+        my $other = $recognize->($node) or return;
         return unless $other->{operator} eq $origin->{operator}
             && $other->{source_names}[0] eq $origin->{source_names}[0]
             && $other->{source_names}[1] eq $origin->{source_names}[1];
@@ -308,7 +332,7 @@ sub binary_bitwise_origin ($self, $signal_name, $signal_info, $expression) {
 =head2 binary_width_allocation
 
 Return an optional current allocation policy for the same freshly selected
-binary origin and expression. Only the width owner's completed source attachment
+bitwise origin and expression. Only the width owner's completed source attachment
 or factorizer proof can supply it. Ordered operands/operator and exact selected
 width must agree, with actual plain unsigned module operands and no state or
 constraint profile. Recheck current policy after all reads so matching supported
@@ -319,7 +343,25 @@ This publishes no symbolic range and does not extend the scalar VHDL profile.
 =cut
 
 sub binary_width_allocation ($self, $signal_name, $signal_info, $expression) {
-    my $origin = $self->binary_bitwise_origin($signal_name, $signal_info, $expression) or return;
+    return $self->_width_allocation_for_origin($signal_name, $signal_info, $expression, 'binary_bitwise_origin');
+}
+
+=head2 arithmetic_width_allocation
+
+Return the optional current arithmetic policy using C<binary_arithmetic_origin>
+and the same completed-allocation, plain-source, exact-width and final-currentness
+checks as C<binary_width_allocation>. Keeping this publisher separate preserves
+the bitwise-only declaration consumer. Arithmetic target metadata alone neither
+changes the numeric helper declaration nor extends symbolic VHDL admission.
+
+=cut
+
+sub arithmetic_width_allocation ($self, $signal_name, $signal_info, $expression) {
+    return $self->_width_allocation_for_origin($signal_name, $signal_info, $expression, 'binary_arithmetic_origin');
+}
+
+sub _width_allocation_for_origin ($self, $signal_name, $signal_info, $expression, $origin_method) {
+    my $origin = $self->$origin_method($signal_name, $signal_info, $expression) or return;
     my $ctx = $self->{flattened_dt};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
     return unless $width_support && $width_support->can('intermediate_width_allocation');

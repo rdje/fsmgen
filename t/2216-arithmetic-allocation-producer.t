@@ -85,8 +85,10 @@ subtest 'actual arithmetic allocator and intrinsic inference publish current pri
             ok(!defined($p->{initial}{width}) && $p->{initial}{source} eq 'unresolved_factorization_ast',
                 'birth precedes any selected width');
             is_deeply(current_policy($p), policy($operator, $width), 'actual completed intrinsic-max policy is current');
-            is_deeply($p->{snapshot}{target_intermediates}{$p->{name}}, {expression => "A $operator B"},
-                'producer does not invent arithmetic target origins or range admission');
+            is_deeply($p->{snapshot}{target_intermediates}{$p->{name}}, {expression => "A $operator B",
+                arithmetic_origin => {kind => 'binary_arithmetic', operator => $operator, source_names => ['A','B']},
+                width_allocation => policy($operator, $width)},
+                'selected target event joins arithmetic origin and current producer policy');
         }
     }
 };

@@ -157,6 +157,9 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
                 my $event = $snapshot->{target_intermediates}{$name};
                 next unless $event->{width_allocation};
+                # Arithmetic events publish allocation only; their range consumer
+                # has not yet joined the complete source and target proof.
+                next unless $event->{bitwise_origin};
                 my $has_symbolic_operand = grep {
                     exists($qualified->{ranges}{$_});
                 } @{$event->{width_allocation}{source_names}};
