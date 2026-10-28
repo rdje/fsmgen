@@ -17,22 +17,14 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  t/2205-factorizer-width-inference.t; docs/audits/factorizer-width-inference-20261028.json.gz;
-  t/2204-factorizer-width-births.t; docs/audits/factorizer-width-births-20261028.json.gz; perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; t/2202-source-allocation-publication.t; docs/audits/source-allocation-publication-20261028.json.gz; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
-  t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
-  perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
-  t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
-  perl/FSM/DirectDeclaredWidthSupport.pm; t/2172-direct-width-module-source-plans.t; docs/audits/direct-width-module-source-plans-20261027.json.gz;
-  perl/FSM/DeclaredWidthRangeSupport.pm; t/2171-declared-width-range-adapter.t; docs/audits/direct-width-range-adapter-20261027.json.gz;
-  docs/audits/direct-width-binding-proof-20261027.json.gz; perl/FSM/DeclaredWidthBindingSupport.pm; docs/audits/shared-vhdl-width-kernel-20261027.json.gz;
-  perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; docs/audits/shared-verilog-width-kernel-20261027.json.gz; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm;
-  docs/audits/scoped-late-width-sizing-20261027.json.gz; docs/audits/immediate-width-copy-origins-20261027.json.gz; docs/audits/scoped-late-width-contract-20261027.json.gz;
-  docs/audits/scoped-late-width-contract-20261027.py; docs/audits/auxiliary-width-bindings-20261027.json.gz; docs/audits/source-width-requirements-20261027.json.gz;
-  docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz;
-  perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz;
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
 ---
+
+Component owners above are current evidence. The complete original card/proof inventory (baseline and digests) is retained in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
+
+`python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/direct-declared-width-consumers.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
 Parser's detached Signal declared_width_source retains expression, resolved_width
 and original signal; named types retain their type contract. It lacks full actual
@@ -200,3 +192,9 @@ Reverify contracts (original commands retained):
 `prove -Iperl t/2187-symbolic-register-helper-ranges.t t/2176-direct-symbolic-storage-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
 
 `prove -Iperl t/2189*.t`.
+
+Guard XOR became NOT because condition capture read Core type `unary_op` and
+forced NOT. It now validates the actual opcode, normalizes existing not/neg/pos
+spellings and preserves recursive guards (T2189); optional source inversion stays
+outside that repair. The original diagnosis is retained in the owning task and
+`docs/audits/unary-guard-capture-operators-20261028.json.gz`.

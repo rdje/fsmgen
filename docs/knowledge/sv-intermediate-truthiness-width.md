@@ -17,10 +17,13 @@ date: 2026-10-28
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  t/2203-whole-bitwise-shapes.t; docs/audits/whole-bitwise-shapes-20261028.json.gz; t/2197-binary-bitwise-intermediate-origins.t; docs/audits/binary-bitwise-intermediate-origins-20261028.json.gz; t/2196-runtime-comparison-grouping.t; docs/audits/runtime-comparison-grouping-20261028.json.gz; perl/FSM/AST/Node.pm; t/2195-core-condition-literal-capture.t; docs/audits/core-condition-literal-capture-20261028.json.gz; t/2194-core-binary-guard-opcodes.t; docs/audits/core-binary-guard-opcodes-20261028.json.gz; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; docs/audits/parser-bitwise-intermediate-widths-20261028.json.gz;
-  t/2192-parser-bitwise-intermediate-widths.t; t/2190-scalar-intermediate-capture.t; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; docs/audits/direct-vhdl-scalar-intermediates-20261028.json.gz; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; t/208-enable-graph-ast-support.t; t/2191-direct-vhdl-scalar-intermediates.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/AST/Node.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; docs/audits/width-card-evidence-20261028.json.gz;
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/219[0124567]*.t t/208-enable-graph-ast-support.t
 ---
+
+Component owners above are current evidence. The complete original card/proof inventory (baseline and digests) is retained in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
+
+`python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/sv-intermediate-truthiness-width.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
 Render-time ASTSupport uses recorded widths: multi-bit zero -> `(~|sum_expr)`;
 nonzero keeps sized equality when needed; scalar forms stay compact. The .219 lookup adds no recursive hot-path width inference.
