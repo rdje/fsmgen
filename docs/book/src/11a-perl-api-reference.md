@@ -137,7 +137,10 @@ digest-checked recovery command. Current contract text and existing recheck
 commands remain directly readable in the cards.
 Completed allocation-producer task subtrees retain exact Git revision, file
 digest and retention-contract retrieval through their live compact terminals.
-Other shape/target work stays in the live task tree.
+The bounded binary family now composes allocation, frozen source/target proof,
+actual declaration emission and final event closure. Symbolic truth stays vector
+aware at default one. Nested/n-ary/arithmetic and remaining scalar constraints,
+other shapes and binary VHDL stay separately owned; full qualification is deferred.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

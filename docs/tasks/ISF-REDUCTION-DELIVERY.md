@@ -2168,10 +2168,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2193/T2182/T2191. Original/current legacy T1420 share the preexisting subtest25 refusal, retained and owned by .27. Scalar/data/selected/comparison products, caller kinds and backend reuse pass. Module/test syntax and book/POD/source freshness plus normal hooks gate commit; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prove and consume actual same-relationship vector bitwise intermediate widths in Verilog-family declarations.`
   Acceptance: `After guard semantics, select actual whole-source binary bitwise intermediate events. Keep every distinct operand association and source capture. Only identical proved mutable width relationships may share a result range; equal defaults or separate overridable aliases cannot prove equivalence. Bind actual AST, selected emitted text and declaration, preserve vector rank at default one and refuse missing/foreign/independent-max proof. Split publication/consumer boundaries before an unsafe slice; focused source/caller/static/refusal checks and book/POD precede commit. VHDL non-scalar join remains .3.4.3.4; full qualification .6.`
-  Verification: `Guard prerequisites close under .3.4.3.2.1. Actual symbolic vector relationship publication/consumer remains next; no symbolic inference is supplied by the numeric guard repairs.`
+  Verification: `Children compose current explicit source/factorizer allocation, frozen source/all-target proof, actual symbolic declaration consumption and independent final target/event closure. Default-one symbolic truth is repaired. This closes only the bounded whole-operand plain unsigned family with focused checks; other relationships and full qualification stay live under .3.4.3.2.3/.3/.4 and .6.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
 
@@ -2367,11 +2367,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=11 for actual symbolic truth, binary emitter and existing AST renderer. Full native delta is only the two expected default-one gate operators; source/event/policy/fixed products conserve. POD/book/source/knowledge checks and authoritative final-index hook gate commit. External override/runtime and full .6 remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close bounded binary bitwise propagation and select remaining unary/binary constraints.`
   Acceptance: `After publisher/proof/emission, review composed focused actual source/target products and precise unsupported boundaries. N-ary/nested graph propagation remains explicitly owned by .3.4.3.2.3 if outside this bounded binary producer/consumer; close this relationship family and select .3.4.3.2.3. Do not start full verification before agreed feature completion; .6 owns complete compiler/override/runtime/API/MCP/corpus.`
-  Verification: `pending implementation`
-  Commit: `pending`
+  Verification: `Composed committed private-range, actual sequence, binary emission and symbolic-truth authorities with exact current source-chain equality. Prior predecessor/hostile/native checks retain their scoped meanings; no tests or external qualification are rerun. The bounded plain whole-operand intrinsic-max/same-frozen-contract family is implemented with focused checks. Missing/unqualified policies do not gain generic authority; nested/n-ary/unary/arithmetic/logical/comparison constraints remain .3.4.3.2.3, concat/select/shift .3.4.3.3, binary VHDL .3.4.3.4 and complete qualification .6. Re-derive the exact current chain; falsify stale/noncomposing authorities via equality and retained component controls; durability docs/audits/binary-relationship-family-closure-20261028.json.gz, task/book/Git. Next .3.4.3.2.3 inventories remaining actual operators and numeric/cache consumers without optional inversion.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4: close bounded binary range implementation`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'No HDL emission is activated yet.' on the API guide identifies a7f947aea as actual emitter admission; bounded family status still needs exact source-chain composition rather than treating earlier pending authority conclusions as current delivery. The reference-aggregate metadata change requires this fresh checklist even though runtime code is unchanged.
+  - [x] **ADDRESSED (verified)** — The native closure program proves private/sequence/emitter/truth source continuity against committed authority records and current files. Close only the bounded family; preserve explicit remaining graph, binary VHDL and full-qualification owners and advance the resume pointer.
+  - [x] **NO REGRESSION** — knowledge-map: OK with query parity verified; book/source build and relative-source contracts pass. No runtime code or allocation policy changes, and no broader suite or external qualification is inferred. Final staged task acceptance and normal doctrine hook gate the metadata-bearing documentation commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`
   Status: `pending`
