@@ -331,6 +331,10 @@ General source rules:
   folds the generic operand's actual vector range, including default one.
   Other computed/logical/type shapes refuse; complete intermediate/reset and
   external override/runtime/transport qualification remain separate.
+  Parser-hoisted multi-operand bitwise helpers now retain exact selected result
+  widths before registration, preserving whole-vector guard truth and actual
+  declaration agreement. This repairs numeric metadata; it creates no symbolic
+  relationship for general computed helpers or new VHDL profile.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

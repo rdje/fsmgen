@@ -1,7 +1,7 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="how does FSMGen render multi-bit intermediate equality to zero?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="what did the .219 renderer-width fix cover?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="which scalar intermediates allow generic VHDL?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="why did a high-bit-only vector guard fail?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why should multi-bit intermediates not render as bare negation?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 
 ## Facts

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1295** facts · **7139** unique questions · **7316** answer occurrences · **205** topic shards.
+> **1295** facts · **7141** unique questions · **7318** answer occurrences · **205** topic shards.
 
 Query first:
 
@@ -58,7 +58,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `direct-port` | 1 | 4 | [`direct-port.md`](knowledge-map/generated/direct-port.md) |
 | `direct-structural` | 3 | 13 | [`direct-structural.md`](knowledge-map/generated/direct-structural.md) |
 | `direct-symbol` | 1 | 2 | [`direct-symbol.md`](knowledge-map/generated/direct-symbol.md) |
-| `direct-vhdl` | 7 | 129 | [`direct-vhdl.md`](knowledge-map/generated/direct-vhdl.md) |
+| `direct-vhdl` | 7 | 130 | [`direct-vhdl.md`](knowledge-map/generated/direct-vhdl.md) |
 | `doc-paths` | 1 | 6 | [`doc-paths.md`](knowledge-map/generated/doc-paths.md) |
 | `doctrine-enforcement` | 2 | 11 | [`doctrine-enforcement.md`](knowledge-map/generated/doctrine-enforcement.md) |
 | `downstream-consumer` | 1 | 8 | [`downstream-consumer.md`](knowledge-map/generated/downstream-consumer.md) |
@@ -192,7 +192,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `specforge-feature` | 1 | 8 | [`specforge-feature.md`](knowledge-map/generated/specforge-feature.md) |
 | `specforge-field` | 1 | 5 | [`specforge-field.md`](knowledge-map/generated/specforge-field.md) |
 | `specforge-transaction` | 1 | 6 | [`specforge-transaction.md`](knowledge-map/generated/specforge-transaction.md) |
-| `sv-intermediate` | 1 | 6 | [`sv-intermediate.md`](knowledge-map/generated/sv-intermediate.md) |
+| `sv-intermediate` | 1 | 7 | [`sv-intermediate.md`](knowledge-map/generated/sv-intermediate.md) |
 | `task-acceptance` | 1 | 11 | [`task-acceptance.md`](knowledge-map/generated/task-acceptance.md) |
 | `task-tree` | 6 | 38 | [`task-tree.md`](knowledge-map/generated/task-tree.md) |
 | `test-subprocess` | 1 | 166 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |

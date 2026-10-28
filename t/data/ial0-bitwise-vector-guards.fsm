@@ -1,0 +1,8 @@
+(?fsm:bitwise_vector_guards
+  (+interface (output DATA) (output OTHER))
+  (+size (A 8) (B 8) (DATA 1) (OTHER 1))
+  (idle
+    (<(& A B)
+      (= (DATA 1))
+      (= (OTHER 1)))
+    (-> idle)))

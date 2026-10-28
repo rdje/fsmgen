@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2087,10 +2087,61 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2191/T2190/T2188. Strict native VHDL example succeeds; actual logical refusal preserves existing/absent outputs. Syntax/book/POD/source checks and mandatory normal final-index doctrines gate commit. External runtime/override/compiler/public/corpus qualification stays .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate canonical width relationships through supported width-preserving unary/binary intermediates.`
   Acceptance: `After scalar reductions, inspect actual AST width rules and canonical source relationships for whole-vector unary/bitwise/arithmetic families. Prove all operands and retain each distinct origin; equal defaults cannot reduce independent max-width constraints. Support equivalent proved relationships or explicit target expressions with actual backend legality, and refuse missing general max/mixed-width proof. Keep scalar logical/comparison results distinct. Split by actual consumers, focused checks and synchronized docs before each commit; full qualification stays .6.`
-  Verification: `pending actual expression selection`
+  Verification: `Scalar source/VHDL profile closes at e998f1c4c with clean handoff. The normal expression contract preserves vector bitwise operations; CaptureSupport currently coerces Core binary &/| into logical operators. First probe actual source/Core/native semantics before selecting width relationships; do not infer a defect from code alone. Existing recorded-width and AST simplification cards retain their narrower facts.`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1`
+  Status: `active`
+  Goal: `Repair demonstrated vector-guard truthiness/width loss before symbolic relationship propagation.`
+  Acceptance: `Probe parsed Core &/| guards against the normal n-ary bitwise expression contract and actual native selectors, including disjoint one/two bit masks and nested comparisons. If actual semantics change during capture, own and repair that required-delivery blocker immediately. Preserve authored bitwise versus logical operations, recursive negation, one-bit simplifications and aliases; qualify distinct literal truth controls, one/wider widths, actual emitted operator/selector associations and caller JSON kinds. Retain genuine original RED and focused directly affected capture/AST checks with book/POD/fact sync; external runtime/full public/corpus qualification remains .6. No optional inversion or computed VHDL expansion.`
+  Verification: `Parser-hoisted source width/truthiness repair closes .1 with focused native proof. Its exact GHDL consumer check owns a preexisting fixed VHDL type failure in immediate next .3. Programmatic binary capture coercion remains a separate hypothesis in .2; do not attribute the hoisted source path to it. Required implementation/full qualification ordering remains unchanged.`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1`
+  Status: `done`
+  Goal: `Repair missing exact widths on parser-created vector bitwise intermediates and their guard truthiness.`
+  Acceptance: `P1 immediate required-delivery blocker. Native debug trace proves finalized bitwise intermediates have inferred/emitted width8 but Core Signal width1, selecting bitwise state gating and failing captured generic declaration/source agreement. ExpressionBuilder::finalize_nary_expression registers all multi-operand &/|/^ helpers without width. Use its existing exact-expression width kernel on the actual driving AST before registration; preserve one-bit/reduction/literal/unknown/operand-width and source capture contracts, without inventing a symbolic relationship. Qualify actual parsed Core and native state selectors at defaults1/8, aliases/n-ary/nested/comparison controls and distinct high-bit truth values, actual generic refusal-to-success plus complete caller kinds. Focused expression/capture/AST checks, strict native/book/POD/fact evidence and commit precede further work. External runtime/full override/public/corpus remains .6; symbolic helper range relationships remain .2.2.`
+  Verification: `Actual native --trace-verbosity=debug --trace-log proves Core helper width1 versus inferred/emitted width8; ASTSupport consequently chooses bitwise & for logical state gating. ExpressionBuilder::finalize_nary_expression omitted width. It now uses the existing exact-expression kernel before registration, preserving selected numeric result widths without resizing operands or inventing a declared-width binding. Final unchanged T2192 RED fails all four top-level subtests before repair. Initial test helpers collided with Perl caller and assumed unused C was in module membership; both oracle errors and original/corrected tests/streams retain. Final focused All tests successful Files=3 Tests=13 for T2192/T2074/T208. Actual parsed fixed/selected-param defaults1/8, aliases, n-ary/nested/comparison/reduction, literal-max and unknown-placeholder controls pass; independent literal high-bit words distinguish true logical gating from low-bit truncation. Both native fixed/captured probes now emit && and generic declaration agreement succeeds; strict runnable book fixture generates. Complete caller maps, widths and JSON kinds conserve. One directly affected fixed VHDL analysis with the exact published local GHDL binary exposes the preexisting ill-typed scalar/vector and; complete original/current raw VHDL products are byte-identical, so this independent defect is owned immediately next by .3 before programmatic .2. No provider source/submodule internals were inspected. Re-derive actual Core/AST/native traces; falsify unchanged RED, high-bit/mixed-width/unknown/static/caller controls and full target preservation; durability implementation/regression/fixture/POD/book/current cards and docs/audits/parser-bitwise-intermediate-widths-20261028.json.gz. Preserve complete prior cards and all questions; no containment allowances change. Card-capacity risk is owned by .29. The numeric source example has a three-leg derived_gate disposition under its fixed general_book group owner; this leaf owns the producer/oracle/durability evidence. Full original worktree/raw-root streams and complete external compiler/override/runtime/API/MCP/corpus proof remain missing (.6); symbolic helper relationships remain .2.2. Book/POD/source freshness and normal final-index doctrines gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1: retain exact parser bitwise helper widths`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --trace-log records Core intermediate width1 while normalization/declaration resolves8. ASTSupport uses Core metadata to select & for && state gating. ExpressionBuilder::finalize_nary_expression lines239-246 registers the driving AST's helper without width. Final original T2192 fails all four subtests, with high-bit A=B=2 producing the wrong emitted selector truth; nested literal comparison supplies a distinguishing correct control.
+  - [x] **ADDRESSED (verified)** — Existing exact-width inference now precedes actual helper registration. Core/declaration widths agree; wide selectors use logical whole-value truth, one-bit selectors stay compact. Independent high-bit/literal/nested/scalar/unknown and caller-kind controls pass. Numeric repair adds no symbolic relationship. The separate preexisting fixed VHDL type failure is diagnosed, retained and owned by immediate child .3; its complete artifact is unchanged by this repair.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2192/T2074/T208. Native fixed/selected-param probes and strict book source succeed; unknown widths and reduction/literal/operand contracts preserve. Module/test syntax, mdBook/POD/source freshness and mandatory final-index hooks gate commit. One failing fixed VHDL diagnosis is explicitly owned; full external/public/corpus qualification remains .6.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2`
+  Status: `pending`
+  Goal: `Qualify programmatic Core binary guard opcodes separately from parser-hoisted source expressions.`
+  Acceptance: `After .1, reproduce actual Core-authored binary &/| guards through the public backend, using independent literal values and nested comparisons to distinguish vector from logical semantics. Decide whether CaptureSupport coercion is a real supported-contract defect; repair and qualify if demonstrated, otherwise retain the exact scope finding. Do not attribute parser-hoisted paths to that conversion. Focused caller/native/AST controls and documentation/commit close this child; no full runtime/public/corpus claim.`
+  Verification: `pending actual Core caller proof`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
+  Status: `pending`
+  Goal: `Repair P1 fixed VHDL whole-vector logical guard typing before further width propagation.`
+  Acceptance: `Immediate after .1 commit, before programmatic opcode .2. Reproduce t/data/ial0-bitwise-vector-guards.fsm through strict native VHDL. Preserve the fixed-vector predicate as whole-value Boolean truth instead of translating both SV logical and bitwise operators into an ill-typed scalar/vector and. Reuse the bounded typed Boolean kernel where valid or retain a precise unsupported refusal before any artifact; no guessed casts or low-bit truncation. Bind actual fixed declarations, helper reservation and source/raw consumers, with distinguishing high-bit/nested/logical/one-bit/static and atomic controls. Focused consumer checks plus this exact single-source GHDL analysis qualify the repair; full compiler/override/runtime/API/MCP/corpus remains .6. Book/POD/fact sync and commit precede .2.`
+  Verification: `Owned under .1's directly affected consumer check. Exact qualified local GHDL binary (published VIAL profile digest) rejects actual fixed-after.vhd lines35/36: no function declarations for operator and, with scalar idle_en and eight-bit intermediate. VHDL::_sv_expr_to_vhdl currently maps both && and & to and without whole-vector Boolean conversion in fixed assignment context. Complete fixed raw VHDL from original/current SV is byte-identical, so the compiler defect predates the parser width repair. Source/streams/tool identity and full old/current products will retain in the .1 receipt. This single-source diagnosis is not broad VHDL qualification; no provider source/submodule internals were read or changed.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2`
+  Status: `pending`
+  Goal: `Prove and consume actual same-relationship vector bitwise intermediate widths in Verilog-family declarations.`
+  Acceptance: `After guard semantics, select actual whole-source binary bitwise intermediate events. Keep every distinct operand association and source capture. Only identical proved mutable width relationships may share a result range; equal defaults or separate overridable aliases cannot prove equivalence. Bind actual AST, selected emitted text and declaration, preserve vector rank at default one and refuse missing/foreign/independent-max proof. Split publication/consumer boundaries before an unsafe slice; focused source/caller/static/refusal checks and book/POD precede commit. VHDL non-scalar join remains .3.4.3.4; full qualification .6.`
+  Verification: `pending guard semantics`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`
+  Status: `pending`
+  Goal: `Close remaining width-preserving unary/arithmetic and scalar logical/comparison relationships with explicit independent constraints.`
+  Acceptance: `After initial bitwise relationships, inventory actual supported unary/binary AST families and emitted numeric/cache contexts. Preserve all independent max-width and signed/type constraints, literal sizing and actual source semantics; admit only proved kernels, with explicit refusals for unsupported relationships. Do not activate optional inversion. Split bounded family/producer/consumer slices with focused checks and synchronized docs; paired VHDL remains .4 and full external/public/corpus qualification .6.`
+  Verification: `pending initial bitwise relationships`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
@@ -2487,6 +2538,13 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — Prior hook rejected task_evidence capacity; git log -S for the exact .1.2 node locates original registration at 23a7b94fa419aca23b1193f0583bb40e80b8c724. Current exact source proves the selected subtree closed; live owner .1.3.2 excludes the wider .1 candidate. Initial section-placement and missing fresh-checklist refusals are retained in the audit.
   - [x] **ADDRESSED (verified)** — Exact source/digest/goal/child recovery preserves all archived contracts and every unrelated live node. Registry owner census preserves live owners; corrected authoritative registration passes native integrity. No limits, source behavior or feature qualification change.
   - [x] **NO REGRESSION** — All tests successful Files=1 Tests=48 for T1549 task/history controls, including current live-tree recovery. Native task integrity, book/POD and complete source-view checks pass. Normal final-index doctrine hook gates commit; source/VHDL implementation resumes .3.4.3.1.2.2.
+
+- ID: `ISF-REDUCTION-DELIVERY.29`
+  Status: `pending`
+  Goal: `Contain canonical Knowledge Map card growth without losing current facts, evidence or questions.`
+  Acceptance: `Priority required-continuity prerequisite when fresh facts would exceed the owned transition allowance; otherwise after required feature implementation and before .6. Independently census canonical cards and registry allowances, distinguish current facts from version-retrievable historical narration, then select bounded semantic consolidation/retention. Preserve complete current fact identities, question routes, evidence/reverify contracts and exact historical source bytes. Do not rename cards to manipulate pressure or increase ceilings/allowances. Prove whole pre/post membership/query parity and retained current-fact/source recovery with focused native controls, sync docs and commit. Derived shard containment remains separate .26.`
+  Verification: `The collection exhausts its finite transition line/byte allowances during .3.4.3.2.1.1; related-card prose consolidation preserves all prior questions/current facts and full old cards in the receipt. Whole-file byte census and immutable registry baseline/growth independently reproduce the boundary; normal containment hook supplies native re-derivation. This is owned pressure remediation, not completed redesign or an excuse to discard a new defect fact.`
+  Commit: `pending`
 
 ## Blockers
 

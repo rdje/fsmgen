@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2`
-- next_action: Inspect actual width-preserving unary/binary intermediate consumers and their independent operand constraints; split the next proved relationship before implementation.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
+- next_action: Repair the diagnosed fixed VHDL scalar/vector logical guard typing with bounded whole-value Boolean conversion and focused native/type controls.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

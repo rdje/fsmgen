@@ -467,6 +467,27 @@ reductions with proved emitted origins. Other computed intermediates and complet
 external override/runtime qualification remain separate work; see
 [Data Manipulation](13e-data-manipulation.md).
 
+A vector compound predicate uses whole-value nonzero truth. With eight-bit
+`A = B = 2`, `(& A B)` is 2, so the guarded assignments execute while the state
+is active. Parser-created bitwise intermediates retain their actual expression
+width; their state selectors use logical truth rather than testing the low bit.
+One-bit predicates keep the compact bitwise gate. The aliases `and`, `or`, `xor`
+and nested/n-ary expressions retain their own result widths.
+
+```lisp
+{{#include ../../../t/data/ial0-bitwise-vector-guards.fsm}}
+```
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/bitwise_vector_guards.sv t/data/ial0-bitwise-vector-guards.fsm
+```
+
+Focused checks pass for SystemVerilog generation at fixed and selected parameter
+defaults. A fixed VHDL scalar/vector logical guard probe still has a compiler
+type error, owned by `.3.4.3.2.1.3`. Symbolic relationships for general computed
+intermediates and complete external compiler/override/runtime qualification
+remain separate work.
+
 Example with nested and compound guards:
 
 ```lisp

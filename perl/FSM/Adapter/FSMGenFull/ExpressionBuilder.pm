@@ -237,10 +237,12 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
         fsm_debug("          FACTORIZATION: Extracting complex $operator expression to intermediate signal", 3);
 
         my $intermediate_name = $self->generate_intermediate_signal($operator, $parsed_operands);
+        my $width = $self->infer_exact_expression_width($ast_tree);
+        my %attributes = (type => 'wire', is_intermediate => 1);
+        $attributes{width} = $width if defined($width) && $width > 0;
         my $signal = $self->{signal_manager}->register_signal(
             $intermediate_name,
-            type => 'wire',
-            is_intermediate => 1
+            %attributes,
         );
 
         $signal->set_driving_ast($ast_tree);
@@ -1136,3 +1138,25 @@ sub propagate_width_to_expression($self, $expr, $width) {
 }
 
 1;
+
+=head1 NAME
+
+FSM::Adapter::FSMGenFull::ExpressionBuilder - Build direct source expressions and parser-owned intermediates
+
+=head1 INTERNAL WIDTH ALLOCATION
+
+C<finalize_nary_expression> builds the actual n-ary AST and hoists multi-operand
+bitwise AND/OR/XOR into a fresh owned intermediate. Before registration, its
+existing C<infer_exact_expression_width> kernel supplies a positive known result
+width. Core metadata, native declarations and guard truthiness therefore agree;
+a wide intermediate is tested as a whole nonzero value rather than through its
+low bit. Unary reductions remain scalar, and literal widths remain independent
+max constraints. This sizing does not resize operand Signals.
+
+An unknown exact width retains the existing placeholder behavior. Selected
+numeric widths do not create a declared-width binding or prove a mutable
+symbolic relationship. Generic computed-shape propagation, target legality and
+external override/runtime qualification remain separate contracts. Source
+parsing and scope validation continue through the existing adapter surface.
+
+=cut

@@ -10,6 +10,7 @@ answers:
   - "how do private symbolic VHDL conditions retain whole-vector truth?"
   - "how do private symbolic VHDL assignments preserve unsigned sizing?"
   - "which direct VHDL symbolic source shapes now generate through the CLI?"
+  - "why did fixed VHDL vector guards fail analysis?"
   - "why does source-aware symbolic VHDL require a captured transition?"
   - "which task owns the direct no-transition state-hold repair?"
 date: 2026-10-28
@@ -19,30 +20,24 @@ evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; perl/FSM/Backend/VHDL
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2184-direct-vhdl-symbolic-source.t t/2179-direct-vhdl-declaration-parser.t t/2154-direct-vhdl-generic-integration.t
 ---
 
-DirectParameterEmitter prepares declarations from proved source observations and an explicit actual
-target namespace/identifier mapping. Related consumers and their referenced roots use the existing
-natural renderer. Equal numeric defaults create no relationships; independent
-literal/vector/negative defaults retain the static converter path and generated identifier
-normalization.
+DirectParameterEmitter uses proved observations and actual namespace/mapping.
+Related consumers/roots use natural rendering; equal defaults create no relation.
+Independent literal/vector/negative defaults keep static conversion and name normalization.
+Membership, case-insensitive conflicts and dependency order (alphabetical ties) are
+checked; lexical scope survives copies. Related root renaming, stale captures,
+cycles and unsupported natural relations refuse. Legacy declarations gain no scope.
 
-The plan checks emitted membership and case-insensitive namespace conflicts, preserves dependency
-order with alphabetical ties and retains lexical source scope across physical module copies. Related
-parameter renaming, stale captures, cycles and unsupported natural relationships refuse. Legacy
-programmatic declarations acquire no invented scope.
+Normalized declarations and independent expectations qualify preparation;
+caller-made namespaces attest no provenance. Native module/declaration/mapping
+coupling has T2154 and supported/refused controls. Raw conversion stays
+integer/static; full external override/runtime/transport checks remain .6.
 
-Actual normalized backend declarations and independent plan expectations qualify private
-preparation. Caller-made namespace records are not provenance attestation. The direct backend now
-consumes this plan with its actual normalized module/declarations/mapping; standalone raw conversion
-retains its existing integer/static behavior. T2154 and native supported/refused controls qualify
-that coupling. Full external override/runtime/transport checks remain .6.
-
-Optional paired assignment_analysis/target_declarations now qualify actual captured widths through
-DirectDeclaredWidthSupport against the same complete target namespace. Proved width roots join the
-existing default-reference subset before natural rendering. Width-only roots select natural; equal
-independent literal/vector/negative defaults stay static. Missing/stale/renamed/inconsistent inputs
-refuse. Omitting both inputs preserves the existing default-only profile. The source-aware converter
-now supplies actual width context for symbolic source generation; remaining computed shapes stay
-.3.4-owned.
+Paired optional assignment_analysis/target_declarations qualify captured widths
+against the same namespace through DirectDeclaredWidthSupport. Width-only and
+default-referenced roots join natural rendering; equal independent literals,
+vectors and negative defaults stay static. Missing/stale/renamed/inconsistent
+inputs refuse; omitting both preserves default-only preparation. Source-aware
+conversion supplies this context; remaining computed shapes are .3.4-owned.
 
 DirectDeclarationPlan now pairs original emitted SystemVerilog ranges with normalized VHDL ranges
 and types, re-proving complete actual source/target declarations before preparing natural generics
@@ -101,3 +96,6 @@ Task .27 owns the missing no-transition next_state drive: SV allocates state reg
 but only transitions create that assignment family. Its source, loci and unobserved
 dynamic impact remain in .27/source-activation audit. Symbolic source refuses;
 fixed-source behavior remains unrepaired.
+
+Fixed logical scalar/vector guards currently emit ill-typed `and` (GHDL diagnosis).
+Task .3.4.3.2.1.3 owns the immediate repair; the .1 width-fix receipt retains proof.

@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **129** uniquely owned question entries.
+> **7** facts · **130** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -130,6 +130,7 @@
 - q="which unary reduction operands still fail in direct VHDL?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why can direct VHDL generation succeed but GHDL reject a reserved identifier?" · facts=[direct-vhdl-reserved-identifiers](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)
 - q="why did direct VHDL select vector fold helpers?" · facts=[direct-vhdl-reduction-expression-readiness-audit](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
+- q="why did fixed VHDL vector guards fail analysis?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 - q="why does FSMGen emit fsmgen_direct_vhdl_reduce_or?" · facts=[direct-vhdl-reduction-expression-lowering-behavior](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 - q="why does named-drive VHDL contain a vertical bar before drive_start?" · facts=[direct-vhdl-reduction-expression-token-leak](../../docs/knowledge/direct-vhdl-reduction-expression-token-leak.md)
 - q="why does source-aware symbolic VHDL require a captured transition?" · facts=[direct-vhdl-parameter-profiles](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
