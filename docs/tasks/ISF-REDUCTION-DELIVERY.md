@@ -2402,22 +2402,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1`
   Status: `done`
   Goal: `Record original computed arithmetic births and owned substitution lineage.`
-  Acceptance: `Use actual fresh unresolved nested arithmetic candidates and the existing substitution transformation, before any numeric inference. Keep the whole-reference birth API/record unchanged; add an explicit separate closed graph-birth capsule with ordered typed original tree/source identity and exact current candidate/AST/edge ownership. Advance it only through actual owned substitution while widths remain unresolved, binding generated references to the actual selected child candidates. Same-width/text copies, later observations, forged/foreign/stale/self/cyclic lineage and unsupported literal/state/operator trees cannot mint or refresh it. Retain only owner-local plain data and detached diagnostics. This first closed holder bounds diagnostic tree walks to 64 levels/4096 visited nodes; larger/unsupported trees withhold metadata while legacy generation stays unchanged. Original source type/width eligibility remains a later inference obligation. Focused real-source/tamper/lifecycle/native controls plus POD/book/facts and commit; no graph policy/event/range admission yet.`
-  Verification: `Separate original arithmetic graph trees now bind actual fresh candidate/AST/Core identity and owned mapped substitution. T2220/T2204/T2216/T2219: All tests successful Files=4 Tests=20; authenticated predecessor lacks API. Exact native deltas are only new graph birth diagnostics; full HDL/source/events/whole births/current policies conserve. Ordered/duplicate/deeper/Core/tamper/foreign/mapped/refusal/plain-owner controls pass. Re-derive actual boundaries; falsify predecessor/incorrect lineage/compatible-type paths; durability docs/audits/arithmetic-graph-birth-20261028.json.gz. Intrinsic/completed graph events and range admission remain pending.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1: retain original arithmetic graph births`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1.1`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2220 reports Can't locate object method intermediate_width_graph_birth at ./t/2220-factorized-arithmetic-graph-births.t line 39. Original nested candidates lacked ownership through typed substitution; selected widths cannot reconstruct that earlier event. First new-helper failures also expose compatible isa versus actual Core ancestry.
-  - [x] **ADDRESSED (verified)** — Add separate closed original tree capsules and exact current child/mapped substitution checks at actual allocator/transform boundaries. Preserve whole-reference APIs and numeric products; use true ancestry for compatible references, reject copied/foreign/stale/cyclic/unsupported lineage and keep only detached plain data.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20. Exact native comparison permits only graph-birth diagnostic fields; every existing HDL/source/event/current-policy product conserves. Scalar-safe historical replay confirms earlier residual classifications. POD/book/current fact and mandatory final-index hook qualify commit; no graph policy/range/full .6 claim.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.1.1`
-  Status: `done`
-  Goal: `Correct inherited inventory optional-value observation and review prior classifications.`
-  Acceptance: `Current native probe and the earlier residual inventory contain Odd number of elements warnings because optional allocation is the final hash value in list context. Preserve original receipts/logs; scalarize optional observations in the current owned probe, authenticate predecessor source bytes against the earlier receipt, and compare complete corrected predecessor products to the historical inventory. Confirm or correct every prior classification rather than assuming the last-field warning harmless. No production getter/API or behavior change; retain exact review in the graph-birth receipt.`
-  Verification: `Current and historical last-field warnings reproduce. Corrected scalar-safe predecessor products match every historical residual inventory product under exact relevant source hashes; every prior classification conserves. Warning-free current/baseline captures and initial logs remain in the parent receipt. Original historical receipt is unchanged; no production getter/API change.`
-  Commit: `joined to parent graph-birth slice`
+  Terminal: `version_object`
+  Revision: `35272feca1cb97f521864a201038a4cfa1e6891b`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `b8c31959b555d8b7eb2ae45e032b32c67c3f05ab51e39213089a1b2e2aef9837`
+  Archived node count: `2`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed original graph-birth source and children: docs/audits/graph-event-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1: retain closed graph-birth history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2`
   Status: `active`
@@ -2452,11 +2444,32 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20 for T2221/T2205/T2220/T2216. Full source/HDL/target/policy products equal authenticated predecessor; private frame/caller/lifetime controls pass. POD/book/fact and normal final-index doctrines gate commit; full qualification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Record first intrinsic graph max events from pending input and current dependency proof.`
   Acceptance: `After .2, integrate actual resolver entry/recursive child inference/parent width publication into a held graph-event path separate from whole-reference events. Parent eligibility is captured before selected width; ready dependency proof must reflect the actual numeric resolver's chosen rows, not a same-name alternate. Preserve exact max, order/duplicates, source/child constraints and epoch/revision/ownership through permitted writes. Child cache re-inference at default one and numeric fast paths at wider defaults must not erase or fabricate proof; temporary held-event take/restore is not completed policy. Supported source/dependency changes, unknown publications, cycles and copied/stale/foreign graphs withhold. Keep current ordinary numeric selection, old APIs and plain owner lifetimes. Focused real recursive/order/currentness/refusal controls plus POD/book/facts and commit close intrinsic inference only; .3.3 owns completed policies/owned registry and live prepared-view publication.`
   Verification: `pending current input/dependency frames`
   Commit: `pending intrinsic graph events`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1`
+  Status: `done`
+  Goal: `Retain closed graph-birth evidence before intrinsic event integration.`
+  Acceptance: `Retain only the closed original graph-birth subtree at exact current HEAD under fsmgen_required_history. Preserve full source/digest/children, every unrelated node and live owner, without nested terminals or changed budgets; native retrieval and normal hooks before event code.`
+  Verification: `Exact committed graph-birth subtree and complete done children retain through digest-bound version_object retrieval. Independent Git source equality, unchanged unrelated nodes and every live owner pass; receipt docs/audits/graph-event-frontier-20261028.json.gz. No source/behavior/limit/qualification change.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1: prepare graph event frontier`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S retain original arithmetic graph births locates 0e131d680. Closed graph-birth detail occupies task-evidence capacity needed for current intrinsic event proof; its exact prior source requires durable retrieval.
+  - [x] **ADDRESSED (verified)** — Retain the full closed graph-birth subtree under fsmgen_required_history with exact revision/digest/children. Independent source, complete closure and live-owner/unrelated-node checks pass; actual intrinsic integration remains the next owned leaf.
+  - [x] **NO REGRESSION** — knowledge-map: OK remains required by the final hook. Native task retrieval, book/source checks and normal doctrines validate the exact retained history and unchanged budgets; no source behavior or full qualification promotion.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
+  Status: `pending`
+  Goal: `Integrate actual first intrinsic graph events and owned resolver cache transitions.`
+  Acceptance: `Implement parent event contract using current pending/ready frames; transitive child proof and actual resolver branch/publication must agree. Independent/native/floor/stale/cyclic inputs withhold; preserve numeric/whole-reference APIs and plain lifetimes. Completed graph policy/registry/view publication stays .3.3.`
+  Verification: `pending actual first intrinsic events`
+  Commit: `pending graph inference integration`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
   Status: `pending`
