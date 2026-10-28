@@ -30,6 +30,13 @@ The broader C<EnableGraph> owner still provides shared backend context,
 intermediate-signal classification, and assignment/reset helpers consumed by
 this rendering/classification family.
 
+During source-aware generation, proved symbolic source, storage and emitted
+binary-helper ranges remain vectors even when their selected default is one.
+Truth tests and logical operator selection use whole-vector semantics; numeric
+width folds cannot treat these ranges as fixed sizes. Per-generation plans are
+read without modifying declaration ledgers or inferring new relationships.
+Explicit one-bit slices and fixed scalar behavior retain their existing path.
+
 =cut
 
 use v5.20;
@@ -623,6 +630,8 @@ sub _expression_width ($self, $ast) {
         return $slice_width if defined $slice_width;
 
         my $signal = eval { $ast->signal };
+        return undef if $signal && $signal->can('name')
+            && $self->_signal_has_symbolic_range($signal->name);
         my $width = eval { $signal && $signal->can('width') ? $signal->width : undef };
         return $width if defined($width) && !ref($width) && $width =~ /\A\d+\z/;
     }
@@ -685,6 +694,7 @@ sub _known_same_expression_width ($self, @asts) {
 
 sub _signal_width ($self, $name) {
     return undef unless defined($name) && length($name);
+    return undef if $self->_signal_has_symbolic_range($name);
 
     my $ctx = $self->{flattened_dt};
     if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals && $ctx->{fsm_module}->signals->{$name}) {
@@ -706,6 +716,7 @@ sub _signal_width ($self, $name) {
 
 sub _intermediate_signal_width ($self, $name) {
     return undef unless defined($name) && length($name);
+    return undef if $self->_signal_has_symbolic_range($name);
 
     my $ctx = $self->{flattened_dt};
     return undef unless $ctx
@@ -761,6 +772,25 @@ sub _intermediate_signal_width ($self, $name) {
     }
 
     return undef;
+}
+
+sub _signal_has_symbolic_range ($self, $name) {
+    return 0 unless defined $name;
+    my $ctx = $self->{flattened_dt};
+    my $source = $ctx->{direct_declared_width_source_plan};
+    my $signal = $source ? $source->{signals}{$name} : undef;
+    my $binary_ranges = $ctx->{direct_declared_width_emitted_binary_ranges};
+    my $binary = $binary_ranges ? $binary_ranges->{$name} : undef;
+    my @plans = ($signal ? $signal->{width_plan} : undef,
+        $binary ? $binary->{width_plan} : undef);
+    for my $field (qw(direct_declared_width_emitted_ports direct_declared_width_emitted_signals)) {
+        my $map = $ctx->{$field};
+        push @plans, $map->{$name} if $map && exists($map->{$name});
+    }
+    for my $plan (@plans) {
+        return 1 if $plan && $plan->{profile} eq 'symbolic';
+    }
+    return 0;
 }
 
 sub _boolean_constant ($self, $value) {
@@ -1434,6 +1464,7 @@ Internal single-bit signal classifier for emitted operator selection.
 
 sub _signal_is_single_bit ($self, $name) {
     my $ctx = $self->{flattened_dt};
+    return 0 if $self->_signal_has_symbolic_range($name);
 
     fsm_debug("    SIGNAL_IS_1BIT: Checking if signal '$name' is single-bit", 3);
 

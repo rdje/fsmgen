@@ -468,7 +468,15 @@ range, expression, ordered operands and allocation role. Before HDL returns,
 final assembly independently rederives the current source/allocation proof
 against complete emitted namespace, type and declaration records, then requires
 exact agreement with that record. Late policy, expression, range, role or source
-changes refuse and invalidate the collector. Binary VHDL helpers and full
+changes refuse and invalidate the collector. Symbolic source/storage/helper
+truth tests also use vector semantics at default one: nonzero tests reduce the
+whole vector, equals-one stays exact equality, and direct vector guard gating
+uses logical `&&`. Fixed scalar gates and explicit one-bit slices stay compact.
+Selected defaults cannot supply fixed sizes for Boolean simplification. For
+example, overriding `W` to eight must preserve a true high-bit-only predicate;
+`idle_en & helper` would lose it at a scalar enable, while `idle_en && helper`
+retains its truth. External override/runtime execution is still deferred.
+Binary VHDL helpers and full
 compiler/override/runtime qualification remain pending.
 
 The [register-helper fixture](../../../t/data/ial0-direct-symbolic-helpers.fsm)
