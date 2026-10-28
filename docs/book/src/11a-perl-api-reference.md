@@ -202,15 +202,13 @@ while the outer arithmetic helper still retains its selected numeric width.
 `(& A B C)` creates a source-owned nested AST with a numeric helper too.
 These forms do not yet provide parameter-correct helper propagation; use the
 bounded whole-operand kernels above only within their stated relationship.
-Computed arithmetic graph ownership is next, followed by n-ary source-holder
-proof. Actual lifecycle observations locate the missing contract before width
-selection: original nested candidates receive no whole-reference birth, and
-substitution replaces their child trees with typed helper references while the
-root width is still unresolved. Parent inference can normalize a child
-recursively; the child's held intrinsic event exists before collection publishes
-completed policy. New graph proof must bind that original ownership and exact
-substitution edge, then use current dependency events. A later numeric width or
-printed child range cannot recreate those events. Logical/comparison wrappers
+Completed arithmetic graph policy/publication is next, followed by n-ary source-holder
+proof. Original nested candidates receive a separate graph birth; substitution
+binds their typed helper references while the root width is still unresolved.
+Parent inference can normalize a child recursively. Current graph intrinsic
+events now join that ownership to held child proofs before collection completes
+policy. Transitive completed policy and target ranges remain pending. A later
+numeric width or printed child range cannot recreate those earlier events. Logical/comparison wrappers
 retain one-bit results; that scalar result alone supplies no allocation proof for
 a vector operand. Full override/runtime
 qualification remains deferred.
@@ -231,7 +229,8 @@ The original whole-reference birth API stays separate. Later numeric widths do
 not create graph birth or prove allocation. Each private tree walk admits
 at most 64 binary levels and 4096 visited nodes; larger trees receive no new
 metadata. Private graph input and ready frames now validate source constraints
-and actual current child proofs; graph intrinsic/completed policy remains pending.
+and actual current child proofs; graph intrinsic events now qualify separately.
+Completed graph policy remains pending.
 These diagnostics change no HDL, target events or current range admission.
 
 `IntermediateWidthGraphInferenceSupport` separates pending unresolved parent input
@@ -247,7 +246,21 @@ equal numeric widths withhold. Returned frames contain only detached JSON data;
 the weak association retains no registry and abort clears it. Child cache reads
 preserve the stable proof only after the full current child getter validates
 owned transient fields. No graph inference event or completed policy is installed
-by these private queries; integration at the actual resolver remains next.
+by these private queries. The actual resolver now captures eligible input before
+inference, validates ready child proof and compares its selected parent write.
+Its separate `factorized_graph_inference_event` returns a closed
+`arithmetic_graph_operand_max` record with operator, ordered current edge names,
+original expression tree and selected max. N-ary, nested, duplicate and transitive
+arithmetic graphs retain their actual ownership. Valid resolver cache reads
+preserve held proof, including scalar re-inference; equal copied metadata,
+native/floor constraints and changed sources/views cannot create or revive it.
+A read shares child validation within its own operation, then independently
+rechecks graph inputs, held capsules and whole-reference child proofs before
+return. A later sibling source write therefore cannot hide behind a cached
+child result. Operation-local observations retain no owner graph. Abort/new
+epochs clear holders. Normalization/registry/prepared-view publications still
+withhold graph currentness until their separately owned integration; no completed
+graph policy, graph target event or symbolic graph range is exposed yet.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

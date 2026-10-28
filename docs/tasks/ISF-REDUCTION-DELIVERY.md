@@ -2412,11 +2412,11 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1: retain closed graph-birth history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Join first intrinsic graph inference to current actual dependency events.`
   Acceptance: `After .1, bind actual parent unresolved input and exact typed generated edges to current actual child rows/events during the same recursive inference epoch. Handle child-first and parent-recursive normalization without treating completed policy as available early; distinguish held events temporarily taken/restored during owned cache reads. Verify exact max against plain source leaves and every independent result/operand floor/type/opaque constraint. Reject cycles, copied/foreign/stale or unproved numeric children and unsupported publications; plain capsules add no owner graph. Preserve existing numeric selection and whole-reference producers. Focused causal/order/currentness/refusal checks, synchronized contracts and commit; no completed graph or range claim yet.`
-  Verification: `Actual child held event precedes collection completion; nested parent may recursively normalize it. Original trace and corrected logging evidence retained in the lifecycle receipt.`
-  Commit: `pending transitive intrinsic inference`
+  Verification: `Current-row frames and actual intrinsic graph/cache events have focused checks; exact receipt arithmetic-graph-intrinsic-20261028. Completed policy/publication remains .3.3.`
+  Commit: `completed through ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1`
@@ -2444,11 +2444,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20 for T2221/T2205/T2220/T2216. Full source/HDL/target/policy products equal authenticated predecessor; private frame/caller/lifetime controls pass. POD/book/fact and normal final-index doctrines gate commit; full qualification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Record first intrinsic graph max events from pending input and current dependency proof.`
   Acceptance: `After .2, integrate actual resolver entry/recursive child inference/parent width publication into a held graph-event path separate from whole-reference events. Parent eligibility is captured before selected width; ready dependency proof must reflect the actual numeric resolver's chosen rows, not a same-name alternate. Preserve exact max, order/duplicates, source/child constraints and epoch/revision/ownership through permitted writes. Child cache re-inference at default one and numeric fast paths at wider defaults must not erase or fabricate proof; temporary held-event take/restore is not completed policy. Supported source/dependency changes, unknown publications, cycles and copied/stale/foreign graphs withhold. Keep current ordinary numeric selection, old APIs and plain owner lifetimes. Focused real recursive/order/currentness/refusal controls plus POD/book/facts and commit close intrinsic inference only; .3.3 owns completed policies/owned registry and live prepared-view publication.`
-  Verification: `pending current input/dependency frames`
-  Commit: `pending intrinsic graph events`
+  Verification: `Current-row frames and actual intrinsic graph/cache events have focused checks; exact receipt arithmetic-graph-intrinsic-20261028. Completed policy/publication remains .3.3.`
+  Commit: `completed through ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1`
@@ -2464,12 +2464,17 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — knowledge-map: OK remains required by the final hook. Native task retrieval, book/source checks and normal doctrines validate the exact retained history and unchanged budgets; no source behavior or full qualification promotion.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate actual first intrinsic graph events and owned resolver cache transitions.`
   Acceptance: `Implement parent event contract using current pending/ready frames; transitive child proof and actual resolver branch/publication must agree. Independent/native/floor/stale/cyclic inputs withhold; preserve numeric/whole-reference APIs and plain lifetimes. Completed graph policy/registry/view publication stays .3.3.`
-  Verification: `pending actual first intrinsic events`
-  Commit: `pending graph inference integration`
+  Verification: `Separate actual intrinsic graph max events and owned cache transitions pass focused controls. Native products conserve except new diagnostics. Repeated transitive validation cost is fixed by operation-local reuse plus fresh shallow proof/holder checks; known-bad reuse removal fails. Initial catchable/buffered observer is explicitly invalid and corrected. Exact sources/logs/legs: docs/audits/arithmetic-graph-intrinsic-20261028.json.gz. Completed policy/range/full .6 stay pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2: record intrinsic arithmetic graph events`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Predecessor reports Can't locate object method factorized_graph_inference_event at ./t/2222-arithmetic-graph-intrinsic-events.t line 60. Disabling only validation reuse fails the per-node control at line 229; initial guarded depth probe exposes multiplying child getter work.
+  - [x] **ADDRESSED (verified)** — Bind actual first unresolved/ready/max publication to separate graph holders; preserve only current owned cache writes. Operation-local reuse ends with fresh graph/whole-child/holder checks, rejecting mutation behind cached children. Exact invalid-observer recovery is retained.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20; alternate traversal Files=1 Tests=6. Native source/HDL/target/completed policies conserve; guarded depth and known-bad controls qualify the cost repair. POD/book/facts and mandatory hooks gate commit; .3.3 owns policy/publication.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
   Status: `pending`

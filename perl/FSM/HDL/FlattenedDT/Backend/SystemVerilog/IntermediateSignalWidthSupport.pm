@@ -58,6 +58,7 @@ sub _begin_factorized_width_inference ($self) {
 
 sub _abort_factorized_width_inference ($self) {
     $self->{_width_inference_events} = {};
+    $self->{_graph_inference_events} = {};
     $self->{_source_width_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
     delete $self->{_width_inference_complete};
@@ -128,6 +129,33 @@ sub factorized_width_inference_event ($self, $signal_name, $signal_info) {
         context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
         epoch => $self->{_width_inference_epoch}, revision => $self->{_width_inference_revisions}{$signal_name},
         holder => $self->{_width_inference_events}{$signal_name});
+}
+
+=head2 factorized_graph_inference_event
+
+Return a detached current C<arithmetic_graph_operand_max> intrinsic event for
+the actual row in the current weak view. The actual first unresolved AST branch
+must bind original graph ownership and current ordered child proofs, then compare
+the ready frame through only its own parent width/source writes. Selected max,
+original expression tree and current typed edge names remain separate fields.
+The whole-reference event and completed allocation APIs retain their profiles.
+
+Owned resolver cache reads preserve only an already current graph holder through
+the exact revision and parent width/source writes; default-one AST re-inference
+uses the same contract. Native metadata, independent floors, stale or copied
+inputs, cycles and source/view changes withhold. Abort clears graph holders.
+Later normalization/registry publications are not yet qualified for graph proof;
+they cannot refresh it or expose completed graph policy or symbolic ranges.
+
+=cut
+
+sub factorized_graph_inference_event ($self, $signal_name, $signal_info) {
+    my $events = $self->{_graph_inference_events};
+    return undef unless $self->{_width_inference_epoch} && ref($events) eq 'HASH'
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    return FSM::IntermediateWidthGraphInferenceSupport->current_inference(
+        width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
+        holder => $events->{$signal_name});
 }
 
 =head2 factorized_width_allocation
@@ -260,6 +288,47 @@ sub _finish_factorized_registry_copy ($self, $name, $info, $checkpoint, $replace
     $self->_restore_factorized_inference($name, $info, $checkpoint->{holder}, $expected);
 }
 
+sub _record_graph_inference ($self, $name, $info, $width, $source, $ready) {
+    return unless $ready;
+    my $holder = FSM::IntermediateWidthGraphInferenceSupport->prepare_inference(
+        width_support => $self, signal_name => $name, signal_info => $info, selected_width => $width) or return;
+    my $expected = JSON::PP->new->decode(JSON::PP->new->encode($ready));
+    my $identity = $expected->{signal_info}{identity};
+    for my $row ($expected->{signal_info}, $expected->{factorizer_entry}, $expected->{registered}) {
+        next unless $row && $row->{identity} eq $identity;
+        $row->{width} = $width;
+        $row->{width_source} = $source;
+    }
+    $self->{_graph_inference_events}{$name} = $holder
+        if JSON::PP->new->canonical->encode($expected) eq $holder->{state};
+}
+
+sub _take_current_graph_inference ($self, $name, $info) {
+    my $record = $self->factorized_graph_inference_event($name, $info);
+    my $holder = delete $self->{_graph_inference_events}{$name};
+    return undef unless $record;
+    return JSON::PP->new->decode(JSON::PP->new->encode($holder));
+}
+
+sub _restore_graph_inference ($self, $name, $info, $holder, $width, $source) {
+    return unless $holder;
+    my $current = FSM::IntermediateWidthGraphInferenceSupport->prepare_inference(
+        width_support => $self, signal_name => $name, signal_info => $info,
+        selected_width => $holder->{record}{selected_width}) or return;
+    my $expected = JSON::PP->new->decode($holder->{state});
+    $expected->{revision} = $self->{_width_inference_revisions}{$name};
+    my $identity = $expected->{signal_info}{identity};
+    for my $row ($expected->{signal_info}, $expected->{factorizer_entry}, $expected->{registered}) {
+        next unless $row && $row->{identity} eq $identity;
+        $row->{width} = $width;
+        $row->{width_source} = $source;
+    }
+    my $json = JSON::PP->new->canonical;
+    $self->{_graph_inference_events}{$name} = $current
+        if $json->encode($expected) eq $current->{state}
+            && $json->encode($holder->{record}) eq $json->encode($current->{record});
+}
+
 =head2 new
 
 Construct one intermediate-signal width owner bound to a specific
@@ -289,8 +358,10 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
 
     my $held = $self->{_width_inference_epoch}
         ? $self->_take_current_factorized_inference($signal_name, $signal_info) : undef;
+    my $graph_held = $self->{_width_inference_epoch}
+        ? $self->_take_current_graph_inference($signal_name, $signal_info) : undef;
     ++$self->{_width_inference_revisions}{$signal_name} if $self->{_width_inference_epoch};
-    my ($input_frame, $intrinsic_inference);
+    my ($input_frame, $graph_input, $graph_ready, $intrinsic_inference);
 
     $signal_registry //= {};
     $seen_signals //= {};
@@ -321,11 +392,17 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         if ($runtime_ast && blessed($runtime_ast)) {
             $input_frame = $self->_unresolved_factorized_input_frame($signal_name, $signal_info, $signal_registry)
                 unless $native_signal_info;
+            $graph_input = FSM::IntermediateWidthGraphInferenceSupport->prepare_input(
+                width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
+                signal_registry => $signal_registry, native_signal_info => undef, track => 1)
+                unless $native_signal_info;
             my $ast_width = $self->infer_width_from_intermediate_ast($runtime_ast, $signal_registry, $seen_signals);
             if (defined($ast_width) && $ast_width > 0) {
                 $resolved_width = $ast_width;
                 $width_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
                 $intrinsic_inference = 1;
+                $graph_ready = FSM::IntermediateWidthGraphInferenceSupport->prepare_frame(
+                    width_support => $self, input => $graph_input) if $graph_input;
             }
         }
     }
@@ -343,6 +420,10 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
 
     $self->_record_factorized_inference($signal_name, $signal_info, $resolved_width, $width_source, $input_frame)
         if $intrinsic_inference && !$native_signal_info;
+    $self->_record_graph_inference($signal_name, $signal_info, $resolved_width, $width_source, $graph_ready)
+        if $intrinsic_inference && !$native_signal_info;
+    $self->_restore_graph_inference($signal_name, $signal_info, $graph_held, $resolved_width, $width_source)
+        if $graph_held && !$native_signal_info;
 
     if ($held && !$native_signal_info) {
         my $expected = JSON::PP->new->decode($held->{state});

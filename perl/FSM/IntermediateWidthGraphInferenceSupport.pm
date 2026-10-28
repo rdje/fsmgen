@@ -17,8 +17,9 @@ FSM::IntermediateWidthGraphInferenceSupport - Prepare actual pending arithmetic 
 Private two-phase validation at the real normalization/inference boundary.
 Pending input binds the first unresolved parent and exact typed operands in the
 width owner's current non-owning row view. Ready proof additionally requires
-current held child events. Neither phase publishes an event or selected policy,
-attests execution of a caller-supplied branch, or enables a symbolic range.
+current held child events. The actual resolver compares the ready proof around
+its own selected-width publication before installing a separate intrinsic event.
+Frame queries alone do not attest branch execution or complete selected policy.
 
 Generated references follow the numeric resolver's passed-registry precedence.
 The factorizer fallback without an actual collected row supplies no proof.
@@ -32,6 +33,7 @@ they are not target type or mutable-range eligibility.
 sub _json { return JSON::PP->new->canonical }
 sub _id { return ref($_[0]) ? sprintf('%x', refaddr($_[0])) : undef }
 sub _copy { return _json()->decode(_json()->encode($_[0])) }
+my %validation;
 
 sub _scope {
     my ($owner) = @_;
@@ -80,8 +82,8 @@ sub _child_birth {
     return $whole ? {family => 'whole', capsule => $whole} : undef;
 }
 
-sub _prepare_input {
-    my (%args) = @_;
+sub _observe_input {
+    my ($selected, %args) = @_;
     return undef unless exists($args{native_signal_info}) && !defined($args{native_signal_info});
     return undef if defined($args{track}) && (ref($args{track}) || $args{track} !~ /\A[01]\z/);
     my $owner = $args{width_support};
@@ -95,14 +97,14 @@ sub _prepare_input {
     my $revisions = $owner->{_width_inference_revisions};
     return undef unless ref($revisions) eq 'HASH'
         && defined(FSM::IntermediateWidthAllocationSupport::_width($revisions->{$name}))
-        && FSM::IntermediateWidthAllocationSupport::_width($revisions->{$name}) eq '1';
+        && ($selected || FSM::IntermediateWidthAllocationSupport::_width($revisions->{$name}) eq '1');
     my $signals = $module->signals;
     return undef unless ref($signals) eq 'HASH' && !exists($signals->{$name});
     return undef if defined($ctx->{enable_graph_assignment_support}->get_signal_info($name));
     my $factorizer = $ctx->{ast_factorizer};
     return undef unless blessed($factorizer) && $factorizer->isa('FSM::HDL::ASTFactorization');
     my $parent = _factorized_row($factorizer, $name, $args{signal_info}) or return undef;
-    return undef unless _unresolved($args{signal_info}) && _unresolved($parent->{entry});
+    return undef unless $selected || (_unresolved($args{signal_info}) && _unresolved($parent->{entry}));
     my $birth = $factorizer->_current_intermediate_width_graph_birth($name) or return undef;
     my $ast = $parent->{entry}{ast};
     my $shape = FSM::IntermediateWidthAllocationSupport->binary_operand_max_shape($ast) or return undef;
@@ -138,7 +140,7 @@ sub _prepare_input {
     my $registered = ref($registered_map) eq 'HASH' ? $registered_map->{$name} : undef;
     my $registered_state = defined($registered) ? _metadata($registered, $ast) : undef;
     return undef if defined($registered) && !$registered_state;
-    return undef if $registered_state && (defined($registered_state->{width})
+    return undef if !$selected && $registered_state && (defined($registered_state->{width})
         || (defined($registered_state->{width_source})
             && $registered_state->{width_source} ne 'unresolved_factorization_ast'));
     # Tracking is explicit and begins only after every source/profile is valid.
@@ -205,7 +207,47 @@ sub _child_kernel {
     my $width = FSM::IntermediateWidthAllocationSupport::_width($info->{width});
     my $selected = FSM::IntermediateWidthAllocationSupport::_width($record->{selected_width});
     return undef unless defined($width) && defined($selected) && $selected eq $width;
+    if ($operand->{birth}{family} eq 'whole' && $validation{active}) {
+        $validation{active}{whole}{$name} = _copy({record => $record, state => $holder->{state}});
+    }
     return {record => $record, state => $state, width => $width};
+}
+
+sub _validation_current {
+    my ($owner, $session) = @_;
+    my $scope = _scope($owner) or return undef;
+    return undef unless $session->{owner_identity} eq _id($owner);
+    # These are shallow observations, with no recursive event getters. Every
+    # visited graph contributes its own exact local input; whole-reference
+    # children contribute their existing non-recursive full inference proof.
+    for my $name (sort keys %{$session->{inputs}}) {
+        my $current = _observe_input(1, width_support => $owner, signal_name => $name,
+            signal_info => $scope->{rows}{$name}, signal_registry => $scope->{rows}, native_signal_info => undef)
+            or return undef;
+        return undef unless _json()->encode($current) eq $session->{inputs}{$name};
+    }
+    for my $name (sort keys %{$session->{whole}}) {
+        my $expected = $session->{whole}{$name};
+        my $events = $owner->{_width_inference_events};
+        return undef unless ref($events) eq 'HASH'
+            && _json()->encode($events->{$name}) eq _json()->encode($expected);
+        my $current = FSM::IntermediateWidthAllocationSupport->prepare_factorized_inference(
+            context => $scope->{context}, signal_name => $name, signal_info => $scope->{rows}{$name},
+            epoch => $scope->{epoch}, revision => $owner->{_width_inference_revisions}{$name},
+            selected_width => $expected->{record}{selected_width}) or return undef;
+        return undef unless _json()->encode($current) eq _json()->encode($expected);
+    }
+    my $events = $owner->{_graph_inference_events};
+    for my $name (sort keys %{$session->{holders}}) {
+        return undef unless ref($events) eq 'HASH'
+            && _json()->encode($events->{$name}) eq $session->{holders}{$name};
+    }
+    return 1;
+}
+
+sub _new_validation {
+    my ($owner) = @_;
+    return {owner_identity => _id($owner), inputs => {}, whole => {}, holders => {}, records => {}};
 }
 
 sub _dependencies {
@@ -244,7 +286,7 @@ only JSON data; caller data alone does not attest branch execution.
 
 sub prepare_input {
     my ($class, %args) = @_;
-    my $input = eval {_prepare_input(%args)};
+    my $input = eval {_observe_input(0, %args)};
     return $@ ? undef : $input;
 }
 
@@ -265,33 +307,122 @@ hide invalidation of a child that was already read.
 
 sub prepare_frame {
     my ($class, %args) = @_;
+    my $owner = $args{width_support};
+    my $outer = !$validation{active} || ($validation{active}{owner_identity} // '') ne (_id($owner) // '');
+    local $validation{active} = $outer ? _new_validation($owner) : $validation{active};
     my $frame = eval {
-        my $input = _copy($args{input});
-        return undef unless ref($input) eq 'HASH' && ($input->{kind} // '') eq 'arithmetic_graph_input';
-        my $scope = _scope($args{width_support}) or return undef;
-        my $name = $input->{signal_name};
-        my $rows = $scope->{rows};
-        my $current = _prepare_input(width_support => $args{width_support}, signal_name => $name,
-            signal_info => $rows->{$name}, signal_registry => $rows, native_signal_info => undef) or return undef;
-        return undef unless _json()->encode(_stable_input($input)) eq _json()->encode(_stable_input($current));
-        my $proof = _dependencies($args{width_support}, $scope, $current->{operands}) or return undef;
-        # A later sibling's getter can invalidate an earlier child's source.
-        # Compare the complete dependency proof again before publishing a frame.
-        my $checked = _dependencies($args{width_support}, $scope, $current->{operands}) or return undef;
-        return undef unless _json()->encode($proof) eq _json()->encode($checked);
-        my $again = _prepare_input(width_support => $args{width_support}, signal_name => $name,
-            signal_info => $rows->{$name}, signal_registry => $rows, native_signal_info => undef) or return undef;
-        return undef unless _json()->encode(_stable_input($current)) eq _json()->encode(_stable_input($again));
-        # Child before-inference widths are deliberately replaced by current,
-        # validated proof rather than retained as another sizing constraint.
-        my $stable = _stable_input($current);
-        delete $stable->{operands};
-        $stable->{kind} = 'arithmetic_graph_inference_frame';
-        $stable->{dependencies} = $proof->{dependencies};
-        $stable->{expected_width} = $proof->{expected_width};
-        return _copy($stable);
+        my $ready = _ready_frame($owner, $args{input}, 0) or return undef;
+        return undef if $outer && !_validation_current($owner, $validation{active});
+        return $ready;
     };
     return $@ ? undef : $frame;
+}
+
+sub _ready_frame {
+    my ($owner, $pending, $selected) = @_;
+    my $input = _copy($pending);
+    return undef unless ref($input) eq 'HASH' && ($input->{kind} // '') eq 'arithmetic_graph_input';
+    my $scope = _scope($owner) or return undef;
+    my $name = $input->{signal_name};
+    my $rows = $scope->{rows};
+    my $current = _observe_input($selected, width_support => $owner, signal_name => $name,
+        signal_info => $rows->{$name}, signal_registry => $rows, native_signal_info => undef) or return undef;
+    return undef unless _json()->encode(_stable_input($input)) eq _json()->encode(_stable_input($current));
+    my $proof = _dependencies($owner, $scope, $current->{operands}) or return undef;
+    # A later sibling's getter can invalidate an earlier child's source.
+    # Compare the complete dependency proof again before publishing a frame.
+    my $checked = _dependencies($owner, $scope, $current->{operands}) or return undef;
+    return undef unless _json()->encode($proof) eq _json()->encode($checked);
+    my $again = _observe_input($selected, width_support => $owner, signal_name => $name,
+        signal_info => $rows->{$name}, signal_registry => $rows, native_signal_info => undef) or return undef;
+    return undef unless _json()->encode(_stable_input($current)) eq _json()->encode(_stable_input($again));
+    # Child before-inference widths are deliberately replaced by current,
+    # validated proof rather than retained as another sizing constraint.
+    my $stable = _stable_input($current);
+    delete $stable->{operands};
+    $stable->{kind} = 'arithmetic_graph_inference_frame';
+    $stable->{dependencies} = $proof->{dependencies};
+    $stable->{expected_width} = $proof->{expected_width};
+    return _copy($stable);
+}
+
+=head2 prepare_inference
+
+Re-derive selected graph state from the actual current row view and held child
+proofs. The selected parent width must equal the exact dependency maximum.
+Return a detached C<{record, state}> capsule with closed
+C<arithmetic_graph_operand_max> record: canonical C<operator>, ordered current
+C<source_names>, original C<expression_tree> and C<selected_width>. This observer
+alone does not attest earlier unresolved input; the resolver must compare its
+ready frame through only the actual parent width/source writes before installing.
+
+=cut
+
+sub prepare_inference {
+    my ($class, %args) = @_;
+    my $owner = $args{width_support};
+    my $outer = !$validation{active} || ($validation{active}{owner_identity} // '') ne (_id($owner) // '');
+    local $validation{active} = $outer ? _new_validation($owner) : $validation{active};
+    my $holder = eval {
+        my $scope = _scope($owner) or return undef;
+        my $input = _observe_input(1, %args, signal_registry => $scope->{rows}, native_signal_info => undef)
+            or return undef;
+        my $frame = _ready_frame($owner, $input, 1) or return undef;
+        my $width = FSM::IntermediateWidthAllocationSupport::_width($args{selected_width});
+        return undef unless defined($width) && $width eq $frame->{expected_width}
+            && defined(FSM::IntermediateWidthAllocationSupport::_width($frame->{signal_info}{width}))
+            && FSM::IntermediateWidthAllocationSupport::_width($frame->{signal_info}{width}) eq $width;
+        $validation{active}{inputs}{$args{signal_name}} = _json()->encode($input);
+        return undef if $outer && !_validation_current($owner, $validation{active});
+        return {record => {kind => 'arithmetic_graph_operand_max', %{$frame->{shape}},
+                expression_tree => $frame->{graph_birth}{record}{expression_tree}, selected_width => $args{selected_width}},
+            state => _json()->encode($frame)};
+    };
+    return $@ ? undef : _copy($holder);
+}
+
+=head2 current_inference
+
+Return the detached held record only if complete current selected state and
+record still equal the installation. Re-entrant dependency cycles withhold.
+This validates intrinsic inference rather than completed policy. Unknown row,
+view, source, constraint or registry publications cannot refresh the holder.
+Child validation is shared only within the current read operation. Before the
+outer read returns, every visited graph input and held capsule is checked again,
+and whole-reference children re-derive their complete current inference state
+without recursive graph getters. This avoids repeated recursive proof work while
+rejecting source/row/holder changes behind a temporarily reused child result.
+The operation-local plain observations disappear on return or failure.
+
+=cut
+
+my %checking;
+sub current_inference {
+    my ($class, %args) = @_;
+    my $record = eval {
+        my $holder = $args{holder};
+        return undef unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state'
+            && ref($holder->{record}) eq 'HASH' && defined($holder->{state}) && !ref($holder->{state});
+        return undef unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($args{signal_name});
+        my $key = (_id($args{width_support}) // '') . '/' . ($args{signal_name} // '');
+        return undef if $checking{$key};
+        local $checking{$key} = 1;
+        my $session = $validation{active};
+        $session = undef if $session && ($session->{owner_identity} // '') ne (_id($args{width_support}) // '');
+        my $name = $args{signal_name};
+        my $cached = $session ? $session->{records}{$name} : undef;
+        return _copy($cached->{record}) if $cached
+            && ($cached->{identity} // '') eq (_id($args{signal_info}) // '');
+        my $current = $class->prepare_inference(%args, selected_width => $holder->{record}{selected_width}) or return undef;
+        return undef unless $holder->{state} eq $current->{state}
+            && _json()->encode($holder->{record}) eq _json()->encode($current->{record});
+        if ($session) {
+            $session->{records}{$name} = {identity => _id($args{signal_info}), record => _copy($current->{record})};
+            $session->{holders}{$name} = _json()->encode($holder);
+        }
+        return _copy($current->{record});
+    };
+    return $@ ? undef : $record;
 }
 
 1;
