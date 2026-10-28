@@ -73,6 +73,19 @@ pre-generation validation, and rendering owners.
 =cut
 
 sub generate_consolidated_intermediate_block ($self, $fsm_module) {
+    my $prepared_block = $self->prepare_consolidated_intermediate_block($fsm_module);
+    return $self->render_prepared_consolidated_intermediate_block($prepared_block);
+}
+
+=head2 prepare_consolidated_intermediate_block
+
+Run prescan, collect and plan the actual intermediate block, and validate its
+operand contract. Return that block without emitting declarations or assignments.
+Module assembly can prove source ranges after helper discovery and before rendering.
+
+=cut
+
+sub prepare_consolidated_intermediate_block ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     $ctx->{backend_sv_generation_prescan_preparation_support}
         ->prepare_enable_prescan();
@@ -81,7 +94,18 @@ sub generate_consolidated_intermediate_block ($self, $fsm_module) {
     $ctx->{backend_sv_operand_contract_validation_support}
         ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
 
-    return $ctx->{backend_sv_consolidated_intermediate_rendering_support}
+    return $prepared_block;
+}
+
+=head2 render_prepared_consolidated_intermediate_block
+
+Render one already prepared and validated block through the existing rendering
+owner. This does not repeat prescan, collection, planning or validation.
+
+=cut
+
+sub render_prepared_consolidated_intermediate_block ($self, $prepared_block) {
+    return $self->{flattened_dt}{backend_sv_consolidated_intermediate_rendering_support}
         ->render_prepared_consolidated_intermediate_block($prepared_block);
 }
 

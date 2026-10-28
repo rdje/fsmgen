@@ -2323,10 +2323,30 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2: prepare current binary intermediate ranges`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit proved symbolic bitwise intermediate ranges with final actual-event closure.`
   Acceptance: `After .2 private proof, join actual prepared intermediate planning before declaration emission; source planning currently follows consolidated rendering, so qualify any sequencing change explicitly instead of patching HDL or performing a second generation. Actual declaration ranges consume proved same-relationship plans, preserving vector rank at one, and final independent event/source/target reproof must equal emitted identities, expressions, origins and ranges. Keep caller/event isolation and reuse/failure atomicity, fixed/legacy/named controls and independent constraints. Focused source SV/Verilog/default/alias negatives plus book/POD/fact precede commit. VHDL non-scalar join remains .3.4.3.4, full .6.`
   Verification: `pending target-plan proof`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1`
+  Status: `done`
+  Goal: `Separate actual intermediate preparation from rendering before source range planning.`
+  Acceptance: `Expose prepare/validate and render on the live stage owner while preserving its combined facade. Assembly prepares the actual block once, proves source widths, then renders once before scaffold emission. Preserve legacy combined-only providers, actual fixed/symbolic HDL and complete captured events. Focused phase-order, validation/failure and existing stage/assembly controls; synchronize POD/book/fact and commit. No helper range emission in this precursor.`
+  Verification: `Live stage exposes prepare/validate and explicit render, with the old combined facade composed once. Assembly joins source proof between discovery and rendering, preserving combined-only injected providers. T2213/T231/T293 pass All tests successful Files=3 Tests=9: real width1/8 timeline, refusal before render, reuse, direct stage contract, actual validation and legacy assembly controls. Final T2213 fails against exact authenticated predecessor owners. Complete native source/raw-factorizer width1/8 HDL (Date-only), snapshots, public source fields, allocations, births and inference events are equal before/after. Re-derive actual phase sequence; falsify predecessor plus complete product/legacy controls; durability source/test/POD/book/card and docs/audits/intermediate-preparation-sequence-20261028.json.gz. Initial test-double reblessing error is corrected and retained. No helper range emission or full .6 qualification; .2 is next.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1: separate intermediate preparation from rendering`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2213 reports Failed test render sees the prepared source plan at ./t/2213-intermediate-preparation-sequence.t line 51, source order at line 57 and refusal-before-render at line 87. The combined stage rendered before assembly prepared source ranges.
+  - [x] **ADDRESSED (verified)** — Real preparation/validation precedes source proof, then the same block renders once. Final T2213 fails against exact predecessor owners and passes current code. Combined facade/providers preserve; source failure prevents rendering and reuse recovers. Full native actual products match with Date-only normalization.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for sequencing/stage/assembly. Complete native HDL/event/source/policy/birth/inference controls preserve; knowledge-map: OK and POD/book/source checks pass. Final-index doctrine hook gates commit. Helper range emission and full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
+  Status: `pending`
+  Goal: `Consume private actual intermediate ranges and independently reprove final emitted events.`
+  Acceptance: `After .1, prepare complete selected declaration/event inputs from the actual block and use private current-context binary ranges at declaration emission. Reprove completed actual identities, expressions, allocation origins and emitted ranges; preserve vector rank at one, legacy/fixed controls, failure/reuse isolation and independent constraints. Split bounded further leaves if needed. Full .6 and non-scalar VHDL remain separately owned.`
+  Verification: `pending range consumer`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`

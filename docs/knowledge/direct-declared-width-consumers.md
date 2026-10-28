@@ -17,18 +17,18 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz;
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz; docs/audits/intermediate-preparation-sequence-20261028.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2213*.t t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
 ---
 
-Component owners above are current evidence. The complete original card/proof inventory (baseline and digests) is retained in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
+Component owners above are current evidence. Exact original cards/proofs (baseline and digests) remain in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
 
 `python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/direct-declared-width-consumers.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
 Parser's detached Signal declared_width_source retains expression, resolved_width
-and original signal; named types retain their type contract. Module parameter getters return clones. It lacks full actual
-parameter/static lookup provenance: equal numeric widths cannot reconstruct it.
+and original signal; named types retain their type contract. Module parameter getters clone. Source text lacks parameter/static lookup
+provenance: equal widths cannot reconstruct it.
 The resettable receipt uses WIDTH1, explicit data_port parameter selection and an
 independent literal-width input. Only the selector has an authored tree. Both
 were formerly scalar HDL; captured Verilog-family ports now preserve symbolic
@@ -73,7 +73,7 @@ remain separately owned.
 Core binary_operand_max (T2198) binds actual helper/AST/ordered whole operands and source/result revisions.
 Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
 Equal widths install nothing. Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify.
-Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind actual Core/helper/AST/input/registry identity and state in that epoch; clones/foreign/stale inputs withhold. Actual allocation events and identical frozen operand contracts yield private ranges; emission stays pending.
+Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind actual Core/helper/AST/input/registry identity and state in that epoch; clones/foreign/stale inputs withhold. Events/frozen operand contracts yield private ranges. Source proof follows discovery before rendering; helper emission stays pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

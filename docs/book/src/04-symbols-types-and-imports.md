@@ -442,6 +442,10 @@ signal map. Explicit internal roles stay internal; fixed/static/type ranges
 retain their existing declaration paths. Backend-only helpers acquire no
 symbolic range by matching numeric widths.
 
+The live direct stage now discovers and validates intermediates before source
+range proof, then renders that prepared block once. A failed source proof stops
+before intermediate rendering. Binary helper range emission remains pending.
+
 The [register-helper fixture](../../../t/data/ial0-direct-symbolic-helpers.fsm)
 uses distinct register-output and register-input assignments. Run:
 

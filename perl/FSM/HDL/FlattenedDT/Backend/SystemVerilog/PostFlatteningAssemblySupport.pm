@@ -75,6 +75,9 @@ sub new ($class, %args) {
 =head2 generate_systemverilog_module
 
 Generate the full direct SystemVerilog module after decision-tree flattening.
+The live stage prepares and validates once, source ranges are proved, then that
+block renders once before scaffold emission. Combined-only injected stage
+providers retain their existing ordering and contract.
 
 =cut
 
@@ -89,12 +92,23 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_emitted_signals} = {};
     local $ctx->{direct_declared_width_emitted_helper_origins} = {};
     $capture->begin_module($fsm_module->name) if $capture;
-    my $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
+    my $stage = $ctx->{backend_sv_consolidated_intermediate_stage_support};
+    my $split_stage = $stage->can('prepare_consolidated_intermediate_block')
+        && $stage->can('render_prepared_consolidated_intermediate_block');
+    my ($prepared_block, $consolidated_intermediate_hdl);
+    if ($split_stage) {
+        $prepared_block = $stage->prepare_consolidated_intermediate_block($fsm_module);
+    } else {
+        # Older injected providers expose only the combined stage contract.
+        $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
+    }
     if ($prepare_widths) {
         $ctx->{direct_declared_width_source_plan} = FSM::DirectDeclaredWidthSupport->prepare_module(
             fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
             target_language => 'systemverilog');
     }
+    $consolidated_intermediate_hdl = $stage->render_prepared_consolidated_intermediate_block($prepared_block)
+        if $split_stage;
 
     my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
