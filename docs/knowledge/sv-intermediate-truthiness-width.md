@@ -42,8 +42,7 @@ Actual operations now survive recursively; native helpers retain vector widths
 and whole-value gating. Existing alias/source/unary/caller controls pass.
 Typed Core literals formerly lost width/radix through bare value capture, turning
 binary value3 into decimal11. Capture now carries Core canonical spelling (T2195);
-actual typed/native and parsed guards retain value/width/radix, ordinary unsized
-products and caller kinds. The literal audit retains original RED; full .6 stays open.
+actual typed/native and parsed guards retain value/width/radix, ordinary unsized products and caller kinds. The literal audit retains original RED; full .6 stays open.
 
 Runtime comparison text now groups bare &/| children on either side (T2196).
 Independent rendered literal outcomes and caller controls pass; typed native HDL

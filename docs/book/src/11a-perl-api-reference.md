@@ -77,6 +77,11 @@ N-ary, literal, sliced, signed, named and unknown shapes remain outside this
 binary whole-reference profile. Factorizer provenance, actual target-event joins
 and generic range consumers remain separate implementation steps.
 
+The factorizer now retains plain-data births for actual unresolved binary
+whole-reference candidates, anchored to its owner, row and AST identities. Existing
+candidate row keys preserve. A later cached width remains independent; birth
+records carry no selected policy. Actual inference and target joins remain pending.
+
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own
 interface. This supplies syntactic shape before allocation and range proof.

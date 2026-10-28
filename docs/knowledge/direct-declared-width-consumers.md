@@ -11,11 +11,12 @@ answers:
   - "why must late sizing preserve distinct next/q copy origins?"
   - "why did guard XOR become NOT?"
   - "how are explicit Core intermediate width allocation contracts held?"
+  - "how are factorizer allocation births retained?"
 date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; t/2202-source-allocation-publication.t; docs/audits/source-allocation-publication-20261028.json.gz; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
+  t/2204-factorizer-width-births.t; docs/audits/factorizer-width-births-20261028.json.gz; perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; t/2200-parser-allocation-birth-journal.t; t/2201-parser-allocation-transitions.t; t/2202-source-allocation-publication.t; docs/audits/source-allocation-publication-20261028.json.gz; docs/audits/parser-allocation-transitions-20261028.json.gz; docs/audits/parser-allocation-birth-journal-20261028.json.gz; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
@@ -28,7 +29,7 @@ evidence: >-
   docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz;
   perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
 ---
 
 Parser's detached Signal declared_width_source retains expression, resolved_width
@@ -75,10 +76,10 @@ success publishes; invalidation clears every new map. Both sizing orders/copy
 chains retain origins. Ordinary unscoped late sizing stays legacy; computed shapes
 remain separately owned.
 
-Intermediate_width_allocation separately holds explicit binary_operand_max intent (T2198),
-binding actual helper/unsliced Core AST/ordered operands and tracked source/result revisions.
-Fresh scoped builder journals publish only after Parser success or full facade completion; failure/reuse clears. No extra owner graph or policy
-arises from equal widths. Canonical INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; other roles withhold. Scoped current events cross only known bare-reference/final-width/classifier writes; source publication preserves dependency epochs; factorizer/event joins/ranges remain pending.
+Core binary_operand_max (T2198) binds actual helper/AST/ordered unsliced operands and source/result revisions.
+Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no extra owner graph.
+Equal widths install nothing. INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; others withhold.
+Only known bare-reference/final-width/classifier writes refresh current births. Factorizer binary births retain unresolved ownership; selected inference/event/range joins remain pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

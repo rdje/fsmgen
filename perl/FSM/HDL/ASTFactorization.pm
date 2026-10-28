@@ -6,8 +6,11 @@ use Carp qw(confess);
 use Scalar::Util qw(blessed refaddr);
 use Digest::SHA qw(sha256_hex);
 use Data::Dumper;
+use JSON::PP ();
 use FSM::Debug;
 use FSM::Package::ExpressionOperatorSupport ();
+use FSM::IntermediateWidthAllocationSupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head1 NAME
 
@@ -16,16 +19,16 @@ FSM::HDL::ASTFactorization - Generic AST-based expression factorization system
 =head1 SYNOPSIS
 
     my $factorizer = FSM::HDL::ASTFactorization->new();
-    
+
     # Add AST expressions from any FSM
     $factorizer->add_ast_expression($ast1, "enable_signal_1");
     $factorizer->add_ast_expression($ast2, "enable_signal_2");
-    
+
     # Perform global factorization analysis
     my $factorization_result = $factorizer->analyze_and_factorize();
-    
-    # Re-enable intermediate signal generation
-    my $hdl = $factorizer->generate_intermediate_signals($factorization_result);
+
+    # Inspect allocated candidates; the backend owns width inference and HDL.
+    my $signals = $factorization_result->{intermediate_signals};
 
 =head1 DESCRIPTION
 
@@ -569,9 +572,76 @@ sub generate_candidate_names {
             width         => undef,
             width_source  => 'unresolved_factorization_ast',
         };
+
+        my $entry = $self->{intermediate_signals}{$signal_name};
+        if (!defined($entry->{width}) && $entry->{width_source} eq 'unresolved_factorization_ast') {
+            my $birth = eval {$self->_factorizer_width_birth_capsule($signal_name)};
+            $self->{_intermediate_width_allocation_births}{$signal_name} = $birth if $birth;
+        }
         
         fsm_debug("AST-FACTOR-DEBUG: Generated signal: $signal_name (usage: $candidate_info->{usage_count})", 3);
     }
+}
+
+sub _factorizer_width_birth_capsule {
+    my ($self, $signal_name) = @_;
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    my $entry = $self->{intermediate_signals}{$signal_name};
+    return unless ref($entry) eq 'HASH' && defined($entry->{structural_id}) && !ref($entry->{structural_id});
+    my $ast = $entry->{ast};
+    my $shape = FSM::IntermediateWidthAllocationSupport->binary_whole_signal_shape($ast) or return;
+    my @operands = ($ast->left, $ast->right);
+    my $record = {kind => 'binary_operand_max_candidate', %$shape};
+    my $state = JSON::PP->new->canonical->encode({
+        owner_identity => sprintf('%x', refaddr($self)), signal_name => $signal_name,
+        entry_identity => sprintf('%x', refaddr($entry)), ast_identity => sprintf('%x', refaddr($ast)),
+        structural_id => $entry->{structural_id}, shape => $shape,
+        operand_identities => [map {sprintf('%x', refaddr($_))} @operands],
+        core_signal_identities => [map {UNIVERSAL::isa($_, 'FSM::CoreAST::SignalRef')
+            ? sprintf('%x', refaddr($_->signal)) : undef} @operands],
+    });
+    return {record => $record, state => $state};
+}
+
+sub _current_intermediate_width_birth {
+    my ($self, $signal_name) = @_;
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    return unless ref($self->{_intermediate_width_allocation_births}) eq 'HASH';
+    my $birth = $self->{_intermediate_width_allocation_births}{$signal_name};
+    return unless ref($birth) eq 'HASH' && join(',', sort keys %$birth) eq 'record,state';
+    my $current = eval {
+        my $expected = $self->_factorizer_width_birth_capsule($signal_name) or return;
+        my $json = JSON::PP->new->canonical;
+        return unless defined($birth->{state}) && !ref($birth->{state})
+            && $birth->{state} eq $expected->{state}
+            && $json->encode($birth->{record}) eq $json->encode($expected->{record});
+        $json->decode($json->encode($expected));
+    };
+    return $@ ? undef : $current;
+}
+
+=head2 intermediate_width_allocation_birth($signal_name)
+
+Return a detached C<{kind =E<gt> binary_operand_max_candidate, operator,
+source_names}> for a current actual fresh binary whole-reference candidate.
+The allocator records birth only while the new row has its original unresolved
+width. An owner-local plain-data capsule anchors this factorizer, actual row,
+AST, ordered reference nodes and any actual Core Signal identities. Opaque copied
+rows, foreign capsules, divergent trees or malformed records return undef.
+Ordinary lookup creates no tracking field; candidate row keys remain unchanged.
+
+The original birth remains distinct from later selected widths or context floors.
+It carries no C<selected_width>, type/range proof or generic target admission.
+Only the subsequent actual inference/normalization join may establish allocation
+policy; equal native/cached widths cannot reconstruct that event. Capsule data
+retains no additional AST/Signal owner graph.
+
+=cut
+
+sub intermediate_width_allocation_birth {
+    my ($self, $signal_name) = @_;
+    my $birth = $self->_current_intermediate_width_birth($signal_name);
+    return $birth ? $birth->{record} : undef;
 }
 
 =head2 generate_ast_based_name($ast)
