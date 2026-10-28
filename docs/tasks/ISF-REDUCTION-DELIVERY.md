@@ -2321,10 +2321,31 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2189/T207/T2074; stronger final native-selector T2189 Files=1 Tests=3 passes. Changed module/new test syntax OK; strict native examples, mdBook/POD build and source-reference freshness qualify documentation. Mandatory final-index scripts/check_doctrines.sh/hook gates commit; external runtime and full API/MCP/corpus/publication remain .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual emitted scalar reduction intermediate origins and consume the bounded invariant shape.`
   Acceptance: `After capture-opcode repair, use actual defining/runtime AST and selected cached/rendered expression at the real declaration/assignment boundary. Preserve one-bit result independently of generic operand width, bind the consumed expression to the actual unsigned whole operand and reject missing/stale/foreign/unsupported compatibility fallbacks. Preserve every actual declaration and emitted semantic identity; no helper-name or numeric matching. Integrate only proved source/paired consumers with focused distinguishing controls, book/POD and commit. Full compiler/override/runtime/corpus/API/MCP remains .6.`
-  Verification: `pending correct captured unary operators`
+  Verification: `Publisher .1 done; consumer .2 pending.`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.1, ISF-REDUCTION-DELIVERY.3.4.3.1.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.1`
+  Status: `done`
+  Goal: `Capture actual scalar reduction intermediate events.`
+  Acceptance: `Detached actual events; typed AST/render proof. Preserve native HDL; source/VHDL in .2.`
+  Verification: `Re-derive native events; falsify unchanged RED and stale/foreign/exact-HDL controls. Full receipt and first hook failure: docs/audits/scalar-intermediate-capture-20261028.json.gz. Missing full worktree/raw streams/external proof (.6).`
+  Commit: `this slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original RED lacks record_intermediate_declaration at t/2190-scalar-intermediate-capture.t line 88; numeric rows omit expression/operand relationships.
+  - [x] **ADDRESSED (verified)** — Detached actual text/missing assignments; typed AST/render agreement grants scalar origins. Malformed/foreign/duplicate events invalidate; exact native HDL/JSON conserve.
+  - [x] **NO REGRESSION** — All tests successful: T2190/T2174/T2189 Files=3 Tests=11; final T2190/T208 Files=2 Tests=6; T2188 Files=1 Tests=5. Syntax/book/POD/source checks pass; normal hook gates commit.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2.2`
+  Status: `pending`
+  Goal: `Consume proved unsigned scalar reductions in paired VHDL.`
+  Acceptance: `Parent .1.2 contracts apply: complete event/source/type/assignment proof, scalar result/generic operand rank, precise refusals, raw/static/caller/atomic controls and book/POD. Full qualification .6.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2`

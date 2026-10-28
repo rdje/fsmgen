@@ -79,6 +79,38 @@ sub record_typedefs ($self, $lookup) {
     return;
 }
 
+sub record_intermediate_declaration ($self, $record) {
+    $self->record_declaration('signals', $record);
+    $self->{intermediates}{$record->{name}} = {};
+    return;
+}
+
+sub record_intermediate_assignment ($self, $name, $record) {
+    $self->_fail('intermediate assignment requires its active emitted declaration')
+        unless $self->{state} eq 'active' && defined($name) && !ref($name)
+            && exists($self->{intermediates}{$name});
+    $self->_fail('has duplicate intermediate assignment events')
+        if exists($self->{intermediates}{$name}{expression});
+    my $json = JSON::PP->new->canonical;
+    my $copy = eval {$json->decode($json->encode($record))};
+    $self->_fail('requires a closed JSON-safe intermediate expression event')
+        if $@ || ref($copy) ne 'HASH'
+            || grep {$_ ne 'expression' && $_ ne 'reduction_origin'} keys %$copy;
+    $self->_fail('requires actual nonempty intermediate expression text')
+        unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
+    if (exists($copy->{reduction_origin})) {
+        my $origin = $copy->{reduction_origin};
+        $self->_fail('requires a closed scalar intermediate reduction origin')
+            unless ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,operator,source_name'
+                && defined($origin->{kind}) && !ref($origin->{kind}) && $origin->{kind} eq 'scalar_reduction'
+                && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ /\A[&|^]\z/
+                && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($origin->{source_name})
+                && $origin->{source_name} ne $name && $self->{declarations}{$name}{width} == 1;
+    }
+    $self->{intermediates}{$name} = $copy;
+    return;
+}
+
 sub complete ($self) {
     $self->_fail('cannot complete an inactive declaration transaction') unless $self->{state} eq 'active';
     my @required = grep {$self->{names}{$_} eq 'ports' || $self->{names}{$_} eq 'signals'} keys %{$self->{names}};
@@ -89,6 +121,11 @@ sub complete ($self) {
         next unless exists($row->{width_origin});
         $self->_fail('width origin requires an actual declared parent')
             unless exists($self->{declarations}{$row->{width_origin}{source_name}});
+    }
+    for my $row (values %{$self->{intermediates} // {}}) {
+        next unless exists($row->{reduction_origin});
+        $self->_fail('intermediate reduction requires an actual declared operand')
+            unless exists($self->{declarations}{$row->{reduction_origin}{source_name}});
     }
     $self->{state} = 'complete';
     return;
@@ -103,7 +140,8 @@ sub snapshot ($self) {
     }
     my $json = JSON::PP->new->canonical;
     return $json->decode($json->encode({target_namespace => \%namespace,
-        target_declarations => $self->{declarations}}));
+        target_declarations => $self->{declarations},
+        (keys(%{$self->{intermediates} // {}}) ? (target_intermediates => $self->{intermediates}) : ())}));
 }
 
 1;
@@ -138,6 +176,20 @@ of each row; absent fields preserve the old snapshot shape. Pulse-delay,
 enable, source-owned and other unrelated declarations acquire no origin.
 This metadata does not prove a caller-made allocation or a symbolic width/type
 relationship; qualified range consumers retain those obligations.
+
+Actual prepared intermediates use C<record_intermediate_declaration>, then
+C<record_intermediate_assignment> at their selected assign emission. The optional
+C<target_intermediates> snapshot map contains every such declared name: an empty
+row means no assignment was emitted; otherwise C<expression> retains the exact
+selected text. A C<reduction_origin> additionally holds closed
+C<{kind =E<gt> scalar_reduction, operator, source_name}> metadata for typed whole
+SignalRef XOR/AND/OR whose defining/runtime ASTs and fresh rendering agree.
+Result width must be one and the operand must have its own actual declaration.
+Other rendered expressions retain text without an origin. Unknown or duplicate
+assignment owners, malformed records and missing operands invalidate the
+transaction. Records detach on input/output; a generation with no intermediates
+omits this map, preserving the legacy empty shape. The publisher supplies no
+source unsigned/type proof and activates no symbolic intermediate consumer.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

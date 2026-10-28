@@ -73,7 +73,7 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
     for my $signal_name (@{$sorted_signals}) {
         my $signal_info = $filtered_signals->{$signal_name};
         my $width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
-        $ctx->{declared_width_declaration_capture}->record_declaration('signals',
+        $ctx->{declared_width_declaration_capture}->record_intermediate_declaration(
             {name => $signal_name, width => $width, signed => 0})
             if $ctx->{declared_width_declaration_capture};
 

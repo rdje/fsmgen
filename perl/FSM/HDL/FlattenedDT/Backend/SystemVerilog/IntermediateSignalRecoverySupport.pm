@@ -45,6 +45,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use Scalar::Util qw(blessed);
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head2 new
 
@@ -229,6 +230,44 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
         $signal_info->{rendered_expression_source} = 'enable_graph_expression';
     }
     return $expression;
+}
+
+sub _whole_signal_reduction ($node) {
+    return unless blessed($node) && ($node->isa('FSM::AST::UnaryOp')
+        || $node->isa('FSM::CoreAST::UnaryOp') || $node->isa('FSM::HDL::SubstitutedUnaryOp'));
+    my $op = $node->operator;
+    return unless defined($op) && !ref($op) && $op =~ /\A[&|^]\z/;
+    my $operand = $node->operand;
+    return unless blessed($operand) && ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
+    return if $operand->isa('FSM::AST::SignalRef') && ($operand->is_fsm_state_next || $operand->is_fsm_state_register);
+    my $name = $operand->isa('FSM::CoreAST::SignalRef') ? $operand->signal->name : $operand->name;
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    return {kind => 'scalar_reduction', operator => $op, source_name => $name};
+}
+
+=head2 scalar_reduction_origin
+
+Return an optional detached syntactic origin for an actually emitted unary
+XOR/AND/OR over one whole SignalRef. Selected defining and runtime ASTs, plus
+any cached defining AST, must agree; freshly rendering the runtime AST must
+equal the exact selected emitted expression. Stored text alone, conflicting
+caches, logical operations and computed operands supply no origin. This does
+not prove source membership, unsigned type or a symbolic consumer contract.
+
+=cut
+
+sub scalar_reduction_origin ($self, $signal_name, $signal_info, $expression) {
+    return unless ref($signal_info) eq 'HASH' && defined($expression) && !ref($expression);
+    my $runtime = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+    my $defining = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+    my $origin = _whole_signal_reduction($runtime) or return;
+    for my $node ($defining, map {$signal_info->{$_}} grep {exists($signal_info->{$_})} qw(ast defining_ast)) {
+        my $other = _whole_signal_reduction($node) or return;
+        return unless $other->{operator} eq $origin->{operator} && $other->{source_name} eq $origin->{source_name};
+    }
+    my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($runtime);
+    return unless defined($rendered) && $rendered eq $expression;
+    return $origin;
 }
 
 =head2 resolve_intermediate_signal_dependencies

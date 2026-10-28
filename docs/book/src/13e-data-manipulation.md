@@ -88,6 +88,16 @@ also preserves scalar result widths: `(concat (! (^ data)) (concat (^ data[3:0])
 semantic and generated-source qualification covers these operator, width and
 enable associations; the fixed public-pin witness below adds HDL execution.
 
+A repeated whole-signal reduction guard can be factored into an intermediate
+wire. Its result remains one bit when a direct operand's captured generic width
+defaults to one or a wider value; see the runnable
+[direct guard example](02-language-basics.md#guarded-blocks).
+The backend retains the actual declaration and selected expression together,
+attaching a reduction origin only when defining/runtime ASTs and emitted text
+agree. Cached text alone supplies no relationship. These focused capture checks
+preserve existing native HDL; generic VHDL intermediate consumption and complete
+external override/runtime qualification remain separate work.
+
 The qualified generation subset uses declared fixed widths. The separate
 fixed runtime witness below qualifies both Verilog-family targets:
 
