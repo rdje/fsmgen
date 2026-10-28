@@ -210,9 +210,29 @@ root width is still unresolved. Parent inference can normalize a child
 recursively; the child's held intrinsic event exists before collection publishes
 completed policy. New graph proof must bind that original ownership and exact
 substitution edge, then use current dependency events. A later numeric width or
-printed child range cannot recreate those events. Logical/comparison wrappers retain one-bit results; that scalar result
-alone supplies no allocation proof for a vector operand. Full override/runtime
+printed child range cannot recreate those events. Logical/comparison wrappers
+retain one-bit results; that scalar result alone supplies no allocation proof for
+a vector operand. Full override/runtime
 qualification remains deferred.
+
+A separate `intermediate_width_graph_birth` diagnostic now retains
+`{kind => arithmetic_graph_candidate, expression_tree => ...}` at the actual
+fresh unresolved allocation. For `(+ A B C)`, the tree is
+`["+", ["+", ["signal", "A"], ["signal", "B"]], ["signal", "C"]]`.
+Owned substitution binds generated references to actual current child entries;
+expanding their original trees must preserve every ordered operator/source and
+Core source identity. This also retains duplicates and deeper arithmetic chains.
+Copied rows/capsules, changed or foreign children, unsupported trees and cycles
+withhold the diagnostic. Returned records detach and retained capsules own no
+AST or backend graph. Compatible generated references use their actual interface;
+their compatibility `isa` does not provide Core Signal methods.
+
+The original whole-reference birth API stays separate. Later numeric widths do
+not create graph birth or prove allocation. Each private tree walk admits
+at most 64 binary levels and 4096 visited nodes; larger trees receive no new
+metadata. Source width/type constraints and graph intrinsic/completed policy
+remain the next producer slices. This birth-only slice changes no HDL, target
+events, completed policies or current range admission.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

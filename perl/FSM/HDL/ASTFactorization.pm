@@ -10,6 +10,7 @@ use JSON::PP ();
 use FSM::Debug;
 use FSM::Package::ExpressionOperatorSupport ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphBirthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head1 NAME
@@ -577,6 +578,11 @@ sub generate_candidate_names {
         if (!defined($entry->{width}) && $entry->{width_source} eq 'unresolved_factorization_ast') {
             my $birth = eval {$self->_factorizer_width_birth_capsule($signal_name)};
             $self->{_intermediate_width_allocation_births}{$signal_name} = $birth if $birth;
+            my $graphs = $self->{_intermediate_width_graph_births};
+            delete $graphs->{$signal_name} if ref($graphs) eq 'HASH';
+            my $graph = FSM::IntermediateWidthGraphBirthSupport->prepare_birth(
+                factorizer => $self, signal_name => $signal_name);
+            $self->{_intermediate_width_graph_births}{$signal_name} = $graph if $graph;
         }
         
         fsm_debug("AST-FACTOR-DEBUG: Generated signal: $signal_name (usage: $candidate_info->{usage_count})", 3);
@@ -644,6 +650,33 @@ retains no additional AST/Signal owner graph.
 sub intermediate_width_allocation_birth {
     my ($self, $signal_name) = @_;
     my $birth = $self->_current_intermediate_width_birth($signal_name);
+    return $birth ? $birth->{record} : undef;
+}
+
+sub _current_intermediate_width_graph_birth {
+    my ($self, $signal_name) = @_;
+    my $births = $self->{_intermediate_width_graph_births};
+    return undef unless ref($births) eq 'HASH'
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    return FSM::IntermediateWidthGraphBirthSupport->current_birth(
+        factorizer => $self, signal_name => $signal_name, holder => $births->{$signal_name});
+}
+
+=head2 intermediate_width_graph_birth($signal_name)
+
+Return a detached original C<arithmetic_graph_candidate> expression tree for a
+fresh nested arithmetic candidate whose actual ownership remains current through
+owned substitution. Typed child references bind actual current child births and
+must expand to the original ordered source tree. The existing whole-reference
+birth API remains separate. Later numeric widths cannot mint graph birth; this
+diagnostic record supplies neither selected policy nor symbolic admission.
+Capsules retain only plain data; unknown/copied/stale/cyclic ownership withholds.
+
+=cut
+
+sub intermediate_width_graph_birth {
+    my ($self, $signal_name) = @_;
+    my $birth = $self->_current_intermediate_width_graph_birth($signal_name);
     return $birth ? $birth->{record} : undef;
 }
 
@@ -966,7 +999,16 @@ sub perform_single_substitution_pass {
         );
         
         if ($substituted_ast != $original_ast) {
+            my $graph = FSM::IntermediateWidthGraphBirthSupport->prepare_substitution(
+                factorizer => $self, signal_name => $signal_name,
+                holder => $self->_current_intermediate_width_graph_birth($signal_name),
+                original_ast => $original_ast, substituted_ast => $substituted_ast,
+                mapping => $structural_id_to_signal);
             $signal_info->{ast} = $substituted_ast;
+            if (ref($self->{_intermediate_width_graph_births}) eq 'HASH') {
+                delete $self->{_intermediate_width_graph_births}{$signal_name};
+                $self->{_intermediate_width_graph_births}{$signal_name} = $graph if $graph;
+            }
             $substitution_count++;
             
             my $substituted_sv = eval { $substituted_ast->to_systemverilog() } || "[NO SV REPRESENTATION]";
