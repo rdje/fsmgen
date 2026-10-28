@@ -2232,11 +2232,11 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.33: retain completed allocation producer evidence`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Join actual current allocation policies to completed binary intermediate events.`
   Acceptance: `After actual producers, add a separate closed allocation-policy event contract tied to the same current defining/runtime AST, ordered syntactic origin, declaration and selected text. Preserve independent operand/result widths; opaque/context/unknown/stale/foreign policies stay absent or precisely refuse under their contract. Complete actual field/membership/detachment and generation-reuse controls, old snapshots after only owned fields, unchanged HDL and scalar/VHDL boundaries qualify before private range proof. Sync POD/book/fact and commit.`
-  Verification: `Actual source/factorizer producers are complete with focused checks and exact retained task history. Split a closed collector contract from actual source/factorizer publication so numeric-only records and independent contextual widths remain unchanged before emitter integration.`
-  Commit: `pending`
+  Verification: `Closed optional policy contract and actual source/factorizer publisher are implemented with focused checks in children .1/.2. Target events retain current allocation separately from syntactic origin and independent widths. Hand off private same-relationship range proof .5; emission and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2: publish current binary allocation events`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.1`
@@ -2252,11 +2252,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2208/T2197. Legacy contextual widths, actual parsed source snapshots, detached fields, empty reuse and scalar/VHDL boundary preserve. Authenticated whole native/source HDL/snapshots/row/policy/event packets match. POD/book/source checks and normal final-index doctrine hook gate commit; actual publisher and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Publish only actual current source/factorizer policies with the same selected binary events.`
   Acceptance: `After .1, bind current source helper/module/AST/operand identities or completed factorizer policy to the freshly selected syntactic origin/text and actual declaration. Stale/copied/opaque/context/foreign state supplies no allocation field. Actual source/raw-Core success/failure/reuse/detachment and old snapshot comparison after removing only the new field qualify without HDL or scalar/VHDL admission changes. Synchronize POD/book/fact and commit; private range proof remains .5.`
-  Verification: `Closed optional collector contract committed at b0f090417. Actual parsed source helpers retain current Core policy before/after native generation; raw-Core factorized helpers retain completed width-owner policy. Trace actual selected publisher metadata/AST membership before selecting the bounded join. This leaf owns source/factorizer publication and exact snapshot compatibility after removing only width_allocation.`
-  Commit: `pending`
+  Verification: `Children .1/.2 own successful source attachment and actual selected-event publication. Composed focused source/factorizer/currentness/failure/retry and exact old-packet comparison pass. No range/emission/full qualification closes.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2: publish current binary allocation events`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.1`
@@ -2272,11 +2272,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=12 for T2209/T2207/T225, covering actual source/factorizer success, copy/currentness/failure/reset/reuse and legacy providers. Authenticated complete ordinary native/source packets and all existing events match. POD/book/source checks and normal hook gate this slice; actual target publication and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish current attached policies only with agreeing selected binary assignment events.`
   Acceptance: `After .1, join current backend policy, fresh typed origin/rendering, actual selected declaration and plain actual source profiles. Retain width_allocation only for the same operator/ordered operands/width; absent or stale/foreign/opaque policy leaves old event shape. Compare complete source/raw-Core snapshots after removing only the new field, keep HDL/scalar/VHDL behavior and failure/reuse/detachment, synchronize docs and commit before range proof .5.`
-  Verification: `pending source attachment .1`
-  Commit: `pending`
+  Verification: `Actual assignment capture now adds width_allocation only when completed attached source/factorizer policy agrees with fresh typed binary origin/text, ordered slots and exact plain actual module operand/result widths. Current proof is checked again after profile reads; matching supported mutation during lookup cannot launder it. Unknown copies, stale rendering/state, revoked source policy, signed/constrained operands and independent 32-bit result floors retain old event shape. Optional legacy recovery providers remain compatible. T2210/T2197/T2191 pass All tests successful Files=3 Tests=15, including actual post-event failure/retry and unchanged scalar VHDL/binary refusal. Authenticated final predecessor regression fails actual new fields. Exact native packets compare after removing only four new width_allocation fields from target_intermediates: HDL (Date-only), all old snapshot members, source policies, births and existing events preserve. Target field detaches through the closed collector contract. Re-derive actual policy/origin/profile/text join; falsify predecessor and copy/floor/type/mutation/failure/retry controls; durability source/tests/POD/book/facts/task and docs/audits/binary-allocation-event-publication-20261028.json.gz. This closes actual event publication only; private range proof .5 and emission integration remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2: publish current binary allocation events`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated exact predecessor final T2210 reports Failed test actual selected event retains current intrinsic allocation at ./t/2210-binary-allocation-event-publication.t line 52. Existing assignment capture emits only selected text/syntactic origin despite current completed backend policy, so no actual allocation event is available to the next range proof.
+  - [x] **ADDRESSED (verified)** — Join current backend policy to fresh origin/rendering, ordered operands, exact widths and plain source profiles at the actual assignment publisher, then recheck currentness after reads. Preserve unsupported/opaque/context records without the new field. Matching source mutation during publication withholds; actual failed generation/retry cannot expose an earlier completed snapshot.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for T2210/T2197/T2191. Complete authenticated native/source packets preserve after removing only the four new target fields; HDL, prior metadata, source policies, factorizer births and existing observations match. Old contextual widths and scalar VHDL/binary-refusal boundaries preserve. POD/book/source and normal final-index doctrines gate commit; range/emission/full .6 remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
   Status: `pending`

@@ -45,6 +45,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use Scalar::Util qw(blessed);
+use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
 
 =head2 new
@@ -302,6 +303,52 @@ sub binary_bitwise_origin ($self, $signal_name, $signal_info, $expression) {
     my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($runtime);
     return unless defined($rendered) && $rendered eq $expression;
     return $origin;
+}
+
+=head2 binary_width_allocation
+
+Return an optional current allocation policy for the same freshly selected
+binary origin and expression. Only the width owner's completed source attachment
+or factorizer proof can supply it. Ordered operands/operator and exact selected
+width must agree, with actual plain unsigned module operands and no state or
+constraint profile. Recheck current policy after all reads so matching supported
+source mutation during publication cannot borrow a prior observation. Opaque,
+copied, stale or independently constrained metadata retains its old event shape.
+This publishes no symbolic range and does not extend the scalar VHDL profile.
+
+=cut
+
+sub binary_width_allocation ($self, $signal_name, $signal_info, $expression) {
+    my $origin = $self->binary_bitwise_origin($signal_name, $signal_info, $expression) or return;
+    my $ctx = $self->{flattened_dt};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    return unless $width_support && $width_support->can('intermediate_width_allocation');
+    my $policy = $width_support->intermediate_width_allocation($signal_name, $signal_info) or return;
+    $policy = FSM::IntermediateWidthAllocationSupport->copy_record($policy);
+    return unless $policy->{operator} eq $origin->{operator}
+        && $policy->{source_names}[0] eq $origin->{source_names}[0]
+        && $policy->{source_names}[1] eq $origin->{source_names}[1]
+        && !defined($signal_info->{state_model});
+    my $module = $ctx->{fsm_module};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule')
+        && ref($module->signals) eq 'HASH';
+    my @widths;
+    for my $name (@{$policy->{source_names}}) {
+        my $signal = $module->signals->{$name};
+        return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal')
+            && !$signal->signed && !defined($signal->state_model)
+            && !defined($signal->declared_type_name) && !defined($signal->declared_type_spec)
+            && defined($signal->type) && !ref($signal->type) && $signal->type =~ /\A(?:wire|reg)\z/;
+        my $constraints = $signal->constraints;
+        return unless ref($constraints) eq 'ARRAY' && !@$constraints;
+        push @widths, $signal->width;
+    }
+    return unless FSM::IntermediateWidthAllocationSupport->matches_selected_widths(
+        $policy, $signal_info->{width}, @widths);
+    my $current = $width_support->intermediate_width_allocation($signal_name, $signal_info) or return;
+    my $json = JSON::PP->new->canonical;
+    return unless $json->encode($policy) eq $json->encode($current);
+    return $current;
 }
 
 =head2 resolve_intermediate_signal_dependencies

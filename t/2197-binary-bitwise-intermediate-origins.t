@@ -40,8 +40,8 @@ subtest 'actual source declarations and assignments capture both ordered operand
             my ($name)=$hdl =~ /^  assign (\w+) = A \Q$op\E B; \/\/ Source: fsmgen_parsing$/m;
             ok(defined($name),'actual source emits the two-operand bitwise intermediate');
             my $snapshot=$capture->snapshot;
-            is_deeply($snapshot->{target_intermediates}{$name},{expression=>"A $op B",bitwise_origin=>origin($op)},
-                'actual selected expression and both operand associations retain typed origin');
+            is_deeply($snapshot->{target_intermediates}{$name},{expression=>"A $op B",bitwise_origin=>origin($op),width_allocation=>{kind=>'binary_operand_max',operator=>$op,source_names=>['A','B'],selected_width=>$width}},
+                'actual selected expression, operands and current allocation policy retain');
             is($snapshot->{target_declarations}{$name}{width},$width,'actual result selected numeric width remains unchanged');
             is($json->encode([$module->parameters,$module->parameter_default_sources,$module->parameter_default_bindings,
                 {map {my $s=$module->signals->{$_};$_=>[$s->width,$s->declared_width_binding,$s->declared_width_requirements]} keys %{$module->signals}}]),$before,

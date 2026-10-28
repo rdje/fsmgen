@@ -97,12 +97,17 @@ The collector accepts a separate optional `width_allocation` record with kind,
 operator, ordered source names and selected width. It requires the same binary
 origin and actual plain unsigned declarations satisfying the exact decimal
 operand maximum. Absent policy keeps contextual widths independent. This schema
-check alone supplies no source provenance; actual policy publication follows.
+check alone supplies no source provenance; the actual publisher supplies that join.
 Successful collection also attaches an existing current Core source-helper
 policy to its actual module, operands, AST and input/registry row identities.
 `intermediate_width_allocation` returns only that current source attachment or
 the completed factorizer policy. Copies and foreign/stale state withhold;
-failure/reset/reuse clear both maps. Actual selected-text publication follows.
+failure/reset/reuse clear both maps. The actual assignment publisher now joins
+that current policy to fresh typed origin/text and actual plain module operands.
+A final currentness check rejects supported source mutation during publication.
+Unknown copies, independent result floors and unsupported source profiles keep
+the old event shape. Only `width_allocation` extends qualified snapshots; HDL
+text and scalar VHDL behavior preserve. Symbolic range admission remains pending.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

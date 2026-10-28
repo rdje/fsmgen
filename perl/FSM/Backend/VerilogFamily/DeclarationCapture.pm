@@ -252,8 +252,9 @@ named-type metadata, and their exact decimal widths must satisfy the selected
 intrinsic maximum. Scalar JSON kinds and duplicate slots preserve. Malformed,
 conflicting, typed, missing or width-inconsistent policies invalidate atomically.
 Absent policy fields preserve independent contextual widths and old snapshots.
-Schema/numeric validation supplies no source provenance: actual current-policy
-publication and symbolic range admission remain separate implementation steps.
+Schema/numeric validation alone supplies no source provenance. The actual
+assignment publisher obtains current completed backend policy and rechecks fresh
+AST/text and plain operand profiles. Symbolic range admission remains separate.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains
