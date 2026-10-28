@@ -185,7 +185,8 @@ source ownership. Detached target plans identify symbolic port/storage ranges
 and independent fixed declarations. Actual numeric rendered widths independently
 match backend planner metadata in the focused contract. The opt-in VerilogFamily::DeclarationCapture publisher now records actual
 parameter order, ports, state/storage/enable/intermediate declarations and
-allocated typedef names across the existing emitters. Completed assembly alone
+allocated typedef names across the existing emitters. Register helpers retain
+parent/kind (T2186); pulse/enable widths stay independent. Completed assembly alone
 exposes detached namespace/numeric-type snapshots; reset, failed/incomplete or
 duplicate transactions withhold old/partial results. No HDL parsing or second
 generation pass supplies them. Actual ordinary/captured artifacts conserve

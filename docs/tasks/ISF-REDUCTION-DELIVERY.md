@@ -2228,7 +2228,7 @@ do not start broad suites between implementation slices.
   Status: `active`
   Goal: `Propagate generic width relationships through internal expressions, constants, resets and width-sensitive helpers.`
   Acceptance: `After declared ranges, join existing AST/IR width consumers to actual declarations rather than numeric equality. Preserve reductions, intermediate/result widths, register/reset sizing and supported canonical helper expressions under the elaborated relationship. Keep unrelated fixed widths and existing type/reset semantics. Split by actual backend/consumer boundaries when necessary; use focused distinguishing controls and named unsupported refusals. Synchronize book/discovery/owned constructor contracts and commit; full corpus/runtime remains .6.`
-  Verification: `After declared generic ranges, own complete retained declaration/generated maximum requirements, including equivalent original captures reached through distinct immediate copy origins. Preserve both attestations while proving any reduction to one shape; until qualified, separate records withhold a single binding. T2166 owns the actual same-original/different-edge control. Qualify broader expression/inference/reset consumers at their actual backend boundaries, with full verification in .6.`
+  Verification: `After declared generic ranges, own complete retained declaration/generated maximum requirements, including equivalent original captures reached through distinct immediate copy origins. Both attestations remain retained; .3.4.1 now qualifies one binding for identical complete original captures with attested edges, while independent or opaque combined constraints remain withheld. T2166 owns the actual same-original/different-edge control. Qualify broader expression/inference/reset consumers at their actual backend boundaries, with full verification in .6.`
   Commit: `pending`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.1, ISF-REDUCTION-DELIVERY.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3, ISF-REDUCTION-DELIVERY.3.4.4, ISF-REDUCTION-DELIVERY.3.4.5`
@@ -2246,10 +2246,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=6 Tests=29 across T2185/T2166/T2165/T2170/T2172/T2176; final T2185 mixed-style control Files=1 Tests=4 and final plan checks Files=2 Tests=10 pass. Changed modules/new test syntax OK; book/POD build and source-reference freshness pass. Normal final-index scripts/check_doctrines.sh/hook gates commit; full compiler/override/runtime/publication remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate actual backend-only auxiliary declaration relationships and qualify the VHDL auxiliary boundary.`
   Acceptance: `After .1 inspect actual auxiliary allocation and parent identity, carry proven shapes to backend-only next/q and helper declarations, retain type/state/enable distinctions and independent fixed widths. Integrate bounded VHDL allocation/type/reset consumers or name precise refusals. No numeric-width matching. Focused native and declaration controls, synchronized book and commit; full runtime remains .6.`
   Verification: `pending actual backend-only consumer selection`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.2.1, ISF-REDUCTION-DELIVERY.3.4.2.2, ISF-REDUCTION-DELIVERY.3.4.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.2.1`
+  Status: `done`
+  Goal: `Retain actual allocation-time backend auxiliary width origins in detached declaration snapshots.`
+  Acceptance: `ModulePlanningSupport allocates register_out/register_out_dual next helpers and register_in/register_in_dual q helpers from actual assignment families. Record closed kind/source_name origins at these exact allocation points; pulse delay widths must not borrow data ancestry. Carry optional metadata through the actual internal emitter and declaration collector, preserving absent-field compatibility, all numeric/type/state fields and complete ordinary HDL. Validate origin role/shape/identifier and complete parent membership, detach inputs/results and invalidate failures/reuse. Focused allocation/native snapshot/collector controls plus synchronized POD/book/fact evidence qualify this private preparation; no symbolic helper range, VHDL admission, source/API/MCP/corpus schema or runtime claim. Commit before range consumption.`
+  Verification: `Actual allocation points now publish closed register_next/register_q origins from assignment LHS identity. The internal emitter and optional declaration snapshots retain detached origins; pulse pipes keep cycle-derived widths, while ordinary/source/enable declarations gain no ancestry. Collector validates role/closed fields/simple distinct parent and completion membership; malformed input, missing parents and reuse invalidate old/partial results. Unchanged original T2186 is RED against 89b03821e with all three subtests failing; after implementation focused All tests successful Files=3 Tests=9 for T2186/T2174/T204. Actual five assignment forms at defaults1/8 retain independent whole expected origin maps, selected numeric fields and complete captured-versus-ordinary current HDL equality; literal/type/pulse controls and mutation isolation pass. Changed modules/new test syntax OK; mdBook/POD build and source-reference freshness pass. Re-derive actual planner/collector/native generation; falsify independent literal maps, original RED, malformed/missing-parent/pulse/type controls; durability source/tests/POD/book/fact and docs/audits/backend-auxiliary-width-origins-20261028.json.gz. Original whole worktree/raw-root streams and exact predecessor whole-HDL artifact comparison remain uncaptured; external override/runtime/public qualification remains .6. Private metadata only: no symbolic helper range, source/report/API/MCP/corpus schema or VHDL admission. First hook refuses focused_documents line-width allowance because the current task-index row grew to916 bytes. Replace only that overwritten summary with a concise current frontier; all detailed facts remain in canonical task/book/receipts and Git. No allowance or ceiling changes; later doctrines were unrun. Normal final-index doctrines/hook gate commit; range consumption continues .3.4.2.2.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.2.1: capture backend auxiliary width origins`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original regression output at t/2186-backend-auxiliary-width-origins.t line 42 has undef instead of the independently expected complete allocation-origin map; line44 exposes the missing actual emitter metadata. ModulePlanningSupport retains only numeric/type fields at next/q allocation; DeclarationCapture discards unrecognized metadata. All original failing subtests retain in the dated receipt.
+  - [x] **ADDRESSED (verified)** — Record closed parent/kind origins at actual next/q allocations and carry them through the existing emitter into detached snapshots. Pulse/enable/source declarations borrow no ancestry. Validate origin shape/role/name/distinct parent and completion membership, preserving absent-field compatibility. Actual native/current ordinary-versus-captured products, type/default contrasts, complete origin maps, malformed/missing-parent refusals and reuse/mutation controls pass.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for T2186/T2174/T204. Changed modules/new test syntax OK; mdBook/POD build and source-reference freshness pass. Mandatory final-index scripts/check_doctrines.sh and normal hook qualify commit; symbolic helper ranges, VHDL admission and full compiler/override/runtime remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.2.2`
+  Status: `pending`
+  Goal: `Consume actual register helper origins for Verilog-family symbolic ranges.`
+  Acceptance: `After .1, join each recorded parent to its actual normalized assignment/Core width plan and declaration membership, verify numeric/type/state coherence and reject conflicting independent declarations or stale same-default ancestry. Render helper ranges through existing canonical kernels and requalify emitted helper identities before artifact return. Preserve pulse/fixed/type/enable shapes, native output atomicity and focused independent complete declarations at one/wider defaults. Synchronize docs and commit; VHDL activation .3 and full compiler/override/runtime .6 remain separate.`
+  Verification: `pending origin publication`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.2.3`
+  Status: `pending`
+  Goal: `Qualify bounded VHDL register-helper allocation, assignment and reset consumers.`
+  Acceptance: `After .2, retain normalized helper origins and symbolic target rank through actual paired VHDL plans/parsing. Qualify real next/q transfers, reset values and fixed/unrelated helpers or refuse unsupported precise shapes; no suffix guessing or numeric ancestry. Preserve existing no-transition/intermediate guard boundaries until their owners qualify them. Focused actual-source/static/refusal/atomic controls and lowering-clean book examples precede admission; split unsafe consumer growth and retain full override/runtime under .6.`
+  Verification: `pending Verilog-family helper relationship`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3`

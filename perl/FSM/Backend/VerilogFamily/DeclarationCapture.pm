@@ -54,9 +54,22 @@ sub record_declaration ($self, $role, $record) {
     $self->_fail('requires positive numeric width and a numeric signed flag')
         unless defined($copy->{width}) && !ref($copy->{width}) && $copy->{width} =~ /\A[0-9]+\z/ && $copy->{width} > 0
             && defined($copy->{signed}) && !ref($copy->{signed}) && $copy->{signed} =~ /\A[01]\z/;
+    if (exists($copy->{width_origin})) {
+        my $origin = $copy->{width_origin};
+        $self->_fail('requires a closed signal-helper width origin')
+            unless $role eq 'signals' && ref($origin) eq 'HASH'
+                && join(',', sort keys %$origin) eq 'kind,source_name'
+                && defined($origin->{kind}) && !ref($origin->{kind})
+                && $origin->{kind} =~ /\A(?:register_next|register_q)\z/
+                && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($origin->{source_name})
+                && defined($copy->{name}) && !ref($copy->{name})
+                && $origin->{source_name} ne $copy->{name};
+    }
     $self->record_name($role, $copy->{name});
     $self->{declarations}{$copy->{name}} = {map {$_ => $copy->{$_}}
         qw(name width signed state_model declared_type_name declared_type_spec)};
+    $self->{declarations}{$copy->{name}}{width_origin} = $copy->{width_origin}
+        if exists($copy->{width_origin});
     return;
 }
 
@@ -72,6 +85,11 @@ sub complete ($self) {
     $self->_fail('cannot complete without every numeric declaration row')
         unless @required == keys(%{$self->{declarations}})
             && !grep {!exists($self->{declarations}{$_})} @required;
+    for my $row (values %{$self->{declarations}}) {
+        next unless exists($row->{width_origin});
+        $self->_fail('width origin requires an actual declared parent')
+            unless exists($self->{declarations}{$row->{width_origin}{source_name}});
+    }
     $self->{state} = 'complete';
     return;
 }
@@ -108,6 +126,18 @@ numeric/type metadata come from existing emission points. No HDL is parsed or
 regenerated to obtain membership. Allocated aggregate typedef names deduplicate
 across uses. Other duplicate owners, invalid rows and non-JSON graphs refuse
 and invalidate the transaction. Target legality remains separate preparation.
+
+Actual internal register-helper rows may additionally contain C<width_origin>,
+a closed C<{kind, source_name}> record. The allocation kind is C<register_next>
+or C<register_q>; C<source_name> identifies the actual assignment parent at
+allocation, independently of numeric width equality or suffix interpretation.
+Only signal rows accept this field. The parent must be a different simple name
+and have its own declaration row when the transaction completes. Malformed or
+missing-parent origins invalidate the transaction. Origins detach with the rest
+of each row; absent fields preserve the old snapshot shape. Pulse-delay,
+enable, source-owned and other unrelated declarations acquire no origin.
+This metadata does not prove a caller-made allocation or a symbolic width/type
+relationship; qualified range consumers retain those obligations.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

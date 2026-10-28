@@ -209,6 +209,13 @@ sub reset_condition_expr ($self, $fsm_module = undef) {
 Build the normalized internal-storage and auxiliary-declaration plan for one
 prepared direct backend context.
 
+The detached C<aux_width_origins> map records C<{kind, source_name}> at actual
+register next/q allocation points. It preserves the assignment parent and
+allocation family without deriving ancestry from equal widths or helper names.
+Pulse-delay pipe widths retain their cycle-count contract and no data-width
+origin. Numeric, signed, state-model and declared-type maps remain independent;
+origin publication alone does not qualify a symbolic helper range.
+
 =cut
 
 sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports = undef) {
@@ -222,6 +229,7 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
 
     my %signal_decls;
     my %aux_decls;
+    my %aux_width_origins;
     my %signal_signed;
     my %aux_signed;
     my %signal_state_model;
@@ -286,6 +294,7 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
             my $next_name = "${lhs}_next";
             unless ($declared_ports{$next_name}) {
                 $aux_decls{$next_name} = $width;
+                $aux_width_origins{$next_name} = {kind => 'register_next', source_name => $lhs};
                 $aux_signed{$next_name} = $lhs_signed;
                 $aux_state_model{$next_name} = $lhs_state_model if defined $lhs_state_model;
                 $aux_declared_type_name{$next_name} = $lhs_declared_type_name if defined $lhs_declared_type_name;
@@ -295,6 +304,7 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
             my $q_name = "${lhs}_q";
             unless ($declared_ports{$q_name}) {
                 $aux_decls{$q_name} = $width;
+                $aux_width_origins{$q_name} = {kind => 'register_q', source_name => $lhs};
                 $aux_signed{$q_name} = $lhs_signed;
                 $aux_state_model{$q_name} = $lhs_state_model if defined $lhs_state_model;
                 $aux_declared_type_name{$q_name} = $lhs_declared_type_name if defined $lhs_declared_type_name;
@@ -315,6 +325,7 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
     return {
         signal_decls => \%signal_decls,
         aux_decls => \%aux_decls,
+        aux_width_origins => \%aux_width_origins,
         signal_signed => \%signal_signed,
         aux_signed => \%aux_signed,
         signal_state_model => \%signal_state_model,

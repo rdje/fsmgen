@@ -39,6 +39,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     );
     my %signal_decls = %{$declaration_plan->{signal_decls} || {}};
     my %aux_decls = %{$declaration_plan->{aux_decls} || {}};
+    my $aux_width_origins = $declaration_plan->{aux_width_origins} || {};
     my %signal_signed = %{$declaration_plan->{signal_signed} || {}};
     my %aux_signed = %{$declaration_plan->{aux_signed} || {}};
     my %signal_state_model = %{$declaration_plan->{signal_state_model} || {}};
@@ -66,7 +67,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
 
     my @typed_declaration_entries = (
         _typed_declaration_entries(\%signal_decls, \%signal_signed, \%signal_state_model, \%signal_declared_type_name, \%signal_declared_type_spec),
-        _typed_declaration_entries(\%aux_decls, \%aux_signed, \%aux_state_model, \%aux_declared_type_name, \%aux_declared_type_spec),
+        _typed_declaration_entries(\%aux_decls, \%aux_signed, \%aux_state_model, \%aux_declared_type_name, \%aux_declared_type_spec, $aux_width_origins),
     );
     my ($typedef_lines, $aggregate_typedef_lookup) =
         FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs(
@@ -155,10 +156,10 @@ sub _add_enable_wire ($enable_decls, $declared, $name) {
     $enable_decls->{$name} = 1;
 }
 
-sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared_type_name_map, $declared_type_spec_map) {
+sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared_type_name_map, $declared_type_spec_map, $width_origins = undef) {
     my @entries;
     for my $signal_name (sort keys %{$decls || {}}) {
-        push @entries, {
+        my $entry = {
             name => $signal_name,
             width => $decls->{$signal_name},
             signed => ($signed_map->{$signal_name} // 0) ? 1 : 0,
@@ -166,6 +167,9 @@ sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared
             declared_type_name => $declared_type_name_map->{$signal_name},
             declared_type_spec => $declared_type_spec_map->{$signal_name},
         };
+        $entry->{width_origin} = $width_origins->{$signal_name}
+            if $width_origins && exists($width_origins->{$signal_name});
+        push @entries, $entry;
     }
     return @entries;
 }
@@ -229,5 +233,8 @@ auxiliary helper register family used by the direct generated-module backend.
 Captured source-owned storage consumes its proved symbolic range, including
 vector rank at a selected width of one. Backend-only helpers keep their existing
 numeric shape; no width relationship is inferred from equal numeric widths.
+Their captured declaration rows retain optional allocation-time C<width_origin>
+metadata supplied by the module planner. It names actual register next/q parents;
+pulse-delay helpers and ordinary declarations do not borrow that relationship.
 
 =cut

@@ -389,6 +389,13 @@ or incomplete numeric rows withhold prior/partial results. Captured direct
 parameter/width preparation now installs this collector for one generation;
 legacy uncaptured generation keeps its existing path.
 
+Backend register helpers now retain a detached `width_origin` with their actual
+allocation kind (`register_next` or `register_q`) and assignment parent name.
+The planner supplies this identity at allocation; the collector checks its shape
+and complete parent membership. Pulse-delay and enable widths acquire no data
+ancestry. Existing HDL and numeric/type/state metadata preserve. Symbolic helper
+range consumption and VHDL helper admission remain separately qualified work.
+
 Direct SystemVerilog and compatibility Verilog ports and source-owned internal
 storage now consume the proved ranges. Selected names and arithmetic remain,
 including an explicit vector when the selected width defaults to one. Fixed

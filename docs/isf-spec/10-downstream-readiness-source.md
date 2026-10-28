@@ -312,6 +312,9 @@ General source rules:
   defaults, opaque/type/literal constraints and unattested combined edges refuse;
   this prepared-range rule does not admit mixed assignment styles or change
   source/report/API/MCP/corpus contracts.
+  Private backend declaration snapshots also retain actual register next/q
+  allocation origins. This prepares helper-range consumption; pulse-delay
+  widths and symbolic VHDL helper admission remain separate contracts.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
