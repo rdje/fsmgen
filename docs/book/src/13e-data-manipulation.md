@@ -103,6 +103,14 @@ named/signed operand types and unrelated pulse helpers remain withheld. Focused
 one-bit/wider native checks and atomic refusals preserve existing products;
 complete external compiler/override/runtime qualification remains separate.
 
+Internal capture also retains both ordered whole operands of a binary bitwise
+intermediate, including duplicate references, when actual ASTs and selected text
+agree. Every operand must have an emitted declaration. Selected operand/result
+widths remain separate constraints: a context-sized result need not equal the
+operand maximum. This syntactic origin adds no generic range relationship;
+allocation-policy proof and symbolic range emission remain separate work.
+Existing scalar reduction records and the bounded VHDL source guard preserve.
+
 The qualified generation subset uses declared fixed widths. The separate
 fixed runtime witness below qualifies both Verilog-family targets:
 

@@ -83,8 +83,10 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
         $hdl .= "  assign $signal_name = $expression; // Source: $source\n";
         if (my $capture = $ctx->{declared_width_declaration_capture}) {
             my $origin = $recovery_support->scalar_reduction_origin($signal_name, $signal_info, $expression);
+            my $bitwise = $recovery_support->binary_bitwise_origin($signal_name, $signal_info, $expression);
             $capture->record_intermediate_assignment($signal_name,
-                {expression => $expression, ($origin ? (reduction_origin => $origin) : ())});
+                {expression => $expression, ($origin ? (reduction_origin => $origin) : ()),
+                    ($bitwise ? (bitwise_origin => $bitwise) : ())});
         }
         fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3)
             if $trace_signal_detail;

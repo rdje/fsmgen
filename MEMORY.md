@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2`
-- next_action: Prepare actual same-relationship binary bitwise intermediate width origins/ranges; split producer and consumer leaves before edits, preserving every operand and independent max constraint.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2`
+- next_action: Establish actual intermediate width-allocation provenance before same-relationship range proof; syntactic operand origins retain independent selected/context widths and cannot prove allocation from equal defaults.
 - in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

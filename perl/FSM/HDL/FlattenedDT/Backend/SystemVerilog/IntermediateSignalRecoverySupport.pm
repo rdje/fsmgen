@@ -237,12 +237,26 @@ sub _whole_signal_reduction ($node) {
         || $node->isa('FSM::CoreAST::UnaryOp') || $node->isa('FSM::HDL::SubstitutedUnaryOp'));
     my $op = $node->operator;
     return unless defined($op) && !ref($op) && $op =~ /\A[&|^]\z/;
-    my $operand = $node->operand;
+    my $name = _whole_signal_name($node->operand) or return;
+    return {kind => 'scalar_reduction', operator => $op, source_name => $name};
+}
+
+sub _whole_signal_name ($operand) {
     return unless blessed($operand) && ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
     return if $operand->isa('FSM::AST::SignalRef') && ($operand->is_fsm_state_next || $operand->is_fsm_state_register);
     my $name = $operand->isa('FSM::CoreAST::SignalRef') ? $operand->signal->name : $operand->name;
     return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
-    return {kind => 'scalar_reduction', operator => $op, source_name => $name};
+    return $name;
+}
+
+sub _whole_signal_binary_bitwise ($node) {
+    return unless blessed($node) && ($node->isa('FSM::AST::BinaryOp')
+        || $node->isa('FSM::CoreAST::BinaryOp') || $node->isa('FSM::HDL::SubstitutedBinaryOp'));
+    my $op = $node->operator;
+    return unless defined($op) && !ref($op) && $op =~ /\A[&|^]\z/;
+    my $left = _whole_signal_name($node->left) or return;
+    my $right = _whole_signal_name($node->right) or return;
+    return {kind => 'binary_bitwise', operator => $op, source_names => [$left, $right]};
 }
 
 =head2 scalar_reduction_origin
@@ -264,6 +278,31 @@ sub scalar_reduction_origin ($self, $signal_name, $signal_info, $expression) {
     for my $node ($defining, map {$signal_info->{$_}} grep {exists($signal_info->{$_})} qw(ast defining_ast)) {
         my $other = _whole_signal_reduction($node) or return;
         return unless $other->{operator} eq $origin->{operator} && $other->{source_name} eq $origin->{source_name};
+    }
+    my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($runtime);
+    return unless defined($rendered) && $rendered eq $expression;
+    return $origin;
+}
+
+=head2 binary_bitwise_origin
+
+Return an optional detached binary XOR/AND/OR origin with both ordered whole
+SignalRef operands. Defining/runtime/cached ASTs and fresh selected rendering
+must agree. Duplicate operand slots preserve; text-only, logical, literal and
+compound operands gain no origin. This supplies no symbolic width/type proof.
+
+=cut
+
+sub binary_bitwise_origin ($self, $signal_name, $signal_info, $expression) {
+    return unless ref($signal_info) eq 'HASH' && defined($expression) && !ref($expression);
+    my $runtime = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+    my $defining = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+    my $origin = _whole_signal_binary_bitwise($runtime) or return;
+    for my $node ($defining, map {$signal_info->{$_}} grep {exists($signal_info->{$_})} qw(ast defining_ast)) {
+        my $other = _whole_signal_binary_bitwise($node) or return;
+        return unless $other->{operator} eq $origin->{operator}
+            && $other->{source_names}[0] eq $origin->{source_names}[0]
+            && $other->{source_names}[1] eq $origin->{source_names}[1];
     }
     my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($runtime);
     return unless defined($rendered) && $rendered eq $expression;

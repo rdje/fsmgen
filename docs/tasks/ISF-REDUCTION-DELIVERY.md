@@ -2168,10 +2168,44 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2193/T2182/T2191. Original/current legacy T1420 share the preexisting subtest25 refusal, retained and owned by .27. Scalar/data/selected/comparison products, caller kinds and backend reuse pass. Module/test syntax and book/POD/source freshness plus normal hooks gate commit; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prove and consume actual same-relationship vector bitwise intermediate widths in Verilog-family declarations.`
   Acceptance: `After guard semantics, select actual whole-source binary bitwise intermediate events. Keep every distinct operand association and source capture. Only identical proved mutable width relationships may share a result range; equal defaults or separate overridable aliases cannot prove equivalence. Bind actual AST, selected emitted text and declaration, preserve vector rank at default one and refuse missing/foreign/independent-max proof. Split publication/consumer boundaries before an unsafe slice; focused source/caller/static/refusal checks and book/POD precede commit. VHDL non-scalar join remains .3.4.3.4; full qualification .6.`
   Verification: `Guard prerequisites close under .3.4.3.2.1. Actual symbolic vector relationship publication/consumer remains next; no symbolic inference is supplied by the numeric guard repairs.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.1`
+  Status: `done`
+  Goal: `Capture actual binary bitwise intermediate operand origins without changing HDL or symbolic admission.`
+  Acceptance: `Extend actual prepared intermediate assignment events with optional closed bitwise_origin {kind:binary_bitwise,operator,source_names:[left,right]}. Only typed whole SignalRef &/|/^ nodes qualify; retain both ordered operand slots, including duplicate references. Defining/runtime/cached ASTs and fresh actual selected expression must agree; no rendered-text/name/cache-only inference. Actual collector membership and distinct result ownership qualify at completion; declared operand/result numeric widths remain separate constraints, not an assumed intrinsic maximum. malformed/conflicting/unknown/missing origins invalidate. Preserve scalar reduction schema and empty/legacy shapes, ordinary whole HDL, caller kinds and detachment. Source width/type relationship proof and emission remain successor leaves. Focused real source/prepared/collector RED-to-GREEN plus book/POD/fact and commit close publisher.`
+  Verification: `DeclarationCapture originally permits only expression/reduction_origin, so actual binary bitwise relationships are absent. Typed whole canonical binary &/|/^ now supplies detached bitwise_origin with both ordered SignalRefs; runtime/defining/cached ASTs and fresh selected expression agree. Completed actual operand declarations and closed/exclusive origin families qualify, preserving duplicate slots, caller kinds and legacy scalar snapshots. Final T2197/T2190/T2174/T2191 pass All tests successful Files=4 Tests=18. Authenticated predecessor/current source fixtures have identical complete HDL after Date normalization and identical complete snapshots after removing only the owned new field. Initial exact-max completion guard falsely rejects the valid predecessor context32/A8/B8 declaration; a focused actual prepared counterexample locates this overconstraint. Remove the inference, retain every selected width, and qualify widened/truncated contexts. Original/corrected contracts, all source/code/streams and native identities retain in docs/audits/binary-bitwise-intermediate-origins-20261028.json.gz. Re-derive actual events; falsify exact old owners, missing/stale/foreign/logical/compound/duplicate/atomic and context-width controls; durability tracked source/test/audit/POD/book/fact. No symbolic range/type equivalence or VHDL admission. Immediate .2 must establish actual allocation policy before any promotion; equal selected widths are insufficient.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.1: capture binary bitwise operand origins`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original T2197 reports at t/2197-binary-bitwise-intermediate-origins.t line 43: bitwise_origin does not exist. Recovery/capture currently publishes only unary reduction relationships. The actual predecessor context32/A8/B8 emitter succeeds, while the initial new exact-max guard fails at DeclarationCapture.pm line150, proving a syntactic publisher must preserve independent width constraints rather than infer allocation policy.
+  - [x] **ADDRESSED (verified)** — Actual typed binary AST/text agreement publishes both ordered operands; closed schemas and complete actual membership qualify without a width-equivalence assertion. Context widening/truncation and duplicate slots retain independently. Native predecessor/current HDL and snapshots conserve after only Date/new-field normalization; no symbolic/VHDL admission changes.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=18 for final T2197/T2190/T2174/T2191. Scalar/legacy/event, caller/detachment/reuse and scalar-only VHDL controls pass. Syntax/book/POD/source freshness and normal hook gate commit; allocation/range/full qualification remain separately owned.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2`
+  Status: `pending`
+  Goal: `Prove same-relationship binary bitwise intermediate range plans against actual operands.`
+  Acceptance: `After .1, bind completed actual intermediate/declaration events to every operand's canonical source/target plan. Both actual whole unsigned plain operands must have the same proved mutable width relationship, retaining separate identity/constraints; equal defaults or separately overridable aliases are insufficient. Prove actual result allocation policy independently of selected numeric equality: a prepared result may be context-widened/truncated, and an equal default can conceal that constraint. Add allocation-policy publication ownership before promotion if required. Validate selected width, current expression and complete actual membership, default-one vector rank, static/type/signed and independent-max refusals. Source-owned parser helpers need explicit actual intermediate ownership rather than register-helper ownership assumptions. Qualify a detached bounded target-plan consumer before emission, sync docs and commit. No VHDL non-scalar/raw admission or external qualification.`
+  Verification: `Pending publisher completion. Context32/A8/B8 public prepared emission remains valid; binary_origin attests only operation/operand identity, not max-width allocation policy. The initial over-strict collector refusal is retained in the publisher audit. Establish actual source allocation provenance before using any equal selected widths as generic proof.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`
+  Status: `pending`
+  Goal: `Emit proved symbolic bitwise intermediate ranges with final actual-event closure.`
+  Acceptance: `After .2 private proof, join actual prepared intermediate planning before declaration emission; source planning currently follows consolidated rendering, so qualify any sequencing change explicitly instead of patching HDL or performing a second generation. Actual declaration ranges consume proved same-relationship plans, preserving vector rank at one, and final independent event/source/target reproof must equal emitted identities, expressions, origins and ranges. Keep caller/event isolation and reuse/failure atomicity, fixed/legacy/named controls and independent constraints. Focused source SV/Verilog/default/alias negatives plus book/POD/fact precede commit. VHDL non-scalar join remains .3.4.3.4, full .6.`
+  Verification: `pending target-plan proof`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
+  Status: `pending`
+  Goal: `Close bounded binary bitwise propagation and select remaining unary/binary constraints.`
+  Acceptance: `After publisher/proof/emission, review composed focused actual source/target products and precise unsupported boundaries. N-ary/nested graph propagation remains explicitly owned by .3.4.3.2.3 if outside this bounded binary producer/consumer; close this relationship family and select .3.4.3.2.3. Do not start full verification before agreed feature completion; .6 owns complete compiler/override/runtime/API/MCP/corpus.`
+  Verification: `pending implementation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`

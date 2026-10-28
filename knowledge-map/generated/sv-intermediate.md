@@ -1,10 +1,11 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **10** uniquely owned question entries.
+> **1** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="how are binary bitwise intermediate operand origins captured?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="how are multi-bit generated intermediate signals treated in truthiness?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="how are scalar reduction intermediate origins captured?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="how does FSMGen render multi-bit intermediate equality to zero?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)

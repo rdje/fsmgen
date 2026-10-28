@@ -338,6 +338,9 @@ General source rules:
   now fold whole-vector operands before scalar combination, with exact consumed
   helper reservation and case-insensitive collision refusal. A selected fixed
   native compiler/runtime witness passes; complete qualification remains open.
+  Binary intermediate capture now retains ordered whole-operand origins and each
+  selected width independently. Allocation policy and generic range proof remain
+  separate; equal selected defaults establish no relationship.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

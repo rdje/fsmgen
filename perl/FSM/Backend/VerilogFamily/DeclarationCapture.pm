@@ -95,9 +95,21 @@ sub record_intermediate_assignment ($self, $name, $record) {
     my $copy = eval {$json->decode($json->encode($record))};
     $self->_fail('requires a closed JSON-safe intermediate expression event')
         if $@ || ref($copy) ne 'HASH'
-            || grep {$_ ne 'expression' && $_ ne 'reduction_origin'} keys %$copy;
+            || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin'} keys %$copy;
     $self->_fail('requires actual nonempty intermediate expression text')
         unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
+    $self->_fail('requires one coherent intermediate origin family')
+        if exists($copy->{reduction_origin}) && exists($copy->{bitwise_origin});
+    if (exists($copy->{bitwise_origin})) {
+        my $origin = $copy->{bitwise_origin};
+        $self->_fail('requires a closed binary bitwise intermediate origin')
+            unless ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,operator,source_names'
+                && defined($origin->{kind}) && !ref($origin->{kind}) && $origin->{kind} eq 'binary_bitwise'
+                && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ /\A[&|^]\z/
+                && ref($origin->{source_names}) eq 'ARRAY' && @{$origin->{source_names}} == 2
+                && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_) || $_ eq $name}
+                    @{$origin->{source_names}};
+    }
     if (exists($copy->{reduction_origin})) {
         my $origin = $copy->{reduction_origin};
         $self->_fail('requires a closed scalar intermediate reduction origin')
@@ -122,10 +134,17 @@ sub complete ($self) {
         $self->_fail('width origin requires an actual declared parent')
             unless exists($self->{declarations}{$row->{width_origin}{source_name}});
     }
-    for my $row (values %{$self->{intermediates} // {}}) {
-        next unless exists($row->{reduction_origin});
-        $self->_fail('intermediate reduction requires an actual declared operand')
-            unless exists($self->{declarations}{$row->{reduction_origin}{source_name}});
+    for my $name (keys %{$self->{intermediates} // {}}) {
+        my $row = $self->{intermediates}{$name};
+        if (exists($row->{reduction_origin})) {
+            $self->_fail('intermediate reduction requires an actual declared operand')
+                unless exists($self->{declarations}{$row->{reduction_origin}{source_name}});
+        }
+        if (exists($row->{bitwise_origin})) {
+            my @operands = @{$row->{bitwise_origin}{source_names}};
+            $self->_fail('binary bitwise intermediate requires actual declared operands')
+                if grep {!exists($self->{declarations}{$_})} @operands;
+        }
     }
     $self->{state} = 'complete';
     return;
@@ -190,6 +209,18 @@ assignment owners, malformed records and missing operands invalidate the
 transaction. Records detach on input/output; a generation with no intermediates
 omits this map, preserving the legacy empty shape. The publisher supplies no
 source unsigned/type proof and activates no symbolic intermediate consumer.
+
+A separate optional C<bitwise_origin> is closed
+C<{kind =E<gt> binary_bitwise, operator, source_names =E<gt> [left, right]}>.
+Canonical binary XOR/AND/OR over typed whole SignalRefs must agree across
+actual defining/runtime/cached ASTs and fresh selected expression rendering.
+Both ordered operand slots retain, including duplicates; names must differ
+from the result and have actual declaration rows at completion. The origin
+families are mutually exclusive. Selected operand and result widths remain
+separate numeric constraints: context-widened or truncated result declarations
+are valid and do not imply an intrinsic maximum-width allocation policy.
+The event proves no mutable width equivalence or symbolic range eligibility.
+Malformed, conflicting or missing-operand records invalidate the transaction.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains
