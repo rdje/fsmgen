@@ -15,7 +15,7 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
+  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; t/2199-core-allocation-canonical-role.t; docs/audits/core-allocation-canonical-role-20261028.json.gz; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
@@ -78,7 +78,7 @@ remain separately owned.
 Intermediate_width_allocation separately holds explicit binary_operand_max intent (T2198),
 binding this helper/current Core AST/ordered operand objects with matching-write revocation.
 It shares detached/failed-replacement rules, retains no extra owner graph and installs nothing
-from equal widths. Actual allocation publishers and generic ranges remain pending.
+from equal widths. Canonical INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; other roles withhold. Actual publishers/ranges remain pending.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

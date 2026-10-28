@@ -62,7 +62,9 @@ bounded repair does not close arbitrary mixed arithmetic/unary text rendering.
 An internal [intermediate allocation holder](perl-api/FSM/IntermediateWidthAllocationSupport.html)
 now records an explicit current binary max-allocation contract. It binds the
 actual Core helper, AST and ordered operand objects, with revocation on relevant
-matching-state writes. Opaque equal-width metadata installs nothing. Getter and
+matching-state writes. Actual parsed helpers carrying `INTERNAL_INTERMEDIATE`
+are eligible, as are unspecified and legacy lowercase intermediate roles; other
+explicit roles are withheld. Opaque equal-width metadata installs nothing. Getter and
 replacement records detach; the capsule adds no mutable owner graph. Actual
 parser/factorizer allocation publication and generic range consumers remain
 separate implementation steps.

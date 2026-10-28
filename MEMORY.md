@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2`
-- next_action: Publish actual parser helper allocation contracts from fresh/proved inferred allocations, preserving opaque/authored floors and source failure/reuse boundaries; no range admission yet.
-- in_flight_uncommitted: Derive exact paths with git status --short; finish the owning slice through COMMIT.md before advancing.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.2`
+- next_action: Retain actual fresh parser binary max-allocation events in source-local staging; join completed parser/facade classification afterward, without reconstructing intent from equal widths.
+- in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

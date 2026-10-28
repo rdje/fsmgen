@@ -52,7 +52,7 @@ sub _capture ($signal) {
         && !$signal->get_attribute('is_output') && !$signal->get_attribute('is_aux_output')
         && !$signal->get_attribute('width_declared');
     my $role = $signal->get_attribute('signal_role');
-    return if defined($role) && (ref($role) || $role ne 'intermediate');
+    return if defined($role) && (ref($role) || $role ne 'intermediate' && $role ne 'INTERNAL_INTERMEDIATE');
     return if grep {exists($signal->{$_})} qw(_declared_width_source _declared_width_binding _declared_width_requirements);
     return unless ref($own->{constraints}) eq 'ARRAY' && !@{$own->{constraints}};
     my $ast = $signal->driving_ast;
@@ -134,6 +134,8 @@ This metadata acceptance establishes no target width/domain legality.
 
 The actual result must be a plain unsigned wire intermediate without an authored
 width record, conflicting output/auxiliary/declared role, or own constraints.
+An absent role, legacy C<intermediate>, or canonical C<INTERNAL_INTERMEDIATE>
+role is eligible; other explicit roles are withheld. Matching role writes revoke.
 Operands are plain unsigned Core wire/register Signals. The current driving AST,
 actual Signal/operand identities, selected width, type/role/constraint state and
 revocation revision must agree. Named/signed or other shapes remain unqualified.

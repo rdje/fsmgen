@@ -2208,10 +2208,44 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=18 for T2198/T2161/T2163; final holder-only inspection control passes Files=1 Tests=4. Existing Core width-holder behavior and caller kinds preserve. Syntax, POD/book/source freshness and mandatory hook gate commit; allocator publication, target proof and full .6 stay pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish actual parser bitwise helper allocation policy while preserving independent existing constraints.`
   Acceptance: `After holder, bind policy only at actual ExpressionBuilder/SignalManager inferred intermediate allocation, before source data loses that origin. Fresh versus repeated generated allocations must preserve every existing authored/opaque floor; identical selected defaults cannot relabel an opaque or context-sized existing Signal. Repeated actual identical inferred helpers may retain/rebind a proved policy, but conflicting/floor/type/stale/unknown cases withhold. Preserve unknown-width placeholders, old numeric/Core/public products and caller kinds; complete source failure must not expose stale policy. Focused real source/reuse/late/context controls and book/POD/fact precede commit. No target range admission.`
-  Verification: `pending holder`
+  Verification: `Holder and actual canonical-role prerequisite have focused checks; immutable fresh birth staging is next.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.1`
+  Status: `done`
+  Goal: `Accept the actual canonical INTERNAL_INTERMEDIATE role in the opt-in Core holder.`
+  Acceptance: `Actual SignalAnalyzer assigns uppercase INTERNAL_INTERMEDIATE, while the new holder permits only lowercase. Reproduce through the real facade's parsed binary helpers at scalar/wider defaults and canonical operators; correct the holder's role eligibility without changing stored roles, caller metadata or matching-state revocation. Keep input/output/unknown roles withheld, compatibility lowercase/unspecified cases and existing holder controls. No actual allocator publication or range admission. Focused original RED/parsed/current lifecycle controls plus POD/book/fact/audit and commit precede the birth journal.`
+  Verification: `Actual facade parsing supplies INTERNAL_INTERMEDIATE, not the initially presumed INTERMEDIATE. Final unchanged T2199 fails both subtests against exact predecessor support; original inaccurate-role probe is also retained. Narrow eligibility now accepts actual canonical INTERNAL_INTERMEDIATE, existing lowercase intermediate or an absent role. Other explicit roles stay withheld, matching canonical-role writes revoke, source defaults/bindings/width/attributes and caller kinds preserve. T2199/T2198 pass All tests successful Files=2 Tests=6. No source publication or target admission is enabled. Re-derive actual parser/classifier/holder; falsify exact predecessor, conflicting roles and matching-state writes; durability tracked test/support/POD/book/fact and complete source/log receipt docs/audits/core-allocation-canonical-role-20261028.json.gz. Fresh allocator names and post-parser classifier lifecycle are confirmed for the next producer slice.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.1: accept actual canonical helper roles`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final unchanged T2199 rejects actual parsed helpers with Intermediate width allocation requires the actual current plain binary max shape at perl/FSM/IntermediateWidthAllocationSupport.pm line 94. SignalAnalyzer actually publishes INTERNAL_INTERMEDIATE; the holder accepted only lowercase intermediate.
+  - [x] **ADDRESSED (verified)** — Accept only the actual canonical role alongside existing lowercase/absent compatibility. Real parsed scalar/wider bitwise helpers accept explicit matching records; role writes still revoke and conflicting roles refuse without old records.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=6 for T2199/T2198. Actual caller/default/role/width kinds preserve. POD/book/source freshness and the mandatory normal doctrine hook gate this prerequisite; allocator publication and full .6 stay pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Retain immutable actual fresh parser allocation events without relabeling opaque widths.`
+  Acceptance: `After role repair, capture actual eligible binary fresh-name allocation at ExpressionBuilder/SignalManager, preserving unknown/signed/named/n-ary/opaque constraints and ordinary numeric behavior. Bind actual object/AST/operand identity and revisions; source birth intent must survive only qualified lifecycle changes, never be reconstructed from equal widths. Establish bounded source-local staging/cleanup before facade publication; no second parse/generation pass or persistent owner graph. Focused fresh/collision/reuse/matching-write controls and docs precede commit.`
+  Verification: `pending role prerequisite`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Publish proved parser allocation contracts only across completed validation and role classification.`
+  Acceptance: `After actual birth events, join Parser/facade completion and the actual INTERNAL_INTERMEDIATE role write. Reprove current object/AST/operand/width/type/constraint state and every supported intervening write; allow only the explicit qualified classifier transition, not arbitrary matching-state mutation. Parser/facade failure or reuse clears old/partial candidates and published records. Preserve ordinary HDL/snapshots/caller kinds after only owned metadata and precise unsupported boundaries, with focused source/error/retry controls, synchronized docs and commit.`
+  Verification: `pending birth journal`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.4`
+  Status: `pending`
+  Goal: `Close actual parser allocation publication and hand off factorization provenance.`
+  Acceptance: `Review composed focused fresh allocation, role transition, source/facade atomicity and independent opaque/context constraints; close this producer only for proved binary whole-ref profiles. Join closure to publication if safe, then resume factorization .3. Full/public/corpus qualification stays .6.`
+  Verification: `pending actual publication`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3`
