@@ -271,9 +271,13 @@ partial holders and fresh reuse can qualify new events. The prepared block
 owns the original row map through rendering, alongside a distinct filtered map
 whose entries are the same actual rows. The graph view remains weak: real
 prepare/render observations retain current proof, and the view clears when
-ordinary generation releases that block. The existing handoff needs its
-focused lifecycle qualification before completed policy; no completed
-graph policy, graph target event or symbolic graph range is exposed yet.
+ordinary generation releases that block. Explicitly retaining the actual block
+extends its canonical row lifetime. Retaining only the filtered map keeps row
+objects alive without keeping the containing original map; current graph proof
+then withholds. Rendering failure clears graph holders, and fresh backend reuse
+re-establishes the ordinary lifecycle. Focused checks now qualify this existing
+handoff without a new rebind or strong owner reference. Completed graph policy,
+graph target events and symbolic graph ranges remain pending.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

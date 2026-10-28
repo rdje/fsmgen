@@ -153,8 +153,15 @@ graphs before removing any child holder, then bind each actual installed row
 identity and complete merged metadata. Graph restoration follows dependencies
 after whole-reference child holders and all rows are installed. Equal foreign
 copies, copied row-view maps and changed sources/constraints cannot refresh.
-Prepared-view handoff remains separate; no completed graph policy or symbolic
-range is exposed by these transitions.
+The actual prepared block owns C<all_intermediate_signals> through rendering;
+its distinct C<filtered_signals> map contains the same row objects. The weak
+canonical view remains current while that original map is owned. Explicitly
+retaining the actual block extends that lifetime; retaining filtered row values
+alone does not retain their containing original map and cannot recreate an
+expired view. Ordinary generation releases the view, and generation failure
+clears partial holders through the existing orchestrator abort. This is a row
+lifetime contract, not a claim about whole-backend ownership cycles. Separate
+completed graph policy and symbolic range admission remain pending.
 
 =cut
 

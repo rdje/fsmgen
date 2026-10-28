@@ -2461,11 +2461,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2224/T2222/T2206); alternate order Files=1 Tests=3. Full native products preserve except registry diagnostics. Non-retaining prepare/render source/trace and parser-cursor correction retain in receipt. POD/book/fact and normal hooks gate commit; completed policy remains pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify existing prepared-block ownership and weak graph-row lifetime.`
   Acceptance: `Lock actual prepare/render ownership and exact filtered-row aliases without adding observer retention. Current graph proof must remain available while the prepared block owns original rows and the weak view must end after ordinary generation. Preserve the existing handoff; no rebind without a demonstrated missing transition. Focused lifetime/currentness/refusal checks, canonical fact/POD/book and commit qualify this boundary before completed graph policy.`
-  Verification: `Current registry slice causal probe observes prepare/render at defaults one/eight without keeping maps/blocks: original all-row map remains owned, filtered map is distinct with identical row objects, graph events remain current, weak view is absent after generation. Plain and observed HDL match. Prior weak-view-death assumption was false; exact source/trace and parser-cursor observer correction retain in registry receipt. No rebind is needed on the observed path; lock existing contract next.`
-  Commit: `pending`
+  Verification: `Real prepare/render retains the weak original map and exact filtered-row aliases; explicit block versus filtered-only ownership, release, failure and reuse pass. Strong-reference variant fails the exact controls; source executable bytes remain unchanged and no rebind is added. Re-derive actual boundaries, falsify known-bad retention, retain sources/logs in docs/audits/graph-view-20261028.json.gz. Completed graph policy and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4: qualify prepared graph row lifetime`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'weaken($self->{_graph_inference_rows})' locates 35272feca. Actual PreparedBlockSupport retains the original map alongside filtered row aliases; the earlier plan wrongly assumed it expired during planning. The strong variant fails ordinary release and filtered-only controls.
+  - [x] **ADDRESSED (verified)** — Lock existing real prepared/render currentness and weak release, explicit retained-block/filtered-only ownership, render failure and backend reuse. No rebind or executable production change; POD and book state the actual lifetime contract.
+  - [x] **NO REGRESSION** — All tests successful Files=1 Tests=3. Actual plain/observed HDL matches; removing only weak storage fails the same lifecycle checks. Exact production code comparison after POD removal, book/fact and normal doctrines qualify this focused boundary; completed graph policy is next.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
   Status: `pending`
