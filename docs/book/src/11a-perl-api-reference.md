@@ -93,6 +93,11 @@ pruning and final registry publication succeed. Earlier observations remain
 diagnostic. Normalization/collection/generation failures and reset/reuse clear
 policy; repeated cached normalization mints no replacement proof. Target-event
 and symbolic range joins remain pending.
+The collector accepts a separate optional `width_allocation` record with kind,
+operator, ordered source names and selected width. It requires the same binary
+origin and actual plain unsigned declarations satisfying the exact decimal
+operand maximum. Absent policy keeps contextual widths independent. This schema
+check alone supplies no source provenance; actual policy publication follows.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

@@ -67,6 +67,19 @@ sub _copy_record ($record) {
     return JSON::PP->new->canonical->decode(JSON::PP->new->canonical->encode($record));
 }
 
+sub copy_record ($class, $record) {
+    return _copy_record($record);
+}
+
+sub matches_selected_widths ($class, $record, $result_width, @operand_widths) {
+    my $copy = _copy_record($record);
+    return unless @operand_widths == 2;
+    my @widths = map {_width($_)} @operand_widths;
+    my $result = _width($result_width);
+    return unless defined($result) && !grep {!defined($_)} @widths;
+    return _width($copy->{selected_width}) eq $result && $result eq _maximum(@widths);
+}
+
 sub _descriptor ($signal) {
     return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal')
         && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal->name)
@@ -296,6 +309,20 @@ revocation revision must agree. Named/signed or other shapes remain unqualified.
 Context-widened/truncated results cannot assert this intrinsic-max contract.
 
 =head1 METHODS
+
+=head2 copy_record
+
+Validate and detach the closed C<binary_operand_max> record, preserving scalar
+JSON kinds and ordered duplicate operand slots. Invalid records throw. This
+schema operation supplies no allocation, object-currentness or source proof.
+
+=head2 matches_selected_widths
+
+Check that a valid record's selected width equals the supplied result width and
+the exact positive decimal maximum of two supplied operand widths. Leading
+zeros normalize only for comparison; caller fields and JSON kinds preserve.
+No native integer or floating-point conversion determines equality or maximum.
+This numeric consistency check does not attest actual allocation or membership.
 
 =head2 whole_signal_name
 

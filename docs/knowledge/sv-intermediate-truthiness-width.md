@@ -18,7 +18,7 @@ status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
   perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/AST/Node.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; docs/audits/width-card-evidence-20261028.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/219[0124567]*.t t/208-enable-graph-ast-support.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t
 ---
 
 Component owners above are current evidence. The complete original card/proof inventory (baseline and digests) is retained in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
@@ -34,7 +34,7 @@ fresh selected text, width1 and an actually declared operand (T2190).
 Binary &/|/^ origins retain both ordered whole operands, including duplicates,
 with the same AST/text/membership proof (T2197). All selected widths remain separate.
 Core slices/state/invalid/stored-only/stale/computed/logical operands withhold; compatible
-intermediate references retain typed names. Inputs/results detach; empty sets preserve snapshots; no width/type proof.
+intermediate references retain typed names. Inputs/results detach; empty sets preserve snapshots; origins prove no width/type relation. Optional width_allocation checks a closed intrinsic-max policy against the ordered origin/plain actual declaration widths; actual publication/range proof stays pending.
 Paired VHDL proves plain unsigned operands, scalar results and exact assignments
 (T2191); other shapes refuse.
 

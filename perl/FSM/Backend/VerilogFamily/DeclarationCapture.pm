@@ -8,6 +8,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::IntermediateWidthAllocationSupport;
 
 sub new ($class) {return bless {state => 'empty'}, $class}
 
@@ -95,7 +96,8 @@ sub record_intermediate_assignment ($self, $name, $record) {
     my $copy = eval {$json->decode($json->encode($record))};
     $self->_fail('requires a closed JSON-safe intermediate expression event')
         if $@ || ref($copy) ne 'HASH'
-            || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin'} keys %$copy;
+            || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin'
+                && $_ ne 'width_allocation'} keys %$copy;
     $self->_fail('requires actual nonempty intermediate expression text')
         unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
     $self->_fail('requires one coherent intermediate origin family')
@@ -118,6 +120,16 @@ sub record_intermediate_assignment ($self, $name, $record) {
                 && defined($origin->{operator}) && !ref($origin->{operator}) && $origin->{operator} =~ /\A[&|^]\z/
                 && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($origin->{source_name})
                 && $origin->{source_name} ne $name && $self->{declarations}{$name}{width} == 1;
+    }
+    if (exists($copy->{width_allocation})) {
+        my $allocation = eval {FSM::IntermediateWidthAllocationSupport->copy_record($copy->{width_allocation})};
+        $self->_fail('requires a closed binary width allocation policy') if $@ || !$allocation;
+        my $origin = $copy->{bitwise_origin};
+        $self->_fail('width allocation requires its same ordered binary origin')
+            unless $origin && $origin->{operator} eq $allocation->{operator}
+                && $origin->{source_names}[0] eq $allocation->{source_names}[0]
+                && $origin->{source_names}[1] eq $allocation->{source_names}[1];
+        $copy->{width_allocation} = $allocation;
     }
     $self->{intermediates}{$name} = $copy;
     return;
@@ -144,6 +156,16 @@ sub complete ($self) {
             my @operands = @{$row->{bitwise_origin}{source_names}};
             $self->_fail('binary bitwise intermediate requires actual declared operands')
                 if grep {!exists($self->{declarations}{$_})} @operands;
+        }
+        if (exists($row->{width_allocation})) {
+            my @operands = @{$row->{width_allocation}{source_names}};
+            my @declarations = map {$self->{declarations}{$_}} ($name, @operands);
+            $self->_fail('width allocation requires actual plain unsigned declarations')
+                if grep {$_->{signed} || defined($_->{state_model})
+                    || defined($_->{declared_type_name}) || defined($_->{declared_type_spec})} @declarations;
+            $self->_fail('width allocation requires the exact declared operand maximum and result width')
+                unless FSM::IntermediateWidthAllocationSupport->matches_selected_widths(
+                    $row->{width_allocation}, map {$_->{width}} @declarations);
         }
     }
     $self->{state} = 'complete';
@@ -221,6 +243,17 @@ separate numeric constraints: context-widened or truncated result declarations
 are valid and do not imply an intrinsic maximum-width allocation policy.
 The event proves no mutable width equivalence or symbolic range eligibility.
 Malformed, conflicting or missing-operand records invalidate the transaction.
+
+An optional C<width_allocation> additionally carries the separate closed
+C<{kind =E<gt> binary_operand_max, operator, source_names, selected_width}>
+policy. It requires the same ordered C<bitwise_origin>. On completion the actual
+result and both operand declarations must be plain unsigned, without state or
+named-type metadata, and their exact decimal widths must satisfy the selected
+intrinsic maximum. Scalar JSON kinds and duplicate slots preserve. Malformed,
+conflicting, typed, missing or width-inconsistent policies invalidate atomically.
+Absent policy fields preserve independent contextual widths and old snapshots.
+Schema/numeric validation supplies no source provenance: actual current-policy
+publication and symbolic range admission remain separate implementation steps.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

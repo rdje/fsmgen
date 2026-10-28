@@ -2232,10 +2232,30 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.33: retain completed allocation producer evidence`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Join actual current allocation policies to completed binary intermediate events.`
   Acceptance: `After actual producers, add a separate closed allocation-policy event contract tied to the same current defining/runtime AST, ordered syntactic origin, declaration and selected text. Preserve independent operand/result widths; opaque/context/unknown/stale/foreign policies stay absent or precisely refuse under their contract. Complete actual field/membership/detachment and generation-reuse controls, old snapshots after only owned fields, unchanged HDL and scalar/VHDL boundaries qualify before private range proof. Sync POD/book/fact and commit.`
-  Verification: `pending actual allocation producers`
+  Verification: `Actual source/factorizer producers are complete with focused checks and exact retained task history. Split a closed collector contract from actual source/factorizer publication so numeric-only records and independent contextual widths remain unchanged before emitter integration.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.1`
+  Status: `done`
+  Goal: `Define the closed optional binary width-allocation collector event contract.`
+  Acceptance: `Accept a detached closed binary_operand_max policy only with the same ordered bitwise origin, selected result width and actual declared plain unsigned operands/result. Use exact decimal max/equality without coercing JSON kinds; reject malformed/conflicting/missing/typed/width-mismatched new policies atomically. Preserve independent contextual widths and all legacy snapshots when the optional field is absent. This schema validator mints no source provenance and no actual publisher/range admission. Focused collector controls, POD/book/fact and commit precede .2 publication.`
+  Verification: `Collector width_allocation is a closed detached binary_operand_max policy joined to the same ordered bitwise_origin. Completion requires actual plain unsigned result/operand rows and exact decimal selected/result/operand-max equality; malformed/missing/typed/conflicting/mismatched new fields invalidate atomically. Numeric kernels preserve scalar JSON kinds and adjacent widths beyond native integer precision. Absent fields keep narrow/equal/wide context results and legacy shapes. Authenticated final predecessor schema rejects positive events; current T2208/T2197 pass All tests successful Files=2 Tests=10, including actual source products and unchanged scalar-only VHDL boundary. Complete baseline/current native/source packets match after excluding only loaded-owner identities; no actual publisher yet uses the new field. Re-derive actual collector/numeric consistency; falsify exact predecessor, adjacent large decimals and malformed/order/type/membership/width controls; durability source/test/POD/book/fact/task and docs/audits/binary-allocation-event-contract-20261028.json.gz. Actual provenance publication .2 and private range proof .5 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.1: define binary allocation event contract`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated exact predecessor final T2208 reports Direct declaration capture requires a closed JSON-safe intermediate expression event at its baseline DeclarationCapture.pm line 21, surfaced at ./t/2208-binary-allocation-event-contract.t line 24. Existing syntactic origin has no separate allocation-policy field and must preserve independent contextual widths.
+  - [x] **ADDRESSED (verified)** — Add only the closed optional policy and exact origin/declaration-width consistency contract. Typed/missing/conflicting/inconsistent policies invalidate atomically; numeric comparison preserves JSON kinds and distinguishes adjacent decimal widths beyond native integer precision. Schema validation mints no allocation provenance or symbolic range eligibility.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2208/T2197. Legacy contextual widths, actual parsed source snapshots, detached fields, empty reuse and scalar/VHDL boundary preserve. Authenticated whole native/source HDL/snapshots/row/policy/event packets match. POD/book/source checks and normal final-index doctrine hook gate commit; actual publisher and full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2`
+  Status: `pending`
+  Goal: `Publish only actual current source/factorizer policies with the same selected binary events.`
+  Acceptance: `After .1, bind current source helper/module/AST/operand identities or completed factorizer policy to the freshly selected syntactic origin/text and actual declaration. Stale/copied/opaque/context/foreign state supplies no allocation field. Actual source/raw-Core success/failure/reuse/detachment and old snapshot comparison after removing only the new field qualify without HDL or scalar/VHDL admission changes. Synchronize POD/book/fact and commit; private range proof remains .5.`
+  Verification: `pending contract .1`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
