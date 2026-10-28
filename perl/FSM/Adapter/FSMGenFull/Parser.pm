@@ -10,6 +10,7 @@ use Data::Dumper;
 use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
 use FSM::CoreAST;
+use FSM::DeclaredWidthBindingSupport;
 use parent 'FSM::WidthExpressionSupport';
 use FSM::Package::ExpressionOperatorSupport ();
 use FSM::Debug;
@@ -139,13 +140,12 @@ sub _publish_declared_width_requirements($self) {
     for my $pending (values %{$self->{_declared_width_capture_context}{requirements}}) {
         next unless $self->_width_event_is_current($pending);
         $pending->{signal}->set_declared_width_requirements($pending->{record});
-        my $entries = $pending->{record}{requirements};
-        # Independent requirements are not the last expression, even when
-        # their selected defaults happen to be equal.
-        next unless @$entries == 1 && defined($entries->[0]{width_capture});
-        my $entry = $entries->[0];
-        $pending->{signal}->set_declared_width_binding({%{$entry->{width_capture}},
-            signal => $entry->{signal}, expression => $entry->{expression}});
+        # A combined set may share one complete original capture, while its
+        # actual immediate copy edges remain separately retained. Independent
+        # requirements must never borrow the last same-default expression.
+        my $binding = FSM::DeclaredWidthBindingSupport->equivalent_requirement_binding(
+            signal => $pending->{signal});
+        $pending->{signal}->set_declared_width_binding($binding);
     }
 }
 

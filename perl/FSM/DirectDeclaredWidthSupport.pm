@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::DeclaredWidthRangeSupport;
+use FSM::DeclaredWidthBindingSupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -63,20 +64,18 @@ sub prepare_module ($class, %args) {
         _join_scope(\$scope, $binding->{scope}, $json) if $binding;
         _join_scope(\$scope, $requirements->{scope}, $json) if $requirements;
         if ($requirements) {
+            my $expected = FSM::DeclaredWidthBindingSupport->equivalent_requirement_binding(signal => $signal);
             my $mutable = grep {
                 my $capture = $_->{width_capture};
                 $capture && grep {$_->{kind} eq 'parameter'} @{$capture->{observations}};
             } @{$requirements->{requirements}};
             confess "Direct module '$name' has a combined mutable width shape pending specialization\n"
-                if $mutable && @{$requirements->{requirements}} > 1;
+                if $mutable && @{$requirements->{requirements}} > 1
+                    && !$expected;
             confess "Direct module '$name' has a missing coherent width binding\n" if $mutable && !$binding;
             if ($binding) {
-                my $entry = $requirements->{requirements}[0];
-                my $expected = {%{$entry->{width_capture} // {}},
-                    signal => $entry->{signal}, expression => $entry->{expression}};
                 confess "Direct module '$name' has inconsistent width binding and requirement snapshots\n"
-                    unless @{$requirements->{requirements}} == 1
-                        && $json->encode($binding) eq $json->encode($expected);
+                    unless $expected && $json->encode($binding) eq $json->encode($expected);
             }
         }
         confess "Direct module '$name' has a missing coherent width binding\n"
@@ -264,7 +263,10 @@ twice deduplicates; distinct objects claiming one physical name refuse.
 Copied canonical module parameter maps pass the existing observation proof.
 Coherent width bindings pass C<DeclaredWidthRangeSupport> with original lexical
 scope, independent of the physical module name. Requirements and bindings must
-agree. Combined mutable shapes, missing/stale coherent captures, foreign scope,
+agree. Combined requirements may share one binding only through complete original
+capture equivalence with attested generated edges; every separate requirement
+remains retained. Independent combined mutable shapes, missing/stale coherent
+captures, foreign scope,
 malformed membership and unsupported target profiles refuse instead of freezing
 selected defaults. Independent fixed and named-type declarations retain their
 numeric/type attributes. Legacy numeric modules gain no invented source scope.

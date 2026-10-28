@@ -306,6 +306,12 @@ General source rules:
   and no-transition symbolic FSMs refuse before an artifact returns; raw symbolic
   conversion remains unsupported. Generated internal shapes, complete transport
   and external compiler/override/runtime qualification remain pending.
+  Private auxiliary requirements can now share one effective binding only when
+  their complete original captures match and every combined generated edge is
+  attested. All separate immediate edges remain retained. Independent equal
+  defaults, opaque/type/literal constraints and unattested combined edges refuse;
+  this prepared-range rule does not admit mixed assignment styles or change
+  source/report/API/MCP/corpus contracts.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

@@ -15,14 +15,21 @@ ok(eval {require FSM::DirectDeclaredWidthSupport; 1}, 'direct module source-widt
 my $json = JSON::PP->new->canonical;
 sub copy { $json->decode($json->encode($_[0])) }
 sub fixture {
-    my ($value, $extra, $declarations) = @_;
+    my ($value, $extra, $declarations, $expected_refusal) = @_;
     $value //= 1; $extra //= ''; $declarations //= "(data (param COPY)) (INPUT $value)";
     my $text = "(?fsm:width_module (+params (W $value) (COPY W) (SAME $value)) $extra"
         ." (+size $declarations) (idle (<-= (data INPUT))))";
     my $a = FSM::Adapter::FSMGenFull->new(debug => 0);
     my $m = $a->parse_fsm(scalar Lispish::multi(\$text));
     my $dt = FSM::HDL::FlattenedDT->new(debug => 0);
-    my $hdl = $dt->generate_systemverilog($m);
+    my $hdl;
+    if ($expected_refusal) {
+        ok(!eval {$hdl = $dt->generate_systemverilog($m); 1},
+            'unsupported source fixture reaches the actual generation refusal');
+        like($@, $expected_refusal, 'fixture refusal preserves the expected unsupported boundary');
+    } else {
+        $hdl = $dt->generate_systemverilog($m);
+    }
     return ($m, $dt->{assignment_analysis}, $a, $hdl);
 }
 sub prepare {
@@ -87,7 +94,8 @@ subtest 'physical names and shared actual identity do not invent scope or duplic
 };
 
 subtest 'combined mutable and stale captures cannot silently freeze their defaults' => sub {
-    my ($m, $analysis) = fixture(8, '', '(data (param COPY)) (next_data 8) (INPUT 8)');
+    my ($m, $analysis) = fixture(8, '', '(data (param COPY)) (next_data 8) (INPUT 8)',
+        qr/combined.*mutable.*width/);
     ok(!defined($m->signals->{next_data}->declared_width_binding), 'real independent auxiliary contribution withholds single binding');
     my $before = snapshot($m, $analysis);
     ok(!eval {prepare($m, $analysis); 1}, 'actual combined mutable requirements refuse');

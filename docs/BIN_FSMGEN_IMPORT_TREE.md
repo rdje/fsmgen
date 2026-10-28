@@ -7,7 +7,10 @@ Scoped update on `2026-10-28`: the direct VHDL backend imports
 collector and canonical direct width support. Completed source analysis and
 normalized target declarations select bounded symbolic conversion; actual
 allocated auxiliary/intermediate shapes and no-transition symbolic FSMs refuse.
-Raw symbolic conversion remains unsupported. This adds no fresh closure census.
+Raw symbolic conversion remains unsupported. The direct parser now imports
+`DeclaredWidthBindingSupport` to select equivalent original captures while
+retaining distinct immediate copy edges. Source/target proof checks the whole
+requirement set; this adds no fresh closure census.
 
 Use it to keep one current, high-signal picture of:
 - what [bin/fsmgen](bin/fsmgen) actually does,

@@ -40,8 +40,9 @@ subtest 'overlapping actual next/q events retain distinct immediate origins' => 
     is($json->encode(record($a, 'next_data_r')->{requirements}),
         $json->encode([generated('data', 'W', 8, 'data_r'), generated('data', 'W', 8, 'next_data')]),
         'even identical original captures retain distinct attested immediate edges');
-    is(signal($a, 'next_data_r')->declared_width_binding, undef,
-        'combined distinct edges remain conservative until combined-shape qualification');
+    is_deeply(signal($a, 'next_data_r')->declared_width_binding,
+        {%{record($a, 'next_data_r')->{requirements}[0]{width_capture}}, signal => 'data', expression => ['param', ['W']]},
+        'equivalent original captures share one binding while both immediate edges remain retained');
 };
 
 subtest 'chains retain original declarations and replace only the immediate edge field' => sub {

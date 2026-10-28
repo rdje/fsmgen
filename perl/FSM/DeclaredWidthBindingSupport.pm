@@ -13,6 +13,34 @@ use FSM::ParameterDeclarationSupport;
 use FSM::ParameterValueSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
+sub equivalent_requirement_binding ($class, %args) {
+    my $signal = $args{signal};
+    confess "Direct declared-width requirement selection requires a Core Signal\n"
+        unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+    my $requirements = $signal->declared_width_requirements;
+    return undef unless $requirements;
+    return undef if defined($signal->declared_type_name) || defined($signal->declared_type_spec);
+    my $json = JSON::PP->new->canonical;
+    my ($binding, $identity);
+    my $combined = @{$requirements->{requirements}} > 1;
+    for my $entry (@{$requirements->{requirements}}) {
+        return undef unless defined($entry->{width_capture});
+        return undef if defined($entry->{declared_type_name}) || defined($entry->{declared_type_spec});
+        return undef if $combined && $entry->{kind} eq 'generated' && !defined($entry->{copy_origin});
+        my $candidate = {%{$entry->{width_capture}},
+            signal => $entry->{signal}, expression => $entry->{expression}};
+        my $candidate_identity = $json->encode($candidate);
+        return undef if defined($identity) && $identity ne $candidate_identity;
+        $binding //= $candidate;
+        $identity //= $candidate_identity;
+    }
+    # Do not replace the Core holder's coherence contract or invent ancestry
+    # from equal widths. Only the complete original capture may be shared;
+    # kind/copy_origin remain on every separate requirement in the holder.
+    return undef unless $signal->_declared_width_binding_matches($binding);
+    return $binding;
+}
+
 sub prove_signal ($class, %args) {
     my $signal = $args{signal};
     confess "Direct declared-width proof requires a Core Signal\n"
@@ -21,6 +49,11 @@ sub prove_signal ($class, %args) {
     confess "Direct declared-width proof requires a coherent captured Signal binding\n"
         unless defined $capture;
     my $json = JSON::PP->new->canonical;
+    if ($signal->declared_width_requirements) {
+        my $expected = $class->equivalent_requirement_binding(signal => $signal);
+        confess "Direct declared-width proof has inconsistent width binding and requirement snapshots\n"
+            unless $expected && $json->encode($expected) eq $json->encode($capture);
+    }
     my $data = eval {$json->decode($json->encode({capture => $capture, environment => $args{environment}}))};
     confess "Direct declared-width proof requires JSON-safe acyclic records: $@" if $@;
     $capture = $data->{capture};
@@ -104,10 +137,24 @@ FSM::DeclaredWidthBindingSupport - Frozen-observation consistency proof for actu
 
 =head1 DESCRIPTION
 
+C<equivalent_requirement_binding> takes an actual Core C<signal> and reads its
+current detached C<declared_width_requirements>. It returns one detached binding
+only when every requirement has the same complete original signal, expression,
+scope, observed width, binding tree and observations, with no named-type
+constraint. In a combined set every generated requirement must have a defined
+immediate C<copy_origin>. Different immediate edges and requirement roles remain
+separate in the holder; this selector never merges or mutates those records.
+The candidate must satisfy the existing Core source/width/type coherence check.
+Absent, opaque, independent, unattested or inconsistent sets return undef.
+Equal selected widths alone establish nothing. This is capture selection, not
+canonical observation or target proof; caller-made records do not attest origin.
+
 C<prove_signal> consumes an actual Core C<signal> with a coherent public
 C<declared_width_binding> and a prepared direct C<environment> containing source
 C<scope>, complete C<declaration_order> and declared C<parameters>. Inputs are
 detached as plain acyclic JSON before validation.
+When requirements exist, the complete set must select exactly that binding;
+a coherent last-binding record cannot bypass an independent requirement.
 
 The canonical width capture walk re-derives the recorded source structure using
 strict frozen observations. Entrypoint, token, kind, order, nested payload walks,

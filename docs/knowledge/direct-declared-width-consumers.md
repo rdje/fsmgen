@@ -9,7 +9,7 @@ answers:
   - "is the Core module signals map exhaustive for declared assignment targets?"
   - "why must explicit auxiliary width declarations be preserved before copying parent bindings?"
   - "why must late sizing preserve distinct next/q copy origins?"
-date: 2026-10-27
+date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
@@ -46,8 +46,7 @@ ModulePlanningSupport owns direct port/internal plans. ScaffoldEmitter now
 consumes captured symbolic port ranges; InternalDeclarationEmitter consumes
 source-owned captured storage ranges, including actual assignment targets absent
 from module membership. Backend-only helpers retain their numeric shape.
-Direct VHDL symbolic port conversion remains pending
-and refuses rather than returning an artifact. CompositionWidthEmitter already has
+Bounded source VHDL now follows direct-vhdl-parameter-profiles. CompositionWidthEmitter already has
 captured lookup contracts, explicit symbolic ranges and one-bit vector rank.
 ISF-REDUCTION-DELIVERY.3.3 owns source provenance, shared target kernels and
 direct consumer integration; computed shapes and full qualification stay .3.4/.6.
@@ -91,8 +90,7 @@ mutation versions plus installation state revoke stale pending requirements and
 primary bindings even after matching-state replacement. Current records publish
 only after complete success; all new maps clear on invalidation. Both sizing
 orders and real copy chains retain independent origins. Ordinary unscoped late
-sizing remains legacy. Scoped late sizing/range admission and computed shape
-rendering remain separately owned successors.
+sizing remains legacy; computed shapes remain separately owned.
 Reverify: `prove -Iperl t/2164-direct-source-width-requirements.t t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.
 
 Eligible primary and auxiliary bindings now derive from the same current
@@ -118,7 +116,10 @@ names or widths cannot attest an edge. Chains overwrite the immediate origin
 while preserving original declaration/capture identity. Older absent/null fields
 remain unattested; declarations and unexplained numeric floors invent no edge.
 Distinct immediate edges retain separate snapshots even for equivalent original
-captures; combined-shape reduction stays .3.4. Reverify:
+captures; identical complete original captures can now share one binding while retaining
+each attested edge (T2185); independent, opaque or unattested combined shapes
+remain withheld. Prepared ranges do not admit mixed assignment styles. Reverify:
+`prove -Iperl t/2185-equivalent-width-copy-bindings.t t/2166-immediate-width-copy-origins.t`. Reverify:
 `prove -Iperl t/2166-immediate-width-copy-origins.t t/2164-direct-source-width-requirements.t t/2165-direct-auxiliary-width-bindings.t t/2163-core-declared-width-requirements.t`.
 The scoped entrypoint .2.2 preserves all authored and other-origin records,
 replacing only opaque generated records attested to that same actual immediate
@@ -149,8 +150,7 @@ direct_module/composition_top scopes. CompositionWidthEmitter is the narrower
 top-scope/diagnostic wrapper. Ordered actual lookups, static arithmetic folds and
 default-one vector rank preserve; foreign targets and unknown/mismatched scopes
 refuse. Returned range text retains no caller graph. Actual existing composition
-success/refusal/caller products conserve. Direct captured-plan preparation and
-declaration activation remain .3.3.2.3/.3.
+success/refusal/caller products conserve.
 Reverify: `prove -Iperl t/2168-shared-verilog-width-kernel.t t/2135-composition-symbolic-port-ranges.t`.
 
 VHDL::WidthExpressionEmitter now shares the existing portable prepared width
@@ -159,8 +159,7 @@ top diagnostics and declaration/namespace prerequisites. The integer evaluator
 retains natural bounds at every intermediate step, positive final width and mod
 formatting; selected roots reuse VHDL::ParameterBindingEmitter identifier checks.
 Actual composition success/refusal/caller products preserve, including recursive
-caller topology captured as a deterministic reference graph. Direct raw
-conversion and captured direct plans remain inactive. Reverify:
+caller topology captured as a deterministic reference graph. Reverify:
 `prove -Iperl t/2169-shared-vhdl-width-kernel.t t/2139-composition-vhdl-port-ranges.t`.
 
 DeclaredWidthBindingSupport proves coherent actual Signal captures against
@@ -176,7 +175,7 @@ remain unchanged and plans retain no Signal/environment owner. DirectDeclaredWid
 assignment-target SignalRefs, rejecting distinct objects claiming one physical
 name. Copied module parameter maps pass canonical observation proof; coherent
 bindings join the bounded adapter with original lexical scope. Fixed/type/static
-controls preserve, while combined mutable requirements and stale/missing binding
+controls preserve, while independent combined mutable requirements and stale/missing binding
 records refuse. Module plans are detached and retain no Core/backend owners.
 prepare_declarations now joins actual namespace/declaration snapshots, checking
 mapped parameter/Signal membership, reserved names/collisions, numeric default

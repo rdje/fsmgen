@@ -214,8 +214,9 @@ requirements do not fabricate a single parent binding. Ordinary unscoped late
 sizing still supplies no guessed lexical scope.
 
 Primary declarations and auxiliary copies now publish `declared_width_binding`
-only when their current event contains a single complete captured requirement
-and the actual legacy source, width and type state agree. Clean copies and copy
+when all current requirements share one complete original capture and the
+actual legacy source, width and type state agree. A combined set requires every
+generated edge to retain its immediate copy attestation. Clean copies and copy
 chains retain the original declaration signal and lexical owner, including a
 parameter defaulting to a single bit. Static observations remain static; named
 types and unrecorded inference acquire no borrowed parameter relationship.
@@ -240,7 +241,15 @@ Chains update this immediate edge while retaining original expression/capture
 identity. Older records without the field, or with a null field, remain
 unattested. Ordinary declarations and unexplained numeric floors invent no
 copy origin. Distinct actual edges stay separate even if their original captured
-expressions are identical; combined-shape qualification owns any later reduction.
+expressions are identical. Complete original signal/expression/capture equality
+now allows one effective binding while preserving both edge records. Independent
+same-default parameters, different original declarations, opaque/literal/type
+requirements and unattested combined edges still withhold that binding.
+The [focused regression](../../../t/2185-equivalent-width-copy-bindings.t) proves
+actual parser records and prepared SystemVerilog/Verilog/VHDL ranges at defaults
+one and eight. Its overlapping-copy source also uses independently unsupported
+mixed assignment styles: prepared ranges do not qualify whole-source HDL.
+Backend-only allocation, computed shapes and override/runtime proof remain open.
 Scoped updates preserve authored and other-origin
 requirements, replacing only earlier opaque inference attested to the same
 immediate source. Replay the earlier diagnostic policy contract with:
@@ -360,7 +369,7 @@ The module's signal map alone can omit an assigned storage object. Shared
 object identity deduplicates; distinct objects claiming one physical name
 refuse. Copied module defaults pass their canonical observation proof before
 captured ranges are prepared. Original source scope survives a physical module
-rename. Fixed/type declarations stay independent, while combined mutable
+rename. Fixed/type declarations stay independent, while independent combined mutable
 requirements and missing or stale captures refuse before numeric fallback.
 The returned module plan is detached from Core and backend objects.
 The private `prepare_declarations` entrypoint now joins these source plans to
@@ -386,7 +395,7 @@ including an explicit vector when the selected width defaults to one. Fixed
 literals, static selections and named types keep independent numeric/type
 ranges. Before returning HDL, complete actual target snapshots are qualified
 again and compared with the emitted port/storage identities. A same-default source
-replacement cannot bless already emitted text. Combined mutable requirements,
+replacement cannot bless already emitted text. Independent combined mutable requirements,
 stale captures, namespace conflicts and symbolic clock/reset widths refuse.
 
 Run the [one-bit input/output fixture](../../../t/data/ial0-direct-symbolic-ports.fsm):
