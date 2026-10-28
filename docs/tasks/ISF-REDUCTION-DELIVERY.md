@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2252,10 +2252,30 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2208/T2197. Legacy contextual widths, actual parsed source snapshots, detached fields, empty reuse and scalar/VHDL boundary preserve. Authenticated whole native/source HDL/snapshots/row/policy/event packets match. POD/book/source checks and normal final-index doctrine hook gate commit; actual publisher and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish only actual current source/factorizer policies with the same selected binary events.`
   Acceptance: `After .1, bind current source helper/module/AST/operand identities or completed factorizer policy to the freshly selected syntactic origin/text and actual declaration. Stale/copied/opaque/context/foreign state supplies no allocation field. Actual source/raw-Core success/failure/reuse/detachment and old snapshot comparison after removing only the new field qualify without HDL or scalar/VHDL admission changes. Synchronize POD/book/fact and commit; private range proof remains .5.`
-  Verification: `pending contract .1`
+  Verification: `Closed optional collector contract committed at b0f090417. Actual parsed source helpers retain current Core policy before/after native generation; raw-Core factorized helpers retain completed width-owner policy. Trace actual selected publisher metadata/AST membership before selecting the bounded join. This leaf owns source/factorizer publication and exact snapshot compatibility after removing only width_allocation.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.1`
+  Status: `done`
+  Goal: `Attach actual current Core helper policy to its successful backend collection metadata.`
+  Acceptance: `At actual successful collection, retain only plain detached proof coupling the current module/helper/operand identities and Core policy to exact defining/runtime/registry metadata and normalization epoch. Current access rejects equal metadata/registry/source clones, source mutation, unknown constraints/types and failed/reused scopes. Generic backend allocation lookup may select only this source proof or the existing completed factorizer proof. Mint no policy from numeric equality and publish no new target field yet. Focused actual source/factorizer success/currentness/failure controls, unchanged native products, POD/book/fact and commit precede .2.`
+  Verification: `Actual successful collection now attaches only an existing current Core helper policy to its exact module/helper/ordered operands, defining/driving/runtime AST, input/registry metadata identities and epoch. Plain source/result profiles and exact widths are required; no record derives from width equality. Generic lookup returns only this current source attachment or existing completed factorizer policy. Equal input/registry copies, foreign/replaced module operands, matching supported source writes, AST/type/constraint/state divergence and failed/reused scopes withhold. T2209/T2207/T225 pass All tests successful Files=3 Tests=12; actual raw-Core delegation creates no source attachment. Authenticated exact predecessor final test fails actual attachment availability. Complete ordinary native/source packets and existing events compare exactly, excluding loaded-source identities only. Stored source map/getters contain detached JSON data. Re-derive actual collection/Core/current frame and retained source/factorizer AST trace; falsify predecessor and copied/foreign/mutated/failure/reuse controls; durability source/test/POD/book/fact/task and docs/audits/source-allocation-attachment-20261028.json.gz. Selected target publication .2 and symbolic proof .5 remain pending. Daily maintenance is due; run .34 after this clean commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.1: attach current source allocation policy`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated final predecessor T2209 reports Failed test actual successful collection exposes current attachment at ./t/2209-source-allocation-attachment.t line 47. Actual selected-assignment trace shows source inline/driving/runtime ASTs are the Core helper AST, but Core policy alone does not identify a supplied backend metadata row or completed collection.
+  - [x] **ADDRESSED (verified)** — Successful collection installs a plain current source capsule coupling actual module/helper/operand/AST/input/registry identities and state. Access revalidates the entire frame and current Core policy; equal copies/foreign state and supported mutations withhold. Existing factorizer completion delegates unchanged; no new target field is published.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=12 for T2209/T2207/T225, covering actual source/factorizer success, copy/currentness/failure/reset/reuse and legacy providers. Authenticated complete ordinary native/source packets and all existing events match. POD/book/source checks and normal hook gate this slice; actual target publication and full .6 remain pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2`
+  Status: `pending`
+  Goal: `Publish current attached policies only with agreeing selected binary assignment events.`
+  Acceptance: `After .1, join current backend policy, fresh typed origin/rendering, actual selected declaration and plain actual source profiles. Retain width_allocation only for the same operator/ordered operands/width; absent or stale/foreign/opaque policy leaves old event shape. Compare complete source/raw-Core snapshots after removing only the new field, keep HDL/scalar/VHDL behavior and failure/reuse/detachment, synchronize docs and commit before range proof .5.`
+  Verification: `pending source attachment .1`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
@@ -2742,6 +2762,13 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — Prior final-index hook rejected task_evidence by 742 bytes; the repaired final producer commit leaves little new evidence capacity. git log -S for the selected cache-policy goal locates f046c1af9. Immutable source and current owner census prove exactly the two completed producer subtrees are eligible; current book navigation supplies its own new aggregate authority.
   - [x] **ADDRESSED (verified)** — Both compact terminals retain original goals, full source revision/digest, exact archived counts and required history. Independent closure/owner/source census preserves every unrelated original live node and every current registry owner. Native task integrity retrieves and validates the complete archived subtrees. Initial separator assertion failure is retained; no source behavior changes.
   - [x] **NO REGRESSION** — Native task integrity passes exact current live/archived topology. knowledge-map: OK and complete book/source-view checks qualify retrieval/navigation; the normal final-index doctrine hook checks unchanged budgets/allowances. All open target/range/unsupported-shape/full .6 obligations remain live; no implementation verification is promoted.
+
+- ID: `ISF-REDUCTION-DELIVERY.34`
+  Status: `pending`
+  Goal: `Run the due authenticated daily artifact census after the clean source attachment commit.`
+  Acceptance: `After .3.4.3.2.2.2.4.2.1 commits, reuse installed byte-authenticated collector/reviewer/hostile saved controls in a fresh exclusive 20261028 slot bound to actual native HEAD and this owner. Confirm more than 24 hours from the latest record, independent same-volume regular log/bin membership and root/Rust locations, excluding other repositories/symlinks/volumes. Retain every candidate without exact disposal authority. Overwrite the latest-only date/summary, synchronize the saved-reader book route, run focused saved-reader and mandatory commit gates, commit, then resume .3.4.3.2.2.2.4.2.2. Do not replay spent source/compiler epochs or raise budgets.`
+  Verification: `Pending clean attachment commit; prior record 2026-10-27T10:52:23.434576+00:00 is now over 24 hours old.`
+  Commit: `pending`
 
 ## Blockers
 

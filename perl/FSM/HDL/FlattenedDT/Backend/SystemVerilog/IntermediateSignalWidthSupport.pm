@@ -52,6 +52,7 @@ sub _begin_factorized_width_inference ($self) {
 
 sub _abort_factorized_width_inference ($self) {
     $self->{_width_inference_events} = {};
+    $self->{_source_width_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
     delete $self->{_width_inference_complete};
 }
@@ -62,6 +63,12 @@ sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {
         delete $self->{_width_inference_events}{$name}
             unless ref($all_intermediate_signals->{$name}) eq 'HASH'
                 && $self->factorized_width_inference_event($name, $all_intermediate_signals->{$name});
+    }
+    for my $name (keys %{$all_intermediate_signals || {}}) {
+        my $holder = eval {FSM::IntermediateWidthAllocationSupport->prepare_source_intermediate(
+            context => $self->{flattened_dt}, signal_name => $name,
+            signal_info => $all_intermediate_signals->{$name}, epoch => $self->{_width_inference_epoch})};
+        $self->{_source_width_allocation_events}{$name} = $holder if $holder;
     }
     $self->{_width_inference_complete} = $self->{_width_inference_epoch};
 }
@@ -109,6 +116,33 @@ sub factorized_width_allocation ($self, $signal_name, $signal_info) {
     return unless $self->{_width_inference_complete}
         && $self->{_width_inference_complete} == $self->{_width_inference_epoch};
     return $self->factorized_width_inference_event($signal_name, $signal_info);
+}
+
+=head2 intermediate_width_allocation
+
+Return only a completed current backend policy for the actual metadata row.
+Successful collection attaches an existing current Core source-helper policy
+through exact module/helper/operand/AST/input/registry identity and state proof.
+The factorizer branch delegates its existing completed intrinsic policy. Equal
+source metadata copies or Core policy alone without owned collection cannot
+supply the source attachment. Failure/reset/new epochs clear both plain maps;
+ordinary source declaration cache reads preserve still-identical source state.
+This lookup supplies no selected-text event or symbolic admission.
+
+=cut
+
+sub intermediate_width_allocation ($self, $signal_name, $signal_info) {
+    return unless $self->{_width_inference_complete}
+        && $self->{_width_inference_complete} == $self->{_width_inference_epoch}
+        && ref($signal_info) eq 'HASH'
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    if (defined($signal_info->{source}) && !ref($signal_info->{source})
+            && $signal_info->{source} eq 'fsmgen_parsing') {
+        return FSM::IntermediateWidthAllocationSupport->current_source_intermediate(
+            context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
+            epoch => $self->{_width_inference_epoch}, holder => $self->{_source_width_allocation_events}{$signal_name});
+    }
+    return $self->factorized_width_allocation($signal_name, $signal_info);
 }
 
 sub _unresolved_factorized_input_frame ($self, $signal_name, $signal_info, $signal_registry) {

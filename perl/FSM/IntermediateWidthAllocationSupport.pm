@@ -188,6 +188,66 @@ sub _factorized_metadata_state ($metadata, $ast) {
             declared_type_name declared_type_spec _declared_width_source _declared_width_binding _declared_width_requirements)}};
 }
 
+sub prepare_source_intermediate ($class, %args) {
+    my $context = $args{context};
+    return unless blessed($context) && $context->isa('FSM::HDL::FlattenedDT')
+        && defined(_width($args{epoch}));
+    my $module = $context->{fsm_module};
+    my $name = $args{signal_name};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule')
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    my $signals = $module->signals;
+    return unless ref($signals) eq 'HASH';
+    my $signal = $signals->{$name};
+    my $capture = _capture($signal) or return;
+    return unless $signal->name eq $name && !defined($signal->state_model);
+    my $record = $signal->intermediate_width_allocation or return;
+    my $ast = $signal->driving_ast;
+    my $info = $args{signal_info};
+    return unless ref($info) eq 'HASH' && ($info->{source} // '') eq 'fsmgen_parsing';
+    for my $key (qw(ast driving_ast runtime_ast)) {
+        return unless blessed($info->{$key}) && refaddr($info->{$key}) == refaddr($ast);
+    }
+    my $info_state = _factorized_metadata_state($info, $ast) or return;
+    return if defined($info->{state_model});
+    my $registry = $context->{intermediate_signals};
+    return unless ref($registry) eq 'HASH';
+    my $registered = $registry->{$name};
+    my $registered_state = _factorized_metadata_state($registered, $ast) or return;
+    my @sources;
+    my @operands = ($ast->left, $ast->right);
+    for my $index (0, 1) {
+        my $source = $signals->{$record->{source_names}[$index]};
+        my $descriptor = _descriptor($source) or return;
+        return unless refaddr($source) == refaddr($operands[$index]->signal)
+            && !defined($descriptor->{state_model})
+            && ref($descriptor->{constraints}) eq 'ARRAY' && !@{$descriptor->{constraints}};
+        push @sources, $descriptor;
+    }
+    return unless $class->matches_selected_widths($record, $info->{width}, map {$_->{width}} @sources)
+        && $class->matches_selected_widths($record, $registered->{width}, map {$_->{width}} @sources);
+    my $state = JSON::PP->new->canonical->encode({
+        context_identity => sprintf('%x', refaddr($context)), module_identity => sprintf('%x', refaddr($module)),
+        epoch => $args{epoch}, signal_name => $name, core_state => $capture->{state},
+        signal_info => $info_state, registered => $registered_state, sources => \@sources,
+    });
+    return {record => $record, state => $state};
+}
+
+sub current_source_intermediate ($class, %args) {
+    my $holder = $args{holder};
+    return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state'
+        && defined($holder->{state}) && !ref($holder->{state});
+    my $record = eval {
+        my $current = $class->prepare_source_intermediate(%args) or return;
+        return unless $current->{state} eq $holder->{state}
+            && JSON::PP->new->canonical->encode($current->{record})
+                eq JSON::PP->new->canonical->encode(_copy_record($holder->{record}));
+        $current->{record};
+    };
+    return $@ ? undef : $record;
+}
+
 sub factorized_inference_frame ($class, %args) {
     return unless defined(_width($args{epoch})) && defined(_width($args{revision}));
     my $context = $args{context};
@@ -366,6 +426,23 @@ record. Reusing an escaped capsule cannot bypass a later revocation revision.
 Runnable lifecycle/opaque-context controls:
 
   scripts/run_with_ram_guard.sh -- prove -Iperl t/2198-core-intermediate-width-allocation.t
+
+=head2 prepare_source_intermediate
+
+Attach a current Core helper allocation policy to actual completed backend
+collection metadata. The module must own the same helper and ordered Core
+operand objects; inline/driving/runtime ASTs must be the helper's actual AST.
+Plain unsigned result/source profiles, exact selected widths and current Core
+policy are required. The plain capsule binds the context/module, epoch, Core
+state and exact input/registry row identities and metadata. This validator
+alone does not attest collection; only its successful completion installs it.
+
+=head2 current_source_intermediate
+
+Revalidate the entire source attachment and return a detached current policy.
+Equal copied input/registry rows, foreign module operands, supported source
+mutation and metadata/AST/type/constraint divergence withhold. Stored data
+retains no Core/backend/AST owners and publishes no target event or range.
 
 =head2 factorized_inference_frame
 
