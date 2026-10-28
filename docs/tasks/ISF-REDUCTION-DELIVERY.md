@@ -2376,11 +2376,25 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish explicit current factorizer allocation for the next arithmetic kernel.`
-  Acceptance: `Actual source .1 leaves arithmetic inline; actual factorizer creates the helper. Qualify a closed producer policy for selected plain whole-operand arithmetic without weakening existing bitwise schemas or deriving provenance from cached equality. Preserve actual source/default/AST/target numeric products, independent contexts, failure/reset/reuse and caller isolation. Split bounded producer stages as required; synchronize current contracts and focused tests per commit.`
-  Verification: `pending closed factorizer arithmetic birth and inference policy`
-  Commit: `pending`
+  Acceptance: `Actual source .1 leaves arithmetic inline; actual factorizer creates the helper. Qualify a closed producer policy for selected plain whole-operand arithmetic while preserving bitwise origins/Core-holder scope or deriving provenance from cached equality. Preserve actual source/default/AST/target numeric products, independent contexts, failure/reset/reuse and caller isolation. Use a separate canonical max-shape recognizer for admitted binary arithmetic, keeping the existing bitwise-only origin recognizer unchanged. Qualify the inherited unresolved birth, first intrinsic inference, held cache/publication lifecycle and current completed policy before target events; source Parser/Core helper profile remains unchanged. Focused actual source/private/negative controls and exact native products qualify this producer slice; synchronize contracts and commit.`
+  Verification: `Canonical arithmetic max shapes now supply actual unresolved births and intrinsic held/completed policies. Bitwise origins/Core scope remain narrow. T2216/T2204/T2205/T2198: All tests successful Files=4 Tests=18. Authenticated predecessor fails arithmetic and old bitwise constraint controls. Native HDL/events/source captures conserve after only new arithmetic private fields; constrained bitwise policy alone disappears. Re-derive actual producers; falsify predecessor/floors/stale/constraints/lifecycle; durability docs/audits/arithmetic-allocation-producer-20261028.json.gz. Arithmetic target events/ranges and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2: qualify current arithmetic allocation policies`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2216 fails existing bitwise unconstrained-profile control at ./t/2216-arithmetic-allocation-producer.t line 119. Arithmetic births/policies are absent; shared frames snapshot opaque operand constraints without rejecting them.
+  - [x] **ADDRESSED (verified)** — Add a closed arithmetic max-shape path and enum, preserve bitwise origins/Core scope, and reject opaque operands before tracking. Actual producer/currentness/failure/reuse and independent native controls pass; target promotion stays separate.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=18. Exact native HDL/events/source captures conserve; only qualified private arithmetic data and the constrained-policy refusal change. POD/book/knowledge and final-index hook gate commit; full .6 remains deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2.1`
+  Status: `done`
+  Goal: `Withhold opaque operand constraints at the shared factorizer frame.`
+  Acceptance: `P1 direct prerequisite discovered by the arithmetic producer negative: constrained_source still returns a current policy. factorized_inference_frame snapshots operand constraints but does not reject nonempty opaque constraints; later target publication already refuses. Reproduce on the existing raw-Core bitwise factorizer as an independent control, then require empty constraints before tracking/intrinsic policy. Preserve fixed/ordinary numeric products and currentness/lifecycle; qualify with focused old/new producer controls. Join this small shared-frame repair to the in-flight producer commit rather than promote an overbroad private profile.`
+  Verification: `Old raw-bitwise and arithmetic controls reproduce opaque-operand policy admission. Empty constraints now gate frames before tracking. Focused old/new tests pass; native constrained HDL/events/source data conserve while its private policy withholds. Evidence: parent receipt.`
+  Commit: `joined to parent producer`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3`
   Status: `pending`

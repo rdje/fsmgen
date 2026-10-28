@@ -144,11 +144,21 @@ other shapes and binary VHDL stay separately owned; full qualification is deferr
 
 Arithmetic source expressions such as `(+ A B)` stay inline in the parser;
 repeated expressions acquire their actual helper in the backend factorizer.
-Those arithmetic helpers currently retain numeric widths and expression-only
-events, without an allocation policy or generic range qualification. The next
-producer work belongs at that actual factorizer boundary. Comparison and logical
-negation helpers retain independently scalar results. Source acceptance and a
-matching selected numeric width do not establish a mutable helper relationship.
+The actual factorizer now records unresolved whole-operand arithmetic births and
+qualifies its first intrinsic-max inference for canonical `+`, `-`, `*`, `/` and
+`%`. Current policy survives only the already qualified normalization, cache and
+registry publications; copied/stale inputs and independent floors cannot mint it.
+A separate max-shape recognizer and extended closed max record serve these
+arithmetic kernels. Bitwise origin recognition and the Core-holder profile stay
+bitwise-only. Opaque operand constraints now withhold a shared inference frame
+before tracking, including the existing bitwise factorizer profile; later target
+publication already rejected that profile.
+
+Arithmetic declarations still retain numeric widths and expression-only target
+events. Selected arithmetic origin/policy publication and source/target range
+consumption remain pending. Comparison and logical negation helpers retain
+independently scalar results. Source acceptance and matching selected numeric
+widths cannot establish a mutable helper relationship.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

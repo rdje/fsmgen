@@ -33,10 +33,16 @@ sub whole_signal_name ($class, $operand) {
 }
 
 sub binary_whole_signal_shape ($class, $node) {
+    my $shape = $class->binary_operand_max_shape($node) or return;
+    return unless $shape->{operator} =~ /\A[&|^]\z/;
+    return $shape;
+}
+
+sub binary_operand_max_shape ($class, $node) {
     return unless blessed($node) && ($node->isa('FSM::AST::BinaryOp')
         || $node->isa('FSM::CoreAST::BinaryOp') || $node->isa('FSM::HDL::SubstitutedBinaryOp'));
     my $operator = $node->operator;
-    return unless defined($operator) && !ref($operator) && $operator =~ /\A[&|^]\z/;
+    return unless defined($operator) && !ref($operator) && $operator =~ m{\A[&|^+*/%\-]\z};
     my $left = $class->whole_signal_name($node->left) or return;
     my $right = $class->whole_signal_name($node->right) or return;
     return {operator => $operator, source_names => [$left, $right]};
@@ -59,7 +65,7 @@ sub _copy_record ($record) {
         unless ref($record) eq 'HASH'
             && join(',', sort keys %$record) eq 'kind,operator,selected_width,source_names'
             && defined($record->{kind}) && !ref($record->{kind}) && $record->{kind} eq 'binary_operand_max'
-            && defined($record->{operator}) && !ref($record->{operator}) && $record->{operator} =~ /\A[&|^]\z/
+            && defined($record->{operator}) && !ref($record->{operator}) && $record->{operator} =~ m{\A[&|^+*/%\-]\z}
             && ref($record->{source_names}) eq 'ARRAY' && @{$record->{source_names}} == 2
             && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_)} @{$record->{source_names}};
     confess "Intermediate width allocation requires a positive decimal selected width\n"
@@ -278,6 +284,7 @@ sub factorized_inference_frame ($class, %args) {
             || UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef');
         my $source = $signals->{$birth->{record}{source_names}[$index]};
         my $descriptor = _descriptor($source) or return;
+        return unless ref($descriptor->{constraints}) eq 'ARRAY' && !@{$descriptor->{constraints}};
         return unless $descriptor->{name} eq $birth->{record}{source_names}[$index];
         return if UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef') && refaddr($operand->signal) != refaddr($source);
         push @sources, $source;
@@ -350,15 +357,19 @@ Factorizer provenance and symbolic range consumers remain separate successors.
 This validator alone enables no source or target profile.
 
 The closed record is C<{kind =E<gt> binary_operand_max, operator, source_names,
-selected_width}>. The operator is canonical binary C<&>, C<|> or C<^> and
-C<source_names> retains both ordered whole Core SignalRef slots, including two
-references to the same actual Signal. Distinct objects claiming the same name
+selected_width}>. Canonical operators are binary bitwise C<&>, C<|>, C<^>
+and arithmetic C<+>, C<->, C<*>, C</>, C<%>. C<source_names> retains both
+ordered whole-operand slots, including duplicates. The Core-holder adapter
+remains bitwise-only; actual factorizer births and intrinsic inference also
+qualify the listed arithmetic operators. Distinct actual source associations
+remain required by each adapter. Distinct objects claiming the same name
 cannot borrow that identity. The selected width is a positive decimal scalar;
 integer and decimal-string representations retain their supplied JSON kinds.
 Decimal maximum comparisons are exact and independent of machine integer width.
 This metadata acceptance establishes no target width/domain legality.
 
-The actual result must be a plain unsigned wire intermediate without an authored
+For the Core holder, the actual result must be a plain unsigned bitwise wire
+intermediate without an authored
 width record, conflicting output/auxiliary/declared role, or own constraints.
 An absent role, legacy C<intermediate>, or canonical C<INTERNAL_INTERMEDIATE>
 role is eligible; other explicit roles are withheld. Matching role writes revoke.
@@ -399,6 +410,14 @@ Return detached C<{operator, source_names}> syntax for canonical binary bitwise
 C<&>, C<|> or C<^> over those whole references. Core, runtime and substituted
 binary nodes retain both ordered slots, including duplicates. This shared shape
 boundary proves no allocator intent, object association, width or target legality.
+
+=head2 binary_operand_max_shape
+
+Return the same typed whole-reference syntax for the bitwise operators above
+and binary arithmetic C<+>, C<->, C<*>, C</>, C<%>. Logical/comparison/shift,
+literal, sliced and computed operand families withhold. Recognition establishes
+no allocator provenance, selected width or generic target admission. The
+bitwise-only C<binary_whole_signal_shape> contract remains unchanged.
 
 =head2 prepare_core
 
@@ -449,8 +468,9 @@ retains no Core/backend/AST owners and publishes no target event or range.
 Internal plain-data observation of an actual backend normalization epoch, current
 factorizer birth, exact metadata/AST associations and complete plain unsigned
 module operands. Native result declarations, generated-reference lookup, named
-or signed types, authored result constraints and missing/foreign membership
-withhold. Optional C<track> starts source revocation counters only after the
+or signed types, opaque operand constraints, authored result constraints and
+missing/foreign membership withhold. Empty operand constraints are required
+before tracking; the capsule still binds their actual current state. Optional C<track> starts source revocation counters only after the
 complete frame can be serialized. Returned data retains no owner references.
 
 =head2 prepare_factorized_inference

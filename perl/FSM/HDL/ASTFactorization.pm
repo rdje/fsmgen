@@ -589,7 +589,7 @@ sub _factorizer_width_birth_capsule {
     my $entry = $self->{intermediate_signals}{$signal_name};
     return unless ref($entry) eq 'HASH' && defined($entry->{structural_id}) && !ref($entry->{structural_id});
     my $ast = $entry->{ast};
-    my $shape = FSM::IntermediateWidthAllocationSupport->binary_whole_signal_shape($ast) or return;
+    my $shape = FSM::IntermediateWidthAllocationSupport->binary_operand_max_shape($ast) or return;
     my @operands = ($ast->left, $ast->right);
     my $record = {kind => 'binary_operand_max_candidate', %$shape};
     my $state = JSON::PP->new->canonical->encode({
@@ -624,6 +624,9 @@ sub _current_intermediate_width_birth {
 
 Return a detached C<{kind =E<gt> binary_operand_max_candidate, operator,
 source_names}> for a current actual fresh binary whole-reference candidate.
+This bounded shape covers bitwise C<&>, C<|>, C<^> and arithmetic C<+>, C<->,
+C<*>, C</>, C<%>. Actual backend inference separately qualifies plain unsigned
+module operands without opaque constraints before any selected policy exists.
 The allocator records birth only while the new row has its original unresolved
 width. An owner-local plain-data capsule anchors this factorizer, actual row,
 AST, ordered reference nodes and any actual Core Signal identities. Opaque copied

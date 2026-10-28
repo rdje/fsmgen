@@ -19,8 +19,8 @@ date: 2026-10-28
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/AST/Node.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm; docs/audits/remaining-operator-inventory-20261028.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2215*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/AST/Node.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm; docs/audits/arithmetic-allocation-producer-20261028.json.gz;
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2216*.t t/2215*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t
 ---
 
 Component owners above are current evidence. The complete original card/proof inventory (baseline and digests) is retained in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
@@ -45,5 +45,5 @@ Core canonical literals preserve value/width/radix, typed/native/parsed/unsized 
 
 Runtime comparisons group bare &/| on either side (T2196); independent literal/caller controls and typed native HDL preserve. Mixed arithmetic/unary and external qualification remain .6.
 
-Parser keeps arithmetic inline; actual A+B helpers are factorizer-owned without allocation policy.
-Comparison/! helpers stay scalar; remaining contracts belong to .3.4.3.2.3.
+Arithmetic stays inline in Parser; factorizer births/intrinsic-max policies bind whole operands.
+Target-event/range joins remain pending; comparisons/! stay scalar. Opaque constraints withhold policy.
