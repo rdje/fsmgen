@@ -11,6 +11,7 @@ use JSON::PP ();
 use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::DeclaredWidthRangeSupport;
 use FSM::DeclaredWidthBindingSupport;
+use FSM::IntermediateWidthAllocationSupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -180,6 +181,84 @@ sub prepare_binary_operand_relationship ($class, %args) {
         @{$result}{qw(profile width_plan)} = ('symbolic', $operands[0]{width_plan});
     }
     return $json->decode($json->encode($result));
+}
+
+sub prepare_binary_intermediate_range ($class, %args) {
+    my $ctx = $args{flattened_dt};
+    confess "Direct binary range requires an actual backend context\n"
+        unless blessed($ctx) && $ctx->isa('FSM::HDL::FlattenedDT')
+            && blessed($ctx->{fsm_module}) && $ctx->{fsm_module}->isa('FSM::CoreAST::FSMModule');
+    my $width_owner = $ctx->{backend_sv_intermediate_width_support};
+    confess "Direct binary range requires its canonical current width owner\n"
+        unless ref($width_owner) eq 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport'
+            && $width_owner->{flattened_dt} && $width_owner->{flattened_dt} == $ctx;
+    my $language = $args{target_language};
+    confess "Direct binary range currently requires a Verilog-family target\n"
+        unless defined($language) && !ref($language) && lc($language) =~ /\A(?:systemverilog|sv|verilog|v)\z/;
+    my $name = $args{signal_name};
+    my $info = $args{signal_info};
+    confess "Direct binary range requires its actual selected intermediate metadata\n"
+        unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name) && ref($info) eq 'HASH';
+    my $json = JSON::PP->new->canonical;
+    my $events = eval {$json->decode($json->encode($args{target_intermediates}))};
+    confess "Direct binary range requires JSON-safe actual intermediate events\n"
+        if $@ || ref($events) ne 'HASH';
+    my $event = $events->{$name};
+    confess "Direct binary range requires a closed selected allocation event\n"
+        unless ref($event) eq 'HASH' && join(',', sort keys %$event) eq 'bitwise_origin,expression,width_allocation'
+            && defined($event->{expression}) && !ref($event->{expression}) && length($event->{expression});
+    my $policy = FSM::IntermediateWidthAllocationSupport->copy_record($event->{width_allocation});
+    my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
+    confess "Direct binary range requires its current backend recovery owner\n"
+        unless blessed($recovery)
+            && $recovery->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport')
+            && $recovery->{flattened_dt} == $ctx;
+    my $current = $recovery->binary_width_allocation($name, $info, $event->{expression});
+    my $origin = $recovery->binary_bitwise_origin($name, $info, $event->{expression});
+    confess "Direct binary range has no same current allocation/origin/text proof\n"
+        unless $current && $origin && $json->encode($current) eq $json->encode($policy)
+            && $json->encode($origin) eq $json->encode($event->{bitwise_origin});
+    my %source_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
+        target_language => $language);
+    my %target_args = (%source_args, target_namespace => $args{target_namespace}, target_declarations => $args{target_declarations});
+    my $target = $class->prepare_declarations(%target_args);
+    confess "Direct binary range requires an actual intermediate signal declaration\n"
+        unless ref($args{target_namespace}{signals}) eq 'ARRAY'
+            && 1 == grep {defined($_) && !ref($_) && $_ eq $name} @{$args{target_namespace}{signals}};
+    my @targets;
+    for my $operand (@{$policy->{source_names}}) {
+        confess "Direct binary range does not admit computed operand '$operand'\n" if exists($events->{$operand});
+        my $mapped = $target->{signal_targets}{$operand};
+        confess "Direct binary range operand '$operand' disagrees with actual target membership\n"
+            unless defined($mapped) && $mapped eq $operand;
+        push @targets, $mapped;
+    }
+    my $declarations = $args{target_declarations};
+    my @rows = map {$declarations->{$_}} ($name, @targets);
+    confess "Direct binary range requires actual plain unsigned target declarations\n"
+        if grep {ref($_) ne 'HASH' || $_->{signed} || defined($_->{state_model})
+            || defined($_->{declared_type_name}) || defined($_->{declared_type_spec})} @rows;
+    confess "Direct binary range disagrees with actual selected declaration widths\n"
+        unless FSM::IntermediateWidthAllocationSupport->matches_selected_widths($policy, map {$_->{width}} @rows);
+    my $role = ($info->{source} // '') eq 'fsmgen_parsing' ? 'source_intermediate'
+        : ($info->{source} // '') eq 'ast_factorization' ? 'factorized_intermediate' : undef;
+    confess "Direct binary range has an unknown actual allocation role\n" unless $role;
+    confess "Direct binary range conflicts with another declaration allocation family\n"
+        if exists($rows[0]{width_origin});
+    my $relationship = $class->prepare_binary_operand_relationship(%source_args, source_names => $policy->{source_names});
+    my $again = $class->prepare_binary_operand_relationship(%source_args, source_names => $policy->{source_names});
+    my $target_again = $class->prepare_declarations(%target_args);
+    $current = $recovery->binary_width_allocation($name, $info, $event->{expression});
+    confess "Direct binary range proof changed during preparation\n"
+        unless $current && $json->encode($current) eq $json->encode($policy)
+            && $json->encode($relationship) eq $json->encode($again)
+            && $json->encode($target) eq $json->encode($target_again);
+    return $json->decode($json->encode({profile => $relationship->{profile},
+        target_language => $target->{target_language}, source_scope => $relationship->{source_scope},
+        module_name => $target->{module_name}, target_name => $name, declaration_kind => 'signal',
+        allocation_role => $role, source_names => $policy->{source_names}, operand_targets => \@targets,
+        width_allocation => $policy, bitwise_origin => $origin, expression => $event->{expression},
+        width_plan => $relationship->{width_plan}}));
 }
 
 sub prepare_declarations ($class, %args) {
@@ -380,6 +459,28 @@ proves neither allocation nor target membership and activates no helper range,
 including VHDL; the actual-context/event join and emission remain separate.
 Caller plans cannot replace actual source proof, and caller objects/kinds stay
 unchanged.
+
+C<prepare_binary_intermediate_range> joins one selected helper privately for
+SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical
+width owner, the exact C<signal_name>/C<signal_info> row, target language and
+backend-owned C<target_namespace>, C<target_declarations> and
+C<target_intermediates> records. Target data remains an input contract; actual
+current context supplies allocation provenance. Fresh policy/origin/text must
+agree, complete canonical target preparation must pass, and both actual operand
+targets must match the selected physical names. Result/operand declarations must
+be plain unsigned and satisfy the exact intrinsic maximum. Conflicting register
+origins and computed intermediate operands remain outside this direct profile.
+
+The source-only relationship helper supplies either fixed data without a range
+or the identical frozen mutable range, including default-one vector rank.
+Source-owned and factorized allocation roles remain distinct. Repeated source,
+target and policy checks reject changes during preparation. The detached result
+contains C<profile>, canonical language/scope/module, C<target_name>, signal
+C<declaration_kind>, C<allocation_role>, ordered source/target operands, allocation
+and origin records, selected expression and optional representative C<width_plan>.
+Caller plans, numeric equality and copied/stale/foreign metadata cannot supply
+current allocation proof. This API emits no HDL and admits no binary VHDL helper;
+pre-emission sequencing and final actual-emission comparison remain separate.
 
 C<prepare_declarations> takes the same source arguments plus a backend-owned
 C<target_namespace> and C<target_declarations> map. The namespace contains the

@@ -2188,10 +2188,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=18 for final T2197/T2190/T2174/T2191. Scalar/legacy/event, caller/detachment/reuse and scalar-only VHDL controls pass. Syntax/book/POD/source freshness and normal hook gate commit; allocation/range/full qualification remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prove same-relationship binary bitwise intermediate range plans against actual operands.`
   Acceptance: `After .1, bind completed actual intermediate/declaration events to every operand's canonical source/target plan. Both actual whole unsigned plain operands must have the same proved mutable width relationship, retaining separate identity/constraints; equal defaults or separately overridable aliases are insufficient. Prove actual result allocation policy independently of selected numeric equality: a prepared result may be context-widened/truncated, and an equal default can conceal that constraint. Add allocation-policy publication ownership before promotion if required. Validate selected width, current expression and complete actual membership, default-one vector rank, static/type/signed and independent-max refusals. Source-owned parser helpers need explicit actual intermediate ownership rather than register-helper ownership assumptions. Qualify a detached bounded target-plan consumer before emission, sync docs and commit. No VHDL non-scalar/raw admission or external qualification.`
-  Verification: `Pending publisher completion. Context32/A8/B8 public prepared emission remains valid; binary_origin attests only operation/operand identity, not max-width allocation policy. The initial over-strict collector refusal is retained in the publisher audit. Establish actual source allocation provenance before using any equal selected widths as generic proof.`
+  Verification: `Actual allocation/range prerequisites are implemented for bounded plain binary whole operands with identical frozen mutable contracts. Children retain exact producer/event/private-proof evidence. Actual emitter sequencing and final emission reproof remain .3; unsupported shapes and full .6 remain pending.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.6`
 
@@ -2284,11 +2284,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for T2210/T2197/T2191. Complete authenticated native/source packets preserve after removing only the four new target fields; HDL, prior metadata, source policies, factorizer births and existing observations match. Old contextual widths and scalar VHDL/binary-refusal boundaries preserve. POD/book/source and normal final-index doctrines gate commit; range/emission/full .6 remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare detached symbolic binary range plans only from actual allocation and all operand constraints.`
   Acceptance: `After completed event policy, bind every source/target operand to canonical frozen scope/range proof, selected widths, plain unsigned type and complete actual membership. Only identical proved mutable relationships plus actual intrinsic-max allocation may share a result range. Equal defaults, independent aliases, static floors, context sizing, missing policy and stale identities refuse; keep vector rank at default one. Prepared source-owned/generated helper roles and fresh selected expression remain distinct; caller plans attest no provenance. Focused private proof and target/scalar/static/refusal controls, docs and commit precede emission.`
-  Verification: `Actual target events committed at 0cae69d38 with focused checks and exact old-data comparison. Existing prepare_module/prepare_declarations and DeclaredWidthRangeSupport own frozen source proof, complete target namespaces and detached plans. Separate actual-source operand relationship proof from the later current-context/event target join; neither slice activates emission.`
-  Commit: `pending`
+  Verification: `Children .1/.2 compose actual-source frozen relationship and current-context/complete-target private range proof. Focused checks preserve fixed/default-one/typed/currentness boundaries. No emitter or full qualification closes.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2: prepare current binary intermediate ranges`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.1`
@@ -2304,18 +2304,23 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2211/T2173, including independently expected complete existing target plans and caller source/default/binding/requirement kinds. Source-only VHDL range data does not admit a VHDL helper. POD/book/source freshness and normal final-index doctrine hook gate commit; actual range/event join and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join actual completed allocation events and complete target constraints to private detached binary ranges.`
   Acceptance: `After .1, require current actual backend context/metadata and freshly revalidated selected policy/origin/text plus complete source/target namespace/declarations. Caller plans or numeric equality attest no provenance. Only identical proved mutable relationships share the representative operand range; source-owned versus factorized helper roles remain distinct. Refuse missing/stale/foreign/opaque/context/static-floor/alias/typed cases, preserve static/scalar controls and width-one vector rank. Return detached private data without emitter admission, synchronize docs and commit before .6 closure/emission handoff.`
-  Verification: `pending operand relationship .1`
-  Commit: `pending`
+  Verification: `prepare_binary_intermediate_range joins one actual selected row to canonical default backend/current policy, fresh origin/text, complete source/target declaration plans and identical frozen operand contracts. Target data remains an input contract; caller policy objects cannot replace actual owner/context proof. Result/operand widths and plain types agree exactly, physical targets match selected names, helper roles remain source_intermediate/factorized_intermediate, and conflicting register/computed operands refuse. Repeated source/target/policy checks catch mutation during proof. Detached output retains vector rank at default one; fixed operands keep no symbolic range. T2212/T2211/T2173 pass All tests successful Files=3 Tests=15, including real parsed and parameter-captured raw-Core factorizer fixtures, forged owners, alias/default/floor/currentness/membership controls and VHDL refusal. Authenticated predecessor lacks the method. Re-derive actual source/target/current event join; falsify predecessor and independent hostile controls; durability source/tests/POD/book/facts/task and docs/audits/binary-intermediate-range-20261028.json.gz. Existing target-plan and caller-kind controls preserve. This closes bounded private proof only; actual pre-emission sequencing and final range/event comparison remain .3, other shapes remain .3.4.3.2.3 and full .6 is deferred.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2: prepare current binary intermediate ranges`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2212 reports Can't locate object method prepare_binary_intermediate_range via package FSM::DirectDeclaredWidthSupport at ./t/2212-binary-intermediate-range.t line 41. Current allocation events and source-only operand relationships still lack a private actual-context/complete-target join.
+  - [x] **ADDRESSED (verified)** — Require actual canonical context/metadata and current policy/origin/text, re-derive complete target/source constraints, check exact widths/roles/membership and consume only identical frozen mutable relationships. Repeat proof after reads; copied/fake/stale/context/alias/type data cannot yield a range. Return detached private data without emitter or binary VHDL admission.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for T2212/T2211/T2173. Real source/factorizer and default-one/static controls, caller kinds, existing complete target plans, canonical-owner and during-proof mutation refusals pass. POD/book/source freshness and normal final-index doctrine hook gate commit. Actual emitter sequencing, unsupported shapes and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Close allocation/range preparation and hand off the actual emitter join.`
   Acceptance: `After bounded holder, producers, events and private target proof, review composed focused policy/constraint/currentness controls and exact gaps, close .2 only for proved binary whole-operand profiles, then activate .3 emitter sequencing. Preserve .3.4.3.2.3 ownership of unsupported nested/n-ary/unary/arithmetic constraints and full .6 qualification. Join closure to the final proof commit if safe; no broad verification campaign.`
-  Verification: `pending prerequisites`
-  Commit: `pending`
+  Verification: `Permitted final-proof closure composes the holder, source/factorizer producers, actual events and private same-contract target ranges with focused currentness/refusal controls. Exact prior native products and existing target plans remain qualified at their recorded slices. Hand off .3 sequencing/emission; other shapes and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2: prepare current binary intermediate ranges`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`
   Status: `pending`

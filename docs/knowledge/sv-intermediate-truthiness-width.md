@@ -34,7 +34,7 @@ fresh selected text, width1 and an actually declared operand (T2190).
 Binary &/|/^ origins retain both ordered whole operands, including duplicates,
 with the same AST/text/membership proof (T2197). All selected widths remain separate.
 Core slices/state/invalid/stored-only/stale/computed/logical operands withhold; compatible
-intermediate references retain typed names. Inputs/results detach; empty sets preserve snapshots; origins prove no width/type relation. Optional width_allocation checks a closed intrinsic-max policy against the ordered origin/plain actual declaration widths; Actual publication rechecks current attached policy, fresh origin/text and plain sources; symbolic ranges stay pending.
+intermediate references retain typed names. Inputs/results detach; empty sets preserve snapshots; origins prove no width/type relation. Optional width_allocation checks a closed intrinsic-max policy against the ordered origin/plain actual declaration widths; Actual publication rechecks current attached policy, fresh origin/text and plain sources; symbolic emission stays pending.
 Paired VHDL proves plain unsigned operands, scalar results and exact assignments
 (T2191); other shapes refuse.
 

@@ -114,6 +114,13 @@ except source-signal identity; equal defaults, independent aliases, static
 floors and different trees refuse. Both static operands keep separate fixed
 widths. The result is detached source-only data, retaining width-one vector
 rank; it proves no allocation/target membership and enables no helper emission.
+Private `prepare_binary_intermediate_range` now joins one actual current backend
+row and its selected allocation/origin/text event to complete target declarations
+and the source relationship proof. It returns detached range data with distinct
+source/factorizer roles and width-one vector rank. Copies, caller policy objects,
+independent aliases/floors, missing or inconsistent targets and changes during
+proof refuse. Static operands retain fixed data; computed operands and binary
+VHDL helpers remain outside this profile. No HDL emission is activated yet.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own
