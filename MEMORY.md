@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
-- next_action: Join proved binary ranges to the actual prepared block and declarations, then independently reprove completed emitted event/source/target identities; no HDL patching or second generation.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
+- next_action: Review composed bounded binary producer/proof/emitter evidence and precise unsupported boundaries, close the relationship family, then select remaining unary/binary constraints under .3.4.3.2.3.
 - in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.

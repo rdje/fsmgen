@@ -78,6 +78,10 @@ Generate the full direct SystemVerilog module after decision-tree flattening.
 The live stage prepares and validates once, source ranges are proved, then that
 block renders once before scaffold emission. Combined-only injected stage
 providers retain their existing ordering and contract.
+Symbolic binary helper declarations retain their actual source/allocation proof
+in a per-generation ledger. Complete captured target events are independently
+reproved against current source and backend state, then compared with the full
+emitted records, including range, expression, ordered operands and helper role.
 
 =cut
 
@@ -91,6 +95,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_emitted_ports} = {};
     local $ctx->{direct_declared_width_emitted_signals} = {};
     local $ctx->{direct_declared_width_emitted_helper_origins} = {};
+    local $ctx->{direct_declared_width_emitted_binary_ranges} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $stage = $ctx->{backend_sv_consolidated_intermediate_stage_support};
     my $split_stage = $stage->can('prepare_consolidated_intermediate_block')
@@ -148,6 +153,21 @@ sub generate_systemverilog_module ($self, $fsm_module) {
                 grep {exists($snapshot->{target_declarations}{$_}{width_origin})} keys %{$snapshot->{target_declarations}};
             confess "Direct captured auxiliary origins do not match the actual emitted helper identities\n"
                 unless $json->encode(\%expected_origins) eq $json->encode($ctx->{direct_declared_width_emitted_helper_origins});
+            my %expected_binary;
+            for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
+                my $event = $snapshot->{target_intermediates}{$name};
+                next unless $event->{width_allocation};
+                my $has_symbolic_operand = grep {
+                    exists($qualified->{ranges}{$_});
+                } @{$event->{width_allocation}{source_names}};
+                next unless $has_symbolic_operand;
+                $expected_binary{$name} = FSM::DirectDeclaredWidthSupport->prepare_binary_intermediate_range(
+                    flattened_dt => $ctx, signal_name => $name,
+                    signal_info => $prepared_block->{filtered_signals}{$name},
+                    target_language => 'systemverilog', %$snapshot);
+            }
+            confess "Direct captured binary ranges do not match the actual emitted intermediate identities\n"
+                unless $json->encode(\%expected_binary) eq $json->encode($ctx->{direct_declared_width_emitted_binary_ranges});
             1;
         };
         unless ($ok) {

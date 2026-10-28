@@ -63,7 +63,7 @@ subtest 'actual source and factorizer events join only identical frozen operand 
 subtest 'equal defaults static floors and independent result constraints refuse' => sub {
     plan skip_all=>'range API absent' unless $has_api;
     for my $right ('(param COPY)','(param SAME)','8','(+ (param W) 0)') {
-        my $in=fixture('source',8,'(param W)',$right);ok(!eval {prepare($in);1},'unproved same-default operand relation refuses');
+        ok(!eval {my $in=fixture('source',8,'(param W)',$right);prepare($in);1},'unproved same-default operand relation refuses during emission or private proof');
     }
     my $in=fixture('factorized',8);$in->{target_declarations}{$in->{signal_name}}{width}=32;
     ok(!eval {prepare($in);1},'independent target result floor cannot borrow intrinsic policy');

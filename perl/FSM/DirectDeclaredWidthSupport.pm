@@ -479,8 +479,10 @@ contains C<profile>, canonical language/scope/module, C<target_name>, signal
 C<declaration_kind>, C<allocation_role>, ordered source/target operands, allocation
 and origin records, selected expression and optional representative C<width_plan>.
 Caller plans, numeric equality and copied/stale/foreign metadata cannot supply
-current allocation proof. This API emits no HDL and admits no binary VHDL helper;
-pre-emission sequencing and final actual-emission comparison remain separate.
+current allocation proof. This API emits no HDL and admits no binary VHDL helper.
+Live Verilog-family declarations separately consume current allocation/source
+proof; final assembly invokes this complete-target proof independently and
+requires exact agreement with the detached emitted-plan ledger before success.
 
 C<prepare_declarations> takes the same source arguments plus a backend-owned
 C<target_namespace> and C<target_declarations> map. The namespace contains the

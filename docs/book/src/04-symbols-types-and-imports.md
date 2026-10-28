@@ -444,7 +444,32 @@ symbolic range by matching numeric widths.
 
 The live direct stage now discovers and validates intermediates before source
 range proof, then renders that prepared block once. A failed source proof stops
-before intermediate rendering. Binary helper range emission remains pending.
+before intermediate rendering. Bounded binary helpers now consume symbolic
+ranges when the actual current allocation proves an intrinsic operand maximum
+and both whole unsigned operands have identical frozen mutable width contracts.
+This covers `&`, `|` and `^`, including duplicate operand slots and vector rank
+at a default of one. Source and factorizer allocation roles remain distinct.
+Independent alias roots, same-default fixed widths and different expression
+trees cannot borrow this relationship. Helpers without a current qualifying
+allocation retain their existing numeric path; general nested/n-ary and other
+computed relationships remain pending.
+
+Run the [binary helper fixture](../../../t/data/ial0-direct-symbolic-bitwise.fsm):
+
+```bash
+./bin/fsmgen --quiet --strict --check --json t/data/ial0-direct-symbolic-bitwise.fsm
+./bin/fsmgen --quiet --strict --output .artifacts/direct_symbolic_bitwise.sv t/data/ial0-direct-symbolic-bitwise.fsm
+./bin/fsmgen --quiet --strict --language verilog --output .artifacts/direct_symbolic_bitwise.v t/data/ial0-direct-symbolic-bitwise.fsm
+```
+
+Its actual binary helper uses `wire [(W - 1):0]` and the selected `A & B`
+assignment. Each symbolic helper declaration retains a detached record of the
+range, expression, ordered operands and allocation role. Before HDL returns,
+final assembly independently rederives the current source/allocation proof
+against complete emitted namespace, type and declaration records, then requires
+exact agreement with that record. Late policy, expression, range, role or source
+changes refuse and invalidate the collector. Binary VHDL helpers and full
+compiler/override/runtime qualification remain pending.
 
 The [register-helper fixture](../../../t/data/ial0-direct-symbolic-helpers.fsm)
 uses distinct register-output and register-input assignments. Run:

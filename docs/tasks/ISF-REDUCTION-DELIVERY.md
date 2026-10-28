@@ -2323,11 +2323,11 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5.2: prepare current binary intermediate ranges`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Emit proved symbolic bitwise intermediate ranges with final actual-event closure.`
   Acceptance: `After .2 private proof, join actual prepared intermediate planning before declaration emission; source planning currently follows consolidated rendering, so qualify any sequencing change explicitly instead of patching HDL or performing a second generation. Actual declaration ranges consume proved same-relationship plans, preserving vector rank at one, and final independent event/source/target reproof must equal emitted identities, expressions, origins and ranges. Keep caller/event isolation and reuse/failure atomicity, fixed/legacy/named controls and independent constraints. Focused source SV/Verilog/default/alias negatives plus book/POD/fact precede commit. VHDL non-scalar join remains .3.4.3.4, full .6.`
-  Verification: `pending target-plan proof`
-  Commit: `pending`
+  Verification: `Children .1/.2 qualify one actual prepare/source-proof/render sequence and bounded symbolic binary declaration consumption, followed by independent complete emitted target/source/event reproof. Focused implementation checks pass; binary VHDL, other relationship families and full .6 remain open.`
+  Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1`
@@ -2343,11 +2343,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for sequencing/stage/assembly. Complete native HDL/event/source/policy/birth/inference controls preserve; knowledge-map: OK and POD/book/source checks pass. Final-index doctrine hook gates commit. Helper range emission and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume private actual intermediate ranges and independently reprove final emitted events.`
-  Acceptance: `After .1, prepare complete selected declaration/event inputs from the actual block and use private current-context binary ranges at declaration emission. Reprove completed actual identities, expressions, allocation origins and emitted ranges; preserve vector rank at one, legacy/fixed controls, failure/reuse isolation and independent constraints. Split bounded further leaves if needed. Full .6 and non-scalar VHDL remain separately owned.`
-  Verification: `pending range consumer`
-  Commit: `pending`
+  Acceptance: `After .1, prove actual selected allocation/source relationships at declaration emission, preserving a detached emitted-plan ledger. Full target records exist only after emission; use the existing independent private complete-target proof at final assembly, without fabricating or exposing partial snapshots. Reprove completed actual identities, expressions, allocation origins and emitted ranges; preserve vector rank at one, legacy/fixed controls, failure/reuse isolation and independent constraints. Split bounded further leaves if needed. Full .6 and non-scalar VHDL remain separately owned.`
+  Verification: `Actual declarations consume current allocation plus identical frozen mutable operand contracts and retain detached range/expression/origin/ordered-operand/role records. Full emitted target data exists only after rendering; final assembly independently invokes prepare_binary_intermediate_range and requires exact whole-record equality. No fabricated partial snapshot, HDL patching or second generation. T2214/T2212/T2210/T2213 pass All tests successful Files=4 Tests=17: source/factorizer width1/8, SV/Verilog, operators/duplicates, alias/default/static/tree refusals, late range/role/text/policy/source mutation, failure/reuse and legacy event controls. The final regression fails against authenticated predecessor owners. Native comparison changes only the literal two source-helper declaration ranges; complete snapshots/source fields/policies/births/inference and fixed factorizer products conserve. Strict fixture check and both generated HDL profiles pass without external tools. Re-derive actual emitter/final target closure; falsify predecessor and independent identity/constraint/product controls; durability source/test/fixture/POD/book/cards and docs/audits/binary-intermediate-emission-20261028.json.gz. Existing A&A simplification exposed and corrected a test oracle, not a product defect; raw duplicate origins preserve. Unqualified allocation shapes retain numeric legacy behavior; other relationships, non-scalar VHDL and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2: emit proved binary intermediate ranges`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2214 reports Failed test actual helper range keeps W and vector rank at default one at ./t/2214-symbolic-binary-intermediate-emission.t line 48. The actual declaration owner emitted cached numeric ranges despite proved current allocation and source contracts; final assembly had no binary emitted-plan closure.
+  - [x] **ADDRESSED (verified)** — Consume current source/allocation proof at declaration and compare its detached full record with independently rederived complete actual target-event proof. Width-one rank, aliases/constraints, ordered duplicate origins, final mutations and failure/reuse controls qualify; final T2214 fails against exact predecessor modules and passes current implementation. Strict source/SV/Verilog examples pass.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=17 for emission, complete private target proof, actual policy events and sequencing. Literal native delta is only the expected source helper ranges; snapshots/source kinds/policies/births/inference/fixed products conserve. POD/book/source/knowledge checks and final-index hook gate commit. Binary VHDL, other shapes and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
   Status: `pending`

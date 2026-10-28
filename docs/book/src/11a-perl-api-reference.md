@@ -74,8 +74,8 @@ existing registry/AST boundary; the facade waits through role and interface
 completion. Source, phase or publication failure and parse reuse clear prior or
 partial policy. Publishing an inner helper preserves a dependent helper's epoch.
 N-ary, literal, sliced, signed, named and unknown shapes remain outside this
-binary whole-reference profile. Factorizer provenance, actual target-event joins
-and generic range consumers remain separate implementation steps.
+binary whole-reference profile. The factorizer and actual target-event joins below qualify the same bounded
+profile; other generic range relationships remain separate work.
 
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing
@@ -91,8 +91,8 @@ held event, including scalar AST re-inference; recursive fallback revokes it.
 `factorized_width_allocation` returns completed policy only after normalization,
 pruning and final registry publication succeed. Earlier observations remain
 diagnostic. Normalization/collection/generation failures and reset/reuse clear
-policy; repeated cached normalization mints no replacement proof. Target-event
-and symbolic range joins remain pending.
+policy; repeated cached normalization mints no replacement proof. Actual target-event publication and bounded symbolic consumers are described
+below.
 The collector accepts a separate optional `width_allocation` record with kind,
 operator, ordered source names and selected width. It requires the same binary
 origin and actual plain unsigned declarations satisfying the exact decimal
@@ -106,8 +106,9 @@ failure/reset/reuse clear both maps. The actual assignment publisher now joins
 that current policy to fresh typed origin/text and actual plain module operands.
 A final currentness check rejects supported source mutation during publication.
 Unknown copies, independent result floors and unsupported source profiles keep
-the old event shape. Only `width_allocation` extends qualified snapshots; HDL
-text and scalar VHDL behavior preserve. Symbolic range admission remains pending.
+the old event shape. Only `width_allocation` extends qualified snapshots;
+publication preserves HDL text and scalar VHDL behavior. Bounded symbolic
+consumers follow below.
 Private `prepare_binary_operand_relationship` now re-derives canonical ranges
 from actual current module operands. Mutable plans must agree in every field
 except source-signal identity; equal defaults, independent aliases, static
@@ -120,7 +121,10 @@ and the source relationship proof. It returns detached range data with distinct
 source/factorizer roles and width-one vector rank. Copies, caller policy objects,
 independent aliases/floors, missing or inconsistent targets and changes during
 proof refuse. Static operands retain fixed data; computed operands and binary
-VHDL helpers remain outside this profile. No HDL emission is activated yet.
+VHDL helpers remain outside this profile. Live Verilog-family declarations now
+consume current allocation/source relationships. Final assembly independently
+invokes the complete-target proof and compares the detached emitted range,
+expression, ordered origin and allocation role before returning HDL.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own
@@ -133,7 +137,7 @@ digest-checked recovery command. Current contract text and existing recheck
 commands remain directly readable in the cards.
 Completed allocation-producer task subtrees retain exact Git revision, file
 digest and retention-contract retrieval through their live compact terminals.
-Open target/range work stays in the live task tree.
+Other shape/target work stays in the live task tree.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
