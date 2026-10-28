@@ -200,12 +200,20 @@ sub prepare_binary_intermediate_range ($class, %args) {
     confess "Direct binary range requires its actual selected intermediate metadata\n"
         unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name) && ref($info) eq 'HASH';
     my $json = JSON::PP->new->canonical;
-    my $events = eval {$json->decode($json->encode($args{target_intermediates}))};
-    confess "Direct binary range requires JSON-safe actual intermediate events\n"
-        if $@ || ref($events) ne 'HASH';
+    my $target_inputs = sub {
+        return $json->encode({namespace => $args{target_namespace},
+            declarations => $args{target_declarations}, intermediates => $args{target_intermediates}});
+    };
+    my $target_snapshot = eval {$target_inputs->()};
+    confess "Direct binary range requires JSON-safe actual target records\n" if $@;
+    my $events = $json->decode($target_snapshot)->{intermediates};
+    confess "Direct binary range requires actual intermediate events\n" unless ref($events) eq 'HASH';
     my $event = $events->{$name};
+    my $origin_key = ref($event) eq 'HASH' && exists($event->{arithmetic_origin})
+        ? 'arithmetic_origin' : 'bitwise_origin';
     confess "Direct binary range requires a closed selected allocation event\n"
-        unless ref($event) eq 'HASH' && join(',', sort keys %$event) eq 'bitwise_origin,expression,width_allocation'
+        unless ref($event) eq 'HASH'
+            && join(',', sort keys %$event) eq join(',', sort ($origin_key, 'expression', 'width_allocation'))
             && defined($event->{expression}) && !ref($event->{expression}) && length($event->{expression});
     my $policy = FSM::IntermediateWidthAllocationSupport->copy_record($event->{width_allocation});
     my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
@@ -213,11 +221,14 @@ sub prepare_binary_intermediate_range ($class, %args) {
         unless blessed($recovery)
             && $recovery->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport')
             && $recovery->{flattened_dt} == $ctx;
-    my $current = $recovery->binary_width_allocation($name, $info, $event->{expression});
-    my $origin = $recovery->binary_bitwise_origin($name, $info, $event->{expression});
+    my ($allocation_method, $origin_method) = $origin_key eq 'arithmetic_origin'
+        ? ('arithmetic_width_allocation', 'binary_arithmetic_origin')
+        : ('binary_width_allocation', 'binary_bitwise_origin');
+    my $current = $recovery->$allocation_method($name, $info, $event->{expression});
+    my $origin = $recovery->$origin_method($name, $info, $event->{expression});
     confess "Direct binary range has no same current allocation/origin/text proof\n"
         unless $current && $origin && $json->encode($current) eq $json->encode($policy)
-            && $json->encode($origin) eq $json->encode($event->{bitwise_origin});
+            && $json->encode($origin) eq $json->encode($event->{$origin_key});
     my %source_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
         target_language => $language);
     my %target_args = (%source_args, target_namespace => $args{target_namespace}, target_declarations => $args{target_declarations});
@@ -248,16 +259,17 @@ sub prepare_binary_intermediate_range ($class, %args) {
     my $relationship = $class->prepare_binary_operand_relationship(%source_args, source_names => $policy->{source_names});
     my $again = $class->prepare_binary_operand_relationship(%source_args, source_names => $policy->{source_names});
     my $target_again = $class->prepare_declarations(%target_args);
-    $current = $recovery->binary_width_allocation($name, $info, $event->{expression});
+    $current = $recovery->$allocation_method($name, $info, $event->{expression});
     confess "Direct binary range proof changed during preparation\n"
         unless $current && $json->encode($current) eq $json->encode($policy)
             && $json->encode($relationship) eq $json->encode($again)
-            && $json->encode($target) eq $json->encode($target_again);
+            && $json->encode($target) eq $json->encode($target_again)
+            && $target_snapshot eq $target_inputs->();
     return $json->decode($json->encode({profile => $relationship->{profile},
         target_language => $target->{target_language}, source_scope => $relationship->{source_scope},
         module_name => $target->{module_name}, target_name => $name, declaration_kind => 'signal',
         allocation_role => $role, source_names => $policy->{source_names}, operand_targets => \@targets,
-        width_allocation => $policy, bitwise_origin => $origin, expression => $event->{expression},
+        width_allocation => $policy, $origin_key => $origin, expression => $event->{expression},
         width_plan => $relationship->{width_plan}}));
 }
 
@@ -471,10 +483,20 @@ targets must match the selected physical names. Result/operand declarations must
 be plain unsigned and satisfy the exact intrinsic maximum. Conflicting register
 origins and computed intermediate operands remain outside this direct profile.
 
+The selected event is closed to C<expression>, C<width_allocation> and exactly
+one of C<bitwise_origin> or C<arithmetic_origin>. The corresponding current
+recovery publisher supplies canonical XOR/AND/OR or C<+>, C<->, C<*>, C</>, C<%>
+proof; a different family, operator or ordered origin cannot borrow that policy.
+The returned record retains that same origin field. Arithmetic currently has
+only actual factorizer allocation; this join invents no source-holder policy.
+
 The source-only relationship helper supplies either fixed data without a range
 or the identical frozen mutable range, including default-one vector rank.
 Source-owned and factorized allocation roles remain distinct. Repeated source,
-target and policy checks reject changes during preparation. The detached result
+target and policy checks reject changes during preparation. Complete input
+namespace/declaration/event snapshots must also agree at return: an equal derived
+target plan cannot hide changes to computed-helper fields absent from that plan.
+The detached result
 contains C<profile>, canonical language/scope/module, C<target_name>, signal
 C<declaration_kind>, C<allocation_role>, ordered source/target operands, allocation
 and origin records, selected expression and optional representative C<width_plan>.
@@ -483,6 +505,8 @@ current allocation proof. This API emits no HDL and admits no binary VHDL helper
 Live Verilog-family declarations separately consume current allocation/source
 proof; final assembly invokes this complete-target proof independently and
 requires exact agreement with the detached emitted-plan ledger before success.
+That live consumer currently admits only bitwise origins. Arithmetic private
+plans do not change numeric helper HDL or activate arithmetic range emission.
 
 C<prepare_declarations> takes the same source arguments plus a backend-owned
 C<target_namespace> and C<target_declarations> map. The namespace contains the

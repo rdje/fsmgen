@@ -17,9 +17,9 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz; docs/audits/binary-intermediate-emission-20261028.json.gz;
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/width-card-evidence-20261028.json.gz; docs/audits/arithmetic-range-proof-20261028.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[34]*.t t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[2348]*.t t/2204-factorizer-width-births.t t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
 ---
 
 Component owners above are current evidence. Exact original cards/proofs (baseline and digests) remain in `docs/audits/width-card-evidence-20261028.json.gz`; recover its exact source:
@@ -73,7 +73,7 @@ remain separately owned.
 Core binary_operand_max (T2198) binds actual helper/AST/ordered whole operands and source/result revisions.
 Fresh scoped births publish at Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
 Equal widths install nothing. Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify.
-Only known bare-reference/final-width/classifier writes refresh source births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind actual Core/helper/AST/input/registry identity and state in that epoch; clones/foreign/stale inputs withhold. Same frozen operands/current events emit ranges after discovery/source proof; final target/event reproof checks emitted fields.
+Only owned bare-reference/final-width/classifier writes refresh births. Factorizer births retain unresolved ownership; intrinsic AST events bind plain unsigned operands and exclude native/cached constraints. Exact owned publications, registry rebuilds and cache reads preserve held events. Policy completes after successful collection; failure/reset/reuse clears. Source attachments bind epoch Core/helper/AST/input/registry identity/state; cloned/foreign/stale inputs withhold. Bitwise frozen/current events emit after source proof with final target reproof; arithmetic plans stay private. Complete target inputs recheck.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

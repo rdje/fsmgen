@@ -162,7 +162,17 @@ an independently widened result can retain that origin without allocation policy
 Conflicting AST/text, copied metadata and source mutation cannot supply current
 policy. Collector completion checks actual operand membership and exact max
 widths whenever policy is present. Legacy injected providers retain their shape.
-Arithmetic source/target range consumption remains pending; publication alone
+Private arithmetic range preparation now joins those actual events to complete
+source and target proof. Both operands must carry the identical frozen mutable
+width contract: `A` and `B` using `(param W)` qualify, while `(param COPY)`, an
+independent equal-default parameter, a fixed operand or a different expression
+tree cannot borrow that relationship. Default one retains vector rank in the
+private plan; fixed operands yield fixed data without a generic range. Actual
+helper identity, plain unsigned declarations, exact intrinsic max, selected text
+and current policy must all agree. Computed operands remain outside this profile.
+Complete namespace, declaration and event inputs are checked again at return;
+an unchanged derived plan cannot hide a changed computed-helper width or event.
+Actual arithmetic range emission remains pending. Private preparation alone
 does not turn a numeric helper into a generic vector. The bitwise range consumer
 and scalar-only symbolic VHDL profile retain their existing boundaries.
 Comparison and logical negation helpers retain

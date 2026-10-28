@@ -2369,11 +2369,24 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=5 Tests=24; actual symbolic VHDL refusal also passes. Exact predecessor/native product comparison conserves all HDL/source/private producer fields and scalar controls; only declared arithmetic event fields change. Book/POD/card and normal final-index hook qualify commit; full .6 deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare actual arithmetic target ranges against all source and allocation constraints.`
   Acceptance: `After .2, join current arithmetic events/actual metadata to complete source and target plans, plain operand profiles and intrinsic max proof. Require identical frozen mutable relationships, preserving distinct ordered operands and independent constraints; aliases/equal defaults/computed/foreign/stale cases cannot supply proof. Return detached private ranges with default-one vector rank; arithmetic emission and VHDL remain separate. Focused actual-target/private/atomic controls and synchronized contracts precede commit.`
-  Verification: `pending actual events`
-  Commit: `pending`
+  Verification: `Canonical private arithmetic ranges join actual current policy/events to identical complete operand contracts, with default-one vector rank. T2218/T2212/T2217: All tests successful Files=3 Tests=14. Authenticated predecessor fails arithmetic and inherited bitwise complete-target mutation controls. Seven-case complete native HDL/source/producer/event products conserve. Re-derive actual plans; falsify aliases/floors/copies/late changes/typed/computed/foreign cases; durability docs/audits/arithmetic-range-proof-20261028.json.gz. Live arithmetic emission and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3: prove private arithmetic intermediate ranges`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2218 reports closed selected-event refusal at perl/FSM/DirectDeclaredWidthSupport.pm line 209. Its final raw-factorized bitwise controls also expose late computed-helper/event mutation: the repeated derived target plan omits those fields.
+  - [x] **ADDRESSED (verified)** — Select one closed origin family and its matching current policy publisher for canonical source/target joins. Snapshot and recheck complete target inputs before returning; existing source/factorized bitwise mutation controls reject the inherited gap. Keep live arithmetic emission separate.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=14. Exact seven-case predecessor/native products conserve all HDL/source/producer/event data; default-one rank, fixed controls, scalar VHDL refusal and detached caller preservation pass. Book/POD/cards and final-index hook qualify commit; full .6 stays deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3.1`
+  Status: `done`
+  Goal: `Close complete target-input mutation during private binary proof.`
+  Acceptance: `New arithmetic late-target control changes the result width after the first relationship proof; the private plan still returns because prepare_declarations omits computed helper fields from its derived plan. Reproduce the same gap through existing bitwise public private-proof inputs. Bind and compare complete namespace/declarations/events across preparation, rejecting mutation atomically while preserving callers and valid products. Fix in the shared arithmetic-proof slice with focused known-bad controls; no range emission or broad qualification.`
+  Verification: `Exact predecessor final regression demonstrates source-bitwise event and factorized-bitwise result/event mutation gaps. Complete target JSON comparison now rejects them plus arithmetic controls. Valid full native products conserve; parent receipt retains initial/final failures and source identity. No ordinary emitted-HDL defect is inferred from this private input-mutation gap.`
+  Commit: `joined to parent private-proof slice`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4`
   Status: `pending`
