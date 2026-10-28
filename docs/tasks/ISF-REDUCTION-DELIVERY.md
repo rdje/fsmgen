@@ -2098,74 +2098,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1`
   Status: `done`
   Goal: `Repair demonstrated vector-guard truthiness/width loss before symbolic relationship propagation.`
-  Acceptance: `Probe parsed Core &/| guards against the normal n-ary bitwise expression contract and actual native selectors, including disjoint one/two bit masks and nested comparisons. If actual semantics change during capture, own and repair that required-delivery blocker immediately. Preserve authored bitwise versus logical operations, recursive negation, one-bit simplifications and aliases; qualify distinct literal truth controls, one/wider widths, actual emitted operator/selector associations and caller JSON kinds. Retain genuine original RED and focused directly affected capture/AST checks with book/POD/fact sync; external runtime/full public/corpus qualification remains .6. No optional inversion or computed VHDL expansion.`
-  Verification: `Parser width .1, fixed VHDL typing .3 and independent Core opcode/literal .2 now close the bounded guard prerequisites with focused checks. The original source and Core defects are separately proved, repaired and retained; composed T2194/T2195 preserve actual native values and caller/source controls. Required symbolic relationship implementation resumes .3.4.3.2.2. Full compiler/override/runtime/public/corpus qualification stays .6.`
-  Commit: `children below`
-
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1`
-  Status: `done`
-  Goal: `Repair missing exact widths on parser-created vector bitwise intermediates and their guard truthiness.`
-  Acceptance: `P1 immediate required-delivery blocker. Native debug trace proves finalized bitwise intermediates have inferred/emitted width8 but Core Signal width1, selecting bitwise state gating and failing captured generic declaration/source agreement. ExpressionBuilder::finalize_nary_expression registers all multi-operand &/|/^ helpers without width. Use its existing exact-expression width kernel on the actual driving AST before registration; preserve one-bit/reduction/literal/unknown/operand-width and source capture contracts, without inventing a symbolic relationship. Qualify actual parsed Core and native state selectors at defaults1/8, aliases/n-ary/nested/comparison controls and distinct high-bit truth values, actual generic refusal-to-success plus complete caller kinds. Focused expression/capture/AST checks, strict native/book/POD/fact evidence and commit precede further work. External runtime/full override/public/corpus remains .6; symbolic helper range relationships remain .2.2.`
-  Verification: `Actual native --trace-verbosity=debug --trace-log proves Core helper width1 versus inferred/emitted width8; ASTSupport consequently chooses bitwise & for logical state gating. ExpressionBuilder::finalize_nary_expression omitted width. It now uses the existing exact-expression kernel before registration, preserving selected numeric result widths without resizing operands or inventing a declared-width binding. Final unchanged T2192 RED fails all four top-level subtests before repair. Initial test helpers collided with Perl caller and assumed unused C was in module membership; both oracle errors and original/corrected tests/streams retain. Final focused All tests successful Files=3 Tests=13 for T2192/T2074/T208. Actual parsed fixed/selected-param defaults1/8, aliases, n-ary/nested/comparison/reduction, literal-max and unknown-placeholder controls pass; independent literal high-bit words distinguish true logical gating from low-bit truncation. Both native fixed/captured probes now emit && and generic declaration agreement succeeds; strict runnable book fixture generates. Complete caller maps, widths and JSON kinds conserve. One directly affected fixed VHDL analysis with the exact published local GHDL binary exposes the preexisting ill-typed scalar/vector and; complete original/current raw VHDL products are byte-identical, so this independent defect is owned immediately next by .3 before programmatic .2. No provider source/submodule internals were inspected. Re-derive actual Core/AST/native traces; falsify unchanged RED, high-bit/mixed-width/unknown/static/caller controls and full target preservation; durability implementation/regression/fixture/POD/book/current cards and docs/audits/parser-bitwise-intermediate-widths-20261028.json.gz. Preserve complete prior cards and all questions; no containment allowances change. Card-capacity risk is owned by .29. The numeric source example has a three-leg derived_gate disposition under its fixed general_book group owner; this leaf owns the producer/oracle/durability evidence. Full original worktree/raw-root streams and complete external compiler/override/runtime/API/MCP/corpus proof remain missing (.6); symbolic helper relationships remain .2.2. Book/POD/source freshness and normal final-index doctrines gate commit.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1: retain exact parser bitwise helper widths`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --trace-log records Core intermediate width1 while normalization/declaration resolves8. ASTSupport uses Core metadata to select & for && state gating. ExpressionBuilder::finalize_nary_expression lines239-246 registers the driving AST's helper without width. Final original T2192 fails all four subtests, with high-bit A=B=2 producing the wrong emitted selector truth; nested literal comparison supplies a distinguishing correct control.
-  - [x] **ADDRESSED (verified)** — Existing exact-width inference now precedes actual helper registration. Core/declaration widths agree; wide selectors use logical whole-value truth, one-bit selectors stay compact. Independent high-bit/literal/nested/scalar/unknown and caller-kind controls pass. Numeric repair adds no symbolic relationship. The separate preexisting fixed VHDL type failure is diagnosed, retained and owned by immediate child .3; its complete artifact is unchanged by this repair.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2192/T2074/T208. Native fixed/selected-param probes and strict book source succeed; unknown widths and reduction/literal/operand contracts preserve. Module/test syntax, mdBook/POD/source freshness and mandatory final-index hooks gate commit. One failing fixed VHDL diagnosis is explicitly owned; full external/public/corpus qualification remains .6.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2`
-  Status: `done`
-  Goal: `Qualify programmatic Core binary guard opcodes separately from parser-hoisted source expressions.`
-  Acceptance: `After .1, reproduce actual Core-authored binary &/| guards through the public backend, using independent literal values and nested comparisons to distinguish vector from logical semantics. Decide whether CaptureSupport coercion is a real supported-contract defect; repair and qualify if demonstrated, otherwise retain the exact scope finding. Do not attribute parser-hoisted paths to that conversion. Focused caller/native/AST controls and documentation/commit close this child; no full runtime/public/corpus claim.`
-  Verification: `Actual public constructor/backend chain independently proves &/| coercion, now repaired by child .1 with focused checks. Existing aliases already render correctly. Typed binary literal radix/width loss is independently repaired by .2; .3 closes bounded composition with the same focused checks. Parsed hoisted source remains separate control.`
-  Commit: `children below`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1`
-  Status: `done`
-  Goal: `Preserve actual Core bitwise binary guard semantics at capture.`
-  Acceptance: `Actual public constructors/backend reproduce A & B becoming A && B. Preserve bitwise versus logical symbols recursively. Published Core bitwise aliases already render correctly through the actual native consumer; retain their complete products and ordinary comparison/logical/unary/source controls and caller kinds. Distinguishing disjoint AND and nested OR-value assertions plus exact native helper/selector widths at one/wider widths qualify; full external runtime remains .6. Preserve original RED, update book/POD/fact and commit before typed literals.`
-  Verification: `Actual public Core constructors/backend reproduce scalar A_and_B = A && B from vector Core A & B. Removing only &/| from logical-constructor branches preserves actual bitwise opcodes; published aliases already rendered correctly and remain unchanged. Final qualified original T2194 RED fails all four subtests; repaired T2194/T2189/T2192/T207 pass All tests successful Files=4 Tests=12. Independent literal tables distinguish disjoint AND values and nested OR comparisons, with recursive negation, one/wider actual helpers/selectors and caller-kind/reuse controls. Native before/after probe retains exact products. Oracle corrections use actual unsized assignment selector names and unchanged XOR A_op_B identity; original/corrected streams retain in docs/audits/core-binary-guard-opcodes-20261028.json.gz. Re-derive actual constructor/capture/native chain; falsify literal values and original implementation; durability tracked test/audit/POD/book/fact. Separately observed typed binary literal becomes decimal11; immediate .2 owns cause/fix. Full external/runtime/API/MCP/corpus stays .6.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1: preserve Core bitwise guard opcodes`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Qualified original T2194 reports at t/2194-core-binary-guard-opcodes.t line 68: got && expected &. CaptureSupport::convert_condition_to_ast routes &/| through logical constructors. Actual public Core/native probe emits scalar A && B from vector A & B, changing disjoint-mask truth; nested value comparisons independently distinguish OR coercion.
-  - [x] **ADDRESSED (verified)** — Only actual &&/|| use logical constructors. Bitwise symbols recurse unchanged; native result helpers/whole-value selectors preserve exact widths, aliases and caller graphs/kinds. Independent original/current assertions pass; actual source hoisting remains separately controlled. Typed literal radix/width failure is retained and owned by immediate .2, not claimed repaired.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=12 for T2194/T2189/T2192/T207. Existing unary, source/parser-width, capture, alias, scalar and caller/reuse controls pass. Syntax, POD/book/source freshness and normal hook gate commit; full .6 remains deferred.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2`
-  Status: `done`
-  Goal: `Preserve actual Core literal width and radix during condition capture.`
-  Acceptance: `P1 immediate after opcode .1, before width propagation. Actual public Core typed binary literal 00000011 width8/radix binary renders 8'b11, but convert_condition_to_ast passes only value to Utils::literal, causing native comparison to decimal11. Retain actual typed literal meaning and width through the canonical literal contract without changing unsized scalar source products; test binary/hex/octal/decimal, zero/one and nested public operands with caller-kind controls. Preserve first native failure and source loci, qualify exact emitted comparison and focused literal/capture consumers, sync book/POD/fact and commit. No general Core admission or external/full qualification claim.`
-  Verification: `CaptureSupport literal conversion formerly passed only Core value digits, discarding width/radix; actual binary value3 became decimal11 in public/native and parsed guards. It now passes the actual Core canonical to_systemverilog spelling to the existing runtime Literal consumer, retaining no caller graph. Final unchanged T2195 against exact predecessor CaptureSupport fails subtests1/3/4; ordinary unsized control passes. Current T2195/T2194/T309/T207 pass All tests successful Files=4 Tests=13. Independent exact binary/hex/octal/decimal/zero/one/negative/unsized strings, recovered numeric widths, associated native vector/comparison/selectors, actual parsed typed/decimal guards and caller/reuse controls qualify. Initial test regex delimiter syntax failure was corrected before genuine RED; full original/corrected/final tests/logs/source identities retain in docs/audits/core-condition-literal-capture-20261028.json.gz. Re-derive actual Core/capture/native/source products; falsify exact old module and independent expected literal values; durability tracked source/test/audit/POD/book/fact. The same focused composition safely closes child .3 and programmatic guard parent; full external/override/runtime/API/MCP/corpus stays .6.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2: preserve typed Core guard literals`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Final original T2195 reports at t/2195-core-condition-literal-capture.t line 30: got11 expected8'b11. convert_condition_to_ast reads only Literal::value, then constructs an untyped runtime literal. Actual Core producer and native/parsed comparisons independently expose the lost width/radix and changed numeric value.
-  - [x] **ADDRESSED (verified)** — Actual Core canonical spelling reaches the existing runtime literal contract; all independent exact spellings, recovered values/widths and associated native comparison/selectors pass. Caller literal kinds and parsed metadata preserve. Ordinary unsized products retain their original successful control; no arbitrary Core admission or caller graph is added.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=13 for T2195/T2194/T309/T207. Opcode, alias, literal normalization, capture, parsed typed/ordinary and backend reuse controls pass. Syntax/POD/book/source checks and mandatory hook gate commit; full .6 stays deferred.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
-  Status: `done`
-  Goal: `Close programmatic guard qualification after opcode and literal prerequisites.`
-  Acceptance: `After .1/.2 focused checks and commits, review their composed actual public Core/native products, confirm parsed hoisted source remains a separate control, close parent only for these bounded guards and restore symbolic bitwise relationships. No broad/external/full regression expansion; record exact remaining .6 gaps and commit a bounded closure if not safely joined to .2.`
-  Verification: `Safely joined to typed-literal child .2: current focused T2194/T2195 compose actual Core opcode/literal/native associations and preserve parsed source controls, with T309/T207 unchanged consumers. No broad verification was added. Full qualification remains .6; next implementation is .3.4.3.2.2.`
-  Commit: `joined to .3.4.3.2.1.2.2`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
-  Status: `done`
-  Goal: `Repair P1 fixed VHDL whole-vector logical guard typing before further width propagation.`
-  Acceptance: `After committed parser fix 2f2b3df44, before programmatic opcode .2. Reproduce t/data/ial0-bitwise-vector-guards.fsm through strict native VHDL. Preserve the fixed-vector predicate as whole-value Boolean truth instead of translating both SV logical and bitwise operators into an ill-typed scalar/vector and. Reuse the bounded typed Boolean kernel where valid or retain a precise unsupported refusal before any artifact; no guessed casts or low-bit truncation. Bind actual fixed declarations, exact typed helper reservation, case-insensitive helper namespace and source/raw consumers, with distinguishing high-bit/nested/logical/one-bit/static and atomic controls. Focused consumer checks plus this exact single-source GHDL analysis qualify the repair; full compiler/override/runtime/API/MCP/corpus remains .6. Book/POD/fact sync and commit precede .2.`
-  Verification: `Existing fixed scalar/vector logical assignments lose SV Boolean conversion in _sv_expr_to_vhdl. T2193 qualified original RED fails its first three subtests; corrected/current focused T2193/T2182/T2191 pass Files=3 Tests=13. Structural scalar-value mode now folds whole fixed vectors, reserving only consumed helpers before VHDL case-fold collision checks. Source/raw complete products, independent nested/negated/signed/rank-one/scalar/data/comparison and caller/reuse controls qualify. Strict native fixture passes pinned published GHDL analysis/elaboration and selected high-bit/disjoint witness; uppercase helper collision preserves existing/absent destinations. Legacy T1420 fails subtest25 identically before/after due to already-owned no-transition refusal (.27), not a new guard regression. Complete commands/oracle corrections/streams/tool digest retain in docs/audits/fixed-vhdl-vector-logic-20261028.json.gz. Re-derive actual emitted selectors/compiler; falsify old module, distinguishing literal masks, helper inventory/collisions and unchanged paths; durability tracked test/fixture/audit/POD/book/fact. Full external/override/unknown/public/corpus qualification remains .6.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3: type fixed VHDL whole-vector logical guards`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — T2193 original RED reports at t/2193-fixed-vhdl-vector-logic.t line 40: actual declaration-aware expression lacks the OR fold. _sv_expr_to_vhdl textually maps && and & to and, making scalar/vector guards ill-typed; exact prior GHDL diagnosis is retained. Actual source/raw products agree on the defect.
-  - [x] **ADDRESSED (verified)** — Existing structural Boolean kernel gains bounded scalar-value mode; consumed whole-vector helpers and case-fold names qualify before output. Corrected independent assertions pass, exact native GHDL analysis/elaboration/selected witness passes, and strict collision refusals preserve both destination states. Unsupported computed/symbolic leaves gain no authority.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2193/T2182/T2191. Original/current legacy T1420 share the preexisting subtest25 refusal, retained and owned by .27. Scalar/data/selected/comparison products, caller kinds and backend reuse pass. Module/test syntax and book/POD/source freshness plus normal hooks gate commit; full .6 remains deferred.
+  Terminal: `version_object`
+  Revision: `d0cce215fe7143d2459eea99035828405d1ff946`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `31c0c6a9f8761f17288493d045eade1cefba96224ba462b6943dd89d9384f325`
+  Archived node count: `7`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed intrinsic preparation/frame source and children: docs/audits/graph-publication-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1: retain closed intrinsic preparation/frame history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2`
   Status: `done`
@@ -2422,26 +2362,26 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1`
   Status: `done`
   Goal: `Retain closed proof history before intrinsic graph ownership expansion.`
-  Acceptance: `Current task-evidence room cannot hold the required current-row/dependency-frame and first-inference split. Retain closed Core holder .3.4.3.2.2.2.1 and graph lifecycle .3.4.3.2.3.4.2.2 through exact current-HEAD version_object terminals with whole source/digest and complete done-child closure under fsmgen_required_history. Preserve every unrelated node and live registry owner, with no nested terminal, limit or behavior change; register exact graph frame/inference successors before code.`
-  Verification: `Closed Core holder and graph lifecycle subtrees retain exact committed source/digest, complete done children and all historical acceptance/evidence bytes. Independent Git show/cat-file equality, unselected current-node byte identity, no nested terminals and every live registry owner pass. Evidence: docs/audits/intrinsic-graph-frontier-20261028.json.gz. Register current-row/dependency-frame and actual first-inference successors; no behavior, limit or qualification change.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1: prepare intrinsic graph frontier`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'bind computed graph lifecycle requirements' -- docs/tasks/ISF-REDUCTION-DELIVERY.md identifies 68bca9b62 as the closed lifecycle detail change. Live task-evidence room cannot hold the exact row/frame/inference split; closed holder/lifecycle evidence requires durable version retrieval.
-  - [x] **ADDRESSED (verified)** — Retain only complete closed Core-holder/lifecycle subtrees as current-revision digest-bound version_object terminals under fsmgen_required_history. Preserve every source/acceptance byte, unselected current node and live registry owner; register exact weak current-view, dependency-frame and first-inference successors before code.
-  - [x] **NO REGRESSION** — Exact source/closure/current-owner assertions pass; knowledge-map: OK and book/source freshness qualify the unchanged current contracts. Normal final-index doctrines remain mandatory; no behavior, budget or full .6 change.
+  Terminal: `version_object`
+  Revision: `d0cce215fe7143d2459eea99035828405d1ff946`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `31c0c6a9f8761f17288493d045eade1cefba96224ba462b6943dd89d9384f325`
+  Archived node count: `1`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed intrinsic preparation/frame source and children: docs/audits/graph-publication-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1: retain closed intrinsic preparation/frame history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2`
   Status: `done`
   Goal: `Prepare current actual graph input and dependency frames without publishing policy.`
-  Acceptance: `Introduce an epoch-bound non-owning view of the actual normalization rows; preserve original collected, factorizer and registered identities instead of assuming they are one object. Any locator must be weak and add no strong owner graph; plain proof capsules remain JSON-only. Use exact actual generated-reference width lookup precedence, current graph birth and actual selected child rows/held events. Separate pending unresolved parent input from ready post-child proof; preserve source/Core/AST/ordered-edge identity and every native/cache/floor/type/constraint requirement. Derive a stable dependency kernel only after validating the full current child event, distinguishing semantic/source revisions from exact owned cache/registry publication fields. Copied/stale/foreign/missing/cyclic rows or merely equal widths cannot supply frames. Focused real call-point/caller/lifetime/refusal/native checks and synchronized docs precede commit. No intrinsic graph event, completed policy, target or HDL change.`
-  Verification: `Weak actual-row input/ready frames validate current held children before parent publication. Copied/stale/foreign/floored inputs refuse; source writes during later sibling reads now revoke earlier proof. Full native products equal authenticated predecessor; weak locator releases registry. Re-derive actual call points, falsify predecessor and stale-child controls, retain exact sources/logs in docs/audits/arithmetic-graph-frames-20261028.json.gz. No graph event/policy/range or full .6 claim.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2: validate pending and ready graph frames`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor reports Can't locate object method prepare_input at ./t/2221-arithmetic-graph-inference-frames.t line 57. Actual collected/factorizer/registered rows differ. The initial sibling control fails at t/2221-arithmetic-graph-inference-frames.t line 213: a later getter invalidated an already-read child without invalidating ready return.
-  - [x] **ADDRESSED (verified)** — Bind a weak epoch/view and actual unresolved rows; validate exact ordered inputs and full current child proof, then compare the complete dependency vector again. Independent registered/child floors, stale sources and copied views withhold; capsules detach and no event or range is installed.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20 for T2221/T2205/T2220/T2216. Full source/HDL/target/policy products equal authenticated predecessor; private frame/caller/lifetime controls pass. POD/book/fact and normal final-index doctrines gate commit; full qualification stays deferred.
+  Terminal: `version_object`
+  Revision: `d0cce215fe7143d2459eea99035828405d1ff946`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `31c0c6a9f8761f17288493d045eade1cefba96224ba462b6943dd89d9384f325`
+  Archived node count: `1`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed intrinsic preparation/frame source and children: docs/audits/graph-publication-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1: retain closed intrinsic preparation/frame history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
   Status: `done`
@@ -2454,14 +2394,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1`
   Status: `done`
   Goal: `Retain closed graph-birth evidence before intrinsic event integration.`
-  Acceptance: `Retain only the closed original graph-birth subtree at exact current HEAD under fsmgen_required_history. Preserve full source/digest/children, every unrelated node and live owner, without nested terminals or changed budgets; native retrieval and normal hooks before event code.`
-  Verification: `Exact committed graph-birth subtree and complete done children retain through digest-bound version_object retrieval. Independent Git source equality, unchanged unrelated nodes and every live owner pass; receipt docs/audits/graph-event-frontier-20261028.json.gz. No source/behavior/limit/qualification change.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.1: prepare graph event frontier`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S retain original arithmetic graph births locates 0e131d680. Closed graph-birth detail occupies task-evidence capacity needed for current intrinsic event proof; its exact prior source requires durable retrieval.
-  - [x] **ADDRESSED (verified)** — Retain the full closed graph-birth subtree under fsmgen_required_history with exact revision/digest/children. Independent source, complete closure and live-owner/unrelated-node checks pass; actual intrinsic integration remains the next owned leaf.
-  - [x] **NO REGRESSION** — knowledge-map: OK remains required by the final hook. Native task retrieval, book/source checks and normal doctrines validate the exact retained history and unchanged budgets; no source behavior or full qualification promotion.
+  Terminal: `version_object`
+  Revision: `d0cce215fe7143d2459eea99035828405d1ff946`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `31c0c6a9f8761f17288493d045eade1cefba96224ba462b6943dd89d9384f325`
+  Archived node count: `1`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed intrinsic preparation/frame source and children: docs/audits/graph-publication-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1: retain closed intrinsic preparation/frame history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3.2`
   Status: `done`
@@ -2477,11 +2417,53 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=20; alternate traversal Files=1 Tests=6. Native source/HDL/target/completed policies conserve; guarded depth and known-bad controls qualify the cost repair. POD/book/facts and mandatory hooks gate commit; .3.3 owns policy/publication.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish completed current graph allocation through owned normalization and registry boundaries.`
   Acceptance: `After .2, preserve only exact current graph events through actual width/source publications, registry copies/rebuilds, cache reads and collection success. Bind dependency identities/revisions and transitive source state; matching-state source writes or changed child/current registry events revoke every dependent policy. Partial/failing/reset/reused generations expose no prior graph policy; new constraints or copied metadata cannot revive it. Keep ordinary whole-source APIs and numeric HDL stable, with graph target publication/range admission still separate. Focused live currentness/failure/reuse/native controls, POD/book/facts and commit close graph producers.`
-  Verification: `pending first intrinsic graph events`
+  Verification: `Intrinsic graph/cache events pass focused checks in arithmetic-graph-intrinsic-20261028; exact publication transitions remain pending.`
   Commit: `pending completed graph producer`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1`
+  Status: `done`
+  Goal: `Retain closed width-proof history before graph publication work.`
+  Acceptance: `Retain exact closed frame/frontier prerequisites and vector-guard repair history after the mandatory LF-allowance rejection through current-HEAD digest/count/closure and fsmgen_required_history. Preserve unrelated nodes, live registry owners and all budgets; native retrieval and normal hooked commit before code.`
+  Verification: `Exact closed preparation/frame/vector-guard sources, complete children and live-owner/unrelated-node equality pass. Digest-bound terminals retain all evidence: docs/audits/graph-publication-frontier-20261028.json.gz. Initial LF rejection and exact vector-guard retention repair retain in the receipt; no budget change.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.1: prepare graph publication frontier`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S validate pending and ready graph frames locates 35272feca. Closed preparation/frame detail occupies capacity required for exact publication evidence.
+  - [x] **ADDRESSED (verified)** — Retain only closed prerequisites through exact Git source/digest/child retrieval; preserve every unrelated node, live registry owner and budget. Register normalization, registry, view and completion successors.
+  - [x] **NO REGRESSION** — Independent closure/source/owner checks pass; native retrieval, knowledge-map: OK and book/source freshness remain enforced by normal final-index hooks. No behavior or full qualification claim.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.2`
+  Status: `pending`
+  Goal: `Preserve graph events through actual normalization width/source publication.`
+  Acceptance: `Checkpoint current graph proof before the real normalizer callback; refresh only exact permitted allocator/registered width/source writes. Transitive order, source/constraint mutation, failure and legacy providers preserve fail-closed behavior. No completed graph policy.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3`
+  Status: `pending`
+  Goal: `Preserve graph events through actual merged registry copies and rebuilds.`
+  Acceptance: `Capture current graph holders before any dependent holder is taken or registry reset. Bind exact merged row identities/metadata, restore dependency-safe only after actual installs, reject partial/copied/stale/changed inputs and clear on failure. Whole policies/numeric products preserve.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.4`
+  Status: `pending`
+  Goal: `Carry graph currentness into the actual weak prepared-row view.`
+  Acceptance: `At the real filtered-view handoff validate old current holders and exact retained row/dependency identities before weak rebind. Update only owned view identity/revision; no strong registry or owner graph, no copied/omitted dependencies or guessed aliases.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.5`
+  Status: `pending`
+  Goal: `Complete graph allocation policy after successful current collection and handoff.`
+  Acceptance: `Expose separate current completed graph policy only after qualified collection/pruning/registry/view boundaries; failure/reset/new epoch/reuse revoke old policy. Preserve ordinary APIs and all native products. Focused complete lifecycle/refusal/POD/book/facts and commit; target/ranges stay later.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
   Status: `pending`
