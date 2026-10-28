@@ -521,8 +521,9 @@ current ordered edges, original tree/leaves and range representative, plus
 children-before-parent C<node_order> and per-node plans. Source/target snapshots,
 canonical plans and complete current policy recheck at return. This method emits
 no HDL, admits no graph VHDL profile and requires the actual weak row view to
-remain current. Final deep-mutation/lifetime qualification and live graph range
-emission remain separately owned.
+remain current. Focused deep-input and weak caller-view controls qualify this
+private join; live graph range emission and full feature qualification remain
+separately owned.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

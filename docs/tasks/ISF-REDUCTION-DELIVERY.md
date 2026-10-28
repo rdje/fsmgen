@@ -1971,11 +1971,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2226/T2222/T2205); alternate traversal Files=1 Tests=3. Exact native source/HDL/target/old policy products preserve except new completed graph diagnostics. POD/book/fact and mandatory hooks qualify this producer foundation; target/range/full .6 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare canonical transitive computed arithmetic source and target ranges.`
   Acceptance: `After actual current graph policies, recursively join exact selected typed edges/child events to complete source/target constraints and identical frozen leaf relationships. Preserve child/root identities, actual ordered operators, result/operand independent widths, default-one rank and source roles. Detect cycles, stale edges, foreign or merely numeric/printed child ranges and independent constraints. Return detached private plans only, with complete input/source/currentness rechecks. No caller graph laundering, arithmetic emission or binary VHDL activation; focused native/private/atomic controls plus synced docs precede commit.`
-  Verification: `Actual completed graph allocation now has focused checks through .3.3.5. Selected graph target events and canonical transitive source/target proof remain pending.`
-  Commit: `pending transitive canonical proof`
+  Verification: `Closed shared schema/collector, actual selected graph target policy, all-leaf frozen source relationships, canonical transitive selected target proof and independent deep-input/weak-view controls have focused checks. Exact receipts graph-schema/graph-target/graph-source/graph-join/graph-proof retain implementation and falsification legs. Actual graph range emission .2.5 and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.5: qualify graph proof inputs and lifetime`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.5`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.1`
@@ -2072,12 +2072,17 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2: prepare canonical selected graph ranges`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Close private graph range proof with complete-input and source-currentness controls.`
   Acceptance: `Recheck complete source/namespace/declaration/event inputs at return, including deep child changes hidden by unchanged derived plans. Qualify detached plan/caller lifetime, refusal/atomicity and existing-family conservation; update POD/book/facts and commit before actual graph range emission .5. Full .6 remains deferred.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Independent actual-block controls prove full source/target snapshots reject changes hidden by unchanged canonical plans. Supported source writes revoke current dependency proof. Detached JSON retains no row map, and owner loss during preparation refuses. Re-derive actual callers, falsify isolated missing target/source snapshot and strong-view variants, retain exact sources/logs in docs/audits/graph-proof-20261028.json.gz. Production executable bytes unchanged; actual graph emission and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.5: qualify graph proof inputs and lifetime`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Canonical plan equality alone hides late nested target data and non-width source constraints. Removing only target snapshot equality fails the complete target mutation assertion at ./t/2231-arithmetic-graph-proof-closure.t line 82; removing source snapshot or weak row-view guard independently accepts stale or owner-expired proof. Exact failed diagnostics and source variants retain in graph-proof-20261028 receipt.
+  - [x] **ADDRESSED (verified)** — Independently qualify existing complete input snapshots, current dependency checks and actual weak caller ownership using a retained real prepared block. API calls exclude unrelated owner arguments; returned JSON neither retains nor revives the row container. Each isolated guard mutant fails. Executable source is unchanged; this closes private proof qualification before live graph emission.
+  - [x] **NO REGRESSION** — All tests successful Files=2, Tests=8 (T2231/T2230); alternate traversal Files=1, Tests=4. Baseline/current production executable text is byte-identical after POD removal. Exact prior graph-join native conservation remains authoritative; no repeated broad gate or graph/VHDL emission is claimed. Full .6 and whole-backend/Core cycles remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
   Status: `pending`

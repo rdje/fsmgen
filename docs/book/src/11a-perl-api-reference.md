@@ -363,9 +363,19 @@ child's symbolic declaration in repeated-computed graphs, including vector rank
 at a default width of one. The computed parent retains its numeric declaration
 until graph emission is implemented. A real cycle retains conservative numeric
 fallback and creates no graph proof. The focused executable examples are
-in `t/2230-arithmetic-graph-intermediate-ranges.t`. Deep mutation/lifetime closure,
-actual graph range emission and full qualification remain pending. This private
+in `t/2230-arithmetic-graph-intermediate-ranges.t`. Focused deep-input and weak
+caller-view closure checks now pass in `t/2231-arithmetic-graph-proof-closure.t`.
+Actual graph range emission and full qualification remain pending. This private
 join emits no HDL and does not extend VHDL admission.
+
+The closure controls change nested child target metadata, selected original-tree
+data and a source constraint after canonical source preparation. Even when the
+derived canonical plans stay equal, complete input snapshots reject the changed
+proof. Matching supported source writes independently revoke dependency policy.
+Returned graph JSON retains no row container and cannot revive an expired view.
+If the caller releases its last actual prepared-block owner during preparation,
+the join refuses. These are graph row-view guarantees; whole-backend and Core
+ownership cycles remain separately tracked.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

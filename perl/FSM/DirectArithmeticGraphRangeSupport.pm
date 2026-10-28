@@ -235,7 +235,10 @@ The detached root plan contains its selected policy/origin/expression, width and
 ordered current operands, original tree/leaves and canonical range representative.
 C<node_order> lists children before parents; C<nodes> contains corresponding
 per-child plans with their own first-leaf representative. This private API emits
-no HDL and extends no VHDL profile. Deep mutation/lifetime qualification and live
-graph range emission remain separately owned.
+no HDL and extends no VHDL profile. Focused controls cover deep source/target
+changes hidden by unchanged canonical plans, supported dependency writes,
+detached return data and expiry of the actual caller's row-map ownership during
+preparation. These checks cover the graph row view; whole-backend/Core ownership
+cycles and live graph range emission remain separately owned.
 
 =cut
