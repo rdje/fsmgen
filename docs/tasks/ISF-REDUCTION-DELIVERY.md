@@ -2764,11 +2764,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Native task integrity passes exact current live/archived topology. knowledge-map: OK and complete book/source-view checks qualify retrieval/navigation; the normal final-index doctrine hook checks unchanged budgets/allowances. All open target/range/unsupported-shape/full .6 obligations remain live; no implementation verification is promoted.
 
 - ID: `ISF-REDUCTION-DELIVERY.34`
-  Status: `pending`
+  Status: `done`
   Goal: `Run the due authenticated daily artifact census after the clean source attachment commit.`
   Acceptance: `After .3.4.3.2.2.2.4.2.1 commits, reuse installed byte-authenticated collector/reviewer/hostile saved controls in a fresh exclusive 20261028 slot bound to actual native HEAD and this owner. Confirm more than 24 hours from the latest record, independent same-volume regular log/bin membership and root/Rust locations, excluding other repositories/symlinks/volumes. Retain every candidate without exact disposal authority. Overwrite the latest-only date/summary, synchronize the saved-reader book route, run focused saved-reader and mandatory commit gates, commit, then resume .3.4.3.2.2.2.4.2.2. Do not replay spent source/compiler epochs or raise budgets.`
-  Verification: `Pending clean attachment commit; prior record 2026-10-27T10:52:23.434576+00:00 is now over 24 hours old.`
-  Commit: `pending`
+  Verification: `At 2026-10-28T11:08:10.040207+00:00 the authenticated installed collector admits the interval beyond the prior 24-hour boundary. Native HEAD 42af56bec binds the prior record and installed collector bytes; the fresh exclusive wrapper changes only owner/revision/producer/output. Actual regular same-volume log/bin metadata and root/Rust location census agrees exactly with independent rg membership. No disposal authority exists, so all 7303 candidates remain and removed is empty. Saved reader authenticates native prior/source/interval and rejects missing-member, unsafe-path, Boolean-size and invented-removal controls. Re-derive actual filesystem census; falsify independent rg and genuine hostile saved-record controls; durability docs/audits/artifact-census-20261028/census.py and census.json.gz, latest-only record/task/book and Git. No content identity, reclamation, future absence or original/compiler execution claim. Same-size dated book reader change retains the unchanged aggregate authority; no budgets grow. Saved reader, knowledge-map/book/source and normal hooked doctrines gate commit; resume .3.4.3.2.2.2.4.2.2.`
+  Commit: `ISF-REDUCTION-DELIVERY.34: complete due daily artifact census`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup locates the record registration at 495e394d1c; git log -1 for the file identifies latest prior update 6c3a1c822c. Exact native prior record and captured UTC pass the installed collector's unchanged 24-hour assertion after the clean source-attachment commit. Age/suffix gives no disposal authority.
+  - [x] **ADDRESSED (verified)** — Run the authenticated installed census in a fresh exclusive slot, preserve every observed candidate and excluded boundary, verify actual rg membership and saved hostile-record controls, and update only the latest cleanup date/summary plus current book reader. No source/compiler epoch is replayed or candidate deleted.
+  - [x] **NO REGRESSION** — Saved collector/reviewer and genuine missing-member/unsafe-path/Boolean-size/invented-removal controls pass. knowledge-map: OK and book/source freshness qualify navigation; normal final-index doctrines gate the same-size reader update without aggregate/budget changes. Selected-event publication resumes from its existing live owner.
 
 ## Blockers
 

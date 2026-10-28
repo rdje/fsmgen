@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.34`
-- next_action: Run the due authenticated daily artifact census in a fresh exclusive slot bound to native HEAD, update the latest-only record/book reader, and commit.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4.2.2`
+- next_action: Publish current attached source/factorizer policies only with agreeing selected binary origin/text and actual declaration; preserve old snapshots after removing only width_allocation.
 - in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.
