@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use Scalar::Util qw(blessed);
 use FSM::CoreAST;
+use FSM::IntermediateWidthAllocationSupport;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
@@ -36,6 +37,29 @@ sub state_active_references($self) {
 sub clear_state_active_references($self) {
     $self->{state_active_references} = [];
     return 1;
+}
+
+sub _capture_intermediate_width_allocations($self, $callback) {
+    confess "Intermediate allocation capture requires a callback\n" unless ref($callback) eq 'CODE';
+    confess "Intermediate allocation capture is already active\n"
+        if exists $self->{_intermediate_width_allocation_capture};
+    local $self->{_intermediate_width_allocation_capture} = [];
+    my $value = $callback->();
+    return {value => $value, events => $self->{_intermediate_width_allocation_capture}};
+}
+
+sub _stage_intermediate_width_allocation($self, $signal, $operator, $operands, $width) {
+    my $events = $self->{_intermediate_width_allocation_capture} or return;
+    return unless defined($width) && $width > 0 && @$operands == 2;
+    return if grep {!blessed($_) || !$_->isa('FSM::CoreAST::SignalRef') || defined($_->slice)} @$operands;
+    my $record = {kind => 'binary_operand_max', operator => $operator,
+        source_names => [map {$_->signal->name} @$operands], selected_width => $width};
+    # Unsupported signed/named/context shapes retain their ordinary numeric
+    # allocation. Withholding a private event must not change source admission.
+    my $holder = eval {FSM::IntermediateWidthAllocationSupport->prepare_core(
+        signal => $signal, record => $record, track => 1)};
+    return unless $holder;
+    push @$events, {signal_name => $signal->name, holder => $holder};
 }
 
 sub parse_condition($self, $condition) {
@@ -246,6 +270,7 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
         );
 
         $signal->set_driving_ast($ast_tree);
+        $self->_stage_intermediate_width_allocation($signal, $operator, $parsed_operands, $width);
         fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
 
         return FSM::CoreAST::SignalRef->new($signal);
@@ -1152,6 +1177,17 @@ width. Core metadata, native declarations and guard truthiness therefore agree;
 a wide intermediate is tested as a whole nonzero value rather than through its
 low bit. Unary reductions remain scalar, and literal widths remain independent
 max constraints. This sizing does not resize operand Signals.
+
+Internal C<_capture_intermediate_width_allocations(callback)> runs one scalar
+callback with a source-local journal and returns C<{value, events}>. Only actual
+fresh binary whole-reference allocations can stage an explicit intrinsic-max
+contract. Events contain plain detached state and scalar identity fingerprints,
+not Core owner references; they publish no Signal policy. Validated result and
+operand revision counters revoke events on supported matching-state mutations.
+Nesting refuses; success or exception restores the builder's prior state.
+Unsupported shapes retain ordinary allocation without events. Later parser
+reference registration currently revokes earlier events conservatively; qualified
+reference/classifier transitions and complete facade publication remain successors.
 
 An unknown exact width retains the existing placeholder behavior. Selected
 numeric widths do not create a declared-width binding or prove a mutable

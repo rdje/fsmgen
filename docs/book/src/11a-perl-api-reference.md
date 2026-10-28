@@ -67,7 +67,10 @@ are eligible, as are unspecified and legacy lowercase intermediate roles; other
 explicit roles are withheld. Opaque equal-width metadata installs nothing. Getter and
 replacement records detach; the capsule adds no mutable owner graph. Actual
 parser/factorizer allocation publication and generic range consumers remain
-separate implementation steps.
+separate implementation steps. An internal builder callback can now journal
+fresh binary allocations as plain data without publishing them. Matching helper
+or operand writes revoke staged intent; slices cannot assert whole-signal policy.
+Reference/classifier transitions and facade integration remain pending.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

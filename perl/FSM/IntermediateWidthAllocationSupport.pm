@@ -43,7 +43,8 @@ sub _descriptor ($signal) {
         && !$signal->signed && !defined($signal->declared_type_name) && !defined($signal->declared_type_spec);
     return {object_identity => sprintf('%x', refaddr($signal)), name => $signal->name,
         width => _width($signal->width), type => $signal->type, signed => $signal->signed,
-        state_model => $signal->state_model, constraints => $signal->constraints};
+        state_model => $signal->state_model, constraints => $signal->constraints,
+        revision => $signal->_intermediate_width_allocation_revision};
 }
 
 sub _capture ($signal) {
@@ -52,7 +53,8 @@ sub _capture ($signal) {
         && !$signal->get_attribute('is_output') && !$signal->get_attribute('is_aux_output')
         && !$signal->get_attribute('width_declared');
     my $role = $signal->get_attribute('signal_role');
-    return if defined($role) && (ref($role) || $role ne 'intermediate' && $role ne 'INTERNAL_INTERMEDIATE');
+    return if defined($role)
+        && (ref($role) || ($role ne 'intermediate' && $role ne 'INTERNAL_INTERMEDIATE'));
     return if grep {exists($signal->{$_})} qw(_declared_width_source _declared_width_binding _declared_width_requirements);
     return unless ref($own->{constraints}) eq 'ARRAY' && !@{$own->{constraints}};
     my $ast = $signal->driving_ast;
@@ -62,6 +64,7 @@ sub _capture ($signal) {
     my (@names, @sources, @references);
     for my $operand ($ast->left, $ast->right) {
         return unless blessed($operand) && $operand->isa('FSM::CoreAST::SignalRef');
+        return if defined $operand->slice;
         my $source = $operand->signal;
         my $descriptor = _descriptor($source) or return;
         return if refaddr($source) == refaddr($signal) || $source->name eq $signal->name;
@@ -93,6 +96,14 @@ sub prepare_core ($class, %args) {
     my $capture = eval {_capture($args{signal})};
     confess "Intermediate width allocation requires the actual current plain binary max shape\n"
         unless $capture && _matches($record, $capture);
+    if ($args{track}) {
+        # Track only explicitly opted-in objects. Initializing an absent counter
+        # to zero preserves the already captured state, but future supported
+        # writes revoke this event even if they restore identical values.
+        my $signal = $args{signal};
+        $_->_track_intermediate_width_allocation
+            for ($signal, $signal->driving_ast->left->signal, $signal->driving_ast->right->signal);
+    }
     return {record => $record, state => $capture->{state}};
 }
 
@@ -136,7 +147,8 @@ The actual result must be a plain unsigned wire intermediate without an authored
 width record, conflicting output/auxiliary/declared role, or own constraints.
 An absent role, legacy C<intermediate>, or canonical C<INTERNAL_INTERMEDIATE>
 role is eligible; other explicit roles are withheld. Matching role writes revoke.
-Operands are plain unsigned Core wire/register Signals. The current driving AST,
+Operands are unsliced whole references to plain unsigned Core wire/register Signals.
+The current driving AST,
 actual Signal/operand identities, selected width, type/role/constraint state and
 revocation revision must agree. Named/signed or other shapes remain unqualified.
 Context-widened/truncated results cannot assert this intrinsic-max contract.
@@ -148,7 +160,10 @@ Context-widened/truncated results cannot assert this intrinsic-max contract.
 C<prepare_core(signal =E<gt> $signal, record =E<gt> $record)> returns a detached
 plain C<{record, state}> capsule. It throws for malformed or incoherent supplied
 records. Only an actual allocator may supply the intent contract; this helper's
-shape validation is not caller-provenance attestation. The state contains scalar
+shape validation is not caller-provenance attestation. Internal C<track =E<gt> 1>
+opts the validated result and operand Signals into revocation counters, so later
+supported matching-state writes also invalidate staged or installed source intent.
+Ordinary validation/getters do not start tracking. The state contains scalar
 identity fingerprints and JSON data, with no additional mutable owner graph.
 
 =head2 current_core

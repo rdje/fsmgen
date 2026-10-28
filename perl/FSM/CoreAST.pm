@@ -276,6 +276,8 @@ Revoke the record and return this Signal. Previously opted-in Signals retain a
 revocation counter; ordinary lookup/clear creates no field. Actual driving-AST,
 relevant role/constraint, authored-metadata and registry width/type/source writes
 revoke an installed contract even for matching-state replacements.
+Explicit installation also tracks operand revisions; matching source writes
+invalidate the contract without adding references to the source owner graph.
 
 =cut
 
@@ -295,14 +297,18 @@ revoke an installed contract even for matching-state replacements.
     sub set_intermediate_width_allocation($self, $record) {
         $self->clear_intermediate_width_allocation;
         return $self unless defined $record;
-        my $holder = FSM::IntermediateWidthAllocationSupport->prepare_core(signal => $self, record => $record);
-        $self->{_intermediate_width_allocation_revision} //= 0;
+        my $holder = FSM::IntermediateWidthAllocationSupport->prepare_core(
+            signal => $self, record => $record, track => 1);
         $self->{_intermediate_width_allocation} = $holder;
         return $self;
     }
 
     sub _intermediate_width_allocation_revision($self) {
         return $self->{_intermediate_width_allocation_revision} // 0;
+    }
+
+    sub _track_intermediate_width_allocation($self) {
+        $self->{_intermediate_width_allocation_revision} //= 0;
     }
 
     # FANIN CONE ACCESS: Core signal-AST relationship methods
