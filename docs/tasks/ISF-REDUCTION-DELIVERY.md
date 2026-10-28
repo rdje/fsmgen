@@ -2318,87 +2318,26 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2`
   Status: `done`
   Goal: `Publish explicit current factorizer allocation for the next arithmetic kernel.`
-  Acceptance: `Actual source .1 leaves arithmetic inline; actual factorizer creates the helper. Qualify a closed producer policy for selected plain whole-operand arithmetic while preserving bitwise origins/Core-holder scope or deriving provenance from cached equality. Preserve actual source/default/AST/target numeric products, independent contexts, failure/reset/reuse and caller isolation. Use a separate canonical max-shape recognizer for admitted binary arithmetic, keeping the existing bitwise-only origin recognizer unchanged. Qualify the inherited unresolved birth, first intrinsic inference, held cache/publication lifecycle and current completed policy before target events; source Parser/Core helper profile remains unchanged. Focused actual source/private/negative controls and exact native products qualify this producer slice; synchronize contracts and commit.`
-  Verification: `Canonical arithmetic max shapes now supply actual unresolved births and intrinsic held/completed policies. Bitwise origins/Core scope remain narrow. T2216/T2204/T2205/T2198: All tests successful Files=4 Tests=18. Authenticated predecessor fails arithmetic and old bitwise constraint controls. Native HDL/events/source captures conserve after only new arithmetic private fields; constrained bitwise policy alone disappears. Re-derive actual producers; falsify predecessor/floors/stale/constraints/lifecycle; durability docs/audits/arithmetic-allocation-producer-20261028.json.gz. Arithmetic target events/ranges and full .6 remain pending.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2: qualify current arithmetic allocation policies`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2.1`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2216 fails existing bitwise unconstrained-profile control at ./t/2216-arithmetic-allocation-producer.t line 119. Arithmetic births/policies are absent; shared frames snapshot opaque operand constraints without rejecting them.
-  - [x] **ADDRESSED (verified)** — Add a closed arithmetic max-shape path and enum, preserve bitwise origins/Core scope, and reject opaque operands before tracking. Actual producer/currentness/failure/reuse and independent native controls pass; target promotion stays separate.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=18. Exact native HDL/events/source captures conserve; only qualified private arithmetic data and the constrained-policy refusal change. POD/book/knowledge and final-index hook gate commit; full .6 remains deferred.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2.1`
-  Status: `done`
-  Goal: `Withhold opaque operand constraints at the shared factorizer frame.`
-  Acceptance: `P1 direct prerequisite discovered by the arithmetic producer negative: constrained_source still returns a current policy. factorized_inference_frame snapshots operand constraints but does not reject nonempty opaque constraints; later target publication already refuses. Reproduce on the existing raw-Core bitwise factorizer as an independent control, then require empty constraints before tracking/intrinsic policy. Preserve fixed/ordinary numeric products and currentness/lifecycle; qualify with focused old/new producer controls. Join this small shared-frame repair to the in-flight producer commit rather than promote an overbroad private profile.`
-  Verification: `Old raw-bitwise and arithmetic controls reproduce opaque-operand policy admission. Empty constraints now gate frames before tracking. Focused old/new tests pass; native constrained HDL/events/source data conserve while its private policy withholds. Evidence: parent receipt.`
-  Commit: `joined to parent producer`
-
+  Terminal: `version_object`
+  Revision: `4a378c9f24e2226793ed978eca280eff454fecb5`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `3b0eb948bd383d29707897a86d6e012eec491c04e3ac5b33bc891015797c632e`
+  Archived node count: `2`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed arithmetic producer/consumer source and children: docs/audits/computed-graph-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1: retain closed arithmetic history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3`
   Status: `done`
   Goal: `Join qualified arithmetic allocation to canonical ranges and actual emission.`
-  Acceptance: `After .2, prove all source/target constraints for selected arithmetic relationships, retaining actual operator and ordered operands. Consume only proved kernels at actual declarations/expressions and independently close final emitted records. Preserve literal sizing, signed/type/floor restrictions, default-one rank and truth behavior; unsupported relationships refuse promotion. Paired VHDL and full .6 remain separate.`
-  Verification: `Selected arithmetic events, private canonical complete source/target ranges and actual emission/final closure now have focused checks under .2-.4. Exact historical prerequisite .1 preserves old closed proof. Receipts arithmetic-target-events, arithmetic-range-proof and arithmetic-range-emission-20261028.json.gz compose this bounded consumer; no broad/full .6 claim. Remaining scalar/unary/n-ary/nested constraints proceed under .3.4.3.2.3.4.`
-  Commit: `closed with .4 actual emission`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.1`
-  Status: `done`
-  Goal: `Retain closed target/event proof history before arithmetic consumer expansion.`
-  Acceptance: `Current task-evidence room cannot hold the required publisher/proof/emitter split. Preserve completed .3.4.3.2.2.2.4 and .5 subtrees as exact current-HEAD version_object terminals with whole-source digest, complete child closure and fsmgen_required_history. Preserve all unrelated/current registry owners, every historical acceptance byte and no nested terminals; change no budget. Also own the director-requested overall backlog review: its derived ignored search capture was created before a leaf was assigned. Record that process miss and verify every captured line against canonical book sources; retain it as owned evidence without deleting other artifacts. Commit this continuity prerequisite before code.`
-  Verification: `Closed event/publication and private source/target-proof subtrees retain complete committed source/digest/child retrieval. Independent Git show/cat-file equality, unrelated-node byte identity, no nested terminals and every live registry owner pass. The status-search artifact is now explicitly owned, with complete source-line parity and its pre-ownership process miss retained. Evidence: docs/audits/arithmetic-target-frontier-20261028.json.gz. No behavior, limit or qualification change; actual arithmetic publisher .2 is next.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.1: prepare arithmetic target-event frontier`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S prepare_binary_intermediate_range identifies 967bee73f as the latest closed task-source change. Current task-evidence room cannot hold the necessary arithmetic publisher/proof/emitter expansion; its already closed target/event proof details require exact durable retrieval.
-  - [x] **ADDRESSED (verified)** — Replace only complete closed subtrees with digest-bound version_object terminals under fsmgen_required_history; preserve every historical source/acceptance byte, unselected current node and live registry owner. Register the next arithmetic leaves and own/verify the status lookup artifact explicitly.
-  - [x] **NO REGRESSION** — Exact source/child/owner assertions and knowledge-map: OK pass. Current code/policies, all budget limits and qualification boundaries are unchanged. Book/source freshness and normal final-index doctrine hook qualify the metadata-bearing continuity commit.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2`
-  Status: `done`
-  Goal: `Publish selected arithmetic origins and current allocation policy in actual target events.`
-  Acceptance: `Capture a separate closed binary_arithmetic origin for canonical + - * / % whole operands, agreeing defining/runtime/cached ASTs and fresh selected text. Join only current actual arithmetic policy; preserve widths as independent without policy. Extend collector membership/closed-family/constraint/atomic checks and old recovery-provider compatibility. Keep bitwise origins/Core scope and scalar VHDL boundaries; explicitly fence existing bitwise range closure so arithmetic event publication alone leaves HDL/numeric ranges unchanged. Focused actual source/collector/currentness/refusal/native controls, POD/book/fact and commit.`
-  Verification: `Actual selected canonical arithmetic events join separate origins/current policies. T2217/T2216/T2197/T2208/T2191: All tests successful Files=5 Tests=24; added actual symbolic VHDL refusal passes. Authenticated predecessor fails three final regression subtests. Full native HDL/source/birth/policy/scalar products conserve; only arithmetic event fields change. Re-derive actual publication; falsify stale/conflicting/foreign/legacy/independent-width controls; durability docs/audits/arithmetic-target-events-20261028.json.gz. Numeric declarations and bitwise closure stay unchanged; arithmetic ranges/full .6 remain pending.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.2: publish selected arithmetic target events`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2217 reports missing arithmetic_origin at ./t/2217-arithmetic-target-events.t line 51. Actual allocation exists, but selected assignment recovery/publisher and closed collector have no arithmetic origin join.
-  - [x] **ADDRESSED (verified)** — Publish separate closed arithmetic origins and optional current policies; validate exclusive family/member/max contracts. Preserve legacy recovery providers, independent widths and bitwise-only range closure; actual arithmetic declarations remain numeric.
-  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=24; actual symbolic VHDL refusal also passes. Exact predecessor/native product comparison conserves all HDL/source/private producer fields and scalar controls; only declared arithmetic event fields change. Book/POD/card and normal final-index hook qualify commit; full .6 deferred.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3`
-  Status: `done`
-  Goal: `Prepare actual arithmetic target ranges against all source and allocation constraints.`
-  Acceptance: `After .2, join current arithmetic events/actual metadata to complete source and target plans, plain operand profiles and intrinsic max proof. Require identical frozen mutable relationships, preserving distinct ordered operands and independent constraints; aliases/equal defaults/computed/foreign/stale cases cannot supply proof. Return detached private ranges with default-one vector rank; arithmetic emission and VHDL remain separate. Focused actual-target/private/atomic controls and synchronized contracts precede commit.`
-  Verification: `Canonical private arithmetic ranges join actual current policy/events to identical complete operand contracts, with default-one vector rank. T2218/T2212/T2217: All tests successful Files=3 Tests=14. Authenticated predecessor fails arithmetic and inherited bitwise complete-target mutation controls. Seven-case complete native HDL/source/producer/event products conserve. Re-derive actual plans; falsify aliases/floors/copies/late changes/typed/computed/foreign cases; durability docs/audits/arithmetic-range-proof-20261028.json.gz. Live arithmetic emission and full .6 remain pending.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3: prove private arithmetic intermediate ranges`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3.1`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2218 reports closed selected-event refusal at perl/FSM/DirectDeclaredWidthSupport.pm line 209. Its final raw-factorized bitwise controls also expose late computed-helper/event mutation: the repeated derived target plan omits those fields.
-  - [x] **ADDRESSED (verified)** — Select one closed origin family and its matching current policy publisher for canonical source/target joins. Snapshot and recheck complete target inputs before returning; existing source/factorized bitwise mutation controls reject the inherited gap. Keep live arithmetic emission separate.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=14. Exact seven-case predecessor/native products conserve all HDL/source/producer/event data; default-one rank, fixed controls, scalar VHDL refusal and detached caller preservation pass. Book/POD/cards and final-index hook qualify commit; full .6 stays deferred.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.3.1`
-  Status: `done`
-  Goal: `Close complete target-input mutation during private binary proof.`
-  Acceptance: `New arithmetic late-target control changes the result width after the first relationship proof; the private plan still returns because prepare_declarations omits computed helper fields from its derived plan. Reproduce the same gap through existing bitwise public private-proof inputs. Bind and compare complete namespace/declarations/events across preparation, rejecting mutation atomically while preserving callers and valid products. Fix in the shared arithmetic-proof slice with focused known-bad controls; no range emission or broad qualification.`
-  Verification: `Exact predecessor final regression demonstrates source-bitwise event and factorized-bitwise result/event mutation gaps. Complete target JSON comparison now rejects them plus arithmetic controls. Valid full native products conserve; parent receipt retains initial/final failures and source identity. No ordinary emitted-HDL defect is inferred from this private input-mutation gap.`
-  Commit: `joined to parent private-proof slice`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4`
-  Status: `done`
-  Goal: `Consume proved arithmetic ranges at actual emission with independent final closure.`
-  Acceptance: `After .3, use current allocation/source proof at arithmetic declarations and independently reprove completed target/event identities, expressions, origins, roles and ranges. Preserve one generation, width-one vector rank/truth, fixed/legacy/type controls, failure/reuse and all constraints. Other unary/n-ary/nested graphs remain .3.4.3.2.3.4, binary VHDL .3.4.3.4 and full .6. Focused source/SV/Verilog/native refusals plus POD/book/facts and commit close this bounded arithmetic consumer.`
-  Verification: `Actual canonical arithmetic declarations emit identical frozen ranges and independently close final origin/policy/text/role/range records. T2219/T2218/T2217/T2214/T2215: All tests successful Files=5 Tests=21. Authenticated predecessor fails three emitter subtests. Exact native deltas are only arithmetic declarations and default-one logical gates; full other HDL/source/producer/event controls conserve. Strict source check/SV/Verilog example and book pass. Re-derive actual consumers; falsify aliases/late changes/order/duplicate/fixed/lifecycle controls; durability docs/audits/arithmetic-range-emission-20261028.json.gz. Other graphs/VHDL/full .6 remain open.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3.4: emit proved arithmetic intermediate ranges`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2219 fails the actual arithmetic range assertion at ./t/2219-symbolic-arithmetic-intermediate-emission.t line 88. Declaration recovery only queried bitwise allocation and final assembly skipped arithmetic events, leaving numeric declarations and default-one scalar gates despite current private arithmetic proof.
-  - [x] **ADDRESSED (verified)** — Consume family-specific current arithmetic allocation/origin and canonical frozen source relationships at actual declarations. Independently qualify every selected mutable binary event against complete final target records and emitted-ledger fields; preserve one pass, default-one vector truth and failure/reuse.
-  - [x] **NO REGRESSION** — All tests successful Files=5 Tests=21. Native comparison permits only arithmetic ranges/default-one logical gates; complete fixed/bitwise/scalar/source/producer/event controls conserve. Strict source check/SV/Verilog and book/POD pass. Final-index hook qualifies commit; full .6 remains deferred.
+  Terminal: `version_object`
+  Revision: `4a378c9f24e2226793ed978eca280eff454fecb5`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `3b0eb948bd383d29707897a86d6e012eec491c04e3ac5b33bc891015797c632e`
+  Archived node count: `6`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed arithmetic producer/consumer source and children: docs/audits/computed-graph-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1: retain closed arithmetic history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
   Status: `active`
@@ -2421,11 +2360,52 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Exact loaded-owner Git/current hashes and full initial-versus-typed-edge product/source equality pass; knowledge-map: OK passes for current cards and cached/direct queries. No production behavior changes. Book build and normal mandatory doctrines gate the metadata-bearing inventory; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair numeric-width freezing across actual computed arithmetic helper graphs.`
   Acceptance: `Reproduce (+ A B C), (- A B C) and (+ A (* B C)) with plain A/B/C sized by the same captured W. Current inner helpers have current policies/symbolic ranges but outer computed-operand helpers have no allocation policy and retain numeric widths; a later W override can truncate their results and guard truth. Split exact actual graph birth/inference ownership, canonical transitive source/target proof and actual emission/final closure before code. Bind typed ordered edges to current collected helper identities and dependency epochs; preserve independent numeric floors/literal/type/constraint semantics, detect cycles and reject stale/foreign/copied graph claims. Do not infer equivalence from names, equal defaults or an already printed child range. Focused source/target/lifecycle checks and book/fact sync per slice; no early full .6.`
   Verification: `Actual default-one/eight reproductions and full products: docs/audits/residual-operator-inventory-20261028.json.gz. Highest next residual implementation priority.`
   Commit: `pending exact graph producer/proof/consumer split`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1`
+  Status: `done`
+  Goal: `Retain closed arithmetic evidence before computed-graph expansion.`
+  Acceptance: `Current task-evidence headroom cannot hold exact graph producer/proof/emitter leaves. Replace only closed arithmetic producer .3.4.3.2.3.2 and consumer .3.4.3.2.3.3 subtrees with exact current-HEAD version_object terminals under fsmgen_required_history. Preserve complete source/digest/child closure, unrelated nodes and all live registry owners; no nested terminal, deletion of evidence, budget change or behavior change. Register the bounded graph frontier and commit before code.`
+  Verification: `Exact closed arithmetic producer/consumer subtrees retain complete source/digest/child retrieval with no nested terminals. Independent git show/cat-file equality, unrelated current node byte identity and every live registry owner pass; all historical acceptance/evidence bytes remain retrievable. Evidence: docs/audits/computed-graph-frontier-20261028.json.gz. Register bounded lifecycle/producer/private-proof/emitter successors without changing behavior, limits or qualification.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1: prepare computed graph frontier`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'emit proved arithmetic intermediate ranges' -- docs/tasks/ISF-REDUCTION-DELIVERY.md identifies b14d29a7f as the last closed consumer detail change. Current task-evidence headroom cannot hold the required graph lifecycle/producer/proof/emitter split; completed arithmetic details require exact historical retrieval.
+  - [x] **ADDRESSED (verified)** — Replace only complete closed arithmetic producer/consumer subtrees with digest-bound current-revision version_object terminals under fsmgen_required_history. Preserve unrelated/current nodes, all live registry owners and every source/acceptance byte; register explicit graph successors with no budget or behavior change.
+  - [x] **NO REGRESSION** — Exact Git/source/child/current-owner assertions pass; knowledge-map: OK and book/source freshness gate this continuity slice. Normal final-index doctrines remain mandatory. No implementation or full .6 qualification change.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2`
+  Status: `pending`
+  Goal: `Trace actual computed-helper birth, substitution and first inference ownership.`
+  Acceptance: `Before producer code, observe real fresh original candidate rows/ASTs, actual substitution to typed IntermediateSignalRef edges, collection/current row identities and first unresolved numeric inference for n-ary/nested arithmetic. Preserve every existing normalization/cache/registry publication and dependency epoch contract. Retain bounded exact causal evidence and select explicit original-tree/substitution lineage requirements; do not mint later birth from selected widths or names. No behavior, graph admission or broad verification change; update canonical facts/book/task and commit.`
+  Verification: `pending owned causal producer trace`
+  Commit: `pending graph lifecycle prerequisite`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3`
+  Status: `pending`
+  Goal: `Qualify current actual computed arithmetic graph allocation producers.`
+  Acceptance: `After .2, split safe producer slices as needed. Bind fresh original ownership and exact substitution lineage to current typed ordered computed edges. First intrinsic inference must join actual dependency rows/events in one context/epoch, plain source leaf identities and exact max widths; independent native/cached floors, stale/copied/foreign/cyclic graphs and unowned publications cannot create or revive proof. Preserve existing source/whole-operand allocation behavior and owner-local plain capsules. Publish completed current graph policy only after successful collection, with failure/reset/reuse clearing. Source n-ary and range emission stay separate; focused causal/lifecycle controls, POD/book/fact and commit per slice.`
+  Verification: `pending causal lineage contract`
+  Commit: `pending graph producer slices`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
+  Status: `pending`
+  Goal: `Prepare canonical transitive computed arithmetic source and target ranges.`
+  Acceptance: `After actual current graph policies, recursively join exact selected typed edges/child events to complete source/target constraints and identical frozen leaf relationships. Preserve child/root identities, actual ordered operators, result/operand independent widths, default-one rank and source roles. Detect cycles, stale edges, foreign or merely numeric/printed child ranges and independent constraints. Return detached private plans only, with complete input/source/currentness rechecks. No caller graph laundering, arithmetic emission or binary VHDL activation; focused native/private/atomic controls plus synced docs precede commit.`
+  Verification: `pending current graph allocation`
+  Commit: `pending transitive canonical proof`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
+  Status: `pending`
+  Goal: `Emit proved computed arithmetic ranges and independently close the full selected graph.`
+  Acceptance: `After .4, consume current proved child/root relationships at actual declarations in dependency order without a second generation. Preserve one-bit vector rank, whole-value guard truth and exact arithmetic order/duplicates; independent fixed/literal/type/constraint profiles retain their contracts. Final assembly independently re-derives complete selected graph/event/target provenance and compares every actual emitted field. Late mutation/failure returns no artifact or snapshot and fresh reuse recovers. Focused n-ary/nested SV/Verilog/source/refusal/lifecycle controls, runnable examples and docs qualify implementation; source-owned n-ary, paired VHDL and full .6 remain separate.`
+  Verification: `pending canonical graph proof`
+  Commit: `pending actual graph consumer`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3`
   Status: `pending`
