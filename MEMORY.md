@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4`
-- next_action: Join current completed graph policies to actual selected target events, then prove canonical transitive source/target ranges with exact frozen leaf relationships and independent constraints.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2`
+- next_action: Validate the shared closed graph policy schema and collector target constraints before actual selected graph publication.
 - in_flight_uncommitted: None after this slice commits; derive exact paths with git status --short.
 - in_flight_background: None.
 - blockers: None for the next source slice. Required feature/full/publication qualification remains owned; known symbol/backend lifetime, VHDL-keyword, auxiliary-type and no-transition state-hold repairs precede .6.
