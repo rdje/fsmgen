@@ -40,7 +40,7 @@ The precise backend and language boundaries live in
 
 - Perl 5.20 or newer for the main implementation.
 - mdBook to build or serve the user manual.
-- Python 3.9+ on macOS/Linux and Pod::Simple 3.42+ for the book's generated POD reference.
+- Python 3.9+ on macOS/Linux for the RAM guard and book; Pod::Simple 3.42+ for POD.
 - Verilator and Yosys only when `--verify-hdl` external SystemVerilog
   validation is requested.
 

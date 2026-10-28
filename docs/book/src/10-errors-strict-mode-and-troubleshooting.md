@@ -599,7 +599,7 @@ The command prints `guarded stdin`. Guard diagnostics go to standard error, and
 the command's exit status is preserved. The memory cutoffs remain 88% of host
 occupied capacity and 4096 MiB RSS per descendant. A cutoff returns exit 137.
 
-The launcher requires Python 3. It establishes a dedicated session before
+Guarded commands and book generation require Python 3. The launcher establishes a dedicated session before
 releasing the command, keeps its session leader alive after command exit, and
 monitors session members including orphaned children in nested process groups.
 Over-limit startup refuses before launching the payload. On a cutoff it sends

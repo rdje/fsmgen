@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-28`
+- Last updated: `2026-10-29`
 - Owner: repo-local workflow
 
 ## Goal
@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34, ISF-REDUCTION-DELIVERY.35`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2636,6 +2636,17 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup locates the record registration at 495e394d1c; git log -1 for the file identifies latest prior update 6c3a1c822c. Exact native prior record and captured UTC pass the installed collector's unchanged 24-hour assertion after the clean source-attachment commit. Age/suffix gives no disposal authority.
   - [x] **ADDRESSED (verified)** — Run the authenticated installed census in a fresh exclusive slot, preserve every observed candidate and excluded boundary, verify actual rg membership and saved hostile-record controls, and update only the latest cleanup date/summary plus current book reader. No source/compiler epoch is replayed or candidate deleted.
   - [x] **NO REGRESSION** — Saved collector/reviewer and genuine missing-member/unsafe-path/Boolean-size/invented-removal controls pass. knowledge-map: OK and book/source freshness qualify navigation; normal final-index doctrines gate the same-size reader update without aggregate/budget changes. Selected-event publication resumes from its existing live owner.
+
+- ID: `ISF-REDUCTION-DELIVERY.35`
+  Status: `done`
+  Goal: `Align bounded startup prerequisites with owned RAM session supervision.`
+  Acceptance: `README Requirements still names Python only for generated POD, although b1d8a81bc makes it a RAM-guard prerequisite. Correct the first-use dependency entry and aligned book prose without expanding README or any cap. Preserve Perl, platform, Python/Pod versions and external HDL requirements. Focused README/source/claim checks and normal commit gates close this source-caused documentation defect before selected graph closure resumes.`
+  Verification: `README now explicitly includes RAM guard and book in its existing Python prerequisite; Perl, macOS/Linux, Python3.9+, Pod::Simple3.42+ and external HDL requirements retain. README shrinks by7 bytes with unchanged lines/caps. Troubleshooting prose and its reviewed interpreter-reference claim align; no runtime source change. Re-derivation: committed launcher dependency and direct prerequisite diff. Falsification: entrypoint guard and preserved version/platform tokens; no unrelated requirement changes. Durability: README/book/task/claim and Git. Source/claim checks and normal mandatory gate precede resuming graph closure.`
+  Commit: `this prerequisite documentation slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'ram_guard_session.py' identifies b1d8a81bc2789f8fbf621161de476b3a8507a08c; README Requirements still restricted Python's stated role to generated POD. Actual guarded first-use therefore had an undocumented interpreter prerequisite.
+  - [x] **ADDRESSED (verified)** — README and troubleshooting now name Python for guarded commands and book generation. Existing versions, platforms, Perl and external HDL prerequisites preserve; README is seven bytes smaller, with unchanged ceilings.
+  - [x] **NO REGRESSION** — readme-entrypoint: all README entry-point invariants hold. Whitespace checks pass; complete source/claim and normal mandatory gates qualify this documentation-only correction. No new runtime code or broader feature-verification claim.
 
 ## Blockers
 
