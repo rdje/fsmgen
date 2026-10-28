@@ -54,8 +54,10 @@ source path. Core literal capture also preserves canonical size/radix spelling:
 binary digits retain their binary value in nested guards. Existing unsized scalar
 products preserve. Typed and ordinary parsed guard literals have focused controls;
 complete external/runtime/public qualification remains separate work. Internal
-captured-AST text still needs grouping repair before reuse as inline HDL; the
-native factored guards in these checks retain correct association (task `.30`).
+runtime comparison text now groups bare `&`/`|` children on either side, preserving
+the operand tree in diagnostic/factorization strings. Existing scalar and already
+grouped products preserve; the checked native factored HDL is unchanged. This
+bounded repair does not close arbitrary mixed arithmetic/unary text rendering.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

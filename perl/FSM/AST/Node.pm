@@ -18,8 +18,19 @@ FSM::AST::Node - Base class for FSM AST nodes
 =head1 DESCRIPTION
 
 This module provides the base class and concrete implementations for AST nodes
-used throughout the FSM processing pipeline. The entire pipeline works with
-AST nodes and only converts to strings at the final RTL generation step.
+used throughout the FSM processing pipeline. Nodes retain expression structure;
+consumers render text for diagnostics, signatures and final target boundaries.
+
+=head1 COMPARISON TEXT
+
+Runtime C<FSM::AST::BinaryOp> comparison text groups bare C<&>/C<|> child
+expressions on either side. SystemVerilog comparisons bind more tightly than
+those bitwise operators; concatenating child text would change the operand tree.
+Already grouped arithmetic/XOR children and ordinary scalar, bitwise and logical
+products retain their existing spelling. Rendering does not mutate caller nodes.
+This bounded text contract also serves diagnostic/factorization signatures;
+backend C<ASTSupport> remains the separate native renderer. It does not close
+arbitrary mixed arithmetic/unary operator precedence or external qualification.
 
 =cut
 
@@ -242,10 +253,21 @@ sub to_systemverilog ($self) {
         $right_sv = "($right_sv)" if _bitwise_child_needs_grouping($self->{right});
         return "$left_sv $op $right_sv";
     } elsif ($op eq '==' || $op eq '!=' || $op eq '<' || $op eq '>' || $op eq '<=' || $op eq '>=') {
+        $left_sv = "($left_sv)" if _comparison_child_needs_grouping($self->{left});
+        $right_sv = "($right_sv)" if _comparison_child_needs_grouping($self->{right});
         return "$left_sv $op $right_sv";
     } else {
         return "($left_sv $op $right_sv)";
     }
+}
+
+sub _comparison_child_needs_grouping ($child) {
+    return 0 unless $child && Scalar::Util::blessed($child);
+    return 0 unless $child->can('operator');
+
+    # These runtime bitwise nodes render without outer parentheses, and their
+    # operators bind less tightly than a SystemVerilog comparison.
+    return $child->operator =~ /\A[&|]\z/ ? 1 : 0;
 }
 
 sub _bitwise_child_needs_grouping ($child) {
