@@ -43,6 +43,7 @@ no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::DirectDeclaredWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 
 =head2 new
 
@@ -66,7 +67,12 @@ Render the prepared consolidated intermediate wire declarations from the
 prepared block contract.
 Actual current bitwise/arithmetic allocations with identical captured mutable operand
 contracts consume the representative symbolic range, including vector rank at
-width one. Other declarations retain numeric shapes. A detached emitted-plan
+width one. Current computed arithmetic graph allocations use the canonical
+original-leaf relationship through separate source declaration intent. The graph
+ledger preserves the selected root fields, original tree and duplicate slots;
+independent completed target proof must agree before HDL returns. Fixed graphs
+retain numeric declarations, and incompatible mutable leaf contracts refuse.
+Other declarations retain numeric shapes. A detached emitted-plan
 ledger records the selected expression, ordered operands, allocation role and
 range; final assembly independently qualifies the completed target records and
 requires exact agreement before returning HDL.
@@ -88,6 +94,7 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
             if $ctx->{declared_width_declaration_capture};
 
         my $range = $self->_binary_symbolic_range($signal_name, $signal_info, $width);
+        $range //= $self->_graph_symbolic_range($signal_name, $signal_info, $width);
         if ($range) {
             $hdl .= "  wire $range->{range_text}$signal_name;\n";
         } elsif ($width > 1) {
@@ -147,6 +154,31 @@ sub _binary_symbolic_range ($self, $name, $info, $width) {
         operand_targets => $policy->{source_names}, width_allocation => $policy,
         $origin_key => $origin, expression => $expression, width_plan => $relationship->{width_plan}}));
     $ctx->{direct_declared_width_emitted_binary_ranges}{$name} = $emitted;
+    return $emitted->{width_plan};
+}
+
+sub _graph_symbolic_range ($self, $name, $info, $width) {
+    my $ctx = $self->{flattened_dt};
+    my $source = $ctx->{direct_declared_width_source_plan} or return;
+    my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
+    return unless $recovery && $recovery->can('arithmetic_graph_width_allocation');
+    my $expression = $recovery->render_intermediate_signal_expression($name, $info);
+    my $policy = $recovery->arithmetic_graph_width_allocation($name, $info, $expression) or return;
+    my $leaves = FSM::IntermediateWidthGraphPolicySupport->leaf_names($policy);
+    return unless grep {
+        my $signal = $source->{signals}{$_};
+        $signal && $signal->{width_plan} && $signal->{width_plan}{profile} eq 'symbolic';
+    } @$leaves;
+    my $emitted = FSM::DirectDeclaredWidthSupport->prepare_arithmetic_graph_declaration(
+        flattened_dt => $ctx, signal_name => $name, signal_info => $info,
+        target_language => 'systemverilog', expression => $expression);
+    my $json = JSON::PP->new->canonical;
+    confess "Direct graph emitted range requires the same current symbolic declaration intent\n"
+        unless $emitted->{profile} eq 'symbolic' && $emitted->{width_plan}
+            && $json->encode($emitted->{graph_width_allocation}) eq $json->encode($policy)
+            && FSM::IntermediateWidthAllocationSupport::_width($emitted->{width})
+                eq FSM::IntermediateWidthAllocationSupport::_width($width);
+    $ctx->{direct_declared_width_emitted_graph_ranges}{$name} = $emitted;
     return $emitted->{width_plan};
 }
 

@@ -2105,19 +2105,19 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful: initial T2232/T2231/T2230 Files=3, Tests=11; final T2232 including late-result constraint Files=1, Tests=3. Isolated source-snapshot current control under alternate traversal Files=1, Tests=1; both known-bad guards fail. Interrupted RAM runs remain non-results and exact recovery evidence retains. Default parent emission stays numeric; actual consumer/final closure and full .6 remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Emit actual graph ranges and independently compare completed selected target proof.`
   Acceptance: `Consume source declaration intent in the actual one-pass prepared declaration stage, retain a separate per-generation ledger, and expose graph vector rank to whole-value guard truth. Final assembly must independently prove complete selected graph target events and match every emitted root field. Preserve fixed/legacy profiles and atomic failure/reset/reuse; no VHDL broadening.`
-  Verification: `Current source declaration intent agrees with completed target root proof. Own actual declaration consumer, separate graph ledger, symbolic guard rank and independent final selected target/root comparison before code. Initial T2233 runtime attempt was stopped before tests by the unchanged RAM guard at host 89.1 percent against 88; no test result is accepted. Later actual-emission smoke and T2233 completed successfully. T2232 negative source fixture now hits the intended frozen-contract refusal during live emission before its old oracle; move construction inside the refusal assertion, preserve the exact relationship diagnostic, and keep source-only T2229 setup on non-allocation guards. The combined run then hit RAM cutoff 88.0 percent; accept no unfinished results. Preserve interruptions and resume only unfinished checks under the same guard. T2230 and existing guard truth pass. The source-only T2229 fixture initially used unsupported logical-or syntax (ExpressionBuilder.pm line 1111); correct it to supported nested comparisons retaining all three Signals, without changing its relationship assertions. Also correct the stale API-reference sentence that still marks canonical transitive proof pending although .2.4 closed; keep remaining emission/full qualification boundaries accurate.`
-  Commit: `pending`
+  Verification: `Actual graph source intent now prints canonical ranges, retains a separate ledger and supplies vector rank to whole-value guards. Final assembly independently proves every completed selected graph target and compares all root fields. Final T2233 All tests successful Files=1, Tests=4; corrected T2232/T2229 each Files=1, Tests=3, plus complete T2230/T2215 per-file passes, remain exact-source qualified. Failed/interrupted aggregate runs remain non-passes. All26 native contrasts preserve every source/AST/target/event/policy product; only14 eligible graph HDL cases change proved W ranges/default-one gating. Loaded owners match immutable803/current hashes. Rank and ledger omission controls fail their intended assertions. Fixed widths, incompatible aliases, late source/ledger changes, atomic refusal and fresh reuse pass; strict CLI check and SV/Verilog generation exit0. Source-only unsupported || setup was corrected to nested comparisons without changing relationship assertions; alias refusal assertions now include construction because live emission reaches the intended refusal sooner. RAM race was isolated in separate committed repair, source parked/restored exactly, and five tainted observations rerun. Full source/raw logs, native products/comparison and three evidence legs retain in docs/audits/graph-emit-20261028.json.gz. Consumer implementation has focused checks; independent .5.3 and full .6 remain open.`
+  Commit: `this restored graph emission slice`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair RAM-guard fork handoff and descendant containment before more graph verification.`
   Acceptance: `P1 safety prerequisite. A real nested native runner survived an exit-137 host cutoff because PID enumeration missed a newly forked child, then root termination orphaned it before the second census. Preserve exact evidence, park the unrelated emission prototype, implement dedicated containment without touching unrelated processes or raising limits, and verify fork-race cleanup plus existing stdin/metric/status behavior before resuming graph work.`
-  Verification: `Actual guard PID 5307 reports termination of only 5307 at host 88.6, but the native child then prints five more case starts and COMPLETE after. Read-only process census confirms no owned comparison process remains. terminate_tree snapshots PPID descendants, signals the snapshot, then rediscovers from a possibly dead root. Those five after-cutoff products are unmonitored and cannot qualify the feature.`
-  Commit: `pending contained launcher repair`
+  Verification: `Actual orphan-race diagnosis and source park committed in04b1c5c77; dedicated session repair and focused race/stdin/metric controls committed in b1d8a81bc. Exact restoration excludes new safety records, and all five unmonitored products and unfinished controls now rerun successfully under repaired containment. This safety prerequisite closes without raising limits.`
+  Commit: `diagnosis04b1c5c77; guard b1d8a81bc; restoration in this slice`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.1`
@@ -2144,11 +2144,15 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful: final focused T2234/T2011/T1595/T1811 Files=4, Tests=21. Binary stdin/EOF/program/file/fd3, system Bash, exact nonzero status, original macOS/Linux metric branches, fixed fixture limits and signal/capture cleanup remain covered. Syntax, diff, guarded mdBook build, native source-copy freshness and complete claim/disposition checks pass; full CI remains deferred and normal mandatory hook is consumed before advancing.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore the graph prototype and reverify only orphan-tainted or unfinished observations.`
   Acceptance: `After the guard repair commits cleanly, restore the exact parked graph implementation paths without overwriting new guard task/memory records. Verify source hashes and owning frontier, re-run the five unmonitored after cases and unfinished CLI/rank/ledger controls under repaired containment, and finish the graph emission commit independently.`
-  Verification: `pending guard repair`
-  Commit: `pending`
+  Verification: `After b1d8a81bc committed cleanly, all 14 baseline hashes admitted and all 14 restored hashes matched the packet exactly. New safety source and task/memory were excluded. The five quarantined products were re-created under repaired containment, and all six unfinished CLI/mutation/emission controls completed with expected statuses. Exact restoration and all source/log/product epochs retain in docs/audits/graph-emit-20261028.json.gz. Only manual wording clarity changed after restoration; no unmonitored product is promoted.`
+  Commit: `this restored graph emission slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $range = $self->_binary_symbolic_range' identifies a7f947aea36e25f746ba319ffe8e612c51f580b7. Immutable803 native products still have numeric computed graph ranges and scalar default-one gates: only binary declaration intent was consumed. Source intent and complete graph proof existed, but their actual consumer, vector rank and complete emitted-root equality were missing.
+  - [x] **ADDRESSED (verified)** — Existing one-pass declarations consume source graph intent. Independent final selected-target proof matches every emitted root field. Exact26-case comparison admits only actual graph W ranges and default-one whole-value gates. Isolated rank/ledger omissions fail intended assertions; all five unmonitored cases rerun under repaired containment. Safety records survive exact source restoration.
+  - [x] **NO REGRESSION** — All tests successful: final T2233 Files=1, Tests=4; exact-source corrected T2232/T2229 each Files=1, Tests=3; T2230/T2215 complete per-file passes. Every other native source/AST/target/graph product is exact against authenticated803; strict CLI check and SV/Verilog generation exit0. Failed/interrupted cohorts remain non-passes. Book/source/claim and normal mandatory gates complete before advancing; independent .5.3 and full .6 remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`
   Status: `pending`

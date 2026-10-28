@@ -109,8 +109,9 @@ subtest 'numeric or printed child evidence incomplete targets and independent fl
         $change->($in);
         ok(!eval {prepare($in); 1}, 'incomplete stale foreign typed or independently constrained target data refuses');
     }
-    my $different = fixture('(+ A B C)', 8, '(param W)', '(param W)', '(param COPY)');
-    ok(!eval {prepare($different); 1}, 'equal numeric graph defaults cannot hide a different frozen original root');
+    ok(!eval {my $different = fixture('(+ A B C)', 8, '(param W)', '(param W)', '(param COPY)');
+        prepare($different); 1}, 'equal numeric graph defaults refuse during emission or private frozen-root proof');
+    like($@, qr/identical mutable operand contracts/, 'refusal retains the source relationship contract');
 };
 subtest 'fixed graph leaves keep independent widths and current identities remain mandatory' => sub {
     my $in = fixture('(+ A (* B C))', 8, '8', '4', '2');

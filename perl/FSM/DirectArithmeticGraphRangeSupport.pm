@@ -264,8 +264,9 @@ final current-policy checks bind its detached root fields. The fixed profile
 retains independent observed widths; mutable default-one range rank preserves.
 This intent contains the same root fields as the completed target plan, without
 C<nodes> or C<node_order>. It captures no target events and supplies no target
-membership attestation. Actual declaration emission and independent final target
-comparison remain separately owned.
+membership attestation. The actual declaration backend consumes this intent and
+final assembly independently invokes the completed target join before returning
+HDL.
 
 Every typed computed edge requires its actual selected arithmetic child event,
 fresh origin/text and current completed graph or binary allocation policy.
@@ -291,6 +292,7 @@ no HDL and extends no VHDL profile. Focused controls cover deep source/target
 changes hidden by unchanged canonical plans, supported dependency writes,
 detached return data and expiry of the actual caller's row-map ownership during
 preparation. These checks cover the graph row view; whole-backend/Core ownership
-cycles and live graph range emission remain separately owned.
+cycles remain separately owned. Live graph declarations consume the separate
+source intent; final assembly compares it with the independently prepared root.
 
 =cut

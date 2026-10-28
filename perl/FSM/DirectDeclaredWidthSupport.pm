@@ -527,8 +527,9 @@ children-before-parent C<node_order> and per-node plans. Source/target snapshots
 canonical plans and complete current policy recheck at return. This method emits
 no HDL, admits no graph VHDL profile and requires the actual weak row view to
 remain current. Focused deep-input and weak caller-view controls qualify this
-private join; live graph range emission and full feature qualification remain
-separately owned.
+private join. Actual graph declaration emission consumes separate source intent
+and final assembly independently invokes this target join; full selected-graph
+and feature qualification remain separately owned.
 
 C<prepare_arithmetic_graph_declaration> provides a separate source-only root
 intent before target event completion. It requires the actual context/current
@@ -537,7 +538,8 @@ fresh origin/text, complete canonical source snapshots and the original-leaf
 relationship must remain current. Its detached root fields agree with the
 complete graph range plan except the transitive C<nodes>/C<node_order> inventory.
 It attests no target membership or emitted range and does not fabricate events.
-Actual live declaration/ledger integration remains separate.
+The actual declaration backend consumes this intent and final assembly compares
+every root field with the independently completed target proof.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

@@ -82,6 +82,11 @@ Symbolic binary helper declarations retain their actual source/allocation proof
 in a per-generation ledger. Complete captured target events are independently
 reproved against current source and backend state, then compared with the full
 emitted records, including range, expression, ordered operands and helper role.
+Computed arithmetic graphs retain a separate declaration ledger and symbolic
+guard rank. Final assembly independently traverses every selected graph event,
+proves its actual children/source/target constraints and compares the complete
+root fields with the source declaration intent. Fixed graphs retain no symbolic
+ledger. A mismatch invalidates capture before rethrowing the generation error.
 
 =cut
 
@@ -96,6 +101,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_emitted_signals} = {};
     local $ctx->{direct_declared_width_emitted_helper_origins} = {};
     local $ctx->{direct_declared_width_emitted_binary_ranges} = {};
+    local $ctx->{direct_declared_width_emitted_graph_ranges} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $stage = $ctx->{backend_sv_consolidated_intermediate_stage_support};
     my $split_stage = $stage->can('prepare_consolidated_intermediate_block')
@@ -168,6 +174,21 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             }
             confess "Direct captured binary ranges do not match the actual emitted intermediate identities\n"
                 unless $json->encode(\%expected_binary) eq $json->encode($ctx->{direct_declared_width_emitted_binary_ranges});
+            my %expected_graph;
+            for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
+                next unless $snapshot->{target_intermediates}{$name}{graph_width_allocation};
+                my $plan = FSM::DirectDeclaredWidthSupport->prepare_arithmetic_graph_intermediate_range(
+                    flattened_dt => $ctx, signal_name => $name,
+                    signal_info => $prepared_block->{filtered_signals}{$name},
+                    target_language => 'systemverilog', %$snapshot);
+                next unless $plan->{profile} eq 'symbolic';
+                # Source declaration intent and independent complete-target
+                # proof share root fields; the latter also inventories children.
+                delete @{$plan}{qw(nodes node_order)};
+                $expected_graph{$name} = $plan;
+            }
+            confess "Direct captured graph ranges do not match the actual emitted intermediate identities\n"
+                unless $json->encode(\%expected_graph) eq $json->encode($ctx->{direct_declared_width_emitted_graph_ranges});
             1;
         };
         unless ($ok) {

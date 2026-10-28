@@ -387,6 +387,37 @@ selector such as `=2'3` proves a 2-bit selector. If the source does not contain
 enough evidence, FSMGen keeps the width conservative and asks for an explicit
 declaration instead of guessing.
 
+Direct parameter widths can propagate through selected arithmetic helper graphs
+when all original leaves have the same captured width contract:
+
+```lisp
+(?fsm:direct_symbolic_graph
+  (+params (W 1))
+  (+size (A (param W)) (B (param W)) (C (param W)) (DATA 1) (OTHER 1))
+  (idle
+    (<(+ A (* B C)) (= (DATA 1)) (= (OTHER 1)))
+    (-> idle)))
+```
+
+In the direct Verilog family, both `B_mul_C` and `A_plus_B_mul_C` retain
+`[(W - 1):0]`, including vector rank when the default is one. Ordered operations
+and repeated operands retain their meaning. The profile requires plain unsigned whole
+Signals, current allocator ownership and identical frozen contracts for every
+original leaf. Equal defaults from independent roots or aliases do not prove
+that relationship; incompatible mutable graphs refuse. Fixed arithmetic graphs
+keep independent numeric widths. Source-owned nested bitwise graphs, other
+independent type/constraint profiles and full override/runtime qualification
+remain separate work.
+
+The executable example is `t/data/ial0-direct-symbolic-graph.fsm`:
+
+```sh
+mkdir -p .artifacts/sv .artifacts/verilog
+./bin/fsmgen --quiet --strict --check --json t/data/ial0-direct-symbolic-graph.fsm
+./bin/fsmgen --quiet --strict --output .artifacts/sv/direct-symbolic-graph.sv t/data/ial0-direct-symbolic-graph.fsm
+./bin/fsmgen --quiet --strict --language verilog --output .artifacts/verilog/direct-symbolic-graph.v t/data/ial0-direct-symbolic-graph.fsm
+```
+
 Truthiness is intent-level: a signal used as a predicate means “non-zero.”
 When flattened SystemVerilog needs a one-bit predicate from a multibit signal,
 FSMGen emits a reduction such as `(|COUNT)` for true/non-zero or `(~|bytept)`

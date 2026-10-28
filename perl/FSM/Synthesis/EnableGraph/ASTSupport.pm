@@ -781,8 +781,11 @@ sub _signal_has_symbolic_range ($self, $name) {
     my $signal = $source ? $source->{signals}{$name} : undef;
     my $binary_ranges = $ctx->{direct_declared_width_emitted_binary_ranges};
     my $binary = $binary_ranges ? $binary_ranges->{$name} : undef;
+    my $graph_ranges = $ctx->{direct_declared_width_emitted_graph_ranges};
+    my $graph = $graph_ranges ? $graph_ranges->{$name} : undef;
     my @plans = ($signal ? $signal->{width_plan} : undef,
-        $binary ? $binary->{width_plan} : undef);
+        $binary ? $binary->{width_plan} : undef,
+        $graph ? $graph->{width_plan} : undef);
     for my $field (qw(direct_declared_width_emitted_ports direct_declared_width_emitted_signals)) {
         my $map = $ctx->{$field};
         push @plans, $map->{$name} if $map && exists($map->{$name});

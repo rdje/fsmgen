@@ -1,0 +1,6 @@
+(?fsm:direct_symbolic_graph
+  (+params (W 1))
+  (+size (A (param W)) (B (param W)) (C (param W)) (DATA 1) (OTHER 1))
+  (idle
+    (<(+ A (* B C)) (= (DATA 1)) (= (OTHER 1)))
+    (-> idle)))

@@ -183,7 +183,8 @@ proof and compares the emitted expression, origin, allocation role and range;
 late disagreement returns no HDL or completed collector snapshot. Failed
 generations can reuse the backend and collector after a fresh valid proof.
 The bitwise range consumer and scalar-only symbolic VHDL profile retain their
-existing boundaries. Other unary/n-ary/nested constraints remain separately owned.
+existing boundaries. Other unary/shift/select/concatenation and source-owned nested bitwise
+constraints remain separately owned.
 Comparison and logical negation helpers retain
 independently scalar results. Source acceptance and matching selected numeric
 widths cannot establish a mutable helper relationship.
@@ -196,23 +197,24 @@ The runnable default-one source is `t/data/ial0-direct-symbolic-arithmetic.fsm`:
 ./bin/fsmgen --quiet --strict --language verilog --output .artifacts/verilog/direct-arithmetic.v t/data/ial0-direct-symbolic-arithmetic.fsm
 ```
 
-The remaining computed-operand boundary is visible in `(+ A B C)` and
-`(+ A (* B C))`: the whole-source inner helper has a proved generic range,
-while the outer arithmetic helper still retains its selected numeric width.
-`(& A B C)` creates a source-owned nested AST with a numeric helper too.
-These forms do not yet provide parameter-correct helper propagation; use the
-bounded whole-operand kernels above only within their stated relationship.
-Transitive source/target graph range proof and emission are next, followed by
-n-ary source-holder proof. Original nested candidates receive a separate graph birth; substitution
-binds their typed helper references while the root width is still unresolved.
-Parent inference can normalize a child recursively. Current graph intrinsic
-events now join that ownership to held child proofs before collection completes
-policy. Separate completed graph policy now follows successful collection;
-transitive target range proof and emission remain pending. A later
-numeric width or printed child range cannot recreate those earlier events. Logical/comparison wrappers
-retain one-bit results; that scalar result alone supplies no allocation proof for
-a vector operand. Full override/runtime
-qualification remains deferred.
+Computed arithmetic forms such as `(+ A B C)` and `(+ A (* B C))` now propagate
+the same proved generic range through selected child and parent declarations.
+Every original leaf must have the identical frozen mutable width relationship,
+and actual current graph allocation and complete selected-target proof must
+agree. Repeated source and computed operand slots retain their order. Fixed
+graphs keep their independently selected numeric widths. Different mutable roots,
+aliases or static floors cannot borrow an equal default value. Source-owned
+nested bitwise forms such as `(& A B C)` remain a separate pending profile.
+
+Original nested candidates receive a separate graph birth; substitution binds
+typed helper references while the root width is unresolved. Intrinsic events
+join that ownership to held child proofs, and completed graph policy follows
+successful collection. A later numeric width or printed child range cannot
+recreate those events. Actual declaration intent and an independent completed
+target traversal bind emission. Logical/comparison wrappers retain one-bit
+results; that scalar result alone supplies no vector allocation proof. Independent
+selected-graph closure and full override/runtime qualification remain separately
+owned.
 
 A separate `intermediate_width_graph_birth` diagnostic now retains
 `{kind => arithmetic_graph_candidate, expression_tree => ...}` at the actual
@@ -315,9 +317,9 @@ have a plain unsigned profile; numeric state-model evidence alone cannot publish
 this target field. A final complete-policy read rejects source or dependency
 changes during publication. Copied metadata, independent floors and mismatched
 selected text withhold; legacy recovery providers keep their existing events.
-The returned policy detaches. HDL text is unchanged. Canonical transitive
-source/target range proof and actual graph range emission remain pending, and
-the ordinary binary allocation and VHDL profiles retain their boundaries.
+The returned policy detaches. Canonical transitive source/target range proof and
+its actual graph declaration consumer are described below. Ordinary binary
+allocation and VHDL profiles retain their boundaries.
 
 `DirectDeclaredWidthSupport::prepare_graph_operand_relationship` now provides
 the source-only prerequisite for that graph range proof. It uses the shared
@@ -360,13 +362,14 @@ policy recheck before the plan returns. Repeated computed operands retain both
 ordered edge slots: the numeric resolver's active-call guard distinguishes a
 shared child from an actual recursive cycle. This restores the existing whole
 child's symbolic declaration in repeated-computed graphs, including vector rank
-at a default width of one. The computed parent retains its numeric declaration
-until graph emission is implemented. A real cycle retains conservative numeric
+at a default width of one. The computed parent's proved range is now consumed
+through separate graph declaration intent. A real cycle retains conservative numeric
 fallback and creates no graph proof. The focused executable examples are
 in `t/2230-arithmetic-graph-intermediate-ranges.t`. Focused deep-input and weak
 caller-view closure checks now pass in `t/2231-arithmetic-graph-proof-closure.t`.
-Actual graph range emission and full qualification remain pending. This private
-join emits no HDL and does not extend VHDL admission.
+Actual declaration emission consumes separate source intent and independently
+reuses this complete-target proof at final assembly. Full qualification remains
+pending. This private join itself emits no HDL and does not extend VHDL admission.
 
 The closure controls change nested child target metadata, selected original-tree
 data and a source constraint after canonical source preparation. Even when the
@@ -386,8 +389,13 @@ fields agree exactly with the independently completed target plan after removing
 the child inventory. Fixed widths remain independent; mutable default-one widths
 retain vector rank. Copied metadata, different selected text, independent roots,
 result floors and late source/result constraints refuse. This intent fabricates
-no target events and prints no range. Actual emission, guard-rank integration and
-final ledger comparison remain next.
+no target events and prints no range. Actual one-pass declarations now consume
+that intent, retain a separate graph ledger and expose vector rank to guard
+classification. Final assembly independently re-proves the completed selected
+graph and requires exact root-field agreement with the ledger before returning
+HDL. Missing or changed source/target/ledger evidence refuses atomically; fresh
+reuse starts with a new per-generation ledger. Independent selected-graph closure
+and full feature qualification remain separate work.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

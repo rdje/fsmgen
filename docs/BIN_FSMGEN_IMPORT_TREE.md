@@ -18,8 +18,10 @@ adds no graph allocation or target attestation. A lazy direct facade now loads
 complete source/target join. The numeric resolver uses active-call recursion
 tracking so repeated computed children retain current policy. Live graph ranges
 remain pending. The same lazy graph owner now prepares a distinct source-only
-declaration intent, without target events; actual declaration/guard/final-ledger
-integration remains next. The dated closure census is unchanged.
+declaration intent, without target events. Actual declarations now consume it
+through a separate graph ledger; ASTSupport recognizes its symbolic vector rank,
+and final assembly independently qualifies complete selected graph targets before
+comparing root fields. The dated closure census is unchanged.
 
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration

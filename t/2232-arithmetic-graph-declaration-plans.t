@@ -69,8 +69,8 @@ subtest 'source declaration intent agrees with independently completed actual gr
         $plan->{width_plan}{width_contract}{expression}[1] = 'WRONG';
         is_deeply(declaration($in), completed_root($in), 'returned graph intent deeply detaches');
         my $name = $in->{signal_name};
-        like($in->{hdl}, $case->[1] == 1 ? qr/^  wire \Q$name\E;$/m : qr/^  wire \[7:0\] \Q$name\E;$/m,
-            'default live parent emission remains numeric until the consumer slice');
+        like($in->{hdl}, qr/^  wire \[\(W - 1\):0\] \Q$name\E;$/m,
+            'actual live parent emission consumes the canonical graph declaration intent');
     }
     my $fixed = fixture('(+ A (* B C))', 8, '8', '4', '2');
     my $plan = declaration($fixed);
@@ -87,8 +87,9 @@ subtest 'copied foreign stale text and independent source relationships cannot m
     ) {
         ok(!eval {declaration($in, %$override); 1}, 'copied or incoherent source selection refuses');
     }
-    my $independent = fixture('(+ A B C)', 8, '(param W)', '(param W)', '(param COPY)');
-    ok(!eval {declaration($independent); 1}, 'equal-default independent original leaf root refuses');
+    ok(!eval {my $independent = fixture('(+ A B C)', 8, '(param W)', '(param W)', '(param COPY)');
+        declaration($independent); 1}, 'equal-default independent original root refuses during emission or source intent');
+    like($@, qr/identical mutable operand contracts/, 'refusal retains the actual frozen source contract');
     $in->{signal_info}{width} = 32;
     ok(!eval {declaration($in); 1}, 'independent result floor cannot borrow current graph intent');
 };

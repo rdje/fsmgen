@@ -18,7 +18,9 @@ sub fixture {
     @sizes = ('(param W)') x 3 unless @sizes;
     my $source = "(?fsm:graph_leaves (+params (W $width) (COPY W) (SAME $width))"
         . " (+size (A $sizes[0]) (B $sizes[1]) (C $sizes[2]) (DATA 1) (OTHER 1))"
-        . ' (idle (<(+ A B C) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+        # Reference every actual source without requesting graph range emission
+        # before the source-only incompatibility oracle runs.
+        . ' (idle (<(== A (== B C)) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
     my $module = FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$source));
     my $ctx = FSM::HDL::FlattenedDT->new;
     $ctx->generate_systemverilog($module);
