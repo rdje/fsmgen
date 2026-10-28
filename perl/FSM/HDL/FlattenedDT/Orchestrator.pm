@@ -18,6 +18,9 @@ sub new ($class, %args) {
 }
 sub reset_generation_state ($self) {
     my $ctx = $self->{flattened_dt};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    $width_support->_abort_factorized_width_inference
+        if $width_support && $width_support->can('_abort_factorized_width_inference');
     $ctx->{declared_width_declaration_capture}->invalidate
         if $ctx->{declared_width_declaration_capture};
 
@@ -51,7 +54,37 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         ->flatten_decision_tree($dt_name, $dt_node, $condition_stack);
 }
 
+=head1 NAME
+
+FSM::HDL::FlattenedDT::Orchestrator - Coordinate direct SystemVerilog generation
+
+=head1 METHODS
+
+=head2 generate_systemverilog
+
+Generate one direct SystemVerilog module using fresh generation state. Private
+factorizer width policies clear at entry/reset and on any generation exception,
+including failures after successful intermediate collection. The original HDL
+result and error propagate; no symbolic target admission is added here.
+
+=cut
+
 sub generate_systemverilog ($self, $fsm_module) {
+    my $width_support = $self->{flattened_dt}{backend_sv_intermediate_width_support};
+    $width_support->_abort_factorized_width_inference
+        if $width_support && $width_support->can('_abort_factorized_width_inference');
+    my $hdl;
+    my $ok = eval { $hdl = $self->_generate_systemverilog($fsm_module); 1 };
+    unless ($ok) {
+        my $error = $@;
+        $width_support->_abort_factorized_width_inference
+            if $width_support && $width_support->can('_abort_factorized_width_inference');
+        die $error;
+    }
+    return $hdl;
+}
+
+sub _generate_systemverilog ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
     fsm_debug("Starting flattened DT SystemVerilog generation for " . $fsm_module->name, 3);

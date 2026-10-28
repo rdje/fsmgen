@@ -46,9 +46,24 @@ use FSM::IntermediateWidthAllocationSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _begin_factorized_width_inference ($self) {
+    $self->_abort_factorized_width_inference;
     ++$self->{_width_inference_epoch};
+}
+
+sub _abort_factorized_width_inference ($self) {
     $self->{_width_inference_events} = {};
     $self->{_width_inference_revisions} = {};
+    delete $self->{_width_inference_complete};
+}
+
+sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {
+    return unless $self->{_width_inference_epoch};
+    for my $name (keys %{$self->{_width_inference_events}}) {
+        delete $self->{_width_inference_events}{$name}
+            unless ref($all_intermediate_signals->{$name}) eq 'HASH'
+                && $self->factorized_width_inference_event($name, $all_intermediate_signals->{$name});
+    }
+    $self->{_width_inference_complete} = $self->{_width_inference_epoch};
 }
 
 =head2 factorized_width_inference_event
@@ -64,8 +79,9 @@ The actual normalizer width publication and consolidated registry rebuild carry
 a still-current event through exact before/after checks. Registry-copy proof is
 captured before the owned reset, and binds the exact newly installed row and
 merged metadata. Independent floors, stale/copy identities and source mutations
-cannot refresh. Later resolver calls still advance its revision and withhold;
-cache/completion and target-event/range joins remain successors.
+cannot refresh. Later resolver calls preserve only a still-current held event
+through their exact revision and width/source writes. Scalar AST re-inference
+uses the same check; recursive fallback and unknown writes withhold.
 
 =cut
 
@@ -76,6 +92,23 @@ sub factorized_width_inference_event ($self, $signal_name, $signal_info) {
         context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
         epoch => $self->{_width_inference_epoch}, revision => $self->{_width_inference_revisions}{$signal_name},
         holder => $self->{_width_inference_events}{$signal_name});
+}
+
+=head2 factorized_width_allocation
+
+Return the detached current selected policy only after successful normalization,
+pruning and final registry publication in this epoch. Earlier diagnostic events
+remain available through C<factorized_width_inference_event> but are incomplete.
+New normalization, collection/generation failure and generator reset clear the
+policy. Exact cache reads preserve it; equal copied metadata or new constraints
+cannot create or revive it. Target-event and symbolic range joins remain separate.
+
+=cut
+
+sub factorized_width_allocation ($self, $signal_name, $signal_info) {
+    return unless $self->{_width_inference_complete}
+        && $self->{_width_inference_complete} == $self->{_width_inference_epoch};
+    return $self->factorized_width_inference_event($signal_name, $signal_info);
 }
 
 sub _unresolved_factorized_input_frame ($self, $signal_name, $signal_info, $signal_registry) {
@@ -191,6 +224,8 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
 
+    my $held = $self->{_width_inference_epoch}
+        ? $self->_take_current_factorized_inference($signal_name, $signal_info) : undef;
     ++$self->{_width_inference_revisions}{$signal_name} if $self->{_width_inference_epoch};
     my ($input_frame, $intrinsic_inference);
 
@@ -245,6 +280,18 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
 
     $self->_record_factorized_inference($signal_name, $signal_info, $resolved_width, $width_source, $input_frame)
         if $intrinsic_inference && !$native_signal_info;
+
+    if ($held && !$native_signal_info) {
+        my $expected = JSON::PP->new->decode($held->{state});
+        $expected->{revision} = $self->{_width_inference_revisions}{$signal_name};
+        my $identity = $expected->{signal_info}{identity};
+        for my $row ($expected->{signal_info}, $expected->{factorizer_entry}, $expected->{registered}) {
+            next unless $row && $row->{identity} eq $identity;
+            $row->{width} = $resolved_width;
+            $row->{width_source} = $width_source;
+        }
+        $self->_restore_factorized_inference($signal_name, $signal_info, $held, $expected);
+    }
 
     fsm_debug("[IntermediateSignalWidthSupport.pm][resolve_intermediate_signal_width()] Resolved width $resolved_width for '$signal_name' via $width_source", 3);
     return $resolved_width;

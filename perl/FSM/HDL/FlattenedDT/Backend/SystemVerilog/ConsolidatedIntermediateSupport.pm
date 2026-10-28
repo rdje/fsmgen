@@ -459,12 +459,17 @@ sub _expression_mentions_removed_signal ($self, $expression, $removed_signals) {
 Build the consolidated intermediate-signal set for the direct backend by
 merging first-pass factorization, pre-scan references, and FSMGen-parsed
 intermediate carriers, then delegating normalized metadata preparation to the
-extracted normalization owner.
+extracted normalization owner. Selected width policy completes only after
+normalization, pruning and the final registry copy succeed. A fresh collection
+or any failure clears partial policy before rethrowing the original error.
 
 =cut
 
 sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    $width_support->_abort_factorized_width_inference
+        if $width_support && $width_support->can('_abort_factorized_width_inference');
     $ctx->{intermediate_signals} = {};
 
     fsm_debug("\n*** CONSOLIDATED INTERMEDIATE SIGNAL GENERATION ***", 3);
@@ -485,12 +490,23 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     $self->merge_prescan_intermediate_signals(\%all_intermediate_signals);
     $self->merge_fsmgen_parsed_intermediate_signals(\%all_intermediate_signals, $fsm_module);
     $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
-    $ctx->{backend_sv_consolidated_intermediate_normalization_support}
-        ->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
-    my $pruned_count = $self->prune_sampled_value_intermediate_chains(\%all_intermediate_signals);
-    fsm_debug("CONSOL_INTER_SIG: [PRUNE] Removed $pruned_count sampled-value intermediate helper(s)", 3)
-        if $pruned_count;
-    $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals, 1);
+    my $ok = eval {
+        $ctx->{backend_sv_consolidated_intermediate_normalization_support}
+            ->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
+        my $pruned_count = $self->prune_sampled_value_intermediate_chains(\%all_intermediate_signals);
+        fsm_debug("CONSOL_INTER_SIG: [PRUNE] Removed $pruned_count sampled-value intermediate helper(s)", 3)
+            if $pruned_count;
+        $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals, 1);
+        $width_support->_complete_factorized_width_inference(\%all_intermediate_signals)
+            if $width_support && $width_support->can('_complete_factorized_width_inference');
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $width_support->_abort_factorized_width_inference
+            if $width_support && $width_support->can('_abort_factorized_width_inference');
+        die $error;
+    }
 
     return \%all_intermediate_signals;
 }

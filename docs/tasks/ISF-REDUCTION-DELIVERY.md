@@ -2286,10 +2286,10 @@ do not start broad suites between implementation slices.
   Commit: `joined ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish actual factorization allocation policy through width normalization without laundering cached context widths.`
   Acceptance: `After holder/parser producer, retain actual pure-expression allocation provenance from ASTFactorization candidate birth and the qualified width inference event. Normalization/cache copies must preserve current proof or revoke it on independent native/cached/context constraints, never reconstruct birth policy from late width_source/default equality. Preserve existing ordinary factorization, metadata/identity, caller graphs and selected widths; qualify actual raw-Core guards and opaque/private controls, sync docs and commit. N-ary/compound graphs stay separately owned until proved.`
-  Verification: `Actual source producer committed at d119f8816 with clean tree. Factorizer candidates begin unresolved; backend native/cached/inferred selection and later normalization copies can rewrite labels. Before birth records, own a shared typed whole-operand shape boundary and actual sliced/compatible-reference controls; no selected-policy inference from numeric equality.`
+  Verification: `Children own the complete focused factorizer producer evidence. Current selected policy is implemented; target-event/range/unsupported-shape/full .6 qualification stays open.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.4`
 
@@ -2318,10 +2318,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=10 for T2204/T1887. Actual raw-Core/backend and source native HDL/declaration/ordinary row/public width products and source policies match authenticated predecessor; plain birth state retains no owner graph in the isolated control. POD/book/source freshness, preserved question/recipe routes and normal doctrine hook gate commit; selected inference/target/full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind current actual factorizer births only to qualified intrinsic-width inference and preserve it through normalization.`
   Acceptance: `Join actual pure AST inference to current birth/registry identities and all plain unsigned operand declarations. Native/cached/context/fallback/unknown constraints cannot assert intrinsic max even at equal defaults. Preserve proven policy across only actual normalization-owned writes/copies; stale/conflicting/private foreign states withhold. Real raw-Core backend, repeated cache resolution, opaque/context/scalar/wider and detached/no-extra-owner controls plus unchanged native products, POD/book/fact and commit qualify before event join.`
-  Verification: `Actual unresolved births committed at c9cde4dae with clean tree. Trace a bounded actual raw-Core generation first: normalization and declaration both call the width resolver, which can relabel inferred output as cached. Establish actual metadata identities and canonical registry copy points before minting/retaining selected policy.`
+  Verification: `Children retain complete initial/owned-transition/completion evidence and focused checks. Target-event/range/full qualification remains pending.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.3`
 
@@ -2338,11 +2338,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=6 for T2205/T220/T225. Authenticated ordinary source/raw-Core HDL/declaration/row/public-width/birth/source-policy products conserve; legacy injected width providers keep their contract. POD/book/source freshness and normal doctrine hook gate commit. Owned cache/copy completion, target/range joins and full .6 remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve current actual inference policy only through owned cache and normalization writes/copies.`
   Acceptance: `After actual intrinsic event, qualify exact resolver cache reads and normalizer registry copies with current before/after proof. Bind all canonical target width constraints, source identity/type/width state and actual object/AST membership; unknown copied records or new independent native/cached/context floors withhold. Surface only completed current policy for the later target-event join, preserve raw/native ordinary products and caller kinds, synchronize POD/book/fact and commit.`
-  Verification: `Initial event producer is committed at f046c1af9. Exact pipeline inspection also finds a whole backend registry reset immediately before its second sync; capture current proof before that owned reset and qualify the actual resulting copy, rather than refreshing after an unexplained replacement. This leaf owns known publications/cache reads, completion/failure boundaries and focused before/after controls.`
-  Commit: `pending`
+  Verification: `Children .1/.2 own exact publication/copy/cache/completion evidence. Selected policy is implemented with focused checks; target/range/full qualification stays pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2: complete current factorizer width policy`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.1`
@@ -2358,26 +2358,32 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for T2206/T2205/T225; the initial-event/cache-refusal and injected legacy-provider contracts preserve. Exact authenticated source/raw-Core HDL/declarations/row/source-policy/birth products match. POD/book/source freshness and normal doctrine hook gate this slice; cache/completion and full qualification remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify exact cache reads and successful completion/failure boundaries for selected policy.`
   Acceptance: `After .1, preserve only current held events through exact owned resolver-cache writes and revisions; native/new independent floors, opaque copies, source/birth changes and recursive fallback withhold. Expose completed policy only after successful normalization/registry handoff, clear on failure/reuse, preserve source/raw-Core products, synchronize POD/book/fact and commit. Full external qualification stays .6.`
-  Verification: `pending .1`
-  Commit: `pending`
+  Verification: `The fresh checklist below owns exact cause/fix/check results; docs/audits/factorizer-width-cache-20261028.json.gz retains complete source, native products, probes and logs. T2207/T2205/T2206/T225 pass All tests successful Files=4 Tests=15. Whole source/raw-Core HDL (Date-only), declarations, metadata, source allocations and births conserve. Initial T2205 now expects qualified cache preservation; the new context probe tests the wrapper seam, not an original defect. Re-derive actual full-frame transitions and successful collection; falsify authenticated predecessor cache/completion failures, independent state/floors/clones, matching source writes before/during scalar inference, recursive fallback, inner/outer failures and reuse; durability source/tests/POD/book/fact/task and exact receipt. Stored holders/getters remain plain/detached. Permitted selected-producer closures share this final commit. Target/range/unsupported-shape/full .6 remain open.`
+  Gate recovery: `First hook rejected task-evidence aggregate by 742 bytes. Duplicate ancestor summaries now route to their complete child authority; exact rejected task source and reviewed disposition retain in this slice receipt. Budgets/allowances are unchanged.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2: complete current factorizer width policy`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated exact predecessor T2207 reports Failed test actual subsequent cache retains the original event at ./t/2207-factorizer-width-cache-completion.t line 80. The later resolver increments its revision, while no successful collection policy boundary existed; actual collected-policy checks also fail.
+  - [x] **ADDRESSED (verified)** — Exact cache revision/width/source writes now preserve only current held proof. Completed policy follows successful final registry publication. Initial diagnostic events remain incomplete; recursive fallback, opaque state, supported matching source changes and repeated cached normalization cannot mint replacements. Scoped normalization/collection/generation failure and reset/reuse clear partial policy.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=15 for T2207/T2205/T2206/T225, covering inner/outer failure clearing, actual scalar/wider cache paths and legacy providers. Authenticated whole native/source HDL/declaration/row/source-allocation/birth products conserve. POD/book/source freshness and normal final-index doctrine hook gate commit; target/range/full .6 stay pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Close composed selected factorizer allocation provenance before actual target-event join.`
   Acceptance: `Join focused actual birth/inference/owned normalization/cache/currentness controls and old native products only for proved binary whole-reference profiles. May close with final producer commit; target/range/external/API/corpus qualification remains separately owned.`
-  Verification: `pending completed current policy`
-  Commit: `pending`
+  Verification: `Permitted final-producer closure: .3.3.1/.3.3.2 own composed inference/currentness/product evidence. No target/range/API/corpus/runtime closure.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2: complete current factorizer width policy`
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close focused factorizer provenance and hand off actual target-event allocation join.`
   Acceptance: `Join actual birth, selected inference and normalization currentness controls only for proved binary whole-reference profiles. May close with final producer commit. Unsupported shapes and full target/API/corpus/runtime qualification stay separately owned.`
-  Verification: `pending selected producer`
-  Commit: `pending`
+  Verification: `Permitted final-producer closure follows .3.1-.3.3 evidence. Hand off actual target-event join .4; unsupported shapes and target/range/full .6 remain open.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3.3.2.2: complete current factorizer width policy`
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4`

@@ -86,8 +86,13 @@ unsigned operands and no native/cached target constraint. Copied/stale inputs an
 matching supported source mutations withhold. Exact normalizer width/source
 publications and the registry rebuild now preserve current events, checking
 proof before reset and binding the actual replacement row. Independent floors
-and copied/stale metadata cannot refresh. Cache reads, successful completion
-and target joins remain pending.
+and copied/stale metadata cannot refresh. Exact cache reads now preserve the
+held event, including scalar AST re-inference; recursive fallback revokes it.
+`factorized_width_allocation` returns completed policy only after normalization,
+pruning and final registry publication succeed. Earlier observations remain
+diagnostic. Normalization/collection/generation failures and reset/reuse clear
+policy; repeated cached normalization mints no replacement proof. Target-event
+and symbolic range joins remain pending.
 
 Whole-reference origins now share typed recognition: explicit Core slices and
 state wrappers withhold; compatible intermediate references use their own

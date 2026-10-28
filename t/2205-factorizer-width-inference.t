@@ -71,7 +71,7 @@ subtest 'actual intrinsic branch records a current selected event before cache/n
         my ($initial)=@{$p->{observations}};
         is_deeply($initial->{event},expected($operator,$width),'actual canonical intrinsic max event retains selected width and order');
         ok(!defined($initial->{before}{width}) && $initial->{before}{source} eq 'unresolved_factorization_ast','event comes from actual unresolved input');
-        ok(!(grep {defined($_->{event})} @{$p->{observations}}[1..$#{$p->{observations}}]),'unqualified later cache/copy calls do not reissue the event yet');
+        is_deeply([map {$_->{event}} @{$p->{observations}}[1..$#{$p->{observations}}]],[(expected($operator,$width)) x $#{$p->{observations}}],'qualified later cache/copy calls preserve the original event');
     }}
 };
 subtest 'independent cached/native/canonical/registered constraints withhold even at equal defaults' => sub {

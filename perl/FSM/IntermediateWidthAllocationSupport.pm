@@ -369,9 +369,9 @@ and compares the full resulting frame. This projection alone mints no event.
 =head2 current_factorized_inference
 
 Return the detached selected record only while the entire held frame agrees.
-Subsequent cache calls, unknown registry copies, source writes or epoch reset
-withhold. The actual normalizer and registry publisher qualify their own exact
-transitions; cache/completion remains a successor. This observation is not
-completed generic allocation admission.
+Unknown registry copies, source writes and epoch reset withhold. The actual
+normalizer, registry publisher and resolver qualify their exact transitions from
+current held proof. The producer separately gates completed policy on successful
+collection; target-event/range admission remains outside this validator.
 
 =cut

@@ -74,16 +74,37 @@ consume one AST-first cache.
 The default width owner starts a fresh private inference epoch. Injected legacy
 width providers keep their original method contract and supply no new provenance.
 The default owner checks current proof around the exact width/source publication;
-other metadata and source changes cannot borrow that refresh.
+other metadata and source changes cannot borrow that refresh. Failure clears
+partial events before rethrowing the original error. Scalar/list/void caller
+contexts preserve; this pass alone does not mark completed collection policy.
 
 =cut
 
 sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signals) {
+    my $width_support = $self->{flattened_dt}{backend_sv_intermediate_width_support};
+    $width_support->_begin_factorized_width_inference
+        if $width_support->can('_begin_factorized_width_inference');
+    my $want = wantarray;
+    my (@result, $result);
+    my $ok = eval {
+        if (!defined($want)) { $self->_normalize_metadata($all_intermediate_signals) }
+        elsif ($want) { @result = $self->_normalize_metadata($all_intermediate_signals) }
+        else { $result = $self->_normalize_metadata($all_intermediate_signals) }
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $width_support->_abort_factorized_width_inference
+            if $width_support->can('_abort_factorized_width_inference');
+        die $error;
+    }
+    return $want ? @result : $result;
+}
+
+sub _normalize_metadata ($self, $all_intermediate_signals) {
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
-    $width_support->_begin_factorized_width_inference
-        if $width_support->can('_begin_factorized_width_inference');
 
     for my $signal_name (keys %{$all_intermediate_signals || {}}) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
