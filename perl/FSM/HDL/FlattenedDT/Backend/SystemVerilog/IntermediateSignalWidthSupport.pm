@@ -144,8 +144,12 @@ Owned resolver cache reads preserve only an already current graph holder through
 the exact revision and parent width/source writes; default-one AST re-inference
 uses the same contract. Native metadata, independent floors, stale or copied
 inputs, cycles and source/view changes withhold. Abort clears graph holders.
-Later normalization/registry publications are not yet qualified for graph proof;
-they cannot refresh it or expose completed graph policy or symbolic ranges.
+The actual normalizer checkpoints current graph proof before its callback and
+refreshes only the exact allocator/registered width/source writes. Other fields,
+source changes and row replacement withhold; callback failure clears partial
+holders through normalizer abort. Transitive child publications preserve only
+still-current dependency proof. Registry copies and prepared-view handoff remain
+separate; this transition exposes no completed graph policy or symbolic range.
 
 =cut
 
@@ -254,6 +258,15 @@ sub _restore_factorized_inference ($self, $signal_name, $signal_info, $holder, $
 }
 
 sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publish) {
+    my $graph_holder = $self->_take_current_graph_inference($signal_name, $signal_info);
+    my $graph_expected = $graph_holder ? JSON::PP->new->decode($graph_holder->{state}) : undef;
+    if ($graph_expected) {
+        for my $row ($graph_expected->{registered}, $graph_expected->{factorizer_entry}) {
+            next unless $row;
+            $row->{width} = $signal_info->{width};
+            $row->{width_source} = $signal_info->{width_source};
+        }
+    }
     my $holder = $self->_take_current_factorized_inference($signal_name, $signal_info);
     my $expected = $holder ? JSON::PP->new->decode($holder->{state}) : undef;
     if ($expected) {
@@ -265,6 +278,7 @@ sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publ
     }
     $publish->();
     $self->_restore_factorized_inference($signal_name, $signal_info, $holder, $expected);
+    $self->_restore_graph_inference_state($signal_name, $signal_info, $graph_holder, $graph_expected);
 }
 
 sub _checkpoint_factorized_registry_copies ($self, $all_intermediate_signals, $replace_registry = 0) {
@@ -312,9 +326,6 @@ sub _take_current_graph_inference ($self, $name, $info) {
 
 sub _restore_graph_inference ($self, $name, $info, $holder, $width, $source) {
     return unless $holder;
-    my $current = FSM::IntermediateWidthGraphInferenceSupport->prepare_inference(
-        width_support => $self, signal_name => $name, signal_info => $info,
-        selected_width => $holder->{record}{selected_width}) or return;
     my $expected = JSON::PP->new->decode($holder->{state});
     $expected->{revision} = $self->{_width_inference_revisions}{$name};
     my $identity = $expected->{signal_info}{identity};
@@ -323,6 +334,14 @@ sub _restore_graph_inference ($self, $name, $info, $holder, $width, $source) {
         $row->{width} = $width;
         $row->{width_source} = $source;
     }
+    $self->_restore_graph_inference_state($name, $info, $holder, $expected);
+}
+
+sub _restore_graph_inference_state ($self, $name, $info, $holder, $expected) {
+    return unless $holder && $expected;
+    my $current = FSM::IntermediateWidthGraphInferenceSupport->prepare_inference(
+        width_support => $self, signal_name => $name, signal_info => $info,
+        selected_width => $holder->{record}{selected_width}) or return;
     my $json = JSON::PP->new->canonical;
     $self->{_graph_inference_events}{$name} = $current
         if $json->encode($expected) eq $current->{state}

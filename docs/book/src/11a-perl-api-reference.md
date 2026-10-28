@@ -258,8 +258,11 @@ A read shares child validation within its own operation, then independently
 rechecks graph inputs, held capsules and whole-reference child proofs before
 return. A later sibling source write therefore cannot hide behind a cached
 child result. Operation-local observations retain no owner graph. Abort/new
-epochs clear holders. Normalization/registry/prepared-view publications still
-withhold graph currentness until their separately owned integration; no completed
+epochs clear holders. Actual normalizer width/source publications now checkpoint
+current graph proof and refresh only those allocator/registered fields. Source,
+constraint and row-identity changes withhold; publication failure clears partial
+holders and fresh backend reuse can capture new proof. Registry copies and
+prepared-view publication still require their separately owned integration; no completed
 graph policy, graph target event or symbolic graph range is exposed yet.
 
 The book search covers the manual and this guide. Use the API index, coverage

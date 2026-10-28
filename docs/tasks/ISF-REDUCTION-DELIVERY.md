@@ -2437,11 +2437,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Independent closure/source/owner checks pass; native retrieval, knowledge-map: OK and book/source freshness remain enforced by normal final-index hooks. No behavior or full qualification claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve graph events through actual normalization width/source publication.`
   Acceptance: `Checkpoint current graph proof before the real normalizer callback; refresh only exact permitted allocator/registered width/source writes. Transitive order, source/constraint mutation, failure and legacy providers preserve fail-closed behavior. No completed graph policy.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Exact graph normalizer width/source refresh passes transitive/default/currentness/failure/reuse controls; source/constraint/copied-row changes withhold. Full native products preserve except new post-normalization diagnostics. Re-derive actual callback, falsify predecessor and hostile writes, retain exact sources/logs in docs/audits/arithmetic-graph-width-publication-20261028.json.gz. Registry/view/completion and full .6 stay pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.2: preserve graph width publications`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub _with_factorized_width_publication locates whole-only refresh at 3ec89a901. Authenticated predecessor T2223 fails at line 67: actual normalizer allocator/registered writes invalidate otherwise current graph state.
+  - [x] **ADDRESSED (verified)** — Checkpoint current graph proof before the callback, expect only exact allocator/registered width/source changes, then re-derive full state and record. Source/constraint/row replacement cannot refresh; publication failure aborts partial proof and fresh backend reuse succeeds.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 (T2223/T2222/T2206); alternate order Files=1 Tests=3. Native HDL/source/target/completed policy and earlier intrinsic records conserve. POD/book/fact and normal doctrines gate commit; registry/view/completed graph policy remain next.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3.3`
   Status: `pending`
