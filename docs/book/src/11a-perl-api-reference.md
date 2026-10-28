@@ -135,7 +135,7 @@ complete earlier test/audit locator lists and exact card sources remain in
 `docs/audits/width-card-evidence-20261028.json.gz`; each card includes a
 digest-checked recovery command. Current contract text and existing recheck
 commands remain directly readable in the cards.
-Completed bitwise/arithmetic allocation/emission/target-proof subtrees retain exact Git revision, file
+Completed bitwise/arithmetic allocation/lifecycle/emission/target-proof subtrees retain exact Git revision, file
 digest and retention-contract retrieval through their live compact terminals.
 The bounded binary family now composes allocation, frozen source/target proof,
 actual declaration emission and final event closure. Symbolic truth stays vector

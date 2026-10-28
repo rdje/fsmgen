@@ -2198,14 +2198,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1`
   Status: `done`
   Goal: `Hold an explicit current Core binary max-allocation contract without inferring it from equal widths.`
-  Acceptance: `Add an opt-in detached intermediate_width_allocation holder with closed binary_operand_max/operator/source_names/selected_width record. An explicit producer-supplied contract must agree with this actual intermediate Signal, current canonical Core binary whole-SignalRef driving AST, ordered source identities and exact positive selected max. Equal numeric metadata alone installs nothing. Ordinary Signals gain no field. Anchor this Signal/current AST/operand identities and relevant selected/type/role/constraint state without retaining another owner graph; getters withhold stale/foreign/private divergence, failed replacement clears, caller input/output JSON kinds detach. Supported driving-AST, authored metadata, relevant role/constraint and registry width/type/source writes invalidate even matching-state replacement; preserve legacy numeric/state behavior. Keep source-parser/factorizer publication and symbolic target consumers inactive. Focused lifecycle/opaque-context/large-integer/foreign/ordinary controls, existing Core width-holder checks, POD/book/fact and commit close only holder.`
-  Verification: `Core previously has no intermediate_width_allocation API; original/final predecessor T2198 retains the missing-method diagnostic. A private shared helper now validates an explicit closed binary_operand_max contract against this plain unsigned helper, canonical Core AST, ordered actual operands and exact decimal maximum. Equal selected metadata installs nothing. Detached capsules contain scalar identity fingerprints/current state and a revocation revision, no extra owner graph. Supported driving/role/constraint/authored and registry writes revoke matching-state records; stale escaped/foreign/private-divergent capsules withhold, failed replacement clears. T2198/T2161/T2163 pass All tests successful Files=3 Tests=18; final holder-only width-inspection control passes Files=1 Tests=4. Canonical operators at scalar/wider widths, duplicate actual identity, role/type/context negatives and adjacent beyond-machine decimal widths qualify with unchanged caller kinds. Ordinary getters/clear add no field. Authenticated predecessor/current ordinary source HDL, declaration snapshots, Core keys/bindings/requirements and absent publication match exactly after Date normalization. Full original/current sources, tests, commands and lifecycle evidence retain in docs/audits/core-intermediate-width-allocation-20261028.json.gz. Historical width-copy prototype narration routes to exact prior card/audits; current facts and all old question/command routes preserve. Re-derive actual holder state; falsify opaque equality, currentness/matching writes, foreign/context/schema and large-width controls; durability source/test/POD/book/fact/audit. No parser/factorizer publication or generic target consumer; immediate .2 owns actual source allocator policy.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1: hold current Core max-allocation contracts`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Original T2198 reports Can't locate object method intermediate_width_allocation at t/2198-core-intermediate-width-allocation.t line 26. Existing late width_source is rewritten by cache reuse; the already retained context32/A8/B8 control proves numeric equality cannot supply birth policy. The new holder is an explicit supplied contract, not provenance inferred from those values.
-  - [x] **ADDRESSED (verified)** — Explicit Core setter/getter/clear and a detached currentness helper validate actual AST/ordered object identity and exact selected max. Relevant matching-state writes revoke; copied/stale/foreign/private-divergent capsules cannot borrow identity, and malformed replacement clears old data. Opaque metadata gains no record or source/range admission.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=18 for T2198/T2161/T2163; final holder-only inspection control passes Files=1 Tests=4. Existing Core width-holder behavior and caller kinds preserve. Syntax, POD/book/source freshness and mandatory hook gate commit; allocator publication, target proof and full .6 stay pending.
+  Terminal: `version_object`
+  Revision: `0e131d6806040d8e1bf741367f3facc4776fe747`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `5afdbfaa1f564149bc46abde1ba75e38d60b17fb45ccd983eed13ef75e744bb4`
+  Archived node count: `1`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed Core-holder/lifecycle source and children: docs/audits/intrinsic-graph-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1: retain closed holder/lifecycle history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2`
   Status: `done`
@@ -2382,22 +2382,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2`
   Status: `done`
   Goal: `Trace actual computed-helper birth, substitution and first inference ownership.`
-  Acceptance: `Before producer code, observe real fresh original candidate rows/ASTs, actual substitution to typed IntermediateSignalRef edges, collection/current row identities and first unresolved numeric inference for n-ary/nested arithmetic. Preserve every existing normalization/cache/registry publication and dependency epoch contract. Retain bounded exact causal evidence and select explicit original-tree/substitution lineage requirements; do not mint later birth from selected widths or names. No behavior, graph admission or broad verification change; update canonical facts/book/task and commit.`
-  Verification: `Actual nested candidates lack original birth, then gain typed substituted child edges while widths remain unresolved. Child held events precede completed collection policy; n-ary child-first and nested parent-recursive inference paths retain. Corrected read-only traces match genuinely uninstrumented full source/HDL/events under explicit hash seeds; plain/fixed controls preserve. Re-derive actual lifecycle; falsify original/substituted and held/completed boundaries plus known-bad logger; durability docs/audits/computed-graph-lifecycle-20261028.json.gz. Register separate original graph birth, intrinsic dependency proof and completed policy slices. No graph policy/range/full .6 claim.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2: bind computed graph lifecycle requirements`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2.1`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _factorizer_width_birth_capsule -- perl/FSM/HDL/ASTFactorization.pm identifies c9cde4dae. Actual original nested candidates have no whole-reference birth; owned substitution replaces their trees before numeric inference, and parent normalization can recurse into still-incomplete child policy.
-  - [x] **ADDRESSED (verified)** — Retain exact causal rows/typed edges/inference/publication evidence and register separate graph birth, intrinsic and completed-policy contracts. Diagnose and repair list-context corruption in the probe; invalid captures are retained and excluded from graph facts.
-  - [x] **NO REGRESSION** — Corrected traced/uninstrumented complete source/HDL/event products match and loaded owners equal exact Git/current bytes. Scalar-safe event-kind assertions reject the original malformed capture. knowledge-map: OK, book/source freshness and normal final-index doctrines qualify this metadata-bearing prerequisite; no production/full .6 change.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2.1`
-  Status: `done`
-  Goal: `Repair optional getter list-context corruption in the lifecycle probe.`
-  Acceptance: `The first trace logs Odd number of elements in anonymous hash at trace.pl line 96; an absent parent event becomes the string completed_policy. Optional getters return an empty list when embedded in a hash constructor. Preserve initial malformed captures as invalid evidence, force scalar optional fields and read-only absent-map observations, compare genuinely uninstrumented products and rerun. No production behavior change or use of corrupted event fields as graph facts.`
-  Verification: `Original trace.pl line 96 warning and event=completed_policy are retained as invalid logging evidence. Explicit scalar optional getters and safe absent-map reads produce warning-free corrected traces; the kind oracle rejects the known-bad capture and full uninstrumented products match.`
-  Commit: `joined to parent lifecycle prerequisite`
+  Terminal: `version_object`
+  Revision: `0e131d6806040d8e1bf741367f3facc4776fe747`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `5afdbfaa1f564149bc46abde1ba75e38d60b17fb45ccd983eed13ef75e744bb4`
+  Archived node count: `2`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact closed Core-holder/lifecycle source and children: docs/audits/intrinsic-graph-frontier-20261028.json.gz. Existing focused contracts retain their scoped evidence; current graph work and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1: retain closed holder/lifecycle history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3`
   Status: `active`
@@ -2428,11 +2420,38 @@ do not start broad suites between implementation slices.
   Commit: `joined to parent graph-birth slice`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Join first intrinsic graph inference to current actual dependency events.`
   Acceptance: `After .1, bind actual parent unresolved input and exact typed generated edges to current actual child rows/events during the same recursive inference epoch. Handle child-first and parent-recursive normalization without treating completed policy as available early; distinguish held events temporarily taken/restored during owned cache reads. Verify exact max against plain source leaves and every independent result/operand floor/type/opaque constraint. Reject cycles, copied/foreign/stale or unproved numeric children and unsupported publications; plain capsules add no owner graph. Preserve existing numeric selection and whole-reference producers. Focused causal/order/currentness/refusal checks, synchronized contracts and commit; no completed graph or range claim yet.`
   Verification: `Actual child held event precedes collection completion; nested parent may recursively normalize it. Original trace and corrected logging evidence retained in the lifecycle receipt.`
   Commit: `pending transitive intrinsic inference`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1`
+  Status: `done`
+  Goal: `Retain closed proof history before intrinsic graph ownership expansion.`
+  Acceptance: `Current task-evidence room cannot hold the required current-row/dependency-frame and first-inference split. Retain closed Core holder .3.4.3.2.2.2.1 and graph lifecycle .3.4.3.2.3.4.2.2 through exact current-HEAD version_object terminals with whole source/digest and complete done-child closure under fsmgen_required_history. Preserve every unrelated node and live registry owner, with no nested terminal, limit or behavior change; register exact graph frame/inference successors before code.`
+  Verification: `Closed Core holder and graph lifecycle subtrees retain exact committed source/digest, complete done children and all historical acceptance/evidence bytes. Independent Git show/cat-file equality, unselected current-node byte identity, no nested terminals and every live registry owner pass. Evidence: docs/audits/intrinsic-graph-frontier-20261028.json.gz. Register current-row/dependency-frame and actual first-inference successors; no behavior, limit or qualification change.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.1: prepare intrinsic graph frontier`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'bind computed graph lifecycle requirements' -- docs/tasks/ISF-REDUCTION-DELIVERY.md identifies 68bca9b62 as the closed lifecycle detail change. Live task-evidence room cannot hold the exact row/frame/inference split; closed holder/lifecycle evidence requires durable version retrieval.
+  - [x] **ADDRESSED (verified)** — Retain only complete closed Core-holder/lifecycle subtrees as current-revision digest-bound version_object terminals under fsmgen_required_history. Preserve every source/acceptance byte, unselected current node and live registry owner; register exact weak current-view, dependency-frame and first-inference successors before code.
+  - [x] **NO REGRESSION** — Exact source/closure/current-owner assertions pass; knowledge-map: OK and book/source freshness qualify the unchanged current contracts. Normal final-index doctrines remain mandatory; no behavior, budget or full .6 change.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.2`
+  Status: `pending`
+  Goal: `Prepare current actual graph input and dependency frames without publishing policy.`
+  Acceptance: `Introduce an epoch-bound non-owning view of the actual normalization rows; preserve original collected, factorizer and registered identities instead of assuming they are one object. Any locator must be weak and add no strong owner graph; plain proof capsules remain JSON-only. Use exact actual generated-reference width lookup precedence, current graph birth and actual selected child rows/held events. Separate pending unresolved parent input from ready post-child proof; preserve source/Core/AST/ordered-edge identity and every native/cache/floor/type/constraint requirement. Derive a stable dependency kernel only after validating the full current child event, distinguishing semantic/source revisions from exact owned cache/registry publication fields. Copied/stale/foreign/missing/cyclic rows or merely equal widths cannot supply frames. Focused real call-point/caller/lifetime/refusal/native checks and synchronized docs precede commit. No intrinsic graph event, completed policy, target or HDL change.`
+  Verification: `Lifecycle receipt proves distinct original/collected/registered rows and child-first/parent-recursive inference; implementation pending exact lookup and weak-view contract.`
+  Commit: `pending actual graph frames`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.2.3`
+  Status: `pending`
+  Goal: `Record first intrinsic graph max events from pending input and current dependency proof.`
+  Acceptance: `After .2, integrate actual resolver entry/recursive child inference/parent width publication into a held graph-event path separate from whole-reference events. Parent eligibility is captured before selected width; ready dependency proof must reflect the actual numeric resolver's chosen rows, not a same-name alternate. Preserve exact max, order/duplicates, source/child constraints and epoch/revision/ownership through permitted writes. Child cache re-inference at default one and numeric fast paths at wider defaults must not erase or fabricate proof; temporary held-event take/restore is not completed policy. Supported source/dependency changes, unknown publications, cycles and copied/stale/foreign graphs withhold. Keep current ordinary numeric selection, old APIs and plain owner lifetimes. Focused real recursive/order/currentness/refusal controls plus POD/book/facts and commit close intrinsic inference only; .3.3 owns completed policies/owned registry and live prepared-view publication.`
+  Verification: `pending current input/dependency frames`
+  Commit: `pending intrinsic graph events`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3.3`
   Status: `pending`
