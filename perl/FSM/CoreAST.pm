@@ -10,6 +10,7 @@ use Scalar::Util qw(blessed);
 use JSON::PP ();
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport ();
+use FSM::IntermediateWidthAllocationSupport;
 
 # FSM Core AST - Semantic Foundation for Decision Tree FSMs
 # Format-agnostic, semantically complete representation
@@ -73,6 +74,7 @@ package FSM::CoreAST::Signal;
     }
 
     sub set_declared_width_binding($self, $binding) {
+        $self->clear_intermediate_width_allocation if defined $binding;
         # A failed replacement must not expose the previous binding.
         $self->clear_declared_width_binding;
         return $self unless defined $binding;
@@ -141,6 +143,7 @@ package FSM::CoreAST::Signal;
     }
 
     sub set_declared_width_requirements($self, $requirements) {
+        $self->clear_intermediate_width_allocation if defined $requirements;
         $self->clear_declared_width_requirements;
         return $self unless defined $requirements;
         my $copy = _copy_declared_width_requirements($requirements);
@@ -231,6 +234,8 @@ package FSM::CoreAST::Signal;
     sub is_reset($self) { $self->{type} eq 'reset' }
     
     sub set_attribute($self, $key, $value) {
+        $self->clear_intermediate_width_allocation
+            if defined($key) && $key =~ /\A(?:is_intermediate|is_output|is_aux_output|width_declared|signal_role)\z/;
         if (defined($key) && $key eq 'driving_ast') {
             $self->{attributes}{$key} = $value;
             $self->set_driving_ast($value);
@@ -249,14 +254,63 @@ package FSM::CoreAST::Signal;
     sub add_constraint($self, $constraint) {
         Carp::confess "Signal constraints must be stored as an array"
             unless ref($self->{constraints}) eq 'ARRAY';
+        $self->clear_intermediate_width_allocation;
         push $self->{constraints}->@*, _clone_structured_value($constraint);
     }
     
+=head2 intermediate_width_allocation
+
+Return a detached explicit current binary max-allocation record, or undef.
+Equal selected widths do not install one. The internal contract and eligibility
+profile are owned by L<FSM::IntermediateWidthAllocationSupport>.
+
+=head2 set_intermediate_width_allocation
+
+Install one producer-supplied closed record and return this Signal. Undef clears;
+malformed/incoherent replacement throws after revoking the old record. This is
+an opt-in intent contract, not automatic allocation provenance or range admission.
+
+=head2 clear_intermediate_width_allocation
+
+Revoke the record and return this Signal. Previously opted-in Signals retain a
+revocation counter; ordinary lookup/clear creates no field. Actual driving-AST,
+relevant role/constraint, authored-metadata and registry width/type/source writes
+revoke an installed contract even for matching-state replacements.
+
+=cut
+
+    sub intermediate_width_allocation($self) {
+        return undef unless exists $self->{_intermediate_width_allocation};
+        return FSM::IntermediateWidthAllocationSupport->current_core(
+            signal => $self, holder => $self->{_intermediate_width_allocation});
+    }
+
+    sub clear_intermediate_width_allocation($self) {
+        delete $self->{_intermediate_width_allocation};
+        ++$self->{_intermediate_width_allocation_revision}
+            if exists $self->{_intermediate_width_allocation_revision};
+        return $self;
+    }
+
+    sub set_intermediate_width_allocation($self, $record) {
+        $self->clear_intermediate_width_allocation;
+        return $self unless defined $record;
+        my $holder = FSM::IntermediateWidthAllocationSupport->prepare_core(signal => $self, record => $record);
+        $self->{_intermediate_width_allocation_revision} //= 0;
+        $self->{_intermediate_width_allocation} = $holder;
+        return $self;
+    }
+
+    sub _intermediate_width_allocation_revision($self) {
+        return $self->{_intermediate_width_allocation_revision} // 0;
+    }
+
     # FANIN CONE ACCESS: Core signal-AST relationship methods
     sub driving_ast($self) { $self->{driving_ast} }
     sub fanout_signals($self) { _clone_structured_value($self->{fanout_signals} // []) }
     
     sub set_driving_ast($self, $ast) { 
+        $self->clear_intermediate_width_allocation;
         $self->{driving_ast} = $ast;
         # Update fanout for all signals in the driving AST
         $self->_update_fanout_relationships($ast) if $ast;

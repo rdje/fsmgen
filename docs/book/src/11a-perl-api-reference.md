@@ -59,6 +59,14 @@ the operand tree in diagnostic/factorization strings. Existing scalar and alread
 grouped products preserve; the checked native factored HDL is unchanged. This
 bounded repair does not close arbitrary mixed arithmetic/unary text rendering.
 
+An internal [intermediate allocation holder](perl-api/FSM/IntermediateWidthAllocationSupport.html)
+now records an explicit current binary max-allocation contract. It binds the
+actual Core helper, AST and ordered operand objects, with revocation on relevant
+matching-state writes. Opaque equal-width metadata installs nothing. Getter and
+replacement records detach; the capsule adds no mutable owner graph. Actual
+parser/factorizer allocation publication and generic range consumers remain
+separate implementation steps.
+
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 

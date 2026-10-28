@@ -10,11 +10,12 @@ answers:
   - "why must explicit auxiliary width declarations be preserved before copying parent bindings?"
   - "why must late sizing preserve distinct next/q copy origins?"
   - "why did guard XOR become NOT?"
+  - "how are explicit Core intermediate width allocation contracts held?"
 date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
+  perl/FSM/IntermediateWidthAllocationSupport.pm; t/2198-core-intermediate-width-allocation.t; docs/audits/core-intermediate-width-allocation-20261028.json.gz; t/2176-direct-symbolic-storage-ranges.t; t/data/ial0-direct-symbolic-storage.fsm; docs/audits/direct-symbolic-storage-20261027.json.gz;
   t/2175-direct-symbolic-port-ranges.t; t/data/ial0-direct-symbolic-ports.fsm; docs/audits/direct-symbolic-ports-20261027.json.gz;
   perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; t/2174-direct-declaration-capture.t; docs/audits/direct-declaration-capture-20261027.json.gz;
   t/2173-direct-width-target-plans.t; docs/audits/direct-width-target-plans-20261027.json.gz;
@@ -27,7 +28,7 @@ evidence: >-
   docs/audits/auxiliary-width-origin-contract-20261027.json.gz; docs/audits/auxiliary-width-origin-contract-20261027.py; docs/audits/direct-declared-range-split-20261027.json.gz;
   perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm; t/2111-ial0-parameter-width-selection.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2198-core-intermediate-width-allocation.t t/2111-ial0-parameter-width-selection.t
 ---
 
 Parser's detached Signal declared_width_source retains expression, resolved_width
@@ -52,17 +53,13 @@ scope, unchanged constant fast path and canonical selected-observation walk.
 Actual Signal associations stage locally; primary declared_width_binding publishes
 only after complete validation, and facade failures clear it. Header scope
 survives physical renaming. Old numeric/public/source products preserve; literal
-and type branches acquire no parameter relation. Eligible auxiliary propagation
-and scoped late sizing have focused checks preceding .3.3.2 target kernels.
+and type branches acquire no parameter relation.
 
-The retained predecessor <-=/<=-/<=+ copies replaced explicit auxiliary source
-records with data(param W), although numeric max refinement retained both
-requirements. Equal-default X/literal-eight auxiliary declarations then looked
-identical to W; opposing W/X defaults expose the lost numeric constraint. Clean,
-width1, named-type and renamed late-sizing boundaries stay distinct. P1 retention
-is repaired by .3.3.1.2.2.3.3.4 without numeric changes; the audit describes its
-original epoch. Immutable event snapshots and final actual-object ownership stop
-later live-source lookup from replacing earlier copy identity.
+Historical <-=/<=-/<=+ auxiliary overwrite and opposing W/X counterexamples retain
+in the auxiliary-width-origin audit and exact prior card:
+`git show 8b2868190:docs/knowledge/direct-declared-width-consumers.md`.
+Current immutable events/actual-object ownership preserve earlier copy identity;
+.3.3.1.2.2.3.3.4 repaired retention without numeric changes. Clean/width1/type/renamed controls preserve.
 
 Opt-in Core declared_width_requirements keeps ordered separate declaration and
 generated snapshots, lexical scope and observed numeric maximum. Origin, expression,
@@ -78,6 +75,11 @@ success publishes; invalidation clears every new map. Both sizing orders/copy
 chains retain origins. Ordinary unscoped late sizing stays legacy; computed shapes
 remain separately owned.
 
+Intermediate_width_allocation separately holds explicit binary_operand_max intent (T2198),
+binding this helper/current Core AST/ordered operand objects with matching-write revocation.
+It shares detached/failed-replacement rules, retains no extra owner graph and installs nothing
+from equal widths. Actual allocation publishers and generic ranges remain pending.
+
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,
 width and absent type through Core coherence. Chains preserve original declarations;
@@ -86,10 +88,8 @@ opaque requirements, including equal-default repeated primary declarations, with
 a single binding. Retries use current lexical declarations; inherited larger floors
 remain opaque. Final event versions preserve copies and reject stale replacement.
 
-Late sizing can collide at next_data_r: next(data_r) and q(next_data) requirements
-both survive. Fresh contexts lose explicit auxiliary declarations; blanket generated
-removal loses the other path even at equal defaults. Preserving all records can
-withhold clean bindings behind earlier opaque inference. Immediate copy_origin
+Late sizing retains next(data_r) and q(next_data) at next_data_r; the old fresh,
+blanket and preserve-all failures remain in the scoped-late-width audit. Immediate copy_origin
 attestation (.3.3.1.2.2.3.3.3.2.1) records actual edges separately from original
 identity. Capture requires source-object equality with the registry key, never just
 name/width. Chains replace immediate origin, retaining original declaration/capture;

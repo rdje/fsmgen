@@ -2188,10 +2188,58 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=18 for final T2197/T2190/T2174/T2191. Scalar/legacy/event, caller/detachment/reuse and scalar-only VHDL controls pass. Syntax/book/POD/source freshness and normal hook gate commit; allocation/range/full qualification remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prove same-relationship binary bitwise intermediate range plans against actual operands.`
   Acceptance: `After .1, bind completed actual intermediate/declaration events to every operand's canonical source/target plan. Both actual whole unsigned plain operands must have the same proved mutable width relationship, retaining separate identity/constraints; equal defaults or separately overridable aliases are insufficient. Prove actual result allocation policy independently of selected numeric equality: a prepared result may be context-widened/truncated, and an equal default can conceal that constraint. Add allocation-policy publication ownership before promotion if required. Validate selected width, current expression and complete actual membership, default-one vector rank, static/type/signed and independent-max refusals. Source-owned parser helpers need explicit actual intermediate ownership rather than register-helper ownership assumptions. Qualify a detached bounded target-plan consumer before emission, sync docs and commit. No VHDL non-scalar/raw admission or external qualification.`
   Verification: `Pending publisher completion. Context32/A8/B8 public prepared emission remains valid; binary_origin attests only operation/operand identity, not max-width allocation policy. The initial over-strict collector refusal is retained in the publisher audit. Establish actual source allocation provenance before using any equal selected widths as generic proof.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5, ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.6`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1`
+  Status: `done`
+  Goal: `Hold an explicit current Core binary max-allocation contract without inferring it from equal widths.`
+  Acceptance: `Add an opt-in detached intermediate_width_allocation holder with closed binary_operand_max/operator/source_names/selected_width record. An explicit producer-supplied contract must agree with this actual intermediate Signal, current canonical Core binary whole-SignalRef driving AST, ordered source identities and exact positive selected max. Equal numeric metadata alone installs nothing. Ordinary Signals gain no field. Anchor this Signal/current AST/operand identities and relevant selected/type/role/constraint state without retaining another owner graph; getters withhold stale/foreign/private divergence, failed replacement clears, caller input/output JSON kinds detach. Supported driving-AST, authored metadata, relevant role/constraint and registry width/type/source writes invalidate even matching-state replacement; preserve legacy numeric/state behavior. Keep source-parser/factorizer publication and symbolic target consumers inactive. Focused lifecycle/opaque-context/large-integer/foreign/ordinary controls, existing Core width-holder checks, POD/book/fact and commit close only holder.`
+  Verification: `Core previously has no intermediate_width_allocation API; original/final predecessor T2198 retains the missing-method diagnostic. A private shared helper now validates an explicit closed binary_operand_max contract against this plain unsigned helper, canonical Core AST, ordered actual operands and exact decimal maximum. Equal selected metadata installs nothing. Detached capsules contain scalar identity fingerprints/current state and a revocation revision, no extra owner graph. Supported driving/role/constraint/authored and registry writes revoke matching-state records; stale escaped/foreign/private-divergent capsules withhold, failed replacement clears. T2198/T2161/T2163 pass All tests successful Files=3 Tests=18; final holder-only width-inspection control passes Files=1 Tests=4. Canonical operators at scalar/wider widths, duplicate actual identity, role/type/context negatives and adjacent beyond-machine decimal widths qualify with unchanged caller kinds. Ordinary getters/clear add no field. Authenticated predecessor/current ordinary source HDL, declaration snapshots, Core keys/bindings/requirements and absent publication match exactly after Date normalization. Full original/current sources, tests, commands and lifecycle evidence retain in docs/audits/core-intermediate-width-allocation-20261028.json.gz. Historical width-copy prototype narration routes to exact prior card/audits; current facts and all old question/command routes preserve. Re-derive actual holder state; falsify opaque equality, currentness/matching writes, foreign/context/schema and large-width controls; durability source/test/POD/book/fact/audit. No parser/factorizer publication or generic target consumer; immediate .2 owns actual source allocator policy.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.1: hold current Core max-allocation contracts`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original T2198 reports Can't locate object method intermediate_width_allocation at t/2198-core-intermediate-width-allocation.t line 26. Existing late width_source is rewritten by cache reuse; the already retained context32/A8/B8 control proves numeric equality cannot supply birth policy. The new holder is an explicit supplied contract, not provenance inferred from those values.
+  - [x] **ADDRESSED (verified)** — Explicit Core setter/getter/clear and a detached currentness helper validate actual AST/ordered object identity and exact selected max. Relevant matching-state writes revoke; copied/stale/foreign/private-divergent capsules cannot borrow identity, and malformed replacement clears old data. Opaque metadata gains no record or source/range admission.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=18 for T2198/T2161/T2163; final holder-only inspection control passes Files=1 Tests=4. Existing Core width-holder behavior and caller kinds preserve. Syntax, POD/book/source freshness and mandatory hook gate commit; allocator publication, target proof and full .6 stay pending.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Publish actual parser bitwise helper allocation policy while preserving independent existing constraints.`
+  Acceptance: `After holder, bind policy only at actual ExpressionBuilder/SignalManager inferred intermediate allocation, before source data loses that origin. Fresh versus repeated generated allocations must preserve every existing authored/opaque floor; identical selected defaults cannot relabel an opaque or context-sized existing Signal. Repeated actual identical inferred helpers may retain/rebind a proved policy, but conflicting/floor/type/stale/unknown cases withhold. Preserve unknown-width placeholders, old numeric/Core/public products and caller kinds; complete source failure must not expose stale policy. Focused real source/reuse/late/context controls and book/POD/fact precede commit. No target range admission.`
+  Verification: `pending holder`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Publish actual factorization allocation policy through width normalization without laundering cached context widths.`
+  Acceptance: `After holder/parser producer, retain actual pure-expression allocation provenance from ASTFactorization candidate birth and the qualified width inference event. Normalization/cache copies must preserve current proof or revoke it on independent native/cached/context constraints, never reconstruct birth policy from late width_source/default equality. Preserve existing ordinary factorization, metadata/identity, caller graphs and selected widths; qualify actual raw-Core guards and opaque/private controls, sync docs and commit. N-ary/compound graphs stay separately owned until proved.`
+  Verification: `pending producers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.4`
+  Status: `pending`
+  Goal: `Join actual current allocation policies to completed binary intermediate events.`
+  Acceptance: `After actual producers, add a separate closed allocation-policy event contract tied to the same current defining/runtime AST, ordered syntactic origin, declaration and selected text. Preserve independent operand/result widths; opaque/context/unknown/stale/foreign policies stay absent or precisely refuse under their contract. Complete actual field/membership/detachment and generation-reuse controls, old snapshots after only owned fields, unchanged HDL and scalar/VHDL boundaries qualify before private range proof. Sync POD/book/fact and commit.`
+  Verification: `pending actual allocation producers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.5`
+  Status: `pending`
+  Goal: `Prepare detached symbolic binary range plans only from actual allocation and all operand constraints.`
+  Acceptance: `After completed event policy, bind every source/target operand to canonical frozen scope/range proof, selected widths, plain unsigned type and complete actual membership. Only identical proved mutable relationships plus actual intrinsic-max allocation may share a result range. Equal defaults, independent aliases, static floors, context sizing, missing policy and stale identities refuse; keep vector rank at default one. Prepared source-owned/generated helper roles and fresh selected expression remain distinct; caller plans attest no provenance. Focused private proof and target/scalar/static/refusal controls, docs and commit precede emission.`
+  Verification: `pending event closure`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.2.6`
+  Status: `pending`
+  Goal: `Close allocation/range preparation and hand off the actual emitter join.`
+  Acceptance: `After bounded holder, producers, events and private target proof, review composed focused policy/constraint/currentness controls and exact gaps, close .2 only for proved binary whole-operand profiles, then activate .3 emitter sequencing. Preserve .3.4.3.2.3 ownership of unsupported nested/n-ary/unary/arithmetic constraints and full .6 qualification. Join closure to the final proof commit if safe; no broad verification campaign.`
+  Verification: `pending prerequisites`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`

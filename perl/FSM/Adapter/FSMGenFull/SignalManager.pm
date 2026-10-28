@@ -85,6 +85,13 @@ sub register_signal($self, $signal_name, %attributes) {
         my $existing = $self->{signal_registry}{$signal_name};
         fsm_debug("        SIGNAL EXISTS: '$signal_name' width=" . ($existing->width || 'undef'), 3);
         
+        my $allocation_write = grep {exists $normalized_attrs{$_}}
+            qw(width type signed state_model declared_type_name declared_type_spec
+                _declared_width_source _declared_width_binding _declared_width_requirements);
+        $allocation_write ||= grep {exists $attribute_bag{$_}}
+            qw(is_intermediate is_output is_aux_output width_declared signal_role);
+        $existing->clear_intermediate_width_allocation if $allocation_write;
+
         # Apply refinements directly to the existing object so all previously-created
         # AST signal references see the updated width/attributes.
         if (%normalized_attrs) {
