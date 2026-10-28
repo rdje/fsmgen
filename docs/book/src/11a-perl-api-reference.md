@@ -135,12 +135,20 @@ complete earlier test/audit locator lists and exact card sources remain in
 `docs/audits/width-card-evidence-20261028.json.gz`; each card includes a
 digest-checked recovery command. Current contract text and existing recheck
 commands remain directly readable in the cards.
-Completed allocation-producer task subtrees retain exact Git revision, file
+Completed allocation/emission task subtrees retain exact Git revision, file
 digest and retention-contract retrieval through their live compact terminals.
 The bounded binary family now composes allocation, frozen source/target proof,
 actual declaration emission and final event closure. Symbolic truth stays vector
 aware at default one. Nested/n-ary/arithmetic and remaining scalar constraints,
 other shapes and binary VHDL stay separately owned; full qualification is deferred.
+
+Arithmetic source expressions such as `(+ A B)` stay inline in the parser;
+repeated expressions acquire their actual helper in the backend factorizer.
+Those arithmetic helpers currently retain numeric widths and expression-only
+events, without an allocation policy or generic range qualification. The next
+producer work belongs at that actual factorizer boundary. Comparison and logical
+negation helpers retain independently scalar results. Source acceptance and a
+matching selected numeric width do not establish a mutable helper relationship.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

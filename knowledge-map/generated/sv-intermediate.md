@@ -1,7 +1,7 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **13** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,11 +10,13 @@
 - q="how are scalar reduction intermediate origins captured?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="how does FSMGen render multi-bit intermediate equality to zero?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="what did the .219 renderer-width fix cover?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="where are arithmetic intermediate helpers allocated?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="which scalar intermediates allow generic VHDL?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why can Core typed literals change value during guard capture?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why can runtime AST guard text lose comparison grouping?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why did Core bitwise guard operations become logical?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why did a high-bit-only vector guard fail?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="why do arithmetic helpers lack generic ranges?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why should multi-bit intermediates not render as bare negation?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 
 ## Facts

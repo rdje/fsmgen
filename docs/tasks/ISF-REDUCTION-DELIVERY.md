@@ -2325,46 +2325,14 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3`
   Status: `done`
   Goal: `Emit proved symbolic bitwise intermediate ranges with final actual-event closure.`
-  Acceptance: `After .2 private proof, join actual prepared intermediate planning before declaration emission; source planning currently follows consolidated rendering, so qualify any sequencing change explicitly instead of patching HDL or performing a second generation. Actual declaration ranges consume proved same-relationship plans, preserving vector rank at one, and final independent event/source/target reproof must equal emitted identities, expressions, origins and ranges. Keep caller/event isolation and reuse/failure atomicity, fixed/legacy/named controls and independent constraints. Focused source SV/Verilog/default/alias negatives plus book/POD/fact precede commit. VHDL non-scalar join remains .3.4.3.4, full .6.`
-  Verification: `Children .1-.3 qualify one actual prepare/source-proof/render sequence, bounded symbolic binary declaration consumption, independent complete target/event closure and symbolic whole-vector truth at default1. Focused implementation checks pass; other shapes, binary VHDL and full .6 remain open.`
-  Commit: `children below`
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.3`
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1`
-  Status: `done`
-  Goal: `Separate actual intermediate preparation from rendering before source range planning.`
-  Acceptance: `Expose prepare/validate and render on the live stage owner while preserving its combined facade. Assembly prepares the actual block once, proves source widths, then renders once before scaffold emission. Preserve legacy combined-only providers, actual fixed/symbolic HDL and complete captured events. Focused phase-order, validation/failure and existing stage/assembly controls; synchronize POD/book/fact and commit. No helper range emission in this precursor.`
-  Verification: `Live stage exposes prepare/validate and explicit render, with the old combined facade composed once. Assembly joins source proof between discovery and rendering, preserving combined-only injected providers. T2213/T231/T293 pass All tests successful Files=3 Tests=9: real width1/8 timeline, refusal before render, reuse, direct stage contract, actual validation and legacy assembly controls. Final T2213 fails against exact authenticated predecessor owners. Complete native source/raw-factorizer width1/8 HDL (Date-only), snapshots, public source fields, allocations, births and inference events are equal before/after. Re-derive actual phase sequence; falsify predecessor plus complete product/legacy controls; durability source/test/POD/book/card and docs/audits/intermediate-preparation-sequence-20261028.json.gz. Initial test-double reblessing error is corrected and retained. No helper range emission or full .6 qualification; .2 is next.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.1: separate intermediate preparation from rendering`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2213 reports Failed test render sees the prepared source plan at ./t/2213-intermediate-preparation-sequence.t line 51, source order at line 57 and refusal-before-render at line 87. The combined stage rendered before assembly prepared source ranges.
-  - [x] **ADDRESSED (verified)** — Real preparation/validation precedes source proof, then the same block renders once. Final T2213 fails against exact predecessor owners and passes current code. Combined facade/providers preserve; source failure prevents rendering and reuse recovers. Full native actual products match with Date-only normalization.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=9 for sequencing/stage/assembly. Complete native HDL/event/source/policy/birth/inference controls preserve; knowledge-map: OK and POD/book/source checks pass. Final-index doctrine hook gates commit. Helper range emission and full .6 remain pending.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2`
-  Status: `done`
-  Goal: `Consume private actual intermediate ranges and independently reprove final emitted events.`
-  Acceptance: `After .1, prove actual selected allocation/source relationships at declaration emission, preserving a detached emitted-plan ledger. Full target records exist only after emission; use the existing independent private complete-target proof at final assembly, without fabricating or exposing partial snapshots. Reprove completed actual identities, expressions, allocation origins and emitted ranges; preserve vector rank at one, legacy/fixed controls, failure/reuse isolation and independent constraints. Split bounded further leaves if needed. Full .6 and non-scalar VHDL remain separately owned.`
-  Verification: `Actual declarations consume current allocation plus identical frozen mutable operand contracts and retain detached range/expression/origin/ordered-operand/role records. Full emitted target data exists only after rendering; final assembly independently invokes prepare_binary_intermediate_range and requires exact whole-record equality. No fabricated partial snapshot, HDL patching or second generation. T2214/T2212/T2210/T2213 pass All tests successful Files=4 Tests=17: source/factorizer width1/8, SV/Verilog, operators/duplicates, alias/default/static/tree refusals, late range/role/text/policy/source mutation, failure/reuse and legacy event controls. The final regression fails against authenticated predecessor owners. Native comparison changes only the literal two source-helper declaration ranges; complete snapshots/source fields/policies/births/inference and fixed factorizer products conserve. Strict fixture check and both generated HDL profiles pass without external tools. Re-derive actual emitter/final target closure; falsify predecessor and independent identity/constraint/product controls; durability source/test/fixture/POD/book/cards and docs/audits/binary-intermediate-emission-20261028.json.gz. Existing A&A simplification exposed and corrected a test oracle, not a product defect; raw duplicate origins preserve. Unqualified allocation shapes retain numeric legacy behavior; other relationships, non-scalar VHDL and full .6 remain pending.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.2: emit proved binary intermediate ranges`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor final T2214 reports Failed test actual helper range keeps W and vector rank at default one at ./t/2214-symbolic-binary-intermediate-emission.t line 48. The actual declaration owner emitted cached numeric ranges despite proved current allocation and source contracts; final assembly had no binary emitted-plan closure.
-  - [x] **ADDRESSED (verified)** — Consume current source/allocation proof at declaration and compare its detached full record with independently rederived complete actual target-event proof. Width-one rank, aliases/constraints, ordered duplicate origins, final mutations and failure/reuse controls qualify; final T2214 fails against exact predecessor modules and passes current implementation. Strict source/SV/Verilog examples pass.
-  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=17 for emission, complete private target proof, actual policy events and sequencing. Literal native delta is only the expected source helper ranges; snapshots/source kinds/policies/births/inference/fixed products conserve. POD/book/source/knowledge checks and final-index hook gate commit. Binary VHDL, other shapes and full .6 remain pending.
-
-- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.3`
-  Status: `done`
-  Goal: `Preserve whole-vector truth for symbolic binary helpers defaulting to one.`
-  Acceptance: `P1 required-feature consumer discovered from actual .2 native products: width1 emits idle_en & helper while width8 emits idle_en && helper. With helper range W and W widened, high-bit-only true operands can disappear at the one-bit enable. Root-cause the current AST truth/Boolean classification through canonical source and emitted range metadata, preserve whole-vector truth independently of selected defaults, and keep fixed one-bit behavior. Own actual bare symbolic source predicates if the same consumer requires them. Focused default1/default8 source/factorizer/Verilog and unrelated fixed controls, independent high-bit truth distinction, POD/book/fact and commit. No external runtime campaign; full .6 remains pending.`
-  Verification: `Actual .2 HDL exposed selected-width-one Boolean classification: default1 used idle_en & helper, while default8 used &&. ASTSupport now consults proved per-generation source/storage/helper symbolic ranges, withholding static numeric width/Boolean assumptions. Whole-vector truth, zero/nonzero folds and exact equals-one retain; fixed scalars and explicit slices preserve. Read-only map lookup does not create entries or owner graphs. T2215/T2214/T208 pass All tests successful Files=3 Tests=11: actual source/factorizer/bare-source width1/8/SV/Verilog, authored inline comparisons, independent high-bit distinction and all fixed/slice/emitted-map controls. Final T2215 fails symbolic/author-comparison subtests against authenticated predecessor, with fixed/counterexample controls passing. Native whole-product delta is exactly two default-one enable operators; width8, fixed products, source fields, events, policies, births and inference conserve. Re-derive actual emitted logic; falsify predecessor, literal high-bit arithmetic and complete product controls; durability source/test/POD/book/card and docs/audits/symbolic-guard-truth-20261028.json.gz. Retained first draft map-autovivification and test-oracle failures are corrected; no unresolved product failure. This repairs the surfaced P1 consumer with focused evidence, not actual external override/runtime/full .6 qualification. Family closure .4 follows.`
-  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.3.3: preserve symbolic guard truth at default one`
-
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor T2215 reports source default1 uses whole-value logical gating at ./t/2215-symbolic-guard-truth.t line 79: actual idle_en & helper. Numeric single-bit and expression-width classification also collapses symbolic A==1 to A. Independent high-bit128 distinguishes the erroneous bitwise scalar gate from whole-vector truth.
-  - [x] **ADDRESSED (verified)** — Source/storage/emitted-helper symbolic plans prevent scalar and fixed-fold assumptions. Actual helpers use &&, whole-vector truth reductions and exact comparisons survive default1, and fixed/slice forms preserve. Exact predecessor fails the final regression; current code passes. Read-only identity-map checks lock the corrected nonmutating lookup.
-  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=11 for actual symbolic truth, binary emitter and existing AST renderer. Full native delta is only the two expected default-one gate operators; source/event/policy/fixed products conserve. POD/book/source/knowledge checks and authoritative final-index hook gate commit. External override/runtime and full .6 remain deferred.
+  Terminal: `version_object`
+  Revision: `ebee39ecfc00dd4cd8c45da28e0bd215be21b1fd`
+  Retrieval path: `docs/tasks/ISF-REDUCTION-DELIVERY.md`
+  Retrieved SHA256: `3d88e984eba23f5d3d9c3185b7518608a17c3edbc7e5eeb7287705e8e4e9483a`
+  Archived node count: `4`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact sequence/emitter/truth source and child closure: docs/audits/binary-emission-task-terminal-20261028.json.gz. Focused implementation evidence preserves; other relationships and full .6 stay live.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1.1: retain completed binary emitter evidence`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.2.4`
   Status: `done`
@@ -2379,10 +2347,53 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — knowledge-map: OK with query parity verified; book/source build and relative-source contracts pass. No runtime code or allocation policy changes, and no broader suite or external qualification is inferred. Final staged task acceptance and normal doctrine hook gate the metadata-bearing documentation commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining width-preserving unary/arithmetic and scalar logical/comparison relationships with explicit independent constraints.`
   Acceptance: `After initial bitwise relationships, inventory actual supported unary/binary AST families and emitted numeric/cache contexts. Preserve all independent max-width and signed/type constraints, literal sizing and actual source semantics; admit only proved kernels, with explicit refusals for unsupported relationships. Do not activate optional inversion. Split bounded family/producer/consumer slices with focused checks and synchronized docs; paired VHDL remains .4 and full external/public/corpus qualification .6.`
-  Verification: `pending initial bitwise relationships`
+  Verification: `.1 selects actual factorizer arithmetic allocation after bounded bitwise closure. Explicit arithmetic producer/inference and source/target consumer proof remain .2/.3; residual scalar/unary/n-ary/nested contracts remain .4. No new generic or full-qualification claim.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1`
+  Status: `done`
+  Goal: `Inventory actual remaining operators and select their real allocation boundary.`
+  Acceptance: `Read canonical public/source dispatch, exact expression widths, factorizer allocation and backend inference/truth consumers. Retain one distinguishing actual arithmetic source plus scalar/fixed controls, selected helper width/source/AST/events and private policy absence; do not infer provenance from equal widths. Distinguish source admission, parser hoisting and actual factorizer allocation. Preserve every independent floor, type/sign/literal constraint and record required next producer/proof/consumer tasks; no optional inversion or full verification. Before adding the actual arithmetic boundary fact, consolidate repeated completed guard/capture/literal/comparison narration and shared origin AST/text/membership clauses in sv-intermediate-truthiness-width into current contracts, preserving historical causal examples, every question/recipe and exact old source. Retain explicit semantic dispositions and verify unchanged registered caps; no arbitrary trimming or packing. Update book/task/memory and commit.`
+  Verification: `Source dispatch admits arithmetic n-ary trees, comparison chains and logical !; unary arithmetic is not separately admitted and optional inversion stays inactive. finalize_nary_expression hoists only bitwise &/|/^, so actual repeated + source remains inline in Parser and A_plus_B is allocated by ASTFactorization. Native defaults1/8 show numeric width1/8 and expression-only target events with no birth/current allocation policy. Fixed arithmetic stays numeric; comparison and ! helpers stay scalar. Exact source/operand widths and fallback inference remain separate from allocation provenance. Select real factorizer birth/inference/selected-event work under .2 before canonical range/emission .3; residual scalar/unary/n-ary/nested constraints remain .4. Re-derive actual source/target events; falsify parser-hoisting and numeric-policy guesses using actual allocator membership plus fixed/scalar controls; durability docs/audits/remaining-operator-inventory-20261028.json.gz retains source identities, complete products, probe and semantic card dispositions. Completed guard/literal/comparison narration is consolidated before the new fact, with all questions/recipes/historical causes/current contracts retained and unchanged registered caps. First draft budget refusal is corrected without relaxing limits. No code behavior changes or broader/full qualification; known arithmetic generic gap is now scheduled at its actual allocator.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1: select actual arithmetic allocation boundary`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub binary_whole_signal_shape' identifies bdf97eb4c as the closed bitwise shape authority. Actual arithmetic source emits factorized A_plus_B with numeric width and expression-only event, while Parser creates no helper and current policy/birth remain absent. The required arithmetic producer belongs at factorizer allocation, with independent constraints retained.
+  - [x] **ADDRESSED (verified)** — Record actual source/allocator/target inventories and precise next producer/proof/consumer ownership. Consolidate repeated completed guard facts into their current contracts before adding the new arithmetic boundary, preserving all questions/recipes/causal examples and exact old/current source under unchanged limits. Book and resume pointer identify the real allocator.
+  - [x] **NO REGRESSION** — Native arithmetic/fixed/scalar inventory assertions and exact loaded-source hashes pass; knowledge-map: OK with query parity and unchanged fact capacity. Book/source freshness and authoritative hook gate the documentation/reference-metadata commit. No production code, runtime shape or policy is changed; full .6 stays deferred.
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1.1`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1.1`
+  Status: `done`
+  Goal: `Retain the completed binary emitter subtree exactly before inventory commit.`
+  Acceptance: `The native inventory commit hook rejects task_evidence at its unchanged owned allowance. Preserve the closed .3.4.3.2.2.3 sequence/emitter/truth subtree as an exact version_object terminal from current committed HEAD, with complete source digest, child closure and fsmgen_required_history. No nested terminals, dropped historical boxes or changed unrelated/live registry owners. Retain original gate/source and independent Git show/cat-file equality, validate current topology, then join this required metadata repair to the already in-flight inventory commit. Do not increase budgets or switch task-trees.`
+  Verification: `Exact current committed sequence/emitter/truth subtree is a version_object terminal with complete source digest and child count. Independent Git show/cat-file retrieval agrees; every unselected current node is byte-identical, all doctrine owners stay live, and no nested terminal or historical acceptance box is lost. Original rejected gate and native retention program remain in docs/audits/binary-emission-task-terminal-20261028.json.gz. No budget or feature/qualification change; join this necessary prerequisite to inventory .1 commit.`
+  Commit: `joined to .3.4.3.2.3.1 inventory`
+
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.2`
+  Status: `pending`
+  Goal: `Publish explicit current factorizer allocation for the next arithmetic kernel.`
+  Acceptance: `Actual source .1 leaves arithmetic inline; actual factorizer creates the helper. Qualify a closed producer policy for selected plain whole-operand arithmetic without weakening existing bitwise schemas or deriving provenance from cached equality. Preserve actual source/default/AST/target numeric products, independent contexts, failure/reset/reuse and caller isolation. Split bounded producer stages as required; synchronize current contracts and focused tests per commit.`
+  Verification: `pending closed factorizer arithmetic birth and inference policy`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.3`
+  Status: `pending`
+  Goal: `Join qualified arithmetic allocation to canonical ranges and actual emission.`
+  Acceptance: `After .2, prove all source/target constraints for selected arithmetic relationships, retaining actual operator and ordered operands. Consume only proved kernels at actual declarations/expressions and independently close final emitted records. Preserve literal sizing, signed/type/floor restrictions, default-one rank and truth behavior; unsupported relationships refuse promotion. Paired VHDL and full .6 remain separate.`
+  Verification: `pending current arithmetic producer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
+  Status: `pending`
+  Goal: `Close remaining scalar/unary/n-ary/nested constraints and select other shapes.`
+  Acceptance: `After the first arithmetic kernel, inventory residual actual scalar comparison/logical and admitted unary/n-ary/nested graphs. Preserve independent result/operand widths and value semantics, complete current provenance and explicit unsupported boundaries. Split necessary producer/proof/consumer tasks rather than guessing ancestry. No optional inversion, unqualified binary VHDL or early full verification. Close .2.3 only after required relationships are implemented or precisely qualified refusals, then select concat/select/shift .3.4.3.3.`
+  Verification: `pending implemented arithmetic kernel and residual inventory`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
