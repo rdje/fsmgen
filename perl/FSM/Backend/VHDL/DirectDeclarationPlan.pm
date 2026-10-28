@@ -108,8 +108,9 @@ captures and mappings refuse before any result. Inputs are read-only and no
 Core, Signal, backend or caller graph is retained. The private VHDL declaration
 parser now consumes this result and checks generated text membership and exact
 source ranges. The direct source-aware converter consumes it for bounded
-combinational symbolic declarations; unqualified auxiliary/intermediate shapes
-and no-transition symbolic FSMs refuse. Raw-text symbolic conversion and public
+combinational and bounded unsigned register-helper declarations/transfers/zero
+resets. Unproved auxiliary/pulse/intermediate shapes and no-transition symbolic
+FSMs refuse. Raw-text symbolic conversion and public
 reports remain unchanged; external compiler, override and
 runtime qualification remains pending.
 

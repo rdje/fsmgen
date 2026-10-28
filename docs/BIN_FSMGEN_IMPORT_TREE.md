@@ -5,8 +5,9 @@ This is a live architecture note.
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
 collector and canonical direct width support. Completed source analysis and
-normalized target declarations select bounded symbolic conversion; actual
-allocated auxiliary/intermediate shapes and no-transition symbolic FSMs refuse.
+normalized target declarations select bounded symbolic conversion. Actual
+register next/q helpers use paired ranges and target-length unsigned transfers/zero
+resets; pulse/intermediate shapes and no-transition symbolic FSMs still refuse.
 Raw symbolic conversion remains unsupported. The direct parser now imports
 `DeclaredWidthBindingSupport` to select equivalent original captures while
 retaining distinct immediate copy edges. Source/target proof checks the whole

@@ -302,7 +302,7 @@ General source rules:
   bitwise, aggregate/path relationships refuse. Bounded direct combinational
   source generation now retains captured symbolic port/storage ranges and actual
   target-length unsigned transfers. Compiler state-control references require
-  complete fixed transition-family proof. Allocated auxiliary/intermediate shapes
+  complete fixed transition-family proof. Unproved pulse/intermediate shapes
   and no-transition symbolic FSMs refuse before an artifact returns; raw symbolic
   conversion remains unsupported. Generated internal shapes, complete transport
   and external compiler/override/runtime qualification remain pending.
@@ -315,8 +315,11 @@ General source rules:
   Private backend declaration snapshots also retain actual register next/q
   allocation origins. SystemVerilog/Verilog helper ranges now consume their
   proved parent shape with complete declaration and emitted-edge checks.
-  Pulse-delay widths remain independent; symbolic VHDL helper admission and
-  complete intermediate/reset/override qualification remain separate contracts.
+  Bounded source VHDL now admits actual register next/q parent shapes, whole
+  unsigned target-length transfers and zero resets, including vector rank at one.
+  Missing/malformed/foreign/wrong-width origins refuse; pulse-delay widths remain
+  independent. Complete intermediate/reset/override/runtime qualification remains
+  separate from this focused source profile.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

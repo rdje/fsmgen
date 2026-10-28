@@ -41,8 +41,8 @@ DirectDeclaredWidthSupport against the same complete target namespace. Proved wi
 existing default-reference subset before natural rendering. Width-only roots select natural; equal
 independent literal/vector/negative defaults stay static. Missing/stale/renamed/inconsistent inputs
 refuse. Omitting both inputs preserves the existing default-only profile. The source-aware converter
-now supplies actual width context for its bounded combinational symbolic profile; generated helper
-shapes remain .3.4-owned.
+now supplies actual width context for symbolic source generation; remaining computed shapes stay
+.3.4-owned.
 
 DirectDeclarationPlan now pairs original emitted SystemVerilog ranges with normalized VHDL ranges
 and types, re-proving complete actual source/target declarations before preparing natural generics
@@ -88,11 +88,11 @@ independent whole strings, caller kinds and static/refusal controls. Reverify: `
 t/2183-direct-vhdl-assignment-rank.t t/2180-direct-vhdl-target-rank.t`.
 
 Actual source-aware generation now joins the completed collector, assignment analysis and normalized
-paired plan. T2184 and the strict CLI fixture qualify bounded combinational symbolic ranges, actual
-target-length transfers, source capture kinds and backend reuse. Complete flagged compiler
+paired plan. T2184/T2188 qualify bounded unsigned source ranges, target-length transfers/zero resets,
+source capture kinds and backend reuse. Complete flagged compiler
 transition families with actual fixed state targets are separate from Core data Signal ownership.
-Auxiliary/intermediate allocations conservatively refuse, including unrelated helpers; no-transition
-symbolic FSMs refuse pending task .27 state-hold repair. Raw symbolic text gains no source
+Register next/q allocations use proved parents; pulse/intermediate and no-transition shapes refuse
+pending task .27. Reverify: `prove -Iperl t/2188-direct-vhdl-register-helpers.t`. Raw symbolic text gains no source
 authority; full transport/compiler/runtime qualification remains .6. See
 t/data/ial0-direct-symbolic-comb.fsm.
 

@@ -37,21 +37,29 @@ sub generate_vhdl ($self, $fsm_module) {
             target_language => 'systemverilog')};
         confess _unsupported("direct source width preparation failed: $@") if $@;
         if ($source->{profile} eq 'symbolic') {
-            _validate_symbolic_generated_shapes($ctx, $fsm_module);
+            _validate_symbolic_generated_shapes($ctx, $fsm_module, $source);
             $snapshot = $capture->snapshot;
         }
     }
     return $self->_convert_systemverilog_to_vhdl($sv_hdl, $fsm_module, $snapshot);
 }
 
-sub _validate_symbolic_generated_shapes ($ctx, $fsm_module) {
-    # Use actual allocation owners, never a helper-name suffix or equality of
-    # selected widths. Even unrelated allocated helpers remain withheld until
-    # their dependency propagation is qualified.
+sub _validate_symbolic_generated_shapes ($ctx, $fsm_module, $source) {
+    # Register helpers carry actual allocation origins and have already passed
+    # complete declaration/range/origin qualification in source generation.
+    # Pulse and other unproved allocation families must not borrow that shape.
     my $internal = $ctx->{enable_graph_module_planning_support}->build_internal_signal_declaration_plan(
         $fsm_module, $ctx->{declared_port_signals});
-    confess _unsupported('symbolic source auxiliary register shapes require separate qualification')
-        if keys %{$internal->{aux_decls}};
+    for my $name (sort keys %{$internal->{aux_decls}}) {
+        my $origin = $internal->{aux_width_origins}{$name};
+        my $parent = ref($origin) eq 'HASH' && defined($origin->{source_name})
+            && !ref($origin->{source_name}) ? $source->{signals}{$origin->{source_name}} : undef;
+        confess _unsupported("symbolic source auxiliary '$name' requires a qualified register parent shape")
+            unless ref($origin) eq 'HASH' && join(',', sort keys %$origin) eq 'kind,source_name'
+                && defined($origin->{kind}) && !ref($origin->{kind})
+                && $origin->{kind} =~ /\A(?:register_next|register_q)\z/
+                && $parent && $internal->{aux_decls}{$name} == $parent->{width};
+    }
     confess _unsupported('symbolic source intermediate computed shapes require separate qualification')
         if keys %{$ctx->{intermediate_signals}};
     my $state = $ctx->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
@@ -2029,8 +2037,12 @@ symbolic declarations. Width roots select natural generics. Independent fixed
 source and public raw-text products keep the existing numeric conversion path.
 Symbolic raw text has no source authority and remains unsupported.
 
-Actual allocated auxiliary registers and intermediate expressions conservatively
-refuse until generated shapes propagate; even unrelated helpers are withheld.
+Actual register next/q allocations now use their qualified parent shapes through
+the paired declaration plan. Whole unsigned transfers and zero resets consume
+the actual destination length, including vector rank at a selected width of one.
+The source guard checks actual allocation origins and matching parent widths;
+missing, foreign, malformed or unproved allocation shapes refuse. Pulse-delay
+and intermediate computed shapes remain withheld, including unrelated pipes.
 Symbolic FSMs without captured transitions refuse pending state-hold repair.
 Compiler-owned fixed state-control references pass the separate complete-family
 proof in C<DirectDeclaredWidthSupport>; ordinary source data still requires Core

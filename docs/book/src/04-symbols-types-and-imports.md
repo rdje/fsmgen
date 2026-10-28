@@ -397,8 +397,9 @@ ancestry. Register next/q helper declarations now consume their parent's proved
 symbolic range, including vector rank at one. Final assembly checks complete
 numeric/type/state coherence and separate emitted range/allocation identities;
 an unchanged range cannot hide a changed helper family. Independent fixed
-helpers and cycle-counted pulse pipes stay numeric. VHDL helper admission and
-complete compiler/override/runtime qualification remain pending.
+helpers and cycle-counted pulse pipes stay numeric. Bounded VHDL register-helper
+admission is described below; complete compiler/override/runtime qualification
+remains pending.
 
 Direct SystemVerilog and compatibility Verilog ports and source-owned internal
 storage now consume the proved ranges. Selected names and arithmetic remain,
@@ -580,10 +581,17 @@ state encoding separately from canonical source data Signals. Wrong references,
 foreign state targets and mixed/inconsistent families refuse. This does not
 turn an ordinary data reference into a compiler state-control node.
 
-Symbolic modules with allocated auxiliary registers or intermediate expressions
-remain withheld until those generated shapes propagate correctly. This is a
-conservative allocation boundary, including unrelated helpers. A symbolic FSM
-with no captured transition also refuses pending state-hold repair. These
+Register next/q helpers now use their actual parent shapes in the paired VHDL
+declarations. Whole unsigned transfers and zero resets use the destination's
+elaborated length, including vector rank at a default of one. The
+[helper regression](../../../t/2188-direct-vhdl-register-helpers.t) qualifies
+actual register-input/output and dual-exposure forms, independent fixed helpers,
+complete type/generic expectations, backend reuse and unchanged static products.
+Missing, foreign, malformed or wrong-width allocation origins refuse.
+
+Pulse-delay and intermediate computed allocations remain withheld, including
+unrelated pipes. A symbolic FSM with no captured transition also refuses pending
+state-hold repair. These
 refusals happen before any VHDL artifact returns; raw symbolic text gains no
 source authority. Full transport, compiler, override and runtime qualification
 remain pending.
@@ -600,6 +608,17 @@ Generate it through the strict CLI:
 ```bash
 ./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/vhdl/direct_symbolic_comb.vhdl t/data/ial0-direct-symbolic-comb.fsm
 ```
+
+The register-helper example uses the same qualified source path:
+
+```bash
+./bin/fsmgen --quiet --strict --language vhdl --output .artifacts/vhdl/direct_symbolic_helpers.vhdl t/data/ial0-direct-symbolic-helpers.fsm
+```
+
+It declares `DATA_next` with the `W` range and `CAPTURED_q` with the `COPY`
+range; the independent `FIXED_q` remains `std_logic`. This focused source profile
+does not qualify general intermediate/reset propagation, generated specialization
+or external generic overrides and runtime behavior.
 
 `FSM::Backend::VerilogFamily::ParameterBindingEmitter` now shares scalar target
 preparation for these direct-module bindings and composition-top bindings. It

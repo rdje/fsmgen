@@ -117,13 +117,13 @@ subtest 'static declarations preserve complete legacy parser products' => sub {
     is($json->encode($parsed->{ports}), $json->encode(\@ports), 'whole ordered static port records conserve with JSON kinds');
     is($json->encode($parsed->{signals}), $json->encode(\@signals), 'whole ordered static storage records conserve with JSON kinds');
 };
-subtest 'raw conversion and unqualified generated auxiliary shapes remain refused' => sub {
+subtest 'raw conversion and unqualified no-transition source remain refused' => sub {
     my ($sv, $plan) = fixture();
     my $backend = FSM::HDL::FlattenedDT::Backend::VHDL->new(flattened_dt => {});
     ok(!eval {$backend->convert_systemverilog_to_vhdl($sv); 1}, 'raw symbolic text remains refused');
     like($@, qr/unsupported generated port declaration/, 'raw refusal still comes from bounded numeric parser');
     my $m = FSM::Adapter::FSMGenFull->new(debug => 0)->parse_fsm(scalar Lispish::multi(\$source));
-    ok(!eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_vhdl($m); 1}, 'unqualified symbolic register helpers return no artifact');
-    like($@, qr/symbolic source auxiliary register shapes/, 'actual auxiliary allocation owns the source refusal');
+    ok(!eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_vhdl($m); 1}, 'unqualified no-transition symbolic source returns no artifact');
+    like($@, qr/symbolic source without transitions.*state.hold/, 'actual state-hold boundary remains refused after register-helper admission');
 };
 done_testing();
