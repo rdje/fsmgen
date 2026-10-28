@@ -7,6 +7,7 @@ use Scalar::Util qw(blessed refaddr);
 use Digest::SHA qw(sha256_hex);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head1 NAME
@@ -25,6 +26,7 @@ C</>, C<%>, and C<[signal, name]> for typed whole source references. At least
 one operand must originally be a compound expression. Literal, state, sliced,
 foreign and cyclic trees withhold. Private walks stop beyond 64 binary levels or 4096
 visited nodes; withholding metadata does not change ordinary generation.
+These bounds share their definition with C<FSM::IntermediateWidthGraphPolicySupport>.
 
 Capsules retain only JSON data. Object identities anchor the actual allocator,
 candidate, AST nodes and Core source owners. Generated references additionally
@@ -80,7 +82,7 @@ sub _source_leaf {
 
 sub _original_tree {
     my ($node, $active, $budget, $depth) = @_;
-    return undef unless blessed($node) && $depth <= 64 && --$$budget >= 0;
+    return undef unless blessed($node) && $depth <= FSM::IntermediateWidthGraphPolicySupport::MAX_BINARY_LEVELS() && --$$budget >= 0;
     my $identity = _id($node);
     return undef if $active->{$identity};
     local $active->{$identity} = 1;
@@ -106,7 +108,7 @@ sub _child_source_tree {
         return _json()->decode($graph->{birth_state})->{source_tree};
     }
     my $whole = $factorizer->_current_intermediate_width_birth($name) or return undef;
-    my $budget = 4096;
+    my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
     my $tree = _original_tree($entry->{ast}, {}, \$budget, 0) or return undef;
     return undef unless $tree->{operators} == 1;
     return $tree->{semantic};
@@ -114,7 +116,7 @@ sub _child_source_tree {
 
 sub _current_tree {
     my ($node, $context, $active, $budget, $depth) = @_;
-    return undef unless blessed($node) && $depth <= 64 && --$$budget >= 0;
+    return undef unless blessed($node) && $depth <= FSM::IntermediateWidthGraphPolicySupport::MAX_BINARY_LEVELS() && --$$budget >= 0;
     my $identity = _id($node);
     return undef if $active->{$identity};
     local $active->{$identity} = 1;
@@ -151,7 +153,7 @@ sub _state {
     my ($factorizer, $name, $ast, $basis, $previous_edges, $mapping, $visiting) = @_;
     my $context = {factorizer => $factorizer, name => $name, previous_edges => $previous_edges,
         mapping => $mapping, visiting => $visiting, edges => {}};
-    my $budget = 4096;
+    my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
     my $tree = _current_tree($ast, $context, {}, \$budget, 0) or return undef;
     return undef unless _json()->encode($tree->{semantic}) eq _json()->encode($basis->{source_tree});
     return _json()->encode({ast => $tree->{snapshot}, edges => $context->{edges}});
@@ -197,7 +199,7 @@ sub prepare_birth {
         my ($factorizer, $name) = @args{qw(factorizer signal_name)};
         my $entry = _entry($factorizer, $name) or return undef;
         return undef unless _unresolved($entry);
-        my $budget = 4096;
+        my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
         my $tree = _original_tree($entry->{ast}, {}, \$budget, 0) or return undef;
         return undef unless $tree->{operators} > 1;
         my $record = {kind => 'arithmetic_graph_candidate', expression_tree => $tree->{public}};

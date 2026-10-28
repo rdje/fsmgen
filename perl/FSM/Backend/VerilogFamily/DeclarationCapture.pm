@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use JSON::PP ();
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 
 sub new ($class) {return bless {state => 'empty'}, $class}
 
@@ -97,11 +98,13 @@ sub record_intermediate_assignment ($self, $name, $record) {
     $self->_fail('requires a closed JSON-safe intermediate expression event')
         if $@ || ref($copy) ne 'HASH'
             || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin' && $_ ne 'arithmetic_origin'
-                && $_ ne 'width_allocation'} keys %$copy;
+                && $_ ne 'width_allocation' && $_ ne 'graph_width_allocation'} keys %$copy;
     $self->_fail('requires actual nonempty intermediate expression text')
         unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
     $self->_fail('requires one coherent intermediate origin family')
         if 1 < grep {exists($copy->{$_})} qw(reduction_origin bitwise_origin arithmetic_origin);
+    $self->_fail('requires one coherent intermediate allocation family')
+        if exists($copy->{width_allocation}) && exists($copy->{graph_width_allocation});
     if (exists($copy->{bitwise_origin})) {
         my $origin = $copy->{bitwise_origin};
         $self->_fail('requires a closed binary bitwise intermediate origin')
@@ -140,6 +143,16 @@ sub record_intermediate_assignment ($self, $name, $record) {
                 && $origin->{source_names}[0] eq $allocation->{source_names}[0]
                 && $origin->{source_names}[1] eq $allocation->{source_names}[1];
         $copy->{width_allocation} = $allocation;
+    }
+    if (exists($copy->{graph_width_allocation})) {
+        my $allocation = eval {FSM::IntermediateWidthGraphPolicySupport->copy_record($copy->{graph_width_allocation})};
+        $self->_fail('requires a closed arithmetic graph width allocation policy') if $@ || !$allocation;
+        my $origin = $copy->{arithmetic_origin};
+        $self->_fail('graph width allocation requires its same ordered arithmetic origin')
+            unless $origin && $origin->{operator} eq $allocation->{operator}
+                && $origin->{source_names}[0] eq $allocation->{source_names}[0]
+                && $origin->{source_names}[1] eq $allocation->{source_names}[1];
+        $copy->{graph_width_allocation} = $allocation;
     }
     $self->{intermediates}{$name} = $copy;
     return;
@@ -181,6 +194,28 @@ sub complete ($self) {
             $self->_fail('width allocation requires the exact declared operand maximum and result width')
                 unless FSM::IntermediateWidthAllocationSupport->matches_selected_widths(
                     $row->{width_allocation}, map {$_->{width}} @declarations);
+        }
+        if (exists($row->{graph_width_allocation})) {
+            my $policy = $row->{graph_width_allocation};
+            my $leaves = FSM::IntermediateWidthGraphPolicySupport->leaf_names($policy);
+            $self->_fail('graph width allocation requires an actual computed operand declaration')
+                unless grep {exists($self->{intermediates}{$_})} @{$policy->{source_names}};
+            $self->_fail('graph width allocation cannot use its result as an original leaf')
+                if grep {$_ eq $name} @$leaves;
+            my @names = ($name, @{$policy->{source_names}}, @$leaves);
+            $self->_fail('graph width allocation requires all actual original and current declarations')
+                if grep {!exists($self->{declarations}{$_})} @names;
+            $self->_fail('graph width allocation requires actual plain unsigned declarations')
+                if grep {$_->{signed} || defined($_->{state_model})
+                    || defined($_->{declared_type_name}) || defined($_->{declared_type_spec})}
+                    map {$self->{declarations}{$_}} @names;
+            $self->_fail('graph width allocation requires exact current and original-leaf maxima')
+                unless FSM::IntermediateWidthGraphPolicySupport->matches_selected_widths(
+                        $policy, $self->{declarations}{$name}{width},
+                        map {$self->{declarations}{$_}{width}} @{$policy->{source_names}})
+                    && FSM::IntermediateWidthGraphPolicySupport->matches_leaf_widths(
+                        $policy, $self->{declarations}{$name}{width},
+                        map {$self->{declarations}{$_}{width}} @$leaves);
         }
     }
     $self->{state} = 'complete';
@@ -277,6 +312,20 @@ Absent policy fields preserve independent contextual widths and old snapshots.
 Schema/numeric validation alone supplies no source provenance. The actual
 assignment publisher obtains current completed backend policy and rechecks fresh
 AST/text and plain operand profiles. Symbolic range admission remains separate.
+
+An optional C<graph_width_allocation> carries the separate closed
+C<arithmetic_graph_operand_max> record, including its original expression tree.
+It is exclusive with C<width_allocation> and requires the identical ordered
+C<arithmetic_origin>. Completion requires an emitted intermediate declaration
+among the current edges, no original leaf equal to the result, and actual plain
+unsigned declarations for the result, current pair and every original leaf.
+Exact current-pair and original-leaf maxima must both match the selected/result
+width. Shared graph schema validation preserves scalar kinds, order and duplicate
+slots and uses the same bounds as original graph birth. Malformed or inconsistent
+data invalidates the transaction. These are schema/numeric checks; actual graph
+publication, source provenance, transitive selected-graph closure and symbolic
+range admission remain separately owned. The default publisher does not yet
+attach this field.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

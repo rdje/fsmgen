@@ -1991,11 +1991,25 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Independent source/closure/owner checks pass; native task retrieval, knowledge-map: OK and book/source freshness remain mandatory through the normal final-index hook. Existing code and all deferred qualifications remain unchanged.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Validate a shared closed graph policy schema and collector target constraints.`
   Acceptance: `Provide one pure JSON graph-max schema using existing graph walk bounds, exact ordered slots/original tree and scalar kinds. Collector admits only a coherent exclusive graph policy with actual arithmetic origin, plain declared membership and exact immediate/original-leaf maxima. Keep actual publication/range admission separate; focused malformed/current/native tests and synced docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Closed bounded shared schema, collector origin/role/self-leaf/plain membership and exact pair/leaf math pass. Original scalar kinds and walk bounds preserve; complete native products equal in 24 cases. Re-derive current schema, falsify old collector and pre-fix controls, retain exact evidence in docs/audits/graph-schema-20261028.json.gz. Actual publication/ranges and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2: validate shared graph policy schema`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor rejects the unknown graph field at perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm line 99. Pre-fix original-self/computed-role controls failed. The binary undefined-width probe throws Too few arguments at perl/FSM/IntermediateWidthAllocationSupport.pm line 86 because list-context normalization drops invalid slots; graph vectors incorrectly accepted those missing slots.
+  - [x] **ADDRESSED (verified)** — Introduce the shared bounded graph schema and exact decimal checks, share existing birth constants, and validate the collector's separate exclusive graph field against actual arithmetic origin, computed role, all plain declarations and both maxima. Scalarize each width conversion so invalid vectors withhold without exceptions; zero behavior already correct.
+  - [x] **NO REGRESSION** — All tests successful Files=4, Tests=20 (T2227/T2220/T2226/T2208). Complete native source/HDL/target/old policy/graph diagnostic products exactly equal for 24 cases. Receipt preserves red controls and exact sources; actual graph publication, range proof/emission and full .6 remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2.1`
+  Status: `done`
+  Goal: `Preserve invalid width slots in shared numeric consistency checks.`
+  Acceptance: `P1 immediate correctness prerequisite of the active schema slice. Reproduce list-context _width returns dropping invalid operands in graph and existing binary math. Keep every slot through scalar normalization; invalid vectors must withhold without throwing, and exact valid widths/kinds preserve. This repair is integral to the current schema/math unit and closes with its focused checks/common commit before moving to publication.`
+  Verification: `Confirmed inherited binary arity exception and new graph invalid-vector acceptance for undef/ref/bool/malformed widths; zero already withheld. Scalar map conversion preserves every slot. Exact before/after probes and seven invalid-vector families pass through T2227; evidence joins graph-schema-20261028 receipt.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.2: validate shared graph policy schema (integral numeric repair)`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.3`
   Status: `pending`

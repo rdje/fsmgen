@@ -2,6 +2,14 @@
 
 This is a live architecture note.
 
+Scoped update on `2026-10-28`: actual factorization imports
+`FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports
+`FSM::IntermediateWidthGraphInferenceSupport`. Those helpers and
+`VerilogFamily::DeclarationCapture` now share `IntermediateWidthGraphPolicySupport`
+for the closed original-tree/edge record, common walk bounds and exact numeric
+consistency. Collector graph schema support remains separate from actual selected
+graph publication and symbolic ranges. The dated closure census is unchanged.
+
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
 collector and canonical direct width support. Completed source analysis and

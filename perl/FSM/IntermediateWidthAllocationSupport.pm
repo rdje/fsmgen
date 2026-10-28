@@ -80,7 +80,7 @@ sub copy_record ($class, $record) {
 sub matches_selected_widths ($class, $record, $result_width, @operand_widths) {
     my $copy = _copy_record($record);
     return unless @operand_widths == 2;
-    my @widths = map {_width($_)} @operand_widths;
+    my @widths = map {scalar(_width($_))} @operand_widths;
     my $result = _width($result_width);
     return unless defined($result) && !grep {!defined($_)} @widths;
     return _width($copy->{selected_width}) eq $result && $result eq _maximum(@widths);
@@ -394,6 +394,8 @@ the exact positive decimal maximum of two supplied operand widths. Leading
 zeros normalize only for comparison; caller fields and JSON kinds preserve.
 No native integer or floating-point conversion determines equality or maximum.
 This numeric consistency check does not attest actual allocation or membership.
+Invalid result/operand widths withhold. Scalar normalization preserves every
+supplied operand slot, including an invalid one, before comparing the maximum.
 
 =head2 whole_signal_name
 

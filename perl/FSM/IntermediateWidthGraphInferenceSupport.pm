@@ -6,6 +6,7 @@ use warnings;
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head1 NAME
@@ -355,6 +356,8 @@ C<arithmetic_graph_operand_max> record: canonical C<operator>, ordered current
 C<source_names>, original C<expression_tree> and C<selected_width>. This observer
 alone does not attest earlier unresolved input; the resolver must compare its
 ready frame through only the actual parent width/source writes before installing.
+The detached record uses the shared graph-policy schema; schema validation alone
+does not attest this actual earlier inference branch.
 
 =cut
 
@@ -374,8 +377,9 @@ sub prepare_inference {
             && FSM::IntermediateWidthAllocationSupport::_width($frame->{signal_info}{width}) eq $width;
         $validation{active}{inputs}{$args{signal_name}} = _json()->encode($input);
         return undef if $outer && !_validation_current($owner, $validation{active});
-        return {record => {kind => 'arithmetic_graph_operand_max', %{$frame->{shape}},
-                expression_tree => $frame->{graph_birth}{record}{expression_tree}, selected_width => $args{selected_width}},
+        return {record => FSM::IntermediateWidthGraphPolicySupport->copy_record(
+                {kind => 'arithmetic_graph_operand_max', %{$frame->{shape}},
+                    expression_tree => $frame->{graph_birth}{record}{expression_tree}, selected_width => $args{selected_width}}),
             state => _json()->encode($frame)};
     };
     return $@ ? undef : _copy($holder);

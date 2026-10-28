@@ -18,9 +18,9 @@ date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-policy-20261028.json.gz;
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-schema-20261028.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/222[0-6]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/222[0-7]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
 ---
 
 Current owners are above. Exact original cards/proofs (baseline/digests) remain in `docs/audits/width-card-evidence-20261028.json.gz`; recover:
