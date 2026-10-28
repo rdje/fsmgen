@@ -282,6 +282,15 @@ historical suffix. The semantic-introspection task uses this route; follow its
 `Version-Retrievable Historical Views` pointer when reviewing older evidence.
 The integrity gate verifies retrieval as part of the doctrine checks.
 
+A completed subtree can instead retain a compact `version_object` terminal.
+Follow its exact `Revision` and `Retrieval path`; the file digest and closed
+child graph are checked before acceptance. Active owners remain in the live
+tree. For example, the unary source-admission evidence is recoverable with:
+
+```bash
+git show 9d7cf29ac55ade47abf8e748d3c3f2858303d5fd:docs/tasks/ISF-REDUCTION-DELIVERY.md
+```
+
 That driver runs every registered repository doctrine, including bootstrap,
 memory architecture, bounded Knowledge Map root/shard freshness and query
 parity, docs path hygiene, complete
