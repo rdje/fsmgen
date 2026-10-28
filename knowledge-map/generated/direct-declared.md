@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **7** uniquely owned question entries.
+> **1** facts · **8** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="is the Core module signals map exhaustive for declared assignment targets?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do actual direct backend declaration snapshots come from?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do direct symbolic declared-width consumers need integration?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="why did guard XOR become NOT?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why must explicit auxiliary width declarations be preserved before copying parent bindings?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why must late sizing preserve distinct next/q copy origins?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 

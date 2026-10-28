@@ -56,6 +56,13 @@ their behavior. Generated multiline comb/ff blocks retain their bounded
 conversion; legacy always/latch/startup/final and noncanonical header shapes
 return no partial artifact. No public report or source syntax changes here.
 
+Whole declared unsigned guard operands preserve their unary operation through
+native capture: `(^ bus)` selects parity, `(& bus)` all bits set, and `(| bus)`
+any bit set. Positive and negated guard nesting retain those operations; logical
+`!` remains Boolean negation. Focused direct/Core and IAL1 `when` lowering checks
+qualify this repair. Complete transport/corpus and external runtime qualification
+remain separately owned.
+
 The source/lowering contract remains bounded even though schedule JSON
 `schema_version: 1` is now stable:
 

@@ -444,6 +444,26 @@ The negated form executes when the guard condition is false:
 Guarded blocks must contain at least one action. Nested guards are allowed, and
 their conditions compose by logical `AND`.
 
+Whole declared unsigned operands keep their unary operation in a guard:
+`<(^ INPUT)` selects odd parity, `<(& INPUT)` selects all bits set, and
+`<(| INPUT)` selects any bit set. Logical `!` negates the result. The same
+operations survive negated guard nesting.
+
+This complete [guard example](../../../t/data/ial0-unary-reduction-guards.fsm)
+drives both outputs from one parity predicate:
+
+```lisp
+{{#include ../../../t/data/ial0-unary-reduction-guards.fsm}}
+```
+
+```bash
+./bin/fsmgen --quiet --strict --output .artifacts/unary_reduction_guards.sv t/data/ial0-unary-reduction-guards.fsm
+```
+
+Focused checks cover the parsed operators and native selectors at one-bit and
+wider defaults. Generic VHDL intermediates and complete external override/runtime
+qualification remain separate work; see [Data Manipulation](13e-data-manipulation.md).
+
 Example with nested and compound guards:
 
 ```lisp

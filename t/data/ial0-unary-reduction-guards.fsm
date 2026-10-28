@@ -1,0 +1,9 @@
+(?fsm:unary_reduction_guards
+  (+params (W 8))
+  (+interface (output DATA) (output OTHER))
+  (+size (DATA 1) (OTHER 1) (INPUT (param W)))
+  (idle
+    (<(^ INPUT)
+      (= (DATA 1))
+      (= (OTHER 1)))
+    (-> idle)))

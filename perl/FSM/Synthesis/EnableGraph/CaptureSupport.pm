@@ -645,6 +645,15 @@ sub capture_transition_from_ast ($self, $dt_name, $transition_node, $condition_s
 Convert one parsed FSMGen condition node into the internal AST representation
 used by the backend capture path.
 
+Unary conversion reads the actual C<operator> accessor. The generic Core node
+type C<unary_op> identifies a family and never means logical NOT. Reduction
+symbols C<^>, C<&> and C<|>, logical C<!>, private complement C<~> and unary
+C<+>/C<-> retain their operation recursively. Existing C<not>/C<neg>/C<pos>
+spellings normalize to C<!>/C<->/C<+>. Missing, reference-valued, empty or
+unsupported unary operators refuse instead of borrowing a negation default.
+This conversion contract does not admit optional source inversion or qualify
+external execution of arbitrary Core nodes.
+
 =cut
 
 sub convert_condition_to_ast ($self, $condition_node) {
@@ -665,26 +674,17 @@ sub convert_condition_to_ast ($self, $condition_node) {
         return FSM::AST::Utils::signal_ref($signal_name);
 
     } elsif (ref($condition_node) eq 'FSM::CoreAST::UnaryOp' || ($condition_node->can('operator') && $condition_node->can('operand'))) {
-        my $operator_type = 'unknown';
-        if (ref($condition_node) eq 'HASH' && $condition_node->{type}) {
-            $operator_type = $condition_node->{type};
-        } elsif ($condition_node->can('type')) {
-            $operator_type = $condition_node->type;
-        }
-
-        fsm_debug("    CONVERT_CONDITION_AST: UnaryOp with type: $operator_type", 3);
-
-        if ($operator_type eq 'unary_op' || $operator_type eq 'not' || $operator_type eq '!') {
-            my $operand_ast = $self->convert_condition_to_ast($condition_node->operand);
-            my $result = FSM::AST::Utils::not_op($operand_ast);
-            fsm_debug("    CONVERT_CONDITION_AST: UnaryOp(negation) -> NOT node", 3);
-            return $result;
-        } else {
-            my $operand_ast = $self->convert_condition_to_ast($condition_node->operand);
-            my $result = FSM::AST::UnaryOp->new($operator_type, $operand_ast);
-            fsm_debug("    CONVERT_CONDITION_AST: UnaryOp($operator_type) -> UnaryOp node", 3);
-            return $result;
-        }
+        # Node type identifies the AST family, never its operation. In
+        # particular every Core reduction also has type 'unary_op'.
+        my $operator = $condition_node->operator;
+        confess "Condition capture requires a supported actual unary operator\n"
+            unless defined($operator) && !ref($operator)
+                && $operator =~ /\A(?:[!~&|^+\-]|not|neg|pos)\z/;
+        my %aliases = (not => '!', neg => '-', pos => '+');
+        $operator = $aliases{$operator} // $operator;
+        my $operand_ast = $self->convert_condition_to_ast($condition_node->operand);
+        fsm_debug("    CONVERT_CONDITION_AST: UnaryOp($operator) -> same operation", 3);
+        return FSM::AST::UnaryOp->new($operator, $operand_ast);
 
     } elsif (ref($condition_node) eq 'FSM::CoreAST::BinaryOp' || ($condition_node->can('left') && $condition_node->can('right') && $condition_node->can('operator'))) {
         my $left_ast = $self->convert_condition_to_ast($condition_node->left);

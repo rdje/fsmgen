@@ -2291,10 +2291,68 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=19 for T2188/T2187/T2184/T2179; changed modules/new test syntax OK. Strict native book example, existing/absent destination refusal controls, mdBook/POD build and source-reference freshness pass. Normal final-index scripts/check_doctrines.sh/hook gates commit; external compiler/override/runtime/publication remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate canonical expression widths to actual generated intermediates.`
   Acceptance: `After auxiliary shape ownership inspect actual AST/IR expression and intermediate allocation consumers. Carry reduction-result scalar widths, arithmetic and supported selections/concatenations through explicit relationships; refuse unproved max/computed shapes. Preserve unrelated equal defaults and both HDL family boundaries. Split by actual consumer if needed, focused checks/book/POD and commit; full matrix remains .6.`
   Verification: `pending actual expression consumers`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3, ISF-REDUCTION-DELIVERY.3.4.3.4, ISF-REDUCTION-DELIVERY.3.4.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.1`
+  Status: `active`
+  Goal: `Preserve and consume invariant scalar widths for actual whole-signal reduction intermediates under generic operand widths.`
+  Acceptance: `Inspect actual selected defining/runtime ASTs, native width/cache fallbacks and prepared declaration/assignment emitters before changes. Begin with unary XOR/AND/OR on declared whole unsigned operands; scalar result width is one independently of operand W. Bind any admitted origin to the actual emitted expression and declaration, not helper names or equal defaults. Missing, conflicting, stale, stored-expression-only, foreign or unsupported shapes must not borrow that proof. Preserve operand ranges and actual generic semantics at default one/wider settings; repair a demonstrated default-sensitive rewrite before admission. Integrate only bounded source/paired consumers with focused native/Core/caller/refusal/static controls and book/POD sync; split a growing publication/consumer boundary before implementation. No full compiler/override/runtime/corpus/API/MCP claim; .6 retains qualification.`
+  Verification: `Git clean at 677bf38c7 before activation. Knowledge Map intermediate-width query routes only to the historical numeric render-time truthiness contract; T2074/decision0117 retain scalar reduction width foundations. A plain RHS reduction emits inline; repeated guards expose an actual scalar intermediate. The discovered P1 unary-capture miscompile is repaired by .1. Actual cache/runtime-AST and separate declaration/assign emitters remain the origin-consumer boundary for .2; generic VHDL-intermediate admission remains unqualified.`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.1.1, ISF-REDUCTION-DELIVERY.3.4.3.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.1`
+  Status: `done`
+  Goal: `Repair P1 unary guard capture silently changing actual reduction operators into logical negation.`
+  Acceptance: `Required-delivery blocker found while selecting a real intermediate. Reproduce the actual parsed direct source with parameter-sized INPUT and repeated <(^ INPUT) guard driving DATA/OTHER. CaptureSupport::convert_condition_to_ast uses Core UnaryOp type unary_op as the operation and always creates NOT; preserve the actual operator through recursive runtime conversion. Qualify XOR/AND/OR plus existing NOT and private complement contracts with independent operator/truth controls, actual native selectors, positive/negative/nested guards, one/wider widths and directly affected capture/AST tests. Reject malformed operator data rather than guessing. Do not admit optional source inversion or VHDL intermediates in this repair. Retain original source/streams, sync book/POD/fact and commit before intermediate-origin implementation; external runtime/public full qualification stays .6.`
+  Verification: `Actual repeated direct guard <(^ INPUT) produced not_INPUT = (~|INPUT), driving both output selectors; plain reduction RHS remains correctly inline. CaptureSupport read Core type unary_op and always constructed NOT. It now reads/validates the actual opcode, recursively preserves it and normalizes existing not/neg/pos spellings; malformed data refuses. Original unchanged T2189 RED fails all three top-level subtests: reductions/complement/math aliases become NOT, real parsed positive/negative guards lose inner operations and malformed opcodes silently borrow NOT. Corrected code passes focused All tests successful Files=3 Tests=10 for T2189/T207/T2074. Independent literal width1 and width8 truth controls distinguish parity, all/any, logical NOT and private complement; actual parsed guards preserve nested operations and source JSON kinds. Stronger final T2189 checks both native output selectors use the positive reduction predicate and passes Files=1 Tests=3. Strict direct book fixture now emits op_INPUT = (^(INPUT)) with both state-gated selectors. One focused IAL1 when(^bus) smoke still emits XOR; it is a no-regression control, not historical attribution of that hoisted path. Native pre-repair semantic/trace capture independently records selectors using not_INPUT. Changed module/new test syntax OK; book/POD and source-view checks gate commit. Re-derive actual parsed Core/capture/native products; falsify literal truth arrays, unchanged original RED, positive/negative/native selector and malformed controls; durability tracked implementation/test/fixture/POD/book/fact and docs/audits/unary-guard-capture-operators-20261028.json.gz. Complete original worktree/raw-root streams and external HDL/runtime/public transport/corpus qualification remain missing under .6. New Knowledge Map question routes this constraint to T2189; the already-canonical port audit retains the old VHDL-refusal epoch instead of repeating it as current blanket behavior. Preserve the complete prior card and original-question subset in the receipt; no allowance/ceiling changes. No optional source inversion or VHDL-intermediate admission. Normal final-index doctrines/hook gate commit; actual scalar-intermediate origin consumption continues .1.2.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.1.1: preserve actual unary guard operators`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original test output at t/2189-unary-guard-capture-operators.t line 57 reports actual ! instead of expected ^; independent truth controls also fail. Real --trace-log/--emit-semantic-json products and guard.sv bind the wrong not_INPUT predicate to CaptureSupport::convert_condition_to_ast lines667-686 reading generic Core type unary_op rather than the actual operator getter. The actual parser retains ^ before capture.
+  - [x] **ADDRESSED (verified)** — Preserve/validate actual recursive unary opcodes and established aliases; refuse malformed data. Original RED turns green with literal truth controls, actual positive/negative parsed guards and both native output selectors. Strict direct fixture emits parity; one IAL1 when smoke retains XOR. Preserve caller maps and existing logical NOT/private complement distinctions; optional source inversion and VHDL intermediates are unchanged.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=10 for T2189/T207/T2074; stronger final native-selector T2189 Files=1 Tests=3 passes. Changed module/new test syntax OK; strict native examples, mdBook/POD build and source-reference freshness qualify documentation. Mandatory final-index scripts/check_doctrines.sh/hook gates commit; external runtime and full API/MCP/corpus/publication remain .6.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.1.2`
+  Status: `pending`
+  Goal: `Qualify actual emitted scalar reduction intermediate origins and consume the bounded invariant shape.`
+  Acceptance: `After capture-opcode repair, use actual defining/runtime AST and selected cached/rendered expression at the real declaration/assignment boundary. Preserve one-bit result independently of generic operand width, bind the consumed expression to the actual unsigned whole operand and reject missing/stale/foreign/unsupported compatibility fallbacks. Preserve every actual declaration and emitted semantic identity; no helper-name or numeric matching. Integrate only proved source/paired consumers with focused distinguishing controls, book/POD and commit. Full compiler/override/runtime/corpus/API/MCP remains .6.`
+  Verification: `pending correct captured unary operators`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2`
+  Status: `pending`
+  Goal: `Propagate canonical width relationships through supported width-preserving unary/binary intermediates.`
+  Acceptance: `After scalar reductions, inspect actual AST width rules and canonical source relationships for whole-vector unary/bitwise/arithmetic families. Prove all operands and retain each distinct origin; equal defaults cannot reduce independent max-width constraints. Support equivalent proved relationships or explicit target expressions with actual backend legality, and refuse missing general max/mixed-width proof. Keep scalar logical/comparison results distinct. Split by actual consumers, focused checks and synchronized docs before each commit; full qualification stays .6.`
+  Verification: `pending actual expression selection`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
+  Status: `pending`
+  Goal: `Propagate canonical concatenation, selection and shift intermediate shapes.`
+  Acceptance: `After .1/.2, select actual concatenation/selection/shift width consumers and preserve summed result widths, static versus mutable indices, operand and result rank and independent literal widths. Use canonical expression/target kernels, never selected-default sizing or textual helper inference. Explicitly refuse unproved dynamic selection and mixed relationships. Focused source/IR/backend contrasts and book/POD sync precede each bounded commit; full matrix stays .6.`
+  Verification: `pending selected-shape consumers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.4`
+  Status: `pending`
+  Goal: `Join qualified non-scalar intermediate relationships to actual VHDL paired declarations and expressions.`
+  Acceptance: `After corresponding Verilog-family relationships, propagate normalized actual intermediate origins, ranges and type/rank through paired VHDL preparation and source conversion. Admit only proved expression families; preserve scalar reduction admission, source identity, static/raw artifacts and precise unsupported boundaries. Focused actual-source/target/caller/atomic checks and lowering-clean examples qualify implementation, not full compiler/override/runtime .6.`
+  Verification: `pending qualified non-scalar relationships`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.5`
+  Status: `pending`
+  Goal: `Close generated-intermediate implementation with focused complete relationship and refusal inventories.`
+  Acceptance: `After .1-.4, reconcile actual source/AST/IR/declaration/assignment consumers and remaining width-sensitive helper ownership. Keep every independent constraint and unknown computed profile explicit, preserve constructor/discovery/book contracts and advance general reset/constants .3.4.4. No broad regression or external override matrix before required feature completion; .6 owns those deferred legs.`
+  Verification: `pending implementation predecessors`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.4`

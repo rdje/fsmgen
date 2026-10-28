@@ -9,6 +9,7 @@ answers:
   - "is the Core module signals map exhaustive for declared assignment targets?"
   - "why must explicit auxiliary width declarations be preserved before copying parent bindings?"
   - "why must late sizing preserve distinct next/q copy origins?"
+  - "why did guard XOR become NOT?"
 date: 2026-10-28
 status: current
 tags: [widths, parameters, lowering, declarations]
@@ -196,9 +197,8 @@ selected roots, arithmetic and default-one vector rank. Captured declarations
 install the collector for one generation. Complete actual target qualification
 and exact emitted-plan comparison reject late same-default ancestry changes;
 combined/stale/namespace and symbolic system-width profiles refuse before success.
-Fixed/type/legacy and static VHDL defaults conserve. Native strict check plus
-SystemVerilog/Verilog outputs qualify the one-bit fixture; symbolic VHDL refuses
-and preserves an existing destination. Direct source-owned storage now consumes
+Fixed/type/legacy and static VHDL defaults conserve. Strict check/SV/Verilog pass the one-bit fixture; its prior VHDL refusal is retained
+in the port audit. Direct source-owned storage now consumes
 the same proved range plans, preserving explicit internal roles, arithmetic and
 default-one vector rank. Final emitted storage-plan comparison also rejects
 late same-default identity changes. Signed/state/type/fixed declarations preserve.
@@ -206,3 +206,5 @@ Computed shapes and full override/runtime qualification remain successors. Exist
 .25 and the flattened-backend-owner-cycle card; isolated target plans retain no
 caller target records or never-installed physical Core copy. Reverify:
 `prove -Iperl t/2187-symbolic-register-helper-ranges.t t/2176-direct-symbolic-storage-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
+
+Use opcode: `prove -Iperl t/2189*.t`.
