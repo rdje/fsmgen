@@ -11,7 +11,9 @@ consistency. Collector graph schema support remains separate from actual selecte
 graph publication and symbolic ranges. The actual recovery owner now imports
 that schema for selected graph policy publication; its target checks traverse
 plain source/result profiles and recheck completed currentness. Symbolic graph
-ranges remain separate. The dated closure census is unchanged.
+ranges remain separate. `DirectDeclaredWidthSupport` now uses the same schema
+to select original leaves for source-only frozen width relationships; this
+adds no graph allocation or target attestation. The dated closure census is unchanged.
 
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration

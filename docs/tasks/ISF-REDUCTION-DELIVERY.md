@@ -2024,9 +2024,37 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3, Tests=14 (T2228/T2217/T2227); alternate traversal Files=1, Tests=4. Native HDL/source/target/old policy products equal after removing only new graph-policy fields. Missing final-check variant fails currentness assertion. Canonical graph ranges/emission and full .6 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare detached canonical transitive graph source/target range plans.`
   Acceptance: `Recursively join actual selected typed edges and current child policies to complete source/target constraints and identical frozen leaf relationships. Preserve root/child identities, ordered operators, independent floors and default-one rank. Cyclic/stale/foreign/numeric/printed-only evidence refuses; no graph emission or VHDL widening.`
+  Verification: `Split source-only original-leaf relationship and actual transitive selected-target join. No source-only relationship attests graph allocation or target membership. Full input/source-currentness closure remains .4.5.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1`
+  Status: `done`
+  Goal: `Prepare detached original-leaf width relationships for bounded arithmetic graphs.`
+  Acceptance: `Use the shared closed graph schema only to select its ordered original leaf slots. Prove actual plain module Signals through complete source preparation; require identical frozen mutable contracts across every leaf, retaining duplicate slots, independent static widths and default-one rank. Reuse the binary relationship kernel without broadening its arity or published contract. Caller graph data attests no allocation or target membership; source/default/requirements remain unchanged. Focused identity/refusal/detachment and binary conservation checks plus docs before commit.`
+  Verification: `Shared source kernel checks all original leaves against complete canonical actual source contracts; kinds/order/duplicates/default-one rank and binary API preserve. Later-leaf mismatch variant fails, full 24-case native products equal. Re-derive actual source plans, falsify predecessor/pair-only variant, retain exact evidence and inherited fixture repair in docs/audits/graph-source-20261028.json.gz. Actual selected target DAG, deep-input closure/emission/full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1: prove graph original-leaf relationships`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1.1`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor reports missing prepare_graph_operand_relationship at ./t/2229-arithmetic-graph-leaf-relationships.t line 30. Existing binary kernel checks only its two source slots; arbitrary graph leaf vectors need every canonical frozen source contract. Predecessor T2211 also throws at DirectDeclaredWidthSupport.pm line 179 during live emitter setup, before its deliberately incompatible source-only test can run.
+  - [x] **ADDRESSED (verified)** — Use shared graph schema only to select original leaf slots; generalize the private canonical relationship kernel across every actual source while retaining exact binary arity/output. Preserve independent fixed widths and require identical full mutable plans. Repair T2211 setup with a comparison referencing both Signals; every source assertion remains unchanged and old/current implementations pass.
+  - [x] **NO REGRESSION** — All tests successful Files=3, Tests=11 (T2229/T2211/T2228), alternate graph traversal Files=1, Tests=3. Complete native source/HDL/target/old policy/graph products exactly equal in 24 cases. Checking only the first pair fails later-leaf controls. Actual target range proof, emission and full .6 remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1.1`
+  Status: `done`
+  Goal: `Repair the source-only binary relationship fixture after live range admission.`
+  Acceptance: `P1 immediate prerequisite of the relationship kernel slice. T2211 fixture generates an actual symbolic binary helper before testing intentionally incompatible source relations, so live declaration admission may throw before the intended pure helper oracle runs. Reproduce against authenticated predecessor, keep complete source-only module/analysis setup without asking an unsupported binary emitter to succeed, and preserve all rejection assertions. Close with the current shared relationship commit and focused evidence.`
+  Verification: `Confirmed inherited fixture abort under authenticated predecessor at live declaration admission before negative source assertions. Comparison guard retains both actual source Signals and avoids unrelated binary max admission; complete assertion tail unchanged. Repaired old and current tests pass. Single-A failed attempt and all old/new source/log evidence retain in graph-source-20261028 receipt.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.1: prove graph original-leaf relationships`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4.4.2`
+  Status: `pending`
+  Goal: `Join actual selected graph and child events to canonical source/target range plans.`
+  Acceptance: `Recursively prove the actual typed edge DAG, every selected current child policy and declaration, expanded original tree equality and source-only frozen leaf relationship. Preserve independent root/child/leaf widths, identities, duplicate slots and default-one rank. Cyclic/stale/foreign/numeric/printed-only evidence refuses. Return detached private plans only; final complete-input closure remains .4.5 before emission.`
   Verification: `pending`
   Commit: `pending`
 

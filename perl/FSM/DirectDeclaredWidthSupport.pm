@@ -12,6 +12,7 @@ use FSM::ParameterDefaultEnvironmentSupport;
 use FSM::DeclaredWidthRangeSupport;
 use FSM::DeclaredWidthBindingSupport;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::IntermediateWidthGraphPolicySupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -148,18 +149,27 @@ sub prepare_binary_operand_relationship ($class, %args) {
     confess "Direct binary width relationship requires two actual operand names\n"
         unless ref($names) eq 'ARRAY' && @$names == 2
             && !grep {!FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($_)} @$names;
+    return _prepare_operand_relationship($class, $names, 'binary', %args);
+}
+
+sub prepare_graph_operand_relationship ($class, %args) {
+    my $names = FSM::IntermediateWidthGraphPolicySupport->leaf_names($args{graph_width_allocation});
+    return _prepare_operand_relationship($class, $names, 'graph', %args);
+}
+
+sub _prepare_operand_relationship ($class, $names, $family, %args) {
     my $source = $class->prepare_module(%args);
     my $module = $args{fsm_module};
     my @operands;
     for my $name (@$names) {
         my $signal = $module->signals->{$name};
-        confess "Direct binary width relationship requires actual plain unsigned module operand '$name'\n"
+        confess "Direct $family width relationship requires actual plain unsigned module operand '$name'\n"
             unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal')
                 && !$signal->signed && !defined($signal->state_model)
                 && !defined($signal->declared_type_name) && !defined($signal->declared_type_spec)
                 && defined($signal->type) && !ref($signal->type) && $signal->type =~ /\A(?:wire|reg)\z/;
         my $constraints = $signal->constraints;
-        confess "Direct binary width relationship excludes constrained operand '$name'\n"
+        confess "Direct $family width relationship excludes constrained operand '$name'\n"
             unless ref($constraints) eq 'ARRAY' && !@$constraints;
         push @operands, $source->{signals}{$name};
     }
@@ -168,16 +178,17 @@ sub prepare_binary_operand_relationship ($class, %args) {
     my $result = {profile => 'fixed', target_language => $source->{target_language},
         source_scope => $source->{source_scope}, source_names => $names,
         operand_widths => [map {$_->{width}} @operands], width_plan => undef};
-    if ($symbolic[0] || $symbolic[1]) {
-        confess "Direct binary width relationship requires identical mutable operand contracts\n"
-            unless $symbolic[0] && $symbolic[1];
+    if (grep {$_} @symbolic) {
+        confess "Direct $family width relationship requires identical mutable operand contracts\n"
+            if grep {!$_} @symbolic;
         my @relationships = map {
             my %relationship = %{$_->{width_plan}};
             delete $relationship{source_signal};
             \%relationship;
         } @operands;
-        confess "Direct binary width relationship requires identical mutable operand contracts\n"
-            unless $json->encode($relationships[0]) eq $json->encode($relationships[1]);
+        my $representative = $json->encode($relationships[0]);
+        confess "Direct $family width relationship requires identical mutable operand contracts\n"
+            if grep {$json->encode($_) ne $representative} @relationships;
         @{$result}{qw(profile width_plan)} = ('symbolic', $operands[0]{width_plan});
     }
     return $json->decode($json->encode($result));
@@ -471,6 +482,25 @@ proves neither allocation nor target membership and activates no helper range,
 including VHDL; the actual-context/event join and emission remain separate.
 Caller plans cannot replace actual source proof, and caller objects/kinds stay
 unchanged.
+
+C<prepare_graph_operand_relationship> takes the same source inputs plus a
+C<graph_width_allocation> record. Its shared closed schema selects the original
+ordered leaf names, including duplicates; current generated edge names do not
+replace those sources. Every leaf must be an actual plain unsigned module
+Signal. The same canonical relationship kernel checks the complete leaf vector:
+all fixed leaves retain their independent widths, while any mutable leaf
+requires every frozen range contract to agree except C<source_signal>.
+The result has the same detached source-only fields as the binary helper and
+retains the first original leaf's proved representative, including vector rank
+at a default width of one. Equal defaults, alias roots, static floors and
+different width trees cannot supply a mutable relationship.
+
+The supplied graph record is a schema selector only. This method does not attest
+its allocator, selected maximum, actual arithmetic graph or target membership.
+It neither accepts caller range plans nor emits graph ranges or broadens VHDL
+admission. Actual selected child/event/declaration closure must independently
+join this source relationship before a graph range can be used. The binary API
+still requires exactly two C<source_names> and retains its result contract.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

@@ -319,6 +319,21 @@ The returned policy detaches. HDL text is unchanged. Canonical transitive
 source/target range proof and actual graph range emission remain pending, and
 the ordinary binary allocation and VHDL profiles retain their boundaries.
 
+`DirectDeclaredWidthSupport::prepare_graph_operand_relationship` now provides
+the source-only prerequisite for that graph range proof. It uses the shared
+graph schema to select every original leaf, preserving order and duplicates,
+then proves actual plain module Signals through canonical source preparation.
+For `(+ A (* B C))`, the relationship covers `A`, `B` and `C`, rather than using
+the computed helper's numeric width as a substitute. If any leaf has a mutable
+width, every complete frozen width plan must match except its source Signal
+name. Equal defaults from different parameter roots, aliases, static floors or
+different expression trees refuse. Fixed leaves retain separate observed widths.
+The detached result uses the existing relationship fields and the first leaf's
+canonical range representative, preserving vector rank when its default is one.
+The graph record selects sources only; this helper proves no selected maximum,
+graph allocation or target membership. Actual transitive child/event/declaration
+closure remains pending. The binary relationship API keeps its existing arity.
+
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 

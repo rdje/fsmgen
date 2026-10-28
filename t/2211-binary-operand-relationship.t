@@ -11,7 +11,9 @@ my $class='FSM::DirectDeclaredWidthSupport';my $json=JSON::PP->new->canonical;
 my $has_api=$class->can('prepare_binary_operand_relationship');
 sub fixture {
     my($width,$left,$right,$extra)=@_;$left//='(param W)';$right//=$left;$extra//='';
-    my $text="(?fsm:operand_relation (+params (W $width) (COPY W) (SAME $width)) $extra (+size (A $left) (B $right) (DATA 1) (OTHER 1)) (idle (<(& A B) (= (DATA 1)) (= (OTHER 1))) (-> idle)))";
+    # A comparison references both source Signals without asking binary max
+    # range admission to accept deliberately incompatible source contracts.
+    my $text="(?fsm:operand_relation (+params (W $width) (COPY W) (SAME $width)) $extra (+size (A $left) (B $right) (DATA 1) (OTHER 1)) (idle (<(== A B) (= (DATA 1)) (= (OTHER 1))) (-> idle)))";
     my $module=FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$text));my $ctx=FSM::HDL::FlattenedDT->new;$ctx->generate_systemverilog($module);
     return {fsm_module=>$module,assignment_analysis=>$ctx->{assignment_analysis},source_names=>['A','B'],target_language=>'systemverilog'};
 }
