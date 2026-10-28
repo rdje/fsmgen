@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2096,11 +2096,11 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair demonstrated vector-guard truthiness/width loss before symbolic relationship propagation.`
   Acceptance: `Probe parsed Core &/| guards against the normal n-ary bitwise expression contract and actual native selectors, including disjoint one/two bit masks and nested comparisons. If actual semantics change during capture, own and repair that required-delivery blocker immediately. Preserve authored bitwise versus logical operations, recursive negation, one-bit simplifications and aliases; qualify distinct literal truth controls, one/wider widths, actual emitted operator/selector associations and caller JSON kinds. Retain genuine original RED and focused directly affected capture/AST checks with book/POD/fact sync; external runtime/full public/corpus qualification remains .6. No optional inversion or computed VHDL expansion.`
-  Verification: `Parser-hoisted source width/truthiness repair closes .1 with focused native proof. Its exact GHDL consumer check owns a preexisting fixed VHDL type failure in immediate next .3. Fixed guard repair closes .3 with selected native GHDL proof. Programmatic Core opcode coercion is independently proved/repaired in .2.1; immediate .2.2 owns typed-literal loss. Do not attribute the hoisted source path to either conversion. Required implementation/full qualification ordering remains unchanged.`
-  Commit: `pending`
+  Verification: `Parser width .1, fixed VHDL typing .3 and independent Core opcode/literal .2 now close the bounded guard prerequisites with focused checks. The original source and Core defects are separately proved, repaired and retained; composed T2194/T2195 preserve actual native values and caller/source controls. Required symbolic relationship implementation resumes .3.4.3.2.2. Full compiler/override/runtime/public/corpus qualification stays .6.`
+  Commit: `children below`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
 
@@ -2117,10 +2117,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2192/T2074/T208. Native fixed/selected-param probes and strict book source succeed; unknown widths and reduction/literal/operand contracts preserve. Module/test syntax, mdBook/POD/source freshness and mandatory final-index hooks gate commit. One failing fixed VHDL diagnosis is explicitly owned; full external/public/corpus qualification remains .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify programmatic Core binary guard opcodes separately from parser-hoisted source expressions.`
   Acceptance: `After .1, reproduce actual Core-authored binary &/| guards through the public backend, using independent literal values and nested comparisons to distinguish vector from logical semantics. Decide whether CaptureSupport coercion is a real supported-contract defect; repair and qualify if demonstrated, otherwise retain the exact scope finding. Do not attribute parser-hoisted paths to that conversion. Focused caller/native/AST controls and documentation/commit close this child; no full runtime/public/corpus claim.`
-  Verification: `Actual public constructor/backend chain independently proves &/| coercion, now repaired by child .1 with focused checks. Existing aliases already render correctly. Typed binary literal radix/width loss is a separate proved defect owned by immediate .2; .3 closes bounded composition only after both prerequisites. Parsed hoisted source remains separate control.`
+  Verification: `Actual public constructor/backend chain independently proves &/| coercion, now repaired by child .1 with focused checks. Existing aliases already render correctly. Typed binary literal radix/width loss is independently repaired by .2; .3 closes bounded composition with the same focused checks. Parsed hoisted source remains separate control.`
   Commit: `children below`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
 
@@ -2137,18 +2137,23 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=12 for T2194/T2189/T2192/T207. Existing unary, source/parser-width, capture, alias, scalar and caller/reuse controls pass. Syntax, POD/book/source freshness and normal hook gate commit; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve actual Core literal width and radix during condition capture.`
   Acceptance: `P1 immediate after opcode .1, before width propagation. Actual public Core typed binary literal 00000011 width8/radix binary renders 8'b11, but convert_condition_to_ast passes only value to Utils::literal, causing native comparison to decimal11. Retain actual typed literal meaning and width through the canonical literal contract without changing unsized scalar source products; test binary/hex/octal/decimal, zero/one and nested public operands with caller-kind controls. Preserve first native failure and source loci, qualify exact emitted comparison and focused literal/capture consumers, sync book/POD/fact and commit. No general Core admission or external/full qualification claim.`
-  Verification: `Original CORE/CAPTURE/native stream retains in core-binary-guard-opcodes audit. CaptureSupport literal branch reads only value and creates an untyped runtime Literal; Core emits the original radix/width via IntegerLiteralSupport. Independent cause is actual value3 becoming decimal11, not binary opcode coercion. Immediate repair owns this defect and its exact literal contract.`
-  Commit: `pending`
+  Verification: `CaptureSupport literal conversion formerly passed only Core value digits, discarding width/radix; actual binary value3 became decimal11 in public/native and parsed guards. It now passes the actual Core canonical to_systemverilog spelling to the existing runtime Literal consumer, retaining no caller graph. Final unchanged T2195 against exact predecessor CaptureSupport fails subtests1/3/4; ordinary unsized control passes. Current T2195/T2194/T309/T207 pass All tests successful Files=4 Tests=13. Independent exact binary/hex/octal/decimal/zero/one/negative/unsized strings, recovered numeric widths, associated native vector/comparison/selectors, actual parsed typed/decimal guards and caller/reuse controls qualify. Initial test regex delimiter syntax failure was corrected before genuine RED; full original/corrected/final tests/logs/source identities retain in docs/audits/core-condition-literal-capture-20261028.json.gz. Re-derive actual Core/capture/native/source products; falsify exact old module and independent expected literal values; durability tracked source/test/audit/POD/book/fact. The same focused composition safely closes child .3 and programmatic guard parent; full external/override/runtime/API/MCP/corpus stays .6.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2: preserve typed Core guard literals`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Final original T2195 reports at t/2195-core-condition-literal-capture.t line 30: got11 expected8'b11. convert_condition_to_ast reads only Literal::value, then constructs an untyped runtime literal. Actual Core producer and native/parsed comparisons independently expose the lost width/radix and changed numeric value.
+  - [x] **ADDRESSED (verified)** — Actual Core canonical spelling reaches the existing runtime literal contract; all independent exact spellings, recovered values/widths and associated native comparison/selectors pass. Caller literal kinds and parsed metadata preserve. Ordinary unsized products retain their original successful control; no arbitrary Core admission or caller graph is added.
+  - [x] **NO REGRESSION** — All tests successful Files=4 Tests=13 for T2195/T2194/T309/T207. Opcode, alias, literal normalization, capture, parsed typed/ordinary and backend reuse controls pass. Syntax/POD/book/source checks and mandatory hook gate commit; full .6 stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Close programmatic guard qualification after opcode and literal prerequisites.`
   Acceptance: `After .1/.2 focused checks and commits, review their composed actual public Core/native products, confirm parsed hoisted source remains a separate control, close parent only for these bounded guards and restore symbolic bitwise relationships. No broad/external/full regression expansion; record exact remaining .6 gaps and commit a bounded closure if not safely joined to .2.`
-  Verification: `pending prerequisites`
-  Commit: `pending`
+  Verification: `Safely joined to typed-literal child .2: current focused T2194/T2195 compose actual Core opcode/literal/native associations and preserve parsed source controls, with T309/T207 unchanged consumers. No broad verification was added. Full qualification remains .6; next implementation is .3.4.3.2.2.`
+  Commit: `joined to .3.4.3.2.1.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.1.3`
   Status: `done`
@@ -2166,7 +2171,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Prove and consume actual same-relationship vector bitwise intermediate widths in Verilog-family declarations.`
   Acceptance: `After guard semantics, select actual whole-source binary bitwise intermediate events. Keep every distinct operand association and source capture. Only identical proved mutable width relationships may share a result range; equal defaults or separate overridable aliases cannot prove equivalence. Bind actual AST, selected emitted text and declaration, preserve vector rank at default one and refuse missing/foreign/independent-max proof. Split publication/consumer boundaries before an unsafe slice; focused source/caller/static/refusal checks and book/POD precede commit. VHDL non-scalar join remains .3.4.3.4; full qualification .6.`
-  Verification: `pending guard semantics`
+  Verification: `Guard prerequisites close under .3.4.3.2.1. Actual symbolic vector relationship publication/consumer remains next; no symbolic inference is supplied by the numeric guard repairs.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`
@@ -2582,6 +2587,13 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — Whole current/Git census leaves five bytes and no lines under the immutable knowledge_cards transition allowance. git log -S for the exact bytes_total growth declaration identifies bf41087c6c6e414d5dbdae206d889cb92f468cdc. Repeated producer/consumer milestone/setup prose in two canonical cards is the bounded removable term; full original/current semantic review retains every unique fact and original epoch.
   - [x] **ADDRESSED (verified)** — Complete card membership/frontmatter/recipe parity and exact original/current recovery pass. Independent complete generated root/shard byte comparison and cached query comparison are unchanged. Current fact identities, evidence/reverify contracts and substantive source/target/refusal constraints preserve; only repeated wording consolidates. Finite allowances and names remain unchanged.
   - [x] **NO REGRESSION** — knowledge-map: OK confirms complete source/index freshness and query parity. Whole before/after membership/metadata, original command inclusion and generated byte identity pass; book/POD/source checks and normal final-index hook gate this document/reference transaction. No source behavior or external qualification changes.
+
+- ID: `ISF-REDUCTION-DELIVERY.30`
+  Status: `pending`
+  Goal: `Repair runtime AST comparison/bitwise text grouping without changing qualified native products.`
+  Acceptance: `P1 immediate after typed-literal commit, before symbolic widths. Reproduce the actual captured runtime AST string A | B == 8'b11 versus Core (A | B) == 8'b11 from the literal audit. Native factorized comparison is correct; do not invent a native runtime failure. Locate child/parent precedence omissions in FSM::AST::BinaryOp::to_systemverilog and its actual string/key consumers, then choose a bounded parenthesization repair with independent distinguishing values, both operand orientations, preserved scalar/operator products and current Core/native controls. If the repair exceeds a safe slice, split producer/consumer ownership before edits. Keep the repaired Core assertion-inlining owner separate. Preserve first streams/source, sync book/POD/fact and commit. Full runtime/corpus remains .6.`
+  Verification: `Actual typed-literal probe prints CORE: (A | B) == 8'b11 and CAPTURE: A | B == 8'b11, while native A_or_B producer and typed comparison retain correct association. AST::BinaryOp comparison branch concatenates child text without precedence grouping; bitwise branch has only comparison/logical-child special handling. Existing Knowledge Map assertion-precedence repair concerns Core inlining, not this runtime AST printer. Original/current native stream and exact Node source retain in literal audit; independent printer/consumer qualification is next.`
+  Commit: `pending`
 
 ## Blockers
 

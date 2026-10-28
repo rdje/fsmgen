@@ -655,9 +655,12 @@ Binary C<&>/C<|> retain vector operations recursively; they never borrow the
 C<&&>/C<||> logical constructors. Published Core bitwise aliases retain their
 existing downstream rendering. Nested comparisons consume actual bitwise values,
 and wider native guard helpers retain vector width before whole-value state gating.
-Typed Core literal width/radix preservation is separately owned; this opcode repair
-does not qualify that path. Parsed source can already hoist a bitwise expression
-into a SignalRef, so it is a distinct caller path.
+Core literals carry their canonical C<to_systemverilog> spelling into the existing
+runtime Literal. Bare digits alone lose width and radix and can change numeric
+value. Existing downstream literal consumers recover the canonical sized/radix
+contract; ordinary unsized zero/one/decimal/symbolic products preserve. This carries
+no caller graph. Parsed source can already hoist a bitwise expression into a
+SignalRef, so its guard path has separate typed/ordinary source controls.
 
 This conversion contract does not admit optional source inversion or qualify
 external execution of arbitrary Core nodes.
@@ -714,7 +717,9 @@ sub convert_condition_to_ast ($self, $condition_node) {
         return $result;
 
     } elsif ($condition_node->isa('FSM::CoreAST::Literal')) {
-        my $value = $condition_node->value;
+        # The bare digits omit the Core literal's width and radix. Carry its
+        # canonical spelling into the existing runtime literal consumer.
+        my $value = $condition_node->to_systemverilog;
         fsm_debug("    CONVERT_CONDITION_AST: Literal -> literal('$value')", 3);
         return FSM::AST::Utils::literal($value);
 

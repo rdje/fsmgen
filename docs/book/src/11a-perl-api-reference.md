@@ -50,9 +50,12 @@ false bitwise-AND guard; nested comparisons use the vector result. Existing Core
 bitwise aliases retain their native products. See the
 [condition capture implementation](perl-api/FSM/Synthesis/EnableGraph/CaptureSupport.html#convert_condition_to_ast).
 Focused constructor/backend checks preserve caller kinds and the distinct parsed
-source path. Typed Core literal width/radix capture has a separate immediate
-repair owner, `ISF-REDUCTION-DELIVERY.3.4.3.2.1.2.2`; arbitrary Core/external
-runtime qualification is not implied.
+source path. Core literal capture also preserves canonical size/radix spelling:
+binary digits retain their binary value in nested guards. Existing unsized scalar
+products preserve. Typed and ordinary parsed guard literals have focused controls;
+complete external/runtime/public qualification remains separate work. Internal
+captured-AST text still needs grouping repair before reuse as inline HDL; the
+native factored guards in these checks retain correct association (task `.30`).
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
