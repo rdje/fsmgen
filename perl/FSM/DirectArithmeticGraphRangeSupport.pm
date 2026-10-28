@@ -141,21 +141,61 @@ sub _visit {
     return $node;
 }
 
-sub prepare {
-    my ($class, %args) = @_;
-    my $ctx = $args{flattened_dt};
+sub _scope {
+    my ($args) = @_;
+    my $ctx = $args->{flattened_dt};
     _fail('requires an actual backend context') unless blessed($ctx) && $ctx->isa('FSM::HDL::FlattenedDT')
         && blessed($ctx->{fsm_module}) && $ctx->{fsm_module}->isa('FSM::CoreAST::FSMModule');
     my $owner = $ctx->{backend_sv_intermediate_width_support};
     my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
     _fail('requires canonical current width and recovery owners')
         unless ref($owner) eq 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport'
-            && $owner->{flattened_dt} == $ctx
+            && $owner->{flattened_dt} && $owner->{flattened_dt} == $ctx
             && ref($recovery) eq 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport'
-            && $recovery->{flattened_dt} == $ctx;
-    my $language = $args{target_language};
+            && $recovery->{flattened_dt} && $recovery->{flattened_dt} == $ctx;
+    my $language = $args->{target_language};
     _fail('currently requires a Verilog-family target')
         unless defined($language) && !ref($language) && lc($language) =~ /\A(?:systemverilog|sv|verilog|v)\z/;
+    return ($ctx, $owner, $recovery, $language);
+}
+
+sub prepare_declaration {
+    my ($class, %args) = @_;
+    my ($ctx, $owner, $recovery, $language) = _scope(\%args);
+    my ($name, $info, $expression) = @args{qw(signal_name signal_info expression)};
+    my $allocated = $owner->factorized_graph_width_allocation($name, $info);
+    my $policy = $recovery->arithmetic_graph_width_allocation($name, $info, $expression);
+    my $origin = $recovery->binary_arithmetic_origin($name, $info, $expression);
+    _fail('declaration requires actual current graph allocation and selected origin/text')
+        unless $allocated && $policy && $origin && _json()->encode($allocated) eq _json()->encode($policy);
+    my $source_snapshot = _source_state($ctx);
+    my %source_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
+        target_language => $language, graph_width_allocation => $policy);
+    my $direct = 'FSM::DirectDeclaredWidthSupport';
+    my $relationship = $direct->prepare_graph_operand_relationship(%source_args);
+    _fail('declaration disagrees with independently selected original-leaf maximum')
+        unless FSM::IntermediateWidthGraphPolicySupport->matches_leaf_widths(
+            $policy, $info->{width}, @{$relationship->{operand_widths}});
+    my $again = $direct->prepare_graph_operand_relationship(%source_args);
+    my $source_current = _source_state($ctx);
+    my $current = $recovery->arithmetic_graph_width_allocation($name, $info, $expression);
+    _fail('declaration source proof changed during preparation')
+        unless $current && _json()->encode($current) eq _json()->encode($policy)
+            && _json()->encode($relationship) eq _json()->encode($again)
+            && $source_snapshot eq $source_current;
+    return _json()->decode(_json()->encode({profile => $relationship->{profile},
+        target_language => $relationship->{target_language}, source_scope => $relationship->{source_scope},
+        module_name => $ctx->{fsm_module}->name, target_name => $name, declaration_kind => 'signal',
+        allocation_role => 'factorized_intermediate', source_names => $policy->{source_names},
+        operand_targets => $policy->{source_names}, width => $info->{width},
+        graph_width_allocation => $policy, arithmetic_origin => $origin, expression => $expression,
+        expression_tree => $policy->{expression_tree}, leaf_names => $relationship->{source_names},
+        width_plan => $relationship->{width_plan}}));
+}
+
+sub prepare {
+    my ($class, %args) = @_;
+    my ($ctx, $owner, $recovery, $language) = _scope(\%args);
     my $name = $args{signal_name};
     my $rows = $owner->_current_graph_inference_rows;
     _fail('requires the actual current graph root row')
@@ -214,6 +254,18 @@ C<prepare> joins an actual current FlattenedDT root row to complete selected
 target namespace, declaration and intermediate-event inputs. The direct width
 facade exposes C<prepare_arithmetic_graph_intermediate_range> with those same
 arguments and a Verilog-family C<target_language>.
+
+C<prepare_declaration> supplies the separate source-only declaration intent,
+exposed as C<prepare_arithmetic_graph_declaration>. It takes the actual context,
+root name/metadata, Verilog-family language and freshly selected C<expression>.
+Current completed allocation and arithmetic origin/text must agree. Complete
+source snapshots, original-leaf relationships, exact selected leaf maximum and
+final current-policy checks bind its detached root fields. The fixed profile
+retains independent observed widths; mutable default-one range rank preserves.
+This intent contains the same root fields as the completed target plan, without
+C<nodes> or C<node_order>. It captures no target events and supplies no target
+membership attestation. Actual declaration emission and independent final target
+comparison remain separately owned.
 
 Every typed computed edge requires its actual selected arithmetic child event,
 fresh origin/text and current completed graph or binary allocation policy.

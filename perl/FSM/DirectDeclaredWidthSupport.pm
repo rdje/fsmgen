@@ -289,6 +289,11 @@ sub prepare_arithmetic_graph_intermediate_range ($class, %args) {
     return FSM::DirectArithmeticGraphRangeSupport->prepare(%args);
 }
 
+sub prepare_arithmetic_graph_declaration ($class, %args) {
+    require FSM::DirectArithmeticGraphRangeSupport;
+    return FSM::DirectArithmeticGraphRangeSupport->prepare_declaration(%args);
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -524,6 +529,15 @@ no HDL, admits no graph VHDL profile and requires the actual weak row view to
 remain current. Focused deep-input and weak caller-view controls qualify this
 private join; live graph range emission and full feature qualification remain
 separately owned.
+
+C<prepare_arithmetic_graph_declaration> provides a separate source-only root
+intent before target event completion. It requires the actual context/current
+root, target language and exact selected C<expression>. Completed graph policy,
+fresh origin/text, complete canonical source snapshots and the original-leaf
+relationship must remain current. Its detached root fields agree with the
+complete graph range plan except the transitive C<nodes>/C<node_order> inventory.
+It attests no target membership or emitted range and does not fabricate events.
+Actual live declaration/ledger integration remains separate.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

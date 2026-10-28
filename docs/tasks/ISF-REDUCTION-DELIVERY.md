@@ -2085,11 +2085,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2, Tests=8 (T2231/T2230); alternate traversal Files=1, Tests=4. Baseline/current production executable text is byte-identical after POD removal. Exact prior graph-join native conservation remains authoritative; no repeated broad gate or graph/VHDL emission is claimed. Full .6 and whole-backend/Core cycles remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Emit proved computed arithmetic ranges and independently close the full selected graph.`
   Acceptance: `After .4, consume current proved child/root relationships at actual declarations in dependency order without a second generation. Preserve one-bit vector rank, whole-value guard truth and exact arithmetic order/duplicates; independent fixed/literal/type/constraint profiles retain their contracts. Final assembly independently re-derives complete selected graph/event/target provenance and compares every actual emitted field. Late mutation/failure returns no artifact or snapshot and fresh reuse recovers. Focused n-ary/nested SV/Verilog/source/refusal/lifecycle controls, runnable examples and docs qualify implementation; source-owned n-ary, paired VHDL and full .6 remain separate.`
-  Verification: `pending canonical graph proof`
+  Verification: `Canonical source/target graph proof closes with focused checks through .2.4.5. Split source declaration ledger, actual emission/guard-rank/final comparison, and independent complete selected-graph closure. No second generation or fabricated target events.`
   Commit: `pending actual graph consumer`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.1`
+  Status: `done`
+  Goal: `Prepare current source declaration ledgers for computed arithmetic graph ranges.`
+  Acceptance: `Build a detached source-only declaration intent from actual completed graph allocation, fresh selected origin/text, canonical original-leaf relationships and complete source/currentness checks. Root fields must exactly match the independently completed target plan after excluding its transitive node inventory. Preserve kinds, default-one rank, duplicates and independent fixed widths. No fabricated target events, live emission or VHDL activation; focused source/target agreement, refusal and late-write controls plus docs before commit.`
+  Verification: `Actual completed allocation and selected origin/text join canonical original-leaf source contracts into a detached root intent. Every root field agrees with independent completed target proof; fixed/duplicate/default-one profiles preserve. Re-derive actual source/target agreement, falsify predecessor/stale-policy and isolated missing-source-snapshot variants, retain exact evidence in docs/audits/graph-decl-20261028.json.gz. RAM guard interruptions are not results; unfinished control was isolated and completed after pressure fell with unchanged limits. Live consumer/guard/final-ledger integration and full .6 remain pending.`
+  Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.1: prepare current graph declaration intent`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Authenticated predecessor reports missing prepare_arithmetic_graph_declaration at ./t/2232-arithmetic-graph-declaration-plans.t line 51. Complete target proof cannot be used before actual target events exist; declaration emission needs a separate current source-only root intent. Reusing the earlier policy or omitting source snapshot equality accepts late constraints and fails exact control assertions.
+  - [x] **ADDRESSED (verified)** — Add a separate source declaration facade with shared canonical scope checks, actual completed allocation/selected origin/text, frozen all-leaf relationship, exact selected maximum and full source/currentness rechecks. Root fields agree with independent completed target proof without inventing events. Existing facade methods and target proof tail preserve exact executable bytes; fixed/duplicate/default-one profiles and detached results retain.
+  - [x] **NO REGRESSION** — All tests successful: initial T2232/T2231/T2230 Files=3, Tests=11; final T2232 including late-result constraint Files=1, Tests=3. Isolated source-snapshot current control under alternate traversal Files=1, Tests=1; both known-bad guards fail. Interrupted RAM runs remain non-results and exact recovery evidence retains. Default parent emission stays numeric; actual consumer/final closure and full .6 remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2`
+  Status: `pending`
+  Goal: `Emit actual graph ranges and independently compare completed selected target proof.`
+  Acceptance: `Consume source declaration intent in the actual one-pass prepared declaration stage, retain a separate per-generation ledger, and expose graph vector rank to whole-value guard truth. Final assembly must independently prove complete selected graph target events and match every emitted root field. Preserve fixed/legacy profiles and atomic failure/reset/reuse; no VHDL broadening.`
+  Verification: `pending source declaration intent`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`
+  Status: `pending`
+  Goal: `Independently close selected graph emission, guard truth and failure lifecycle.`
+  Acceptance: `Qualify n-ary/nested/repeated arithmetic at one/wide defaults, actual source/caller/target constraints, complete child ledgers and whole-value guard truth. Late target/source/ledger mutations must return no artifact or snapshot; fresh reuse recovers. Runnable focused SV/Verilog/native profiles and synced docs close graph repair before other source-owned families. Full .6 stays deferred.`
+  Verification: `pending actual graph emission`
+  Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3`
   Status: `pending`

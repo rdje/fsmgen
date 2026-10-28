@@ -377,6 +377,18 @@ If the caller releases its last actual prepared-block owner during preparation,
 the join refuses. These are graph row-view guarantees; whole-backend and Core
 ownership cycles remain separately tracked.
 
+`prepare_arithmetic_graph_declaration` now prepares the source-only root intent
+that declaration emission will consume. It takes the current backend/root row,
+target language and freshly selected expression, without target snapshots.
+Completed graph allocation, selected origin/text and original-leaf contracts must
+agree, and complete source/currentness checks run again before return. Its root
+fields agree exactly with the independently completed target plan after removing
+the child inventory. Fixed widths remain independent; mutable default-one widths
+retain vector rank. Copied metadata, different selected text, independent roots,
+result floors and late source/result constraints refuse. This intent fabricates
+no target events and prints no range. Actual emission, guard-rank integration and
+final ledger comparison remain next.
+
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 

@@ -17,7 +17,9 @@ adds no graph allocation or target attestation. A lazy direct facade now loads
 `DirectArithmeticGraphRangeSupport` for the separate canonical selected DAG and
 complete source/target join. The numeric resolver uses active-call recursion
 tracking so repeated computed children retain current policy. Live graph ranges
-remain pending. The dated closure census is unchanged.
+remain pending. The same lazy graph owner now prepares a distinct source-only
+declaration intent, without target events; actual declaration/guard/final-ledger
+integration remains next. The dated closure census is unchanged.
 
 Scoped update on `2026-10-28`: the direct VHDL backend imports
 `FSM::Backend::VHDL::DirectDeclarationPlan`, the existing actual declaration
