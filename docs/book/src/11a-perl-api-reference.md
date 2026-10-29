@@ -212,6 +212,30 @@ wrap that same bitwise helper in scalar logical NOT. Source-tree birth,
 selected-target proof and symbolic range integration remain pending; these
 forms do not yet propagate parameter changes through their helper ranges.
 
+The separate `SourceBitwiseTreePolicySupport` data schema now validates
+`source_bitwise_tree_operand_max` records. Its source vector contains every
+ordered tree leaf slot, including repeated names, and must agree exactly with
+the original bitwise tree. It preserves scalar JSON kinds and checks exact
+decimal maxima using the existing graph walk limits. For example:
+
+```perl
+use FSM::SourceBitwiseTreePolicySupport;
+my $policy = FSM::SourceBitwiseTreePolicySupport->copy_record({
+    kind => 'source_bitwise_tree_operand_max', operator => '&',
+    source_names => ['A', 'B', 'C'], selected_width => '8',
+    expression_tree => ['&', ['&', ['signal', 'A'], ['signal', 'B']],
+                              ['signal', 'C']],
+});
+die "width mismatch\n" unless
+    FSM::SourceBitwiseTreePolicySupport->matches_selected_widths($policy, 8, 8, 4, 2);
+print join(' ', @{FSM::SourceBitwiseTreePolicySupport->leaf_names($policy)}), "\n";
+```
+
+This prints `A B C`. Numeric agreement describes the independent fixed maximum;
+actual Core ownership, Parser publication, selected target proof and live helper
+range integration remain pending. Binary two-slot and computed arithmetic graph
+contracts remain separate.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows

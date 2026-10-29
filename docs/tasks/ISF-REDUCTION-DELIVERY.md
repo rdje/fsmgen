@@ -2193,10 +2193,29 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Define closed source bitwise tree policy and current Core holder.`
   Acceptance: `Add a separate bounded bitwise-tree policy and actual Core helper adapter, preserving ordered original BinaryOp nodes and every typed whole-reference slot. Keep binary_operand_max arity/schema unchanged and do not reuse arithmetic graph ownership. Exact positive decimal maxima and JSON kinds preserve; nested/mixed operators, repeated names/actual identities, cycles, slices/literals, signed/state/type/opaque/result constraints and forged/stale/copied holders must qualify or withhold precisely. Opt-in setters/getters/revisions remain plain detached state with no owner retention; ordinary Signals gain no fields. Focused holder/schema/currentness and old binary checks plus POD/book precede commit.`
   Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.1`
+  Status: `done`
+  Goal: `Validate separate closed source bitwise tree policy data.`
+  Acceptance: `Introduce only pure closed source_bitwise_tree_operand_max schema: canonical &/|/^ tree, matching root operator, ordered complete whole-name leaf slots including duplicates and a positive exact decimal selected width. Require more than one binary node and the existing shared graph depth/node bounds; malformed/cyclic/over-bound or mismatched tree/vector data refuse. Preserve JSON scalar kinds and independent exact maxima. Binary two-slot and arithmetic graph schemas remain unchanged and reject this family. Focused data/boundary/compatibility checks and API/POD/book precede a separate commit. No Core installation, parser publication, target event, HDL or VHDL activation.`
+  Verification: `Separate closed source_bitwise_tree_operand_max data schema now validates bitwise original topology, exact complete ordered leaf slots including duplicates, selected width kinds and independent decimal maxima. It uses existing shared64-level/4096-node constants; boundary64/65 levels and4095/4097 visited nodes qualify/refuse, including shared subtree occurrences. Malformed/foreign-family/unary/arithmetic/literal/cyclic data and wrong slots refuse before unsafe encoding. Invalid numeric leaf slots withhold without disappearing; large adjacent decimals remain distinct. Baseline T2236 fails absent owner with four skips; final T2236/T2227 All tests successful Files=2, Tests=11. Isolated ordered-slot equality omission admits exactly the wrong-slot controls and fails their two assertions. Syntax and exact API-guide example pass, printing A B C. Existing source and test files are exact00eb; new utility installs no Core policy and changes no default caller. Card questions/commands/history remain with one schema question; curated evidence routes through full original/current cards and receipts, shrinking104 bytes with no LF growth. Source/known-bad/log/card evidence and distinct three legs retain in docs/audits/source-bitwise-policy-20261029.json.gz. Core/source/target/range joins and full .6 remain pending.`
+  Commit: `this pure policy data slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Baseline T2236 reports Can't locate FSM/SourceBitwiseTreePolicySupport.pm at t/2236-source-bitwise-tree-policy.t line 10; existing binary/arithmetic schema owners reject source tree data. The new source family needs complete ordered slots independent of a two-edge record. The slot-equality omission admits reordered or substituted leaves despite unchanged numeric widths, producing the intended failed closed-shape assertions.
+  - [x] **ADDRESSED (verified)** — Closed data validation preserves tree/order/duplicates/kinds and exact maxima under unchanged shared limits. Final source passes every valid/invalid/count/boundary/decimal control, while the isolated equality omission fails two wrong-slot assertions. Exact manual example executes and output matches A B C; no Core or HDL integration is claimed.
+  - [x] **NO REGRESSION** — All tests successful Files=2, Tests=11 for T2236 plus existing arithmetic schema/collector T2227. Module syntax is OK; existing source/tests are exact00eb. Book/source/claim and normal mandatory gates precede commit; Core installation and full feature verification remain separate.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.2`
+  Status: `pending`
+  Goal: `Bind source-tree policy to current actual Core helper state.`
+  Acceptance: `After the pure schema, add opt-in Core current getter/setter and revocation against actual result/tree/all typed leaf objects and exact max. Preserve Root/leaf roles, constraints, duplicate-name identity, node/reference ownership and supported same-value write revocation. Escaped/foreign/stale or privately changed state cannot revive policy. Retained capsules must remain plain detached JSON without owners, and ordinary objects gain no fields. Existing binary API/clear/transaction behavior preserves. Split identity/lifetime support if actual interfaces require it; parser/backend/target/range work remains separate. Focused holder and old binary checks plus POD/book before commit.`
+  Verification: `pending pure schema`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2`

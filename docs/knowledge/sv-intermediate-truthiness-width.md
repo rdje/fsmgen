@@ -16,12 +16,13 @@ answers:
   - "where are arithmetic intermediate helpers allocated?"
   - "why do arithmetic helpers lack generic ranges?"
   - "why do source-owned n-ary bitwise helpers remain numeric?"
+  - "what validates source bitwise tree allocation data?"
 date: 2026-10-29
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/AST/Node.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm; docs/audits/source-bitwise-tree-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreePolicySupport.pm; docs/audits/source-bitwise-policy-20261029.json.gz;
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t
 ---
 
 Owners above. Original cards/proofs (baseline/digests): `docs/audits/width-card-evidence-20261028.json.gz`; recover:
@@ -45,5 +46,4 @@ Capture preserves Core bitwise &/| (formerly &&/||), nested/vector/whole-value g
 Runtime comparisons group bare &/| on either side (T2196); literal/caller controls and typed native HDL preserve. Source n-ary stays open; full qualification is .6.
 
 Arithmetic stays inline in Parser. Proved whole/computed factorizer births, canonical leaf relations and final target/ledger checks now emit generic ranges;
-see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. Source n-ary bitwise trees lack Core policy: the journal accepts
-only two whole operands. Negated forms wrap that helper in scalar logical !.
+see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport validates separate closed data with complete ordered leaf slots and shared walk bounds; it attests no Core/target ownership. Core birth/journal/target/range joins remain pending for source n-ary bitwise. The journal accepts only two whole operands. Negated forms wrap that helper in scalar logical !.
