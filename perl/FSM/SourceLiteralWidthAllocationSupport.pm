@@ -275,6 +275,45 @@ sub current_core {
     return $@ ? undef : $record;
 }
 
+# Convert only the phase and child digests of an authenticated birth capture.
+# Installed completed children must subsequently match this exact projection;
+# a newly current child with equal source or width cannot substitute for it.
+sub _completed_capsule {
+    my ($capsule, $capture) = @_;
+    my $completed = _json()->decode(_json()->encode($capsule));
+    my $state = _json()->decode($completed->{state});
+    my $edges = $state->{children} // [];
+    my $proofs = $capture->{walk}{child_captures};
+    return unless @$edges == @$proofs;
+    for my $index (0 .. $#$edges) {
+        return unless $edges->[$index]{phase} eq 'birth';
+        my $child = _completed_capsule($proofs->[$index]{capsule}, $proofs->[$index]{capture}) or return;
+        $edges->[$index]{phase} = 'completed';
+        $edges->[$index]{holder_digest} = _capsule_digest(_json()->encode($child));
+    }
+    $completed->{state} = _json()->encode($state);
+    return $completed;
+}
+
+sub complete_core {
+    my ($class, %args) = @_;
+    my $completed = eval {
+        my $children = $args{children};
+        return if defined($children) && (ref($children) ne 'HASH' || ($children->{phase} // '') ne 'birth');
+        my $holder = $args{holder};
+        my $record = $class->current_core(%args) or return;
+        my $raw = _json()->encode($holder);
+        my $birth = _capture($args{signal}, $children) or return;
+        return unless _tracked($birth) && _matches($record, $birth) && $birth->{state} eq $holder->{state};
+        my $expected = _completed_capsule($holder, $birth) or return;
+        my $current = _capture($args{signal}, {phase => 'completed'}) or return;
+        return unless _tracked($current) && _matches($record, $current)
+            && $current->{state} eq $expected->{state} && _json()->encode($holder) eq $raw;
+        $expected;
+    };
+    return $@ ? undef : $completed;
+}
+
 # Project only the operation the source producer actually performed. Every
 # other byte, including independent declarations, remains in the state compare.
 sub _advance_raw_signal {
@@ -439,8 +478,8 @@ lifetime tokens use the existing weak identity table and retain no owners.
 This validator does not attest source birth, publish a policy, change source
 inference, or admit a target profile. The actual builder journals births and
 completed Parser/facade transactions publish through the Core Signal lifecycle.
-The builder now uses nested birth captures at actual source allocation;
-completed nested publication and target consumers remain separate successors.
+The builder uses nested birth captures at actual source allocation and converts
+them at completed Parser/facade publication. Target consumers remain separate.
 
 The optional C<children> argument explicitly opts into a prepared nested holder
 boundary. C<< {phase => 'birth', lookup => sub { ... }} >> calls the lookup with
@@ -524,8 +563,31 @@ The caller must first validate current holders and actual registry membership,
 perform the named operation, then refresh affected child holders before their
 parents. Unaffected child holders remain current. Completed mode requires
 actual refreshed installed child policy; birth lookup cannot impersonate it.
-Escaped old parent/child capsules remain stale. The source builder now uses this
-transport for actual nested births; completed nested publication remains separate.
+Escaped old parent/child capsules remain stale. The source builder uses this
+transport for actual nested births before completed publication.
+
+=head2 complete_core
+
+Return a detached completed capsule only when a current birth capsule projects
+exactly to the actual installed completed child relationships. Supply the same
+explicit birth C<children> lookup used to validate the original capsule; no
+children option is needed for direct holders. A completed-phase lookup cannot
+substitute for the original birth. Invalid, stale or changed input returns undef.
+
+The complete bounded birth capture authenticates original source epochs, raw
+state and ordered child capsules. A pure projection replaces only each edge's
+phase and digest using its recursively projected original child capsule. A fresh
+completed capture must equal that entire projection, including actual installed
+child holders. Equal widths or source text, independently current replacement
+children, changed record JSON kinds and missing completed policy cannot establish
+this join. Raw source and installed-holder barriers fence late getter writes.
+Original birth capsules, source data, revisions and caller kinds do not change.
+
+This method installs nothing and does not retain source owners or callbacks.
+The source publisher installs children before parents after normal validation,
+with a final raw registry-membership guard. Parser/facade failure cleanup revokes
+partial publication. Target literal floors and declaration agreement remain
+separate contracts.
 
 Focused executable controls:
 

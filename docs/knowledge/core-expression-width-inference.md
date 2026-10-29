@@ -21,8 +21,8 @@ evidence: >-
   t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
-  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-7]*.t
+  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -64,10 +64,9 @@ state and registry ownership, including repeated slots (T2253); other writes wit
 Completed Parser/facade transactions now publish detached Core literal intent.
 Common allocation clear/revision revokes matching writes and failed replacements;
 completion preserves the staged epoch with a final raw registry join (T2254).
-The preparatory source_reference_width callback now receives actual whole refs:
-undef uses selected width; a closed nullable width record resolves or withholds.
-Malformed results withhold; scalar/slice/literal rules and walk bounds preserve.
-It supplies no source proof. Targets remain open.
+source_reference_width receives actual whole refs: undef uses selected width;
+a closed nullable record resolves or withholds. Malformed results withhold;
+scalar/slice/literal and walk rules preserve. This supplies no source proof.
 The opt-in literal holder children boundary now joins actual typed child edges
 to current birth capsules or actual installed completed policy, with explicit
 phases. It expands raw source text while separately binding ordered child edges;
@@ -84,5 +83,6 @@ digests preserve raw Unicode without interpreting literals. Actual source captur
 now resolves local child births before parent registration: unknown or revoked
 intent cannot lend a nominal width or old binary maximum policy. Fresh nested
 births and child-first transport preserve independent floors and scalar results.
-T2258 covers fixed/mutable Parser/facade writes; completed nested publication and
-target sizing remain separate.
+T2258 covers fixed/mutable Parser/facade writes. T2259 qualifies publication:
+the original birth's phase/digest projection must match actual completed child
+capsules, preserving epochs and raw kinds. Target sizing remains separate.

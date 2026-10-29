@@ -303,7 +303,7 @@ without a semantic revision; explicit setter replacement still revokes intent.
 
 =head2 source_literal_width_allocation
 
-Return detached current direct bitwise literal allocation intent, or undef.
+Return detached current direct or nested bitwise literal allocation intent, or undef.
 Nullable exact width and raw literal value/radix/size retain their JSON kinds;
 an unresolved width is distinct from the nominal Core compatibility width.
 Actual identities, lifetimes, AST slots, source metadata and revisions must
@@ -315,9 +315,13 @@ Install a producer-supplied literal record and return this Signal. Undef clears;
 invalid replacement throws after revoking prior allocation intent. The common
 clear/revision mechanism invalidates every allocation family on relevant writes,
 including matching replacements. This explicit opt-in does not attest a source
-birth or admit nested helper inference, backend floors or target ranges.
-Completed source publication privately installs an already current staged birth
-without advancing semantic revisions. Its optional internal final guard performs
+birth or admit backend floors or target ranges. This setter retains its direct
+profile; normal source publication separately joins actual nested children.
+Completed source publication privately converts an authenticated staged birth
+to actual completed child relationships without advancing semantic revisions.
+The original birth capsules and every source epoch preserve. A complete projected
+capsule comparison rejects independently current replacement children or changed
+record kinds. Its optional internal final guard performs
 the producer's raw registry membership join after all source validation reads.
 
 =cut
@@ -367,7 +371,7 @@ the producer's raw registry membership join after all source validation reads.
     sub source_literal_width_allocation($self) {
         return undef unless exists $self->{_source_literal_width_allocation};
         return FSM::SourceLiteralWidthAllocationSupport->current_core(
-            signal => $self, holder => $self->{_source_literal_width_allocation});
+            signal => $self, holder => $self->{_source_literal_width_allocation}, children => {phase => 'completed'});
     }
 
     sub set_source_literal_width_allocation($self, $record) {
@@ -401,11 +405,14 @@ the producer's raw registry membership join after all source validation reads.
         return 1;
     }
 
-    sub _publish_staged_source_literal_width_allocation($self, $holder, $registry_current = undef) {
-        my $record = FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $self, holder => $holder);
+    sub _publish_staged_source_literal_width_allocation($self, $holder, $registry_current = undef, $children = undef) {
+        my %source = defined($children) ? (children => $children) : ();
+        my $record = FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $self, holder => $holder, %source);
         return 0 unless $record;
-        my $prepared = FSM::SourceLiteralWidthAllocationSupport->prepare_core(signal => $self, record => $record);
+        my $prepared = FSM::SourceLiteralWidthAllocationSupport->prepare_core(signal => $self, record => $record, %source);
         return 0 unless $prepared->{state} eq $holder->{state};
+        $prepared = FSM::SourceLiteralWidthAllocationSupport->complete_core(signal => $self, holder => $prepared, %source);
+        return 0 unless $prepared;
         # No getters after this final producer-owned membership check. Keep the
         # already tracked source epoch so dependent helpers are not invalidated.
         return 0 if defined($registry_current) && (ref($registry_current) ne 'CODE' || !$registry_current->());

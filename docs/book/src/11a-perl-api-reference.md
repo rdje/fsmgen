@@ -716,8 +716,8 @@ die "nominal width changed\n" unless $helpers[0]->width == 1;
 
 T2254 checks both completion paths, raw kinds, explicit floors, revocation,
 failure/reuse and distinguishing stale-epoch/foreign-registry controls. This
-internal policy supplies no backend default or target sizing. Nested unknown
-propagation and the fixed nested truncation repair above remain open; no new
+internal policy supplies no backend default or target sizing. The fixed nested
+truncation repair above remains open; no new
 public semantic schema, MCP field, source grammar or HDL profile is admitted.
 
 The shared width walk now has a preparatory `source_reference_width` option.
@@ -805,9 +805,18 @@ helper roles, real mutable leaf metadata, completed-child refresh and hostile
 replacement/late-write controls; an isolated missing original-child check fails.
 T2258 exercises actual allocation before registration, named transport and
 fixed/mutable Parser and facade completion writes, with explicit size and
-independent-floor controls. Completed nested publication and target literal
-sizing remain open. No source grammar or public API/MCP schema is added;
-the fixed truncation repair still requires its target consumer.
+independent-floor controls. Completed publication now installs children before
+parents through `complete_core`: the complete current birth capsule projects
+only each ordered edge's phase and original child digest into completed form.
+Actual installed completed child capsules must match that whole projection.
+An independently current child with equal source or width cannot replace the
+original relationship, including when its record changes JSON scalar kind.
+Late raw writes and removed child policy withhold; original source, birth
+capsules and semantic revisions preserve. The final registry join follows all
+validation reads. The Core getter validates completed nested relationships.
+T2259 covers both completion paths, replacement/late-write controls and atomic
+partial-publication failure/reuse. Target literal sizing and the fixed truncation
+repair remain open. No source grammar or public API/MCP schema is added.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

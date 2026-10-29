@@ -73,7 +73,8 @@ sub _stage_source_literal_width_allocation($self, $signal) {
     push @$events, {signal_name => $signal->{name}, holder => $holder};
 }
 
-sub _source_literal_birth_children($self) {
+sub _source_literal_birth_children($self, $events = undef) {
+    $events //= $self->{_source_literal_width_allocation_capture} // [];
     return {phase => 'birth', lookup => sub {
         my ($reference) = @_;
         my $signal = $reference->signal;
@@ -81,7 +82,7 @@ sub _source_literal_birth_children($self) {
         return unless ref($registry) eq 'HASH'
             && refaddr($registry->{$signal->{name}} // {}) == refaddr($signal);
         my ($event) = grep {$_->{signal_name} eq $signal->{name}}
-            @{$self->{_source_literal_width_allocation_capture} // []};
+            @$events;
         return $event ? $event->{holder} : undef;
     }};
 }
@@ -305,12 +306,13 @@ sub _publish_intermediate_width_allocations($self, $events, $source_tree_events 
         next unless $self->_source_tree_allocation_registry_matches($signal);
         $signal->_publish_staged_source_bitwise_tree_width_allocation($event->{holder});
     }
+    my $children = $self->_source_literal_birth_children($source_literal_events // []);
     for my $event (@{$source_literal_events // []}) {
         my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
-        my $capture = $self->_source_literal_allocation_registry_matches($signal) or next;
+        my $capture = $self->_source_literal_allocation_registry_matches($signal, $children) or next;
         $signal->_publish_staged_source_literal_width_allocation($event->{holder}, sub {
             $self->_literal_registry_contains($capture->{objects});
-        });
+        }, $children);
     }
 }
 
@@ -1460,8 +1462,14 @@ current nonliteral binary/tree proofs retain their own selected maxima. Ordinary
 independent references and scalar-result wrappers retain their rules. Every fresh
 supported nested literal allocation has its own detached birth. Named transport
 validates all affected holders first, then refreshes children before parents.
-Raw complete-source and registry barriers still apply at every step. Completed
-nested publication remains separate; the direct completion path is unchanged.
+Raw complete-source and registry barriers still apply at every step. After normal
+Parser/facade validation, publication uses the original birth lookup and installs
+children before parents. C<complete_core> requires each actual completed child
+capsule to match its original birth's exact phase/digest projection. Independently
+current replacements, stale epochs, changed record kinds and missing policy
+withhold. Original birth capsules and semantic revisions preserve; the final raw
+registry join follows all validation reads. The Core getter revalidates nested
+completed relationships. Failure cleanup and reuse revoke partial/old policy.
 Other writes revoke; unsupported profiles receive no literal birth. Capture failure
 restores the prior journal scope, and ordinary uncaptured allocation preserves.
 

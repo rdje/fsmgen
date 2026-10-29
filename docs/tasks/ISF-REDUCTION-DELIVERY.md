@@ -2581,11 +2581,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=24 for expanded nested/direct transition/publication checks before the encoding fix; final directly affected Unicode transport/capture checks pass Files=2 Tests=12. Current source/test syntax, generated POD and complete book source-reference contracts pass. Normal final-index doctrine hook and staged acceptance gate commit; broad .6/compiler/runtime/corpus/publication verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Use current source reference contracts at actual allocation and completed nested publication.`
   Acceptance: `After .1/.2, resolve actual reference widths from current capture-local literal births before parent registration, then publish nested intent only after normal Parser/facade validation. An unresolved child keeps the real parent exact width unknown rather than licensing an old binary/tree max policy from placeholder1. Join actual current registry objects and child epochs, transport only exact named role/reference/metadata operations and revoke failed, copied, foreign, matching-write or independent constraints. Ordinary independent declared references retain their own exact floors; scalar wrappers remain scalar. No backend literal default, textual helper inference or equality provenance. Focused actual direct/nested one/wide fixed/mutable/explicit/failure/reuse controls, source conservation and synchronized POD/book/downstream docs before commit. All target floor/final agreement and full .6 work remain separate.`
-  Verification: `Pending actual source allocation/inference consumer after prepared contracts.`
-  Commit: `pending live nested unknown propagation`
+  Verification: `Children .1/.2 qualify actual capture-local nullable inference, fresh nested births, exact named transport and authenticated completed publication after Parser/facade validation. Focused actual source/failure/conservation controls pass; complete source closure .3.2.4 and target repair .1.2.3 remain separately open.`
+  Commit: `children .1/.2 actual source consumer commits`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.1`
@@ -2601,11 +2601,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=18 for T2258/T2252/T2254, with prior directly affected named-transport T2253 passing; final verbose T2258 passes Files=1 Tests=5. Source syntax, generated POD, complete book source/copy freshness and guarded book build pass. Mandatory staged/final-index doctrines gate commit; broad .6/HDL/publication qualification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish completed nested literal intent after normal Parser and facade validation.`
   Acceptance: `After .1, authenticate original current birth capsules and exact child publication relationships before converting birth edges to completed edges. Require actual registry objects, installed child policy, unchanged epochs and full raw source barriers; phase/record equality alone cannot license a replacement child. Getter validates completed nested intent; failed validation/partial publication/reuse revokes every policy. Focused direct/nested one/wide fixed/mutable/explicit/floor/scalar and hostile controls, source conservation and synchronized API/book/downstream docs. Commit before .3.2.4 complete source closure; target repair remains .1.2.3.`
-  Verification: `Pending source allocation prerequisite .1.`
-  Commit: `pending`
+  Verification: `Native T2259 RED shows actual Parser/facade completion exposing only the direct child and missing nested publication. complete_core now authenticates the current bounded birth capture and projects only ordered edge phases and recursively original child capsule digests. Actual installed completed-child capture must agree completely; no equal-width/text rebase. Builder joins original packet births and actual registry objects, installs child-first after normal validation, then Core final raw membership fences every source read. Getter revalidates completed nested intent. Actual fixed/mutable one/wide and explicit-size completion preserves raw caller/record kinds, independent floors, scalar results and semantic epochs. Independently current matching-replacement and changed-child-record-kind controls withhold parents; late source/policy removal and foreign registry controls reject. Actual direct Parser/facade partial-publication failure and invalid reuse revoke every completed level; fresh parse succeeds. Re-derive real birth/completed capsules and actual completion paths; falsify predecessor RED plus independently current replacement/late-write/failure controls; durability complete original/current sources, tests and raw logs in docs/audits/source-nested-literal-publication-20261029.json.gz. T2259/T2254 pass All tests successful Files=2 Tests=12; final expanded T2259 passes Files=1 Tests=5. Source syntax, current POD, native source/copied-build checks and guarded book build pass. Source closure .3.2.4 and target .1.2.3 remain open; no compiler/runtime/full .6/publication success. Normal final-index doctrines gate commit.`
+  Commit: `this actual completed nested publication slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Native T2259 at t/2259-source-nested-literal-publication.t line 60 reports absent parent policy, and actual Parser/facade completion finds only the direct child. The publication loop used direct-only capture; Core publication had no authenticated birth-to-completed child join.
+  - [x] **ADDRESSED (verified)** — complete_core projects original current birth capsules through only edge phase/digest changes and compares the complete actual installed-child capture. Current replacement epochs and changed child JSON record kinds cannot substitute. Builder publishes actual child-first packet relationships after validation with a final raw registry join; getter validates completed nested policy. Late writes/removal, foreign objects, actual partial failure and reuse controls pass while original raw source, independent floors and epochs preserve.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=12 for T2259/T2254; final T2259 with expanded distinguishing replacement/late-capture controls passes Files=1 Tests=5. Core/source syntax, generated POD, complete source/copied-book freshness and guarded book build pass. Mandatory final-index doctrines qualify commit; full .6/compiler/runtime/publication stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.4`
   Status: `pending`
