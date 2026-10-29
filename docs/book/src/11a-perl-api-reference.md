@@ -367,9 +367,60 @@ print join(' ', @{$capture->snapshot->{target_intermediates}{H}{source_tree_orig
 This prints `A B C`. Tree data is bounded before complete-event JSON cloning.
 Malformed, cyclic, over-bound, conflicting, missing, typed or width-inconsistent
 records invalidate the collector; a new transaction can start fresh. These checks
-validate data and numeric declarations. Actual typed AST/text/current-policy
-publication remains the next step, followed by frozen source/target proof and
-symbolic range consumption; schema validity establishes none of those claims.
+validate data and numeric declarations. Actual source assignment emission now
+publishes these fields separately through the recovery owner's optional
+`source_bitwise_tree_origin` and `source_bitwise_tree_width_allocation` methods.
+`SourceBitwiseTreeOriginSupport` walks typed Core/runtime/compatible references
+under the shared bounds, preserving association, mixed operators and every
+ordered occurrence. Cycles, slices, literals, state/logical/arithmetic shapes,
+unknown names and binary-only trees receive no new tree origin. It follows the
+held tree, without expanding other Signals' driving ASTs or interpreting names.
+Complete defining/runtime/cached trees must agree, and fresh rendering must equal
+the exact selected assignment text. A final tree check rejects cache changes
+during rendering. The optional policy additionally needs the installed width
+owner's current completed source attachment; its whole tree and plain/max
+contract are rechecked after selected reads. Matching late source writes, copied
+rows, independent floors and unsupported source constraints cannot borrow policy.
+Origin alone still supplies syntactic data without mutable width equivalence.
+For example, after the earlier complete-source parse, the selected record can be
+inspected through actual generation:
+
+```perl
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+use FSM::HDL::FlattenedDT;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
+my $text = '(?fsm:tree_target (+size (A 8) (B 8) (C 8) (DATA 1) (OTHER 1))'
+    . ' (idle (<(& A B C) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+my $module = FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$text));
+my $backend = FSM::HDL::FlattenedDT->new;
+my $capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+{
+    local $backend->{declared_width_declaration_capture} = $capture;
+    $backend->generate_systemverilog($module);
+}
+my @events = grep {exists($_->{source_tree_width_allocation})}
+    values %{$capture->snapshot->{target_intermediates}};
+die "missing selected tree policy\n" unless @events == 1;
+print join(' ', @{$events[0]{source_tree_origin}{source_names}}), "\n";
+```
+
+This prints `A B C`. Assignment text and declaration widths keep their current
+behavior; legacy providers without the optional methods retain their old event
+shape. Failure after actual event emission invalidates the capture, and fresh
+same-backend reuse recovers. Frozen source/complete selected-target proof and
+symbolic range consumption remain separate; selected metadata admits neither.
+
+The separately owned unsized-literal constraint gap remains: with `(W 8)`,
+`(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while
+SystemVerilog inference selects width 32. Final source/target agreement then
+refuses generation. This reproduces before the selected-tree publisher; it is
+tracked under `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1`, first in the following
+literal/type constraint lane. Explicitly sized literal cases preserve their
+independent widths and receive no source-tree origin. This gap remains a required
+repair; the new metadata does not qualify unsized-literal or symbolic range support.
+The retained diagnosis has source-matched before/after evidence. An unconditional
+staleness watcher for this open literal limitation remains owned by that repair.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

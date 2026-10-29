@@ -60,7 +60,10 @@ text.
 Captured binary events publish separate bitwise/arithmetic syntactic origins
 and query the corresponding optional current-policy publisher.
 Only agreeing completed source/factorizer allocation proof adds width_allocation;
-legacy injected recovery providers and unrelated events keep their old shape.
+separate optional source-tree methods add complete source_tree_origin and
+source_tree_width_allocation fields only for agreeing actual selected trees and
+current completed source policy. Legacy providers without these methods retain
+their event shape. These fields do not change assignment text or admit ranges.
 The separate optional graph publisher adds graph_width_allocation only for a
 current selected arithmetic graph with plain transitive source/result profiles.
 HDL text and symbolic range admission are unchanged.
@@ -99,12 +102,18 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
                     ? $recovery_support->arithmetic_width_allocation($signal_name, $signal_info, $expression) : undef;
             my $graph_allocation = !$allocation && $arithmetic && $recovery_support->can('arithmetic_graph_width_allocation')
                 ? $recovery_support->arithmetic_graph_width_allocation($signal_name, $signal_info, $expression) : undef;
+            my $source_tree = $recovery_support->can('source_bitwise_tree_origin')
+                ? $recovery_support->source_bitwise_tree_origin($signal_name, $signal_info, $expression) : undef;
+            my $source_tree_policy = $source_tree && $recovery_support->can('source_bitwise_tree_width_allocation')
+                ? $recovery_support->source_bitwise_tree_width_allocation($signal_name, $signal_info, $expression) : undef;
             $capture->record_intermediate_assignment($signal_name,
                 {expression => $expression, ($origin ? (reduction_origin => $origin) : ()),
                     ($bitwise ? (bitwise_origin => $bitwise) : ()),
                     ($arithmetic ? (arithmetic_origin => $arithmetic) : ()),
                     ($allocation ? (width_allocation => $allocation) : ()),
-                    ($graph_allocation ? (graph_width_allocation => $graph_allocation) : ())});
+                    ($graph_allocation ? (graph_width_allocation => $graph_allocation) : ()),
+                    ($source_tree ? (source_tree_origin => $source_tree) : ()),
+                    ($source_tree_policy ? (source_tree_width_allocation => $source_tree_policy) : ())});
         }
         fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3)
             if $trace_signal_detail;

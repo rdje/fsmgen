@@ -21,8 +21,12 @@ preserve. Selected target/frozen/range joins remain separate. No closure census.
 DeclarationCapture now imports SourceBitwiseTreePolicySupport for a separate
 optional selected tree origin/allocation data family, reusing exact shared tree
 bounds and ordered slots. It validates full origin/policy tree agreement and
-actual declared membership/plain numeric maxima. Default publishers remain
-unchanged; actual typed AST/text/current-policy publication is the next join.
+actual declared membership/plain numeric maxima. RecoverySupport now imports
+SourceBitwiseTreeOriginSupport for bounded typed Core/runtime/compatible shape
+recognition, full cached-tree agreement and fresh selected text. Actual assignment
+emission queries its separate optional source origin/current completed policy
+methods and records the two separate fields. Final origin/policy reads reject
+late changes; legacy providers retain their shape. No declaration/range change.
 
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports

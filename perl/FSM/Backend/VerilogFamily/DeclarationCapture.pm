@@ -380,7 +380,9 @@ are bounded before complete-event JSON cloning. Malformed, over-bound, conflicti
 missing, typed or width-inconsistent data invalidates the transaction; input/output
 records detach with scalar kinds kept. This collector validates data and actual
 numeric declarations, not source provenance, typed AST/text agreement or frozen
-width equivalence. Default source-tree event publication remains a separate step.
+width equivalence. The default source-tree publisher now requires actual typed
+tree/cache/fresh-text agreement and current completed backend attachment before
+adding policy. Frozen source/selected-target range proof remains separate.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

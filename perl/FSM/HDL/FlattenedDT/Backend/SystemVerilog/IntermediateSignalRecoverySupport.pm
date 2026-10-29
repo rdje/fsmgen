@@ -48,6 +48,8 @@ use Scalar::Util qw(blessed);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
+use FSM::SourceBitwiseTreeOriginSupport;
+use FSM::SourceBitwiseTreePolicySupport;
 
 =head2 new
 
@@ -328,6 +330,73 @@ sub _binary_origin ($self, $signal_name, $signal_info, $expression, $recognize) 
     my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($runtime);
     return unless defined($rendered) && $rendered eq $expression;
     return $origin;
+}
+
+sub _selected_source_tree_shape ($self, $signal_name, $signal_info) {
+    return unless ref($signal_info) eq 'HASH' && defined($signal_info->{source})
+        && !ref($signal_info->{source}) && $signal_info->{source} eq 'fsmgen_parsing';
+    my $runtime = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+    my $defining = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+    my $origin = FSM::SourceBitwiseTreeOriginSupport->from_ast($runtime) or return;
+    return if grep {$_ eq $signal_name} @{$origin->{source_names}};
+    my $json = JSON::PP->new->canonical;
+    for my $node ($defining, map {$signal_info->{$_}} grep {exists($signal_info->{$_})} qw(ast defining_ast driving_ast)) {
+        my $other = FSM::SourceBitwiseTreeOriginSupport->from_ast($node) or return;
+        return unless $json->encode($other) eq $json->encode($origin);
+    }
+    return {runtime => $runtime, origin => $origin};
+}
+
+=head2 source_bitwise_tree_origin
+
+Return a detached source-tree syntactic origin for C<fsmgen_parsing> metadata
+only when complete typed defining/runtime/cached trees agree and fresh rendering
+matches the selected assignment text. Shared bounded recognition preserves every
+operator, association and ordered leaf slot. Source widths establish no shape.
+Recheck all selected trees after rendering; changed caches, slices, literals,
+state/logical/arithmetic shapes and foreign families withhold. This supplies no
+source allocation, plain-type or frozen width proof.
+
+=cut
+
+sub source_bitwise_tree_origin ($self, $signal_name, $signal_info, $expression) {
+    return unless defined($signal_name) && !ref($signal_name)
+        && defined($expression) && !ref($expression);
+    my $shape = $self->_selected_source_tree_shape($signal_name, $signal_info) or return;
+    my $rendered = $self->{flattened_dt}{enable_graph_ast_support}->ast_to_systemverilog($shape->{runtime});
+    return unless defined($rendered) && !ref($rendered) && $rendered eq $expression;
+    my $after = $self->_selected_source_tree_shape($signal_name, $signal_info) or return;
+    return unless JSON::PP->new->canonical->encode($shape->{origin})
+        eq JSON::PP->new->canonical->encode($after->{origin});
+    return $after->{origin};
+}
+
+=head2 source_bitwise_tree_width_allocation
+
+Return separate current tree policy only from the installed width owner's
+completed actual source attachment. Its complete original tree/operator/ordered
+slots must match the fresh selected origin. That owner validates root/all-source
+membership, plain profiles and exact maximum. Recheck selected AST/text and current
+policy after every read; copied/stale/constrained or late-mutated inputs withhold.
+The binary/arithmetic publishers retain their closed profiles. Selected metadata
+alone establishes no frozen relationship or symbolic range eligibility.
+
+=cut
+
+sub source_bitwise_tree_width_allocation ($self, $signal_name, $signal_info, $expression) {
+    my $origin = $self->source_bitwise_tree_origin($signal_name, $signal_info, $expression) or return;
+    my $owner = $self->{flattened_dt}{backend_sv_intermediate_width_support};
+    return unless $owner && $owner->can('source_bitwise_tree_width_allocation');
+    my $policy = $owner->source_bitwise_tree_width_allocation($signal_name, $signal_info) or return;
+    $policy = FSM::SourceBitwiseTreePolicySupport->copy_record($policy);
+    return unless FSM::SourceBitwiseTreePolicySupport->matches_origin($policy, $origin);
+    # The completed owner checks actual root/all-leaf membership, plain profiles
+    # and exact maximum. Recheck after every selected AST/text read.
+    my $after = $self->source_bitwise_tree_origin($signal_name, $signal_info, $expression) or return;
+    return unless FSM::SourceBitwiseTreePolicySupport->matches_origin($policy, $after);
+    my $current = $owner->source_bitwise_tree_width_allocation($signal_name, $signal_info) or return;
+    return unless JSON::PP->new->canonical->encode($current) eq JSON::PP->new->canonical->encode($policy);
+    return $current;
 }
 
 =head2 binary_width_allocation
