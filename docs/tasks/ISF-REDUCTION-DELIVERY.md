@@ -2360,10 +2360,26 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=15 for T2246, recursive source intent T2245 and adjacent arithmetic target T2230. Exact joined manual output and current POD/book/source freshness pass. Existing source and HDL emission paths are unchanged; normal staged doctrines gate this private proof. Live emission, external overrides/runtime, VHDL and full .6/publication qualification remain pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Consume proved source-tree ranges with independent final closure.`
   Acceptance: `After .4, consume separate source declaration intent in actual one-pass declarations, retain a distinct per-generation ledger and expose symbolic vector rank to existing whole-value guard logic. Independently re-prove every selected source-tree target and compare all emitted fields before returning HDL. Missing/changed source/target/ledger state must return no artifact/snapshot and fresh reuse recover. Preserve fixed/legacy widths, scalar NOT/reduction results and existing arithmetic/binary ledgers; unproved mutable relationships require precise supported boundaries, never equal-default borrowing. Runnable SV/Verilog examples, focused failure/rank controls and synced docs precede commit.`
-  Verification: `pending prerequisite source-holder slice`
+  Verification: `Public native --strict generation of (& A B (| (| A B C) C)) at W1 refuses with Direct binary width relationship requires identical mutable operand contracts. The existing binary declaration path sees the source-generated child as a numeric width instead of recursively proving its original leaves. The complete source-tree kernel can traverse that child only beneath a tree root; live declarations also need its separate binary-root intent/target proof. This demonstrated required source-family prerequisite is split into .1 before atomic live emission/final closure .2. Exact source, native failure and relevant owner loci retain in docs/audits/source-tree-emission-prerequisite-20261029.json.gz. No emission repair or new qualification is claimed.`
+  Commit: `this safe live-emission prerequisite decomposition`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5.1`
+  Status: `pending`
+  Goal: `Prove computed source binary helper roots without changing old binary contracts.`
+  Acceptance: `Add separate private source intent and complete-target entrypoints for an actual current source binary helper containing a typed source-helper edge. Reuse the existing bounded recursive tree/source/target kernels and canonical original-leaf relationships; preserve root binary policy/origin fields and expanded operators/ordered leaves. Existing tree-only entrypoints and old binary arithmetic/bitwise APIs stay closed. Direct two-original binary roots retain old ownership. Current child/target/raw fences and weak lifetime guarantees apply. Focused actual nested binary-root positives and independent event/currentness controls, POD/manual/card sync and normal gates; no live range emission.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5.2`
+  Status: `pending`
+  Goal: `Consume proved tree and computed source binary ranges with atomic final closure.`
+  Acceptance: `After .1, consume separate source declaration intent in actual one-pass declarations; maintain a distinct per-generation source-tree ledger for tree and computed source binary roots, expose symbolic vector rank to whole-value guard logic and independently re-prove every selected target before returning HDL. Determine final expected coverage from current actual source/selected event provenance, never ledger membership alone. Missing/changed source/target/ledger state returns no artifact/snapshot and same-backend fresh reuse recovers. Preserve fixed/legacy widths, old binary/arithmetic ledgers and scalar NOT/reduction results. Focused actual SV/Verilog range/guard/closure controls plus runnable manual and downstream contract sync; full .6 remains deferred.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.6`
