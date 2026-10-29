@@ -435,7 +435,13 @@ my $text = '(?fsm:tree_leaves (+params (W 1))'
 my $module = FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$text));
 my $backend = FSM::HDL::FlattenedDT->new;
 my $capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+my $collect = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport
+    ->can('collect_consolidated_intermediate_signals');
+my $rows;
 {
+    no warnings 'redefine';
+    local *FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport::collect_consolidated_intermediate_signals
+        = sub {$rows = $collect->(@_); return $rows};
     local $backend->{declared_width_declaration_capture} = $capture;
     $backend->generate_systemverilog($module);
 }
@@ -451,8 +457,41 @@ This prints `symbolic A B C`. The detached representative retains vector rank
 at the selected default of one. Changing only C to `(param COPY)`, with COPY
 aliasing W, refuses because its original relationship differs. This private
 method emits no range and attests neither current source-helper edges nor
-complete selected targets. Those joins and live consumption remain pending;
-VHDL and public API/MCP/corpus support are unchanged.
+complete selected targets. Actual source intent over original module leaves now has a separate private
+preparation step. Recursive helpers, complete selected targets and live range
+consumption remain pending; VHDL and public API/MCP/corpus support are unchanged.
+
+
+The example deliberately retains the actual collected row map in `$rows`. With
+that caller-owned view still alive, prepare current source declaration intent:
+
+```perl
+my ($name) = grep {exists($capture->snapshot->{target_intermediates}{$_}{source_tree_width_allocation})}
+    sort keys %$rows;
+my $expression = $backend->{backend_sv_intermediate_recovery_support}
+    ->render_intermediate_signal_expression($name, $rows->{$name});
+my $intent = FSM::DirectDeclaredWidthSupport->prepare_source_tree_declaration(
+    flattened_dt => $backend, signal_name => $name, signal_info => $rows->{$name},
+    target_language => 'systemverilog', expression => $expression);
+print $intent->{allocation_role}, ' ', join(' ', @{$intent->{leaf_names}}), "\n";
+```
+
+This prints `source_intermediate A B C`. The source-only root binds installed
+completed allocation, exact selected typed tree/text, current row identity,
+original-leaf contracts and independent selected maxima. Complete source-width
+snapshots and selected policy are checked again after preparation, so an
+unrelated source constraint or late matching write cannot hide behind unchanged
+range text. Arithmetic graph intent uses the same source snapshot logic.
+Returned plans retain no caller map or objects; copied rows, displaced owners,
+expired row views and independent source/result constraints refuse.
+
+This step accepts original module leaves. A generated helper leaf such as the
+inner `(| A B C)` in `(& A B (| A B C))` retains an explicit pending recursive
+proof boundary. Source intent supplies no completed-target membership or child
+inventory and does not activate symbolic helper declarations. Keep the actual
+prepared block alive through proof; a saved plain plan cannot revive expired
+current ownership. Recursive source edges and independent final target proof
+remain required before live range consumption.
 
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while

@@ -17,6 +17,44 @@ use FSM::SourceBitwiseTreePolicySupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
+sub _source_identity {return ref($_[0]) ? sprintf('%x', refaddr($_[0])) : undef}
+sub _source_state_fail {confess "Direct source width snapshot $_[0]\n"}
+sub _source_signal_state {
+    my ($signal) = @_;
+    _source_state_fail('requires actual Core source Signals')
+        unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+    return {identity => _source_identity($signal), map {$_ => scalar($signal->$_())}
+        qw(name width type signed state_model declared_type_name declared_type_spec constraints
+            declared_width_source declared_width_binding declared_width_requirements
+            _intermediate_width_allocation_revision)};
+}
+sub _capture_source_state ($class, $ctx) {
+    my $module = $ctx->{fsm_module};
+    my $analysis = $ctx->{assignment_analysis};
+    _source_state_fail('requires complete normalized assignment analysis') unless ref($analysis) eq 'HASH';
+    my (%signals, %assignments);
+    $signals{$_} = _source_signal_state($module->signals->{$_}) for sort keys %{$module->signals};
+    for my $name (sort keys %$analysis) {
+        my $entry = $analysis->{$name};
+        my $lhs = ref($entry) eq 'HASH' ? $entry->{lhs_ast} : undef;
+        _source_state_fail('requires normalized assignment LHS objects') unless blessed($lhs);
+        my $row = {lhs_identity => _source_identity($lhs), lhs_class => ref($lhs), name => scalar($lhs->name)};
+        if (UNIVERSAL::isa($lhs, 'FSM::CoreAST::SignalRef')) {
+            $row->{signal} = _source_signal_state($lhs->signal);
+        } else {
+            $row->{state_next} = $lhs->can('is_fsm_state_next') ? scalar($lhs->is_fsm_state_next) : undef;
+            $row->{assignments} = [map {
+                my $assignment = $_;
+                {map {$_ => $assignment->{$_}} qw(is_state_trans assignment_intent source_provenance operator rhs)}
+            } @{$entry->{assignments} // []}];
+        }
+        $assignments{$name} = $row;
+    }
+    return JSON::PP->new->canonical->encode({module_identity => _source_identity($module), name => $module->name,
+        parameters => $module->parameters, sources => $module->parameter_default_sources,
+        bindings => $module->parameter_default_bindings, signals => \%signals, assignments => \%assignments});
+}
+
 sub prepare_module ($class, %args) {
     my $module = $args{fsm_module};
     confess "Direct module width preparation requires a Core module\n"
@@ -300,6 +338,11 @@ sub prepare_arithmetic_graph_declaration ($class, %args) {
     return FSM::DirectArithmeticGraphRangeSupport->prepare_declaration(%args);
 }
 
+sub prepare_source_tree_declaration ($class, %args) {
+    require FSM::DirectSourceBitwiseTreeRangeSupport;
+    return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_declaration(%args);
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -563,6 +606,24 @@ complete graph range plan except the transitive C<nodes>/C<node_order> inventory
 It attests no target membership or emitted range and does not fabricate events.
 The actual declaration backend consumes this intent and final assembly compares
 every root field with the independently completed target proof.
+
+C<prepare_source_tree_declaration> delegates separate source-only root intent to
+C<FSM::DirectSourceBitwiseTreeRangeSupport>. It requires the actual backend
+context/current collected source row, Verilog-family language and freshly
+selected C<expression>. Current completed source-tree allocation and full typed
+origin/text must agree. Every ordered original module leaf must satisfy the
+canonical frozen relationship and exact selected maximum. Default-one symbolic
+rank and independent fixed widths preserve. Generated source-helper leaves
+currently refuse pending their separately owned recursive proof.
+
+The detached root fields retain source policy/origin/expression, original tree
+and duplicate leaves, selected width, source allocation role and representative
+range. Complete source snapshots, canonical relationships, selected currentness,
+installed owners and weak caller row membership recheck at return. The snapshot
+implementation is shared here with arithmetic graph preparation; an unchanged
+range plan cannot hide unrelated source-width constraint changes. The operation
+attests no target membership, emits no HDL and broadens no VHDL profile. Recursive
+source intent, complete selected-target proof and live range use remain separate.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

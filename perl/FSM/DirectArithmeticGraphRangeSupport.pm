@@ -5,50 +5,16 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use JSON::PP ();
-use Scalar::Util qw(blessed refaddr weaken);
+use Scalar::Util qw(blessed weaken);
 use FSM::DirectDeclaredWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _json {return JSON::PP->new->canonical}
-sub _id {return ref($_[0]) ? sprintf('%x', refaddr($_[0])) : undef}
 sub _fail {confess "Direct arithmetic graph range $_[0]\n"}
-sub _signal_state {
-    my ($signal) = @_;
-    _fail('requires actual Core source Signals')
-        unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
-    return {identity => _id($signal), map {$_ => scalar($signal->$_())}
-        qw(name width type signed state_model declared_type_name declared_type_spec constraints
-            declared_width_source declared_width_binding declared_width_requirements
-            _intermediate_width_allocation_revision)};
-}
 sub _source_state {
-    my ($ctx) = @_;
-    my $module = $ctx->{fsm_module};
-    my $analysis = $ctx->{assignment_analysis};
-    _fail('requires complete normalized assignment analysis') unless ref($analysis) eq 'HASH';
-    my (%signals, %assignments);
-    $signals{$_} = _signal_state($module->signals->{$_}) for sort keys %{$module->signals};
-    for my $name (sort keys %$analysis) {
-        my $entry = $analysis->{$name};
-        my $lhs = ref($entry) eq 'HASH' ? $entry->{lhs_ast} : undef;
-        _fail('requires normalized assignment LHS objects') unless blessed($lhs);
-        my $row = {lhs_identity => _id($lhs), lhs_class => ref($lhs), name => scalar($lhs->name)};
-        if (UNIVERSAL::isa($lhs, 'FSM::CoreAST::SignalRef')) {
-            $row->{signal} = _signal_state($lhs->signal);
-        } else {
-            $row->{state_next} = $lhs->can('is_fsm_state_next') ? scalar($lhs->is_fsm_state_next) : undef;
-            $row->{assignments} = [map {
-                my $assignment = $_;
-                {map {$_ => $assignment->{$_}} qw(is_state_trans assignment_intent source_provenance operator rhs)}
-            } @{$entry->{assignments} // []}];
-        }
-        $assignments{$name} = $row;
-    }
-    return _json()->encode({module_identity => _id($module), name => $module->name,
-        parameters => $module->parameters, sources => $module->parameter_default_sources,
-        bindings => $module->parameter_default_bindings, signals => \%signals, assignments => \%assignments});
+    return FSM::DirectDeclaredWidthSupport->_capture_source_state($_[0]);
 }
 sub _plain_declaration {
     my ($state, $name) = @_;

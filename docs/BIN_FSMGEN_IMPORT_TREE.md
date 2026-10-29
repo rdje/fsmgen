@@ -28,6 +28,19 @@ emission queries its separate optional source origin/current completed policy
 methods and records the two separate fields. Final origin/policy reads reject
 late changes; legacy providers retain their shape. No declaration/range change.
 
+DirectDeclaredWidthSupport imports the separate source-tree schema for frozen
+original-leaf relationship selection and lazily loads
+`FSM::DirectSourceBitwiseTreeRangeSupport` for actual source-only declaration
+intent over original module leaves. Installed completed source policy, selected
+typed origin/text, weak current collected rows, frozen leaf contracts and exact
+selected maxima must agree. The canonical direct-width owner now supplies the
+complete source snapshot shared with DirectArithmeticGraphRangeSupport; graph
+source/target behavior is unchanged. Late source/row/owner changes refuse and
+returned root plans retain no caller map. Recursive source helpers, independent
+complete target proof and live source-tree ranges remain pending; no VHDL or
+public-report profile expands. This is a scoped dependency update, not a new
+whole-entrypoint closure census.
+
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports
 `FSM::IntermediateWidthGraphInferenceSupport`. Those helpers and

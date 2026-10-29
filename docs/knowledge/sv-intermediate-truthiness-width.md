@@ -23,7 +23,7 @@ status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
   perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-event-publisher-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/223[6789]*.t t/224[0123]*.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/223[6789]*.t t/224[01234]*.t
 ---
 
 Original cards/proofs: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
@@ -43,5 +43,5 @@ T2196: bare &/| grouped on either comparison side; literals/callers/typed native
 
 Arithmetic stays inline in Parser; whole/computed factorizer births, canonical leaves and final target/ledger proof emit generic ranges (direct-declared-width-consumers). Comparisons/! scalar; opaque constraints block policy.
 SourceBitwiseTreePolicySupport bounds closed ordered tree/origin/max data. Explicit Core root/tree/all-leaf intent uses detached weak lifetime IDs/max/revisions; matching writes revoke; final capture rejects late writes.
-Parser source_tree_events stage fresh trees; exact reference/role/metadata refresh only. Parser/facade/backend and selected targets bind current policy; binary events keep two slots; negated n-ary wraps the same base helper in scalar logical !. DirectDeclaredWidthSupport: frozen leaf relationships from tree selectors (T2243); actual source/target joins, ranges/full .6 pending.
+Parser source_tree_events stage fresh trees; exact reference/role/metadata refresh only. Parser/facade/backend and selected targets bind current policy; binary events keep two slots; negated n-ary wraps the same base helper in scalar logical !. DirectDeclaredWidthSupport: frozen leaves T2243, current original-leaf intent T2244; recursion/target/ranges/full .6 pending.
 Unsized literal3: Core placeholder1 vs SV32 width check refuses; repair ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.
