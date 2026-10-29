@@ -21,8 +21,8 @@ evidence: >-
   t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
-  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
+  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t; docs/audits/literal-target-consumers-20261030/verify.py
+reverify: python3 -B docs/audits/literal-target-consumers-20261030/verify.py --current --qualify; scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -40,16 +40,14 @@ ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2. Actual mutable literal sources retain 
 final source/target disagreement; fixed sources currently generate without that
 same final check. Full qualification remains .6.
 
-Revision-bound ownership diagnosis at the preparation commit: an unknown literal
-helper retains nominal Core width. A nested parent reads that width as exact and
-can emit a narrow destination that discards the literal high bit. Strict CLI and
-debug trace reproduce the ordinary fixed artifact. Injected declaration capture
-instead refuses; preserve those separate conditions. Source birth/unknown
-propagation .1.2.2 and target/final agreement .1.2.3 own the immediate P1 repair.
-The adjacent audit verify.py --current --qualify authenticates producer bytes,
-source/target products and independent mask algebra while rejecting hostile
-saved variants. It is manual, revision-bound diagnosis, not an unconditional
-current-state watcher or external HDL runtime proof.
+Preparation-bound ownership diagnosis: nominal child widths could become exact
+and discard an unsized high bit. Ordinary fixed CLI generated; injected capture
+refused. The original audit verify.py --current --qualify authenticates producers,
+source/target products and independent mask algebra, rejecting hostile variants.
+It is a manual historical check, without an unconditional watcher or HDL runtime.
+Source propagation is now closed. The source-qualified target capture below still
+finds a nominal Core child read before its backend row, plus mutable final refusal.
+Target/final agreement .1.2.3 remains the required successor.
 
 SourceLiteralWidthAllocationSupport now validates detached direct bitwise literal
 allocation holders with nullable exact width and raw literal value/radix/size.

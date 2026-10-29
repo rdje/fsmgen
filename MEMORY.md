@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3`
-- next_action: Split target literal-width inference, independent generic floors and fixed/mutable final declaration joins into bounded consumers using the qualified actual source allocation contract.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.2`
+- next_action: Implement the bounded target-only completed source literal-width observation, preserving actual typed children, raw kinds and independent literal/leaf floors before live numeric and generic/final consumers.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.

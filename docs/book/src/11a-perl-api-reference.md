@@ -667,8 +667,15 @@ unsized literal's high bit in a narrower parent helper. The retained strict CLI
 reproduction and source-width diagnosis are authenticated by
 `docs/audits/literal-width-ownership-20261029/verify.py`. Ordinary generation and
 injected declaration capture have different outcomes; the latter can refuse the
-source. Source allocation and nested unknown-width propagation are the immediate
-repair prerequisites. External HDL execution has not qualified this diagnosis.
+source. Source allocation and nested unknown-width propagation now have focused
+qualification; target inference and final declaration agreement remain open.
+The later source-qualified capture at
+`docs/audits/literal-target-consumers-20261030/verify.py --qualify` preserves the
+strict CLI/trace, explicit-size control and independent mask algebra. Its current
+parent route reads a generated child's nominal Core width before resolving that
+child's backend row. Source intent alone does not repair that target ordering.
+The saved reader starts no compiler or HDL execution; its optional `--current`
+checks only the named producer identities, not complete current behavior.
 
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.

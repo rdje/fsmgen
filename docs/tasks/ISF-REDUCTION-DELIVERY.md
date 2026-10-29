@@ -2632,11 +2632,54 @@ do not start broad suites between implementation slices.
   Commit: `with nested source closure .3.2.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join current source literal allocation to target-owned inference, generic floors and final declaration proof.`
   Acceptance: `After .2, use the shared Core width walk and an explicit backend literal sizing contract with current actual source ownership. Derive independent literal floors and original mutable leaf relationships, including nested source helpers and default-one rank, before emitting ranges. Fixed and mutable final source/target agreement must consume the same qualified contract; missing/stale/unknown/independently constrained profiles refuse atomically. Retain full selected declaration/expression/ledger/currentness proof and caller kinds, with no equal-default ancestry or target-specific Core sizing. Split source-only/target-only/live consumers before editing. Focused distinguishing native checks and POD/book sync per slice; full external/corpus/override/runtime .6 remains deferred.`
   Verification: `Pending actual source intent. Ordinary fixed nested literal guard emits a wide inner helper with a narrow parent and loses a high bit under independent source/mask algebra. Strict public CLI and debug trace reproduce; injected capture instead refuses, so its behavior cannot stand in for ordinary native qualification. This immediate successor owns target inference/floors and final fixed/mutable agreement after .2.`
   Commit: `pending target literal floor and declaration consumers`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.1`
+  Status: `done`
+  Goal: `Select actual target literal-width consumers and retain fresh source-qualified native behavior.`
+  Acceptance: `Use the now-qualified source intent to identify exact backend numeric inference, independent literal floors and final declaration checks through public CLI/current source contracts. Retain fresh fixed/mutable native products without compiler/runtime execution; select bounded target-only and live consumers before implementation. Preserve raw source/literal/parameter kinds and distinguish historical from current outcomes. Commit the recoverable contract and next concrete consumer.`
+  Verification: `Fresh source-qualified strict CLI at 5ca8c3512 still emits nested fixed inner32/parent8; source products independently prove both Core helpers retain width1 and current nullable literal intent. Current trace now resolves the parent via defining_ast, rather than the earlier native_signal_metadata route. Exact consumer is resolve_ast_signal_ref_width: it returns the generated Core child selected width before generated-row resolution; parent max with C8 therefore remains8. Explicit size9 control emits both helpers9 and conserves the high bit under independent mask algebra. Mutable direct still refuses final observed source width/signedness agreement. Preserve actual source/caller/parameter kinds, exact CLI inputs/products/logs/trace, selected source identities and replay commands in docs/audits/literal-target-consumers-20261030/receipt.json.gz. Saved reader --current --qualify authenticates selected identities, source/target products, independent algebra and rejects Boolean-width, widened-parent and narrowed-explicit controls without starting captures or HDL. Complete original card prose is retained before consolidating its superseded preparation diagnosis; budgets remain unchanged. Re-derive actual source probe/public CLI; falsify explicit floor plus independent source/mask and hostile saved controls; durability committed reader/receipt/selected producer bytes. This is finite manual diagnosis, not an unconditional current watcher or compiler/runtime qualification. Select target-only SourceLiteralWidthSupport observation .2, live numeric/core-reference resolution .3, independent generic floors/final declaration/ledger .4 and focused closure .5. All target feature repairs remain open. Perl probe syntax OK, native book source/copied-build checks and guarded book build pass; First staged acceptance and hook reject the syntax token embedded before more prose: the declared signature requires the actual output at line end. Retain that rejection and place the observed Perl output on its own indented evidence line; no gate or source behavior changes. Normal final-index doctrines gate commit. Decision0116 selects a clean context checkpoint before the new target observation/owner integration; exact next .1.2.3.2 preserves required-delivery priority.`
+  Commit: `this source-qualified target consumer selection`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Fresh strict public --trace-log shows parent8 via defining_ast and child32 via defining_ast after source-qualified Core allocation now preserves nullable widths. IntermediateSignalWidthSupport::resolve_ast_signal_ref_width returns the generated Core child's nominal width before its actual backend row; DirectDeclaredWidthSupport::prepare_declarations separately refuses mutable source/target disagreement.
+  - [x] **ADDRESSED (verified)** — Retain exact fresh inputs/source products/CLI artifacts/trace and actual consumer selection, distinguishing the old native-metadata route from the current Core-reference route. Explicit size9 preserves the high bit; independent literal/mask algebra and hostile saved Boolean/widened/narrowed controls qualify the diagnosis. Split target-only preparation, actual numeric reference consumers, generic floors/final proof and closure before code. No target behavior repair is claimed.
+  - [x] **NO REGRESSION** — The observed Perl syntax result appears verbatim below; actual strict fixed and explicit CLI succeed, mutable CLI retains its precise existing refusal, and saved reader/current selected identity/hostile controls pass. Current POD, complete native source/copied-book checks and guarded book build pass. Mandatory final-index doctrines qualify commit; full CI/compiler/runtime/publication stays deferred.
+    .artifacts/source-nested-literal-target/source-probe.pl syntax OK
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.2`
+  Status: `pending`
+  Goal: `Prepare target-owned literal widths over current actual completed Core source intent.`
+  Acceptance: `After .1, use the shared bounded Core width walk with the explicit existing target literal sizing rule. Select target-only perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm: prepare a detached observation from the actual completed Core capsule, use one globally bounded child capture and shared Core inference with explicit child resolutions, retain literal and independent leaf contributions separately. This preparation supplies no backend row/epoch/branch attestation or range eligibility. Bind actual current completed source and typed reference relationships, preserve independent explicit/declared floors and scalar wrappers, and withhold stale/missing/foreign/unsupported shapes. No Core backend default or textual/equal-default provenance. Focused native raw source and hostile controls, POD/book, commit before live numeric use.`
+  Verification: `Pending target consumer after source-qualified closure at 5ca8c3512.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.3`
+  Status: `pending`
+  Goal: `Install actual target numeric inference for source literal helpers.`
+  Acceptance: `After .2, consume the qualified source/target observation before selecting native compatibility metadata; retain exact rows/epochs/registry/source ownership and original independent constraints. Fixed nested helpers cannot inherit narrow placeholder widths. Reconcile fixed/mutable preparation without bypassing final declaration or generic-floor obligations; focused source/target/caller controls and synchronized book before commit.`
+  Verification: `Pending target consumer after source-qualified closure at 5ca8c3512.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4`
+  Status: `pending`
+  Goal: `Preserve independent literal floors in generic helper ranges and final declarations.`
+  Acceptance: `After .2/.3, derive generic maxima from original mutable source leaf contracts plus independent fixed/explicit/target literal floors. Bind actual selected target declarations and emitted expressions through complete ledger/currentness/final source-target agreement for fixed and mutable routes, preserving default-one rank. Missing/stale/unproved relationships refuse atomically. Split further concrete consumers if necessary before code; focused differentiating checks, POD/book/downstream sync and commit.`
+  Verification: `Pending target consumer after source-qualified closure at 5ca8c3512.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.5`
+  Status: `pending`
+  Goal: `Close target literal repair with focused original and nested source/target agreement.`
+  Acceptance: `After .2-.4, exercise original direct and nested fixed/mutable one/wide cases plus explicit/independent/scalar/unknown/refusal boundaries. Conserve original source/parameter/literal kinds and compare actual final HDL declaration/expression meaning with independent literal algebra. Reconcile book limitation and owned claim durability gaps without implying compiler/runtime/full .6/publication. Commit before original bounded repair closure .1.2.4.`
+  Verification: `Pending target consumer after source-qualified closure at 5ca8c3512.`
+  Commit: `pending`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.4`
   Status: `pending`
