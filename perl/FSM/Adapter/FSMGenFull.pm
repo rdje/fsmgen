@@ -71,7 +71,7 @@ sub parse_fsm($self, $raw_ast) {
             $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
             return $fsm_module;
         });
-        $self->{expression_builder}->_publish_intermediate_width_allocations($packet->{events});
+        $self->{expression_builder}->_publish_intermediate_width_allocations($packet->{events}, $packet->{source_tree_events});
         1;
     };
     my $error = $@;
@@ -161,8 +161,9 @@ other-origin requirements remain; only same-source attested opaque inference
 may be replaced. Ordinary unscoped calls and return contexts stay unchanged.
 Symbolic HDL ranges and combined shapes remain separate compiler work.
 
-Eligible fresh binary bitwise helpers also publish private intrinsic-max allocation
-contracts from the actual builder birth journal. Known reference, final width
+Eligible fresh binary and source n-ary bitwise helpers publish separate private
+intrinsic-max allocation contracts from their actual builder birth journals.
+Known reference, final width
 publication and classifier operations refresh only events current before and
 coherent after the exact write. Direct Parser success publishes at its existing
 registry/AST boundary; this facade defers through role and interface completion.

@@ -6,12 +6,14 @@ CoreAST now imports `FSM::SourceBitwiseTreeWidthSupport` for separate explicit
 current source bitwise tree intent. It uses the closed source-tree data schema,
 existing exact-width descriptors and walk bounds, and Perl core FieldHash weak
 lifetime keys with scalar identities. Actual root/tree/all leaf state and tracked
-revisions bind the detached capsule; ordinary lookup installs nothing. Parser
-publication, completed backend attachment and live range consumption remain
+revisions bind the detached capsule; ordinary lookup installs nothing. Completed
+backend attachment and live range consumption remain
 separate. ExpressionBuilder now imports that adapter explicitly for a distinct
 optional source-tree birth journal and exact current registry/transition checks.
-Its old binary bucket and uncaptured writes preserve; the new staged tree bucket
-does not yet publish Core policy. This adds no transitive closure census.
+Its old binary bucket and uncaptured writes preserve. Direct Parser success now
+publishes both families; the facade defers through role/interface completion.
+Publication adds no semantic revision and failures clear partial policy. Backend
+attachment and target/range joins remain separate. This adds no closure census.
 
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports

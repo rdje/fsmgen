@@ -2188,7 +2188,7 @@ do not start broad suites between implementation slices.
   Status: `active`
   Goal: `Capture current source-owned bitwise tree allocation without changing HDL.`
   Acceptance: `Split closed tree/Core eligibility, actual Parser/facade birth publication and completed backend attachment. Keep old binary APIs, two-slot records and existing journal events exact; use a distinct optional source-tree family. Plain unsigned whole leaves, typed operators/order/duplicates, exact max and complete source/result constraints are required. No provenance from selected width or printed text.`
-  Verification: `pending prerequisite source-holder slice`
+  Verification: `Pure schema, current Core holder and actual staged/completed source publication qualify in child slices. Completed actual backend attachment remains the next producer join.`
   Commit: `pending`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
 
@@ -2223,10 +2223,10 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3, Tests=13 for new T2237 and directly affected existing T2198/T2199. Existing binary record schema and producer implementations are unchanged; common clear additionally invalidates the new family. Book/source/claim checks and normal mandatory hook precede advancement. Full CI and later source/target/range verification remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Stage and publish actual source-tree births across source transactions.`
   Acceptance: `Use actual fresh finalize_nary_expression allocation after exact AST sizing, with a separate optional journal family; existing binary events bucket and packet behavior preserve. Bind result/Core AST/all ordered leaf objects and current registry. Track only opted-in revisions, refresh only exact sanctioned bare-reference, role and width-metadata publications, reject extra/annotated/stale writes. Direct Parser and facade phase ownership defer until full success; publication adds no new semantic revision, supporting actual dependent helpers. Failure/reuse clears old/partial policy. Preserve negated base helper plus scalar NOT, aliases and native numeric/source/caller products. Focused causal phases/lifecycle and docs before commit.`
-  Verification: `Core holder prerequisite committed at84c0c07e5. Split staged birth/transition capture from completed source publication to keep each slice independently reviewable. No live range integration.`
+  Verification: `Separate staged birth/transitions and completed direct Parser/facade publication qualify in the child slices. Actual registry/current Core binding, atomic failures/reuse and revision-neutral dependent helpers have focused controls; backend/target/frozen/range joins remain separate.`
   Commit: `separate staged and publication children`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2.2`
 
@@ -2242,11 +2242,15 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3, Tests=14 for new T2238 and existing binary birth/transition T2200/T2201. A direct function-body comparison proves old binary transition code is exact after its private rename; ordinary numeric/attribute/parameter/metadata JSON kinds preserve. Exact manual example passes; API/POD/book, source/claim and normal mandatory gates precede advancement. No completed source-tree publication or full CI is implied.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish staged source bitwise tree intent only after complete source success.`
   Acceptance: `After staged current births, add private revision-neutral Core publication and consume optional source_tree_events at direct Parser and facade completion. Under facade defer through actual role/interface phases. Exact registry/tree/all-source state must still agree. Malformed roots, source/role/interface/publication failures clear previous and partial policies; fresh same-adapter reuse recovers. Publication of nested children adds no semantic revision. Preserve old binary packet/publisher behavior, negated base plus scalar NOT and actual caller/numeric metadata/kinds. Focused phase/failure/ownership checks plus API/POD/book precede commit. Backend/target/frozen/range joins remain separate.`
-  Verification: `pending staged source-tree births`
-  Commit: `pending`
+  Verification: `Completed direct Parser and facade transactions now consume the optional source_tree_events journal after success. Actual root/all-leaf registry and full current Core capsule must still match. Private publication installs the tracked record without semantic revision, preserving actual source/source, source/binary and binary/source dependency epochs. Facade Parser defers through actual role/interface phases. Malformed roots, transition validation, late role/interface errors and injected failure after an actually installed tree record clear previous/partial policy; fresh same-adapter retries recover. One/wide actual AND/OR/XOR policies detach and caller source AST/JSON kinds preserve; third-leaf matching writes revoke. Baseline T2239 fails six missing-policy assertions in subtest1 with five skips. Final new T2239 and old binary source T2202 All tests successful Files=2, Tests=11. Isolated completion-registry omission fails only the intended equal-width foreign C assertion at126, while retry/other phases preserve. Exact API example prints A B C; POD/book/source/claim and normal mandatory gates precede advancement. Complete producer/test/known-bad/log/card evidence and distinct legs retain in docs/audits/source-bitwise-publication-20261029.json.gz. Completed backend attachment, selected target/frozen proof/range and full .6 remain open.`
+  Commit: `this completed source-tree publication slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Baseline T2239 reports missing current policies at t/2239-source-bitwise-tree-publication.t line 37: source transactions pass only the old binary events bucket, leaving actual source-tree births staged but unpublished. The isolated completion registry guard omission additionally exposes an equal-width same-name foreign C at t/2239-source-bitwise-tree-publication.t line 126, proving Core numeric/current-tree agreement alone cannot establish final registry association.
+  - [x] **ADDRESSED (verified)** — Completed Parser/facade owners now consume the optional separate tree bucket with actual registry and Core rechecks. Private installation adds no semantic revision. Actual late-phase and post-installation failure controls clear previous/partial policy, same-adapter reuse recovers, and dependent source/binary helpers remain current. Six baseline missing-policy assertions turn green; isolated registry omission fails its intended assertion. Exact complete-source API example prints A B C.
+  - [x] **NO REGRESSION** — All tests successful Files=2, Tests=11 for new T2239 and existing binary transaction/publication T2202. Old binary publication loop remains unchanged; optional argument preserves old callers. Actual source AST/JSON kinds and canonical classification preserve. POD/book, staged copied-source/claim checks and normal mandatory hook precede advancement. No backend/target/range activation or broad/full CI is inferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
   Status: `pending`

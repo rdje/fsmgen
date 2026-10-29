@@ -297,6 +297,8 @@ L<FSM::SourceBitwiseTreeWidthSupport> and return this Signal. Undef clears;
 failed replacement revokes previous intent. The common allocation clear and
 revision mechanism invalidates both families on relevant supported writes.
 Ordinary Signals gain no fields, and no Parser/backend/target policy is inferred.
+The completed source producer privately publishes an already current staged tree
+without a semantic revision; explicit setter replacement still revokes intent.
 
 =cut
 
@@ -352,6 +354,15 @@ Ordinary Signals gain no fields, and no Parser/backend/target policy is inferred
         # semantic write, so dependent staged helpers keep their exact epoch.
         $self->{_intermediate_width_allocation} = FSM::IntermediateWidthAllocationSupport->prepare_core(
             signal => $self, record => $record, track => 1);
+        return 1;
+    }
+
+    sub _publish_staged_source_bitwise_tree_width_allocation($self, $holder) {
+        my $record = FSM::SourceBitwiseTreeWidthSupport->current_core(signal => $self, holder => $holder);
+        return 0 unless $record;
+        # Keep dependent source and binary helper revisions unchanged.
+        $self->{_source_bitwise_tree_width_allocation} = FSM::SourceBitwiseTreeWidthSupport->prepare_core(
+            signal => $self, record => $record);
         return 1;
     }
 

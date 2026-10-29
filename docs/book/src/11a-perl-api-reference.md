@@ -205,11 +205,13 @@ agree. Repeated source and computed operand slots retain their order. Fixed
 graphs keep their independently selected numeric widths. Different mutable roots,
 aliases or static floors cannot borrow an equal default value. Source-owned
 nested bitwise forms such as `(& A B C)` still retain a numeric helper range
-at the selected default. The Parser owns their nested Core tree; its existing
-allocation journal accepts two whole operands, so computed arithmetic graph
-ownership cannot supply the missing source-tree contract. Negated n-ary forms
+at the selected default. The Parser owns their nested Core tree; its binary
+allocation bucket accepts two whole operands, and a separate source-tree journal
+now captures fresh n-ary births. Computed arithmetic graph ownership remains
+separate. Negated n-ary forms
 wrap that same bitwise helper in scalar logical NOT. Fresh source-tree births
-now stage separately; completed publication, selected-target proof and symbolic range integration remain pending. These
+now stage and publish at complete source success; selected-target proof and
+symbolic range integration remain pending. These
 forms do not yet propagate parameter changes through their helper ranges.
 
 The separate `SourceBitwiseTreePolicySupport` data schema now validates
@@ -255,8 +257,9 @@ changes, malformed counters and writes during validation withhold current intent
 Ordinary lookups install no fields. Failed replacement clears previous intent,
 and `clear_intermediate_width_allocation` clears both intent families.
 This local intent establishes no module membership or fresh source birth.
-Parser publication, selected target proof and live helper range integration remain
-pending. Binary two-slot and computed arithmetic graph contracts remain separate.
+The separate source journal now provides completed Parser/facade publication.
+Selected target proof and live helper range integration remain pending. Binary
+two-slot and computed arithmetic graph contracts remain separate.
 
 The actual ExpressionBuilder allocator now stages fresh n-ary AND/OR/XOR births
 in a separate optional `source_tree_events` journal. The original binary `events`
@@ -289,8 +292,29 @@ print join(' ', @{$record->{source_names}}), "\n";
 
 Captured journal data retains no Core graph; failed capture restores both journal
 scopes and a retry records only its fresh births. Ordinary uncaptured allocation
-adds no revision trackers. Completed direct Parser/facade publication and backend
-attachment remain separate steps; no new symbolic helper range is emitted here.
+adds no revision trackers. Completed direct Parser calls publish current staged
+trees at their registry/AST boundary. The facade defers publication through role
+and interface success. Source, phase and publication failures clear previous and
+partial policy; a fresh parse can reuse the adapter. Publication adds no semantic
+revision, preserving nested source and binary dependency epochs. A same-name
+foreign registry leaf cannot borrow a completed birth. For example:
+
+```perl
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+my $text = '(?fsm:tree_policy (+size (A 8) (B 8) (C 8) (DATA 1) (OTHER 1))'
+    . ' (idle (<(& A B C) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+my $adapter = FSM::Adapter::FSMGenFull->new;
+my $module = $adapter->parse_fsm(scalar Lispish::multi(\$text));
+my @helpers = grep {defined($_->source_bitwise_tree_width_allocation)} values %{$module->signals};
+die "expected current tree policy\n" unless @helpers == 1;
+my $record = $helpers[0]->source_bitwise_tree_width_allocation;
+print join(' ', @{$record->{source_names}}), "\n";
+```
+
+This prints `A B C`. Completed backend-row attachment, frozen source/selected
+target proof and symbolic range consumption remain separate steps; these Core
+policies alone emit no new symbolic helper range.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

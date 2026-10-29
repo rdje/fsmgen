@@ -212,11 +212,16 @@ sub _set_published_width_metadata($self, $signal, $kind, $record) {
     return $self->_allocation_transition($signal, undef, undef, sub {$signal->$setter($record)});
 }
 
-sub _publish_intermediate_width_allocations($self, $events) {
+sub _publish_intermediate_width_allocations($self, $events, $source_tree_events = undef) {
     for my $event (@$events) {
         my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
         next unless $self->_allocation_registry_matches($signal);
         $signal->_publish_staged_intermediate_width_allocation($event->{holder});
+    }
+    for my $event (@{$source_tree_events // []}) {
+        my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
+        next unless $self->_source_tree_allocation_registry_matches($signal);
+        $signal->_publish_staged_source_bitwise_tree_width_allocation($event->{holder});
     }
 }
 
@@ -1355,9 +1360,9 @@ afterward, only its exact revision and authorized role delta may differ. Externa
 annotated, late, extra-source or stale writes cannot borrow that refresh. Ordinary
 uncaptured builder paths use the same legacy writes. Source-tree refresh also
 binds every repeated leaf slot and role, and checks actual registry membership
-for the whole held tree. This tree journal publishes no Core policy yet;
-completed-source publication is a separate integration step.
-Completed direct Parser calls own binary capture and publication; an enclosing facade transaction defers
+for the whole held tree. Scoped capture publishes no Core policy.
+Completed direct Parser calls own capture and publication for both families;
+an enclosing facade transaction defers
 publication through actual role and interface completion. Failures and parse
 reuse clear previous/partial policy. Publication installs only the already current
 tracked birth, without a new semantic revision that would invalidate dependent

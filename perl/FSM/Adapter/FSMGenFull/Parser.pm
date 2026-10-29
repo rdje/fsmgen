@@ -136,7 +136,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
             $parse->();
         } else {
             my $packet = $builder->_capture_intermediate_width_allocations($parse);
-            $builder->_publish_intermediate_width_allocations($packet->{events});
+            $builder->_publish_intermediate_width_allocations($packet->{events}, $packet->{source_tree_events});
         }
         1;
     };

@@ -21,8 +21,8 @@ date: 2026-10-29
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-journal-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t t/2237-source-bitwise-tree-core-holder.t t/2238*.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-publication-20261029.json.gz;
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t t/2237-source-bitwise-tree-core-holder.t t/2238*.t t/2239*.t
 ---
 
 Original cards/proofs with baseline/digests: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
@@ -31,13 +31,13 @@ Original cards/proofs with baseline/digests: `docs/audits/width-card-evidence-20
 
 ASTSupport: zero -> `(~|sum_expr)`; nonzero reduces; ==1 stays equality; fixed scalars stay compact. Symbolic widths never set folds; .219 adds no recursive inference.
 
-target_intermediates keeps selected text or {} without assignment.
+target_intermediates: selected text or {} without assignment.
 Origins require agreeing defining/runtime/cached ASTs, fresh text and declared operands:
 whole-SignalRef reductions are width1 (T2190); binary &/|/^ keeps ordered slots/duplicates and separate selected widths (T2197).
 Core slices/state/invalid/stored-only/stale/computed/logical withhold; compatible references keep typed names.
 Inputs/results detach, empty sets preserve snapshots; origins prove no width/type relationship.
 Closed width_allocation proves intrinsic max/ordered origin/plain widths; publication rechecks current policy/origin/text/plain sources. Frozen ranges emit with final target/event reproof.
-Paired VHDL requires plain unsigned operands, scalar results and exact assignments (T2191); other shapes refuse.
+Paired VHDL: T2191 requires plain unsigned operands, scalar results and exact assignments; others refuse.
 
 T2192 sizes from exact AST before bitwise registration; Core/HDL agree, vector guards test whole values.
 
@@ -45,5 +45,5 @@ T2194 preserves Core &/| (formerly &&/||), nested/vector/whole guards and aliase
 
 T2196 groups bare &/| on either comparison side, preserving literals/callers and typed native HDL. Source n-ary/full .6 stay open.
 
-Arithmetic stays inline in Parser. Proved whole/computed factorizer births, canonical leaf relations and final target/ledger checks now emit generic ranges;
-see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport: closed ordered tree data under shared walk bounds. SourceBitwiseTreeWidthSupport binds explicit Core root/tree/all leaves to detached weak lifetime IDs/max/revisions; matching writes revoke; final recheck rejects late writes. Parser now stages source_tree_events and refreshes only exact reference/role/metadata writes. Completed publication/target/range remain pending. Binary events require two whole operands. Negated forms wrap that helper in scalar logical !.
+Parser arithmetic stays inline. Proved whole/computed factorizer births, canonical leaf relations and final target/ledger checks now emit generic ranges;
+see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport: closed ordered tree data under shared walk bounds. SourceBitwiseTreeWidthSupport binds explicit Core root/tree/all leaves to detached weak lifetime IDs/max/revisions; matching writes revoke; final recheck rejects late writes. Parser now stages source_tree_events and refreshes only exact reference/role/metadata writes. Parser/facade publish; backend/target/range pending. Binary events require two whole operands. Negated forms wrap that helper in scalar logical !.
