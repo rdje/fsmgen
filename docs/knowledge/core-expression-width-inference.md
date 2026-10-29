@@ -12,8 +12,10 @@ tags: [widths, literals, core, expression, source-capture]
 evidence: >-
   perl/FSM/CoreExpressionWidthSupport.pm; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm;
   t/2250-core-expression-width-contract.t; docs/audits/core-expression-width-contract-20261029.json.gz;
-  docs/audits/literal-width-ownership-20261029/receipt.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2250-core-expression-width-contract.t t/2192-parser-bitwise-intermediate-widths.t t/2074-unary-reduction-width-foundation.t
+  docs/audits/literal-width-ownership-20261029/receipt.json.gz;
+  perl/FSM/SourceLiteralWidthAllocationSupport.pm; t/2251-source-literal-width-holder.t;
+  docs/audits/source-literal-holder-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2250-core-expression-width-contract.t t/2251-source-literal-width-holder.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -49,3 +51,11 @@ The adjacent audit verify.py --current --qualify authenticates producer bytes,
 source/target products and independent mask algebra while rejecting hostile
 saved variants. It is manual, revision-bound diagnosis, not an unconditional
 current-state watcher or external HDL runtime proof.
+
+SourceLiteralWidthAllocationSupport now validates detached direct bitwise literal
+allocation holders with nullable exact width and raw literal value/radix/size.
+Actual identities, weak lifetime tokens, tracked revisions and a complete raw
+capture barrier reject matching writes and late mutation. T2251 distinguishes
+explicit floors and JSON kinds; an isolated omitted-barrier variant fails its
+late-write control. This validator publishes no live source policy. Actual source
+birth/completion and nested unknown propagation remain the next owned consumers.

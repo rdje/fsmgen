@@ -2453,11 +2453,46 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — No production code changed. The bounded actual strict CLI and saved source/target/refusal controls execute; the retained verifier passes with --current --qualify. The preceding focused All tests successful result remains revision-bound preparation evidence, not a new test run. POD/book-source freshness and normal mandatory staged doctrines gate commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve explicit source allocation intent and unknown width through literal helpers and their actual parents.`
   Acceptance: `After .1, capture intrinsic allocation at the actual source birth without assigning a backend default to Core. Preserve raw literal value/radix/explicit widths and independently constrained source Signals. Distinguish unknown helper width from an exact scalar and propagate that distinction through nested source references without textual/name/default guesses. Reuse canonical bounded width and mutation/lifetime contracts; publish only after complete source validation, revoke on matching-state/failed/foreign writes and preserve independent floors. Split holder/birth/publication consumers into safe executable children before editing. Focused RED/GREEN/hostile source/JSON-kind/lifetime checks and POD/book sync before each commit; no target/generic success until .3.`
   Verification: `Ownership diagnosis complete in predecessor .1: direct unknown literal state cannot distinguish a matching width write, and nested parents currently mistake a nominal child width for exact allocation. The fixed native high-bit truncation is a required P1 repair in this immediate leaf plus target successor .3. Fresh source birth and unknown propagation must precede target relaxation.`
   Commit: `pending explicit source literal allocation`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.1`
+  Status: `done`
+  Goal: `Validate detached current literal-allocation holders before integrating source producers.`
+  Acceptance: `Implement a closed raw literal/bitwise source allocation capsule with nullable exact width, preserving raw literal value/radix/explicit size and JSON kinds. Actual plain Core helper/AST/leaf identities, lifetime tokens and tracked revisions must agree; independent result constraints and unknown/over-bound shapes withhold. Matching writes, failed replacements, foreign/lifetime substitution and late mutations cannot revive intent. Direct helper holder preparation alone changes no parser, inference or target behavior. Focused RED/GREEN and distinguishing hostile controls plus POD/book; no live publisher success yet.`
+  Verification: `A separate closed source_literal_operand_max holder preserves nullable exact source width, raw literal data/JSON kinds and independent explicit floors. Actual direct bitwise Core result, AST slots and independent leaf objects use existing weak lifetime tokens and tracked revisions; no new owner graph is retained. Complete raw-state stamps fence mutating getters, including a final-capture write after an earlier recheck. First missing-module RED is retained. First implementation run fails only the fixture lifetime assertion because the ordinary Core fanout web holds its helper; the corrected fixture explicitly breaks its own existing cycle before testing holder ownership. Final T2251/T2250 report All tests successful Files=2 Tests=12. Isolated omitted-barrier source fails the final-capture matching-write assertion; initial mutant epoch is retained separately. Exact/unknown literal, numeric/string kind, source/result writes, failed metadata writes, foreign identity/lifetime, opaque/independent/unsupported/cyclic/over-bound and reuse controls pass. Re-derive current holders/shared inference; falsify independently authored nullable-versus-nominal/floor/kind/lifecycle assertions and the failing barrier omission; durability tracked module/test/POD/book/card plus docs/audits/source-literal-holder-20261029.json.gz. Initial test/module bytes were not independently snapshotted before iteration; logs and final source retain, without a claim of exact intermediate-source replay. Canonical claim template matches reviewed source read-only and cleanup remains current. Source birth, completed publication, nested unknown propagation and target consumers remain open; no parser, public source/API/MCP schema/corpus, HDL floor/runtime/full .6/publication expansion. Focused POD/source freshness pass. Initial normal hook rejects stale derived claim inventory after the owned book aggregate change; regenerate the canonical inventory and verify existing dispositions without new gaps. Final-index mandatory hook gates this slice.`
+  Commit: `this detached literal holder slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Native first RED reports missing FSM/SourceLiteralWidthAllocationSupport.pm at t/2251-source-literal-width-holder.t line 10. Existing Core nominal width cannot attest intrinsic literal allocation; a separate nullable source contract is required before target relaxation. The isolated omitted-barrier Perl diagnostic at t/2251-source-literal-width-holder.t line 160 demonstrates that repeated capture alone can miss a write on the final read.
+  - [x] **ADDRESSED (verified)** — Detached holder preparation/currentness preserves raw literal widths, radix, values and JSON kinds, validates actual direct source ownership and independent explicit floors, and rejects matching writes, stale/foreign/later lifetimes and final-read mutation. Complete raw stamps add the distinguishing final barrier. The corrected lifetime fixture separates ordinary Core fanout ownership from new holder ownership. No producer or target consumer is installed by this preparation.
+  - [x] **NO REGRESSION** — Guarded T2251/T2250 report All tests successful Files=2 Tests=12. The current isolated omitted-barrier variant fails its intended final-read assertion. Focused current POD/source references and the mandatory full final-index doctrine hook qualify this commit; broad feature/runtime/external/full .6/publication checks remain deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2`
+  Status: `pending`
+  Goal: `Capture actual source literal births and carry only sanctioned source transitions.`
+  Acceptance: `After holder .1, integrate fresh actual literal-containing helper births before independent width writes can become indistinguishable. Preserve nullable exact width and raw syntax, carry tracked events only across named reference/role/metadata transitions, and withhold foreign, failed, independent or stale shapes. Split nested dependency allocation if required; no backend default or target relaxation.`
+  Verification: `pending bounded source allocation consumer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3`
+  Status: `pending`
+  Goal: `Publish completed literal intent and propagate unknown nested helper widths.`
+  Acceptance: `After birth .2, publish only after complete normal source validation. Join current child intent through actual references, preserve independent declared floors and keep unresolved helper widths unknown through the shared bounded inference walk. Relevant supported writes revoke even at matching state, and foreign/stale/cyclic shapes withhold. Focused direct/nested fixed/mutable one/wide/scalar/explicit controls and current source products; target floors/final agreement remain parent successor .3.`
+  Verification: `pending bounded source allocation consumer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.4`
+  Status: `pending`
+  Goal: `Close source allocation with focused lifecycle and conservation controls.`
+  Acceptance: `After .1-.3, reconcile actual source birth, completion, unknown propagation and independent constraint boundaries. Verify complete raw source/parameter/literal/JSON-kind conservation and distinguishing mutation/failure controls; synchronize API/book/canonical records, then select target repair .1.2.3. No HDL floor, runtime, full .6 or publication qualification is implied.`
+  Verification: `pending bounded source allocation consumer`
+  Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3`
   Status: `pending`

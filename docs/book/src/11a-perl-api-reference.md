@@ -670,6 +670,18 @@ injected declaration capture have different outcomes; the latter can refuse the
 source. Source allocation and nested unknown-width propagation are the immediate
 repair prerequisites. External HDL execution has not qualified this diagnosis.
 
+The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
+raw literal `{value, width, radix}` and a nullable exact allocation width.
+Unknown exact width remains distinct from a helper's nominal scalar width;
+explicit literal sizes remain independent floors. Its bounded direct bitwise
+profile validates actual helper, AST and independent leaf identities, raw JSON
+kinds and tracked source revisions. Matching writes, foreign object lifetimes
+and late source mutations withhold intent. The detached holder retains no
+owners. `t/2251-source-literal-width-holder.t` includes an isolated bad-barrier
+control. This preparatory validator publishes no parser policy and enables no
+target profile; actual births, completed publication and nested unknown-width
+propagation remain the next source consumers before the target repair above.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows
