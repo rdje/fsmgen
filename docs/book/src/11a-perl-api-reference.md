@@ -204,7 +204,13 @@ and actual current graph allocation and complete selected-target proof must
 agree. Repeated source and computed operand slots retain their order. Fixed
 graphs keep their independently selected numeric widths. Different mutable roots,
 aliases or static floors cannot borrow an equal default value. Source-owned
-nested bitwise forms such as `(& A B C)` remain a separate pending profile.
+nested bitwise forms such as `(& A B C)` still retain a numeric helper range
+at the selected default. The Parser owns their nested Core tree; its existing
+allocation journal accepts two whole operands, so computed arithmetic graph
+ownership cannot supply the missing source-tree contract. Negated n-ary forms
+wrap that same bitwise helper in scalar logical NOT. Source-tree birth,
+selected-target proof and symbolic range integration remain pending; these
+forms do not yet propagate parameter changes through their helper ranges.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

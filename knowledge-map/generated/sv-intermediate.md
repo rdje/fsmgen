@@ -1,7 +1,7 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **13** uniquely owned question entries.
+> **1** facts · **14** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -17,6 +17,7 @@
 - q="why did Core bitwise guard operations become logical?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why did a high-bit-only vector guard fail?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why do arithmetic helpers lack generic ranges?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="why do source-owned n-ary bitwise helpers remain numeric?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why should multi-bit intermediates not render as bare negation?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 
 ## Facts
@@ -25,5 +26,5 @@
 
 _Scalar reduction origins and render-time intermediate widths_
 
-- **date:** 2026-10-28 · **status:** current
+- **date:** 2026-10-29 · **status:** current
 - **source and verification:** [`docs/knowledge/sv-intermediate-truthiness-width.md`](../../docs/knowledge/sv-intermediate-truthiness-width.md)

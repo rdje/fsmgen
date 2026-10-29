@@ -2166,11 +2166,80 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for the bounded new closure test. git diff --quiet e785996d2 -- perl scripts exits0; previous source-matched emission/native26 and fixed/source/ledger controls remain retained. Book/source/claim and normal mandatory gates precede advancement. No broad suite, full feature or external compiler/runtime qualification is inferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual n-ary and nested source-owned bitwise width relationships.`
   Acceptance: `After computed arithmetic graph ownership, reproduce (& A B C): the parser creates one Core source helper with a nested binary AST, no whole-binary allocation and a numeric result declaration. Preserve actual ordered AST tree/leaf slots, operators and source-holder independent constraints. Split explicit producer/proof/consumer tasks; admit proved complete mutable relationships or retain precise refusal, never flatten ancestry from source text or selected width. Include negated n-ary wrappers, duplicate/order/currentness/default-one controls; paired VHDL and full .6 stay separate.`
   Verification: `Actual source-owned nested-root reproduction: docs/audits/residual-operator-inventory-20261028.json.gz. Scheduled after computed arithmetic graph ownership.`
   Commit: `pending source-holder slices`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.6`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.1`
+  Status: `done`
+  Goal: `Select exact source-holder bitwise tree contracts and bounded implementation leaves.`
+  Acceptance: `Use the retained residual inventory and current source-matched native nary_bitwise product first. Read actual parser source-helper birth, Core allocation publication, current numeric inference/target origin and frozen range contracts. Distinguish source-owned nested Core trees from factorizer computed arithmetic edges and scalar/negated wrappers; preserve typed operator/order/duplicate and independent constraints. Register producer, canonical proof, actual target/range/guard consumer and focused closure ownership before implementation. Repair the discovered stale sv-intermediate-truthiness-width assertion that computed arithmetic roots remain numeric, preserving all question keys, original commands and history within unchanged card budgets. Re-authenticate retained native parity using canonical JSON text so Boolean and numeric kinds cannot collapse under Python dictionary equality; add a kind-change failure control and retain original evidence. No broad verification, optional inversion or VHDL activation.`
+  Verification: `Retained committed source-matched native products prove the source n-ary Core left fold still lacks binary/factorizer/graph policy and emits a numeric range at defaults1/8; computed arithmetic has separate current graph policy and W ranges. Parser finalize_nary_expression creates the source helper; _stage_intermediate_width_allocation requires two whole operands. Core holder/current registry and completed source attachment enforce that binary shape; selected target binary origins likewise require two whole references. Negated forms explicitly finalize the same base helper then wrap it in scalar logical NOT. Native width_source differs by current numeric branch: defining_ast at1, native_signal_metadata at8. The first selection assertion wrongly assumed one branch for both; exact initial proof/log and corrected branch expectations retain. New source schema/Core holder, separate staged publication, completed backend attachment, selected origin/policy, canonical proof and actual range/guard/final closure are split below before code. No existing binary/arithmetic schema is broadened. The stale truthiness card is corrected to computed arithmetic generic ranges versus pending source n-ary trees; all original questions and commands remain, one discoverable source n-ary question is added and aggregate card bytes shrink. The inherited Python dictionary comparison could equate Boolean/numeric values; canonical-JSON re-authentication confirms all26 retained non-HDL native pairs actually match with kinds preserved, and width1-to-True is rejected. Original evidence is unchanged. Complete source/hash/proof/control/card records retain in docs/audits/source-bitwise-tree-20261029.json.gz. Initial normal hook refused the new producer container marked pending; the documented container status is corrected to active while all implementation leaves remain pending. No implementation or new runtime/corpus/full .6 qualification.`
+  Commit: `this bounded source-holder selection slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '@$operands == 2' identifies 23362050d11217f2251c9cc8421a328af3343ef9 and the source journal's binary-only guard. Actual current n-ary bitwise native rows are fsmgen_parsing nested Core trees, with no birth/allocation and numeric ranges; source metadata takes defining_ast at1 and native_signal_metadata at8. The separate arithmetic graph producer is not their owner. Source/current/target code paths and exact retained cases establish the missing contract without a new runtime campaign.
+  - [x] **ADDRESSED (verified)** — Detailed producer/proof/target/consumer/closure leaves now precede implementation. The stale canonical card and user guide distinguish completed arithmetic from pending source n-ary width propagation, retaining original questions/commands/history. Strict canonical JSON parity repairs the inherited bool/int comparison weakness; all26 actual saved pairs remain equal and a Boolean-kind substitution refuses.
+  - [x] **NO REGRESSION** — knowledge-map: OK (1295 facts, 7152 unique questions, 7329 answer occurrences, 205 bounded shards; query parity verified). The new source n-ary query resolves to the corrected card; complete source and claim/disposition checks pass. Normal mandatory gates precede advancement. No production or existing test source changes; current loaded-owner hashes authenticate the retained native evidence. No full CI, external compiler/override/runtime or n-ary implementation success is inferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2`
+  Status: `active`
+  Goal: `Capture current source-owned bitwise tree allocation without changing HDL.`
+  Acceptance: `Split closed tree/Core eligibility, actual Parser/facade birth publication and completed backend attachment. Keep old binary APIs, two-slot records and existing journal events exact; use a distinct optional source-tree family. Plain unsigned whole leaves, typed operators/order/duplicates, exact max and complete source/result constraints are required. No provenance from selected width or printed text.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1`
+  Status: `pending`
+  Goal: `Define closed source bitwise tree policy and current Core holder.`
+  Acceptance: `Add a separate bounded bitwise-tree policy and actual Core helper adapter, preserving ordered original BinaryOp nodes and every typed whole-reference slot. Keep binary_operand_max arity/schema unchanged and do not reuse arithmetic graph ownership. Exact positive decimal maxima and JSON kinds preserve; nested/mixed operators, repeated names/actual identities, cycles, slices/literals, signed/state/type/opaque/result constraints and forged/stale/copied holders must qualify or withhold precisely. Opt-in setters/getters/revisions remain plain detached state with no owner retention; ordinary Signals gain no fields. Focused holder/schema/currentness and old binary checks plus POD/book precede commit.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2`
+  Status: `pending`
+  Goal: `Stage and publish actual source-tree births across source transactions.`
+  Acceptance: `Use actual fresh finalize_nary_expression allocation after exact AST sizing, with a separate optional journal family; existing binary events bucket and packet behavior preserve. Bind result/Core AST/all ordered leaf objects and current registry. Track only opted-in revisions, refresh only exact sanctioned bare-reference, role and width-metadata publications, reject extra/annotated/stale writes. Direct Parser and facade phase ownership defer until full success; publication adds no new semantic revision, supporting actual dependent helpers. Failure/reuse clears old/partial policy. Preserve negated base helper plus scalar NOT, aliases and native numeric/source/caller products. Focused causal phases/lifecycle and docs before commit.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
+  Status: `pending`
+  Goal: `Attach current source-tree policy only to completed actual backend rows.`
+  Acceptance: `At successful collection join the actual module/Core helper/AST/ordered leaf identities to actual collected and registered rows in the same context/epoch. Bind all metadata, source/result constraints and current Core policy; preserve defining_ast default-one and native_signal_metadata wide branches without treating either numeric source as provenance. Ordinary cache/owned registry transitions preserve only exact state. Copies, foreign rows, changed sources, failures/new epochs and stale children withhold. A separate completed getter must not alter binary or arithmetic graph APIs. Focused currentness/attachment/native contrasts and POD/book precede target publication.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.3`
+  Status: `pending`
+  Goal: `Publish selected source bitwise tree origins and allocation policies.`
+  Acceptance: `Introduce separate optional selected tree origin/policy contracts from actual current defining/runtime/cached trees and fresh expression text, using the new source-holder owner. Existing binary and arithmetic fields/profiles remain closed and unchanged. Collector validates closed JSON, exact operator/tree/ordered slots, actual declared membership, plain profiles and selected maxima, without pretending numeric validation proves source authorship. Actual publisher rechecks complete current state. Legacy providers/snapshots preserve; focused selected-source/target/refusal/conservation tests and API/POD/book before commit.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4`
+  Status: `pending`
+  Goal: `Prepare canonical source-tree and complete selected-target ranges.`
+  Acceptance: `Join actual source-owned tree and current typed generated-source helper edges to frozen canonical original-leaf contracts and complete selected target records. Reuse source width evaluators/relationships; never flatten ancestry from helper names, text or equal defaults. Preserve operators/order/duplicates and every independent floor/literal/type/state constraint. All mutable original leaves require identical complete frozen relationships; fixed profiles keep independent maxima. Detect cycles, missing/stale/foreign child records and complete-input changes even if derived range text stays equal. Plans/caller lifetimes detach; private source declaration intent and complete-target proof share exact root fields but retain independence. Split safe kernels as needed; no live range or VHDL widening yet.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5`
+  Status: `pending`
+  Goal: `Consume proved source-tree ranges with independent final closure.`
+  Acceptance: `After .4, consume separate source declaration intent in actual one-pass declarations, retain a distinct per-generation ledger and expose symbolic vector rank to existing whole-value guard logic. Independently re-prove every selected source-tree target and compare all emitted fields before returning HDL. Missing/changed source/target/ledger state must return no artifact/snapshot and fresh reuse recover. Preserve fixed/legacy widths, scalar NOT/reduction results and existing arithmetic/binary ledgers; unproved mutable relationships require precise supported boundaries, never equal-default borrowing. Runnable SV/Verilog examples, focused failure/rank controls and synced docs precede commit.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.6`
+  Status: `pending`
+  Goal: `Close bounded source n-ary bitwise implementation with focused controls.`
+  Acceptance: `Qualify actual AND/OR/XOR, negated base wrappers, duplicates and selected nested source-helper edges at one/wide defaults. Use complete current source/caller/target constraints, exact native contrasts, isolated missing-provenance/rank/ledger/target guards and atomic same-backend reuse. Keep scalar/independent literal/type families under ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4 and paired VHDL/other shapes/full feature/compiler/override/runtime .6 separate. Do not turn this closure into a broad verification matrix.`
+  Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4`
   Status: `pending`
