@@ -77,6 +77,29 @@ sub copy_record {
     return _validated($record);
 }
 
+sub copy_origin {
+    my ($class, $origin) = @_;
+    confess "Source bitwise tree origin requires a closed tree record\n"
+        unless ref($origin) eq 'HASH'
+            && join(',', sort keys %$origin) eq 'expression_tree,kind,operator,source_names'
+            && defined($origin->{kind}) && !ref($origin->{kind})
+            && $origin->{kind} eq 'source_bitwise_tree';
+    # Reuse the exact tree/slot grammar and walk bounds. This sentinel width
+    # validates no numeric relationship and never enters the returned origin.
+    my $copy = _validated({kind => 'source_bitwise_tree_operand_max', selected_width => 1,
+        map {$_ => $origin->{$_}} qw(operator source_names expression_tree)});
+    return {kind => 'source_bitwise_tree',
+        map {$_ => $copy->{$_}} qw(operator source_names expression_tree)};
+}
+
+sub matches_origin {
+    my ($class, $record, $origin) = @_;
+    my $policy = _validated($record);
+    my $copy = $class->copy_origin($origin);
+    return _json()->encode({map {$_ => $policy->{$_}} qw(operator source_names expression_tree)})
+        eq _json()->encode({map {$_ => $copy->{$_}} qw(operator source_names expression_tree)});
+}
+
 sub leaf_names {
     my ($class, $record) = @_;
     return [@{_validated($record)->{source_names}}];
@@ -99,7 +122,7 @@ sub matches_selected_widths {
 
 =head1 NAME
 
-FSM::SourceBitwiseTreePolicySupport - Closed source bitwise tree max data
+FSM::SourceBitwiseTreePolicySupport - Closed source bitwise tree allocation and origin data
 
 =head1 DESCRIPTION
 
@@ -116,6 +139,11 @@ L<FSM::IntermediateWidthGraphPolicySupport>. Shared subtree slots count each
 time they occur. Cyclic and over-bound trees refuse before JSON encoding.
 Binary two-slot and computed arithmetic graph schemas remain separate.
 
+The separate selected origin has C<kind =E<gt> source_bitwise_tree>, C<operator>,
+C<source_names> and C<expression_tree>, with no selected width. It uses the same
+bounded tree and complete ordered-slot grammar. Matching an origin to a policy
+requires the identical full tree, not merely equal operators or flat leaf slots.
+
 This pure data contract proves no actual Core allocation, source object,
 current epoch, frozen width relationship or selected target provenance. It
 installs no Core policy, publishes no target event and changes no HDL profile.
@@ -129,6 +157,18 @@ Validate and detach one closed record. Original operators, topology, ordered
 leaf slots, duplicate occurrences and scalar JSON kinds preserve. Malformed,
 unsupported, inconsistent, cyclic or over-bound data throws. Caller data is
 read-only and the returned record retains no caller graph.
+
+=head2 copy_origin
+
+Return detached closed selected origin data under the same tree/slot/bound
+contract, or throw. This proves no numeric relationship, actual typed AST/text,
+source allocation or target authorship.
+
+=head2 matches_origin
+
+Validate both arguments and compare the complete operator, ordered source slots
+and original expression tree. Return true only for identical selected shape;
+the separate origin and allocation kinds retain their own closed schemas.
 
 =head2 leaf_names
 

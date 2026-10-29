@@ -10,6 +10,7 @@ use JSON::PP ();
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
+use FSM::SourceBitwiseTreePolicySupport;
 
 sub new ($class) {return bless {state => 'empty'}, $class}
 
@@ -93,18 +94,39 @@ sub record_intermediate_assignment ($self, $name, $record) {
             && exists($self->{intermediates}{$name});
     $self->_fail('has duplicate intermediate assignment events')
         if exists($self->{intermediates}{$name}{expression});
+    my ($source_origin, $source_policy);
+    if (ref($record) eq 'HASH' && exists($record->{source_tree_origin})) {
+        $source_origin = eval {FSM::SourceBitwiseTreePolicySupport->copy_origin($record->{source_tree_origin})};
+        $self->_fail('requires a closed bounded source bitwise tree origin') if $@ || !$source_origin;
+    }
+    if (ref($record) eq 'HASH' && exists($record->{source_tree_width_allocation})) {
+        $source_policy = eval {FSM::SourceBitwiseTreePolicySupport->copy_record($record->{source_tree_width_allocation})};
+        $self->_fail('requires a closed bounded source bitwise tree allocation') if $@ || !$source_policy;
+    }
+    # Bound the new tree family before cloning the complete event.
     my $json = JSON::PP->new->canonical;
     my $copy = eval {$json->decode($json->encode($record))};
     $self->_fail('requires a closed JSON-safe intermediate expression event')
         if $@ || ref($copy) ne 'HASH'
             || grep {$_ ne 'expression' && $_ ne 'reduction_origin' && $_ ne 'bitwise_origin' && $_ ne 'arithmetic_origin'
-                && $_ ne 'width_allocation' && $_ ne 'graph_width_allocation'} keys %$copy;
+                && $_ ne 'width_allocation' && $_ ne 'graph_width_allocation'
+                && $_ ne 'source_tree_origin' && $_ ne 'source_tree_width_allocation'} keys %$copy;
     $self->_fail('requires actual nonempty intermediate expression text')
         unless defined($copy->{expression}) && !ref($copy->{expression}) && length($copy->{expression});
     $self->_fail('requires one coherent intermediate origin family')
-        if 1 < grep {exists($copy->{$_})} qw(reduction_origin bitwise_origin arithmetic_origin);
+        if 1 < grep {exists($copy->{$_})} qw(reduction_origin bitwise_origin arithmetic_origin source_tree_origin);
     $self->_fail('requires one coherent intermediate allocation family')
-        if exists($copy->{width_allocation}) && exists($copy->{graph_width_allocation});
+        if 1 < grep {exists($copy->{$_})} qw(width_allocation graph_width_allocation source_tree_width_allocation);
+    if ($source_origin) {
+        $self->_fail('source bitwise tree origin cannot use its result as a leaf')
+            if grep {$_ eq $name} @{$source_origin->{source_names}};
+        $copy->{source_tree_origin} = $source_origin;
+    }
+    if ($source_policy) {
+        $self->_fail('source tree allocation requires its same complete ordered tree origin')
+            unless $source_origin && FSM::SourceBitwiseTreePolicySupport->matches_origin($source_policy, $source_origin);
+        $copy->{source_tree_width_allocation} = $source_policy;
+    }
     if (exists($copy->{bitwise_origin})) {
         my $origin = $copy->{bitwise_origin};
         $self->_fail('requires a closed binary bitwise intermediate origin')
@@ -184,6 +206,20 @@ sub complete ($self) {
             my @operands = @{$row->{arithmetic_origin}{source_names}};
             $self->_fail('binary arithmetic intermediate requires actual declared operands')
                 if grep {!exists($self->{declarations}{$_})} @operands;
+        }
+        if (exists($row->{source_tree_origin})) {
+            $self->_fail('source bitwise tree requires every actual declared leaf')
+                if grep {!exists($self->{declarations}{$_})} @{$row->{source_tree_origin}{source_names}};
+        }
+        if (exists($row->{source_tree_width_allocation})) {
+            my $policy = $row->{source_tree_width_allocation};
+            my @declarations = map {$self->{declarations}{$_}} ($name, @{$policy->{source_names}});
+            $self->_fail('source tree allocation requires actual plain unsigned declarations')
+                if grep {$_->{signed} || defined($_->{state_model})
+                    || defined($_->{declared_type_name}) || defined($_->{declared_type_spec})} @declarations;
+            $self->_fail('source tree allocation requires exact declared result and complete leaf maximum')
+                unless FSM::SourceBitwiseTreePolicySupport->matches_selected_widths(
+                    $policy, map {$_->{width}} @declarations);
         }
         if (exists($row->{width_allocation})) {
             my @operands = @{$row->{width_allocation}{source_names}};
@@ -296,7 +332,7 @@ Malformed, conflicting or missing-operand records invalidate the transaction.
 
 The optional C<arithmetic_origin> uses the same ordered slots and syntactic
 checks with C<kind =E<gt> binary_arithmetic> and canonical C<+>, C<->, C<*>, C</>
-or C<%>. It is exclusive with both other origin families. Actual operand
+or C<%>. It is exclusive with the other origin families. Actual operand
 membership is required, while contextual widths remain independent without
 allocation policy. Arithmetic event publication alone enables no symbolic range.
 
@@ -327,6 +363,24 @@ assignment publisher attaches this field only after current completed graph
 policy, fresh selected origin/text and plain transitive source/result checks.
 Transitive selected-target closure and symbolic range admission remain separately
 owned.
+
+A separate optional C<source_tree_origin> carries closed
+C<{kind =E<gt> source_bitwise_tree, operator, source_names, expression_tree}>.
+It retains more than one binary bitwise node, all ordered whole-name leaf slots
+and duplicates under the shared source-tree bounds. The result cannot be a leaf;
+every leaf needs an actual declaration. Without allocation policy, contextual
+result widths and signed declarations retain independent constraints.
+
+C<source_tree_width_allocation> optionally adds the separate closed
+C<source_bitwise_tree_operand_max> record. The entire original tree, operator
+and ordered slots must match the origin, and actual result/all leaf declarations
+must be plain unsigned with the exact selected decimal maximum. All origin
+families are exclusive, as are all allocation families. The new source trees
+are bounded before complete-event JSON cloning. Malformed, over-bound, conflicting,
+missing, typed or width-inconsistent data invalidates the transaction; input/output
+records detach with scalar kinds kept. This collector validates data and actual
+numeric declarations, not source provenance, typed AST/text agreement or frozen
+width equivalence. Default source-tree event publication remains a separate step.
 
 C<snapshot> returns detached C<target_namespace> and C<target_declarations> in
 the C<DirectDeclaredWidthSupport::prepare_declarations> input format. It retains

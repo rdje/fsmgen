@@ -21,11 +21,11 @@ date: 2026-10-29
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-attachment-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t t/2237-source-bitwise-tree-core-holder.t t/2238*.t t/2239*.t t/2240*.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-event-schema-20261029.json.gz;
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t t/2237-source-bitwise-tree-core-holder.t t/2238*.t t/2239*.t t/2240*.t t/2241*.t
 ---
 
-Original cards/proofs with baseline/digests: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
+Original cards/proofs: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
 
 `python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/sv-intermediate-truthiness-width.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
@@ -46,4 +46,4 @@ T2194 preserves Core &/| (formerly &&/||), nested/vector/whole guards and aliase
 T2196 groups bare &/| on either comparison side, preserving literals/callers and typed native HDL. Source n-ary/full .6 stay open.
 
 Parser arithmetic stays inline. Proved whole/computed factorizer births, canonical leaf relations and final target/ledger checks now emit generic ranges;
-see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport: closed ordered tree data under shared walk bounds. SourceBitwiseTreeWidthSupport binds explicit Core root/tree/all leaves to detached weak lifetime IDs/max/revisions; matching writes revoke; final recheck rejects late writes. Parser stages source_tree_events; only exact reference/role/metadata writes refresh. Parser/facade and backend attach; target/range pending. Binary events require two whole operands. Negated forms wrap that helper in scalar logical !.
+see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints block policy. SourceBitwiseTreePolicySupport: closed ordered tree/origin/max records under shared bounds. SourceBitwiseTreeWidthSupport binds explicit Core root/tree/all leaves to detached weak lifetime IDs/max/revisions; matching writes revoke; final recheck rejects late writes. Parser stages source_tree_events; exact reference/role/metadata refresh only. Parser/facade and backend attach; target publication/range pending. Binary events need two whole operands. Negated forms use scalar logical ! around that helper.

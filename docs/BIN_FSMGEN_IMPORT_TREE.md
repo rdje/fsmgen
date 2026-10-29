@@ -18,6 +18,12 @@ root/all leaves and collected/registered rows bind without retaining owners;
 final membership/row/revision checks follow source reads. Numeric cache branches
 preserve. Selected target/frozen/range joins remain separate. No closure census.
 
+DeclarationCapture now imports SourceBitwiseTreePolicySupport for a separate
+optional selected tree origin/allocation data family, reusing exact shared tree
+bounds and ordered slots. It validates full origin/policy tree agreement and
+actual declared membership/plain numeric maxima. Default publishers remain
+unchanged; actual typed AST/text/current-policy publication is the next join.
+
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports
 `FSM::IntermediateWidthGraphInferenceSupport`. Those helpers and

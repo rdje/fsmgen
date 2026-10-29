@@ -332,6 +332,45 @@ scripts/run_with_ram_guard.sh -- prove -Iperl t/2240-source-bitwise-tree-attachm
 Frozen source/selected target proof and symbolic range consumption remain separate;
 the new attachment emits no new symbolic helper range.
 
+The selected-data collector now accepts separate optional `source_tree_origin`
+and `source_tree_width_allocation` fields. The origin keeps the complete bitwise
+tree and every ordered leaf slot; the policy must match the entire tree, including
+association and mixed operators. Equal flat leaf vectors alone are insufficient.
+Every leaf needs an actual declaration, and the result cannot be its own leaf.
+With policy, plain unsigned result/leaf declarations and exact decimal maxima
+must agree. Origin alone keeps contextual result widths independent. The new
+origin/allocation families are exclusive with the existing families, preserve
+JSON kinds and detach on input/output. For example:
+
+```perl
+use FSM::SourceBitwiseTreePolicySupport;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
+my $origin = FSM::SourceBitwiseTreePolicySupport->copy_origin({
+    kind => 'source_bitwise_tree', operator => '&', source_names => ['A','B','C'],
+    expression_tree => ['&', ['&', ['signal','A'], ['signal','B']], ['signal','C']],
+});
+my $policy = {%$origin, kind => 'source_bitwise_tree_operand_max', selected_width => '8'};
+my $capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+$capture->begin_module('selected_tree');
+$capture->record_intermediate_declaration({name => 'H', width => 8, signed => 0});
+for my $row (['A',8], ['B',4], ['C',2]) {
+    $capture->record_declaration('ports', {name => $row->[0], width => $row->[1], signed => 0});
+}
+$capture->record_intermediate_assignment('H', {
+    expression => 'A & B & C', source_tree_origin => $origin,
+    source_tree_width_allocation => $policy,
+});
+$capture->complete;
+print join(' ', @{$capture->snapshot->{target_intermediates}{H}{source_tree_origin}{source_names}}), "\n";
+```
+
+This prints `A B C`. Tree data is bounded before complete-event JSON cloning.
+Malformed, cyclic, over-bound, conflicting, missing, typed or width-inconsistent
+records invalidate the collector; a new transaction can start fresh. These checks
+validate data and numeric declarations. Actual typed AST/text/current-policy
+publication remains the next step, followed by frozen source/target proof and
+symbolic range consumption; schema validity establishes none of those claims.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows
