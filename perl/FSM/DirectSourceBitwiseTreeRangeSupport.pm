@@ -467,6 +467,35 @@ sub _prepare {
         nodes => {map {$_ => $state->{nodes}{$_}{plan}} @{$state->{order}}}}));
 }
 
+# Internal generation barrier, deliberately separate from detached range plans.
+# It retains weak source-row associations and only reads captured raw state when
+# checked. Later target/source getters cannot revoke an earlier proved root.
+sub capture_generation_fence {
+    my ($class, %args) = @_;
+    my $roots = $args{roots};
+    _fail('generation fence requires source roots') unless ref($roots) eq 'HASH';
+    my (@states, @fences);
+    for my $name (sort keys %$roots) {
+        my $root = $roots->{$name};
+        my %selection = (flattened_dt => $args{flattened_dt}, signal_name => $name,
+            signal_info => $root->{signal_info}, expression => $root->{expression}, target_language => 'systemverilog');
+        my ($ctx, $owner, $recovery, $rows) = _scope(\%selection);
+        weaken($rows);
+        my $state = _expanded($ctx, $owner, $recovery, $rows, \%selection, $root->{binary});
+        push @fences, _fence($state);
+        push @states, $state;
+    }
+    my $check = sub {
+        for my $index (0 .. $#states) {
+            _fail('whole-generation source state changed after declaration preparation')
+                unless $fences[$index] eq _fence($states[$index]);
+        }
+        return 1;
+    };
+    $check->(); # Also reject an earlier root changed while capturing later ones.
+    return $check;
+}
+
 1;
 
 =head1 NAME
@@ -514,8 +543,8 @@ expanded original expression tree/leaf names and canonical range representative.
 The root policy/origin and source names still describe its selected local tree;
 expanded leaves do not overwrite those distinct current edges. It retains
 no caller objects and asserts no selected-target membership or child inventory.
-This private prerequisite emits no HDL, changes no live range and broadens no
-VHDL, public semantic API, MCP or corpus profile. Independently completed
+Preparation emits no HDL. Live declarations separately consume this intent;
+no VHDL, public semantic API, MCP or corpus profile is broadened. Independently completed
 selected-target proof is provided separately by C<prepare>.
 
 C<prepare> takes the same actual context, root row and target language plus
@@ -557,8 +586,18 @@ fields. Its expanded tree and original leaves still include every typed source
 tree or binary child, with separate current policies and selected events.
 Canonical original-leaf contracts, maxima, physical membership, detached plans,
 weak row ownership and final complete source/target/raw-state fences are shared
-with tree roots. This private prerequisite does not enable live symbolic binary
-declarations; producer-only fixtures with that consumer held out of scope do not
-qualify native generation or external HDL behavior.
+with tree roots. Live declarations now consume this intent through a distinct
+source-range ledger, while final assembly independently invokes completed target
+proof. Private preparation alone still does not authorize emission.
+
+C<capture_generation_fence> is an internal assembly barrier, separate from every
+detached source/target plan. It captures the actual participating root states
+before declaration emission and returns an ephemeral raw-state checker. Initial
+capture also checks every earlier root after capturing later ones. Assembly
+checks again after all target proofs and ledger comparisons; later getters cannot
+revoke an already proved root unnoticed. Row associations remain weak. The
+Assembly retains the checker only for its invocation; no plan or HDL result
+stores it. External compiler, override and
+runtime qualification remain separate.
 
 =cut

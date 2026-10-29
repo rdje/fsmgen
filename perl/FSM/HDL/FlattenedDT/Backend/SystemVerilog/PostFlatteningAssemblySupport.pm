@@ -88,6 +88,16 @@ proves its actual children/source/target constraints and compares the complete
 root fields with the source declaration intent. Fixed graphs retain no symbolic
 ledger. A mismatch invalidates capture before rethrowing the generation error.
 
+Source-owned bitwise trees and computed source binary roots have their own
+per-generation ledger and symbolic guard rank. Final expected coverage derives
+from actual selected events and current typed source dependencies, independently
+of ledger membership. Every target root is proved and compared in full. An
+internal raw-state fence captures all participating roots before declarations
+and checks again after every final proof, so a later getter cannot revoke an
+earlier proved helper. Complete selected input identity also remains unchanged.
+Missing events, changed source or any emitted-ledger disagreement invalidate
+capture and return no HDL; fresh same-backend generations do not retain ledgers.
+
 =cut
 
 sub generate_systemverilog_module ($self, $fsm_module) {
@@ -102,11 +112,12 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_emitted_helper_origins} = {};
     local $ctx->{direct_declared_width_emitted_binary_ranges} = {};
     local $ctx->{direct_declared_width_emitted_graph_ranges} = {};
+    local $ctx->{direct_declared_width_emitted_source_tree_ranges} = {};
     $capture->begin_module($fsm_module->name) if $capture;
     my $stage = $ctx->{backend_sv_consolidated_intermediate_stage_support};
     my $split_stage = $stage->can('prepare_consolidated_intermediate_block')
         && $stage->can('render_prepared_consolidated_intermediate_block');
-    my ($prepared_block, $consolidated_intermediate_hdl);
+    my ($prepared_block, $consolidated_intermediate_hdl, $source_tree_fence);
     if ($split_stage) {
         $prepared_block = $stage->prepare_consolidated_intermediate_block($fsm_module);
     } else {
@@ -117,6 +128,22 @@ sub generate_systemverilog_module ($self, $fsm_module) {
         $ctx->{direct_declared_width_source_plan} = FSM::DirectDeclaredWidthSupport->prepare_module(
             fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
             target_language => 'systemverilog');
+        my $declarations = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
+        my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
+        my %roots;
+        my $source_rows = ref($prepared_block) eq 'HASH' ? ($prepared_block->{filtered_signals} // {}) : {};
+        for my $name (sort keys %$source_rows) {
+            my $info = $source_rows->{$name};
+            my $family = $declarations->_source_bitwise_family($name, $info) or next;
+            next unless $declarations->_source_bitwise_uses_symbolic($name);
+            $roots{$name} = {signal_info => $info, binary => $family eq 'binary' ? 1 : 0,
+                expression => $recovery->render_intermediate_signal_expression($name, $info)};
+        }
+        if (keys %roots) {
+            require FSM::DirectSourceBitwiseTreeRangeSupport;
+            $source_tree_fence = FSM::DirectSourceBitwiseTreeRangeSupport->capture_generation_fence(
+                flattened_dt => $ctx, roots => \%roots);
+        }
     }
     $consolidated_intermediate_hdl = $stage->render_prepared_consolidated_intermediate_block($prepared_block)
         if $split_stage;
@@ -149,6 +176,7 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             my %expected = map {$_ => $qualified->{ranges}{$_}{width_plan}}
                 grep {$qualified->{ranges}{$_}{declaration_kind} eq 'port'} keys %{$qualified->{ranges}};
             my $json = JSON::PP->new->canonical;
+            my $target_inputs = $json->encode($snapshot);
             confess "Direct captured widths do not match the actual emitted port identities\n"
                 unless $json->encode(\%expected) eq $json->encode($ctx->{direct_declared_width_emitted_ports});
             my %expected_signals = map {$_ => $qualified->{ranges}{$_}{width_plan}}
@@ -159,10 +187,31 @@ sub generate_systemverilog_module ($self, $fsm_module) {
                 grep {exists($snapshot->{target_declarations}{$_}{width_origin})} keys %{$snapshot->{target_declarations}};
             confess "Direct captured auxiliary origins do not match the actual emitted helper identities\n"
                 unless $json->encode(\%expected_origins) eq $json->encode($ctx->{direct_declared_width_emitted_helper_origins});
+            my %expected_source_tree;
+            my $declarations = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
+            for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
+                my $event = $snapshot->{target_intermediates}{$name};
+                my $info = $prepared_block->{filtered_signals}{$name};
+                next unless ref($info) eq 'HASH' && ($info->{source} // '') eq 'fsmgen_parsing';
+                my $method = $event->{source_tree_origin} ? 'prepare_source_tree_intermediate_range'
+                    : $event->{bitwise_origin} && ($declarations->_source_bitwise_family($name, $info) // '') eq 'binary'
+                        ? 'prepare_computed_source_binary_intermediate_range' : undef;
+                next unless $method && $declarations->_source_bitwise_uses_symbolic($name);
+                my $plan = FSM::DirectDeclaredWidthSupport->$method(flattened_dt => $ctx,
+                    signal_name => $name, signal_info => $info, target_language => 'systemverilog', %$snapshot);
+                confess "Direct captured source bitwise range lost its symbolic source relationship\n"
+                    unless $plan->{profile} eq 'symbolic';
+                delete @{$plan}{qw(nodes node_order)};
+                $expected_source_tree{$name} = $plan;
+            }
+            confess "Direct captured source bitwise ranges do not match the actual emitted intermediate identities\n"
+                unless $json->encode(\%expected_source_tree)
+                    eq $json->encode($ctx->{direct_declared_width_emitted_source_tree_ranges});
             my %expected_binary;
             for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
                 my $event = $snapshot->{target_intermediates}{$name};
                 next unless $event->{width_allocation};
+                next if exists($expected_source_tree{$name});
                 my $has_symbolic_operand = grep {
                     exists($qualified->{ranges}{$_});
                 } @{$event->{width_allocation}{source_names}};
@@ -189,6 +238,9 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             }
             confess "Direct captured graph ranges do not match the actual emitted intermediate identities\n"
                 unless $json->encode(\%expected_graph) eq $json->encode($ctx->{direct_declared_width_emitted_graph_ranges});
+            confess "Direct captured target inputs changed during final proof\n"
+                unless $target_inputs eq $json->encode($snapshot);
+            $source_tree_fence->() if $source_tree_fence;
             1;
         };
         unless ($ok) {

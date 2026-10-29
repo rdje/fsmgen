@@ -41,9 +41,11 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 use JSON::PP ();
+use Scalar::Util qw(blessed refaddr);
 use FSM::DirectDeclaredWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
+use FSM::SourceBitwiseTreeOriginSupport;
 
 =head2 new
 
@@ -77,6 +79,14 @@ ledger records the selected expression, ordered operands, allocation role and
 range; final assembly independently qualifies the completed target records and
 requires exact agreement before returning HDL.
 
+Source-owned nested bitwise trees and computed source binary helpers use a
+separate source-range ledger. Actual typed shape and captured mutable dependency
+select when proof is required; those selectors prove no allocation or ancestry.
+Current source intent must independently prove every original leaf relationship
+and selected maximum. Missing policy cannot silently select a numeric fallback.
+Fixed independent leaves retain numeric declarations. Complete selected-target
+proof and the whole-generation source fence close this ledger before HDL returns.
+
 =cut
 
 sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
@@ -93,7 +103,8 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
             {name => $signal_name, width => $width, signed => 0})
             if $ctx->{declared_width_declaration_capture};
 
-        my $range = $self->_binary_symbolic_range($signal_name, $signal_info, $width);
+        my $range = $self->_source_bitwise_symbolic_range($signal_name, $signal_info, $width);
+        $range //= $self->_binary_symbolic_range($signal_name, $signal_info, $width);
         $range //= $self->_graph_symbolic_range($signal_name, $signal_info, $width);
         if ($range) {
             $hdl .= "  wire $range->{range_text}$signal_name;\n";
@@ -105,6 +116,81 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
     }
 
     return $hdl;
+}
+
+# These selectors decide when proof is required. They install no policy and
+# attest no source edge, width relationship or selected target membership.
+sub _source_bitwise_family ($self, $name, $info) {
+    return unless ref($info) eq 'HASH' && ($info->{source} // '') eq 'fsmgen_parsing';
+    my $module = $self->{flattened_dt}{fsm_module};
+    my $signal = $module->signals->{$name};
+    return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+    my $ast = $signal->driving_ast;
+    return 'tree' if FSM::SourceBitwiseTreeOriginSupport->from_ast($ast);
+    return unless blessed($ast) && $ast->isa('FSM::CoreAST::BinaryOp')
+        && ref($ast->{operands}) eq 'ARRAY' && @{$ast->{operands}} == 2
+        && defined($ast->operator) && $ast->operator =~ /\A[&|^]\z/;
+    for my $operand (@{$ast->{operands}}) {
+        next unless blessed($operand) && $operand->isa('FSM::CoreAST::SignalRef');
+        my $child = $operand->signal;
+        next unless blessed($child) && $child->isa('FSM::CoreAST::Signal');
+        my $canonical = $module->signals->{$child->name};
+        return 'binary' if $child->get_attribute('is_intermediate')
+            || ($canonical && $canonical->get_attribute('is_intermediate'));
+    }
+    return;
+}
+
+sub _source_bitwise_uses_symbolic ($self, $name) {
+    my $ctx = $self->{flattened_dt};
+    my $source = $ctx->{direct_declared_width_source_plan};
+    return 0 unless $source && $source->{profile} eq 'symbolic';
+    my $signal = $ctx->{fsm_module}->signals->{$name};
+    my %active;
+    my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
+    return $signal ? $self->_source_symbolic_dependency($signal->driving_ast, $source, \%active, \$budget, 0) : 0;
+}
+
+sub _source_symbolic_dependency ($self, $ast, $source, $active, $budget, $depth) {
+    return 0 unless blessed($ast);
+    confess "Direct source bitwise symbolic dependency exceeds its bounded tree\n"
+        if $depth > FSM::IntermediateWidthGraphPolicySupport::MAX_BINARY_LEVELS();
+    my $identity = refaddr($ast);
+    confess "Direct source bitwise symbolic dependency contains a cycle\n" if $active->{$identity};
+    local $active->{$identity} = 1;
+    if ($ast->isa('FSM::CoreAST::SignalRef')) {
+        my $operand = $ast->signal;
+        return 0 unless blessed($operand) && $operand->isa('FSM::CoreAST::Signal');
+        my $plan = $source->{signals}{$operand->name};
+        return 1 if $plan && $plan->{width_plan} && $plan->{width_plan}{profile} eq 'symbolic';
+        return $self->_source_symbolic_dependency($operand->driving_ast, $source, $active, $budget, $depth)
+            if $operand->get_attribute('is_intermediate');
+    }
+    confess "Direct source bitwise symbolic dependency exceeds its occurrence budget\n" if --$$budget < 0;
+    if (ref($ast->{operands}) eq 'ARRAY') {
+        for my $operand (@{$ast->{operands}}) {
+            return 1 if $self->_source_symbolic_dependency($operand, $source, $active, $budget, $depth + 1);
+        }
+    }
+    return 0;
+}
+
+sub _source_bitwise_symbolic_range ($self, $name, $info, $width) {
+    my $ctx = $self->{flattened_dt};
+    return unless $ctx->{direct_declared_width_source_plan};
+    my $family = $self->_source_bitwise_family($name, $info) or return;
+    return unless $self->_source_bitwise_uses_symbolic($name);
+    my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
+    my $expression = $recovery->render_intermediate_signal_expression($name, $info);
+    my $method = $family eq 'tree' ? 'prepare_source_tree_declaration' : 'prepare_computed_source_binary_declaration';
+    my $emitted = FSM::DirectDeclaredWidthSupport->$method(flattened_dt => $ctx,
+        signal_name => $name, signal_info => $info, target_language => 'systemverilog', expression => $expression);
+    confess "Direct source bitwise emitted range requires current symbolic intent and selected width\n"
+        unless $emitted->{profile} eq 'symbolic' && $emitted->{width_plan}
+            && FSM::IntermediateWidthAllocationSupport::_width($emitted->{width})
+                eq FSM::IntermediateWidthAllocationSupport::_width($width);
+    $ctx->{direct_declared_width_emitted_source_tree_ranges}{$name} = $emitted;
+    return $emitted->{width_plan};
 }
 
 sub _binary_symbolic_range ($self, $name, $info, $width) {

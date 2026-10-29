@@ -654,8 +654,9 @@ the detached C<nodes> inventory contains each physical child once in
 children-before-parent C<node_order>. The root fields must match separate source
 declaration intent. Full source/target inputs, child selections, raw currentness
 and weak row membership recheck after preparation, including changes hidden by
-equal derived ranges. This private proof emits no HDL and enables no live
-source-tree range or VHDL profile.
+equal derived ranges. Preparation emits no HDL; live declarations consume the
+separate intent and final assembly independently invokes this target proof.
+No VHDL profile is added.
 
 C<prepare_computed_source_binary_declaration> and
 C<prepare_computed_source_binary_intermediate_range> provide separate private
@@ -666,7 +667,8 @@ at the binary root and the complete expanded tree/ordered leaves separately.
 Current tree or binary child policies, complete canonical relationships,
 physical targets and final raw currentness remain required. Direct two-original
 binary roots and the tree-only methods keep their existing ownership boundary.
-These prerequisites still do not repair the live binary range consumer.
+The live backend now consumes this separate intent and independently closes its
+source-range ledger. Private preparation itself still emits no HDL.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

@@ -204,15 +204,15 @@ and actual current graph allocation and complete selected-target proof must
 agree. Repeated source and computed operand slots retain their order. Fixed
 graphs keep their independently selected numeric widths. Different mutable roots,
 aliases or static floors cannot borrow an equal default value. Source-owned
-nested bitwise forms such as `(& A B C)` still retain a numeric helper range
-at the selected default. The Parser owns their nested Core tree; its binary
-allocation bucket accepts two whole operands, and a separate source-tree journal
-now captures fresh n-ary births. Computed arithmetic graph ownership remains
-separate. Negated n-ary forms
-wrap that same bitwise helper in scalar logical NOT. Fresh source-tree births
-now stage and publish at complete source success; selected-target proof and
-symbolic range integration remain pending. These
-forms do not yet propagate parameter changes through their helper ranges.
+nested bitwise forms such as `(& A B C)` now retain a symbolic helper range
+when their original plain unsigned leaves share a complete captured mutable
+width contract. The Parser owns their nested Core tree; its binary allocation
+bucket accepts two whole operands, while a separate source-tree journal captures
+fresh n-ary births. Computed arithmetic graph ownership remains separate.
+Negated n-ary forms wrap the bitwise helper in scalar logical NOT. Completed
+source publication, independent selected-target proof and a separate emitted
+source-range ledger qualify bounded native generation. External parameter
+changes and runtime still require the separate full feature qualification.
 
 The separate `SourceBitwiseTreePolicySupport` data schema now validates
 `source_bitwise_tree_operand_max` records. Its source vector contains every
@@ -258,7 +258,8 @@ Ordinary lookups install no fields. Failed replacement clears previous intent,
 and `clear_intermediate_width_allocation` clears both intent families.
 This local intent establishes no module membership or fresh source birth.
 The separate source journal now provides completed Parser/facade publication.
-Selected target proof and live helper range integration remain pending. Binary
+Separate source/target proof now supports live bounded source helper ranges,
+with whole-generation currentness and final emitted-field closure. Binary
 two-slot and computed arithmetic graph contracts remain separate.
 
 The actual ExpressionBuilder allocator now stages fresh n-ary AND/OR/XOR births
@@ -459,8 +460,9 @@ aliasing W, refuses because its original relationship differs. This private
 method emits no range and attests neither current source-helper edges nor
 complete selected targets. Actual source intent over original module leaves now has a separate private
 preparation step, including recursive typed source helpers. The independent
-complete-target join below now qualifies selected records; live range consumption
-remains pending. VHDL and public API/MCP/corpus support are unchanged.
+complete-target join below qualifies selected records, and the live Verilog-family
+backend now consumes these source intents with independent final closure. VHDL
+and public API/MCP/corpus support are unchanged.
 
 
 The example deliberately retains the actual collected row map in `$rows`. With
@@ -513,7 +515,7 @@ selections replay at return; a final raw-field fence follows the last complete
 source read so a late child metadata change cannot escape.
 
 Source intent supplies no completed-target membership or child
-inventory and does not activate symbolic helper declarations. Keep the actual
+inventory. The live backend consumes it separately from independent target proof. Keep the actual
 prepared block alive through proof; a saved plain plan cannot revive expired
 current ownership.
 
@@ -544,8 +546,9 @@ operators or independent maxima refuse. Every complete input map and current
 child proof rechecks at return, followed by a raw currentness fence after the
 last source snapshot. Unrelated input or source changes cannot hide behind an
 unchanged derived range. Returned data retains no caller row map, and failure
-returns no partial plan. This private proof does not yet activate live symbolic
-helper declarations; emission and independent final assembly remain separate.
+returns no partial plan. Private proof and live declaration emission keep separate
+ownership; final assembly independently compares every emitted source intent
+with the completed target root.
 
 A nested source expression such as `(& A B (| (| A B C) C))` also creates a
 binary helper over a generated child. That helper cannot use the old
@@ -561,17 +564,52 @@ current policy/event and physical declaration. Tree-only entrypoints remain
 closed to binary roots, and direct two-original binary helpers retain their
 existing owner.
 
-This private proof is a prerequisite to live consumption. Native generation of
-that nested mutable example still refuses with `Direct binary width relationship
-requires identical mutable operand contracts`; the next emission slice owns the
-repair. Producer-only private proof fixtures hold that consumer out of scope and
-do not establish successful symbolic HDL generation. Whole-value guards and
-atomic final range closure remain part of that same pending emission slice.
+The actual Verilog-family backend now consumes both source-tree and computed
+source binary intent. Every original mutable leaf must have the same complete
+captured width relationship; a helper name or equal selected default supplies no
+ancestry. A separate generation ledger records every emitted source helper's
+range, selected expression, policy/origin, original tree and ordered leaves.
+Whole-value guards consult that symbolic rank even when the default is one.
+Scalar logical NOT and unary reduction results keep their own scalar behavior.
+Fixed independent leaves retain numeric declarations and no symbolic ledger.
 
-Run the bounded producer-only proof checks with:
+Final assembly derives expected coverage from actual selected events and typed
+source dependencies, independently of ledger membership. It re-proves complete
+targets and compares every root field. A raw source fence spans declaration
+preparation through the final proof: even a later child's getter cannot revoke
+an already proved helper unnoticed. Missing policies/events, changed source,
+incompatible equal-default aliases or ledger mismatches return no HDL and no
+completed capture. Fresh same-backend generation recovers.
+
+For example, save this as `.artifacts/bitwise_generic.fsm`:
+
+```lisp
+(?fsm:bitwise_generic
+  (+params (W 1))
+  (+size (A (param W)) (B (param W)) (C (param W)) (DATA 1) (OTHER 1))
+  (idle
+    (<(& A B (| (| A B C) C)) (= (DATA 1)) (= (OTHER 1)))
+    (-> idle)))
+```
+
+Generate either Verilog-family target:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t
+./bin/fsmgen --strict --output .artifacts/sv/bitwise_generic.sv .artifacts/bitwise_generic.fsm
+./bin/fsmgen --strict --language verilog --output .artifacts/sv/bitwise_generic.v .artifacts/bitwise_generic.fsm
+```
+
+The participating source bitwise helpers retain `[(W - 1):0]` at default one.
+This fixes the previously recorded nested binary consumer refusal. The focused
+native checks qualify declarations, whole-value guards, missing-event/late-write
+refusals and atomic recovery. External compiler, parameter override, runtime and
+full feature qualification remain separate; generated text alone proves none of
+those outcomes.
+
+Run the bounded source proof and live-emission checks with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t t/2248-source-tree-symbolic-range-emission.t
 ```
 
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,

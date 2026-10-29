@@ -31,10 +31,6 @@ sub fixture {
     my $rows;
     {
         no warnings 'redefine';
-        # Exercise actual source/row/event producers only. The demonstrated live
-        # binary range consumer still refuses this family until the next slice.
-        # This fixture deliberately makes no live symbolic-HDL acceptance claim.
-        local *FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport::_needs_declared_width_preparation=sub {0};
         local *FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport::collect_consolidated_intermediate_signals
             =sub {$rows=$collect->(@_); return $rows};
         local $ctx->{declared_width_declaration_capture}=$capture;

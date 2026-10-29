@@ -44,10 +44,14 @@ The same private module now independently traverses complete selected child even
 canonical physical declarations and current typed edges, rechecking all inputs
 and final raw currentness against separate source intent. Separate computed source
 binary-root entrypoints reuse these kernels without changing tree-only or old
-binary contracts. Their typed child ancestry is a prerequisite to live consumption;
-producer-only fixtures do not qualify the still-refusing native nested binary path.
-Live source-tree ranges
-remain pending; no VHDL or public-report profile expands. This is a scoped dependency update, not a new
+binary contracts. Actual declaration consumption now imports the pure typed tree
+selector and retains a separate per-generation source-range ledger. Guard rank
+reads that ledger; final assembly independently proves complete selected targets
+and compares all emitted fields. The source range owner also supplies an ephemeral
+raw-state fence spanning declarations through every final proof, closing later
+getter changes to earlier helpers. Native nested binary generation now succeeds;
+external override/runtime/full qualification remains pending. No VHDL or
+public-report profile expands. This is a scoped dependency update, not a new
 whole-entrypoint closure census.
 
 Scoped update on `2026-10-28`: actual factorization imports
@@ -64,8 +68,8 @@ to select original leaves for source-only frozen width relationships; this
 adds no graph allocation or target attestation. A lazy direct facade now loads
 `DirectArithmeticGraphRangeSupport` for the separate canonical selected DAG and
 complete source/target join. The numeric resolver uses active-call recursion
-tracking so repeated computed children retain current policy. Live graph ranges
-remain pending. The same lazy graph owner now prepares a distinct source-only
+tracking so repeated computed children retain current policy. The same lazy graph
+owner now prepares a distinct source-only
 declaration intent, without target events. Actual declarations now consume it
 through a separate graph ledger; ASTSupport recognizes its symbolic vector rank,
 and final assembly independently qualifies complete selected graph targets before

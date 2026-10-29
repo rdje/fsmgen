@@ -31,7 +31,8 @@ intermediate-signal classification, and assignment/reset helpers consumed by
 this rendering/classification family.
 
 During source-aware generation, proved symbolic source, storage and emitted
-binary-helper ranges remain vectors even when their selected default is one.
+binary-helper, arithmetic graph and source-tree/computed-source-binary ranges
+remain vectors even when their selected default is one.
 Truth tests and logical operator selection use whole-vector semantics; numeric
 width folds cannot treat these ranges as fixed sizes. Per-generation plans are
 read without modifying declaration ledgers or inferring new relationships.
@@ -783,9 +784,12 @@ sub _signal_has_symbolic_range ($self, $name) {
     my $binary = $binary_ranges ? $binary_ranges->{$name} : undef;
     my $graph_ranges = $ctx->{direct_declared_width_emitted_graph_ranges};
     my $graph = $graph_ranges ? $graph_ranges->{$name} : undef;
+    my $source_tree_ranges = $ctx->{direct_declared_width_emitted_source_tree_ranges};
+    my $source_tree = $source_tree_ranges ? $source_tree_ranges->{$name} : undef;
     my @plans = ($signal ? $signal->{width_plan} : undef,
         $binary ? $binary->{width_plan} : undef,
-        $graph ? $graph->{width_plan} : undef);
+        $graph ? $graph->{width_plan} : undef,
+        $source_tree ? $source_tree->{width_plan} : undef);
     for my $field (qw(direct_declared_width_emitted_ports direct_declared_width_emitted_signals)) {
         my $map = $ctx->{$field};
         push @plans, $map->{$name} if $map && exists($map->{$name});

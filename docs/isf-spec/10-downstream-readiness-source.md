@@ -341,6 +341,19 @@ General source rules:
   Binary intermediate capture now retains ordered whole-operand origins and each
   selected width independently. Allocation policy and generic range proof remain
   separate; equal selected defaults establish no relationship.
+  Bounded direct SystemVerilog/Verilog source bitwise trees and computed source
+  binary helpers now consume symbolic ranges only when every original plain
+  unsigned leaf has the same complete captured mutable width contract. Actual
+  typed helper edges, current allocation and selected target declarations must
+  agree; default-one ranges keep vector rank and whole-value guard semantics.
+  Fixed independent leaves retain numeric maxima. A separate emitted-source
+  ledger, complete target reproof and a raw-state fence spanning declaration
+  preparation through final assembly reject missing child events or late source
+  changes, including a later proof revoking an earlier helper. Different
+  equal-default aliases and unproved relationships refuse. This closes the
+  previously retained nested source binary consumer refusal; it does not extend
+  VHDL, public report schemas or corpus phase claims. Full feature, external
+  override/compiler/runtime and transport qualification remain pending.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
