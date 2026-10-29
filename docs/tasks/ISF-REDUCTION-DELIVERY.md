@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34, ISF-REDUCTION-DELIVERY.35`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34, ISF-REDUCTION-DELIVERY.35, ISF-REDUCTION-DELIVERY.36`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -2808,6 +2808,18 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'ram_guard_session.py' identifies b1d8a81bc2789f8fbf621161de476b3a8507a08c; README Requirements still restricted Python's stated role to generated POD. Actual guarded first-use therefore had an undocumented interpreter prerequisite.
   - [x] **ADDRESSED (verified)** — README and troubleshooting now name Python for guarded commands and book generation. Existing versions, platforms, Perl and external HDL prerequisites preserve; README is seven bytes smaller, with unchanged ceilings.
   - [x] **NO REGRESSION** — readme-entrypoint: all README entry-point invariants hold. Whitespace checks pass; complete source/claim and normal mandatory gates qualify this documentation-only correction. No new runtime code or broader feature-verification claim.
+
+- ID: `ISF-REDUCTION-DELIVERY.36`
+  Status: `done`
+  Goal: `Perform the due October29 safe artifact census before canonical source-tree preparation.`
+  Acceptance: `At the clean a0854f279 source-publication boundary, reuse the installed authenticated collector/reviewer in an exclusive dated slot. Capture same-volume regular log/bin membership and root/Rust locations, excluding Git metadata, foreign repositories and symlinks. Retain candidates without exact disposal authority. Verify independent rg membership and saved hostile controls, overwrite the latest-only cleanup record and same-size book reader link, run normal commit integrity and resume canonical proof. Startup policy review checks the external claim template against the retained adopted source; no unreviewed sync or foreign write.`
+  Verification: `Authenticated installed collector/reviewer and fresh a0854f279 native boundary admit the due interval. Same-volume regular log/bin and root/Rust membership agrees exactly with independent rg; all candidates retain without disposal authority. Saved missing-member, unsafe-path, Boolean-size and invented-removal controls reject. Re-derive: fresh dated filesystem census. Falsify: independent rg and saved hostile controls. Durability: exclusive wrapper and complete census.json.gz, latest-only record, book reader, task and Git. External claim template is byte-exact to the already reviewed retained template; README and live-containment policies remain adopted. No removal, original workload replay or future absence claim. Normal mandatory hook precedes resuming canonical source-tree proof.`
+  Commit: `ISF-REDUCTION-DELIVERY.36: record due safe artifact census`
+
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup locates the maintained record; the exact native prior record and captured UTC pass the installed collector's unchanged daily admission assertion. Suffix and age alone provide no disposal authority.
+  - [x] **ADDRESSED (verified)** — Fresh exclusive wrapper authenticates the installed census source against native Git. Independent complete membership and saved hostile-record controls pass; every candidate retains. Latest-only date and same-size book reader advance; saved replay repeats no walk or deletion.
+  - [x] **NO REGRESSION** — Saved census review and all hostile controls pass. Source/claim freshness and knowledge-map: OK are enforced in the normal final-index hook; no changed runtime feature, cap or authority. No full CI or reclamation claim.
 
 ## Blockers
 
