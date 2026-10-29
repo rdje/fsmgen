@@ -1785,11 +1785,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Exact loaded-owner Git/current hashes and full initial-versus-typed-edge product/source equality pass; knowledge-map: OK passes for current cards and cached/direct queries. No production behavior changes. Book build and normal mandatory doctrines gate the metadata-bearing inventory; full .6 remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair numeric-width freezing across actual computed arithmetic helper graphs.`
   Acceptance: `Reproduce (+ A B C), (- A B C) and (+ A (* B C)) with plain A/B/C sized by the same captured W. Current inner helpers have current policies/symbolic ranges but outer computed-operand helpers have no allocation policy and retain numeric widths; a later W override can truncate their results and guard truth. Split exact actual graph birth/inference ownership, canonical transitive source/target proof and actual emission/final closure before code. Bind typed ordered edges to current collected helper identities and dependency epochs; preserve independent numeric floors/literal/type/constraint semantics, detect cycles and reject stale/foreign/copied graph claims. Do not infer equivalence from names, equal defaults or an already printed child range. Focused source/target/lifecycle checks and book/fact sync per slice; no early full .6.`
-  Verification: `Actual default-one/eight reproductions and full products: docs/audits/residual-operator-inventory-20261028.json.gz. Highest next residual implementation priority.`
-  Commit: `pending exact graph producer/proof/consumer split`
+  Verification: `Actual graph birth/substitution, intrinsic/current completed policy, canonical original-leaf and complete selected-target proof, source declaration intent and live range/guard/ledger consumers close with focused checks. N-ary/nested/repeated computed arithmetic preserves actual order, rank and constraints. Native26 contrasts and isolated source/currentness/rank/ledger/target forgeries retain in child receipts. This closes the bounded computed arithmetic repair; source-owned n-ary bitwise/scalar families and full .6 remain required.`
+  Commit: `children and this focused closure slice`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.4, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1`
@@ -2085,11 +2085,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2, Tests=8 (T2231/T2230); alternate traversal Files=1, Tests=4. Baseline/current production executable text is byte-identical after POD removal. Exact prior graph-join native conservation remains authoritative; no repeated broad gate or graph/VHDL emission is claimed. Full .6 and whole-backend/Core cycles remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Emit proved computed arithmetic ranges and independently close the full selected graph.`
   Acceptance: `After .4, consume current proved child/root relationships at actual declarations in dependency order without a second generation. Preserve one-bit vector rank, whole-value guard truth and exact arithmetic order/duplicates; independent fixed/literal/type/constraint profiles retain their contracts. Final assembly independently re-derives complete selected graph/event/target provenance and compares every actual emitted field. Late mutation/failure returns no artifact or snapshot and fresh reuse recovers. Focused n-ary/nested SV/Verilog/source/refusal/lifecycle controls, runnable examples and docs qualify implementation; source-owned n-ary, paired VHDL and full .6 remain separate.`
-  Verification: `Canonical source/target graph proof closes with focused checks through .2.4.5. Split source declaration ledger, actual emission/guard-rank/final comparison, and independent complete selected-graph closure. No second generation or fabricated target events.`
-  Commit: `pending actual graph consumer`
+  Verification: `Source declaration intent, actual one-pass graph range/guard integration and exact independent final target/ledger comparison close in the children. Actual deep/multiple-child and late selected-record failure/reuse checks pass; source-intent substitution fails intended controls. Original native26 before/after contrasts and exact sources retain in graph-emit, independent closure in graph-close. Focused implementation qualification only; source n-ary, VHDL and full .6 remain separate.`
+  Commit: `children and this focused closure slice`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.1`
@@ -2155,11 +2155,15 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful: final T2233 Files=1, Tests=4; exact-source corrected T2232/T2229 each Files=1, Tests=3; T2230/T2215 complete per-file passes. Every other native source/AST/target/graph product is exact against authenticated803; strict CLI check and SV/Verilog generation exit0. Failed/interrupted cohorts remain non-passes. Book/source/claim and normal mandatory gates complete before advancing; independent .5.3 and full .6 remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Independently close selected graph emission, guard truth and failure lifecycle.`
   Acceptance: `Qualify n-ary/nested/repeated arithmetic at one/wide defaults, actual source/caller/target constraints, complete child ledgers and whole-value guard truth. Late target/source/ledger mutations must return no artifact or snapshot; fresh reuse recovers. Runnable focused SV/Verilog/native profiles and synced docs close graph repair before other source-owned families. Full .6 stays deferred.`
-  Verification: `pending actual graph emission`
-  Commit: `pending`
+  Verification: `Focused T2235 passes All tests successful Files=1, Tests=2. Actual deep and multiple-child graphs emit every selected W range at one/wide defaults in Verilog/SV, with whole-value gating and unchanged detached snapshots. Late child expression/tree changes, missing child records and missing root allocation all refuse with no HDL or completed capture; each fresh same-backend retry succeeds. An isolated complete-target method returning emitted source intent instead accepts the two child forgeries and fails six intended assertions. Executable production source is exact e785996d2. Prior26 native contrasts and fixed/alias/source/ledger controls retain in graph-emit; this slice adds actual independent final target closure. Two observed stale API sentences (composition port integration pending and transitive graph ranges next) are corrected against canonical emitter imports/calls and immutable f2a686cdec/a650f5d0e changes, without widening scope into an audit. Original/current prose, test, complete logs, known-bad source and distinct evidence legs retain in docs/audits/graph-close-20261029.json.gz. Focused arithmetic graph repair closes; full .6 and remaining source families stay open.`
+  Commit: `children and this focused closure slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my %expected_graph' identifies a650f5d0e4f1adc0bee7d40c35c0c2241f79fcc6. New independent controls target the real final snapshot after declarations. Returning emitted source intent from the complete-target API bypasses child text/tree disagreement and produces six failed assertions at ./t/2235-arithmetic-graph-emission-closure.t line 117; mere source-intent equality cannot attest selected target inputs.
+  - [x] **ADDRESSED (verified)** — Current T2235 passes actual deep/branched/default-one/wide output and every targeted snapshot/refusal/reuse assertion. The isolated source-intent substitution fails child forgeries while positive generation still succeeds, qualifying the independent final proof. Complete exact evidence and stale API correction routes retain in graph-close; no production executable source changed.
+  - [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for the bounded new closure test. git diff --quiet e785996d2 -- perl scripts exits0; previous source-matched emission/native26 and fixed/source/ledger controls remain retained. Book/source/claim and normal mandatory gates precede advancement. No broad suite, full feature or external compiler/runtime qualification is inferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3`
   Status: `pending`

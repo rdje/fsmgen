@@ -26,8 +26,8 @@ preserves a detached environment only when one is supplied by the actual plan.
 
 The internal [integer-width evaluator](perl-api/FSM/WidthExpressionSupport.html)
 shares direct-parser width semantics through separate ordinary-symbol and
-explicit-parameter resolver callbacks. Composition port integration remains
-pending; this helper does not enable symbolic source planning or HDL emission.
+explicit-parameter resolver callbacks. Composition and direct prepared-range emitters now share this evaluator.
+The evaluator alone does not prove source capture or admit a symbolic HDL profile.
 
 POD documents the Perl bindings. The normalized semantic field reference below
 complements [Extensions and Embedding](11-extensions-and-embedding.md) for
@@ -212,9 +212,9 @@ join that ownership to held child proofs, and completed graph policy follows
 successful collection. A later numeric width or printed child range cannot
 recreate those events. Actual declaration intent and an independent completed
 target traversal bind emission. Logical/comparison wrappers retain one-bit
-results; that scalar result alone supplies no vector allocation proof. Independent
-selected-graph closure and full override/runtime qualification remain separately
-owned.
+results; that scalar result alone supplies no vector allocation proof. Focused
+selected-graph closure covers deep and multiple-child graphs, default-one rank
+and atomic target disagreement. Full override/runtime qualification remains open.
 
 A separate `intermediate_width_graph_birth` diagnostic now retains
 `{kind => arithmetic_graph_candidate, expression_tree => ...}` at the actual
@@ -234,7 +234,7 @@ at most 64 binary levels and 4096 visited nodes; larger trees receive no new
 metadata. Private graph input and ready frames now validate source constraints
 and actual current child proofs; graph intrinsic events now qualify separately.
 Completed graph policy uses its separate current getter after collection.
-These diagnostics change no HDL, target events or current range admission.
+These diagnostics alone change no HDL, target events or range admission.
 
 `IntermediateWidthGraphInferenceSupport` separates pending unresolved parent input
 from ready dependency proof. The canonical width owner holds a weak association
@@ -290,8 +290,8 @@ views and failed/reset/new generations withhold. Returned records detach, and
 later matching numeric values cannot recreate policy. The ordinary
 `intermediate_width_allocation` and whole-reference methods retain their existing
 profiles. This completes the bounded graph producer foundation with focused
-checks. Transitive symbolic ranges and independent final graph closure remain
-next; full override/runtime qualification is deferred.
+checks. The current graph policy feeds the canonical range and independent
+final-assembly proof described below; full override/runtime qualification is deferred.
 
 The shared `IntermediateWidthGraphPolicySupport` now validates that closed graph
 record, original arithmetic tree and current edge pair. It preserves order,
@@ -394,8 +394,14 @@ that intent, retain a separate graph ledger and expose vector rank to guard
 classification. Final assembly independently re-proves the completed selected
 graph and requires exact root-field agreement with the ledger before returning
 HDL. Missing or changed source/target/ledger evidence refuses atomically; fresh
-reuse starts with a new per-generation ledger. Independent selected-graph closure
-and full feature qualification remain separate work.
+reuse starts with a new per-generation ledger. Focused actual deep/multiple-child
+checks pass in `t/2235-arithmetic-graph-emission-closure.t`: changing a selected
+child expression or original tree, removing a child record or dropping the root
+allocation returns no HDL or completed snapshot. The collector data remains
+detached and a fresh generation recovers on the same backend. Replacing final
+independent target proof with already emitted source intent fails the child
+forgery checks. These controls qualify the bounded arithmetic graph consumer;
+full feature/compiler/override/runtime qualification remains separate work.
 
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.

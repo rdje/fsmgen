@@ -24,5 +24,5 @@
 
 _Direct declared ranges retain source trees but numeric declaration plans need captured lookup identities_
 
-- **date:** 2026-10-28 · **status:** current
+- **date:** 2026-10-29 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-declared-width-consumers.md`](../../docs/knowledge/direct-declared-width-consumers.md)

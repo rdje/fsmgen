@@ -405,7 +405,8 @@ and repeated operands retain their meaning. The profile requires plain unsigned 
 Signals, current allocator ownership and identical frozen contracts for every
 original leaf. Equal defaults from independent roots or aliases do not prove
 that relationship; incompatible mutable graphs refuse. Fixed arithmetic graphs
-keep independent numeric widths. Source-owned nested bitwise graphs, other
+keep independent numeric widths. A failed relationship returns no HDL artifact;
+a corrected relationship permits fresh generation. Source-owned nested bitwise graphs, other
 independent type/constraint profiles and full override/runtime qualification
 remain separate work.
 
