@@ -411,6 +411,49 @@ shape. Failure after actual event emission invalidates the capture, and fresh
 same-backend reuse recovers. Frozen source/complete selected-target proof and
 symbolic range consumption remain separate; selected metadata admits neither.
 
+A separate source-only prerequisite now proves the frozen original-leaf
+relationship through `DirectDeclaredWidthSupport`. The closed tree policy
+selects all ordered leaves, including duplicates and mixed operators; it does
+not attest their allocation or selected maximum. The existing canonical width
+kernel requires actual plain unsigned module leaves. If any leaf is mutable,
+every complete frozen range contract must agree, including its original scope,
+width tree, ordered parameter roots and vector rank. Equal-default aliases,
+fixed floors and a different final leaf cannot borrow an earlier match. Fixed
+leaves retain their independent widths and return no symbolic range.
+
+For example, this prepares a relationship from actual source and selected data:
+
+```perl
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+use FSM::HDL::FlattenedDT;
+use FSM::DirectDeclaredWidthSupport;
+use FSM::Backend::VerilogFamily::DeclarationCapture;
+my $text = '(?fsm:tree_leaves (+params (W 1))'
+    . ' (+size (A (param W)) (B (param W)) (C (param W)) (DATA 1) (OTHER 1))'
+    . ' (idle (<(& A B C) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+my $module = FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$text));
+my $backend = FSM::HDL::FlattenedDT->new;
+my $capture = FSM::Backend::VerilogFamily::DeclarationCapture->new;
+{
+    local $backend->{declared_width_declaration_capture} = $capture;
+    $backend->generate_systemverilog($module);
+}
+my ($event) = grep {exists($_->{source_tree_width_allocation})}
+    values %{$capture->snapshot->{target_intermediates}};
+my $plan = FSM::DirectDeclaredWidthSupport->prepare_source_tree_operand_relationship(
+    fsm_module => $module, assignment_analysis => $backend->{assignment_analysis},
+    target_language => 'systemverilog', source_tree_width_allocation => $event->{source_tree_width_allocation});
+print $plan->{profile}, ' ', join(' ', @{$plan->{source_names}}), "\n";
+```
+
+This prints `symbolic A B C`. The detached representative retains vector rank
+at the selected default of one. Changing only C to `(param COPY)`, with COPY
+aliasing W, refuses because its original relationship differs. This private
+method emits no range and attests neither current source-helper edges nor
+complete selected targets. Those joins and live consumption remain pending;
+VHDL and public API/MCP/corpus support are unchanged.
+
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while
 SystemVerilog inference selects width 32. Final source/target agreement then

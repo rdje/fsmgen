@@ -13,6 +13,7 @@ use FSM::DeclaredWidthRangeSupport;
 use FSM::DeclaredWidthBindingSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
+use FSM::SourceBitwiseTreePolicySupport;
 use FSM::Backend::VHDL::ParameterBindingEmitter;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -155,6 +156,11 @@ sub prepare_binary_operand_relationship ($class, %args) {
 sub prepare_graph_operand_relationship ($class, %args) {
     my $names = FSM::IntermediateWidthGraphPolicySupport->leaf_names($args{graph_width_allocation});
     return _prepare_operand_relationship($class, $names, 'graph', %args);
+}
+
+sub prepare_source_tree_operand_relationship ($class, %args) {
+    my $names = FSM::SourceBitwiseTreePolicySupport->leaf_names($args{source_tree_width_allocation});
+    return _prepare_operand_relationship($class, $names, 'source tree', %args);
 }
 
 sub _prepare_operand_relationship ($class, $names, $family, %args) {
@@ -511,6 +517,23 @@ It neither accepts caller range plans nor emits graph ranges or broadens VHDL
 admission. Actual selected child/event/declaration closure must independently
 join this source relationship before a graph range can be used. The binary API
 still requires exactly two C<source_names> and retains its result contract.
+
+C<prepare_source_tree_operand_relationship> takes the same source inputs plus
+C<source_tree_width_allocation>. The separate closed source-bitwise-tree schema
+selects every ordered original leaf slot, including duplicates and mixed
+operators. The existing canonical operand-relationship kernel proves every
+actual plain unsigned module leaf. Fully fixed leaves retain independent
+widths. If any leaf is mutable, all complete frozen range plans must agree
+except C<source_signal>, including original scope, expression tree, ordered
+parameter roots, observed width and vector rank. Equal defaults, alias roots,
+static floors, constraints and stale captures cannot supply that proof.
+
+Its detached result has the same source-only fields as the binary and graph
+relationship methods. The supplied tree policy is only a bounded leaf selector:
+this method does not attest its allocation, selected maximum, current typed
+source-helper edges or target membership. Recursive source intent and complete
+target proof must bind those facts independently before live range use. It
+accepts no caller range plan, emits no HDL and broadens no VHDL profile.
 
 C<prepare_arithmetic_graph_intermediate_range> delegates the private transitive
 join to C<FSM::DirectArithmeticGraphRangeSupport>. It takes the actual backend

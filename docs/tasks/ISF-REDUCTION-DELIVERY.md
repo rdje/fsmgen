@@ -2294,10 +2294,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3, Tests=15 for new T2242 and existing binary origins/publication T2197/T2210. Actual one/wide data and guard HDL, caller source/width contracts and legacy fields conserve in the bounded saved contrast. Exact API example passes; POD/book/staged copied-source/claim and normal mandatory gates precede advancement. No declaration/range change, unsized-literal fix, VHDL widening, override/runtime or full CI qualification is inferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare canonical source-tree and complete selected-target ranges.`
   Acceptance: `Join actual source-owned tree and current typed generated-source helper edges to frozen canonical original-leaf contracts and complete selected target records. Reuse source width evaluators/relationships; never flatten ancestry from helper names, text or equal defaults. Preserve operators/order/duplicates and every independent floor/literal/type/state constraint. All mutable original leaves require identical complete frozen relationships; fixed profiles keep independent maxima. Detect cycles, missing/stale/foreign child records and complete-input changes even if derived range text stays equal. Plans/caller lifetimes detach; private source declaration intent and complete-target proof share exact root fields but retain independence. Split safe kernels as needed; no live range or VHDL widening yet.`
   Verification: `pending prerequisite source-holder slice`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.1`
+  Status: `done`
+  Goal: `Prepare frozen original-leaf relationships from the closed source-tree selector.`
+  Acceptance: `Reuse the existing canonical operand-relationship kernel with bounded source-bitwise-tree schema selection. Preserve complete ordered duplicate slots and frozen mutable range contracts; fixed leaves retain independent widths. Prove equal-default aliases, distinct width trees, fixed floors, missing/state/signed/type/constrained/stale leaves cannot borrow a mutable relationship. Detach plans and preserve full caller JSON kinds. The supplied policy is a selector, not allocation or target attestation. Private API/POD and runnable book example sync; focused source-relationship regression and known-bad third-leaf comparison control, no public API/MCP/corpus expansion or live range emission.`
+  Verification: `The separate source-tree selector now joins the existing canonical operand-relationship kernel. Every ordered original module leaf including duplicate/mixed slots is proved; mutable leaves require identical complete frozen contracts, while fixed independent widths keep their selected values. The selector intentionally supplies no allocation/maximum/typed-edge/target attestation. Baseline T2243 fails the absent method; current T2243/T2229 pass All tests successful Files=2, Tests=6. A current-source isolated comparison restricted to the first two leaves fails exactly the six intended third-leaf alias/root/tree assertions while positive and fixed cases pass. Complete caller JSON state and detached nested plans preserve; default-one vector rank, fixed floors, foreign/signed/state/type/constrained/stale controls qualify. Exact book example prints symbolic A B C. Production changes are the separate facade method/import/POD only; no backend emission or public API/MCP/corpus extension. Re-derive current actual-source tests and canonical plans; falsify isolated third-leaf omission and distinct full contract controls; durability tracked tests/source/manual/card plus exact before/current/known-bad/log/recipe evidence in docs/audits/source-tree-leaf-relationships-20261029.json.gz. Card preserves every original question and old test expansion within unchanged byte allowance. POD/source/claim and normal mandatory hooks precede advancement. Actual recursive source intent and complete-target proof remain pending; full .6 stays deferred.`
+  Commit: `this frozen source-tree leaf relationship slice`
+
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Baseline Perl diagnostic at t/2243-source-bitwise-tree-leaf-relationships.t line 13 reports the missing source-tree relationship API. DirectDeclaredWidthSupport already owns complete canonical binary/graph leaf contracts; the separate source-tree schema has no facade selector. Isolated first-two-only contract comparison fails third-leaf refusal at line 74 and its diagnostic at line 75, exposing equal-default ancestry borrowing.
+  - [x] **ADDRESSED (verified)** — New closed source-tree selection reuses the canonical kernel and preserves ordered duplicate leaves, exact frozen mutable plans, fixed independent widths, caller JSON kinds and detached return data. Third-leaf alias/root/tree omission fails six intended assertions; the current implementation and runnable example pass. Source-only plans attest neither allocation nor actual target/source-helper membership and emit no HDL.
+  - [x] **NO REGRESSION** — All tests successful Files=2, Tests=6 for new T2243 and existing arithmetic leaf T2229; DirectDeclaredWidthSupport.pm syntax OK. POD/manual/source freshness, claim joins and normal mandatory final-index hook gate this slice. Existing backend code, live ranges and public API/MCP/corpus profiles are unchanged; no deferred full qualification is inferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.2`
+  Status: `pending`
+  Goal: `Prepare actual typed source-tree declaration intent and recursive original leaves.`
+  Acceptance: `After .1, bind actual installed completed source attachments and typed Core source-helper edges to canonical original-leaf relationships. Preserve every operator, association, duplicate and independent constraint; generated leaf recursion uses actual objects/current rows rather than names or numeric coincidence. Bound cycles/depth/expanded nodes, detach plans, recheck complete source/currentness after all reads and reject changes hidden by equal ranges. Separate source-only root intent attests no target membership and emits no range. Split further if required before implementation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.4.3`
+  Status: `pending`
+  Goal: `Independently join complete selected source-tree targets to canonical source proof.`
+  Acceptance: `After .2, join complete selected namespace/declaration/intermediate records and current typed source-helper edges. Require every child event/policy and actual original physical membership; retain every operator/order/duplicate/root field and numeric maximum. Reprepare complete canonical inputs/current policies at return, even for equal derived text; missing/stale/foreign/cyclic/changed records refuse. Complete-target root agrees with separate source intent but never substitutes it for target proof. Focused mutation/lifetime/atomic controls and docs; no live range/VHDL/full qualification yet.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.5`
