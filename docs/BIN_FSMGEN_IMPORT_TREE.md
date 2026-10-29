@@ -14,7 +14,10 @@ detached direct literal intent under the common allocation revision lifecycle.
 ExpressionBuilder forwards its literal birth bucket through actual Parser or
 facade completion, preserving the staged epoch and checking final raw registry
 membership. Failed validation/publication and reuse clear partial policy. This
-adds no backend sizing or nested unknown-width consumer.
+adds no backend sizing or live nested unknown-width consumer. Its separate
+opt-in nested holder boundary uses actual birth/completed child capsules,
+shared walk bounds and exact named transition projection. Digest::SHA and Encode
+bind canonical JSON as strict UTF-8 bytes; returned holders retain no owners.
 
 CoreAST now imports `FSM::SourceBitwiseTreeWidthSupport` for separate explicit
 current source bitwise tree intent. It uses the closed source-tree data schema,

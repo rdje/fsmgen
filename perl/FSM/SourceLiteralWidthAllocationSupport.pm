@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Digest::SHA qw(sha256_hex);
+use Encode qw(encode FB_CROAK);
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
 use FSM::CoreExpressionWidthSupport;
@@ -15,6 +16,10 @@ use FSM::Support::HDLInstanceIdentifierPolicy;
 sub _json { return JSON::PP->new->canonical }
 sub _identity { return FSM::SourceBitwiseTreeWidthSupport::_identity($_[0]) }
 sub _positive { return defined FSM::IntermediateWidthAllocationSupport::_width($_[0]) }
+sub _capsule_digest {
+    my ($text) = @_;
+    return sha256_hex(encode('UTF-8', $text, FB_CROAK));
+}
 
 sub _literal_record {
     my ($record) = @_;
@@ -145,7 +150,8 @@ sub _child_tree {
     return unless _tracked($child) && _matches($record, $child) && $holder->{state} eq $child->{state};
     push @{$walk->{holders}}, [$holder, $raw, $options->{phase} eq 'completed' ? $source : undef];
     push @{$walk->{children}}, {reference_identity => _identity($reference),
-        signal_identity => _identity($source), phase => $options->{phase}, holder_digest => sha256_hex($raw)};
+        signal_identity => _identity($source), phase => $options->{phase}, holder_digest => _capsule_digest($raw)};
+    push @{$walk->{child_captures}}, {capsule => _json()->decode($raw), capture => $child};
     # The record expands original source syntax. Separate edge identities bind
     # actual helper ownership even when two expanded subtrees are text-equal.
     for my $key (qw(signals stamps nodes operands holders)) {
@@ -194,7 +200,7 @@ sub _capture_signal {
     return if $shared->{active_signals}{$identity};
     local $shared->{active_signals}{$identity} = 1;
     my $walk = {shared => $shared, signals => [], stamps => [], nodes => [], operands => [],
-        holders => [], children => [], reference_widths => {}, operators => 0, literals => 0};
+        holders => [], children => [], child_captures => [], reference_widths => {}, operators => 0, literals => 0};
     my $own = _observe_signal($signal, $walk) or return;
     return if exists($shared->{names}{$own->{name}}) && $shared->{names}{$own->{name}} ne $own->{identity_token};
     $shared->{names}{$own->{name}} = $own->{identity_token};
@@ -306,6 +312,51 @@ sub copy_transition {
     return _json()->decode(_json()->encode($transition));
 }
 
+# Reconstruct an old child capsule using only the declared source delta. The
+# parent's original digest then authenticates every other byte, including the
+# child record's scalar kinds. All recursion follows the already bounded,
+# current capture; it performs no source getters or child lookups.
+sub _previous_child_capsule {
+    my ($proof, $before, $after) = @_;
+    my $capsule = _json()->decode(_json()->encode($proof->{capsule}));
+    my $state = _json()->decode($capsule->{state});
+    for my $descriptor ($state->{signal}, @{$state->{operands}}) {
+        next unless $descriptor->{identity_token} eq $before->{identity_token};
+        return unless _json()->encode($descriptor) eq _json()->encode($after);
+        %$descriptor = %{_json()->decode(_json()->encode($before))};
+    }
+    for my $stamp (@{$state->{stamps}}) {
+        next unless $stamp->[0] eq $before->{identity_token} && $stamp->[2] eq 'signal';
+        return unless $stamp->[1] eq $after->{raw_state};
+        $stamp->[1] = $before->{raw_state};
+    }
+    my $edges = $state->{children} // [];
+    my $children = $proof->{capture}{walk}{child_captures};
+    return unless @$edges == @$children;
+    for my $index (0 .. $#$edges) {
+        my $previous = _previous_child_capsule($children->[$index], $before, $after) or return;
+        $edges->[$index]{holder_digest} = _capsule_digest(_json()->encode($previous));
+    }
+    $capsule->{state} = _json()->encode($state);
+    return $capsule;
+}
+
+sub _advance_child_edges {
+    my ($state, $capture, $before, $after) = @_;
+    my $edges = $state->{children} // [];
+    my $proofs = $capture->{walk}{child_captures};
+    my $current = $capture->{walk}{children};
+    return unless @$edges == @$proofs && @$edges == @$current;
+    for my $index (0 .. $#$edges) {
+        my $previous = _previous_child_capsule($proofs->[$index], $before, $after) or return;
+        my $old_digest = _capsule_digest(_json()->encode($previous));
+        my %original = (%{$current->[$index]}, holder_digest => $old_digest);
+        return unless _json()->encode($edges->[$index]) eq _json()->encode(\%original);
+        $edges->[$index]{holder_digest} = $current->[$index]{holder_digest};
+    }
+    return 1;
+}
+
 sub advance_core {
     my ($class, %args) = @_;
     my $advanced = eval {
@@ -320,14 +371,21 @@ sub advance_core {
         my $revision = $args{revision};
         return unless defined($revision) && !ref($revision) && $revision =~ /\A[0-9]+\z/
             && $changed->_intermediate_width_allocation_revision == $revision + 1;
+        my ($before, $after);
         my $matches = 0;
         for my $descriptor ($state->{signal}, @{$state->{operands}}) {
             next unless $descriptor->{identity_token} eq $identity;
             return unless $descriptor->{revision} eq $revision;
+            if ($before) {
+                return unless _json()->encode($descriptor) eq _json()->encode($before);
+            } else {
+                $before = _json()->decode(_json()->encode($descriptor));
+            }
             ++$descriptor->{revision};
             $descriptor->{roles}{$transition->{attribute}} = $transition->{value} if $transition->{kind} eq 'role';
             $descriptor->{raw_state} = _advance_raw_signal($descriptor->{raw_state}, $transition, $revision);
             return unless defined $descriptor->{raw_state};
+            $after = $descriptor;
             ++$matches;
         }
         return unless $matches;
@@ -336,7 +394,8 @@ sub advance_core {
             $stamp->[1] = _advance_raw_signal($stamp->[1], $transition, $revision);
             return unless defined $stamp->[1];
         }
-        my $capture = _capture($args{signal}) or return;
+        my $capture = _capture($args{signal}, $args{children}) or return;
+        return unless _advance_child_edges($state, $capture, $before, $after);
         return unless _tracked($capture) && _matches($record, $capture)
             && $capture->{state} eq _json()->encode($state);
         {record => $record, state => $capture->{state}};
@@ -380,8 +439,7 @@ lifetime tokens use the existing weak identity table and retain no owners.
 This validator does not attest source birth, publish a policy, change source
 inference, or admit a target profile. The actual builder journals births and
 completed Parser/facade transactions publish through the Core Signal lifecycle.
-Live nested allocation, named nested transitions and target consumers remain
-separate successors.
+Live nested allocation and target consumers remain separate successors.
 
 The optional C<children> argument explicitly opts into a prepared nested holder
 boundary. C<< {phase => 'birth', lookup => sub { ... }} >> calls the lookup with
@@ -405,6 +463,9 @@ declarations and literal sizes remain unchanged. The detached expression tree
 expands original raw source syntax; separate ordered edge identities and child
 capsule digests bind actual typed references and child lifetimes. Repeated or
 shared references retain every occurrence without becoming cycles.
+Digests use strict UTF-8 bytes of canonical JSON. Raw Unicode scalar data
+preserves without character-to-byte exceptions or lossy replacement; invalid
+encoding withholds. This is Core data preservation, not literal interpretation.
 
 One shared depth/occurrence budget and active AST/Signal path covers the complete
 helper expansion, including reference crossings. It never resets at a child.
@@ -446,12 +507,30 @@ raw literals and AST identities cannot change. The result is a refreshed detache
 holder, or undef. Arbitrary, extra, failed, foreign or stale writes cannot refresh
 through this operation. The caller separately proves actual registry membership
 before and after its write. This transports intent, never publishes Core policy.
-Named transport currently retains its direct-only boundary; nested transport
-is separately owned before live allocator integration.
+
+With the explicit C<children> phase/lookup contract, named transport also
+qualifies every ordered nested child edge. Each current child's complete
+capsule is reconstructed at the prior source epoch by reversing only that
+declared revision/role/metadata delta through the already bounded capture.
+The parent's original child-capsule digest must match that complete prior
+capsule before its edge may advance. The final complete projected parent
+capture must also agree. Merely supplying a current refreshed child is
+insufficient: unrelated child record kinds, raw source data, typed identities,
+independent declarations and phase changes cannot cross an original edge.
+Reconstruction uses only detached snapshots and performs no further getters,
+lookups or source writes. Current capture barriers still fence late writes.
+
+The caller must first validate current holders and actual registry membership,
+perform the named operation, then refresh affected child holders before their
+parents. Unaffected child holders remain current. Completed mode requires
+actual refreshed installed child policy; birth lookup cannot impersonate it.
+Escaped old parent/child capsules remain stale. This prepares transport only;
+live nested allocator/completion integration remains separately owned.
 
 Focused executable controls:
 
   scripts/run_with_ram_guard.sh -- prove -Iperl t/2251-source-literal-width-holder.t
   scripts/run_with_ram_guard.sh -- prove -Iperl t/2256-source-nested-literal-holder.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/2257-source-nested-literal-transitions.t
 
 =cut

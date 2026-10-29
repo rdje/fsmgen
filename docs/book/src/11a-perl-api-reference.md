@@ -786,8 +786,20 @@ This constructs explicit local Core intent; it does not attest a Parser birth.
 T2256 checks prepared birth/completed joins, independent floors, raw kinds,
 ordered child edges, revocation and global bounds. Default direct holders and
 all live source/target calls retain their prior behavior. Named nested
-transition transport, live source integration and the fixed truncation repair
-remain open. This preparation changes no source grammar or generated HDL.
+transition transport is now prepared through the same explicit child phase.
+The caller first validates current source/registry ownership, performs exactly
+the named write, then refreshes affected children before their parents. Each
+new child capsule must reconstruct its original complete capsule under only
+that operation's revision/role/metadata delta, matching the digest held by the
+original parent edge. The complete projected parent state must agree too.
+An independently current replacement child cannot hide unrelated raw data,
+declarations, JSON kinds or a birth/completed phase change. Old escaped holders
+stay stale. Raw string data retains Unicode through strict UTF-8 capsule digests.
+T2257 exercises nested and repeated edges, matching-reference and
+helper roles, real mutable leaf metadata, completed-child refresh and hostile
+replacement/late-write controls; an isolated missing original-child check fails.
+Live source integration and the fixed truncation repair remain open. These
+prepared holder operations change no source grammar or generated HDL.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

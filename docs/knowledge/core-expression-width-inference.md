@@ -20,8 +20,9 @@ evidence: >-
   docs/audits/source-literal-transitions-20261029.json.gz;
   t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
-  t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-6]*.t
+  t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
+  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-7]*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -39,13 +40,7 @@ ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2. Actual mutable literal sources retain 
 final source/target disagreement; fixed sources currently generate without that
 same final check. Full qualification remains .6.
 
-T2250 distinguishes actual unknown widths, explicit floors, raw kinds, callbacks,
-scalar results and bounded walks with fixed/mutable source controls. A resolver
-variant replacing explicit widths fails the independent explicit-floor tests.
-T2192 now asserts current symbolic ranges and whole-value gating; the exact
-committed builder reproduced its stale numeric expectations before this repair.
-Retained first failures, exact source/variant/logs and replay instructions are in
-the evidence receipt. This records the qualified scope, not feature completion.
+Exact historical T2250/T2192 attribution and prior card prose remain in the contract/transition receipts listed above.
 
 Revision-bound ownership diagnosis at the preparation commit: an unknown literal
 helper retains nominal Core width. A nested parent reads that width as exact and
@@ -82,4 +77,11 @@ unknown child widths never borrow nominal widths or independent floors. Shared
 walk bounds cover all helper expansion. Complete raw/capsule barriers reject
 late matching writes and completed-policy removal (T2256); isolated fallback
 and omitted-barrier variants fail. Default direct/live calls remain unchanged.
-Named nested transport and actual source/target integration are still pending.
+Named nested transport now authenticates each original child capsule by reversing
+only the declared delta through bounded current captures before advancing an
+original parent edge. Whole projected parent state must agree; a current child
+alone cannot hide unrelated record kinds or source changes (T2257). Matching
+reference/helper roles, real mutable metadata and completed refresh preserve.
+An omitted original-child check fails the record-kind control. Strict UTF-8
+digest bytes repair the prior raw Unicode character-hashing refusal without
+interpreting literals. Actual source/target integration remains pending.
