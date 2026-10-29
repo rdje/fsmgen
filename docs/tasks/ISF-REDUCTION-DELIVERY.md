@@ -2581,11 +2581,31 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=4 Tests=24 for expanded nested/direct transition/publication checks before the encoding fix; final directly affected Unicode transport/capture checks pass Files=2 Tests=12. Current source/test syntax, generated POD and complete book source-reference contracts pass. Normal final-index doctrine hook and staged acceptance gate commit; broad .6/compiler/runtime/corpus/publication verification remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Use current source reference contracts at actual allocation and completed nested publication.`
   Acceptance: `After .1/.2, resolve actual reference widths from current capture-local literal births before parent registration, then publish nested intent only after normal Parser/facade validation. An unresolved child keeps the real parent exact width unknown rather than licensing an old binary/tree max policy from placeholder1. Join actual current registry objects and child epochs, transport only exact named role/reference/metadata operations and revoke failed, copied, foreign, matching-write or independent constraints. Ordinary independent declared references retain their own exact floors; scalar wrappers remain scalar. No backend literal default, textual helper inference or equality provenance. Focused actual direct/nested one/wide fixed/mutable/explicit/failure/reuse controls, source conservation and synchronized POD/book/downstream docs before commit. All target floor/final agreement and full .6 work remain separate.`
   Verification: `Pending actual source allocation/inference consumer after prepared contracts.`
   Commit: `pending live nested unknown propagation`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.1`
+  Status: `done`
+  Goal: `Resolve capture-local child literal widths before actual parent allocation and transport nested births.`
+  Acceptance: `Use actual registry-owned capture-local literal holders at shared Core inference before parent registration; unknown/stale children cannot lend placeholder widths to binary/tree allocation. Stage actual fresh nested literal births and transport only exact named operations child-first. Preserve direct explicit widths, independent declared floors, scalar wrappers and raw caller/Core kinds. Focused allocation and hostile currentness/registry/failure controls; synchronize POD/book/fact and commit. Completed nested publication remains child .2; no target literal floor or full .6 claim.`
+  Verification: `Corrected native T2258 RED distinguishes parent registration width16 from unknown and missing parent births; initial UnaryOp fixture correction is retained. Actual capture-local inference now consumes current child literal births before registration, withholds missing/stale/foreign/constrained generated references and preserves current nonliteral proof families. Nested births and exact named transport refresh child-first; real fixed/mutable Parser/facade role and leaf metadata writes remain current. Independent floor/scalar/source JSON controls pass. Re-derive actual intercepted registration and raw source records; falsify corrected RED and stale/missing/foreign/failed/constraint controls; durability complete baseline/current sources and raw logs in docs/audits/source-nested-literal-allocation-20261029.json.gz. Focused T2258/T2252/T2254 pass All tests successful Files=3 Tests=18; final T2258 passes Files=1 Tests=5. Syntax, current POD, source-reference/copied-build checks and local book build pass. External claim template is byte-exact to its retained reviewed source; README and containment guide remain adopted. First hook rejects card line allowance; consolidate superseded/current transport description with exact prior bytes retained and unchanged budgets. Normal final-index doctrine gate qualifies commit. Completed nested publication stays child .2; no target-floor, truncation, full .6 or publication closure.`
+  Commit: `this actual nested source allocation slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected T2258 at t/2258-source-nested-literal-allocation.t line 53 reports registration width16 expected undef; finalize_nary_expression inferred from the child nominal width before parent registration and staged no nested literal birth. Initial wrong UnaryOp constructor fixture is corrected and retained separately.
+  - [x] **ADDRESSED (verified)** — Actual source callback joins current capture-local child holders and registry objects before parent allocation. Unknown/unproved generated widths withhold; independent floors, scalar results and current nonliteral proof families preserve. Each fresh supported nested helper stages its own literal birth and named operations refresh child-first. Actual fixed/mutable Parser/facade metadata and source conservation controls pass; completed nested publication remains .2.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=18 for T2258/T2252/T2254, with prior directly affected named-transport T2253 passing; final verbose T2258 passes Files=1 Tests=5. Source syntax, generated POD, complete book source/copy freshness and guarded book build pass. Mandatory staged/final-index doctrines gate commit; broad .6/HDL/publication qualification stays deferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3.2`
+  Status: `pending`
+  Goal: `Publish completed nested literal intent after normal Parser and facade validation.`
+  Acceptance: `After .1, authenticate original current birth capsules and exact child publication relationships before converting birth edges to completed edges. Require actual registry objects, installed child policy, unchanged epochs and full raw source barriers; phase/record equality alone cannot license a replacement child. Getter validates completed nested intent; failed validation/partial publication/reuse revokes every policy. Focused direct/nested one/wide fixed/mutable/explicit/floor/scalar and hostile controls, source conservation and synchronized API/book/downstream docs. Commit before .3.2.4 complete source closure; target repair remains .1.2.3.`
+  Verification: `Pending source allocation prerequisite .1.`
+  Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.4`
   Status: `pending`

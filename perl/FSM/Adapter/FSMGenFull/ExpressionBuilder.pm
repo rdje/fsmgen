@@ -61,18 +61,33 @@ sub _capture_intermediate_width_allocations($self, $callback) {
 
 sub _stage_source_literal_width_allocation($self, $signal) {
     my $events = $self->{_source_literal_width_allocation_capture} or return;
-    my $capture = $self->_source_literal_allocation_registry_matches($signal) or return;
+    my $children = $self->_source_literal_birth_children;
+    my $capture = $self->_source_literal_allocation_registry_matches($signal, $children) or return;
     my $holder = eval {FSM::SourceLiteralWidthAllocationSupport->prepare_core(
-        signal => $signal, record => $capture->{record}, track => 1)} or return;
-    return unless FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $signal, holder => $holder);
+        signal => $signal, record => $capture->{record}, track => 1, children => $children)} or return;
+    return unless FSM::SourceLiteralWidthAllocationSupport->current_core(
+        signal => $signal, holder => $holder, children => $children);
     # Fence the exact actual registry after potentially mutating source reads.
     # These raw membership checks invoke no user-facing getters.
     return unless $self->_literal_registry_contains($capture->{objects});
     push @$events, {signal_name => $signal->{name}, holder => $holder};
 }
 
-sub _source_literal_allocation_registry_matches($self, $signal) {
-    my $capture = eval {FSM::SourceLiteralWidthAllocationSupport::_capture($signal)} or return;
+sub _source_literal_birth_children($self) {
+    return {phase => 'birth', lookup => sub {
+        my ($reference) = @_;
+        my $signal = $reference->signal;
+        my $registry = $self->{signal_manager}{signal_registry};
+        return unless ref($registry) eq 'HASH'
+            && refaddr($registry->{$signal->{name}} // {}) == refaddr($signal);
+        my ($event) = grep {$_->{signal_name} eq $signal->{name}}
+            @{$self->{_source_literal_width_allocation_capture} // []};
+        return $event ? $event->{holder} : undef;
+    }};
+}
+
+sub _source_literal_allocation_registry_matches($self, $signal, $children = undef) {
+    my $capture = eval {FSM::SourceLiteralWidthAllocationSupport::_capture($signal, $children)} or return;
     return unless $self->_literal_registry_contains($capture->{objects});
     return $capture;
 }
@@ -152,12 +167,14 @@ sub _allocation_transition($self, $signal, $attribute, $value, $write, $metadata
 sub _literal_allocation_transition($self, $signal, $attribute, $value, $write, $metadata) {
     my $events = $self->{_source_literal_width_allocation_capture};
     return $write->() unless $events && @$events && $signal;
+    my $children = $self->_source_literal_birth_children;
     my @current;
     for my $event (@$events) {
         my $result = $self->{signal_manager}->get_signal($event->{signal_name});
-        my $capture = $self->_source_literal_allocation_registry_matches($result) or next;
+        my $capture = $self->_source_literal_allocation_registry_matches($result, $children) or next;
         next unless grep {refaddr($_) == refaddr($signal)} @{$capture->{objects}};
-        next unless FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $result, holder => $event->{holder});
+        next unless FSM::SourceLiteralWidthAllocationSupport->current_core(
+            signal => $result, holder => $event->{holder}, children => $children);
         next unless $self->_literal_registry_contains($capture->{objects});
         push @current, [$event, $result, $capture->{objects}];
     }
@@ -171,7 +188,8 @@ sub _literal_allocation_transition($self, $signal, $attribute, $value, $write, $
         my ($event, $result, $objects) = @$candidate;
         next unless $self->_literal_registry_contains($objects);
         my $holder = FSM::SourceLiteralWidthAllocationSupport->advance_core(signal => $result,
-            holder => $event->{holder}, changed_signal => $signal, revision => $revision, transition => $transition);
+            holder => $event->{holder}, changed_signal => $signal, revision => $revision,
+            transition => $transition, children => $children);
         next unless $holder && $self->_literal_registry_contains($objects);
         $event->{holder} = $holder;
     }
@@ -507,7 +525,7 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
         $signal->set_driving_ast($ast_tree);
         $self->_stage_intermediate_width_allocation($signal, $operator, $parsed_operands, $width);
         $self->_stage_source_tree_width_allocation($signal, $operator, $parsed_operands, $width);
-        if ($fresh_allocation && grep {blessed($_) && $_->isa('FSM::CoreAST::Literal')} @$parsed_operands) {
+        if ($fresh_allocation) {
             $self->_stage_source_literal_width_allocation($signal);
         }
         fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
@@ -1277,7 +1295,36 @@ sub parse_sexpr_expression($self, $sexpr) {
 }
 
 sub infer_exact_expression_width($self, $expr) {
-    return FSM::CoreExpressionWidthSupport->infer_width($expr);
+    return FSM::CoreExpressionWidthSupport->infer_width($expr)
+        unless exists $self->{_source_literal_width_allocation_capture};
+    my $children = $self->_source_literal_birth_children;
+    return FSM::CoreExpressionWidthSupport->infer_width($expr, source_reference_width => sub {
+        my ($reference) = @_;
+        my $signal = $reference->signal;
+        return undef unless $signal->{attributes}{is_intermediate};
+        my $holder = $children->{lookup}->($reference);
+        if ($holder) {
+            my $capture = $self->_source_literal_allocation_registry_matches($signal, $children);
+            my $record = $capture && FSM::SourceLiteralWidthAllocationSupport->current_core(
+                signal => $signal, holder => $holder, children => $children);
+            return {width => $record && $self->_literal_registry_contains($capture->{objects})
+                ? $record->{selected_width} : undef};
+        }
+        # A generated reference needs a current capture-local allocation proof.
+        # Preserve the existing nonliteral families without treating an absent
+        # or revoked literal birth's compatibility width as exact.
+        for my $family (
+            ['_intermediate_width_allocation_capture', 'FSM::IntermediateWidthAllocationSupport', '_allocation_registry_matches'],
+            ['_source_bitwise_tree_width_allocation_capture', 'FSM::SourceBitwiseTreeWidthSupport', '_source_tree_allocation_registry_matches'],
+        ) {
+            my ($bucket, $class, $registry_check) = @$family;
+            my ($event) = grep {$_->{signal_name} eq $signal->{name}} @{$self->{$bucket} // []};
+            next unless $event && $self->$registry_check($signal);
+            my $record = $class->current_core(signal => $signal, holder => $event->{holder});
+            return {width => $record->{selected_width}} if $record && $self->$registry_check($signal);
+        }
+        return {width => undef};
+    });
 }
 
 sub parse_signal_reference($self, $signal_spec) {
@@ -1406,8 +1453,16 @@ still-current staged epoch and final raw registry join can publish detached
 Core C<source_literal_width_allocation>. Failed validation/publication and reuse
 clear old or partial policy. Publication preserves tracked semantic revisions;
 matching writes during its final preparation cannot rebase the original birth.
-This does not yet propagate unknown width through generated children. Other writes revoke;
-unsupported direct/nested profiles receive no literal birth. Capture failure
+Within a capture, exact inference now resolves actual generated references from
+current local literal births before parent registration. Unknown or revoked
+child intent withholds exact width rather than borrowing a compatibility width;
+current nonliteral binary/tree proofs retain their own selected maxima. Ordinary
+independent references and scalar-result wrappers retain their rules. Every fresh
+supported nested literal allocation has its own detached birth. Named transport
+validates all affected holders first, then refreshes children before parents.
+Raw complete-source and registry barriers still apply at every step. Completed
+nested publication remains separate; the direct completion path is unchanged.
+Other writes revoke; unsupported profiles receive no literal birth. Capture failure
 restores the prior journal scope, and ordinary uncaptured allocation preserves.
 
 An unknown exact width retains the existing placeholder behavior. Selected

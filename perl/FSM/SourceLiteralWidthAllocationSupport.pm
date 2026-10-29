@@ -439,7 +439,8 @@ lifetime tokens use the existing weak identity table and retain no owners.
 This validator does not attest source birth, publish a policy, change source
 inference, or admit a target profile. The actual builder journals births and
 completed Parser/facade transactions publish through the Core Signal lifecycle.
-Live nested allocation and target consumers remain separate successors.
+The builder now uses nested birth captures at actual source allocation;
+completed nested publication and target consumers remain separate successors.
 
 The optional C<children> argument explicitly opts into a prepared nested holder
 boundary. C<< {phase => 'birth', lookup => sub { ... }} >> calls the lookup with
@@ -472,8 +473,7 @@ helper expansion, including reference crossings. It never resets at a child.
 Final raw barriers cover all descendant Signals, AST slots and supplied child
 capsules, plus continued installed-policy membership in completed mode. Only
 temporary call-local state contains owners or callbacks; returned holders are
-plain detached JSON. Default direct captures and all live callers remain
-unchanged by this opt-in preparation.
+plain detached JSON. Default direct captures preserve their prior behavior.
 
 =head2 current_core
 
@@ -524,8 +524,8 @@ The caller must first validate current holders and actual registry membership,
 perform the named operation, then refresh affected child holders before their
 parents. Unaffected child holders remain current. Completed mode requires
 actual refreshed installed child policy; birth lookup cannot impersonate it.
-Escaped old parent/child capsules remain stale. This prepares transport only;
-live nested allocator/completion integration remains separately owned.
+Escaped old parent/child capsules remain stale. The source builder now uses this
+transport for actual nested births; completed nested publication remains separate.
 
 Focused executable controls:
 

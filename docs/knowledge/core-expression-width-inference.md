@@ -40,8 +40,6 @@ ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2. Actual mutable literal sources retain 
 final source/target disagreement; fixed sources currently generate without that
 same final check. Full qualification remains .6.
 
-Exact historical T2250/T2192 attribution and prior card prose remain in the contract/transition receipts listed above.
-
 Revision-bound ownership diagnosis at the preparation commit: an unknown literal
 helper retains nominal Core width. A nested parent reads that width as exact and
 can emit a narrow destination that discards the literal high bit. Strict CLI and
@@ -69,19 +67,22 @@ completion preserves the staged epoch with a final raw registry join (T2254).
 The preparatory source_reference_width callback now receives actual whole refs:
 undef uses selected width; a closed nullable width record resolves or withholds.
 Malformed results withhold; scalar/slice/literal rules and walk bounds preserve.
-It supplies no source proof. Live nested inference and targets remain open.
+It supplies no source proof. Targets remain open.
 The opt-in literal holder children boundary now joins actual typed child edges
 to current birth capsules or actual installed completed policy, with explicit
 phases. It expands raw source text while separately binding ordered child edges;
 unknown child widths never borrow nominal widths or independent floors. Shared
 walk bounds cover all helper expansion. Complete raw/capsule barriers reject
 late matching writes and completed-policy removal (T2256); isolated fallback
-and omitted-barrier variants fail. Default direct/live calls remain unchanged.
-Named nested transport now authenticates each original child capsule by reversing
-only the declared delta through bounded current captures before advancing an
-original parent edge. Whole projected parent state must agree; a current child
-alone cannot hide unrelated record kinds or source changes (T2257). Matching
-reference/helper roles, real mutable metadata and completed refresh preserve.
-An omitted original-child check fails the record-kind control. Strict UTF-8
-digest bytes repair the prior raw Unicode character-hashing refusal without
-interpreting literals. Actual source/target integration remains pending.
+and omitted-barrier variants fail. Default direct captures preserve.
+Named transport reconstructs each original child capsule under only the declared
+delta through bounded captures; original edge digest and whole projected parent
+must agree. A current child cannot hide unrelated kinds or source data (T2257);
+omitting original-child proof fails the record-kind control. Matching references,
+helper roles, mutable metadata and completed refresh preserve. Strict UTF-8
+digests preserve raw Unicode without interpreting literals. Actual source capture
+now resolves local child births before parent registration: unknown or revoked
+intent cannot lend a nominal width or old binary maximum policy. Fresh nested
+births and child-first transport preserve independent floors and scalar results.
+T2258 covers fixed/mutable Parser/facade writes; completed nested publication and
+target sizing remain separate.

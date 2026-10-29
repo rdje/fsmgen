@@ -166,7 +166,8 @@ source legality. The caller must leave independently authored references
 unoverridden and explicitly withhold unproved generated helpers. Slices,
 ParameterRefs, explicit literals, scalar-result operators and unknown classes
 do not call this resolver. Without it, ordinary reference inference is unchanged.
-No live builder/target consumer is installed by this preparatory interface.
+ExpressionBuilder now uses this boundary during capture-local source allocation;
+target consumers remain separate.
 
 C<MAX_DEPTH> and C<MAX_NODES> bound depth and visited occurrences. Active AST
 cycles and over-bound walks return undef. Shared subtrees count each occurrence,

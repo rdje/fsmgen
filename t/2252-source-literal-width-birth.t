@@ -66,10 +66,10 @@ subtest 'ordinary source births conserve old buckets and withhold unsupported di
     is(scalar(@{$tree->{source_tree_events}}), 1, 'old all-reference tree bucket preserves');
     ok(!exists($tree->{source_literal_events}), 'nonliteral tree has no literal bucket');
     my $nested = parse($builder, ['^', ['|', 'A', 'B', '256'], 'C']);
-    is(scalar(@{$nested->{source_literal_events} // []}), 1, 'only the direct literal child has the currently bounded birth');
-    if (my $event = $nested->{source_literal_events}[0]) {
-        isnt($event->{signal_name}, $nested->{value}->signal->name, 'outer generated-child reference cannot borrow direct literal ownership');
-    }
+    is(scalar(@{$nested->{source_literal_events} // []}), 2, 'actual nested parent joins its own current child birth');
+    is($nested->{source_literal_events}[-1]{signal_name}, $nested->{value}->signal->name,
+        'fresh outer allocation owns its separate literal intent');
+    is($nested->{value}->signal->width, 1, 'unknown literal child keeps the parent exact width unresolved');
     for my $expression (['|', 'A[0:0]', '256'], ['|', ['+', 'A', 'B'], '256']) {
         my $packet = parse($builder, $expression);
         ok(!exists($packet->{source_literal_events}), 'sliced or computed direct profile installs no literal event');

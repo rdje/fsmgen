@@ -742,8 +742,12 @@ die "source width changed\n" unless $helper->width == 1;
 
 This example supplies an illustrative caller decision, not source provenance.
 T2255 separately exercises actual completed literal policy and revoked-source
-controls. Live builder calls still use ordinary inference. Allocation-time
-source resolution and the target repair remain open.
+controls. During source capture, the builder now resolves actual generated
+references from current local allocation holders before registering a parent.
+An unresolved literal child keeps its parent's exact width unknown even beside
+a wider declared leaf. Missing or revoked generated intent cannot lend its
+nominal width to an old binary maximum policy. Current nonliteral binary/tree
+proofs, independent declared widths and scalar wrappers keep their own rules.
 
 The literal holder has a separate opt-in `children` boundary for prepared nested
 ownership. `{phase => 'birth', lookup => sub { ... }}` supplies a current child
@@ -784,9 +788,10 @@ die "nested source borrowed a nominal width\n"
 
 This constructs explicit local Core intent; it does not attest a Parser birth.
 T2256 checks prepared birth/completed joins, independent floors, raw kinds,
-ordered child edges, revocation and global bounds. Default direct holders and
-all live source/target calls retain their prior behavior. Named nested
-transition transport is now prepared through the same explicit child phase.
+ordered child edges, revocation and global bounds. Default direct holders retain
+their prior behavior. Actual fresh nested allocations now journal their own
+literal birth through this boundary. Named nested transition transport uses
+the same explicit child phase.
 The caller first validates current source/registry ownership, performs exactly
 the named write, then refreshes affected children before their parents. Each
 new child capsule must reconstruct its original complete capsule under only
@@ -798,8 +803,11 @@ stay stale. Raw string data retains Unicode through strict UTF-8 capsule digests
 T2257 exercises nested and repeated edges, matching-reference and
 helper roles, real mutable leaf metadata, completed-child refresh and hostile
 replacement/late-write controls; an isolated missing original-child check fails.
-Live source integration and the fixed truncation repair remain open. These
-prepared holder operations change no source grammar or generated HDL.
+T2258 exercises actual allocation before registration, named transport and
+fixed/mutable Parser and facade completion writes, with explicit size and
+independent-floor controls. Completed nested publication and target literal
+sizing remain open. No source grammar or public API/MCP schema is added;
+the fixed truncation repair still requires its target consumer.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
