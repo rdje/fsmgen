@@ -24,7 +24,7 @@ status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
   perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-event-publisher-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-8]*.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-9]*.t
 ---
 
 Original card/proofs: `docs/audits/width-card-evidence-20261028.json.gz`; recover:

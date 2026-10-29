@@ -606,10 +606,22 @@ refusals and atomic recovery. External compiler, parameter override, runtime and
 full feature qualification remain separate; generated text alone proves none of
 those outcomes.
 
+Bounded native family closure also covers top-level OR/XOR with repeated leaves
+and negated-base forms such as `(!& A B C)`. Logical negation may render as `!X`
+or the equivalent whole-vector zero test `(~|X)`; its result stays scalar. A
+source-matched comparison of the saved AND fixture preserves complete selected
+namespace/declaration/event snapshots, including JSON kinds, at the recorded
+mutable and fixed defaults. Its HDL changes are confined to helper ranges and
+whole-value enable gating at default one, plus the authenticated generated date
+comment. The comparison binds the three named native producers; full feature,
+external override/compiler/runtime and transport qualification remain pending.
+The deferred full-feature task also owns collection-scale retained-fence memory
+qualification; the native cases above establish correctness in their saved scope.
+
 Run the bounded source proof and live-emission checks with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t t/2248-source-tree-symbolic-range-emission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t t/2248-source-tree-symbolic-range-emission.t t/2249-source-bitwise-family-closure.t
 ```
 
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
