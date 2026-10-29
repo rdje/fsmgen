@@ -2,6 +2,13 @@
 
 This is a live architecture note.
 
+ExpressionBuilder imports `FSM::CoreExpressionWidthSupport` for the shared
+bounded exact-width walk. Its ordinary parser call has no target literal policy;
+unsized literals remain unknown. The separate explicit callback contract passes
+detached raw literal data and preserves independent explicit widths. It supplies
+no allocation ancestry, generic range or final target agreement. This is a scoped
+import update; backend literal consumers and full qualification remain pending.
+
 CoreAST now imports `FSM::SourceBitwiseTreeWidthSupport` for separate explicit
 current source bitwise tree intent. It uses the closed source-tree data schema,
 existing exact-width descriptors and walk bounds, and Perl core FieldHash weak

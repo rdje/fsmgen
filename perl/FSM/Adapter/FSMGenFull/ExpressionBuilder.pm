@@ -10,6 +10,7 @@ use Data::Dumper;
 use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
 use FSM::CoreAST;
+use FSM::CoreExpressionWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::Debug;
@@ -1202,70 +1203,7 @@ sub parse_sexpr_expression($self, $sexpr) {
 }
 
 sub infer_exact_expression_width($self, $expr) {
-    return undef unless $expr && blessed($expr);
-
-    if ($expr->isa('FSM::CoreAST::Literal')) {
-        my $width = $expr->width;
-        return (defined($width) && $width > 0) ? $width : undef;
-    }
-
-    if ($expr->isa('FSM::CoreAST::ParameterRef')) {
-        my $width = $expr->width;
-        return (defined($width) && $width > 0) ? $width : undef;
-    }
-
-    if ($expr->isa('FSM::CoreAST::SignalRef')) {
-        if ($expr->slice) {
-            my ($high, $low) = @{$expr->slice};
-            return abs($high - $low) + 1;
-        }
-
-        my $signal = $expr->signal;
-        return undef unless $signal && $signal->can('width');
-        my $width = $signal->width;
-        return (defined($width) && $width > 0) ? $width : undef;
-    }
-
-    if ($expr->isa('FSM::CoreAST::IndexedRef')) {
-        return 1;
-    }
-
-    if ($expr->isa('FSM::CoreAST::AggregateRef')) {
-        my $width = $expr->width;
-        return $width if defined($width) && $width > 0;
-
-        my $type_spec = $expr->type_spec;
-        return $type_spec->{width}
-            if ref($type_spec) eq 'HASH' && defined($type_spec->{width}) && $type_spec->{width} > 0;
-        return undef;
-    }
-
-    if ($expr->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $expr->operator eq '!' || is_reduction_operator($expr->operator);
-        return $self->infer_exact_expression_width($expr->operand);
-    }
-
-    if ($expr->isa('FSM::CoreAST::BinaryOp')) {
-        my $operator = $expr->operator;
-        return 1 if defined($operator) && $operator =~ /^(?:==|!=|<|>|<=|>=)$/;
-
-        my $left_width = $self->infer_exact_expression_width($expr->left);
-        my $right_width = $self->infer_exact_expression_width($expr->right);
-        return undef unless defined($left_width) && defined($right_width);
-        return $left_width > $right_width ? $left_width : $right_width;
-    }
-
-    if ($expr->isa('FSM::CoreAST::Concatenation')) {
-        my $total_width = 0;
-        for my $operand (@{$expr->operands}) {
-            my $operand_width = $self->infer_exact_expression_width($operand);
-            return undef unless defined($operand_width) && $operand_width > 0;
-            $total_width += $operand_width;
-        }
-        return $total_width > 0 ? $total_width : undef;
-    }
-
-    return undef;
+    return FSM::CoreExpressionWidthSupport->infer_width($expr);
 }
 
 sub parse_signal_reference($self, $signal_spec) {
@@ -1341,6 +1279,13 @@ width. Core metadata, native declarations and guard truthiness therefore agree;
 a wide intermediate is tested as a whole nonzero value rather than through its
 low bit. Unary reductions remain scalar, and literal widths remain independent
 max constraints. This sizing does not resize operand Signals.
+
+C<infer_exact_expression_width> delegates to the bounded shared
+C<FSM::CoreExpressionWidthSupport> walk without a target literal resolver.
+Unsized literals and unknown expression classes remain unknown. The separate
+shared API accepts an explicit target-owned unsized-literal resolver; the parser
+never supplies a backend default. This preparatory boundary does not repair final
+target/source agreement or establish symbolic literal floors.
 
 Internal C<_capture_intermediate_width_allocations(callback)> runs one scalar
 callback with source-local journals and returns C<{value, events}>. Its original

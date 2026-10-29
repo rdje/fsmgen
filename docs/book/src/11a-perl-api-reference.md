@@ -635,6 +635,33 @@ repair; the new metadata does not qualify unsized-literal or symbolic range supp
 The retained diagnosis has source-matched before/after evidence. An unconditional
 staleness watcher for this open literal limitation remains owned by that repair.
 
+The preparatory `FSM::CoreExpressionWidthSupport->infer_width` contract now
+centralizes the direct builder's exact-width walk. Unsized literals stay unknown
+unless a caller explicitly supplies an `unsized_literal_width` callback. The
+callback receives detached raw `{value, radix, width}` data; it cannot replace an
+explicit literal width or assign a width to an unknown expression class. Scalar
+wrappers keep their result width. Active cycles and over-bound walks stay unknown.
+References read selected Signal widths; they do not prove helper ancestry or
+that a compatibility placeholder is exact.
+
+```perl
+use FSM::CoreAST;
+use FSM::CoreExpressionWidthSupport;
+my $literal = FSM::CoreAST::Literal->new('3');
+die "unexpected Core default\n"
+    if defined FSM::CoreExpressionWidthSupport->infer_width($literal);
+# Illustrative caller policy; the shared Core walk supplies no target default.
+my $width = FSM::CoreExpressionWidthSupport->infer_width($literal,
+    unsized_literal_width => sub { return 32 });
+die "caller policy lost\n" unless $width == 32;
+```
+
+This interface does not yet alter HDL generation. The mutable source refusal
+above remains open. Fixed-width sources currently generate through a path that
+does not run the same final source/target agreement check; that path and generic
+literal floors remain owned by the target-consumer successor. The focused
+contract/source controls are in `t/2250-core-expression-width-contract.t`.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows

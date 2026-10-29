@@ -44,11 +44,11 @@ subtest 'actual parser-created bitwise helpers retain declared vector widths bef
                 my $hdl = eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($m)};
                 ok(defined($hdl), "fixed/captured source generates at operand width $width") or diag $@;
                 next unless defined($hdl);
-                my $range = $width == 1 ? '' : '[7:0] ';
+                my $range = $symbolic ? '[(W - 1):0] ' : $width == 1 ? '' : '[7:0] ';
                 like($hdl, qr/^  wire \Q$range$name\E;$/m, 'complete emitted helper declaration agrees with Core');
                 like($hdl, qr/^  assign \Q$name\E = A \Q$ops{$op}\E B; \/\/ Source: fsmgen_parsing$/m,
                     'actual data expression preserves bitwise values');
-                my $gate = $width == 1 ? '&' : '&&';
+                my $gate = $symbolic || $width > 1 ? '&&' : '&';
                 for my $output ('data', 'other') {
                     like($hdl, qr/^  assign idle_\Q$output\E_1_en = idle_en \Q$gate\E \Q$name\E; /m,
                         'complete state selector uses logical whole-vector truth for wide helpers');
