@@ -1,6 +1,6 @@
 ---
 id: core-expression-width-inference
-title: Core exact width inference has an explicit target-owned unsized literal boundary
+title: Core exact width inference has explicit source-reference and unsized literal boundaries
 answers:
   - "where is the shared Core expression width inference kernel?"
   - "how can a target supply unsized literal widths without changing Core defaults?"
@@ -17,8 +17,9 @@ evidence: >-
   docs/audits/source-literal-holder-20261029.json.gz; t/2252-source-literal-width-birth.t;
   docs/audits/source-literal-birth-20261029.json.gz; t/2253-source-literal-width-transitions.t;
   docs/audits/source-literal-transitions-20261029.json.gz;
-  t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-4]*.t
+  t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
+  t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-5]*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -27,7 +28,7 @@ unsized_literal_width callback receives detached raw literal value/radix/width
 with source JSON kinds intact; it supplies a validated width without changing
 Core. Explicit literal widths bypass it. Unknown future classes cannot borrow it.
 Scalar wrappers keep their results; cycles and over-bound walks remain unknown.
-References read selected widths and do not expand other Signals' definitions.
+Ordinary references read selected widths without expanding Signals' definitions.
 
 Selected widths alone prove neither allocation ancestry nor that a helper's
 compatibility placeholder is exact. This preparatory API does not yet alter the
@@ -68,4 +69,7 @@ state and registry ownership, including repeated slots (T2253); other writes wit
 Completed Parser/facade transactions now publish detached Core literal intent.
 Common allocation clear/revision revokes matching writes and failed replacements;
 completion preserves the staged epoch with a final raw registry join (T2254).
-Nested unknown propagation and target/final agreement remain open.
+The preparatory source_reference_width callback now receives actual whole refs:
+undef uses selected width; a closed nullable width record resolves or withholds.
+Malformed results withhold; scalar/slice/literal rules and walk bounds preserve.
+It supplies no source proof. Live nested ownership/inference and targets remain open.

@@ -14,7 +14,7 @@
 
 ### core-expression-width-inference
 
-_Core exact width inference has an explicit target-owned unsized literal boundary_
+_Core exact width inference has explicit source-reference and unsized literal boundaries_
 
 - **date:** 2026-10-29 · **status:** current
 - **source and verification:** [`docs/knowledge/core-expression-width-inference.md`](../../docs/knowledge/core-expression-width-inference.md)

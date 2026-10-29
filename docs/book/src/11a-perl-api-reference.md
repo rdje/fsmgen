@@ -720,6 +720,32 @@ internal policy supplies no backend default or target sizing. Nested unknown
 propagation and the fixed nested truncation repair above remain open; no new
 public semantic schema, MCP field, source grammar or HDL profile is admitted.
 
+The shared width walk now has a preparatory `source_reference_width` option.
+It passes the actual whole Core SignalRef to an explicit source resolver, so
+that caller can join its current source ownership. Returning `undef` preserves
+the selected width; a closed `{width => undef}` deliberately withholds it.
+A positive `{width => VALUE}` resolves explicitly; malformed results withhold
+and callback exceptions propagate. Independent authored references must stay
+unoverridden. Slices, explicit literals and scalar-result wrappers keep their
+own rules, and the walk's cycle/depth/occurrence bounds still apply.
+
+```perl
+use FSM::CoreAST;
+use FSM::CoreExpressionWidthSupport;
+my $helper = FSM::CoreAST::Signal->new(name => 'H', width => 1);
+my $reference = FSM::CoreAST::SignalRef->new($helper);
+my $width = FSM::CoreExpressionWidthSupport->infer_width($reference,
+    source_reference_width => sub { return {width => undef} });
+die "unresolved source borrowed nominal width\n" if defined $width;
+die "source width changed\n" unless $helper->width == 1;
+```
+
+This example supplies an illustrative caller decision, not source provenance.
+T2255 separately exercises actual completed literal policy and revoked-source
+controls. Live builder calls still use ordinary inference. Current nested child
+ownership, allocation-time source resolution and the target repair remain open;
+this preparation alone changes no generated HDL or source admission.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows
