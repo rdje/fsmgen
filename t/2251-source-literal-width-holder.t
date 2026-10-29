@@ -175,6 +175,8 @@ subtest 'depth and occurrence budgets bound actual source and supplied tree walk
     $h->{driving_ast} = FSM::CoreAST::BinaryOp->new('|', $ast, FSM::CoreAST::SignalRef->new($a));
     $record->{expression_tree} = ['|', $tree, ['signal', 'A']];
     ok(!eval {prepare($h, $record); 1}, 'next source depth refuses');
+    my ($valid) = fixture();
+    ok(FSM::SourceLiteralWidthAllocationSupport::_capture($valid), 'actual private capture accepts a valid direct source');
     my $shared = $literal;
     my $shared_tree = ['literal', {value => '256', width => undef, radix => 'decimal'}];
     for (1 .. 12) {
@@ -182,7 +184,7 @@ subtest 'depth and occurrence budgets bound actual source and supplied tree walk
         $shared_tree = ['|', $shared_tree, $shared_tree];
     }
     $h->{driving_ast} = $shared;
-    ok(!defined($class->_capture($h)), 'over-budget actual repeated occurrences withhold');
+    ok(!defined(FSM::SourceLiteralWidthAllocationSupport::_capture($h)), 'over-budget actual repeated occurrences withhold');
     $record->{expression_tree} = $shared_tree;
     ok(!eval {$class->copy_record($record); 1}, 'over-budget supplied repeated occurrences refuse');
     my ($fresh, undef, undef, $fresh_record) = fixture();

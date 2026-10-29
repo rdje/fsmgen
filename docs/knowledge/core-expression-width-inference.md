@@ -6,6 +6,7 @@ answers:
   - "how can a target supply unsized literal widths without changing Core defaults?"
   - "does exact width inference prove a generated helper placeholder or symbolic ancestry?"
   - "why can nested unsized literal helpers truncate a guards high bit?"
+  - "how are nested literal child holders joined before live parser integration?"
 date: 2026-10-29
 status: current
 tags: [widths, literals, core, expression, source-capture]
@@ -18,8 +19,9 @@ evidence: >-
   docs/audits/source-literal-birth-20261029.json.gz; t/2253-source-literal-width-transitions.t;
   docs/audits/source-literal-transitions-20261029.json.gz;
   t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
-  t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-5]*.t
+  t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
+  t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-6]*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -72,4 +74,12 @@ completion preserves the staged epoch with a final raw registry join (T2254).
 The preparatory source_reference_width callback now receives actual whole refs:
 undef uses selected width; a closed nullable width record resolves or withholds.
 Malformed results withhold; scalar/slice/literal rules and walk bounds preserve.
-It supplies no source proof. Live nested ownership/inference and targets remain open.
+It supplies no source proof. Live nested inference and targets remain open.
+The opt-in literal holder children boundary now joins actual typed child edges
+to current birth capsules or actual installed completed policy, with explicit
+phases. It expands raw source text while separately binding ordered child edges;
+unknown child widths never borrow nominal widths or independent floors. Shared
+walk bounds cover all helper expansion. Complete raw/capsule barriers reject
+late matching writes and completed-policy removal (T2256); isolated fallback
+and omitted-barrier variants fail. Default direct/live calls remain unchanged.
+Named nested transport and actual source/target integration are still pending.

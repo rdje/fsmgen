@@ -742,9 +742,52 @@ die "source width changed\n" unless $helper->width == 1;
 
 This example supplies an illustrative caller decision, not source provenance.
 T2255 separately exercises actual completed literal policy and revoked-source
-controls. Live builder calls still use ordinary inference. Current nested child
-ownership, allocation-time source resolution and the target repair remain open;
-this preparation alone changes no generated HDL or source admission.
+controls. Live builder calls still use ordinary inference. Allocation-time
+source resolution and the target repair remain open.
+
+The literal holder has a separate opt-in `children` boundary for prepared nested
+ownership. `{phase => 'birth', lookup => sub { ... }}` supplies a current child
+holder for each actual whole Core reference; the capture owner still attests
+fresh birth. `{phase => 'completed'}` reads only the actual installed child
+policy and permits no callback. A provisional birth cannot supply completed
+policy. Every generated child must have its own current literal contract.
+Missing, foreign, stale or independently constrained child intent withholds.
+The holder expands original raw source syntax while binding each typed edge
+separately, including repeated/shared child slots. One depth and occurrence
+budget spans the complete expansion. Late writes and removed completed policy
+withhold. Returned capsules retain no source owners or lookup callbacks.
+
+```perl
+use FSM::CoreAST;
+use FSM::SourceLiteralWidthAllocationSupport;
+my $a = FSM::CoreAST::Signal->new(name => 'A', width => 8);
+my $literal = FSM::CoreAST::Literal->new('256', radix => 'decimal');
+my $tree = ['|', ['signal', 'A'],
+    ['literal', {value => '256', width => undef, radix => 'decimal'}]];
+my $child = FSM::CoreAST::Signal->new(name => 'CHILD', width => 1,
+    type => 'wire', attributes => {is_intermediate => 1},
+    driving_ast => FSM::CoreAST::BinaryOp->new('|',
+        FSM::CoreAST::SignalRef->new($a), $literal));
+$child->set_source_literal_width_allocation({kind => 'source_literal_operand_max',
+    selected_width => undef, expression_tree => $tree});
+my $parent = FSM::CoreAST::Signal->new(name => 'PARENT', width => 1,
+    type => 'wire', attributes => {is_intermediate => 1},
+    driving_ast => FSM::CoreAST::BinaryOp->new('^',
+        FSM::CoreAST::SignalRef->new($child), FSM::CoreAST::SignalRef->new($a)));
+my $holder = FSM::SourceLiteralWidthAllocationSupport->prepare_core(
+    signal => $parent, track => 1, children => {phase => 'completed'},
+    record => {kind => 'source_literal_operand_max', selected_width => undef,
+        expression_tree => ['^', $tree, ['signal', 'A']]});
+die "nested source borrowed a nominal width\n"
+    if defined $holder->{record}{selected_width};
+```
+
+This constructs explicit local Core intent; it does not attest a Parser birth.
+T2256 checks prepared birth/completed joins, independent floors, raw kinds,
+ordered child edges, revocation and global bounds. Default direct holders and
+all live source/target calls retain their prior behavior. Named nested
+transition transport, live source integration and the fixed truncation repair
+remain open. This preparation changes no source grammar or generated HDL.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

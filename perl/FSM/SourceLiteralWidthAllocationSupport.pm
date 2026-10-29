@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Digest::SHA qw(sha256_hex);
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
 use FSM::CoreExpressionWidthSupport;
@@ -93,10 +94,10 @@ sub _observe_signal {
 sub _core_tree {
     my ($node, $root, $walk, $depth) = @_;
     return unless blessed($node) && $depth <= FSM::CoreExpressionWidthSupport::MAX_DEPTH()
-        && --$walk->{remaining} >= 0;
+        && --$walk->{shared}{remaining} >= 0;
     my $address = refaddr($node);
-    return if $walk->{active}{$address};
-    local $walk->{active}{$address} = 1;
+    return if $walk->{shared}{active_nodes}{$address};
+    local $walk->{shared}{active_nodes}{$address} = 1;
     return unless $node->isa('FSM::CoreAST::Literal') || $node->isa('FSM::CoreAST::SignalRef')
         || ($node->isa('FSM::CoreAST::BinaryOp') && ref($node->{operands}) eq 'ARRAY' && @{$node->{operands}} == 2);
     push @{$walk->{stamps}}, [$node, _raw_node($node), 'node'];
@@ -111,13 +112,14 @@ sub _core_tree {
         my $source = $node->signal;
         my $descriptor = _observe_signal($source, $walk) or return;
         return if refaddr($source) == refaddr($root) || $source->name eq $root->name;
-        # A generated child's nominal width is not an exact width contract.
-        # Actual nested birth/completion joins belong to the source successor.
-        return if $descriptor->{roles}{is_intermediate};
         my $name = $descriptor->{name};
-        return if exists($walk->{names}{$name}) && $walk->{names}{$name} ne $descriptor->{identity_token};
-        $walk->{names}{$name} = $descriptor->{identity_token};
+        my $names = $walk->{shared}{names};
+        return if exists($names->{$name}) && $names->{$name} ne $descriptor->{identity_token};
+        $names->{$name} = $descriptor->{identity_token};
         push @{$walk->{operands}}, $descriptor;
+        if ($descriptor->{roles}{is_intermediate}) {
+            return _child_tree($node, $source, $walk, $depth);
+        }
         return ['signal', $name];
     }
     my $operator = $node->operator;
@@ -128,36 +130,96 @@ sub _core_tree {
     return [$operator, $left, $right];
 }
 
+sub _child_tree {
+    my ($reference, $source, $walk, $depth) = @_;
+    my $options = $walk->{shared}{children} or return;
+    # Births are explicitly supplied by the capture owner. Completion never
+    # calls that lookup: it requires the actual installed Core child policy.
+    my $holder = $options->{phase} eq 'birth' ? $options->{lookup}->($reference)
+        : $source->{_source_literal_width_allocation};
+    return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state'
+        && defined($holder->{state}) && !ref($holder->{state});
+    my $record = __PACKAGE__->copy_record($holder->{record});
+    my $raw = _json()->encode($holder);
+    my $child = _capture_signal($source, $walk->{shared}, $depth + 1) or return;
+    return unless _tracked($child) && _matches($record, $child) && $holder->{state} eq $child->{state};
+    push @{$walk->{holders}}, [$holder, $raw, $options->{phase} eq 'completed' ? $source : undef];
+    push @{$walk->{children}}, {reference_identity => _identity($reference),
+        signal_identity => _identity($source), phase => $options->{phase}, holder_digest => sha256_hex($raw)};
+    # The record expands original source syntax. Separate edge identities bind
+    # actual helper ownership even when two expanded subtrees are text-equal.
+    for my $key (qw(signals stamps nodes operands holders)) {
+        push @{$walk->{$key}}, @{$child->{walk}{$key}};
+    }
+    $walk->{operators} += $child->{walk}{operators};
+    $walk->{literals} += $child->{walk}{literals};
+    $walk->{reference_widths}{refaddr($reference)} = $record->{selected_width};
+    return $record->{expression_tree};
+}
+
 sub _unchanged {
     my ($walk) = @_;
     for my $stamp (@{$walk->{stamps}}) {
         my ($object, $raw, $kind) = @$stamp;
         return unless ($kind eq 'signal' ? _raw_signal($object) : _raw_node($object)) eq $raw;
     }
+    for my $stamp (@{$walk->{holders}}) {
+        my ($holder, $raw, $completed_source) = @$stamp;
+        return unless _json()->encode($holder) eq $raw;
+        if ($completed_source) {
+            my $installed = $completed_source->{_source_literal_width_allocation};
+            return unless ref($installed) eq 'HASH' && _json()->encode($installed) eq $raw;
+        }
+    }
     return 1;
 }
 
 sub _capture {
-    my ($signal) = @_;
-    my $walk = {remaining => FSM::CoreExpressionWidthSupport::MAX_NODES(), active => {},
-        signals => [], stamps => [], nodes => [], operands => [], names => {}, operators => 0, literals => 0};
+    my ($signal, $children) = @_;
+    if (defined $children) {
+        confess "Source literal children require explicit birth lookup or completed policy\n"
+            unless ref($children) eq 'HASH' && defined($children->{phase}) && !ref($children->{phase})
+                && (($children->{phase} eq 'birth' && join(',', sort keys %$children) eq 'lookup,phase'
+                        && ref($children->{lookup}) eq 'CODE')
+                    || ($children->{phase} eq 'completed' && join(',', sort keys %$children) eq 'phase'));
+    }
+    return _capture_signal($signal, {remaining => FSM::CoreExpressionWidthSupport::MAX_NODES(),
+        active_nodes => {}, active_signals => {}, names => {}, children => $children}, 0);
+}
+
+sub _capture_signal {
+    my ($signal, $shared, $depth) = @_;
+    return unless blessed($signal) && $depth <= FSM::CoreExpressionWidthSupport::MAX_DEPTH();
+    my $identity = refaddr($signal);
+    return if $shared->{active_signals}{$identity};
+    local $shared->{active_signals}{$identity} = 1;
+    my $walk = {shared => $shared, signals => [], stamps => [], nodes => [], operands => [],
+        holders => [], children => [], reference_widths => {}, operators => 0, literals => 0};
     my $own = _observe_signal($signal, $walk) or return;
+    return if exists($shared->{names}{$own->{name}}) && $shared->{names}{$own->{name}} ne $own->{identity_token};
+    $shared->{names}{$own->{name}} = $own->{identity_token};
     my $roles = $own->{roles};
     return unless $own->{type} eq 'wire' && $roles->{is_intermediate}
         && !$roles->{is_output} && !$roles->{is_aux_output} && !$roles->{width_declared};
     my $role = $roles->{signal_role};
     return if defined($role) && (ref($role) || ($role ne 'intermediate' && $role ne 'INTERNAL_INTERMEDIATE'));
     return if grep {exists($signal->{$_})} qw(_declared_width_source _declared_width_binding _declared_width_requirements);
-    my $tree = _core_tree($signal->driving_ast, $signal, $walk, 0) or return;
+    my $tree = _core_tree($signal->driving_ast, $signal, $walk, $depth) or return;
     return unless $walk->{operators} && $walk->{literals};
-    my $width = FSM::CoreExpressionWidthSupport->infer_width($signal->driving_ast);
+    my %inference = %{$walk->{reference_widths}} ? (source_reference_width => sub {
+        my ($reference) = @_;
+        my $key = refaddr($reference);
+        return exists($walk->{reference_widths}{$key}) ? {width => $walk->{reference_widths}{$key}} : undef;
+    }) : ();
+    my $width = FSM::CoreExpressionWidthSupport->infer_width($signal->driving_ast, %inference);
     my $expected = defined($width) ? $width : 1;
     return unless FSM::IntermediateWidthAllocationSupport::_width($signal->width)
         eq FSM::IntermediateWidthAllocationSupport::_width($expected);
     return unless _unchanged($walk);
     my $record = {kind => 'source_literal_operand_max', selected_width => $width, expression_tree => $tree};
-    return {record => $record, objects => $walk->{signals}, state => _json()->encode({signal => $own,
+    return {record => $record, objects => $walk->{signals}, walk => $walk, state => _json()->encode({signal => $own,
         nodes => $walk->{nodes}, operands => $walk->{operands}, record => $record,
+        (@{$walk->{children}} ? (children => $walk->{children}) : ()),
         stamps => [map {[_identity($_->[0]), $_->[1], $_->[2]]} @{$walk->{stamps}}]})};
 }
 
@@ -178,13 +240,13 @@ sub _matches {
 sub prepare_core {
     my ($class, %args) = @_;
     my $record = $class->copy_record($args{record});
-    my $capture = eval {_capture($args{signal})};
+    my $capture = eval {_capture($args{signal}, $args{children})};
     confess "Source literal allocation requires the actual current plain Core literal shape\n"
         unless $capture && _matches($record, $capture);
     if ($args{track}) {
         $_->_track_intermediate_width_allocation for @{$capture->{objects}};
     }
-    my $after = eval {_capture($args{signal})};
+    my $after = eval {_capture($args{signal}, $args{children})};
     confess "Source literal allocation requires unchanged tracked source state\n"
         unless $after && _tracked($after) && $capture->{state} eq $after->{state};
     return {record => $record, state => $after->{state}};
@@ -196,11 +258,11 @@ sub current_core {
     return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state'
         && defined($holder->{state}) && !ref($holder->{state});
     my $record = eval {
-        my $capture = _capture($args{signal}) or return;
+        my $capture = _capture($args{signal}, $args{children}) or return;
         return unless _tracked($capture) && $capture->{state} eq $holder->{state};
         my $copy = $class->copy_record($holder->{record});
         return unless _matches($copy, $capture);
-        my $after = _capture($args{signal}) or return;
+        my $after = _capture($args{signal}, $args{children}) or return;
         return unless _tracked($after) && $after->{state} eq $capture->{state} && _matches($copy, $after);
         $copy;
     };
@@ -305,8 +367,8 @@ Closed schema, cycle, depth and occurrence validation precede serialization.
 Validate producer-supplied intent against the actual current plain unsigned
 wire intermediate, bitwise tree and literal data. At least one literal and one
 operator are required. Whole leaf Signals must be plain unsigned independent
-Signals; generated child references, slices and other expression families
-withhold. Result declarations, constraints, named/signed types and conflicting
+Signals; by default generated child references, slices and other expression
+families withhold. Result declarations, constraints, named/signed types and conflicting
 roles withhold. Nullable exact width comes from the shared Core width walk;
 unknown results must still have their nominal compatibility width. Explicit
 sizes must agree with the actual exact operand maximum.
@@ -318,7 +380,39 @@ lifetime tokens use the existing weak identity table and retain no owners.
 This validator does not attest source birth, publish a policy, change source
 inference, or admit a target profile. The actual builder journals births and
 completed Parser/facade transactions publish through the Core Signal lifecycle.
-Nested unknown propagation and target consumers remain separate successors.
+Live nested allocation, named nested transitions and target consumers remain
+separate successors.
+
+The optional C<children> argument explicitly opts into a prepared nested holder
+boundary. C<< {phase => 'birth', lookup => sub { ... }} >> calls the lookup with
+each actual whole Core SignalRef to a generated child. It must return that
+child's current detached C<{record, state}> holder, not merely a record or a
+numerically matching width. This supplied holder establishes current local
+ownership, not fresh allocator provenance; the capture owner must attest birth.
+C<< {phase => 'completed'} >> instead requires the actual installed child
+C<_source_literal_width_allocation> holder and allows no lookup callback.
+Provisional births cannot substitute for completed policy. Every generated
+child in the expansion must have a current literal holder under that same
+phase. Missing, malformed, foreign, independently constrained or stale child
+proof withholds. Lookup exceptions refuse preparation; failed preparation
+publishes nothing.
+
+Each child's exact nullable width is resolved through the shared Core walk's
+explicit source-reference boundary. An unknown child remains unknown even
+beside an independently declared wider leaf; no nominal selected width or
+backend default supplies the missing source proof. Original independent leaf
+declarations and literal sizes remain unchanged. The detached expression tree
+expands original raw source syntax; separate ordered edge identities and child
+capsule digests bind actual typed references and child lifetimes. Repeated or
+shared references retain every occurrence without becoming cycles.
+
+One shared depth/occurrence budget and active AST/Signal path covers the complete
+helper expansion, including reference crossings. It never resets at a child.
+Final raw barriers cover all descendant Signals, AST slots and supplied child
+capsules, plus continued installed-policy membership in completed mode. Only
+temporary call-local state contains owners or callbacks; returned holders are
+plain detached JSON. Default direct captures and all live callers remain
+unchanged by this opt-in preparation.
 
 =head2 current_core
 
@@ -329,6 +423,10 @@ later object lifetimes and unknown shapes withhold. A raw complete-capture
 barrier checks earlier objects after all potentially mutating getters. Ordinary
 absent lookup creates no fields. Failed preparation installs nothing; the
 Core Signal owner revokes any previous installation before explicit replacement.
+Opted-in nested captures require the same explicit C<children> phase/lookup
+contract at revalidation. Birth and completed relationships cannot impersonate
+each other. Completed policy removal and late child-lookup/source writes
+withhold. This method does not publish nested Core policy.
 
 =head2 copy_transition
 
@@ -348,9 +446,12 @@ raw literals and AST identities cannot change. The result is a refreshed detache
 holder, or undef. Arbitrary, extra, failed, foreign or stale writes cannot refresh
 through this operation. The caller separately proves actual registry membership
 before and after its write. This transports intent, never publishes Core policy.
+Named transport currently retains its direct-only boundary; nested transport
+is separately owned before live allocator integration.
 
 Focused executable controls:
 
   scripts/run_with_ram_guard.sh -- prove -Iperl t/2251-source-literal-width-holder.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/2256-source-nested-literal-holder.t
 
 =cut
