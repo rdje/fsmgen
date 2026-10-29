@@ -458,8 +458,9 @@ at the selected default of one. Changing only C to `(param COPY)`, with COPY
 aliasing W, refuses because its original relationship differs. This private
 method emits no range and attests neither current source-helper edges nor
 complete selected targets. Actual source intent over original module leaves now has a separate private
-preparation step, including recursive typed source helpers. Complete selected targets and live range
-consumption remain pending; VHDL and public API/MCP/corpus support are unchanged.
+preparation step, including recursive typed source helpers. The independent
+complete-target join below now qualifies selected records; live range consumption
+remains pending. VHDL and public API/MCP/corpus support are unchanged.
 
 
 The example deliberately retains the actual collected row map in `$rows`. With
@@ -514,8 +515,37 @@ source read so a late child metadata change cannot escape.
 Source intent supplies no completed-target membership or child
 inventory and does not activate symbolic helper declarations. Keep the actual
 prepared block alive through proof; a saved plain plan cannot revive expired
-current ownership. Independent final target proof remains required before live
-range consumption.
+current ownership.
+
+With the actual row view retained, independently join the complete selected
+namespace, declarations and intermediate events:
+
+```perl
+my $selected = $capture->snapshot;
+my $target = FSM::DirectDeclaredWidthSupport->prepare_source_tree_intermediate_range(
+    flattened_dt => $backend, signal_name => $name, signal_info => $rows->{$name},
+    target_language => 'systemverilog',
+    map {$_ => $selected->{$_}} qw(target_namespace target_declarations target_intermediates));
+print $target->{allocation_role}, ' ', join(' ', @{$target->{leaf_names}}), "\n";
+```
+
+For the original `(& A B C)` example this prints `source_intermediate A B C`.
+The root fields agree with separate source intent. `nodes` contains each actual
+reachable helper's detached plan; `node_order` puts children before parents.
+Binary children retain their own binary policy/origin fields, while source-tree
+children retain their tree fields. Shared physical children appear once in the
+inventory and expand at every ordered source occurrence.
+
+Each actual typed edge needs its current selected child event, completed policy,
+exact expression and plain unsigned physical declaration. Original leaves must
+join their canonical target membership and frozen width contracts. Missing or
+foreign child records, renamed targets, substituted original events, altered
+operators or independent maxima refuse. Every complete input map and current
+child proof rechecks at return, followed by a raw currentness fence after the
+last source snapshot. Unrelated input or source changes cannot hide behind an
+unchanged derived range. Returned data retains no caller row map, and failure
+returns no partial plan. This private proof does not yet activate live symbolic
+helper declarations; emission and independent final assembly remain separate.
 
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while

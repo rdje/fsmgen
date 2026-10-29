@@ -24,7 +24,7 @@ status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
   perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-event-publisher-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-5]*.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-6]*.t
 ---
 
 Original card/proofs: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
@@ -44,5 +44,5 @@ T2196: bare &/| group either comparison side; literal/caller/typed native HDL pr
 
 Parser arithmetic stays inline; whole/computed factorizer births, canonical leaves and final target/ledger proof emit generic ranges (direct-declared-width-consumers). Comparisons/! scalar; opaque constraints block policy.
 SourceBitwiseTreePolicySupport bounds closed ordered tree/origin/max. Explicit Core root/tree/all-leaf intent binds detached weak lifetime IDs/max/revisions; matching writes revoke; final capture rejects late writes.
-Parser source_tree_events: fresh trees; only exact reference/role/metadata refresh. Parser/facade/backend/selected targets bind current policy; binary events stay two-slot; negated n-ary wraps that helper in scalar logical !. DirectDeclaredWidthSupport: frozen leaves T2243; current original-leaf intent T2244; recursive Core tree/binary edges, repeated leaves/bounds and current child/final raw fences T2245. Target/ranges/full .6 pending.
+Parser source_tree_events: fresh trees; only exact reference/role/metadata refresh. Parser/facade/backend/selected targets bind current policy; binary events stay two-slot; negated n-ary wraps that helper in scalar logical !. DirectDeclaredWidthSupport: frozen leaves T2243; current original-leaf intent T2244; recursive Core tree/binary edges, repeats/bounds and child/final raw fences T2245. Independent child target/currentness join T2246; ranges/full .6 pending.
 Unsized literal3: Core placeholder1/SV32 width check refuses; repair ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.

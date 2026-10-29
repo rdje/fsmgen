@@ -40,8 +40,10 @@ returned root plans retain no caller map. Recursive expansion imports the existi
 binary allocation schema and shared tree bounds, retaining operators and every
 original leaf occurrence through completed tree/binary child attachments.
 Complete child selections replay and a final raw-field fence follows source reads.
-Independent complete target proof and live source-tree ranges remain pending; no VHDL or
-public-report profile expands. This is a scoped dependency update, not a new
+The same private module now independently traverses complete selected child events,
+canonical physical declarations and current typed edges, rechecking all inputs
+and final raw currentness against separate source intent. Live source-tree ranges
+remain pending; no VHDL or public-report profile expands. This is a scoped dependency update, not a new
 whole-entrypoint closure census.
 
 Scoped update on `2026-10-28`: actual factorization imports

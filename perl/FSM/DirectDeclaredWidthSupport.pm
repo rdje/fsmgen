@@ -343,6 +343,11 @@ sub prepare_source_tree_declaration ($class, %args) {
     return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_declaration(%args);
 }
 
+sub prepare_source_tree_intermediate_range ($class, %args) {
+    require FSM::DirectSourceBitwiseTreeRangeSupport;
+    return FSM::DirectSourceBitwiseTreeRangeSupport->prepare(%args);
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -628,6 +633,19 @@ implementation is shared here with arithmetic graph preparation; an unchanged
 range plan cannot hide unrelated source-width constraint changes. The operation
 attests no target membership, emits no HDL and broadens no VHDL profile. Recursive
 complete selected-target proof and live range use remain separate.
+
+C<prepare_source_tree_intermediate_range> independently joins the same actual
+source-tree root to complete C<target_namespace>, C<target_declarations> and
+C<target_intermediates> maps. Each actual typed child requires its own closed
+selected tree or binary event, current completed policy, exact expression and
+plain unsigned physical declaration. Original leaves require canonical target
+membership and their full frozen width relationships. Every occurrence expands;
+the detached C<nodes> inventory contains each physical child once in
+children-before-parent C<node_order>. The root fields must match separate source
+declaration intent. Full source/target inputs, child selections, raw currentness
+and weak row membership recheck after preparation, including changes hidden by
+equal derived ranges. This private proof emits no HDL and enables no live
+source-tree range or VHDL profile.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

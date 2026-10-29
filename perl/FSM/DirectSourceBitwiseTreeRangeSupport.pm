@@ -263,6 +263,182 @@ sub prepare_declaration {
     return $plan;
 }
 
+sub _target_declaration {
+    my ($state, $name) = @_;
+    my $row = $state->{declarations}{$name};
+    _fail("requires an actual plain unsigned selected declaration '$name'")
+        unless ref($row) eq 'HASH' && !$row->{signed} && !defined($row->{state_model})
+            && !defined($row->{declared_type_name}) && !defined($row->{declared_type_spec})
+            && ($state->{target}{signal_targets}{$name} // '') eq $name;
+    return $row;
+}
+
+sub _target_walk {
+    my ($state, $ast, $depth, $names, $widths) = @_;
+    _fail('exceeds its bounded selected source tree')
+        unless blessed($ast) && $depth <= FSM::IntermediateWidthGraphPolicySupport::MAX_BINARY_LEVELS();
+    my $identity = refaddr($ast);
+    _fail('contains a cyclic selected typed tree') if $state->{active_ast}{$identity};
+    local $state->{active_ast}{$identity} = 1;
+    _remember($state->{asts}, $identity, $ast);
+    if ($ast->isa('FSM::CoreAST::SignalRef')) {
+        my $name = FSM::IntermediateWidthAllocationSupport->whole_signal_name($ast);
+        my $signal = $ast->signal;
+        _fail('requires actual whole Core edges to selected source targets')
+            unless defined($name) && !defined($ast->{slice}) && blessed($signal)
+                && $signal->isa('FSM::CoreAST::Signal')
+                && ($state->{ctx}{fsm_module}->signals->{$name} // 0) == $signal;
+        _remember($state->{signals}, $name, $signal);
+        push @$names, $name;
+        push @$widths, _target_declaration($state, $name)->{width};
+        if ($signal->get_attribute('is_intermediate')) {
+            return _target_visit($state, $name, $depth)->{tree};
+        }
+        _fail("cannot substitute a selected helper event for original leaf '$name'")
+            if exists($state->{events}{$name});
+        _fail('exceeds its bounded selected source tree') unless --$state->{budget} >= 0;
+        return ['signal', $name];
+    }
+    _fail('requires actual typed bitwise edges in selected source targets')
+        unless $ast->isa('FSM::CoreAST::BinaryOp') && ref($ast->{operands}) eq 'ARRAY'
+            && @{$ast->{operands}} == 2 && defined($ast->operator)
+            && !ref($ast->operator) && $ast->operator =~ /\A[&|^]\z/;
+    _fail('exceeds its bounded selected source tree') unless --$state->{budget} >= 0;
+    my $left = _target_walk($state, $ast->left, $depth + 1, $names, $widths);
+    my $right = _target_walk($state, $ast->right, $depth + 1, $names, $widths);
+    return [$ast->operator, $left, $right];
+}
+
+sub _target_visit {
+    my ($state, $name, $depth) = @_;
+    _fail('contains a cyclic selected source-helper graph') if $state->{active_helper}{$name};
+    local $state->{active_helper}{$name} = 1;
+    my $signal = $state->{ctx}{fsm_module}->signals->{$name};
+    my $info = $state->{rows} && $state->{rows}{$name};
+    _fail("requires actual current selected source-helper '$name'")
+        unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal')
+            && $signal->get_attribute('is_intermediate') && ref($info) eq 'HASH'
+            && ($info->{source} // '') eq 'fsmgen_parsing';
+    _remember($state->{signals}, $name, $signal);
+    _remember($state->{infos}, $name, $info);
+    my $event = $state->{events}{$name};
+    my $binary = ref($event) eq 'HASH' && !exists($event->{source_tree_width_allocation});
+    my ($policy_key, $origin_key) = $binary ? qw(width_allocation bitwise_origin)
+        : qw(source_tree_width_allocation source_tree_origin);
+    _fail("requires a closed selected source-helper event '$name'")
+        unless ref($event) eq 'HASH'
+            && join(',', sort keys %$event) eq join(',', sort ('expression', $policy_key, $origin_key));
+    _fail('requires a source-tree root event') if $name eq $state->{root} && $binary;
+    my ($policy, $origin) = _selection({signal_name => $name, signal_info => $info,
+        expression => $event->{expression}}, $state->{owner}, $state->{recovery}, $binary);
+    _fail("disagrees with the complete current selected event for '$name'")
+        unless _equal($event, {expression => $event->{expression}, $policy_key => $policy, $origin_key => $origin});
+    $state->{selections}{$name} = {policy => $policy, origin => $origin,
+        expression => $event->{expression}, binary => $binary ? 1 : 0};
+    my $declaration = _target_declaration($state, $name);
+    _fail("requires unrenamed intermediate signal membership for '$name'")
+        unless 1 == (grep {$_ eq $name} @{$state->{namespace}{signals}})
+            && !exists($declaration->{width_origin});
+    my (@names, @widths);
+    # Traverse each occurrence, even when a child already has an inventory row:
+    # sharing cannot evade the expanded depth/occurrence bounds.
+    my $tree = _target_walk($state, $signal->driving_ast, $depth, \@names, \@widths);
+    my $schema = $binary ? 'FSM::IntermediateWidthAllocationSupport' : 'FSM::SourceBitwiseTreePolicySupport';
+    _fail("disagrees with actual selected operand slots or maximum for '$name'")
+        unless _equal(\@names, $policy->{source_names})
+            && $schema->matches_selected_widths($policy, $declaration->{width}, @widths)
+            && defined(FSM::IntermediateWidthAllocationSupport::_width($info->{width}))
+            && FSM::IntermediateWidthAllocationSupport::_width($info->{width})
+                eq FSM::IntermediateWidthAllocationSupport::_width($declaration->{width});
+    my $leaves = _tree_leaves($tree);
+    my $node = {tree => $tree, plan => {profile => $state->{relationship}{profile},
+        target_language => $state->{target}{target_language}, source_scope => $state->{relationship}{source_scope},
+        module_name => $state->{target}{module_name}, target_name => $name, declaration_kind => 'signal',
+        allocation_role => 'source_intermediate', source_names => $policy->{source_names},
+        operand_targets => $policy->{source_names}, width => $declaration->{width},
+        $policy_key => $policy, $origin_key => $origin, expression => $event->{expression},
+        expression_tree => $tree, leaf_names => $leaves,
+        width_plan => $state->{relationship}{profile} eq 'symbolic'
+            ? $state->{source}{signals}{$leaves->[0]}{width_plan} : undef}};
+    if (exists($state->{nodes}{$name})) {
+        _fail("changed a shared selected source-helper '$name'") unless _equal($node, $state->{nodes}{$name});
+    } else {
+        $state->{nodes}{$name} = $node;
+        push @{$state->{order}}, $name;
+    }
+    return $node;
+}
+
+sub _tree_leaves {
+    my ($tree) = @_;
+    return [$tree->[1]] if $tree->[0] eq 'signal';
+    return [@{_tree_leaves($tree->[1])}, @{_tree_leaves($tree->[2])}];
+}
+
+sub _selected_targets {
+    my ($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name) = @_;
+    my $state = {ctx => $ctx, owner => $owner, recovery => $recovery, rows => $rows, %$input,
+        source => $source, target => $target, relationship => $relationship, root => $name,
+        signals => {}, infos => {}, asts => {}, selections => {}, nodes => {}, order => [],
+        active_ast => {}, active_helper => {}, budget => FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES()};
+    weaken($state->{rows});
+    undef $rows;
+    _target_visit($state, $name, 0);
+    return $state;
+}
+
+sub prepare {
+    my ($class, %args) = @_;
+    my $target_inputs = sub {_json()->encode({namespace => $args{target_namespace},
+        declarations => $args{target_declarations}, events => $args{target_intermediates}})};
+    my $snapshot = eval {$target_inputs->()};
+    _fail("requires JSON-safe complete selected target records: $@") if $@;
+    my $input = _json()->decode($snapshot);
+    my $name = $args{signal_name};
+    _fail('requires complete selected source-tree target maps')
+        unless ref($input->{namespace}) eq 'HASH' && ref($input->{declarations}) eq 'HASH'
+            && ref($input->{events}) eq 'HASH' && defined($name) && !ref($name)
+            && ref($input->{events}{$name}) eq 'HASH';
+    $args{expression} = $input->{events}{$name}{expression};
+    my ($ctx, $owner, $recovery, $rows) = _scope(\%args);
+    weaken($rows);
+    my $direct = 'FSM::DirectDeclaredWidthSupport';
+    my $before = $direct->_capture_source_state($ctx);
+    my %source_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
+        target_language => $args{target_language});
+    my %target_args = (%source_args, target_namespace => $input->{namespace}, target_declarations => $input->{declarations});
+    my $source = $direct->prepare_module(%source_args);
+    my $target = $direct->prepare_declarations(%target_args);
+    my $intent = $class->prepare_declaration(%args);
+    my $expanded = {%{$intent->{source_tree_width_allocation}},
+        expression_tree => $intent->{expression_tree}, source_names => $intent->{leaf_names}};
+    my $relationship = $direct->prepare_source_tree_operand_relationship(%source_args,
+        source_tree_width_allocation => $expanded);
+    my $state = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name);
+    my $fence = _fence($state);
+    _fail('complete target root disagrees with independent source declaration intent')
+        unless _equal($state->{nodes}{$name}{plan}, $intent);
+    my $source_again = $direct->prepare_module(%source_args);
+    my $target_again = $direct->prepare_declarations(%target_args);
+    my $again = $direct->prepare_source_tree_operand_relationship(%source_args,
+        source_tree_width_allocation => $expanded);
+    my $current_intent = $class->prepare_declaration(%args);
+    my $current = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source_again, $target_again, $again, $name);
+    my $after = $direct->_capture_source_state($ctx);
+    _fail('complete selected inputs or current source proof changed during target preparation')
+        unless $snapshot eq $target_inputs->() && $before eq $after
+            && _equal($source, $source_again) && _equal($target, $target_again)
+            && _equal($relationship, $again) && _equal($intent, $current_intent)
+            && _equal($state->{nodes}, $current->{nodes}) && _equal($state->{order}, $current->{order})
+            && $fence eq _fence($state) && $fence eq _fence($current);
+    my ($final_ctx, $final_owner, $final_recovery, $final_rows) = _scope(\%args);
+    _fail('source ownership changed during selected target preparation')
+        unless $final_ctx == $ctx && $final_owner == $owner && $final_recovery == $recovery
+            && $rows && $rows == $final_rows;
+    return _json()->decode(_json()->encode({%{$state->{nodes}{$name}{plan}}, node_order => $state->{order},
+        nodes => {map {$_ => $state->{nodes}{$_}{plan}} @{$state->{order}}}}));
+}
+
 1;
 
 =head1 NAME
@@ -312,6 +488,32 @@ expanded leaves do not overwrite those distinct current edges. It retains
 no caller objects and asserts no selected-target membership or child inventory.
 This private prerequisite emits no HDL, changes no live range and broadens no
 VHDL, public semantic API, MCP or corpus profile. Independently completed
-selected-target proof remains a separate prerequisite.
+selected-target proof is provided separately by C<prepare>.
+
+C<prepare> takes the same actual context, root row and target language plus
+complete C<target_namespace>, C<target_declarations> and C<target_intermediates>
+maps. It selects the root expression from those events. A separate traversal
+joins actual whole Core edges to every selected tree or binary child event,
+current completed policy and exact typed expression. Every result and operand
+needs a plain unsigned canonical physical declaration and independently selected
+maximum. Renamed helper targets, missing child events, foreign or copied rows,
+conflicting allocation origins and substituted original-leaf events refuse.
+
+The canonical source and declaration kernels reprepare the full input scope.
+The independently traversed target root must agree with separate current source
+intent, including expanded operators, association and ordered duplicate leaves.
+Shared helper occurrences each consume depth/node budget, but each physical
+helper appears only once in children-before-parent C<node_order>. C<nodes> holds
+detached per-helper plans. Tree and binary children keep their own distinct
+policy/origin fields. Every plan has its own original first-leaf range
+representative when symbolic; fixed independent widths invent no relationship.
+
+All selected target inputs retain their complete JSON identity at return, even
+when a change leaves prepared range text equal. Canonical plans and all child
+selections replay; the final raw-field fence follows the last complete source
+snapshot and checks Core, row, attachment, module scope, owner and epoch state.
+Proof retains no caller row view. Failure returns no partial plan, and held
+detached plans cannot revive expired current membership. This independent proof
+still emits no HDL and activates no source-tree range or VHDL support.
 
 =cut
