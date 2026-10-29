@@ -17,5 +17,5 @@
 
 _Core exact width inference has explicit source-reference and unsized literal boundaries_
 
-- **date:** 2026-10-29 · **status:** current
+- **date:** 2026-10-30 · **status:** current
 - **source and verification:** [`docs/knowledge/core-expression-width-inference.md`](../../docs/knowledge/core-expression-width-inference.md)

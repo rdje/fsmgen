@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-29`
+- Last updated: `2026-10-30`
 - Owner: repo-local workflow
 
 ## Goal
@@ -2453,11 +2453,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — No production code changed. The bounded actual strict CLI and saved source/target/refusal controls execute; the retained verifier passes with --current --qualify. The preceding focused All tests successful result remains revision-bound preparation evidence, not a new test run. POD/book-source freshness and normal mandatory staged doctrines gate commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve explicit source allocation intent and unknown width through literal helpers and their actual parents.`
   Acceptance: `After .1, capture intrinsic allocation at the actual source birth without assigning a backend default to Core. Preserve raw literal value/radix/explicit widths and independently constrained source Signals. Distinguish unknown helper width from an exact scalar and propagate that distinction through nested source references without textual/name/default guesses. Reuse canonical bounded width and mutation/lifetime contracts; publish only after complete source validation, revoke on matching-state/failed/foreign writes and preserve independent floors. Split holder/birth/publication consumers into safe executable children before editing. Focused RED/GREEN/hostile source/JSON-kind/lifetime checks and POD/book sync before each commit; no target/generic success until .3.`
-  Verification: `Ownership diagnosis complete in predecessor .1: direct unknown literal state cannot distinguish a matching width write, and nested parents currently mistake a nominal child width for exact allocation. The fixed native high-bit truncation is a required P1 repair in this immediate leaf plus target successor .3. Fresh source birth and unknown propagation must precede target relaxation.`
-  Commit: `pending explicit source literal allocation`
+  Verification: `Source implementation closes through its bounded holder/birth/publication/unknown-propagation children and final reconciliation. Real source inference and publication now consume current typed capture-local relationships with exact source epochs, raw kinds, independent floors and mutation/failure boundaries. Focused actual nested closure is retained under .3.2.4; target sizing/generic floors, fixed/mutable final agreement and original high-bit repair remain immediate .1.2.3. Full .6/publication is deferred.`
+  Commit: `source implementation children and final closure .3.2.4`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.4`
 
@@ -2507,11 +2507,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Corrected focused T2253/T2252/T2251/T2199/T2242 reports All tests successful Files=5 Tests=23, and tightened precise-refusal T2242 separately passes Files=1 Tests=5. The known-bad complete-state omission fails its intended independent declaration control. Current POD/source checks and mandatory final-index doctrines gate commit; full .6/compiler/runtime/publication checks stay deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish completed literal intent and propagate unknown nested helper widths.`
   Acceptance: `After birth .2, publish only after complete normal source validation. Join current child intent through actual references, preserve independent declared floors and keep unresolved helper widths unknown through the shared bounded inference walk. Relevant supported writes revoke even at matching state, and foreign/stale/cyclic shapes withhold. Focused direct/nested fixed/mutable one/wide/scalar/explicit controls and current source products; target floors/final agreement remain parent successor .3.`
-  Verification: `pending bounded source allocation consumer`
-  Commit: `pending`
+  Verification: `Prepared contracts and actual producer children close nullable nested source inference, fresh literal births, exact named child-first transport and authenticated completed publication. Focused current source closure adds repeated/shared/deeper edges, raw caller/parameter/AST-kind conservation, depth/failure/reuse and detached-lifetime controls. Actual allocation .3.2.3.1 is 02410c942; completed publication .3.2.3.2 is 645a4a556. Target literal floors, final declaration agreement and historical high-bit repair remain .1.2.3; full .6 remains deferred.`
+  Commit: `implementation children and .3.2.4 source closure`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2`
 
@@ -2528,11 +2528,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Focused publication/transition/birth/holder/canonical-role/source-tree checks report All tests successful Files=6 Tests=31. The new book example executes, generated POD is current and complete source-reference contracts pass. Normal final-index doctrines and staged acceptance gate this commit; full .6/compiler/runtime/publication checks remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Keep unresolved source width unknown through actual nested helpers without borrowing independent floors.`
   Acceptance: `After completed direct publication .1, split actual birth-time unresolved width semantics, current nested helper ownership and shared inference consumers before editing. Use actual allocation and typed source relationships, preserve independently authored widths and raw literal JSON kinds, and propagate unknown through real nested parents without a backend default, textual/name guesses or equality-based provenance. Supported mutations and failed/foreign/stale/cyclic/over-bound profiles withhold rather than reclassifying an unresolved placeholder as exact. Qualify direct/nested fixed/mutable one/wide/scalar/explicit source controls and actual complete products; target floors/final agreement remain .1.2.3 and full .6 remains deferred.`
-  Verification: `Publication .1 is committed at 81544e18c and clean before this split. The shared Core SignalRef walk still reads selected width only; completed direct literal intent is now separately current, while birth-time capture cannot borrow completed policy before validation. SourceLiteralWidthAllocationSupport::_core_tree deliberately rejects generated child references. Those are distinct shared-inference, nested-ownership and live producer obligations, so implementation is split into bounded prepared contracts before integration. Existing fixed high-bit truncation remains owned by these source children and immediate target successor .1.2.3. Full .6/publication remain deferred.`
-  Commit: `this pre-implementation nested source decomposition`
+  Verification: `Prepared contracts and actual producer children close nullable nested source inference, fresh literal births, exact named child-first transport and authenticated completed publication. Focused current source closure adds repeated/shared/deeper edges, raw caller/parameter/AST-kind conservation, depth/failure/reuse and detached-lifetime controls. Actual allocation .3.2.3.1 is 02410c942; completed publication .3.2.3.2 is 645a4a556. Target literal floors, final declaration agreement and historical high-bit repair remain .1.2.3; full .6 remains deferred.`
+  Commit: `implementation children and .3.2.4 source closure`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.1`
@@ -2613,18 +2613,23 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=12 for T2259/T2254; final T2259 with expanded distinguishing replacement/late-capture controls passes Files=1 Tests=5. Core/source syntax, generated POD, complete source/copied-book freshness and guarded book build pass. Mandatory final-index doctrines qualify commit; full .6/compiler/runtime/publication stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close nested source unknown propagation with focused complete source and lifecycle controls.`
   Acceptance: `After .1-.3, qualify real nested parents including repeated/shared/deep children and distinct explicit/scalar/independent-floor controls. Conserve complete original source/parameter/literal state and JSON kinds, distinguish source completion from provisional birth lookup, and reject stale/foreign/cyclic/over-bound/currentness counterexamples. Reconcile source APIs, book and current task evidence; identify actual remaining source-versus-target outcomes honestly. No compiler/runtime/full .6 success or repaired target high-bit behavior is inferred. Commit before source allocation closure .1.2.2.4 and target successor .1.2.3.`
-  Verification: `Pending focused source closure after live integration; target sizing and original fixed truncation remain separately owned.`
-  Commit: `pending nested source closure`
+  Verification: `Focused actual source closure covers repeated typed slots, a child shared by distinct parents and a deeper chain with explicit/unknown widths. Child-first named transport and completed publication preserve; a same-value replacement reference revokes dependent edges. An independent whole-object census covers every raw Signal key except intended policy fields, all AST node fields/typed identities and caller/parameter JSON kinds; matching string-for-integer saved mutation rejects. Actual source-depth excess withholds parent intent and old binary fallback; a fresh capture succeeds. Detached escaped capsules retain no new owners after only the known fixture fanout edges are removed; Core cycle repair stays .31. All tests successful Files=1 Tests=4 for T2260, with source/test syntax, POD, source/copied-book and guarded book build passing. Re-derive actual builder/Parser/facade products and complete raw census; falsify replacement-slot, saved-kind, over-depth and detached-lifetime controls; durability complete test, source identities and raw TAP/book/sample logs in docs/audits/source-nested-literal-closure-20261029.json.gz. The finite depth check completes under RAM supervision; its captured duration is observation only, not a speed or capacity claim. Inherited direct/nested/failure/phase/bounds controls retain their dated scopes. Source allocation/reconciliation closes; target literals, fixed/mutable declaration agreement and historical high-bit repair remain unqualified under immediate .1.2.3, with full .6 deferred. Normal final-index doctrines gate commit.`
+  Commit: `this actual nested source closure slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S complete_core identifies 645a4a556 as actual completed source integration; prior T2256/T2257 qualify prepared shared/bounded holders, while T2258/T2259 qualify live allocation/completion. Actual repeated/shared/deeper edges and complete raw-object conservation still needed their focused source closure before target work.
+  - [x] **ADDRESSED (verified)** — T2260 observes actual shared/repeated/deeper birth/transport/completed relationships, independent complete raw Signal/AST and original parameter/input conservation, current replacement-slot rejection, source-depth withholding with fresh reuse and detached owner release. The lifetime fixture removes only known Core fanout cycles; .31 retains that separate defect. Source closure and parent reconciliation now complete; target literal floors/declaration agreement stay open.
+  - [x] **NO REGRESSION** — All tests successful Files=1 Tests=4 for focused T2260. Syntax, current generated POD, complete native source/copied-book checks and guarded book build pass. No unchanged broad suite reruns; prior focused allocation/publication controls retain their exact evidence. Mandatory staged/final-index doctrines qualify commit; compiler/runtime/full .6/publication remains deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close source allocation with focused lifecycle and conservation controls.`
   Acceptance: `After .1-.3, reconcile actual source birth, completion, unknown propagation and independent constraint boundaries. Verify complete raw source/parameter/literal/JSON-kind conservation and distinguishing mutation/failure controls; synchronize API/book/canonical records, then select target repair .1.2.3. No HDL floor, runtime, full .6 or publication qualification is implied.`
-  Verification: `pending bounded source allocation consumer`
-  Commit: `pending`
+  Verification: `Source holder/birth/transition/direct-publication/prepared-nested and live allocation/publication records reconcile with T2260 actual source closure. Independent source widths and explicit literal sizes remain independent; unknown exact widths retain nullable intent instead of lending compatibility widths. Completed source relationships and caller/raw/parameter JSON kinds conserve; relevant failed/matching/foreign/late writes withhold. No backend floor, source/target agreement, high-bit runtime or full .6 qualification is inferred. POD/book/downstream source reference and canonical card align; immediate target successor .1.2.3 remains open.`
+  Commit: `with nested source closure .3.2.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3`
   Status: `pending`

@@ -7,7 +7,7 @@ answers:
   - "does exact width inference prove a generated helper placeholder or symbolic ancestry?"
   - "why can nested unsized literal helpers truncate a guards high bit?"
   - "how are nested literal child holders joined before live parser integration?"
-date: 2026-10-29
+date: 2026-10-30
 status: current
 tags: [widths, literals, core, expression, source-capture]
 evidence: >-
@@ -21,8 +21,8 @@ evidence: >-
   t/2254-source-literal-width-publication.t; docs/audits/source-literal-publication-20261029.json.gz;
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
-  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t
+  t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -85,4 +85,4 @@ intent cannot lend a nominal width or old binary maximum policy. Fresh nested
 births and child-first transport preserve independent floors and scalar results.
 T2258 covers fixed/mutable Parser/facade writes. T2259 qualifies publication:
 the original birth's phase/digest projection must match actual completed child
-capsules, preserving epochs and raw kinds. Target sizing remains separate.
+capsules. T2260 closes source edge/conservation/lifetime controls; target sizing remains separate.

@@ -817,6 +817,9 @@ validation reads. The Core getter validates completed nested relationships.
 T2259 covers both completion paths, replacement/late-write controls and atomic
 partial-publication failure/reuse. Target literal sizing and the fixed truncation
 repair remain open. No source grammar or public API/MCP schema is added.
+T2260 closes focused source-only repeated/shared/deeper edges and raw-object
+conservation, bound refusal and detached capsule lifetime. The lifetime fixture
+separately removes its known Core fanout cycles; it makes no graph leak-free claim.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
