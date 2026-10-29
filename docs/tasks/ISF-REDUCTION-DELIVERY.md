@@ -2474,10 +2474,31 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2251/T2250 report All tests successful Files=2 Tests=12. The current isolated omitted-barrier variant fails its intended final-read assertion. Focused current POD/source references and the mandatory full final-index doctrine hook qualify this commit; broad feature/runtime/external/full .6/publication checks remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture actual source literal births and carry only sanctioned source transitions.`
   Acceptance: `After holder .1, integrate fresh actual literal-containing helper births before independent width writes can become indistinguishable. Preserve nullable exact width and raw syntax, carry tracked events only across named reference/role/metadata transitions, and withhold foreign, failed, independent or stale shapes. Split nested dependency allocation if required; no backend default or target relaxation.`
   Verification: `pending bounded source allocation consumer`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.1`
+  Status: `done`
+  Goal: `Journal actual fresh direct literal helper births without publishing completed policy.`
+  Acceptance: `At the actual fresh n-ary bitwise helper allocation, retain a separate optional source_literal_events packet bucket of detached current raw literal holders. Require actual registry membership of root and each independent operand and fresh name ownership; equal existing/foreign/revoked state cannot manufacture a birth. Preserve direct literal kinds and exact/unknown widths, old binary/tree buckets, callback failure and capture reuse. Unsupported/nested shapes remain withheld; no target default, completed source policy or nested width propagation. Focused actual builder/parser fixed/mutable one/wide/explicit/hostile controls, POD/book and normal commit gates.`
+  Verification: `Actual fresh direct bitwise literal allocation now journals a separate optional source_literal_events bucket after actual helper/independent-leaf registry joins and complete current holder validation. The fresh pre-registration name guard prevents an existing equal registration from manufacturing a birth. Raw parsed Core literal kinds and nullable exact width preserve; old binary/tree buckets and ordinary uncaptured paths preserve. Corrected pre-edit T2252 RED fails all journal groups. The first fixture instead used unsupported A:1 and aborts; its exact source/log retain separately. First implementation run exposes a second fixture assumption: ordinary decimal parsing already stores numeric256, while the assertion expected string256. Correct the explicit native oracle and independently compare held data with the actual source Literal; no production literal parser changed. Final focused T2252/T2251/T2250 report All tests successful Files=3 Tests=17. The isolated omitted-fresh-guard variant fails the existing-name ownership assertion. Actual fixed/mutable one/wide facade paths observe still-current births at the allocation locus, callback failures restore capture state and next capture succeeds. Nested parent/sliced/computed profiles remain unqualified rather than borrowing direct literal intent. Re-derive actual builder/facade births; falsify independent literal/null/exact/registry assertions and the known-bad fresh guard; durability tracked tests/source/POD/book/card and docs/audits/source-literal-birth-20261029.json.gz with exact retained RED/corrected/final/variant sources and logs. Sanctioned transitions, completed publication, nested unknown propagation and target repair remain open; no completed parser policy or public source/API/MCP/corpus/schema widening, HDL/runtime/full .6/publication claim. Focused POD/source freshness pass. Initial mandatory hook refuses task-evidence aggregate line growth beyond its declared band. Apply measured actual plus the existing line ratchet inside the unchanged baseline/ceiling, retain the rejected epoch, regenerate derived inventory and rerun the normal final-index hook.`
+  Commit: `this actual source literal birth slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected pre-edit native regression at t/2252-source-literal-width-birth.t line 109 reports the missing actual staging locus; all journal groups fail. Equal selected state cannot establish an allocator birth. The isolated omitted-fresh-guard Perl diagnostic at t/2252-source-literal-width-birth.t line 93 demonstrates the existing-name counterexample. Initial unsupported slice syntax and parsed decimal-kind fixture assumptions are retained separately.
+  - [x] **ADDRESSED (verified)** — Actual fresh source helper allocation now journals detached raw literal holders only after actual root/operand membership and currentness validation. Nullable/explicit width, native parsed kinds, independent caller token kinds, legacy buckets, fixed/mutable parsing and failed-capture reuse pass. Existing-name and foreign-operand controls refuse without forging source intent. Completed literal publication and nested/target consumers remain open.
+  - [x] **NO REGRESSION** — Guarded T2252/T2251/T2250 report All tests successful Files=3 Tests=17; the isolated omitted-fresh-guard variant fails its intended existing-name assertion. Current POD/source checks and the mandatory full final-index doctrine hook gate this slice. No full .6, HDL runtime or publication success is implied.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.2`
+  Status: `pending`
+  Goal: `Carry current source literal births through only sanctioned source transitions.`
+  Acceptance: `After .1, qualify actual bare-reference registration, selected role assignment and final width metadata transitions using the complete old/new holder state and exact supported revision change. Bind actual registry objects and preserve all literal/AST/independent constraint data. Arbitrary, matching, failed, foreign and extra writes must revoke; source completion remains separate .1.2.2.3. Focused real parser/facade currentness and distinguishing hostile controls, synchronized docs and normal gates before commit.`
+  Verification: `pending literal source transition transport`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3`

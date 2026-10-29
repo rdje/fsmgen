@@ -678,9 +678,14 @@ profile validates actual helper, AST and independent leaf identities, raw JSON
 kinds and tracked source revisions. Matching writes, foreign object lifetimes
 and late source mutations withhold intent. The detached holder retains no
 owners. `t/2251-source-literal-width-holder.t` includes an isolated bad-barrier
-control. This preparatory validator publishes no parser policy and enables no
-target profile; actual births, completed publication and nested unknown-width
-propagation remain the next source consumers before the target repair above.
+control. The builder now journals actual fresh direct literal allocations in
+an optional `source_literal_events` bucket. Fresh name ownership and actual
+registry membership distinguish those births from equal existing or foreign
+objects. The journal preserves parsed Core literal kinds, independently of the
+caller's token spelling; old binary/tree buckets preserve. T2252 exercises actual
+fixed/mutable parsing and failed-capture reuse. Sanctioned source transitions,
+completed publication and nested unknown propagation remain the next consumers.
+No completed literal policy or target profile is enabled by this journal.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

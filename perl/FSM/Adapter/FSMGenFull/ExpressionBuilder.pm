@@ -13,6 +13,7 @@ use FSM::CoreAST;
 use FSM::CoreExpressionWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
+use FSM::SourceLiteralWidthAllocationSupport;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
@@ -48,11 +49,32 @@ sub _capture_intermediate_width_allocations($self, $callback) {
         if exists $self->{_intermediate_width_allocation_capture};
     local $self->{_intermediate_width_allocation_capture} = [];
     local $self->{_source_bitwise_tree_width_allocation_capture} = [];
+    local $self->{_source_literal_width_allocation_capture} = [];
     my $value = $callback->();
     my $packet = {value => $value, events => $self->{_intermediate_width_allocation_capture}};
     $packet->{source_tree_events} = $self->{_source_bitwise_tree_width_allocation_capture}
         if @{$self->{_source_bitwise_tree_width_allocation_capture}};
+    $packet->{source_literal_events} = $self->{_source_literal_width_allocation_capture}
+        if @{$self->{_source_literal_width_allocation_capture}};
     return $packet;
+}
+
+sub _stage_source_literal_width_allocation($self, $signal) {
+    my $events = $self->{_source_literal_width_allocation_capture} or return;
+    my $capture = eval {FSM::SourceLiteralWidthAllocationSupport::_capture($signal)} or return;
+    my $manager = $self->{signal_manager};
+    for my $object (@{$capture->{objects}}) {
+        return unless refaddr($manager->get_signal($object->name) // {}) == refaddr($object);
+    }
+    my $holder = eval {FSM::SourceLiteralWidthAllocationSupport->prepare_core(
+        signal => $signal, record => $capture->{record}, track => 1)} or return;
+    return unless FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $signal, holder => $holder);
+    # Fence the exact actual registry after potentially mutating source reads.
+    # These raw membership checks invoke no user-facing getters.
+    for my $object (@{$capture->{objects}}) {
+        return unless refaddr($manager->{signal_registry}{$object->{name}} // {}) == refaddr($object);
+    }
+    push @$events, {signal_name => $signal->{name}, holder => $holder};
 }
 
 sub _stage_intermediate_width_allocation($self, $signal, $operator, $operands, $width) {
@@ -425,6 +447,7 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
         fsm_debug("          FACTORIZATION: Extracting complex $operator expression to intermediate signal", 3);
 
         my $intermediate_name = $self->generate_intermediate_signal($operator, $parsed_operands);
+        my $fresh_allocation = !$self->{signal_manager}->has_symbol_name($intermediate_name);
         my $width = $self->infer_exact_expression_width($ast_tree);
         my %attributes = (type => 'wire', is_intermediate => 1);
         $attributes{width} = $width if defined($width) && $width > 0;
@@ -436,6 +459,9 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
         $signal->set_driving_ast($ast_tree);
         $self->_stage_intermediate_width_allocation($signal, $operator, $parsed_operands, $width);
         $self->_stage_source_tree_width_allocation($signal, $operator, $parsed_operands, $width);
+        if ($fresh_allocation && grep {blessed($_) && $_->isa('FSM::CoreAST::Literal')} @$parsed_operands) {
+            $self->_stage_source_literal_width_allocation($signal);
+        }
         fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
 
         return FSM::CoreAST::SignalRef->new($signal);
@@ -1314,6 +1340,18 @@ tracked birth, without a new semantic revision that would invalidate dependent
 helpers. Direct Parser retains its existing registry/AST boundary and does not
 gain facade interface membership. Factorizer provenance, target event joins and
 generic range consumers remain separate successors.
+
+A separate optional C<source_literal_events> bucket now journals actual fresh
+direct bitwise literal helper births through
+L<FSM::SourceLiteralWidthAllocationSupport>. Fresh name ownership and actual
+registry membership of the helper and each independent source are required.
+Raw parsed Core literal kinds and nullable exact widths preserve; the caller's
+token spelling is not substituted for the parsed literal payload. Old binary
+and source-tree buckets retain their shapes. This journal publishes no completed
+literal policy and does not yet transport sanctioned source transitions or
+propagate unknown width through generated children. Relevant writes revoke;
+unsupported direct/nested profiles receive no literal birth. Capture failure
+restores the prior journal scope, and ordinary uncaptured allocation preserves.
 
 An unknown exact width retains the existing placeholder behavior. Selected
 numeric widths do not create a declared-width binding or prove a mutable
