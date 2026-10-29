@@ -316,8 +316,9 @@ revocation counters. Complete validation precedes tracking, followed by an
 unchanged-state check. Returned C<{record, state}> is detached plain JSON;
 lifetime tokens use the existing weak identity table and retain no owners.
 This validator does not attest source birth, publish a policy, change source
-inference, or admit a target profile. Actual birth/publication and nested
-unknown propagation remain separately owned consumers.
+inference, or admit a target profile. The actual builder journals births and
+completed Parser/facade transactions publish through the Core Signal lifecycle.
+Nested unknown propagation and target consumers remain separate successors.
 
 =head2 current_core
 
@@ -327,7 +328,7 @@ revisions agree. Supported matching-state writes revoke. Foreign capsules,
 later object lifetimes and unknown shapes withhold. A raw complete-capture
 barrier checks earlier objects after all potentially mutating getters. Ordinary
 absent lookup creates no fields. Failed preparation installs nothing; the
-future owner must revoke any previous installation before replacement.
+Core Signal owner revokes any previous installation before explicit replacement.
 
 =head2 copy_transition
 

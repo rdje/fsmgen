@@ -108,7 +108,7 @@ subtest 'fresh registry ownership distinguishes births from matching old or fore
     }
 };
 
-subtest 'actual facade parses observe births while completed publication remains uninstalled' => sub {
+subtest 'actual facade parses observe births before completed publication' => sub {
     my $stage = FSM::Adapter::FSMGenFull::ExpressionBuilder->can('_stage_source_literal_width_allocation');
     ok($stage, 'actual builder has an explicit birth staging locus');
     return unless $stage;
@@ -134,8 +134,8 @@ subtest 'actual facade parses observe births while completed publication remains
         my $module = $adapter->parse_fsm(scalar Lispish::multi(\$source));
         is(scalar(@seen), 1, 'actual fixed/mutable parser and analyzer path observes the literal birth');
         ok($seen[0]{record} && !defined($seen[0]{record}{selected_width}), 'actual source birth preserves unresolved exact width');
-        ok(!exists($module->signals->{$seen[0]{name}}{_source_literal_width_allocation}),
-            'preparatory journal does not claim completed source policy');
+        ok($module->signals->{$seen[0]{name}}->source_literal_width_allocation,
+            'validated facade completion publishes the independently observed birth');
     }}
 };
 

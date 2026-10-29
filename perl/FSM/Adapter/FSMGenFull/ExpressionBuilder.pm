@@ -276,7 +276,7 @@ sub _set_published_width_metadata($self, $signal, $kind, $record) {
         {kind => $kind, record => $record});
 }
 
-sub _publish_intermediate_width_allocations($self, $events, $source_tree_events = undef) {
+sub _publish_intermediate_width_allocations($self, $events, $source_tree_events = undef, $source_literal_events = undef) {
     for my $event (@$events) {
         my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
         next unless $self->_allocation_registry_matches($signal);
@@ -286,6 +286,13 @@ sub _publish_intermediate_width_allocations($self, $events, $source_tree_events 
         my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
         next unless $self->_source_tree_allocation_registry_matches($signal);
         $signal->_publish_staged_source_bitwise_tree_width_allocation($event->{holder});
+    }
+    for my $event (@{$source_literal_events // []}) {
+        my $signal = $self->{signal_manager}->get_signal($event->{signal_name});
+        my $capture = $self->_source_literal_allocation_registry_matches($signal) or next;
+        $signal->_publish_staged_source_literal_width_allocation($event->{holder}, sub {
+            $self->_literal_registry_contains($capture->{objects});
+        });
     }
 }
 
@@ -1373,7 +1380,7 @@ annotated, late, extra-source or stale writes cannot borrow that refresh. Ordina
 uncaptured builder paths use the same legacy writes. Source-tree refresh also
 binds every repeated leaf slot and role, and checks actual registry membership
 for the whole held tree. Scoped capture publishes no Core policy.
-Completed direct Parser calls own capture and publication for both families;
+Completed direct Parser calls own capture and publication for these families;
 an enclosing facade transaction defers
 publication through actual role and interface completion. Failures and parse
 reuse clear previous/partial policy. Publication installs only the already current
@@ -1393,8 +1400,13 @@ final width-requirement/binding operations can transport a current literal
 holder. The complete old/new state must differ only by its named record/role
 and one tracked revision, including every duplicate slot. Independent fields,
 extra writes and stale/foreign membership withhold; final registry checks invoke
-no source getters. This journal publishes no completed literal policy and does
-not yet propagate unknown width through generated children. Other writes revoke;
+no source getters. Direct Parser completion now forwards this separate bucket;
+the facade defers it until role and interface analysis also succeeds. Only a
+still-current staged epoch and final raw registry join can publish detached
+Core C<source_literal_width_allocation>. Failed validation/publication and reuse
+clear old or partial policy. Publication preserves tracked semantic revisions;
+matching writes during its final preparation cannot rebase the original birth.
+This does not yet propagate unknown width through generated children. Other writes revoke;
 unsupported direct/nested profiles receive no literal birth. Capture failure
 restores the prior journal scope, and ordinary uncaptured allocation preserves.
 

@@ -71,7 +71,8 @@ sub parse_fsm($self, $raw_ast) {
             $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
             return $fsm_module;
         });
-        $self->{expression_builder}->_publish_intermediate_width_allocations($packet->{events}, $packet->{source_tree_events});
+        $self->{expression_builder}->_publish_intermediate_width_allocations(
+            $packet->{events}, $packet->{source_tree_events}, $packet->{source_literal_events});
         1;
     };
     my $error = $@;

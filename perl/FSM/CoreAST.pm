@@ -12,6 +12,7 @@ use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
+use FSM::SourceLiteralWidthAllocationSupport;
 
 # FSM Core AST - Semantic Foundation for Decision Tree FSMs
 # Format-agnostic, semantically complete representation
@@ -273,7 +274,7 @@ an opt-in intent contract, not automatic allocation provenance or range admissio
 
 =head2 clear_intermediate_width_allocation
 
-Revoke binary and source bitwise tree intent and return this Signal. Previously
+Revoke binary, source bitwise tree and source literal intent and return this Signal. Previously
 opted-in Signals retain a revocation counter; ordinary lookup/clear creates no
 field. Actual driving-AST,
 relevant role/constraint, authored-metadata and registry width/type/source writes
@@ -295,10 +296,29 @@ match. This separate family does not broaden the binary allocation record.
 Install a producer-supplied source tree record through
 L<FSM::SourceBitwiseTreeWidthSupport> and return this Signal. Undef clears;
 failed replacement revokes previous intent. The common allocation clear and
-revision mechanism invalidates both families on relevant supported writes.
+revision mechanism invalidates all families on relevant supported writes.
 Ordinary Signals gain no fields, and no Parser/backend/target policy is inferred.
 The completed source producer privately publishes an already current staged tree
 without a semantic revision; explicit setter replacement still revokes intent.
+
+=head2 source_literal_width_allocation
+
+Return detached current direct bitwise literal allocation intent, or undef.
+Nullable exact width and raw literal value/radix/size retain their JSON kinds;
+an unresolved width is distinct from the nominal Core compatibility width.
+Actual identities, lifetimes, AST slots, source metadata and revisions must
+still agree under L<FSM::SourceLiteralWidthAllocationSupport>.
+
+=head2 set_source_literal_width_allocation
+
+Install a producer-supplied literal record and return this Signal. Undef clears;
+invalid replacement throws after revoking prior allocation intent. The common
+clear/revision mechanism invalidates every allocation family on relevant writes,
+including matching replacements. This explicit opt-in does not attest a source
+birth or admit nested helper inference, backend floors or target ranges.
+Completed source publication privately installs an already current staged birth
+without advancing semantic revisions. Its optional internal final guard performs
+the producer's raw registry membership join after all source validation reads.
 
 =cut
 
@@ -311,6 +331,7 @@ without a semantic revision; explicit setter replacement still revokes intent.
     sub clear_intermediate_width_allocation($self) {
         delete $self->{_intermediate_width_allocation};
         delete $self->{_source_bitwise_tree_width_allocation};
+        delete $self->{_source_literal_width_allocation};
         ++$self->{_intermediate_width_allocation_revision}
             if exists $self->{_intermediate_width_allocation_revision};
         return $self;
@@ -343,6 +364,20 @@ without a semantic revision; explicit setter replacement still revokes intent.
         return $self;
     }
 
+    sub source_literal_width_allocation($self) {
+        return undef unless exists $self->{_source_literal_width_allocation};
+        return FSM::SourceLiteralWidthAllocationSupport->current_core(
+            signal => $self, holder => $self->{_source_literal_width_allocation});
+    }
+
+    sub set_source_literal_width_allocation($self, $record) {
+        $self->clear_intermediate_width_allocation;
+        return $self unless defined $record;
+        $self->{_source_literal_width_allocation} = FSM::SourceLiteralWidthAllocationSupport->prepare_core(
+            signal => $self, record => $record, track => 1);
+        return $self;
+    }
+
     sub _track_intermediate_width_allocation($self) {
         $self->{_intermediate_width_allocation_revision} //= 0;
     }
@@ -363,6 +398,18 @@ without a semantic revision; explicit setter replacement still revokes intent.
         # Keep dependent source and binary helper revisions unchanged.
         $self->{_source_bitwise_tree_width_allocation} = FSM::SourceBitwiseTreeWidthSupport->prepare_core(
             signal => $self, record => $record);
+        return 1;
+    }
+
+    sub _publish_staged_source_literal_width_allocation($self, $holder, $registry_current = undef) {
+        my $record = FSM::SourceLiteralWidthAllocationSupport->current_core(signal => $self, holder => $holder);
+        return 0 unless $record;
+        my $prepared = FSM::SourceLiteralWidthAllocationSupport->prepare_core(signal => $self, record => $record);
+        return 0 unless $prepared->{state} eq $holder->{state};
+        # No getters after this final producer-owned membership check. Keep the
+        # already tracked source epoch so dependent helpers are not invalidated.
+        return 0 if defined($registry_current) && (ref($registry_current) ne 'CODE' || !$registry_current->());
+        $self->{_source_literal_width_allocation} = $prepared;
         return 1;
     }
 

@@ -9,6 +9,13 @@ detached raw literal data and preserves independent explicit widths. It supplies
 no allocation ancestry, generic range or final target agreement. This is a scoped
 import update; backend literal consumers and full qualification remain pending.
 
+CoreAST also imports `FSM::SourceLiteralWidthAllocationSupport` for separate
+detached direct literal intent under the common allocation revision lifecycle.
+ExpressionBuilder forwards its literal birth bucket through actual Parser or
+facade completion, preserving the staged epoch and checking final raw registry
+membership. Failed validation/publication and reuse clear partial policy. This
+adds no backend sizing or nested unknown-width consumer.
+
 CoreAST now imports `FSM::SourceBitwiseTreeWidthSupport` for separate explicit
 current source bitwise tree intent. It uses the closed source-tree data schema,
 existing exact-width descriptors and walk bounds, and Perl core FieldHash weak

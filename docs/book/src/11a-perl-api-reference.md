@@ -688,9 +688,37 @@ final width-metadata operations now transport only a still-current holder whose
 complete source state differs by the named operation and its tracked revision.
 Independent constraints, extra writes and foreign registry membership withhold;
 escaped old holders stay stale. T2253 checks direct Parser and facade completion,
-actual mutable leaf metadata and repeated/shared source slots. Completed literal
-publication and nested unknown propagation remain the next consumers.
-No completed literal policy or target profile is enabled by this journal.
+actual mutable leaf metadata and repeated/shared source slots. Completed direct
+Parser calls now publish `source_literal_width_allocation` on the actual Core
+helper; facade calls wait through role and interface analysis too. The getter
+returns detached raw source intent. An explicit setter clears prior allocation
+intent before replacement, including on failure; the common allocation clear
+revokes this family on relevant matching writes. Private completion preserves
+semantic revisions and requires the original staged epoch plus final registry
+membership after source reads. Parse failure, partial publication and reuse clear
+old or partial policy. Direct Parser keeps its registry/AST boundary; facade
+completion also attaches those actual Signals to the module.
+
+```perl
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+my $text = '(?fsm:literal_intent (+size (A 8) (B 8) (DATA 1) (OTHER 1))
+  (idle (<(| A B 256) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+my $adapter = FSM::Adapter::FSMGenFull->new;
+my $module = $adapter->{parser}->parse_fsm(scalar Lispish::multi(\$text));
+my @helpers = grep { defined $_->source_literal_width_allocation }
+    values %{$adapter->{signal_manager}{signal_registry}};
+die "missing direct literal intent\n" unless @helpers == 1;
+my $intent = $helpers[0]->source_literal_width_allocation;
+die "unexpected exact width\n" if defined $intent->{selected_width};
+die "nominal width changed\n" unless $helpers[0]->width == 1;
+```
+
+T2254 checks both completion paths, raw kinds, explicit floors, revocation,
+failure/reuse and distinguishing stale-epoch/foreign-registry controls. This
+internal policy supplies no backend default or target sizing. Nested unknown
+propagation and the fixed nested truncation repair above remain open; no new
+public semantic schema, MCP field, source grammar or HDL profile is admitted.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

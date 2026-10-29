@@ -71,8 +71,8 @@ subtest 'actual Parser and facade completion preserve current fixed and mutable 
                 'currentness includes actual independently published mutable leaf requirements and binding');
         }
         my $helper = $adapter->{signal_manager}->get_signal($event->{signal_name});
-        ok(!exists($helper->{_source_literal_width_allocation}),
-            'transport alone does not install a completed source policy');
+        is_deeply($helper->source_literal_width_allocation, $record,
+            'completed source publication consumes the transported current holder');
     }}}
 };
 
