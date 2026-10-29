@@ -11,6 +11,7 @@ use JSON::PP ();
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::ExpressionOperatorSupport ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::SourceBitwiseTreeWidthSupport;
 
 # FSM Core AST - Semantic Foundation for Decision Tree FSMs
 # Format-agnostic, semantically complete representation
@@ -272,8 +273,9 @@ an opt-in intent contract, not automatic allocation provenance or range admissio
 
 =head2 clear_intermediate_width_allocation
 
-Revoke the record and return this Signal. Previously opted-in Signals retain a
-revocation counter; ordinary lookup/clear creates no field. Actual driving-AST,
+Revoke binary and source bitwise tree intent and return this Signal. Previously
+opted-in Signals retain a revocation counter; ordinary lookup/clear creates no
+field. Actual driving-AST,
 relevant role/constraint, authored-metadata and registry width/type/source writes
 revoke an installed contract even for matching-state replacements.
 Explicit installation also tracks operand revisions; matching source writes
@@ -281,6 +283,20 @@ invalidate the contract without adding references to the source owner graph.
 The completed source producer can privately publish a current staged birth
 without a fresh semantic revision; this preserves dependent helper epochs.
 It does not weaken the explicit setter's replacement/revocation contract.
+
+=head2 source_bitwise_tree_width_allocation
+
+Return detached explicit current source bitwise tree intent, or undef. Actual
+Core tree, leaf objects, lifetimes, roles and tracked revisions must still
+match. This separate family does not broaden the binary allocation record.
+
+=head2 set_source_bitwise_tree_width_allocation
+
+Install a producer-supplied source tree record through
+L<FSM::SourceBitwiseTreeWidthSupport> and return this Signal. Undef clears;
+failed replacement revokes previous intent. The common allocation clear and
+revision mechanism invalidates both families on relevant supported writes.
+Ordinary Signals gain no fields, and no Parser/backend/target policy is inferred.
 
 =cut
 
@@ -292,6 +308,7 @@ It does not weaken the explicit setter's replacement/revocation contract.
 
     sub clear_intermediate_width_allocation($self) {
         delete $self->{_intermediate_width_allocation};
+        delete $self->{_source_bitwise_tree_width_allocation};
         ++$self->{_intermediate_width_allocation_revision}
             if exists $self->{_intermediate_width_allocation_revision};
         return $self;
@@ -308,6 +325,20 @@ It does not weaken the explicit setter's replacement/revocation contract.
 
     sub _intermediate_width_allocation_revision($self) {
         return $self->{_intermediate_width_allocation_revision} // 0;
+    }
+
+    sub source_bitwise_tree_width_allocation($self) {
+        return undef unless exists $self->{_source_bitwise_tree_width_allocation};
+        return FSM::SourceBitwiseTreeWidthSupport->current_core(
+            signal => $self, holder => $self->{_source_bitwise_tree_width_allocation});
+    }
+
+    sub set_source_bitwise_tree_width_allocation($self, $record) {
+        $self->clear_intermediate_width_allocation;
+        return $self unless defined $record;
+        $self->{_source_bitwise_tree_width_allocation} = FSM::SourceBitwiseTreeWidthSupport->prepare_core(
+            signal => $self, record => $record, track => 1);
+        return $self;
     }
 
     sub _track_intermediate_width_allocation($self) {

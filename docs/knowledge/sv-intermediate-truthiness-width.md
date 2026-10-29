@@ -21,11 +21,11 @@ date: 2026-10-29
 status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
-  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreePolicySupport.pm; docs/audits/source-bitwise-policy-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t
+  perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-core-20261029.json.gz;
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[56789]*.t t/219[0124567]*.t t/208-enable-graph-ast-support.t t/2208-binary-allocation-event-contract.t t/2210-binary-allocation-event-publication.t t/223[35]*.t t/2236-source-bitwise-tree-policy.t t/2237-source-bitwise-tree-core-holder.t
 ---
 
-Owners above. Original cards/proofs (baseline/digests): `docs/audits/width-card-evidence-20261028.json.gz`; recover:
+Original cards/proofs with baseline/digests: `docs/audits/width-card-evidence-20261028.json.gz`; recover:
 
 `python3 -B -c 'import gzip,json,hashlib; r=json.load(gzip.open("docs/audits/width-card-evidence-20261028.json.gz")); c=r["original_cards"]["docs/knowledge/sv-intermediate-truthiness-width.md"]; b=c["source"].encode(); assert hashlib.sha256(b).hexdigest()==c["sha256"]; print(b.decode(),end="")'`.
 
@@ -46,4 +46,4 @@ Capture preserves Core bitwise &/| (formerly &&/||), nested/vector/whole-value g
 Runtime comparisons group bare &/| on either side (T2196); literal/caller controls and typed native HDL preserve. Source n-ary stays open; full qualification is .6.
 
 Arithmetic stays inline in Parser. Proved whole/computed factorizer births, canonical leaf relations and final target/ledger checks now emit generic ranges;
-see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport validates separate closed data with complete ordered leaf slots and shared walk bounds; it attests no Core/target ownership. Core birth/journal/target/range joins remain pending for source n-ary bitwise. The journal accepts only two whole operands. Negated forms wrap that helper in scalar logical !.
+see direct-declared-width-consumers. Comparisons/! stay scalar; opaque constraints withhold policy. SourceBitwiseTreePolicySupport: closed ordered tree data under shared walk bounds. SourceBitwiseTreeWidthSupport binds explicit Core root/tree/all leaves to detached weak lifetime IDs/max/revisions; matching writes revoke; final recheck rejects late writes. Parser birth/journal/target/range joins remain pending. The journal accepts only two whole operands. Negated forms wrap that helper in scalar logical !.

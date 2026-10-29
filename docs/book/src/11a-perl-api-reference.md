@@ -229,12 +229,34 @@ my $policy = FSM::SourceBitwiseTreePolicySupport->copy_record({
 die "width mismatch\n" unless
     FSM::SourceBitwiseTreePolicySupport->matches_selected_widths($policy, 8, 8, 4, 2);
 print join(' ', @{FSM::SourceBitwiseTreePolicySupport->leaf_names($policy)}), "\n";
+
+use FSM::CoreAST;
+my @sources = map {FSM::CoreAST::Signal->new(name => $_, width => 8)} qw(A B C);
+my @refs = map {FSM::CoreAST::SignalRef->new($_)} @sources;
+my $tree = FSM::CoreAST::BinaryOp->new('&',
+    FSM::CoreAST::BinaryOp->new('&', @refs[0, 1]), $refs[2]);
+my $helper = FSM::CoreAST::Signal->new(
+    name => 'H', width => 8, type => 'wire', attributes => {is_intermediate => 1});
+$helper->set_driving_ast($tree);
+$helper->set_source_bitwise_tree_width_allocation($policy);
+die "missing current policy\n" unless $helper->source_bitwise_tree_width_allocation;
+$helper->set_driving_ast($tree); # A matching-state supported write still revokes.
+die "stale policy survived\n" if $helper->source_bitwise_tree_width_allocation;
 ```
 
 This prints `A B C`. Numeric agreement describes the independent fixed maximum;
-actual Core ownership, Parser publication, selected target proof and live helper
-range integration remain pending. Binary two-slot and computed arithmetic graph
-contracts remain separate.
+the explicit Core setter additionally binds the actual root, nested bitwise nodes
+and every ordered whole-reference leaf through `SourceBitwiseTreeWidthSupport`.
+Plain unsigned wire/register leaves, root roles, exact maximum and empty independent
+constraints must qualify. Returned records and private capsules detach from owners.
+Weak lifetime identities distinguish objects without retaining their graphs.
+Relevant supported writes revoke even when values match; private shape/identity
+changes, malformed counters and writes during validation withhold current intent.
+Ordinary lookups install no fields. Failed replacement clears previous intent,
+and `clear_intermediate_width_allocation` clears both intent families.
+This local intent establishes no module membership or fresh source birth.
+Parser publication, selected target proof and live helper range integration remain
+pending. Binary two-slot and computed arithmetic graph contracts remain separate.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

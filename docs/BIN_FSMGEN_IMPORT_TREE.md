@@ -2,6 +2,14 @@
 
 This is a live architecture note.
 
+CoreAST now imports `FSM::SourceBitwiseTreeWidthSupport` for separate explicit
+current source bitwise tree intent. It uses the closed source-tree data schema,
+existing exact-width descriptors and walk bounds, and Perl core FieldHash weak
+lifetime keys with scalar identities. Actual root/tree/all leaf state and tracked
+revisions bind the detached capsule; ordinary lookup installs nothing. Parser
+publication, completed backend attachment and live range consumption remain
+separate. This scoped dependency update adds no transitive closure census.
+
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports
 `FSM::IntermediateWidthGraphInferenceSupport`. Those helpers and

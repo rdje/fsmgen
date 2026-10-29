@@ -2193,11 +2193,11 @@ do not start broad suites between implementation slices.
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Define closed source bitwise tree policy and current Core holder.`
   Acceptance: `Add a separate bounded bitwise-tree policy and actual Core helper adapter, preserving ordered original BinaryOp nodes and every typed whole-reference slot. Keep binary_operand_max arity/schema unchanged and do not reuse arithmetic graph ownership. Exact positive decimal maxima and JSON kinds preserve; nested/mixed operators, repeated names/actual identities, cycles, slices/literals, signed/state/type/opaque/result constraints and forged/stale/copied holders must qualify or withhold precisely. Opt-in setters/getters/revisions remain plain detached state with no owner retention; ordinary Signals gain no fields. Focused holder/schema/currentness and old binary checks plus POD/book precede commit.`
-  Verification: `pending prerequisite source-holder slice`
-  Commit: `pending`
+  Verification: `Pure schema and current Core holder complete in child slices; actual Parser publication and completed backend attachment remain separate.`
+  Commit: `separate child slices`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.1`
@@ -2212,11 +2212,15 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=2, Tests=11 for T2236 plus existing arithmetic schema/collector T2227. Module syntax is OK; existing source/tests are exact00eb. Book/source/claim and normal mandatory gates precede commit; Core installation and full feature verification remain separate.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind source-tree policy to current actual Core helper state.`
   Acceptance: `After the pure schema, add opt-in Core current getter/setter and revocation against actual result/tree/all typed leaf objects and exact max. Preserve Root/leaf roles, constraints, duplicate-name identity, node/reference ownership and supported same-value write revocation. Escaped/foreign/stale or privately changed state cannot revive policy. Retained capsules must remain plain detached JSON without owners, and ordinary objects gain no fields. Existing binary API/clear/transaction behavior preserves. Split identity/lifetime support if actual interfaces require it; parser/backend/target/range work remains separate. Focused holder and old binary checks plus POD/book before commit.`
-  Verification: `pending pure schema`
-  Commit: `pending`
+  Verification: `Actual Core source bitwise tree intent now binds the root, nested nodes, every ordered whole-reference leaf, roles/constraints, exact decimal maximum and tracked revisions. Weak FieldHash keys with monotonic scalar identities prevent owner retention and later storage reuse from borrowing state; public Perl contract and lifetime probe qualify this choice. Ordinary lookup/clear adds no fields. Supported same-value writes, escaped/foreign capsules, changed nodes/references/roles/widths and malformed counters withhold. An added late-write control initially exposes the single-capture gap; raw revision validation and complete final capture repair it. Final T2237/T2198/T2199 All tests successful Files=3, Tests=13. The isolated held-state equality omission fails the two intended lifecycle/foreign subtests (eleven assertions); positive cases preserve. First final-check invocation used a nonexistent T2199 filename and is retained as harness error, followed by the corrected successful run. Exact API example prints A B C; guarded mdBook/POD build and copied-source verification pass. Full source/test/variant/log/card and distinct evidence legs retain in docs/audits/source-bitwise-core-20261029.json.gz. No Parser/backend/target/range activation or full .6 verification.`
+  Commit: `this current Core-holder slice`
+  Acceptance Checklist:
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Baseline Core has no source-tree holder API; the first new adapter uses a single state capture and accepts malformed private counters. Added T2237 controls fail at t/2237-source-bitwise-tree-core-holder.t line 117 (late matching A write during C read) and line142 (array/negative leaf counters). The exact pre-recheck module/test and RED log retain in source-bitwise-core. Removing held-state comparison separately admits escaped matching-state and foreign-owner policies.
+  - [x] **ADDRESSED (verified)** — Raw revision shape checks and a complete final capture now reject all three initial failing assertions. Current opt-in actual Core root/tree/all-leaf policy passes lifecycle, exact-max, repeated/mixed tree, detached ownership and ordinary-object controls. The isolated state-equality omission fails eleven intended assertions, establishing that numeric agreement cannot replace ownership/currentness. The exact manual example and generated POD build pass.
+  - [x] **NO REGRESSION** — All tests successful Files=3, Tests=13 for new T2237 and directly affected existing T2198/T2199. Existing binary record schema and producer implementations are unchanged; common clear additionally invalidates the new family. Book/source/claim checks and normal mandatory hook precede advancement. Full CI and later source/target/range verification remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3.2.2`
   Status: `pending`
