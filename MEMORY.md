@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2`
-- next_action: Split actual unresolved source birth, nested helper ownership and shared inference consumers, then preserve unknown literal widths through real nested parents before target sizing.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.1`
+- next_action: Prepare an explicit bounded source-reference width resolver in the shared Core walk, preserving ordinary defaults and distinguishing current unresolved intent from nominal helper width.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.
