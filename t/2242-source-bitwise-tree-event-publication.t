@@ -31,7 +31,7 @@ sub probe {
     my $ctx=FSM::HDL::FlattenedDT->new;my $capture=FSM::Backend::VerilogFamily::DeclarationCapture->new;
     my $collect=FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport->can('collect_consolidated_intermediate_signals');
     my $lookup=FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport->can('source_bitwise_tree_width_allocation');
-    my ($all,$name,$hdl,$changed);
+    my ($all,$name,$hdl,$changed,$error,$snapshot,$snapshot_error);
     {
         no warnings 'redefine';
         local *FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport::collect_consolidated_intermediate_signals=sub {
@@ -45,10 +45,17 @@ sub probe {
             return $record;
         };
         local $ctx->{declared_width_declaration_capture}=$capture;
-        $hdl=$ctx->generate_systemverilog($module);
+        $hdl=eval {$ctx->generate_systemverilog($module)};
+        $error=$@;
     }
-    return {ctx=>$ctx,module=>$module,adapter=>$adapter,capture=>$capture,snapshot=>$capture->snapshot,
-        hdl=>$hdl,all=>$all,name=>$name,changed=>$changed};
+    if ($error) {
+        eval {$snapshot=$capture->snapshot};
+        $snapshot_error=$@;
+    } else {
+        $snapshot=$capture->snapshot;
+    }
+    return {ctx=>$ctx,module=>$module,adapter=>$adapter,capture=>$capture,snapshot=>$snapshot,
+        hdl=>$hdl,error=>$error,snapshot_error=>$snapshot_error,all=>$all,name=>$name,changed=>$changed};
 }
 sub prepared {
     my ($info)=@_;my $ctx=FSM::HDL::FlattenedDT->new;my $c=FSM::Backend::VerilogFamily::DeclarationCapture->new;
@@ -151,7 +158,7 @@ subtest 'fresh rendering and every selected typed tree agree independently of nu
     ok($changed,'cache change occurs during actual selected AST rendering');
 };
 
-subtest 'copied revoked constrained or independently widened source rows gain no policy' => sub {
+subtest 'copied revoked constrained or independently widened source rows refuse atomically' => sub {
     plan skip_all=>'actual source-tree publisher absent' unless $available;
     for my $change (
         sub {my ($ctx,$name,$info,$all)=@_;$all->{$name}={%$info}},
@@ -163,11 +170,15 @@ subtest 'copied revoked constrained or independently widened source rows gain no
         sub {my ($ctx,$name,$info,$all,$adapter)=@_;$adapter->{signal_manager}->register_signal($name,width=>32)},
     ) {
         my $p=probe(8,collected=>$change);
-        ok(!exists($p->{snapshot}{target_intermediates}{$p->{name}}{source_tree_width_allocation}),'unknown currentness or independent constraint cannot borrow policy');
+        like($p->{error},qr/Direct source bitwise tree range/,'unknown currentness or independent constraint reaches the actual source-tree refusal');
+        is($p->{hdl},undef,'refusal returns no HDL artifact');
+        ok($p->{snapshot_error} && !defined($p->{snapshot}),'refusal exposes no completed target snapshot');
     }
     my $p=probe(8,during_lookup=>sub {my $ctx=shift;my $c=$ctx->{fsm_module}->signals->{C};$c->set_attribute('width_declared',$c->get_attribute('width_declared'))});
     ok($p->{changed},'actual current tree attachment lookup is reached');
-    ok(!exists($p->{snapshot}{target_intermediates}{$p->{name}}{source_tree_width_allocation}),'final currentness recheck rejects matching third-leaf write');
+    like($p->{error},qr/Direct source bitwise tree range/,'final currentness recheck refuses matching third-leaf write');
+    is($p->{hdl},undef,'late source refusal returns no HDL artifact');
+    ok($p->{snapshot_error} && !defined($p->{snapshot}),'late source refusal exposes no completed target snapshot');
 };
 
 subtest 'actual post-event failure invalidates capture and same-backend fresh reuse recovers' => sub {

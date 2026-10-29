@@ -15,8 +15,9 @@ evidence: >-
   docs/audits/literal-width-ownership-20261029/receipt.json.gz;
   perl/FSM/SourceLiteralWidthAllocationSupport.pm; t/2251-source-literal-width-holder.t;
   docs/audits/source-literal-holder-20261029.json.gz; t/2252-source-literal-width-birth.t;
-  docs/audits/source-literal-birth-20261029.json.gz
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2250-core-expression-width-contract.t t/2251-source-literal-width-holder.t t/2252-source-literal-width-birth.t
+  docs/audits/source-literal-birth-20261029.json.gz; t/2253-source-literal-width-transitions.t;
+  docs/audits/source-literal-transitions-20261029.json.gz
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2250-core-expression-width-contract.t t/2251-source-literal-width-holder.t t/2252-source-literal-width-birth.t t/2253-source-literal-width-transitions.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -61,4 +62,6 @@ explicit floors and JSON kinds; an isolated omitted-barrier variant fails its
 late-write control. This validator publishes no live source policy. The builder
 captures fresh direct literal births in a separate source_literal_events bucket;
 actual name/registry ownership and parsed Core kinds are required (T2252).
-Sanctioned transitions, completed publication and nested unknown propagation remain open.
+Exact named role/reference/width-metadata transitions now preserve complete source
+state and registry ownership, including repeated slots (T2253); other writes withhold.
+Completed publication and nested unknown propagation remain open.

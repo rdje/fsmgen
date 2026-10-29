@@ -207,6 +207,81 @@ sub current_core {
     return $@ ? undef : $record;
 }
 
+# Project only the operation the source producer actually performed. Every
+# other byte, including independent declarations, remains in the state compare.
+sub _advance_raw_signal {
+    my ($text, $transition, $revision) = @_;
+    my $raw = _json()->decode($text);
+    return unless $raw->{revision} eq $revision;
+    ++$raw->{revision};
+    if ($transition->{kind} eq 'role') {
+        $raw->{roles}{$transition->{attribute}} = $transition->{value};
+    } elsif ($transition->{kind} eq 'requirements') {
+        return unless ref($transition->{record}) eq 'HASH';
+        $raw->{fields}{_declared_width_requirements} = $transition->{record};
+        $raw->{fields}{_declared_width_requirements_state} = _json()->encode([
+            @{$raw->{fields}}{qw(_width _declared_width_source declared_type_name declared_type_spec)}]);
+    } elsif ($transition->{kind} eq 'binding') {
+        return unless ref($transition->{record}) eq 'HASH';
+        $raw->{fields}{_declared_width_binding} = $transition->{record};
+    } else {
+        return;
+    }
+    return _json()->encode($raw);
+}
+
+sub copy_transition {
+    my ($class, $transition) = @_;
+    confess "Source literal transition requires a named role or width metadata operation\n"
+        unless ref($transition) eq 'HASH' && defined($transition->{kind}) && !ref($transition->{kind})
+            && (($transition->{kind} eq 'role'
+                && join(',', sort keys %$transition) eq 'attribute,kind,value'
+                && defined($transition->{attribute}) && !ref($transition->{attribute})
+                && $transition->{attribute} =~ /\A(?:is_output|signal_role)\z/
+                && (!ref($transition->{value}) || JSON::PP::is_bool($transition->{value})))
+                || ($transition->{kind} =~ /\A(?:requirements|binding)\z/
+                    && join(',', sort keys %$transition) eq 'kind,record'));
+    return _json()->decode(_json()->encode($transition));
+}
+
+sub advance_core {
+    my ($class, %args) = @_;
+    my $advanced = eval {
+        my $transition = $class->copy_transition($args{transition});
+        my $holder = $args{holder};
+        return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state';
+        my $record = $class->copy_record($holder->{record});
+        my $state = _json()->decode($holder->{state});
+        my $changed = $args{changed_signal};
+        return unless blessed($changed) && $changed->isa('FSM::CoreAST::Signal');
+        my $identity = _identity($changed);
+        my $revision = $args{revision};
+        return unless defined($revision) && !ref($revision) && $revision =~ /\A[0-9]+\z/
+            && $changed->_intermediate_width_allocation_revision == $revision + 1;
+        my $matches = 0;
+        for my $descriptor ($state->{signal}, @{$state->{operands}}) {
+            next unless $descriptor->{identity_token} eq $identity;
+            return unless $descriptor->{revision} eq $revision;
+            ++$descriptor->{revision};
+            $descriptor->{roles}{$transition->{attribute}} = $transition->{value} if $transition->{kind} eq 'role';
+            $descriptor->{raw_state} = _advance_raw_signal($descriptor->{raw_state}, $transition, $revision);
+            return unless defined $descriptor->{raw_state};
+            ++$matches;
+        }
+        return unless $matches;
+        for my $stamp (@{$state->{stamps}}) {
+            next unless $stamp->[0] eq $identity && $stamp->[2] eq 'signal';
+            $stamp->[1] = _advance_raw_signal($stamp->[1], $transition, $revision);
+            return unless defined $stamp->[1];
+        }
+        my $capture = _capture($args{signal}) or return;
+        return unless _tracked($capture) && _matches($record, $capture)
+            && $capture->{state} eq _json()->encode($state);
+        {record => $record, state => $capture->{state}};
+    };
+    return $@ ? undef : $advanced;
+}
+
 1;
 
 =head1 NAME
@@ -253,6 +328,25 @@ later object lifetimes and unknown shapes withhold. A raw complete-capture
 barrier checks earlier objects after all potentially mutating getters. Ordinary
 absent lookup creates no fields. Failed preparation installs nothing; the
 future owner must revoke any previous installation before replacement.
+
+=head2 copy_transition
+
+Detach the closed internal named operation: C<role> with C<attribute> and
+C<value>, or C<requirements>/C<binding> with C<record>. The actual source
+producer snapshots this before its write; failed copying does not suppress the
+write or preserve previous intent. This validates data, not operation execution.
+
+=head2 advance_core
+
+After the source producer validated a current holder and performed exactly one
+named write, compare the complete current capture against that holder with only
+the expected revision and role or width-metadata delta projected. Every repeated
+source slot must agree. Metadata projection includes the exact supplied record
+and the existing requirement-state serialization; independent source fields,
+raw literals and AST identities cannot change. The result is a refreshed detached
+holder, or undef. Arbitrary, extra, failed, foreign or stale writes cannot refresh
+through this operation. The caller separately proves actual registry membership
+before and after its write. This transports intent, never publishes Core policy.
 
 Focused executable controls:
 

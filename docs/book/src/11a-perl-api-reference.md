@@ -683,8 +683,13 @@ an optional `source_literal_events` bucket. Fresh name ownership and actual
 registry membership distinguish those births from equal existing or foreign
 objects. The journal preserves parsed Core literal kinds, independently of the
 caller's token spelling; old binary/tree buckets preserve. T2252 exercises actual
-fixed/mutable parsing and failed-capture reuse. Sanctioned source transitions,
-completed publication and nested unknown propagation remain the next consumers.
+fixed/mutable parsing and failed-capture reuse. Exact bare-reference, role and
+final width-metadata operations now transport only a still-current holder whose
+complete source state differs by the named operation and its tracked revision.
+Independent constraints, extra writes and foreign registry membership withhold;
+escaped old holders stay stale. T2253 checks direct Parser and facade completion,
+actual mutable leaf metadata and repeated/shared source slots. Completed literal
+publication and nested unknown propagation remain the next consumers.
 No completed literal policy or target profile is enabled by this journal.
 
 Original nested candidates receive a separate graph birth; substitution binds

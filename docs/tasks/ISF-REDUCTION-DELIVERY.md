@@ -2474,11 +2474,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2251/T2250 report All tests successful Files=2 Tests=12. The current isolated omitted-barrier variant fails its intended final-read assertion. Focused current POD/source references and the mandatory full final-index doctrine hook qualify this commit; broad feature/runtime/external/full .6/publication checks remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Capture actual source literal births and carry only sanctioned source transitions.`
   Acceptance: `After holder .1, integrate fresh actual literal-containing helper births before independent width writes can become indistinguishable. Preserve nullable exact width and raw syntax, carry tracked events only across named reference/role/metadata transitions, and withhold foreign, failed, independent or stale shapes. Split nested dependency allocation if required; no backend default or target relaxation.`
-  Verification: `pending bounded source allocation consumer`
-  Commit: `pending`
+  Verification: `Actual fresh direct literal births and exact named transition transport are focused-qualified by children .1/.2. Completed publication and nested width semantics remain the next source consumer.`
+  Commit: `birth and transition child commits`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.2`
 
@@ -2495,17 +2495,38 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2252/T2251/T2250 report All tests successful Files=3 Tests=17; the isolated omitted-fresh-guard variant fails its intended existing-name assertion. Current POD/source checks and the mandatory full final-index doctrine hook gate this slice. No full .6, HDL runtime or publication success is implied.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Carry current source literal births through only sanctioned source transitions.`
-  Acceptance: `After .1, qualify actual bare-reference registration, selected role assignment and final width metadata transitions using the complete old/new holder state and exact supported revision change. Bind actual registry objects and preserve all literal/AST/independent constraint data. Arbitrary, matching, failed, foreign and extra writes must revoke; source completion remains separate .1.2.2.3. Focused real parser/facade currentness and distinguishing hostile controls, synchronized docs and normal gates before commit.`
-  Verification: `pending literal source transition transport`
-  Commit: `pending`
+  Acceptance: `After .1, qualify actual bare-reference registration, selected role assignment and final width metadata transitions using the complete old/new holder state and exact supported revision change. Bind actual registry objects and preserve all literal/AST/independent constraint data. Arbitrary, matching, failed, foreign and extra writes must revoke; source completion remains separate .1.2.2.3. Focused real parser/facade currentness and distinguishing hostile controls, synchronized docs and normal gates before commit. Own and repair the directly selected T2242 stale negative oracle: exact committed predecessor reproduces its uncaught final-generation refusal after intentionally revoked/copy/independent source state, so the test must require atomic no-artifact/no-completed-snapshot refusal under the installed live consumer.`
+  Verification: `Exact current literal holders now cross only named bare-reference, role and final requirement/binding operations. The complete old/new capsule must agree after projecting one tracked revision and only the supplied role/metadata record, including duplicate slots and requirement-state serialization. Actual registry membership fences both boundaries without getters after final proof. Independent source data, extra/matching external writes, failed setters, malformed operations and foreign membership withhold; escaped capsules stay stale. Actual direct Parser/facade one/wide fixed/mutable metadata and shared/repeated sources pass. Initial T2253 fixture incorrectly read facade-populated module Signals on the direct Parser path; retain the abort, use its documented registry and preserve the interface boundary. Corrected pre-edit RED fails reference/role/completion/shared-source groups. New implementation passes focused literal checks. Expanded directly affected T2242 instead aborts on its old artifact-after-revocation expectation. Exact 5b255a701 builder/holder overlays reproduce the same source-tree refusal at DirectSourceBitwiseTreeRangeSupport line16: this is a stale validation oracle, not a new source regression. Repair T2242 to retain generation/snapshot errors separately and require the precise source-tree refusal, no HDL and no completed snapshot; accepted emission and fresh reuse preserve. Focused corrected joint T2253/T2252/T2251/T2199/T2242 reports All tests successful Files=5 Tests=23; tightened precise-refusal T2242 separately passes Files=1 Tests=5. The omitted-complete-state variant fails the independently injected source-declaration control. Re-derive actual source transitions/native metadata; falsify unchanged RED, complete-state omission, explicit hostile source writes and exact predecessor T2242 attribution; durability tracked sources/tests/POD/book/card and docs/audits/source-literal-transitions-20261029.json.gz with exact retained sources/logs/variants. Completed literal publication, nested unknown propagation and target repair remain open; no public grammar/schema/API/MCP/corpus or target/full .6/runtime/publication expansion. Focused POD/source and normal final-index doctrines gate commit. Per decision0116 select a clean context-refresh checkpoint after this closure: repeated fixture-boundary corrections make fresh context prudent before the next cross-layer publication and nested-unknown work. Commit, clear brief and consume jobs; next .1.2.2.3.1 retains required-delivery priority.`
+  Commit: `this exact literal source transition slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected native RED at t/2253-source-literal-width-transitions.t line 34 locates literal births becoming stale at a known bare-reference write; line66 locates actual completion/metadata failure. Fresh independent-source mutation fails the isolated omitted-complete-state variant at line106. The selected T2242 uncaught refusal at perl/FSM/DirectSourceBitwiseTreeRangeSupport.pm line 16 reproduces under exact committed predecessor modules, attributing its stale expectation independently of this change.
+  - [x] **ADDRESSED (verified)** — Named transitions now conserve complete raw source state except the exact allowed revision/role/metadata projection and actual registry membership. Fixed/mutable Parser/facade completion, duplicate/shared slots, escaped capsules and hostile writes qualify. T2242 now asserts precise atomic no-artifact/no-completed-snapshot refusal for revoked/copy/independent source profiles; accepted generation and reuse preserve. Completed literal policy and nested/target consumers remain open.
+  - [x] **NO REGRESSION** — Corrected focused T2253/T2252/T2251/T2199/T2242 reports All tests successful Files=5 Tests=23, and tightened precise-refusal T2242 separately passes Files=1 Tests=5. The known-bad complete-state omission fails its intended independent declaration control. Current POD/source checks and mandatory final-index doctrines gate commit; full .6/compiler/runtime/publication checks stay deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish completed literal intent and propagate unknown nested helper widths.`
   Acceptance: `After birth .2, publish only after complete normal source validation. Join current child intent through actual references, preserve independent declared floors and keep unresolved helper widths unknown through the shared bounded inference walk. Relevant supported writes revoke even at matching state, and foreign/stale/cyclic shapes withhold. Focused direct/nested fixed/mutable one/wide/scalar/explicit controls and current source products; target floors/final agreement remain parent successor .3.`
   Verification: `pending bounded source allocation consumer`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.1`
+  Status: `pending`
+  Goal: `Publish completed direct literal intent through the common Core lifecycle and actual Parser/facade boundary.`
+  Acceptance: `After current birth/transition closure, add detached Core literal allocation getter/setter/clear and private staged publication using the existing revision/lifetime mechanism. Carry the separate packet through actual direct Parser and facade completion only after source validation and exact current registry joins. Failed replacement, matching/foreign writes, parse failure/reuse and escaped holders expose no policy. Publish without changing dependent semantic revisions; preserve direct Parser registry versus facade module membership. Focused fixed/mutable one/wide/explicit/atomic controls and POD/book before commit. Unknown nested inference and all target consumers remain .2 and .1.2.3.`
+  Verification: `pending completed literal publication; raw holders, actual births and exact source transition transport are qualified prerequisites`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2`
+  Status: `pending`
+  Goal: `Keep unresolved source width unknown through actual nested helpers without borrowing independent floors.`
+  Acceptance: `After completed direct publication .1, split actual birth-time unresolved width semantics, current nested helper ownership and shared inference consumers before editing. Use actual allocation and typed source relationships, preserve independently authored widths and raw literal JSON kinds, and propagate unknown through real nested parents without a backend default, textual/name guesses or equality-based provenance. Supported mutations and failed/foreign/stale/cyclic/over-bound profiles withhold rather than reclassifying an unresolved placeholder as exact. Qualify direct/nested fixed/mutable one/wide/scalar/explicit source controls and actual complete products; target floors/final agreement remain .1.2.3 and full .6 remains deferred.`
+  Verification: `pending nested source unknown propagation; existing fixed high-bit truncation remains owned by this immediate source repair and target successor`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.4`
