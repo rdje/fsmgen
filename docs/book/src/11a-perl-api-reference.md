@@ -458,7 +458,7 @@ at the selected default of one. Changing only C to `(param COPY)`, with COPY
 aliasing W, refuses because its original relationship differs. This private
 method emits no range and attests neither current source-helper edges nor
 complete selected targets. Actual source intent over original module leaves now has a separate private
-preparation step. Recursive helpers, complete selected targets and live range
+preparation step, including recursive typed source helpers. Complete selected targets and live range
 consumption remain pending; VHDL and public API/MCP/corpus support are unchanged.
 
 
@@ -485,13 +485,37 @@ range text. Arithmetic graph intent uses the same source snapshot logic.
 Returned plans retain no caller map or objects; copied rows, displaced owners,
 expired row views and independent source/result constraints refuse.
 
-This step accepts original module leaves. A generated helper leaf such as the
-inner `(| A B C)` in `(& A B (| A B C))` retains an explicit pending recursive
-proof boundary. Source intent supplies no completed-target membership or child
+Actual whole Core helper references now expand recursively through their own
+current completed source-tree or binary bitwise attachments. For example, repeat
+the generation block above with the source condition `(& A B (| A C))`, keeping
+the actual `$rows` alive. The same preparation call returns:
+
+```text
+source_intermediate A B A C
+```
+
+The expanded `expression_tree` is
+`[&, [&, [signal, A], [signal, B]], [|, [signal, A], [signal, C]]]`.
+Its `leaf_names` retain the repeated A. Root `source_names` and the root
+allocation/origin keep the selected local edges, including the actual child
+helper name. A nested n-ary child such as `(| A B C)` similarly returns original
+leaves `A B A B C`. Mixed operators, association and shared helper occurrences
+preserve; names and matching numeric widths alone supply no edge.
+
+Every child needs its own actual current collected row, plain unsigned completed
+policy and fresh typed selected expression. Missing or copied rows, stale child
+text, foreign Core references, independent constraints and cycles refuse.
+Expansion uses the shared tree depth and occurrence bounds, counting repeated
+helper occurrences separately. Original mutable leaf contracts must agree even
+when a different equal-default alias is hidden behind a helper. All child
+selections replay at return; a final raw-field fence follows the last complete
+source read so a late child metadata change cannot escape.
+
+Source intent supplies no completed-target membership or child
 inventory and does not activate symbolic helper declarations. Keep the actual
 prepared block alive through proof; a saved plain plan cannot revive expired
-current ownership. Recursive source edges and independent final target proof
-remain required before live range consumption.
+current ownership. Independent final target proof remains required before live
+range consumption.
 
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while

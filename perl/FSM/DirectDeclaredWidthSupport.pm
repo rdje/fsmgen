@@ -613,17 +613,21 @@ context/current collected source row, Verilog-family language and freshly
 selected C<expression>. Current completed source-tree allocation and full typed
 origin/text must agree. Every ordered original module leaf must satisfy the
 canonical frozen relationship and exact selected maximum. Default-one symbolic
-rank and independent fixed widths preserve. Generated source-helper leaves
-currently refuse pending their separately owned recursive proof.
+rank and independent fixed widths preserve. Actual whole Core source-helper
+references expand recursively through their own current completed source-tree
+or binary bitwise attachment. Operators, association and duplicate original
+leaves preserve under the shared expanded-tree depth and occurrence limits.
 
 The detached root fields retain source policy/origin/expression, original tree
 and duplicate leaves, selected width, source allocation role and representative
 range. Complete source snapshots, canonical relationships, selected currentness,
-installed owners and weak caller row membership recheck at return. The snapshot
+installed owners and weak caller row membership recheck at return. Every child's
+selected text, typed edges, current policy and complete metadata also recheck;
+a final raw-field fence follows the last source read. The snapshot
 implementation is shared here with arithmetic graph preparation; an unchanged
 range plan cannot hide unrelated source-width constraint changes. The operation
 attests no target membership, emits no HDL and broadens no VHDL profile. Recursive
-source intent, complete selected-target proof and live range use remain separate.
+complete selected-target proof and live range use remain separate.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

@@ -97,8 +97,8 @@ subtest 'copy foreign stale text independent floors and incompatible relationshi
         like($@, qr/identical mutable operand contracts/, 'canonical relationship identifies the refusal');
     }
     my $nested = fixture(8, '(& A B (| A B C))');
-    ok(!eval {prepare($nested); 1}, 'generated source-helper leaf cannot masquerade as original module input');
-    like($@, qr/recursive source-helper proof is pending/, 'recursive actual helper support keeps its precise owned boundary');
+    is_deeply(prepare($nested)->{leaf_names}, [qw(A B A B C)],
+        'recursive source-helper proof now expands actual edges into original leaves');
     $in->{signal_info}{width} = 32;
     ok(!eval {prepare($in); 1}, 'independent result floor cannot borrow intent');
 };

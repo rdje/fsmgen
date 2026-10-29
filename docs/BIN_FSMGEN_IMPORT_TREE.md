@@ -31,13 +31,16 @@ late changes; legacy providers retain their shape. No declaration/range change.
 DirectDeclaredWidthSupport imports the separate source-tree schema for frozen
 original-leaf relationship selection and lazily loads
 `FSM::DirectSourceBitwiseTreeRangeSupport` for actual source-only declaration
-intent over original module leaves. Installed completed source policy, selected
+intent over original module leaves and typed source-helper edges. Installed completed source policy, selected
 typed origin/text, weak current collected rows, frozen leaf contracts and exact
 selected maxima must agree. The canonical direct-width owner now supplies the
 complete source snapshot shared with DirectArithmeticGraphRangeSupport; graph
 source/target behavior is unchanged. Late source/row/owner changes refuse and
-returned root plans retain no caller map. Recursive source helpers, independent
-complete target proof and live source-tree ranges remain pending; no VHDL or
+returned root plans retain no caller map. Recursive expansion imports the existing
+binary allocation schema and shared tree bounds, retaining operators and every
+original leaf occurrence through completed tree/binary child attachments.
+Complete child selections replay and a final raw-field fence follows source reads.
+Independent complete target proof and live source-tree ranges remain pending; no VHDL or
 public-report profile expands. This is a scoped dependency update, not a new
 whole-entrypoint closure census.
 
