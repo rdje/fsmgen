@@ -48,6 +48,7 @@ use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use Scalar::Util qw(blessed refaddr weaken);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::IntermediateWidthGraphInferenceSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -60,6 +61,7 @@ sub _abort_factorized_width_inference ($self) {
     $self->{_width_inference_events} = {};
     $self->{_graph_inference_events} = {};
     $self->{_source_width_allocation_events} = {};
+    $self->{_source_bitwise_tree_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
     delete $self->{_width_inference_complete};
     delete @{$self}{qw(_graph_inference_rows _graph_inference_rows_epoch)};
@@ -104,6 +106,10 @@ sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {
             context => $self->{flattened_dt}, signal_name => $name,
             signal_info => $all_intermediate_signals->{$name}, epoch => $self->{_width_inference_epoch})};
         $self->{_source_width_allocation_events}{$name} = $holder if $holder;
+        my $tree_holder = eval {FSM::SourceBitwiseTreeWidthSupport->prepare_source_intermediate(
+            context => $self->{flattened_dt}, signal_name => $name,
+            signal_info => $all_intermediate_signals->{$name}, epoch => $self->{_width_inference_epoch})};
+        $self->{_source_bitwise_tree_allocation_events}{$name} = $tree_holder if $tree_holder;
     }
     $self->{_width_inference_complete} = $self->{_width_inference_epoch};
 }
@@ -241,6 +247,34 @@ sub intermediate_width_allocation ($self, $signal_name, $signal_info) {
             epoch => $self->{_width_inference_epoch}, holder => $self->{_source_width_allocation_events}{$signal_name});
     }
     return $self->factorized_width_allocation($signal_name, $signal_info);
+}
+
+=head2 source_bitwise_tree_width_allocation
+
+Return only separate completed source bitwise tree intent for the actual collected
+row after successful collection by this installed width owner in this epoch.
+Cloned, replaced or displaced width owners cannot borrow another owner's capsule.
+Actual module/root/all leaves,
+AST, registered row, relevant metadata and current Core policy must still agree.
+The adapter checks again after source reads; equal copies, foreign contexts,
+source changes and private constraints withhold. Returned and stored data retain
+no owners. Abort/reset/new generations clear the separate map; ordinary identical
+numeric cache reads preserve it. The binary getter retains its closed family.
+No selected target origin, frozen relationship or symbolic range is supplied.
+
+=cut
+
+sub source_bitwise_tree_width_allocation ($self, $signal_name, $signal_info) {
+    my $context = $self->{flattened_dt};
+    return unless blessed($context)
+        && (refaddr($context->{backend_sv_intermediate_width_support}) // 0) == refaddr($self);
+    return unless $self->{_width_inference_complete}
+        && $self->{_width_inference_complete} == $self->{_width_inference_epoch}
+        && ref($signal_info) eq 'HASH'
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+    return FSM::SourceBitwiseTreeWidthSupport->current_source_intermediate(
+        context => $self->{flattened_dt}, signal_name => $signal_name, signal_info => $signal_info,
+        epoch => $self->{_width_inference_epoch}, holder => $self->{_source_bitwise_tree_allocation_events}{$signal_name});
 }
 
 sub _unresolved_factorized_input_frame ($self, $signal_name, $signal_info, $signal_registry) {

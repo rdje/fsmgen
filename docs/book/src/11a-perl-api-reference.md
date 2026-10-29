@@ -312,9 +312,25 @@ my $record = $helpers[0]->source_bitwise_tree_width_allocation;
 print join(' ', @{$record->{source_names}}), "\n";
 ```
 
-This prints `A B C`. Completed backend-row attachment, frozen source/selected
-target proof and symbolic range consumption remain separate steps; these Core
-policies alone emit no new symbolic helper range.
+This prints `A B C`. Successful backend collection now attaches the current tree
+policy through a separate `source_bitwise_tree_width_allocation(name, actual_row)`
+getter on IntermediateSignalWidthSupport. It requires the actual collected row;
+an equal copied row or a Core policy alone cannot supply backend completion.
+Installed width owner, context/epoch, module/maps, root/all ordered leaves, AST,
+registered row and plain
+width/type/source/constraint metadata must agree. A final join after source reads
+rejects late membership swaps and supported writes. Returned/stored data detach
+from owners. Failed/reset/new generations clear the separate attachment map,
+while unchanged numeric cache reads preserve it at one and wide defaults.
+The old binary and arithmetic graph getters retain their own families. The
+actual source-tree collection/refusal/reuse contract can be run with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2240-source-bitwise-tree-attachment.t
+```
+
+Frozen source/selected target proof and symbolic range consumption remain separate;
+the new attachment emits no new symbolic helper range.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

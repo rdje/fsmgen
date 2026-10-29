@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed refaddr);
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport ();
 use FSM::SourceBitwiseTreePolicySupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 fieldhash my %IDENTITIES;
 my $NEXT_IDENTITY = Math::BigInt->new(0);
@@ -157,11 +158,104 @@ sub current_core {
     return $@ ? undef : $record;
 }
 
+sub _source_row_state {
+    my ($row, $ast) = @_;
+    return unless ref($row) eq 'HASH' && !defined($row->{state_model})
+        && defined($row->{source}) && !ref($row->{source}) && $row->{source} eq 'fsmgen_parsing';
+    for my $key (qw(ast driving_ast runtime_ast)) {
+        return unless blessed($row->{$key}) && refaddr($row->{$key}) == refaddr($ast);
+    }
+    my $state = FSM::IntermediateWidthAllocationSupport::_factorized_metadata_state($row, $ast) or return;
+    return {%$state, identity_token => _identity($row)};
+}
+
+sub prepare_source_intermediate {
+    my ($class, %args) = @_;
+    my $context = $args{context};
+    my $name = $args{signal_name};
+    return unless blessed($context) && $context->isa('FSM::HDL::FlattenedDT')
+        && defined(FSM::IntermediateWidthAllocationSupport::_width($args{epoch}))
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+    my $owner = $context->{backend_sv_intermediate_width_support};
+    return unless blessed($owner)
+        && $owner->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport')
+        && (refaddr($owner->{flattened_dt}) // 0) == refaddr($context);
+    my $module = $context->{fsm_module};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule');
+    my $signals = $module->signals;
+    return unless ref($signals) eq 'HASH';
+    my $signal = $signals->{$name};
+    my $capture = _capture($signal) or return;
+    return unless $signal->name eq $name;
+    my $record = $signal->source_bitwise_tree_width_allocation or return;
+    return unless _matches($record, $capture);
+    for my $object (@{$capture->{objects}}) {
+        return unless refaddr($signals->{$object->name} // {}) == refaddr($object);
+    }
+    my $info = $args{signal_info};
+    return unless ref($info) eq 'HASH' && defined($info->{source}) && !ref($info->{source})
+        && $info->{source} eq 'fsmgen_parsing';
+    my $registry = $context->{intermediate_signals};
+    return unless ref($registry) eq 'HASH';
+    my $registered = $registry->{$name};
+    my $ast = $signal->driving_ast;
+    my $info_state = _source_row_state($info, $ast) or return;
+    my $registered_state = _source_row_state($registered, $ast) or return;
+    my @widths = map {$_->width} @{$capture->{objects}}[1 .. $#{$capture->{objects}}];
+    return unless FSM::SourceBitwiseTreePolicySupport->matches_selected_widths($record, $info->{width}, @widths)
+        && FSM::SourceBitwiseTreePolicySupport->matches_selected_widths($record, $registered->{width}, @widths);
+    my $state = _json()->encode({context_identity => _identity($context), module_identity => _identity($module),
+        width_owner_identity => _identity($owner),
+        module_signals_identity => _identity($signals), registry_identity => _identity($registry),
+        epoch => $args{epoch}, signal_name => $name, core_state => $capture->{state},
+        signal_info => $info_state, registered => $registered_state});
+    # Complete all potentially mutating source reads before returning a capsule.
+    my $after = _capture($signal) or return;
+    return unless _tracked($after) && $after->{state} eq $capture->{state}
+        && $signal->source_bitwise_tree_width_allocation;
+    return unless (refaddr($context->{fsm_module}) // 0) == refaddr($module)
+        && (refaddr($context->{backend_sv_intermediate_width_support}) // 0) == refaddr($owner)
+        && (refaddr($owner->{flattened_dt}) // 0) == refaddr($context)
+        && (refaddr($module->signals) // 0) == refaddr($signals)
+        && (refaddr($context->{intermediate_signals}) // 0) == refaddr($registry);
+    my $core_state = _json()->decode($capture->{state});
+    my @descriptors = ($core_state->{signal}, @{$core_state->{operands}});
+    my @names = ($name, @{$record->{source_names}});
+    for my $index (0 .. $#names) {
+        my $object = $capture->{objects}[$index];
+        return unless (refaddr($signals->{$names[$index]}) // 0) == refaddr($object)
+            && exists($object->{_intermediate_width_allocation_revision})
+            && _json()->encode([$object->{_intermediate_width_allocation_revision}])
+                eq _json()->encode([$descriptors[$index]{revision}]);
+    }
+    return unless (refaddr($registry->{$name}) // 0) == refaddr($registered);
+    my $final_info = _source_row_state($info, $ast) or return;
+    my $final_registered = _source_row_state($registered, $ast) or return;
+    return unless _json()->encode($final_info) eq _json()->encode($info_state)
+        && _json()->encode($final_registered) eq _json()->encode($registered_state);
+    return {record => $record, state => $state};
+}
+
+sub current_source_intermediate {
+    my ($class, %args) = @_;
+    my $holder = $args{holder};
+    return unless ref($holder) eq 'HASH' && join(',', sort keys %$holder) eq 'record,state'
+        && defined($holder->{state}) && !ref($holder->{state});
+    my $record = eval {
+        my $current = $class->prepare_source_intermediate(%args) or return;
+        return unless $current->{state} eq $holder->{state}
+            && _json()->encode($current->{record}) eq _json()->encode(
+                FSM::SourceBitwiseTreePolicySupport->copy_record($holder->{record}));
+        $current->{record};
+    };
+    return $@ ? undef : $record;
+}
+
 1;
 
 =head1 NAME
 
-FSM::SourceBitwiseTreeWidthSupport - Current actual Core source bitwise tree intent
+FSM::SourceBitwiseTreeWidthSupport - Current Core and source-row bitwise tree intent
 
 =head1 DESCRIPTION
 
@@ -180,9 +274,12 @@ identity with reused storage. Supported matching-state writes revoke the shared
 opt-in revision counters. Unknown, copied, foreign, stale or changed capsules
 withhold instead of re-deriving intent from selected widths.
 
-This is explicit local Core intent, not automatic fresh Parser provenance,
-module/registry membership, completed backend policy, frozen leaf equivalence
-or selected target proof. Those joins and symbolic range emission remain separate.
+The Core methods establish explicit local intent, not fresh Parser provenance,
+module membership or backend completion. The separate source-row adapter joins
+that current policy to actual module/root/all-source identities and collected
+and registered metadata rows. Its owner supplies the successful collection/epoch
+boundary. Neither layer establishes frozen leaf equivalence, selected target
+proof or symbolic range eligibility.
 The existing binary policy API retains its closed schema and eligibility.
 
 =head1 METHODS
@@ -205,5 +302,25 @@ undef. A complete final capture rejects a supported write during validation;
 existing revision counters must be nonnegative decimal scalars. Malformed,
 stale and foreign private holders withhold without throwing.
 An absent policy is not inferred from matching numeric widths.
+
+=head2 prepare_source_intermediate
+
+Accept C<context>, C<signal_name>, actual collected C<signal_info> and C<epoch>.
+Prepare detached C<{record, state}> data from an existing current Core tree
+policy, exact module membership for root and every ordered leaf, actual held AST
+and both source metadata rows. Plain unsigned profiles and exact selected maximum
+must agree. Lifetime tokens bind the installed width owner, context/module and
+maps/rows without retaining them.
+A final join rechecks module membership, current rows and raw tracked revisions
+after all source reads. Unsupported or incoherent shape withholds. This adapter
+does not assert that collection completed; its backend owner owns that gate.
+
+=head2 current_source_intermediate
+
+Accept the preparation arguments plus C<holder>. Reprepare complete current state
+and compare the closed held record/state before returning a detached tree policy.
+Changed, copied, foreign or stale rows/contexts/epochs withhold; malformed holders
+withhold without throwing. The backend owner checks successful epoch completion
+before calling. Binary and arithmetic graph APIs remain separate.
 
 =cut
