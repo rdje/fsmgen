@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
 use FSM::CoreAST;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
@@ -45,8 +46,12 @@ sub _capture_intermediate_width_allocations($self, $callback) {
     confess "Intermediate allocation capture is already active\n"
         if exists $self->{_intermediate_width_allocation_capture};
     local $self->{_intermediate_width_allocation_capture} = [];
+    local $self->{_source_bitwise_tree_width_allocation_capture} = [];
     my $value = $callback->();
-    return {value => $value, events => $self->{_intermediate_width_allocation_capture}};
+    my $packet = {value => $value, events => $self->{_intermediate_width_allocation_capture}};
+    $packet->{source_tree_events} = $self->{_source_bitwise_tree_width_allocation_capture}
+        if @{$self->{_source_bitwise_tree_width_allocation_capture}};
+    return $packet;
 }
 
 sub _stage_intermediate_width_allocation($self, $signal, $operator, $operands, $width) {
@@ -63,6 +68,35 @@ sub _stage_intermediate_width_allocation($self, $signal, $operator, $operands, $
     push @$events, {signal_name => $signal->name, holder => $holder};
 }
 
+sub _stage_source_tree_width_allocation($self, $signal, $operator, $operands, $width) {
+    my $events = $self->{_source_bitwise_tree_width_allocation_capture} or return;
+    return unless @$operands > 2 && defined(FSM::IntermediateWidthAllocationSupport::_width($width));
+    return if grep {!blessed($_) || !$_->isa('FSM::CoreAST::SignalRef') || defined($_->slice)} @$operands;
+    my @names = map {$_->signal->name} @$operands;
+    my $tree = ['signal', $names[0]];
+    $tree = [$operator, $tree, ['signal', $names[$_]]] for 1 .. $#names;
+    my $record = {kind => 'source_bitwise_tree_operand_max', operator => $operator,
+        source_names => \@names, expression_tree => $tree, selected_width => $width};
+    return unless $self->_source_tree_allocation_registry_matches($signal);
+    # Only this fresh allocator supplies intent. The Core adapter independently
+    # checks that the supplied original tree agrees with the actual held AST.
+    my $holder = eval {FSM::SourceBitwiseTreeWidthSupport->prepare_core(
+        signal => $signal, record => $record, track => 1)};
+    return unless $holder;
+    push @$events, {signal_name => $signal->name, holder => $holder};
+}
+
+sub _source_tree_allocation_registry_matches($self, $signal) {
+    return unless blessed($signal);
+    # The adapter's bounded shape capture exposes actual objects only for this
+    # transient join. No object is stored in the detached journal.
+    my $capture = eval {FSM::SourceBitwiseTreeWidthSupport::_capture($signal)} or return;
+    for my $object (@{$capture->{objects}}) {
+        return unless refaddr($self->{signal_manager}->get_signal($object->name) // {}) == refaddr($object);
+    }
+    return 1;
+}
+
 sub _allocation_registry_matches($self, $signal) {
     return unless $signal && refaddr($self->{signal_manager}->get_signal($signal->name) // {}) == refaddr($signal);
     my $ast = $signal->driving_ast;
@@ -76,6 +110,53 @@ sub _allocation_registry_matches($self, $signal) {
 }
 
 sub _allocation_transition($self, $signal, $attribute, $value, $write) {
+    return $self->_source_tree_allocation_transition($signal, $attribute, $value, sub {
+        $self->_binary_allocation_transition($signal, $attribute, $value, $write);
+    });
+}
+
+sub _source_tree_allocation_transition($self, $signal, $attribute, $value, $write) {
+    my $events = $self->{_source_bitwise_tree_width_allocation_capture};
+    return $write->() unless $events && @$events && $signal;
+    my $json = JSON::PP->new->canonical;
+    my $identity = sprintf('%x', refaddr($signal));
+    my @current;
+    for my $event (@$events) {
+        my $result = $self->{signal_manager}->get_signal($event->{signal_name});
+        next unless $self->_source_tree_allocation_registry_matches($result);
+        my $record = FSM::SourceBitwiseTreeWidthSupport->current_core(signal => $result, holder => $event->{holder});
+        next unless $record;
+        my $state = $json->decode($event->{holder}{state});
+        next unless grep {$_->{object_identity} eq $identity} ($state->{signal}, @{$state->{operands}});
+        push @current, [$event, $result, $record, $state];
+    }
+    my $revision = $signal->_intermediate_width_allocation_revision;
+    my $returned = $write->();
+    return $returned unless @current && $signal->_intermediate_width_allocation_revision == $revision + 1;
+    for my $candidate (@current) {
+        my ($event, $result, $record, $state) = @$candidate;
+        next unless $self->_source_tree_allocation_registry_matches($result);
+        my $after = eval {FSM::SourceBitwiseTreeWidthSupport->prepare_core(signal => $result, record => $record)};
+        next unless $after;
+        my @changed = grep {$_->{object_identity} eq $identity} ($state->{signal}, @{$state->{operands}});
+        next if grep {$_->{revision} != $revision} @changed;
+        for my $descriptor (@changed) {
+            ++$descriptor->{revision};
+            $descriptor->{roles}{$attribute} = $value if defined $attribute;
+        }
+        if ($state->{signal}{object_identity} eq $identity) {
+            ++$state->{revision};
+            $state->{roles}{$attribute} = $value if defined $attribute;
+        }
+        # All repeated slots must agree; no other source, role, width or tree
+        # delta can hide inside the one sanctioned operation.
+        next unless $json->encode($state) eq $after->{state};
+        $event->{holder} = $after;
+    }
+    return $returned;
+}
+
+sub _binary_allocation_transition($self, $signal, $attribute, $value, $write) {
     my $events = $self->{_intermediate_width_allocation_capture};
     return $write->() unless $events && $signal;
     my $json = JSON::PP->new->canonical;
@@ -348,6 +429,7 @@ sub finalize_nary_expression($self, $operator, $parsed_operands) {
 
         $signal->set_driving_ast($ast_tree);
         $self->_stage_intermediate_width_allocation($signal, $operator, $parsed_operands, $width);
+        $self->_stage_source_tree_width_allocation($signal, $operator, $parsed_operands, $width);
         fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
 
         return FSM::CoreAST::SignalRef->new($signal);
@@ -1256,9 +1338,12 @@ low bit. Unary reductions remain scalar, and literal widths remain independent
 max constraints. This sizing does not resize operand Signals.
 
 Internal C<_capture_intermediate_width_allocations(callback)> runs one scalar
-callback with a source-local journal and returns C<{value, events}>. Only actual
-fresh binary whole-reference allocations can stage an explicit intrinsic-max
-contract. Events contain plain detached state and scalar identity fingerprints,
+callback with source-local journals and returns C<{value, events}>. Its original
+C<events> bucket retains binary whole-reference allocations. A separate optional
+C<source_tree_events> bucket captures fresh source n-ary bitwise allocations with
+their actual original tree and every ordered whole-reference slot. It is absent
+when no eligible tree birth occurs. Both families stage explicit intrinsic-max
+contracts. Events contain plain detached state and scalar identity fingerprints,
 not Core owner references; they publish no Signal policy. Validated result and
 operand revision counters revoke events on supported matching-state mutations.
 Nesting refuses; success or exception restores the builder's prior state.
@@ -1268,8 +1353,11 @@ publication and Analyzer role operations can refresh a still-current event.
 Before each operation, actual registry identities and the whole event must match;
 afterward, only its exact revision and authorized role delta may differ. External,
 annotated, late, extra-source or stale writes cannot borrow that refresh. Ordinary
-uncaptured builder paths use the same legacy writes. Completed direct Parser
-calls now own capture and publication; an enclosing facade transaction defers
+uncaptured builder paths use the same legacy writes. Source-tree refresh also
+binds every repeated leaf slot and role, and checks actual registry membership
+for the whole held tree. This tree journal publishes no Core policy yet;
+completed-source publication is a separate integration step.
+Completed direct Parser calls own binary capture and publication; an enclosing facade transaction defers
 publication through actual role and interface completion. Failures and parse
 reuse clear previous/partial policy. Publication installs only the already current
 tracked birth, without a new semantic revision that would invalidate dependent

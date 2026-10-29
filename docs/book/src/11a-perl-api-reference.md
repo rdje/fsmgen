@@ -208,8 +208,8 @@ nested bitwise forms such as `(& A B C)` still retain a numeric helper range
 at the selected default. The Parser owns their nested Core tree; its existing
 allocation journal accepts two whole operands, so computed arithmetic graph
 ownership cannot supply the missing source-tree contract. Negated n-ary forms
-wrap that same bitwise helper in scalar logical NOT. Source-tree birth,
-selected-target proof and symbolic range integration remain pending; these
+wrap that same bitwise helper in scalar logical NOT. Fresh source-tree births
+now stage separately; completed publication, selected-target proof and symbolic range integration remain pending. These
 forms do not yet propagate parameter changes through their helper ranges.
 
 The separate `SourceBitwiseTreePolicySupport` data schema now validates
@@ -257,6 +257,40 @@ and `clear_intermediate_width_allocation` clears both intent families.
 This local intent establishes no module membership or fresh source birth.
 Parser publication, selected target proof and live helper range integration remain
 pending. Binary two-slot and computed arithmetic graph contracts remain separate.
+
+The actual ExpressionBuilder allocator now stages fresh n-ary AND/OR/XOR births
+in a separate optional `source_tree_events` journal. The original binary `events`
+bucket keeps its existing shape, and the new bucket is absent without a qualified
+tree birth. Only current actual registry/root/tree/leaf associations can refresh
+across the known bare-reference, analyzed-role and Parser width-metadata writes.
+An external matching-state write, annotated reference or extra write to another
+leaf cannot borrow that refresh. Repeated leaf slots and nested dependent helpers
+preserve their own identities. Negated n-ary forms stage the bitwise base and
+retain their scalar logical NOT wrapper. For example, this internal staging API
+prints `A B C` and leaves the returned helper unpublished:
+
+```perl
+use FSM::Adapter::FSMGenFull::SignalManager;
+use FSM::Adapter::FSMGenFull::ExpressionBuilder;
+use FSM::SourceBitwiseTreeWidthSupport;
+my $manager = FSM::Adapter::FSMGenFull::SignalManager->new;
+$manager->register_signal($_, width => 8) for qw(A B C);
+my $builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(signal_manager => $manager);
+my $packet = $builder->_capture_intermediate_width_allocations(sub {
+    $builder->parse_expression(['&', 'A', 'B', 'C']);
+});
+my $event = $packet->{source_tree_events}[0];
+my $record = FSM::SourceBitwiseTreeWidthSupport->current_core(
+    signal => $manager->get_signal($event->{signal_name}), holder => $event->{holder});
+die "missing staged birth\n" unless $record;
+die "premature publication\n" if $packet->{value}->signal->source_bitwise_tree_width_allocation;
+print join(' ', @{$record->{source_names}}), "\n";
+```
+
+Captured journal data retains no Core graph; failed capture restores both journal
+scopes and a retry records only its fresh births. Ordinary uncaptured allocation
+adds no revision trackers. Completed direct Parser/facade publication and backend
+attachment remain separate steps; no new symbolic helper range is emitted here.
 
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events

@@ -8,7 +8,10 @@ existing exact-width descriptors and walk bounds, and Perl core FieldHash weak
 lifetime keys with scalar identities. Actual root/tree/all leaf state and tracked
 revisions bind the detached capsule; ordinary lookup installs nothing. Parser
 publication, completed backend attachment and live range consumption remain
-separate. This scoped dependency update adds no transitive closure census.
+separate. ExpressionBuilder now imports that adapter explicitly for a distinct
+optional source-tree birth journal and exact current registry/transition checks.
+Its old binary bucket and uncaptured writes preserve; the new staged tree bucket
+does not yet publish Core policy. This adds no transitive closure census.
 
 Scoped update on `2026-10-28`: actual factorization imports
 `FSM::IntermediateWidthGraphBirthSupport`, and the direct width owner imports
