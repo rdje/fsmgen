@@ -547,6 +547,33 @@ unchanged derived range. Returned data retains no caller row map, and failure
 returns no partial plan. This private proof does not yet activate live symbolic
 helper declarations; emission and independent final assembly remain separate.
 
+A nested source expression such as `(& A B (| (| A B C) C))` also creates a
+binary helper over a generated child. That helper cannot use the old
+two-original-operand relationship: its numeric width supplies no mutable
+ancestry. Separate private `prepare_computed_source_binary_declaration` and
+`prepare_computed_source_binary_intermediate_range` entrypoints now prove its
+source intent and complete selected targets through the same bounded recursive
+kernels. Pass the actual binary root's name/row and expression to the first;
+pass its name/row and complete target maps to the second, as in the calls above.
+The binary root retains `width_allocation` and `bitwise_origin`, while expanded
+leaves preserve the original `A B C C` order. Every child still needs its own
+current policy/event and physical declaration. Tree-only entrypoints remain
+closed to binary roots, and direct two-original binary helpers retain their
+existing owner.
+
+This private proof is a prerequisite to live consumption. Native generation of
+that nested mutable example still refuses with `Direct binary width relationship
+requires identical mutable operand contracts`; the next emission slice owns the
+repair. Producer-only private proof fixtures hold that consumer out of scope and
+do not establish successful symbolic HDL generation. Whole-value guards and
+atomic final range closure remain part of that same pending emission slice.
+
+Run the bounded producer-only proof checks with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t
+```
+
 The separately owned unsized-literal constraint gap remains: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while
 SystemVerilog inference selects width 32. Final source/target agreement then

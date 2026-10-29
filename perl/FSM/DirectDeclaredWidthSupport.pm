@@ -348,6 +348,16 @@ sub prepare_source_tree_intermediate_range ($class, %args) {
     return FSM::DirectSourceBitwiseTreeRangeSupport->prepare(%args);
 }
 
+sub prepare_computed_source_binary_declaration ($class, %args) {
+    require FSM::DirectSourceBitwiseTreeRangeSupport;
+    return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_binary_declaration(%args);
+}
+
+sub prepare_computed_source_binary_intermediate_range ($class, %args) {
+    require FSM::DirectSourceBitwiseTreeRangeSupport;
+    return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_binary(%args);
+}
+
 sub prepare_declarations ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -646,6 +656,17 @@ declaration intent. Full source/target inputs, child selections, raw currentness
 and weak row membership recheck after preparation, including changes hidden by
 equal derived ranges. This private proof emits no HDL and enables no live
 source-tree range or VHDL profile.
+
+C<prepare_computed_source_binary_declaration> and
+C<prepare_computed_source_binary_intermediate_range> provide separate private
+entrypoints for a source-owned binary bitwise root containing an actual typed
+source-helper edge. They reuse the bounded original-leaf and independent
+complete-target kernels above, retaining C<width_allocation>/C<bitwise_origin>
+at the binary root and the complete expanded tree/ordered leaves separately.
+Current tree or binary child policies, complete canonical relationships,
+physical targets and final raw currentness remain required. Direct two-original
+binary roots and the tree-only methods keep their existing ownership boundary.
+These prerequisites still do not repair the live binary range consumer.
 
 C<prepare_binary_intermediate_range> joins one selected helper privately for
 SystemVerilog/Verilog. It requires an actual FlattenedDT context and its canonical

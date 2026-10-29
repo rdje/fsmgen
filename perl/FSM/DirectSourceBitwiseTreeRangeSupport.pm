@@ -118,8 +118,8 @@ sub _visit {
     unless ($selection) {
         my $expression = $name eq $state->{root} ? $state->{expression}
             : $state->{recovery}->render_intermediate_signal_expression($name, $info);
-        my $binary = $name ne $state->{root}
-            && !$state->{owner}->source_bitwise_tree_width_allocation($name, $info);
+        my $binary = $name eq $state->{root} ? $state->{root_binary}
+            : !$state->{owner}->source_bitwise_tree_width_allocation($name, $info);
         my ($policy, $origin) = _selection({signal_name => $name, signal_info => $info,
             expression => $expression}, $state->{owner}, $state->{recovery}, $binary);
         $selection = {policy => $policy, origin => $origin, expression => $expression, binary => $binary ? 1 : 0};
@@ -136,9 +136,10 @@ sub _visit {
 }
 
 sub _expanded {
-    my ($ctx, $owner, $recovery, $rows, $args) = @_;
+    my ($ctx, $owner, $recovery, $rows, $args, $root_binary) = @_;
     my $state = {ctx => $ctx, owner => $owner, recovery => $recovery, rows => $rows,
-        root => $args->{signal_name}, expression => $args->{expression}, signals => {}, infos => {}, asts => {},
+        root => $args->{signal_name}, root_binary => $root_binary, expression => $args->{expression},
+        signals => {}, infos => {}, asts => {},
         leaves => [], selections => {}, active_ast => {}, active_helper => {},
         budget => FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES()};
     weaken($state->{rows});
@@ -146,7 +147,10 @@ sub _expanded {
     undef $rows;
     my $tree = _visit($state, $state->{root}, 0);
     my $root = $state->{selections}{$state->{root}}{policy};
-    $state->{expanded} = FSM::SourceBitwiseTreePolicySupport->copy_record({%$root,
+    _fail('computed binary root requires an actual typed source-helper child')
+        if $root_binary && keys(%{$state->{selections}}) < 2;
+    $state->{expanded} = FSM::SourceBitwiseTreePolicySupport->copy_record({
+        kind => 'source_bitwise_tree_operand_max', operator => $root->{operator}, selected_width => $root->{selected_width},
         expression_tree => $tree, source_names => $state->{leaves}});
     return $state;
 }
@@ -226,13 +230,23 @@ sub _fence {
 
 sub prepare_declaration {
     my ($class, %args) = @_;
+    return $class->_prepare_declaration(0, %args);
+}
+
+sub prepare_binary_declaration {
+    my ($class, %args) = @_;
+    return $class->_prepare_declaration(1, %args);
+}
+
+sub _prepare_declaration {
+    my ($class, $root_binary, %args) = @_;
     my ($ctx, $owner, $recovery, $rows) = _scope(\%args);
     # The caller's prepared block owns this map. Proof must not keep an expired
     # row view alive, and returned plans contain no source/backend references.
     weaken($rows);
     my $direct = 'FSM::DirectDeclaredWidthSupport';
     my $before = $direct->_capture_source_state($ctx);
-    my $state = _expanded($ctx, $owner, $recovery, $rows, \%args);
+    my $state = _expanded($ctx, $owner, $recovery, $rows, \%args, $root_binary);
     my $fence = _fence($state);
     my ($policy, $origin) = @{$state->{selections}{$args{signal_name}}}{qw(policy origin)};
     my %source_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
@@ -242,15 +256,17 @@ sub prepare_declaration {
         unless FSM::SourceBitwiseTreePolicySupport->matches_selected_widths(
             $state->{expanded}, $args{signal_info}{width}, @{$relationship->{operand_widths}});
     my $again = $direct->prepare_source_tree_operand_relationship(%source_args);
+    my ($policy_key, $origin_key) = $root_binary ? qw(width_allocation bitwise_origin)
+        : qw(source_tree_width_allocation source_tree_origin);
     my $plan = _json()->decode(_json()->encode({profile => $relationship->{profile},
         target_language => $relationship->{target_language}, source_scope => $relationship->{source_scope},
         module_name => $ctx->{fsm_module}->name, target_name => $args{signal_name}, declaration_kind => 'signal',
         allocation_role => 'source_intermediate', source_names => $policy->{source_names},
         operand_targets => $policy->{source_names}, width => $args{signal_info}{width},
-        source_tree_width_allocation => $policy, source_tree_origin => $origin, expression => $args{expression},
+        $policy_key => $policy, $origin_key => $origin, expression => $args{expression},
         expression_tree => $state->{expanded}{expression_tree}, leaf_names => $relationship->{source_names},
         width_plan => $relationship->{width_plan}}));
-    my $current = _expanded($ctx, $owner, $recovery, $rows, \%args);
+    my $current = _expanded($ctx, $owner, $recovery, $rows, \%args, $root_binary);
     my $after = $direct->_capture_source_state($ctx);
     _fail('complete source or current selected intent changed during declaration preparation')
         unless $before eq $after && _equal($state->{expanded}, $current->{expanded})
@@ -328,7 +344,8 @@ sub _target_visit {
     _fail("requires a closed selected source-helper event '$name'")
         unless ref($event) eq 'HASH'
             && join(',', sort keys %$event) eq join(',', sort ('expression', $policy_key, $origin_key));
-    _fail('requires a source-tree root event') if $name eq $state->{root} && $binary;
+    _fail('requires the selected root allocation family')
+        if $name eq $state->{root} && $binary != $state->{root_binary};
     my ($policy, $origin) = _selection({signal_name => $name, signal_info => $info,
         expression => $event->{expression}}, $state->{owner}, $state->{recovery}, $binary);
     _fail("disagrees with the complete current selected event for '$name'")
@@ -376,9 +393,9 @@ sub _tree_leaves {
 }
 
 sub _selected_targets {
-    my ($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name) = @_;
+    my ($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name, $root_binary) = @_;
     my $state = {ctx => $ctx, owner => $owner, recovery => $recovery, rows => $rows, %$input,
-        source => $source, target => $target, relationship => $relationship, root => $name,
+        source => $source, target => $target, relationship => $relationship, root => $name, root_binary => $root_binary,
         signals => {}, infos => {}, asts => {}, selections => {}, nodes => {}, order => [],
         active_ast => {}, active_helper => {}, budget => FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES()};
     weaken($state->{rows});
@@ -389,6 +406,16 @@ sub _selected_targets {
 
 sub prepare {
     my ($class, %args) = @_;
+    return $class->_prepare(0, %args);
+}
+
+sub prepare_binary {
+    my ($class, %args) = @_;
+    return $class->_prepare(1, %args);
+}
+
+sub _prepare {
+    my ($class, $root_binary, %args) = @_;
     my $target_inputs = sub {_json()->encode({namespace => $args{target_namespace},
         declarations => $args{target_declarations}, events => $args{target_intermediates}})};
     my $snapshot = eval {$target_inputs->()};
@@ -409,12 +436,13 @@ sub prepare {
     my %target_args = (%source_args, target_namespace => $input->{namespace}, target_declarations => $input->{declarations});
     my $source = $direct->prepare_module(%source_args);
     my $target = $direct->prepare_declarations(%target_args);
-    my $intent = $class->prepare_declaration(%args);
-    my $expanded = {%{$intent->{source_tree_width_allocation}},
+    my $intent = $class->_prepare_declaration($root_binary, %args);
+    my $expanded = {kind => 'source_bitwise_tree_operand_max',
+        operator => $intent->{expression_tree}[0], selected_width => $intent->{width},
         expression_tree => $intent->{expression_tree}, source_names => $intent->{leaf_names}};
     my $relationship = $direct->prepare_source_tree_operand_relationship(%source_args,
         source_tree_width_allocation => $expanded);
-    my $state = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name);
+    my $state = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source, $target, $relationship, $name, $root_binary);
     my $fence = _fence($state);
     _fail('complete target root disagrees with independent source declaration intent')
         unless _equal($state->{nodes}{$name}{plan}, $intent);
@@ -422,8 +450,8 @@ sub prepare {
     my $target_again = $direct->prepare_declarations(%target_args);
     my $again = $direct->prepare_source_tree_operand_relationship(%source_args,
         source_tree_width_allocation => $expanded);
-    my $current_intent = $class->prepare_declaration(%args);
-    my $current = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source_again, $target_again, $again, $name);
+    my $current_intent = $class->_prepare_declaration($root_binary, %args);
+    my $current = _selected_targets($ctx, $owner, $recovery, $rows, $input, $source_again, $target_again, $again, $name, $root_binary);
     my $after = $direct->_capture_source_state($ctx);
     _fail('complete selected inputs or current source proof changed during target preparation')
         unless $snapshot eq $target_inputs->() && $before eq $after
@@ -515,5 +543,22 @@ snapshot and checks Core, row, attachment, module scope, owner and epoch state.
 Proof retains no caller row view. Failure returns no partial plan, and held
 detached plans cannot revive expired current membership. This independent proof
 still emits no HDL and activates no source-tree range or VHDL support.
+
+C<prepare_binary_declaration> and C<prepare_binary> select a separate computed
+source binary root for source intent and independent complete-target proof.
+An actual typed source-helper child is mandatory; direct two-original binary
+roots stay with the original binary owner. A tree root cannot borrow this
+entrypoint, and the tree-only methods cannot accept a binary root. The direct
+width facade names these C<prepare_computed_source_binary_declaration> and
+C<prepare_computed_source_binary_intermediate_range>.
+
+These methods keep the binary root's own C<width_allocation>/C<bitwise_origin>
+fields. Its expanded tree and original leaves still include every typed source
+tree or binary child, with separate current policies and selected events.
+Canonical original-leaf contracts, maxima, physical membership, detached plans,
+weak row ownership and final complete source/target/raw-state fences are shared
+with tree roots. This private prerequisite does not enable live symbolic binary
+declarations; producer-only fixtures with that consumer held out of scope do not
+qualify native generation or external HDL behavior.
 
 =cut

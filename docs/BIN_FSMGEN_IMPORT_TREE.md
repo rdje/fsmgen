@@ -42,7 +42,11 @@ original leaf occurrence through completed tree/binary child attachments.
 Complete child selections replay and a final raw-field fence follows source reads.
 The same private module now independently traverses complete selected child events,
 canonical physical declarations and current typed edges, rechecking all inputs
-and final raw currentness against separate source intent. Live source-tree ranges
+and final raw currentness against separate source intent. Separate computed source
+binary-root entrypoints reuse these kernels without changing tree-only or old
+binary contracts. Their typed child ancestry is a prerequisite to live consumption;
+producer-only fixtures do not qualify the still-refusing native nested binary path.
+Live source-tree ranges
 remain pending; no VHDL or public-report profile expands. This is a scoped dependency update, not a new
 whole-entrypoint closure census.
 
