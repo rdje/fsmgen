@@ -2548,11 +2548,27 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Focused shared-reference/original-width/publication checks report All tests successful Files=3 Tests=18. The independent fallback variant fails its intended direct and actual-source controls. Runnable new book example, current generated POD and complete book source-reference contracts pass. Mandatory staged acceptance and normal final-index doctrines gate commit; no full .6/compiler/runtime/publication success is implied.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare bounded nested literal ownership from actual current child contracts and typed source edges.`
   Acceptance: `After .1, extend the source allocation holder boundary for actual generated child references without borrowing their nominal selected widths. Bind root, every actual typed edge and current child birth/completed record, original independent leaf identities, raw literal data, lifetimes and revisions. Keep an exact child relationship separately from expanded source text; preserve repeated/shared slots and independently authored floors. Missing/foreign/stale/cyclic/over-bound child contracts and late matching writes withhold. Define birth-time supplied-child versus completed-child lookup explicitly; a provisional journal is not completed policy. Reuse existing weak identity/raw capture barriers and named transition contract, with no extra owner graph. Focused detached-holder RED/GREEN/hostile controls and POD/book; no live allocator or backend relaxation in this preparation.`
-  Verification: `Pending current nested holder contract; existing direct holder rejects intermediate operands and remains the preserved control.`
-  Commit: `pending nested source allocation holder`
+  Verification: `Pre-implementation contract review separates globally bounded nested child capture from named transition transport. Default direct holders and all live callers continue to reject generated child references. Children below own the prepared boundaries before live integration .3; no implementation or qualification is implied.`
+  Commit: `prepared nested holder children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2.1`
+  Status: `pending`
+  Goal: `Prepare bounded nested literal captures with explicit birth versus completed child lookup.`
+  Acceptance: `Extend only the opt-in holder boundary. Birth lookup supplies a current detached child holder for the actual whole typed reference; completed lookup reads the actual installed child holder and never substitutes a provisional record. Bind each ordered edge separately from expanded raw source text, preserve nullable exact child widths and independent floors, and share depth/cycle/occurrence limits across helper expansion. Validate child state, all root/leaf identities, raw kinds and final mutation barriers without retaining owners. Default direct and live parser/target calls stay unchanged. Focused RED/GREEN, stale/foreign/missing/late-write and bounded shared-child controls plus POD/book before commit. Named transition transport is the immediate child .2; no live source or target relaxation.`
+  Verification: `pending bounded prepared nested capture`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Transport nested holders through exact named source operations and close the prepared contract.`
+  Acceptance: `After .1, extend the existing named role/reference/metadata transition proof to each affected nested child and ordered repeated edge, retaining all unrelated raw source and identity state. Child refresh cannot legitimize independent, matching extra, failed, foreign or stale writes; preserve separate birth/completed lookup and weak ownership. Focused direct/nested/shared/deep explicit/unknown/floor/kind/lifecycle and distinguishing hostile controls, synchronized POD/book/fact, then commit before actual allocator/completion integration .3. No backend sizing or full .6 qualification.`
+  Verification: `pending prepared nested transition and closure`
+  Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.2.3.2.3`
   Status: `pending`
