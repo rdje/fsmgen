@@ -5,12 +5,14 @@ answers:
   - "where is the shared Core expression width inference kernel?"
   - "how can a target supply unsized literal widths without changing Core defaults?"
   - "does exact width inference prove a generated helper placeholder or symbolic ancestry?"
+  - "why can nested unsized literal helpers truncate a guards high bit?"
 date: 2026-10-29
 status: current
 tags: [widths, literals, core, expression, source-capture]
 evidence: >-
   perl/FSM/CoreExpressionWidthSupport.pm; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm;
-  t/2250-core-expression-width-contract.t; docs/audits/core-expression-width-contract-20261029.json.gz
+  t/2250-core-expression-width-contract.t; docs/audits/core-expression-width-contract-20261029.json.gz;
+  docs/audits/literal-width-ownership-20261029/receipt.json.gz
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2250-core-expression-width-contract.t t/2192-parser-bitwise-intermediate-widths.t t/2074-unary-reduction-width-foundation.t
 ---
 
@@ -36,3 +38,14 @@ T2192 now asserts current symbolic ranges and whole-value gating; the exact
 committed builder reproduced its stale numeric expectations before this repair.
 Retained first failures, exact source/variant/logs and replay instructions are in
 the evidence receipt. This records the qualified scope, not feature completion.
+
+Revision-bound ownership diagnosis at the preparation commit: an unknown literal
+helper retains nominal Core width. A nested parent reads that width as exact and
+can emit a narrow destination that discards the literal high bit. Strict CLI and
+debug trace reproduce the ordinary fixed artifact. Injected declaration capture
+instead refuses; preserve those separate conditions. Source birth/unknown
+propagation .1.2.2 and target/final agreement .1.2.3 own the immediate P1 repair.
+The adjacent audit verify.py --current --qualify authenticates producer bytes,
+source/target products and independent mask algebra while rejecting hostile
+saved variants. It is manual, revision-bound diagnosis, not an unconditional
+current-state watcher or external HDL runtime proof.

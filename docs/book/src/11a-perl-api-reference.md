@@ -662,6 +662,14 @@ does not run the same final source/target agreement check; that path and generic
 literal floors remain owned by the target-consumer successor. The focused
 contract/source controls are in `t/2250-core-expression-width-contract.t`.
 
+Known defect in this open family: a nested fixed-width helper can truncate an
+unsized literal's high bit in a narrower parent helper. The retained strict CLI
+reproduction and source-width diagnosis are authenticated by
+`docs/audits/literal-width-ownership-20261029/verify.py`. Ordinary generation and
+injected declaration capture have different outcomes; the latter can refuse the
+source. Source allocation and nested unknown-width propagation are the immediate
+repair prerequisites. External HDL execution has not qualified this diagnosis.
+
 Original nested candidates receive a separate graph birth; substitution binds
 typed helper references while the root width is unresolved. Intrinsic events
 join that ownership to held child proofs, and completed graph policy follows
