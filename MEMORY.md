@@ -10,4 +10,4 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 - next_action: Select actual concatenation/selection/shift intermediate consumers and canonical width relationships; split the first bounded producer/proof/emission repair before changing code.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
-- blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.
+- blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.

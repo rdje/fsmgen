@@ -60,7 +60,7 @@ do not start broad suites between implementation slices.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34, ISF-REDUCTION-DELIVERY.35, ISF-REDUCTION-DELIVERY.36, ISF-REDUCTION-DELIVERY.37, ISF-REDUCTION-DELIVERY.38`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18, ISF-REDUCTION-DELIVERY.19, ISF-REDUCTION-DELIVERY.20, ISF-REDUCTION-DELIVERY.22, ISF-REDUCTION-DELIVERY.23, ISF-REDUCTION-DELIVERY.24, ISF-REDUCTION-DELIVERY.25, ISF-REDUCTION-DELIVERY.26, ISF-REDUCTION-DELIVERY.27, ISF-REDUCTION-DELIVERY.28, ISF-REDUCTION-DELIVERY.29, ISF-REDUCTION-DELIVERY.30, ISF-REDUCTION-DELIVERY.31, ISF-REDUCTION-DELIVERY.32, ISF-REDUCTION-DELIVERY.33, ISF-REDUCTION-DELIVERY.34, ISF-REDUCTION-DELIVERY.35, ISF-REDUCTION-DELIVERY.36, ISF-REDUCTION-DELIVERY.37, ISF-REDUCTION-DELIVERY.38, ISF-REDUCTION-DELIVERY.39`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -3376,6 +3376,13 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'SourceLiteralWidthSupport additionally imports' identifies 5282e7456f. The later final-agreement commit adds DirectDeclaredWidthSupport's lazy source-observer dependency and live emitted-ledger consumers, omitted from the current architecture paragraph.
   - [x] **ADDRESSED (verified)** — Canonical import prose now names actual declaration, assignment, assembly and guard consumers and the source-only lazy call boundary. Exact dated closure measurements and qualification limits preserve; no full dependency scan or behavior change is claimed.
   - [x] **NO REGRESSION** — knowledge-map: OK; current query/card routes and native complete book source/copied-byte/index checks pass. The normal final-index doctrine hook gates this scoped architecture correction; implementation qualifications remain those of the committed source slices.
+
+- ID: `ISF-REDUCTION-DELIVERY.39`
+  Status: `done`
+  Goal: `Remove the obsolete literal-repair blocker from the final resume pointer.`
+  Acceptance: `After bounded family closure, compare Memory with the authoritative closed literal containers and current required frontier. Correct only the stale blocker phrase; preserve remaining feature/backend/full/publication ownership and .3.4.3.3 next action. Verify pointer, task integrity and normal commit doctrines before the clean checkpoint.`
+  Verification: `Final read of committed e2c04ec9b Memory finds an inherited literal-repair-open phrase after the canonical containers close. Remove only that stale phrase; current feature/backend/full/publication work and exact .3.4.3.3 next action preserve. The focused memory-architecture check passes with bounded fields; normal final-index doctrines qualify this documentation-only correction. No source/behavior/book contract changes and no broader verification are necessary. The decision0116 clean checkpoint remains selected; all work is committed and jobs consumed before stopping.`
+  Commit: `ISF-REDUCTION-DELIVERY.39: align resume blocker with closed literal repair`
 
 ## Blockers
 
