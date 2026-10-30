@@ -129,9 +129,13 @@ in the installed weak view. First unresolved typed inference alone mints it;
 native/cache/constraint/unknown/stale inputs do not. Original source and complete
 row metadata revalidate around callbacks and inference. Repeated reads preserve
 only an already current event through their own revision and width/source writes.
-Initial allocator/registry publication invalidates this event until the separate
-owned carry protocol is installed. Abort/reset/reuse clears all events. Numeric
-sum agreement is separate from symbolic range or completed collection policy.
+The actual normalizer carries a held current event through only its exact
+allocator/registry width and width_source writes, withholding it during the
+callback and rechecking complete original source/metadata afterward. Unrelated
+mutations or callback failure cannot refresh it. Later normalization annotations
+and registry replacement remain unqualified. Abort/reset/reuse clears all
+events. Numeric sum agreement is separate from symbolic range or completed
+collection policy.
 
 =cut
 
@@ -394,6 +398,10 @@ sub _restore_factorized_inference ($self, $signal_name, $signal_info, $holder, $
 }
 
 sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publish) {
+    my %concat_args = (width_support => $self, signal_name => $signal_name,
+        signal_info => $signal_info, signal_registry => $self->_current_graph_inference_rows);
+    my $concat_checkpoint = FSM::ConcatenationInferenceSupport->publication_checkpoint(
+        %concat_args, holder => delete $self->{_concatenation_inference_events}{$signal_name});
     my $graph_holder = $self->_take_current_graph_inference($signal_name, $signal_info);
     my $graph_expected = $graph_holder ? JSON::PP->new->decode($graph_holder->{state}) : undef;
     if ($graph_expected) {
@@ -413,6 +421,10 @@ sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publ
         }
     }
     $publish->();
+    if ($concat_checkpoint && FSM::ConcatenationInferenceSupport->current(
+        %concat_args, holder => $concat_checkpoint)) {
+        $self->{_concatenation_inference_events}{$signal_name} = $concat_checkpoint;
+    }
     $self->_restore_factorized_inference($signal_name, $signal_info, $holder, $expected);
     $self->_restore_graph_inference_state($signal_name, $signal_info, $graph_holder, $graph_expected);
 }

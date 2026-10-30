@@ -771,14 +771,23 @@ changed metadata/sources/revisions and foreign or expired identities cannot mint
 Repeated resolver reads carry only a still-current installed event through their
 own revision and width/source writes. Abort/reset/reuse clears events; holders
 retain no caller graph. The raw observer's restored-scalar-write limitation still
-applies. Numeric agreement supplies no symbolic sum-range proof. Initial allocator
-or registry publication invalidates this event; owned carry and completed
-collection remain the next implementation step. Symbolic sums/emission and full
-qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
+applies. Numeric agreement supplies no symbolic sum-range proof. The actual
+normalizer now checkpoints and withholds the event before publishing the merged
+row's exact `width` and `width_source` into the allocator and registered rows.
+Only successful publication and complete original source/metadata revalidation
+restore that same event. Wrong width/source values, unrelated metadata, equal
+object/container replacements, late getter mutations and throwing callbacks
+cannot refresh it; a clean later cache read cannot remint spent authority.
+Later dependency/render/live-usage annotations, registry replacement and completed
+collection policy remain separate implementation steps. Symbolic sums/emission
+and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
 retain focused currentness, refusal, lifecycle and complete native product evidence.
 The [returned-AST control](../../../docs/audits/concat-inference-runtime-20261031/replay.py)
 retains the identical failing/passing regression and native conservation proof.
+The [publication regression](../../../t/2281-concatenation-width-publication.t) and
+[exact predecessor/native replay](../../../docs/audits/concat-width-publication-20261031/replay.py)
+qualify only the owned width publication and retain complete native products.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

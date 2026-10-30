@@ -166,6 +166,25 @@ sub current {
     return $@ ? undef : $record;
 }
 
+# Predict only the actual normalizer's two scalar writes to each existing
+# allocator/registered row. Everything else, including nested container and
+# original source identities, must still match after the callback returns.
+sub publication_checkpoint {
+    my ($class, %args) = @_;
+    my $checkpoint = eval {
+        my $frame = _observe(%args) or return;
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        return unless _same($args{holder}, {record => $record, frame => $frame});
+        for my $target (qw(allocator registered)) {
+            for my $field (qw(width width_source)) {
+                $frame->{state}{$target}{data}{$field} = $frame->{state}{row}{data}{$field};
+            }
+        }
+        return {record => $record, frame => $frame};
+    };
+    return $@ ? undef : $checkpoint;
+}
+
 1;
 
 =head1 NAME
@@ -189,7 +208,9 @@ C<selected_width> and the ordered canonical C<source_contract>. Repeated/nested
 slots and explicit literal widths preserve. Numeric sum agreement supplies no
 generic sum-range or emission authority. Later resolver reads can carry only an
 already current installed event through their own revision and width/source
-writes. Other publications invalidate; collection carry/completion is separate.
+writes. Exact normalizer width publication also carries held events through
+C<publication_checkpoint>; later annotations and registry replacement invalidate
+until their separate carry protocols qualify. Completed policy remains separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.
@@ -216,5 +237,19 @@ writes. Return a detached holder; this observer alone attests no branch executio
 
 Return the detached record only while the entire current holder still agrees.
 Malformed or unsupported observations return undef without installing state.
+
+=head2 publication_checkpoint(..., holder => HOLDER)
+
+Validate a held current intrinsic event before the actual normalizer publication,
+then predict only the existing allocator and registered row C<width> and
+C<width_source> assignments from the unchanged merged row. The installed owner
+removes the event before this check and withholds it while the callback runs.
+Only a successful callback followed by C<current> against this exact checkpoint
+can restore it. Complete remaining metadata, nested container identities,
+original source contracts, rows, registry map, epoch and revision must preserve;
+unrelated or late getter changes cannot refresh. Exceptions propagate from the
+actual callback with the event already removed. This observer installs nothing
+and grants no completed policy. Later normalization annotations and registry
+replacement remain separate, unqualified transitions.
 
 =cut
