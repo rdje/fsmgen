@@ -22,8 +22,8 @@ evidence: >-
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
   t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t; docs/audits/literal-target-consumers-20261030/verify.py
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; t/2262-target-source-literal-numeric-inference.t; t/2263-verilog-prepared-maximum-range.t; t/2264-target-source-literal-generic-range.t
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2264-target-source-literal-generic-range.t t/2262-target-source-literal-numeric-inference.t; python3 -B docs/audits/literal-generic-range-20261030/verify.py --qualify
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; t/2262-target-source-literal-numeric-inference.t; t/2263-verilog-prepared-maximum-range.t; t/2264-target-source-literal-generic-range.t; t/2265-target-source-literal-selection.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2265-target-source-literal-selection.t t/2264-target-source-literal-generic-range.t; python3 -B docs/audits/literal-generic-range-20261030/verify.py --qualify
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -78,6 +78,7 @@ Target-only SourceLiteralWidthSupport prepares current source literal widths;
 prepare_inference joins actual rows/epoch before compatibility metadata (T2261/2).
 Shared WidthExpressionEmitter lower_maximum_range retains independent prepared
 contracts/floors under overrides (T2263). Complete source/target observations,
-raw-kind/currentness barriers and generic source joins (T2264) are canonical in
+raw-kind/currentness barriers, generic source joins (T2264) and actual typed
+expression selection (T2265) are canonical in
 `docs/book/src/11a-perl-api-reference.md`; selected ledgers and final agreement
 remain open. This route consolidates the same book-owned target facts.

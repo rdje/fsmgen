@@ -768,8 +768,27 @@ the saved range; matching namespace replacements cannot reuse it. Fixed-only
 sources, foreign targets and unproved or over-bound joins withhold this generic
 preparation. `t/2264-target-source-literal-generic-range.t` covers actual installed
 rows, independent wider floors, source conservation and a late parameter change.
-Selected declarations, emitted ledgers and final fixed/mutable agreement remain
-pending; this preparation does not change live HDL generation.
+Selected declaration/event membership, emitted ledgers and final fixed/mutable
+agreement remain pending; this preparation does not change live HDL generation.
+
+`prepare_selection` takes the same actual inputs plus the root `expression`
+selected for emission. It joins every typed child helper to its own current
+numeric frame, installed recovery/AST-rendering owners and canonical rows.
+Defining, runtime and cached ASTs must retain actual source identity; fresh typed
+rendering must equal selected text. Matching cached text alone supplies no proof.
+The detached record retains root numeric/range intent and a complete physical
+helper inventory in children-before-parent order. Original capsules separately
+preserve ordered repeated typed edges and raw literal kinds. Mutable leaves
+require the generic source-range proof; fixed observations invent no mutable
+relationship. After all rendering reads, numeric rechecks and final raw source,
+owner and row/text barriers reject late changes to earlier children.
+`current_selection` additionally compares a saved `observation` with the complete
+fresh result. `t/2265-target-source-literal-selection.t` covers direct/nested,
+fixed/mutable and explicit/wider floors, altered caches, foreign ASTs, owner/row/
+epoch changes and late child-cache writes. This qualifies private selected
+expression intent; actual captured declarations/events, live range ledgers and
+final generation agreement remain separate. Generic literal generation still
+refuses at its existing boundary; compiler/runtime/full qualification is pending.
 
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.

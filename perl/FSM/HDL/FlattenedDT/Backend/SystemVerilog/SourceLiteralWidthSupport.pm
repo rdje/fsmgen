@@ -323,6 +323,149 @@ sub current_range {
     return $matches ? $current : undef;
 }
 
+# Selection is a separate join from numeric inference: cached compatibility
+# text cannot prove which actual typed AST is going to be emitted.
+sub _selection_owners {
+    my ($context) = @_;
+    my $recovery = $context->{backend_sv_intermediate_recovery_support};
+    my $renderer = $context->{enable_graph_ast_support};
+    return unless blessed($recovery)
+        && $recovery->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport')
+        && blessed($renderer) && $renderer->isa('FSM::Synthesis::EnableGraph::ASTSupport')
+        && (refaddr($recovery->{flattened_dt}) // 0) == refaddr($context)
+        && (refaddr($renderer->{flattened_dt}) // 0) == refaddr($context);
+    return {recovery_identity => _identity($recovery), renderer_identity => _identity($renderer)};
+}
+
+sub _selection_row_state {
+    my ($row, $ast) = @_;
+    my $numeric = FSM::IntermediateWidthAllocationSupport::_factorized_metadata_state($row, $ast) or return;
+    my %text;
+    for my $key (qw(expression rendered_expression rendered_expression_source
+        runtime_ast_source runtime_ast_resolution_state runtime_ast_miss_reason)) {
+        next unless exists $row->{$key};
+        return if defined($row->{$key}) && ref($row->{$key});
+        $text{$key} = $row->{$key};
+    }
+    return {numeric => $numeric, text => \%text};
+}
+
+sub _selection_target_frame {
+    my ($args, $nodes) = @_;
+    my $owner = $args->{width_support};
+    my $context = $owner->{flattened_dt};
+    my $owners = _selection_owners($context) or return;
+    my %selected;
+    for my $name (sort keys %$nodes) {
+        my $numeric = $nodes->{$name}{numeric};
+        my %input = (width_support => $owner, signal_name => $name,
+            signal_info => $args->{signal_registry}{$name}, signal_registry => $args->{signal_registry});
+        my $frame = _inference_frame(\%input, $numeric->{observation}) or return;
+        return unless _json()->encode($frame) eq _json()->encode($numeric);
+        my $ast = $context->{fsm_module}{signals}{$name}{driving_ast};
+        my $row = _selection_row_state($input{signal_info}, $ast) or return;
+        my $registered = _selection_row_state($context->{intermediate_signals}{$name}, $ast) or return;
+        $selected{$name} = {row => $row, registered => $registered};
+    }
+    return {owners => $owners, selected => \%selected};
+}
+
+sub prepare_selection {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args)
+        eq 'expression,signal_info,signal_name,signal_registry,target_language,width_support';
+    return unless defined($args{expression}) && !ref($args{expression}) && length($args{expression});
+    return unless defined($args{target_language}) && !ref($args{target_language})
+        && $args{target_language} =~ /\A(?:systemverilog|sv|verilog|v)\z/;
+    my $result = eval {
+        my %input = %args;
+        delete @input{qw(expression target_language)};
+        my $initial = $class->prepare_inference(%input) or return;
+        my $owner = $args{width_support};
+        my $context = $owner->{flattened_dt};
+        my $owners = _selection_owners($context) or return;
+        my $before = _range_source_frame($context);
+        return unless defined $before;
+        my $signal = $context->{fsm_module}{signals}{$args{signal_name}};
+        my $capture = FSM::SourceLiteralWidthAllocationSupport::_capture($signal, {phase => 'completed'}) or return;
+        my $source = FSM::DirectDeclaredWidthSupport->prepare_module(
+            fsm_module => $context->{fsm_module}, assignment_analysis => $context->{assignment_analysis},
+            target_language => $args{target_language});
+        my $mutable = 0;
+        for my $leaf (@{$initial->{observation}{leaves}}) {
+            my $plan = $source->{signals}{$leaf->{source}{name}} or return;
+            $mutable ||= $plan->{width_plan} && $plan->{width_plan}{profile} eq 'symbolic';
+        }
+        my (%nodes, @order, %selected);
+        for my $helper (@{$initial->{observation}{helper_widths}}) {
+            my $name = $helper->{name};
+            next if exists $nodes{$name}; # repeated typed edges remain in the original capsule
+            my $actual = $context->{fsm_module}{signals}{$name};
+            return unless blessed($actual) && _identity($actual) eq $helper->{signal_identity};
+            my $row = $args{signal_registry}{$name};
+            return unless ref($row) eq 'HASH';
+            my $recovery = $context->{backend_sv_intermediate_recovery_support};
+            my $expression = $recovery->render_intermediate_signal_expression($name, $row);
+            return unless defined($expression) && !ref($expression) && length($expression);
+            my $runtime = $recovery->resolve_intermediate_signal_runtime_ast($name, $row);
+            my $defining = $recovery->resolve_intermediate_signal_defining_ast($name, $row);
+            my $ast = $actual->{driving_ast};
+            return unless blessed($runtime) && blessed($defining) && blessed($ast)
+                && refaddr($runtime) == refaddr($ast) && refaddr($defining) == refaddr($ast);
+            my $fresh = $context->{enable_graph_ast_support}->ast_to_systemverilog($runtime);
+            return unless defined($fresh) && !ref($fresh) && $fresh eq $expression
+                && ($name ne $args{signal_name} || $expression eq $args{expression});
+            my $row_state = _selection_row_state($row, $ast) or return;
+            my $registered = _selection_row_state($context->{intermediate_signals}{$name}, $ast) or return;
+            my $numeric = $class->prepare_inference(width_support => $owner,
+                signal_name => $name, signal_info => $row, signal_registry => $args{signal_registry}) or return;
+            return unless $numeric->{observation}{source_identity} eq $helper->{signal_identity}
+                && $numeric->{observation}{selected_width} eq $helper->{width};
+            $nodes{$name} = {expression => $expression, numeric => $numeric};
+            $selected{$name} = {row => $row_state, registered => $registered};
+            push @order, $name;
+        }
+        return unless @order && $order[-1] eq $args{signal_name}
+            && _json()->encode($nodes{$args{signal_name}}{numeric}{observation})
+                eq _json()->encode($initial->{observation});
+        my $range;
+        if ($mutable) {
+            $range = $class->prepare_range(%input, target_language => $args{target_language}) or return;
+            return unless _json()->encode($range->{numeric})
+                eq _json()->encode($nodes{$args{signal_name}}{numeric});
+        }
+        # Re-observe after all renderer reads, then finish with raw reads only.
+        # A late getter must not hide a changed earlier child cache or source.
+        for my $name (@order) {
+            return unless $class->current_inference(width_support => $owner,
+                signal_name => $name, signal_info => $args{signal_registry}{$name},
+                signal_registry => $args{signal_registry}, observation => $nodes{$name}{numeric});
+        }
+        my $expected = {owners => $owners, selected => \%selected};
+        my $target = _selection_target_frame(\%args, \%nodes) or return;
+        return unless _json()->encode($expected) eq _json()->encode($target)
+            && FSM::SourceLiteralWidthAllocationSupport::_unchanged($capture->{walk})
+            && $before eq (_range_source_frame($context) // '');
+        _json()->decode(_json()->encode({kind => 'systemverilog_source_literal_selection',
+            target_language => $source->{target_language}, source_plan => $source,
+            source_state_digest => FSM::SourceLiteralWidthAllocationSupport::_capsule_digest($before),
+            numeric => $nodes{$args{signal_name}}{numeric}, range => $range,
+            expression => $args{expression}, node_order => \@order, nodes => \%nodes, target_state => $target}));
+    };
+    return $@ ? undef : $result;
+}
+
+sub current_selection {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args)
+        eq 'expression,observation,signal_info,signal_name,signal_registry,target_language,width_support';
+    my $saved = delete $args{observation};
+    return unless ref($saved) eq 'HASH';
+    my $current = $class->prepare_selection(%args) or return;
+    my $matches = eval {_json()->encode($current) eq _json()->encode($saved)};
+    return $matches ? $current : undef;
+}
+
 1;
 
 =head1 NAME
@@ -330,6 +473,38 @@ sub current_range {
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport - Target-only widths over completed literal source intent
 
 =head1 METHODS
+
+=head2 prepare_selection
+
+C<prepare_selection> takes the C<prepare_range> arguments plus the actual root
+C<expression> selected for emission. It joins fixed or mutable literal intent
+to the installed recovery and AST-rendering owners. Every physical helper in the
+bounded original capture must have its actual current collected/registered row,
+normalization epoch and completed source capsule. Runtime, defining and cached
+ASTs must be the actual source AST; freshly rendering it must equal the selected
+text. Cached text, equal numeric widths and matching foreign ASTs supply no proof.
+
+The detached C<systemverilog_source_literal_selection> record carries canonical
+C<target_language>, complete C<source_plan>, C<source_state_digest>, root C<numeric>,
+C<expression> and nullable C<range>, children-before-parent C<node_order>, C<nodes>
+and exact raw C<target_state>. Each node retains its selected expression and own
+numeric frame. Distinct helpers appear once; ordered repeated typed edges remain
+in the original numeric source capsules. Actual mutable leaves require the
+complete generic range proof; fixed leaves invent no mutable relationship.
+
+All numeric frames recheck after the last rendering read. Final raw row/text,
+owner, source AST/capsule and complete module/parameter/assignment barriers reject
+changes to earlier helpers during later reads. Returned data retains no owners
+or row containers. Missing, stale, foreign, constrained or inconsistent joins
+withhold atomically. This proves selected expression intent, not actual emitted
+declaration/event membership or a completed ledger. Live emission and final
+source/target agreement remain separate consumers.
+
+=head2 current_selection
+
+C<current_selection> additionally takes a saved C<observation> and returns fresh
+detached data only when the entire selection rederives exactly. Changed source
+namespaces, rows, epochs, owners, text, ASTs or original kinds cannot reuse it.
 
 =head2 prepare_range
 

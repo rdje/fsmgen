@@ -372,8 +372,11 @@ General source rules:
   width contracts and fixed floors without freezing mutable branches to their
   defaults. Literal generic range preparation now joins actual numeric frames to
   original mutable leaf contracts and separate fixed/literal floors, with a final
-  raw source barrier. Actual declaration/ledger integration remains pending; this
-  preparation does not expand supported generic source forms.
+  raw source barrier. Private selected-expression preparation now joins every
+  actual typed helper, row/epoch and installed recovery/renderer owner to fresh
+  source rendering, with final raw source and row/text checks. Physical captured
+  declarations/events, live ledgers and final agreement remain pending; these
+  preparations do not expand supported generic source forms.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
