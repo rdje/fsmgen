@@ -2677,10 +2677,39 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2261/T2262/T2192: All tests successful Files=3 Tests=14; final T2262: All tests successful Files=1 Tests=4. Fresh strict native fixed/explicit captures generate; nested mutable refuses missing source-range proof and original direct mutable retains final declaration disagreement; both remain owned. Saved receipt/current identity and hostile-product checks, POD/source/book checks and mandatory final-index doctrines qualify this focused slice; compiler/runtime/full CI remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve independent literal floors in generic helper ranges and final declarations.`
   Acceptance: `After .2/.3, derive generic maxima from original mutable source leaf contracts plus independent fixed/explicit/target literal floors. Bind actual selected target declarations and emitted expressions through complete ledger/currentness/final source-target agreement for fixed and mutable routes, preserving default-one rank. Missing/stale/unproved relationships refuse atomically. Split further concrete consumers if necessary before code; focused differentiating checks, POD/book/downstream sync and commit.`
-  Verification: `Pending target consumer after source-qualified closure at 5ca8c3512.`
+  Verification: `Split before implementation: the shared target width emitter renders one captured expression but no maximum of independent prepared contracts. DirectDeclaredWidthSupport currently requires identical mutable operand contracts; the selected source-tree and final source-width checks independently refuse literal helpers. Preserve these boundaries until their actual consumers are qualified. Startup external claim template matches the retained reviewed source; cleanup remains within its daily interval. Sync scope is private target ranges/POD/book/downstream readiness; no public syntax, report or manifest expansion.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.1`
+  Status: `pending`
+  Goal: `Render bounded maxima of independently prepared Verilog-family width contracts.`
+  Acceptance: `Reuse the shared scoped expression renderer and canonical arithmetic checks for each prepared mutable contract plus independent positive fixed floors. Preserve all branches at default one and wider defaults, exact references and scopes, bounded occurrence/text growth, detached inputs and precise refusal. Do not add a source width operator or derive expressions from numeric defaults or HDL text. Focused differentiating checks and POD/book sync; commit before source-observation range joins.`
+  Verification: `Pending prepared maximum-range kernel; no live declaration change.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.2`
+  Status: `pending`
+  Goal: `Join qualified literal numeric observations to original generic leaf contracts and fixed floors.`
+  Acceptance: `After .1, prepare the source literal generic range from the actual current numeric frame and original mutable leaf width contracts, independent fixed leaves and explicit/target literal floors. Reuse canonical module/environment preparation, preserve ordered source identities and kinds, reject stale/foreign/constrained or unproved relations and close raw currentness barriers. Focused native default-one/wide and hostile controls, POD/book/downstream sync, commit before selected declarations.`
+  Verification: `Pending maximum kernel and actual source-observation consumer.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3`
+  Status: `pending`
+  Goal: `Bind literal helper generic ranges to actual selected declaration and expression ledgers.`
+  Acceptance: `After .2, qualify installed owners, actual selected rows/epochs, declarations, ordered typed child/reference identities and emitted expressions. Record detached exact range intent and independently rederive complete selected-target agreement. Missing or stale contracts refuse atomically; never admit through text equality or compatibility widths. Focused direct/nested fixed/mutable controls, synchronized book/POD/downstream handoff and commit.`
+  Verification: `Pending generic source range proof.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.4`
+  Status: `pending`
+  Goal: `Close final fixed and mutable literal declaration agreement through actual generation.`
+  Acceptance: `After .3, join original unknown Core literal allocation to the qualified actual target width and generic range without weakening independent constraints or scalar rank. Complete final capture/ledger/currentness checks and atomic refusal/reuse. Small original direct and nested one/wide/explicit/wider-floor controls compare full emitted declarations and expressions with independent algebra. Synchronize the book and downstream limitations, commit before .3.5 focused repair closure; full .6/compiler/runtime/publication remain deferred.`
+  Verification: `Pending actual selected-target ledger proof.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.5`
