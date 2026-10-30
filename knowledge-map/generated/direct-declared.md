@@ -1,12 +1,13 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **17** uniquely owned question entries.
+> **1** facts · **18** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="do direct symbolic internal storage ranges retain assignment-target captures?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="does a direct parameter-dependent width defaulting to one retain a vector range?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="how are current concatenation sources observed without getters?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="how are explicit Core intermediate width allocation contracts held?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="how are factorizer allocation births retained?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="how are factorizer width inference events captured?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)

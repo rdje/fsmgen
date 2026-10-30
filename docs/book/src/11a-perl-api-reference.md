@@ -678,8 +678,28 @@ and complete native product comparison are retained in
 guard/RHS cases, native observation selects actual factorizer/Core operands;
 typed naming remains a separate API. The observed calls, positive controls and
 complete native products are in `docs/audits/concat-source-producer-selection-20261030/`.
-Current Core source contracts and completed backend events remain prerequisites
-of generic sum proof and emission.
+`FSM::ConcatenationSourceObservationSupport` provides a separate getter-free
+observation of current Core sources. `capture` takes the actual `factorizer`,
+`signal_name`, `fsm_module` and complete normalized `assignment_analysis`;
+`current` takes the same inputs plus the returned `holder`. Both return detached
+`record`/opaque in-process `state` capsules, or withhold unsupported observations.
+The record preserves the original tree, duplicate ordered source names and raw
+Signal declaration/requirement/binding/revision fields. Actual Core membership
+is required; a printed name or an equal selected width cannot supply it.
+
+The raw barrier includes nonoperand declarations, normalized LHS/control rows,
+parameter scope and observed container identities. Equal-valued replacements
+revoke an old frame. No semantic getter runs, no tracking state is installed and
+no owner graph is retained. Unknown literal widths remain unknown; raw numeric
+width one establishes no scalar/vector rank. Signed, typed or constrained fields
+remain unqualified observations. Restored scalar edits without a surviving
+revision change are outside this read-only contract. Canonical source eligibility,
+getter-versus-raw coherence and completed backend events remain prerequisites of
+generic sum proof and emission. T2277 checks actual factorized guard sources and
+preserves inline RHS profiles that expose no concatenation candidate; neither
+those finite observations nor a raw frame authorize generic helper ranges.
+Exact native conservation and first test corrections:
+`docs/audits/concat-source-observations-20261030/`.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
