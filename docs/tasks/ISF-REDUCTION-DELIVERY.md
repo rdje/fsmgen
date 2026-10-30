@@ -2977,10 +2977,30 @@ do not start broad suites between implementation slices.
     Bounded replay passes positive observation controls, actual module/source/birth membership and complete native product equality. Existing production code and qualified candidate tests preserve; no broad verification repeats. Guarded mdBook/source/fact checks plus mandatory staged acceptance and all final-index doctrines gate this preparation.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare ordered current Core operand contracts for actual concatenation candidates.`
   Acceptance: `After actual producer selection, split further if needed before edits. Bind each ordered whole Core operand to actual current module/declared-source identity, independent literal fields and width-one vector rank. Preserve repeated slots, unknown profiles and caller data. Reject foreign/replaced/mixed/signed/type/opaque sources and stale revisions without reconstructing allocation from names or selected widths. Separate immutable candidate birth from current source eligibility; getter mutation and complete raw barriers must withhold inconsistent observations. Focused actual native and hostile controls plus POD/book/fact sync close this source adapter only; range proof remains .3.4.3.3.3.4.`
-  Verification: `pending actual producer selection`
+  Verification: `Actual Core source preparation separates a getter-free current declaration observation from canonical semantic eligibility/range preparation. The former must bind original candidate membership and complete source scope before any getter can mutate an earlier observation. Child .1 captures/revalidates that frame; child .2 consumes canonical width contracts with complete before/after barriers. Neither source-only slice admits a generic sum or target event.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2.2`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '3657641' identifies ce02b1cb89acabda926653dcb661ad0ce874f551 as the prior task-evidence byte allowance. The first complete hook refuses the expanded task graph at that owned bytes_total allowance; later doctrines are unrun. No code behavior or source proof has changed.
+  - [x] **ADDRESSED (verified)** — Split raw Core observations from canonical width-contract preparation with precise bounded successors. Preserve the complete first refusal and exact registry before/after in docs/audits/concat-source-observation-plan-20261030.json.gz. Apply LIVE_DOCUMENT_SIZE_CONTAINMENT.md measured-actual-plus-own-ratchet only to bytes_total growth; baseline, health targets, ceilings, owner and all other dimensions preserve. Re-derive the complete glob census; falsify unauthorized widening by unchanged ceiling/baseline and the normal guard; durability is the tracked receipt, task and Git.
+  - [x] **NO REGRESSION** — Decomposition preserves production source/tests. Task-tree integrity and knowledge-map: OK pass; inventory/disposition joins hold and git diff --check passes. The required final-index scripts/check_doctrines.sh hook must report all registered doctrines passed before commitment. No full feature verification is claimed.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2.1`
+  Status: `pending`
+  Goal: `Capture and revalidate getter-free current Core concatenation source observations.`
+  Acceptance: `Require an actual current factorizer birth and built-in whole Core operand references to the actual module members. Retain ordered/repeated/nested slots, independent raw literal fields including unknown widths, and raw declaration/requirements/binding/revision state without deriving rank or eligibility. Bind module, source map, normalized assignment identities and complete declaration/parameter scope, including nonoperands. Equal-state object/container replacement must revoke the old frame. Reject malformed, foreign, subclassed, cyclic and over-budget observations silently without installing state or invoking arbitrary getters. Return detached plain data with no owner graph. Focused actual native, hostile replacement/currentness, boundary and lifetime checks plus POD/book/fact sync qualify only this raw observation; canonical source eligibility is child .2.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2.2`
+  Status: `pending`
+  Goal: `Join observed ordered concatenation operands to canonical current source-width contracts.`
+  Acceptance: `Consume child .1 raw frames around DirectDeclaredWidthSupport::prepare_module and canonical declared requirement/binding/range proof. Preserve independent fixed/mutable operand contracts, duplicate slots, independent literal width/radix/value and symbolic vector rank at width one; never require a shared maximum relationship or use selected defaults as sum authority. Reject signed/state/type/constrained/computed/opaque/mixed/stale/foreign profiles contextually. Full raw before/after barriers must reject getter mutation, even on nonoperand declarations or late reads. Revalidation cannot refresh a stale observation. Actual fixed/mutable guard/RHS sources, hostile getters, caller/native conservation, recovery and detached lifetime controls plus POD/book/fact sync precede source-only handoff. Completed backend policy, symbolic sum range/emission and full qualification remain separately owned.`
+  Verification: `pending raw observation frame`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.3`
