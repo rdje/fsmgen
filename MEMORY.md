@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.1`
-- next_action: Implement bounded maximum-range rendering over prepared Verilog-family width contracts and independent fixed floors, then join the qualified literal numeric observation under .4.2.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.2`
+- next_action: Join the qualified literal numeric frame to original generic leaf width contracts and independent fixed/literal floors through the prepared maximum-range kernel; preserve currentness before selected ledger integration.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.

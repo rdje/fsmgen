@@ -22,8 +22,8 @@ evidence: >-
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
   t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t; docs/audits/literal-target-consumers-20261030/verify.py
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; t/2262-target-source-literal-numeric-inference.t; docs/audits/target-source-literal-width-20261030/verify.py
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2261-target-source-literal-width.t t/2262-target-source-literal-numeric-inference.t; python3 -B docs/audits/literal-target-consumers-20261030/verify.py --qualify
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; t/2262-target-source-literal-numeric-inference.t; docs/audits/target-source-literal-width-20261030/verify.py; t/2263-verilog-prepared-maximum-range.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2261-target-source-literal-width.t t/2262-target-source-literal-numeric-inference.t t/2263-verilog-prepared-maximum-range.t; python3 -B docs/audits/literal-target-consumers-20261030/verify.py --qualify
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -74,11 +74,10 @@ T2258 covers fixed/mutable Parser/facade writes. T2259 qualifies publication:
 the original birth's phase/digest projection must match actual completed child
 capsules. T2260 closes source edge/conservation/lifetime controls; target sizing remains separate.
 
-SystemVerilog SourceLiteralWidthSupport now prepares a detached target-only
-observation over one bounded actual completed source capture. Shared Core
-inference receives explicit child resolutions and the existing target unsized32
-rule; explicit sizes and original independent leaf metadata remain separate
-floors. Raw source kinds/edges/capsule conserve; stale, foreign, matching or late
-writes withhold. T2261 qualifies Parser/facade and repeated/bounded controls.
-prepare_inference now joins current rows/epoch before compatibility widths
-(T2262); generic range and final agreement consumers stay open.
+Target-only SourceLiteralWidthSupport prepares current source literal widths;
+prepare_inference joins actual rows/epoch before compatibility metadata (T2261/2).
+Shared WidthExpressionEmitter lower_maximum_range retains independent prepared
+contracts/floors under overrides (T2263). Complete source/target observations,
+raw-kind/currentness barriers and limits are canonical in
+`docs/book/src/11a-perl-api-reference.md`; literal generic source joins and final
+agreement remain open. This route consolidates the same book-owned target facts.

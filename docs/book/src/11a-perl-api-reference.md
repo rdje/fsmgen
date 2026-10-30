@@ -737,6 +737,22 @@ qualification remain deferred. Saved evidence can be read without source or HDL
 execution with `python3 -B docs/audits/literal-numeric-inference-20261030/verify.py --qualify`;
 its optional `--current` checks only the named producer identities.
 
+The shared Verilog-family `WidthExpressionEmitter->lower_maximum_range` now
+renders a maximum over independently prepared width contracts and fixed floors.
+Pass `operands => [{width => $observed, width_contract => $prepared_contract},
+{width => $fixed_floor}]` with the existing captured `environment` and
+`target_language`. Every supplied contract retains its actual ordered lookups,
+scope and arithmetic checks, and must reproduce its own observed width even
+when another default dominates it. Mutable terms remain conditional branches
+under external overrides; equal defaults cannot merge independent parameters.
+The result stays a packed vector at a one-bit default. Fixed-only maxima fold.
+Inputs and output text have explicit bounds; oversize inputs or mismatched
+observed operand values refuse. `t/2263-verilog-prepared-maximum-range.t` interprets emitted
+conditional ranges under distinguishing overrides and checks hostile inputs.
+This is a prepared rendering kernel. Joining literal observations to original
+generic leaf contracts, selected target ledgers and final declaration agreement
+remains pending; native generic literal generation still has its existing refusal.
+
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.
 Unknown exact width remains distinct from a helper's nominal scalar width;

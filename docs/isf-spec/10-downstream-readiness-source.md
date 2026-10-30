@@ -368,6 +368,10 @@ General source rules:
   before compatibility widths, preserving nested fixed high bits and independent
   literal/leaf floors. Mutable generic floors and final fixed/mutable target
   agreement remain owned by the required reduction repair before full qualification.
+  A bounded shared target kernel now renders maxima of independent prepared
+  width contracts and fixed floors without freezing mutable branches to their
+  defaults. Literal source joins and actual generic declaration/ledger integration
+  remain pending; this preparation does not expand supported generic source forms.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

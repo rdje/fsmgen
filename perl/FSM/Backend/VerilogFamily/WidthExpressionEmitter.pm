@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use Scalar::Util qw(refaddr);
+use bytes ();
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -12,6 +13,11 @@ use FSM::WidthExpressionSupport;
 use FSM::Backend::VerilogFamily::ParameterBindingEmitter;
 
 sub lower_range ($class, %args) {
+    my ($text) = _lower_expression(%args);
+    return "[($text - 1):0] ";
+}
+
+sub _lower_expression (%args) {
     my $port = $args{port};
     my $contract = $port->{width_contract};
     my $context = $args{context} // ("Declared signal '" . ($port->{name} // '?') . "' width");
@@ -56,10 +62,85 @@ sub lower_range ($class, %args) {
     );
     my $state = {evaluator => $evaluator, environment => $environment,
         language => $language, scope => $scope, active => {}, context => $context};
-    my ($text, $value) = _render($state, $contract->{expression});
+    my ($text, $value, $symbolic) = _render($state, $contract->{expression});
     confess "$context has unused width lookup records\n" unless $cursor == @$references;
     confess "$context must resolve to a positive integer width\n" unless $value->bcmp(0) > 0;
-    return "[($text - 1):0] ";
+    return ($text, $value, $symbolic);
+}
+
+# Independent width contracts cannot be collapsed using their selected defaults:
+# an external override can make any mutable term the largest. This is a target
+# composition over prepared contracts, not a new source-expression operator.
+sub lower_maximum_range ($class, %args) {
+    my $context = $args{context} // 'Prepared maximum width';
+    my $operands = $args{operands};
+    confess "$context requires between one and 32 width operands\n"
+        unless ref($operands) eq 'ARRAY' && @$operands && @$operands <= 32;
+    my $budget = {nodes => 4096, bytes => 131072, active => {}, context => $context};
+    _maximum_input($budget, [$operands, $args{environment}], 0);
+    my @terms;
+    for my $operand (@$operands) {
+        confess "$context requires positive decimal widths and optional prepared contracts\n"
+            unless ref($operand) eq 'HASH' && exists($operand->{width})
+                && !grep {$_ ne 'width' && $_ ne 'width_contract'} keys %$operand;
+        my $width = $operand->{width};
+        confess "$context requires a positive decimal observed width\n"
+            unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+        my $contract = $operand->{width_contract};
+        $contract //= {scope => ref($args{environment}) eq 'HASH' ? $args{environment}{scope} : undef,
+            expression => $width, references => []};
+        my ($text, $value, $symbolic) = _lower_expression(%args,
+            context => $context, port => {width_contract => $contract});
+        confess "$context disagrees with an independently observed operand width\n"
+            unless $value->bcmp($width) == 0;
+        push @terms, {text => $text, value => $value, symbolic => $symbolic};
+    }
+    # Pairwise reduction bounds repeated conditional text quadratically instead
+    # of duplicating the entire preceding maximum at each additional operand.
+    while (@terms > 1) {
+        my @next;
+        while (@terms) {
+            my $left = shift @terms;
+            my $right = shift @terms;
+            unless ($right) {push @next, $left; next}
+            my $value = $left->{value}->bcmp($right->{value}) > 0 ? $left->{value} : $right->{value};
+            my $symbolic = $left->{symbolic} || $right->{symbolic};
+            my $text = $symbolic
+                ? "($left->{text} > $right->{text} ? $left->{text} : $right->{text})" : $value->bstr;
+            confess "$context exceeds bounded rendered width text\n" if bytes::length($text) > 32768;
+            push @next, {text => $text, value => $value, symbolic => $symbolic};
+        }
+        @terms = @next;
+    }
+    my $range = "[($terms[0]{text} - 1):0] ";
+    confess "$context exceeds bounded rendered width text\n" if bytes::length($range) > 32768;
+    return $range;
+}
+
+sub _maximum_input ($state, $node, $depth) {
+    my $context = $state->{context};
+    confess "$context exceeds its bounded prepared width inputs\n"
+        if $depth > 32 || --$state->{nodes} < 0;
+    unless (ref($node)) {
+        my $bytes = defined($node) ? bytes::length($node) : 0;
+        $state->{bytes} -= $bytes;
+        confess "$context exceeds its bounded prepared width inputs\n"
+            if $bytes > 4096 || $state->{bytes} < 0;
+        return;
+    }
+    confess "$context requires plain acyclic prepared width inputs\n"
+        unless ref($node) eq 'ARRAY' || ref($node) eq 'HASH';
+    my $identity = refaddr($node);
+    confess "$context has cyclic prepared width inputs\n" if $state->{active}{$identity};
+    local $state->{active}{$identity} = 1;
+    if (ref($node) eq 'ARRAY') {
+        _maximum_input($state, $_, $depth + 1) for @$node;
+    } else {
+        for my $key (sort keys %$node) {
+            _maximum_input($state, $key, $depth + 1);
+            _maximum_input($state, $node->{$key}, $depth + 1);
+        }
+    }
 }
 
 sub _unwrap_selector ($expression, $context) {
@@ -136,6 +217,25 @@ retain vector rank. Numeric width caches never supply text. Width/type conflicts
 foreign or unknown scopes, wrong/missing/unused lookups, unsupported shapes,
 cycles, invalid arithmetic and foreign targets refuse without numeric fallback.
 Caller inputs remain read-only and returned text retains no caller graph.
+
+C<lower_maximum_range> composes C<operands>, a nonempty array of at most
+32 records containing a positive decimal observed C<width> and an optional
+C<width_contract>, with the same C<environment>, target and scope arguments.
+Each contract uses the existing renderer, exact ordered lookups and arithmetic
+checks; its selected value must equal that operand's observed width, including
+branches dominated by a larger default. An absent contract is an independent
+fixed floor. Mutable branches always remain in the target conditional maximum,
+even at default one or when their defaults agree. Fixed-only subtrees fold.
+The result is always a packed range, including a one-bit maximum.
+
+The complete operand/environment input is limited to 4,096 occurrences,
+32 traversal levels, 4,096 bytes per scalar and 131,072 scalar bytes in total.
+Cycles and non-plain containers refuse. Balanced pairwise conditional composition
+limits duplication; rendered range text is capped at 32,768 bytes. Exceeding a
+bound refuses without a default-sized fallback. No new source arithmetic
+operator, text parsing or parameter-dependency reconstruction is introduced.
+This method renders supplied prepared contracts; it does not attest actual
+source membership, literal sizing, selected declarations or emitted ledgers.
 
 C<context>, C<scope_description> and C<required_scope_kind> let a narrower wrapper
 retain its diagnostic and scope policy. The composition wrapper keeps its top
