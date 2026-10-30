@@ -725,6 +725,15 @@ native products and the exact predecessor control are retained in
 `docs/audits/concat-source-widths-20261030/`. This source-only join grants no
 completed backend event, symbolic sum range, generic emission or full qualification.
 
+The standalone typed `ExpressionNamer` definition API retains its original Core
+AST and selected numeric width; it is not a source-width provenance protocol.
+For the retained required native guard/RHS profiles, current source preparation
+joins original factorizer/Core candidates. A separate named-definition protocol
+requires an observed required producer before admission. This bounded exclusion
+says nothing about arbitrary external or dynamic callers. Backend inference and
+collection must still establish their own current generation event before sum
+proof or emission can consume these source contracts.
+
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
 inference. Canonical shift operators and their published aliases follow the left
