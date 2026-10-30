@@ -17,8 +17,22 @@ Detached numeric frames supply no generic range or final declaration authority.
 SourceLiteralWidthSupport additionally imports DirectDeclaredWidthSupport,
 ParameterDefaultEnvironmentSupport and the shared Verilog-family width emitter
 for separate generic range preparation over original leaf contracts and literal
-floors. Raw source and numeric rechecks close that preparation; actual selected
-declarations, emitted ledgers and final agreement remain separately owned.
+floors. Raw source and numeric rechecks close that preparation. The actual
+declaration and assignment emitters now import the same literal owner for
+separate generation-local range/expression ledgers. Final assembly imports it
+for independent complete selected-target comparison and a raw generation fence;
+EnableGraph ASTSupport consults the emitted literal range's vector rank.
+The source view precedes literal normalization and refreshes after helper
+discovery, preventing default-one scalar caches from replacing mutable intent.
+
+DirectDeclaredWidthSupport lazily loads that target observer during
+Verilog-family final declaration agreement. It calls the completed-source-only
+observation, which does not recurse into namespace or selected-target proof.
+Original unknown Core allocation remains intact while independently derived
+literal/leaf widths must match physical declarations. Whole-set raw barriers
+follow every source recheck; type/state/signedness, auxiliary origins and VHDL
+boundaries preserve. These are scoped dependency updates, not a new closure
+census or full/external qualification.
 
 CoreAST also imports `FSM::SourceLiteralWidthAllocationSupport` for separate
 detached direct literal intent under the common allocation revision lifecycle.
