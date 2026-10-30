@@ -11,6 +11,10 @@ answers:
   - "why must late sizing preserve distinct next/q copy origins?"
   - "why did guard XOR become NOT?"
   - "how are explicit Core intermediate width allocation contracts held?"
+  - "which consumers own concatenation selection and shift intermediate widths?"
+  - "why can a shift helper borrow the shift amount width?"
+  - "why does a static slice guard test the whole signal?"
+  - "why do bit and concatenation guards reference undeclared condition?"
   - "how are factorizer allocation births retained?"
   - "how are factorizer width inference events captured?"
   - "what owns graph proof rows?"
@@ -162,36 +166,21 @@ successors. Whole backend retention belongs to .25/flattened-backend-owner-cycle
 isolated target plans retain neither caller target records nor never-installed
 physical Core copies.
 
-Reverify contracts (original commands retained):
+Current namespace replay:
 
 `prove -Iperl t/2266-direct-target-namespace.t t/2173-direct-width-target-plans.t`.
-
-`prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
-
-`python3 -B docs/audits/auxiliary-width-origin-contract-20261027.py --self-test`.
-
-`prove -Iperl t/2164-direct-source-width-requirements.t t/2163-core-declared-width-requirements.t t/2161-core-declared-width-binding-lifecycle.t t/2162-direct-source-width-binding-publication.t`.
-
-`prove -Iperl t/2165-direct-auxiliary-width-bindings.t t/2164-direct-source-width-requirements.t t/2162-direct-source-width-binding-publication.t`.
-
-`prove -Iperl t/2185-equivalent-width-copy-bindings.t t/2166-immediate-width-copy-origins.t`.
-
-`prove -Iperl t/2166-immediate-width-copy-origins.t t/2164-direct-source-width-requirements.t t/2165-direct-auxiliary-width-bindings.t t/2163-core-declared-width-requirements.t`.
-
-`python3 -B docs/audits/scoped-late-width-contract-20261027.py --self-test`.
-
-`prove -Iperl t/2167-scoped-late-width-sizing.t t/2165-direct-auxiliary-width-bindings.t t/2162-direct-source-width-binding-publication.t t/2160-direct-declared-width-capture.t`.
-
-`prove -Iperl t/2168-shared-verilog-width-kernel.t t/2135-composition-symbolic-port-ranges.t`.
-
-`prove -Iperl t/2169-shared-vhdl-width-kernel.t t/2139-composition-vhdl-port-ranges.t`.
-
-`prove -Iperl t/2187-symbolic-register-helper-ranges.t t/2176-direct-symbolic-storage-ranges.t t/2174-direct-declaration-capture.t t/2173-direct-width-target-plans.t`.
-
-`prove -Iperl t/2189*.t`.
 
 Guard XOR became NOT because condition capture read Core type `unary_op` and
 forced NOT. It now validates the actual opcode, normalizes existing not/neg/pos
 spellings and preserves recursive guards (T2189); optional source inversion stays
 outside that repair. The original diagnosis is retained in the owning task and
 `docs/audits/unary-guard-capture-operators-20261028.json.gz`.
+
+Shape diagnosis at native a3e01a839: CoreExpressionWidthSupport, ExpressionNamer
+and IntermediateSignalWidthSupport include shift-amount widths. CaptureSupport
+condition conversion drops slices and replaces IndexedRef/Concatenation with the
+undeclared condition placeholder. Numeric and capture repairs are owned by
+ISF-REDUCTION-DELIVERY .3.4.3.3.2-.5. Exact native producer/baseline and scopes:
+`docs/audits/expression-shape-selection-20261030/`. These guard observations
+qualify no RHS, generic relationship or external execution; current status is the
+task tree. Replay with `scripts/run_with_ram_guard.sh -- perl docs/audits/expression-shape-selection-20261030/probe.pl`.

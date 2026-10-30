@@ -637,6 +637,13 @@ The bounded scalar/literal/independent-constraint implementation family is close
 within these contracts. Concatenation, selection and shift relationships, wider
 paired VHDL consumers and full feature/public qualification remain separately owned.
 
+Native guard diagnosis also identifies open shape repairs: shift helpers currently
+borrow the amount's width, static slice guards lose the selection during condition
+capture, and bit/concatenation guards can become an undeclared `condition` operand.
+The saved sources, complete target observations and repair owners are in
+`docs/audits/expression-shape-selection-20261030/` and the active reduction tree.
+These guard observations do not classify RHS support or qualify generic ranges.
+
 Run the bounded source proof and live-emission checks with:
 
 ```bash

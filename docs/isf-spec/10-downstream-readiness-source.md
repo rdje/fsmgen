@@ -368,6 +368,12 @@ General source rules:
   before compatibility widths, preserving nested fixed high bits and independent
   literal/leaf floors. Final declaration agreement now independently joins current
   literal source widths while preserving unknown Core allocation and constraints.
+  Native guard diagnosis retains open shift amount/result-width confusion,
+  dropped static slice selections and undeclared condition placeholders for
+  bit/concatenation guards. Exact sources and target observations retain in
+  docs/audits/expression-shape-selection-20261030/; the active reduction tree owns
+  numeric transfer and capture repairs before generic shape propagation. These
+  observations neither classify RHS support nor qualify generic target ranges.
   A bounded shared target kernel now renders maxima of independent prepared
   width contracts and fixed floors without freezing mutable branches to their
   defaults. Literal generic range preparation now joins actual numeric frames to

@@ -2869,10 +2869,51 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate canonical concatenation, selection and shift intermediate shapes.`
   Acceptance: `After .1/.2, select actual concatenation/selection/shift width consumers and preserve summed result widths, static versus mutable indices, operand and result rank and independent literal widths. Use canonical expression/target kernels, never selected-default sizing or textual helper inference. Explicitly refuse unproved dynamic selection and mixed relationships. Focused source/IR/backend contrasts and book/POD sync precede each bounded commit; full matrix stays .6.`
-  Verification: `pending selected-shape consumers`
+  Verification: `Preparation starts with actual native consumers and independent numeric shape contrasts; no new source or target relationship is admitted by decomposition.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.3.4, ISF-REDUCTION-DELIVERY.3.4.3.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.1`
+  Status: `done`
+  Goal: `Select actual concatenation, selection and shift consumers and split the first bounded repair.`
+  Acceptance: `Recover canonical source/target contracts after the clean literal checkpoint. Probe actual parser/Core and Verilog-family generation for independent-width concatenation, static slice/bit and shift amount contrasts. Preserve failures and caller identities; distinguish source inference, allocation provenance, symbolic target and numeric transfer. Record exact consumers and prioritized executable successors before implementation. Query-first fact/book/task sync and normal commit integrity close this preparation only; full qualification remains .6.`
+  Verification: `Actual native a3e01a839 guard/Core contrasts retain in docs/audits/expression-shape-selection-20261030/probe.pl and baseline.json.gz. Independent per-expression expectations expose shift amount width entering Core and actual declarations; unsized amount makes exact Core unknown. CoreExpressionWidthSupport, ExpressionNamer naming/Core/runtime walks and IntermediateSignalWidthSupport runtime/substituted walks are the numeric consumers for .2. Actual guard capture separately erases static slices and substitutes undeclared condition for IndexedRef/Concatenation; CaptureSupport::convert_condition_to_ast is the demonstrated locus, owned by .4/.3 before generic propagation. Re-derive native parse/generation with the tracked producer; falsify whole-source assumptions using explicit amount/sum/selection expectations, full actual assignments/declarations and per-case diagnostics; durability producer identity, native revision and complete saved baseline. Probe repairs and sandbox guard refusal are disclosed in the receipt. Perl producer syntax OK; baseline membership/caller/actual-width/selection/refusal assertions pass. Preparation changes no runtime behavior. Book/downstream limitation and query-first card synchronize. First hook rejects saturated knowledge-card allowance; complete refusal retains with later checks unrun. Exact independent duplicate-command comparison proves older live replays already exist in the authenticated original card; remove only those duplicates, preserve every question/current-only replay and existing retrieval route, and retain complete transition proof in the baseline. Second hook exposes remaining card-byte and new-topic shard pressure, also retained. Consolidate the new shape fact/questions into the existing canonical direct-width card; retain the complete attempted draft in the receipt. Knowledge-card allowance/baseline/ceilings remain unchanged. The fourth hook isolates generated-projection line allowance; its warning_debt state permits the documented measured-actual-plus-own-ratchet allowance update, with unchanged baseline, targets and ceilings. Full refusal logs retain. A fresh full final-index hook is required. No RHS, external compiler/runtime, mutable range proof or full .6 qualification.`
+  Commit: `ISF-REDUCTION-DELIVERY: select expression shape consumers`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies shared max-width walk introduction2051eb91b and guard conversion extraction109ffe0df. Native actual declarations select the amount width for shifts; CaptureSupport::convert_condition_to_ast drops SignalRef slices and falls back to condition for IndexedRef/Concatenation. Complete original contextual failures remain in the baseline receipt.
+  - [x] **ADDRESSED (verified)** — Split the shape leaf into numeric transfer, concatenation, static/dynamic selection and source-owned shift consumers before implementation. Retain complete native source/capture/assignment observations and independent per-expression expectations, and explicitly schedule every observed defect. This closes preparation only; no defect is claimed fixed.
+  - [x] **NO REGRESSION** — Tracked native probe completes with caller source preserved and per-case failures retained. Independent saved-baseline assertions pass; actual probe.pl syntax OK and knowledge-map: OK. The fifth hook rejects a punctuation-terminated syntax signature, with later checks unrun; the observed Knowledge Map result now supplies the exact declared signature. Book/downstream and Knowledge Map contracts plus all mandatory final-index doctrines gate this preparation; no broad implementation suite or external HDL execution runs.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.2`
+  Status: `pending`
+  Goal: `Repair the first demonstrated numeric shape-transfer defect through its directly affected consumers.`
+  Acceptance: `Actual native guards select AMOUNT's width for (<< A AMOUNT)/(>> A AMOUNT), while unsized amounts make exact Core unknown and actual helpers borrow the target literal floor. Repair CoreExpressionWidthSupport plus actual ExpressionNamer naming/Core/runtime and IntermediateSignalWidthSupport runtime/substituted consumers; split further if the actual join grows. Shift result follows the left operand independently of amount width. Preserve concat sums, scalar selection widths, source unknowns and independent constraints; no printed-name inference or symbolic admission. Distinguishing RED/GREEN native/source checks, focused existing controls, POD/book/downstream sync and commit; full .6 stays deferred.`
+  Verification: `Selected native reproduction: docs/audits/expression-shape-selection-20261030/baseline.json.gz; numeric implementation pending.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3`
+  Status: `pending`
+  Goal: `Propagate canonical concatenation sums through source allocation and actual generic target declarations.`
+  Acceptance: `After preparation and numeric repair, first repair the demonstrated guard capture fallback: Core Concatenation currently becomes undeclared condition in CaptureSupport::convert_condition_to_ast. Retain native receipt, distinguish guard and RHS support and prove full operand/order/sum preservation. Split producer/current-source/target-range/ledger consumers before generic implementation. Preserve repeated occurrences, independent literals, rank and unknown profiles; refuse unsupported mixed/stale allocations. Focused native/refusal/reuse, book/POD/downstream sync and bounded commits; full .6 stays deferred.`
+  Verification: `pending numeric foundation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.4`
+  Status: `pending`
+  Goal: `Propagate proved static selection shapes and refuse unproved dynamic relationships.`
+  Acceptance: `After numeric repair, first own demonstrated static guard capture defects: Core SignalRef slice A[6:2] becomes a name-only runtime reference and tests all A; Core IndexedRef falls back to undeclared condition. Reproduce from the retained native receipt and fix CaptureSupport::convert_condition_to_ast with distinguishing selected-versus-outside bits and actual declaration/expression checks. Split selection producers/proof/emission consumers before wider work. Distinguish static/mutable indices, rank, width and base dependencies; preserve independent contracts and refuse unproved dynamic/mixed relationships. Focused checks, book/POD/downstream sync and bounded commits; full .6 remains open.`
+  Verification: `pending predecessor relationships`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.5`
+  Status: `pending`
+  Goal: `Propagate source-owned shift result relationships without borrowing amount widths.`
+  Acceptance: `After numeric transfer and actual source selection, split producer, currentness, target declaration/expression and ledger work before implementation. Retain the shifted operand's proved width/rank, independently sized shift amount and source legality. Refuse unsupported signed/type/dynamic/mixed relationships precisely; no selected-default or textual inference. Focused actual source/target/refusal/reuse checks and book/POD/downstream sync qualify implementation only; full .6 and paired VHDL .4 retain their obligations.`
+  Verification: `pending numeric transfer and source selection`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.4`
