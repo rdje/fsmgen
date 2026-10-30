@@ -44,7 +44,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use FSM::Package::IntegerLiteralSupport;
-use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator is_shift_operator);
 use Scalar::Util qw(blessed refaddr weaken);
 use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
@@ -592,6 +592,10 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
 
 Infer one intermediate expression width recursively from the substituted AST
 shape, including referenced intermediate signals.
+Runtime and substituted binary shifts use the left operand's inferred width,
+with the existing conservative fallback when that width is unavailable. The
+amount has an independent width and is not used to widen the result. This
+numeric rule establishes no generic range or source-allocation provenance.
 
 =cut
 
@@ -642,6 +646,8 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
         my $left = eval { $ast->left } || $ast->{left};
         my $right = eval { $ast->right } || $ast->{right};
         my $left_width = $self->infer_width_from_intermediate_ast($left, $signal_registry, $seen_signals);
+        return (defined($left_width) && $left_width > 0) ? $left_width : 1
+            if is_shift_operator($operator);
         my $right_width = $self->infer_width_from_intermediate_ast($right, $signal_registry, $seen_signals);
 
         $left_width = 1 unless defined($left_width) && $left_width > 0;
@@ -664,6 +670,8 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
         my $left = eval { $ast->left } || $ast->{left};
         my $right = eval { $ast->right } || $ast->{right};
         my $left_width = $self->infer_width_from_intermediate_ast($left, $signal_registry, $seen_signals);
+        return (defined($left_width) && $left_width > 0) ? $left_width : 1
+            if is_shift_operator($operator);
         my $right_width = $self->infer_width_from_intermediate_ast($right, $signal_registry, $seen_signals);
 
         $left_width = 1 unless defined($left_width) && $left_width > 0;

@@ -3,7 +3,7 @@ package FSM::ExpressionNamer;
 use strict;
 use warnings;
 use Carp qw(confess);
-use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator is_shift_operator);
 use v5.20;
 use feature 'signatures';
 no warnings 'experimental::signatures';
@@ -162,15 +162,8 @@ sub name_binary_op_ast($self, $binary_op) {
     my $base_name = "${left_name}_${op_name}_${right_name}";
     my $signal_name = $self->clean_signal_name($base_name);
     
-    # Calculate width based on operation
-    my $width;
-    if ($op =~ /^(==|!=|<|>|<=|>=)$/) {
-        $width = 1; # Comparison always yields 1 bit
-    } else {
-        my $left_width = $self->infer_ast_width($left);
-        my $right_width = $self->infer_ast_width($right);
-        $width = ($left_width > $right_width) ? $left_width : $right_width;
-    }
+    # Stored definitions must use the same width rule as AST inference.
+    my $width = $self->infer_ast_width($binary_op);
     
     # Store in caches
     $self->{_named_expressions}{$cache_key} = $signal_name;
@@ -877,8 +870,9 @@ sub infer_ast_width($self, $ast) {
             return 1;
         }
         
-        # For other ops, take max width
+        # A shift amount does not contribute to the result width.
         my $left_width = $self->infer_ast_width($ast->left);
+        return $left_width if is_shift_operator($op);
         my $right_width = $self->infer_ast_width($ast->right);
         return $left_width > $right_width ? $left_width : $right_width;
     }
@@ -925,8 +919,9 @@ sub infer_ast_width($self, $ast) {
             return 1;
         }
         
-        # For other ops, take max width
+        # Runtime references retain this namer's existing context-free width.
         my $left_width = $self->infer_ast_width($ast->left);
+        return $left_width if is_shift_operator($op);
         my $right_width = $self->infer_ast_width($ast->right);
         return $left_width > $right_width ? $left_width : $right_width;
     }

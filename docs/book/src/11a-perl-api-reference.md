@@ -637,12 +637,24 @@ The bounded scalar/literal/independent-constraint implementation family is close
 within these contracts. Concatenation, selection and shift relationships, wider
 paired VHDL consumers and full feature/public qualification remain separately owned.
 
-Native guard diagnosis also identifies open shape repairs: shift helpers currently
-borrow the amount's width, static slice guards lose the selection during condition
-capture, and bit/concatenation guards can become an undeclared `condition` operand.
+Native guard diagnosis also identifies open capture repairs: static slice guards
+lose the selection during condition capture, and bit/concatenation guards can
+become an undeclared `condition` operand.
 The saved sources, complete target observations and repair owners are in
 `docs/audits/expression-shape-selection-20261030/` and the active reduction tree.
 These guard observations do not classify RHS support or qualify generic ranges.
+
+Numeric shift transfer is repaired in the shared Core width walk, named Core and
+runtime widths, stored named definitions and runtime/substituted intermediate
+inference. Canonical shift operators and their published aliases follow the left
+operand's width independently of the amount width. An unknown left width remains
+unknown; width-only inference need not visit or validate the amount expression.
+`t/2274-shift-width-transfer.t` distinguishes this rule from an operand maximum,
+checks nested concatenation sums and preserves actual fixed scalar/vector helper
+declarations, complete shift expressions, amount declarations and caller products
+in both Verilog-family backends. The same corrected regression fails against exact
+predecessor modules. This numeric repair establishes no generic shift provenance,
+mutable declaration proof, signed runtime or external compiler qualification.
 
 Run the bounded source proof and live-emission checks with:
 

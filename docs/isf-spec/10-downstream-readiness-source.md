@@ -368,11 +368,16 @@ General source rules:
   before compatibility widths, preserving nested fixed high bits and independent
   literal/leaf floors. Final declaration agreement now independently joins current
   literal source widths while preserving unknown Core allocation and constraints.
-  Native guard diagnosis retains open shift amount/result-width confusion,
-  dropped static slice selections and undeclared condition placeholders for
+  Numeric shift inference now follows the left operand independently of the
+  amount width, including unsized literal amounts; unknown left widths preserve.
+  Focused native fixed Verilog-family helper declarations pass, with caller and
+  independent amount widths intact. Generic shift provenance, mutable target
+  ranges, signed execution and full qualification remain open.
+  Native guard diagnosis retains dropped static slice selections and
+  undeclared condition placeholders for
   bit/concatenation guards. Exact sources and target observations retain in
   docs/audits/expression-shape-selection-20261030/; the active reduction tree owns
-  numeric transfer and capture repairs before generic shape propagation. These
+  capture repairs before generic shape propagation. These
   observations neither classify RHS support nor qualify generic target ranges.
   A bounded shared target kernel now renders maxima of independent prepared
   width contracts and fixed floors without freezing mutable branches to their

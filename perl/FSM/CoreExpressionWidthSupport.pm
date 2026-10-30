@@ -6,7 +6,7 @@ use warnings;
 use Carp qw(confess);
 use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
-use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator is_shift_operator);
 
 use constant MAX_DEPTH => 64;
 use constant MAX_NODES => 4096;
@@ -98,6 +98,7 @@ sub _infer_width {
         return 1 if defined($operator) && $operator =~ /^(?:==|!=|<|>|<=|>=)$/;
 
         my $left_width = _infer_width($expr->left, $walk, $depth + 1);
+        return $left_width if is_shift_operator($operator);
         my $right_width = _infer_width($expr->right, $walk, $depth + 1);
         return undef unless defined($left_width) && defined($right_width);
         return $left_width > $right_width ? $left_width : $right_width;
@@ -142,8 +143,12 @@ remain unknown. Resolver exceptions propagate. Resolver mutation cannot change
 the source Literal. An invalid option or non-callback resolver throws.
 
 Known reference/slice/index/aggregate widths, scalar reductions/logical negation
-and comparisons, ordinary unary propagation, binary operand maxima and
-concatenation sums preserve the existing exact-width rules. By default, Signal references
+and comparisons, ordinary unary propagation, non-shift binary operand maxima
+and concatenation sums preserve the existing exact-width rules. Binary shifts
+and their published aliases retain the left operand's width; the amount's width
+is independent and is not visited for this width-only result. An unknown left
+width stays unknown even when the amount is known. This does not validate the
+amount expression or qualify signed shifting semantics. By default, Signal references
 read their current selected widths without expanding other Signals' definitions;
 those widths alone do not prove allocation ancestry or that a generated helper's
 compatibility placeholder is exact. Unknown future expression classes stay

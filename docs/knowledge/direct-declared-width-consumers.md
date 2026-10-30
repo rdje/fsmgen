@@ -176,8 +176,10 @@ spellings and preserves recursive guards (T2189); optional source inversion stay
 outside that repair. The original diagnosis is retained in the owning task and
 `docs/audits/unary-guard-capture-operators-20261028.json.gz`.
 
-Shape diagnosis at native a3e01a839: CoreExpressionWidthSupport, ExpressionNamer
-and IntermediateSignalWidthSupport include shift-amount widths. CaptureSupport
+Shape diagnosis at native a3e01a839 retained shift-amount width leakage. The numeric
+repair now makes CoreExpressionWidthSupport, ExpressionNamer and intermediate
+runtime/substituted widths follow the left operand; T2274 qualifies fixed native
+declarations against exact predecessor controls. Generic proof remains open. CaptureSupport
 condition conversion drops slices and replaces IndexedRef/Concatenation with the
 undeclared condition placeholder. Numeric and capture repairs are owned by
 ISF-REDUCTION-DELIVERY .3.4.3.3.2-.5. Exact native producer/baseline and scopes:

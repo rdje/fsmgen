@@ -365,6 +365,11 @@ and `%` are left-associative, so `(/ a b c)` means `((a / b) / c)` and
 `(% a b c)` means `((a % b) % c)`. Shift operators are exact binary forms:
 `(<< value amount)` and `(>> value amount)` each require exactly two operands,
 with `shl`/`shr` as word aliases and `sal`/`sar` for arithmetic shifts.
+Shift result sizing follows `value`; a wider `amount` does not widen the result.
+An unsized literal amount does not make a known value width unknown. For example,
+`(concat (<< A 1) B)` has the sum of the declared widths of `A` and `B`.
+The focused native fix covers fixed Verilog-family helper declarations. Generic
+shift-range proof, signed execution and broader backend qualification remain open.
 
 The negated n-ary forms lower as ordinary AST composition, not as a special
 late renderer trick. `(!& A B C)` becomes `!(A & B & C)`, `(!| A B)` becomes
