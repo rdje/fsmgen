@@ -701,6 +701,30 @@ those finite observations nor a raw frame authorize generic helper ranges.
 Exact native conservation and first test corrections:
 `docs/audits/concat-source-observations-20261030/`.
 
+`FSM::ConcatenationSourceWidthSupport->prepare` joins that original `observation`
+to canonical direct source preparation. Pass the same actual inputs plus
+`target_language`; `current` takes those inputs and the returned `holder`.
+Its detached record retains the original expression tree and ordered operands,
+including repeated slots, with each operand's independent numeric width,
+scalar/vector rank and canonical `width_plan`. Fixed and independently mutable
+widths may coexist; a parameter width defaulting to one remains a vector.
+Literal value/width/radix fields, including an unknown width, stay independent.
+No matching-maximum rule or selected concatenation sum is introduced.
+
+Complete getter-free barriers surround canonical preparation and late semantic
+reads, including nonoperand declarations. Semantic getter snapshots must match
+the raw declaration projection. A stale observation cannot be refreshed by
+revalidation. Signed, state, typed, constrained, computed/intermediate, opaque,
+combined or foreign source profiles refuse contextually. A fixed retained
+requirement needs one matching literal declaration; plain Core widths without
+source metadata retain their fixed contract. Malformed scalar driving expressions
+withhold at raw observation. Returned plans retain no caller owner graph.
+T2278 covers actual native guard sources, independent parameter relationships,
+width-one rank, hostile reads, refusal/recovery and detached lifetime. Complete
+native products and the exact predecessor control are retained in
+`docs/audits/concat-source-widths-20261030/`. This source-only join grants no
+completed backend event, symbolic sum range, generic emission or full qualification.
+
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
 inference. Canonical shift operators and their published aliases follow the left

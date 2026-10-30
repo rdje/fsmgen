@@ -72,6 +72,7 @@ sub _plain {
 sub _signal {
     my ($signal, $walk) = @_;
     _invalid() unless ref($signal) eq 'FSM::CoreAST::Signal' && !tied(%$signal);
+    _invalid() if defined($signal->{driving_ast}) && !ref($signal->{driving_ast});
     my %fields;
     for my $field (qw(name _width type signed state_model declared_type_name declared_type_spec
         constraints _declared_width_source _declared_width_binding _declared_width_requirements

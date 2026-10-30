@@ -190,6 +190,6 @@ Slice/bit capture defects stay owned; generic proof and external execution remai
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
 
-Concat births prove allocation only (T2276). Getter-free Core frames (T2277):
-`ConcatenationSourceObservationSupport` POD. Core/inline RHS and typed-naming
-scope: `docs/audits/concat-source-observations-20261030/`.
+Concat births: T2276/POD. Raw/current contracts: T2277/T2278,
+`ConcatenationSourceObservationSupport`/`ConcatenationSourceWidthSupport` POD;
+`docs/audits/concat-source-widths-20261030/` retains native/prior scope.
