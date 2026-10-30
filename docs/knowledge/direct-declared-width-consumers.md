@@ -178,11 +178,11 @@ outside that repair. The original diagnosis is retained in the owning task and
 
 Shape diagnosis at native a3e01a839 retained shift-amount width leakage. The numeric
 repair now makes CoreExpressionWidthSupport, ExpressionNamer and intermediate
-runtime/substituted widths follow the left operand; T2274 qualifies fixed native
-declarations against exact predecessor controls. Generic proof remains open. CaptureSupport
-condition conversion drops slices and replaces IndexedRef/Concatenation with the
-undeclared condition placeholder. Numeric and capture repairs are owned by
-ISF-REDUCTION-DELIVERY .3.4.3.3.2-.5. Exact native producer/baseline and scopes:
-`docs/audits/expression-shape-selection-20261030/`. These guard observations
-qualify no RHS, generic relationship or external execution; current status is the
-task tree. Replay with `scripts/run_with_ram_guard.sh -- perl docs/audits/expression-shape-selection-20261030/probe.pl`.
+runtime/substituted widths follow the left operand (T2274). Concatenation capture
+now keeps its existing Core tree and recursive target rendering (T2275), preserving
+fixed ordered sums and repeated/literal operands. Mutable concat helpers refuse
+until symbolic sum proof; capture invalidates and backend reuse recovers.
+Exact source/target/RHS contrasts: `docs/audits/concat-guard-capture-20261030/`.
+Slice/bit capture defects stay owned; generic proof and external execution remain
+open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
+Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.

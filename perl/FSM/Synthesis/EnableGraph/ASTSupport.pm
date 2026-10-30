@@ -77,6 +77,8 @@ sub new ($class, %args) {
 
 Render one typed AST node into SystemVerilog using the current direct-backend
 operator and precedence rules.
+Core concatenations render their ordered operands through this same recursive
+target walk, preserving nested target operator rules and the caller tree.
 
 =cut
 
@@ -1084,6 +1086,11 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
 
     } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
         return $ast->to_systemverilog();
+
+    } elsif ($ast->isa('FSM::CoreAST::Concatenation')) {
+        return '{' . join(', ', map {
+            $self->_ast_to_systemverilog_internal($_, undef)
+        } @{$ast->operands}) . '}';
 
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($ast);

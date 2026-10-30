@@ -371,6 +371,24 @@ An unsized literal amount does not make a known value width unknown. For example
 The focused native fix covers fixed Verilog-family helper declarations. Generic
 shift-range proof, signed execution and broader backend qualification remain open.
 
+Fixed-width concatenations also work as direct guards in SystemVerilog and
+Verilog. They test the complete packed value; operand order and repeated operands
+remain intact. For example:
+
+```lisp
+(?fsm:concat_guard
+  (+size (A 8) (B 3) (DATA 1) (OTHER 1))
+  (idle
+    (<(concat A B) (= (DATA 1)) (= (OTHER 1)))
+    (-> idle)))
+```
+
+The guard's packed value has the sum of its operand widths. A captured helper
+whose operands have mutable declared widths currently refuses with
+`requires proved symbolic sum range`; generic concatenation range proof remains
+pending. Fixed guard generation is covered by focused checks; external runtime
+and broader backend qualification remain separate.
+
 The negated n-ary forms lower as ordinary AST composition, not as a special
 late renderer trick. `(!& A B C)` becomes `!(A & B & C)`, `(!| A B)` becomes
 `!(A | B)`, and `(xnor A B C)` is the word alias for `(!^ A B C)`.

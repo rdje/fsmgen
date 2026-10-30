@@ -662,6 +662,11 @@ contract; ordinary unsized zero/one/decimal/symbolic products preserve. This car
 no caller graph. Parsed source can already hoist a bitwise expression into a
 SignalRef, so its guard path has separate typed/ordinary source controls.
 
+Core concatenations retain their existing typed tree, including nested operands,
+repeated occurrences, literal widths and source references. Existing typed naming
+and width consumers read that tree; ASTSupport renders its operands recursively.
+Capture adds no exact width, generic allocation or target range proof.
+
 This conversion contract does not admit optional source inversion or qualify
 external execution of arbitrary Core nodes.
 
@@ -677,6 +682,11 @@ sub convert_condition_to_ast ($self, $condition_node) {
 
     if ($condition_node->isa('FSM::CoreAST::AggregateRef')) {
         fsm_debug("    CONVERT_CONDITION_AST: AggregateRef -> keep typed aggregate AST leaf", 3);
+        return $condition_node;
+
+    } elsif ($condition_node->isa('FSM::CoreAST::Concatenation')) {
+        # Keep the typed operands: recursively converting them to runtime
+        # name-only references would discard their widths and selections.
         return $condition_node;
 
     } elsif ($condition_node->isa('FSM::CoreAST::SignalRef')) {

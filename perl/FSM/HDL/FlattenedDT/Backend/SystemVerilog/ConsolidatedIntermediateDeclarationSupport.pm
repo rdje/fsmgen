@@ -94,6 +94,11 @@ maximum. Required typed literal expressions cannot use the other range families
 or numeric fallback when that intent is absent. Complete physical target proof
 and a whole-generation raw fence independently close this ledger.
 
+Typed concatenation helpers with captured symbolic source dependencies refuse
+until a sum-range proof is available. A selected numeric sum cannot replace that
+proof. Fixed helpers retain their existing numeric declaration path; this
+selector grants no new allocation or target-range authority.
+
 =cut
 
 sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
@@ -105,6 +110,7 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
 
     for my $signal_name (@{$sorted_signals}) {
         my $signal_info = $filtered_signals->{$signal_name};
+        $self->_refuse_unproved_concatenation_range($signal_name, $signal_info);
         my $width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
         $ctx->{declared_width_declaration_capture}->record_intermediate_declaration(
             {name => $signal_name, width => $width, signed => 0})
@@ -124,6 +130,17 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
     }
 
     return $hdl;
+}
+
+sub _refuse_unproved_concatenation_range ($self, $name, $info) {
+    my $ast = $info->{ast};
+    return unless blessed($ast) && $ast->isa('FSM::CoreAST::Concatenation');
+    my $source = $self->{flattened_dt}{direct_declared_width_source_plan};
+    return unless $source && $source->{profile} eq 'symbolic';
+    my %active;
+    my $budget = FSM::IntermediateWidthGraphPolicySupport::MAX_TREE_NODES();
+    confess "Direct concatenation '$name' requires proved symbolic sum range\n"
+        if $self->_source_symbolic_dependency($ast, $source, \%active, \$budget, 0);
 }
 
 sub _literal_range ($self, $name, $info, $width, $rows) {

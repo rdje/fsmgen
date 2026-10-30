@@ -638,11 +638,23 @@ within these contracts. Concatenation, selection and shift relationships, wider
 paired VHDL consumers and full feature/public qualification remain separately owned.
 
 Native guard diagnosis also identifies open capture repairs: static slice guards
-lose the selection during condition capture, and bit/concatenation guards can
+lose the selection during condition capture, and bit guards can
 become an undeclared `condition` operand.
 The saved sources, complete target observations and repair owners are in
 `docs/audits/expression-shape-selection-20261030/` and the active reduction tree.
 These guard observations do not classify RHS support or qualify generic ranges.
+
+Concatenation condition capture now preserves the existing Core typed tree;
+ASTSupport recursively renders its ordered operands with the current target rules.
+Nested concatenations, repeated/reversed operands, explicit literal widths and
+fixed scalar/vector sums retain their actual source values. T2275 joins complete
+actual expressions and summed declarations in both Verilog backends, preserves
+caller/Core products and rejects mutable helper dependencies until symbolic sum
+proof exists. A selected numeric sum is insufficient; refusal invalidates capture
+and the same backend can recover with a fixed source. This changes guard capture;
+separate native comparisons preserve existing RHS artifacts. Exact receipts and
+replay producer: `docs/audits/concat-guard-capture-20261030/`. Generic sum
+allocation/currentness/emission, VHDL and external runtime remain separately owned.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

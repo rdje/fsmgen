@@ -373,12 +373,16 @@ General source rules:
   Focused native fixed Verilog-family helper declarations pass, with caller and
   independent amount widths intact. Generic shift provenance, mutable target
   ranges, signed execution and full qualification remain open.
-  Native guard diagnosis retains dropped static slice selections and
-  undeclared condition placeholders for
-  bit/concatenation guards. Exact sources and target observations retain in
-  docs/audits/expression-shape-selection-20261030/; the active reduction tree owns
-  capture repairs before generic shape propagation. These
-  observations neither classify RHS support nor qualify generic target ranges.
+  Fixed concatenation guards now preserve typed operands, order, repeated
+  occurrences and summed actual helper widths in both Verilog backends. Recursive
+  target rendering retains nested operator/literal rules. Mutable concatenation
+  helpers refuse until symbolic sum proof exists; numeric defaults cannot qualify
+  their range. Refusal/capture invalidation and same-backend recovery are focused
+  checks, with caller/Core and existing RHS artifacts preserved. Replay producer
+  and exact observations: docs/audits/concat-guard-capture-20261030/. Native static
+  slice/bit capture defects retain ownership and original evidence in
+  docs/audits/expression-shape-selection-20261030/. Generic sum propagation,
+  external runtime and full publication qualification remain open.
   A bounded shared target kernel now renders maxima of independent prepared
   width contracts and fixed floors without freezing mutable branches to their
   defaults. Literal generic range preparation now joins actual numeric frames to
