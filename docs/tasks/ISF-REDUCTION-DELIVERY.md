@@ -2901,10 +2901,46 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2274/T2250/T220: All tests successful, Files=3, Tests=9. Independent unknown-left, amount-width, non-shift maximum, concat-sum and scalar/vector controls pass. POD/book/source freshness and every mandatory final-index doctrine gate this slice; no full, signed, generic override, external compiler/runtime or transport qualification is implied.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Propagate canonical concatenation sums through source allocation and actual generic target declarations.`
-  Acceptance: `After preparation and numeric repair, first repair the demonstrated guard capture fallback: Core Concatenation currently becomes undeclared condition in CaptureSupport::convert_condition_to_ast. Retain native receipt, distinguish guard and RHS support and prove full operand/order/sum preservation. Split producer/current-source/target-range/ledger consumers before generic implementation. Preserve repeated occurrences, independent literals, rank and unknown profiles; refuse unsupported mixed/stale allocations. Focused native/refusal/reuse, book/POD/downstream sync and bounded commits; full .6 stays deferred.`
-  Verification: `pending numeric foundation`
+  Acceptance: `First repair native guard capture with full typed operand/order/sum preservation, separately from generic proof. Preserve repeated occurrences, independent literals, rank and unknown profiles; refuse unsupported mixed/stale allocations. Producer/current-source/target-range/ledger children own generic implementation. Focused checks and book/POD/downstream synchronization precede each bounded commit; full .6 stays deferred.`
+  Verification: `Numeric predecessor complete; bounded capture and generic consumers selected below.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.4, ISF-REDUCTION-DELIVERY.3.4.3.3.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.1`
+  Status: `done`
+  Goal: `Select bounded typed concatenation capture/rendering and generic proof consumers.`
+  Acceptance: `Query canonical shape facts and retained native diagnosis, then select exact capture, rendering, width and identity consumers before implementation. Separate fixed guard correctness from source allocation and generic declarations. Keep independent selection repairs and full verification owned.`
+  Verification: `Query routes to direct-declared-width-consumers and the retained native expression-shape receipt. CaptureSupport::convert_condition_to_ast lacks Concatenation and returns condition. Core Concatenation already retains ordered operands; ExpressionNamer has typed naming/summed-width paths and ASTFactorization has structural identity. ASTSupport currently falls through to Core rendering instead of recursively applying target operand rules. Select preserving the existing Core typed concatenation at capture plus explicit recursive target rendering; no new runtime AST family is necessary. Factorizer currently leaves concat children intact; optimization is not required to preserve their values. Generic allocation/currentness/emission remain separate children, and static slice/bit capture stays .3.4.3.3.4. Clean native HEAD955026285; hooks enabled. Cleanup record is current. Read-only external claim template equals the already reviewed retained template byte-for-byte; README and containment guide remain adopted with no new policy delta. No source behavior changes or new feature qualification in this preparation. Re-derive actual canonical consumers; falsify proposed fallback/string conversion against retained native Core-versus-target contrast; durability existing producer/baseline, task and Git. Normal final-index gate closes preparation.`
+  Commit: `ISF-REDUCTION-DELIVERY: split concatenation capture and generic proof`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.2`
+  Status: `pending`
+  Goal: `Preserve typed concatenation guards through capture and target rendering.`
+  Acceptance: `Reproduce the retained condition fallback with a distinguishing regression before edits. Preserve the Core typed ordered concat tree at capture and use actual recursive ASTSupport rendering. Prove complete fixed native assignments/declarations, nested/repeated/reversed operands, literal widths, scalar/vector sums and caller/Core conservation in SystemVerilog and Verilog; preserve RHS baseline separately. Unknown widths acquire no exact source proof. Refusal/reuse and affected unary/literal/shift controls stay focused. Preserve first failures, update book/POD/downstream/fact and commit. No generic, VHDL or external runtime qualification.`
+  Verification: `pending selected capture repair`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3`
+  Status: `pending`
+  Goal: `Capture actual concatenation allocation births and ordered operand source contracts.`
+  Acceptance: `After fixed capture repair, select and split further if needed the actual parser/namer/factorizer producer joins before edits. Retain whole repeated occurrences, independent literals, operand rank, unknown computed allocations and generation ownership; no max relationship or selected-default width may stand for a sum. Focused hostile and current-source checks with retained actual source/caller products qualify producer metadata only.`
+  Verification: `pending capture correctness`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4`
+  Status: `pending`
+  Goal: `Prove current concatenation source sums through canonical target range kernels.`
+  Acceptance: `After actual producer contracts, split currentness/range consumers before implementation. Derive ordered sum expressions from actual current source evidence, preserving independent literal widths, repeated dependencies and width-one vector rank. Refuse stale, foreign, mixed, signed/type or opaque constraints without borrowing maximum policies; preserve caller/unknown Core allocation and recovery. Focused source/range controls precede target integration; full .6 stays deferred.`
+  Verification: `pending actual allocation contracts`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5`
+  Status: `pending`
+  Goal: `Join proved concatenation sums to actual Verilog-family declarations and emitted ledgers.`
+  Acceptance: `After source/range proof, split actual emission/ledger consumers before implementation. Complete target namespace/currentness and final actual declaration/expression agreement must retain every ordered operand and source contract, reject late divergence atomically and permit clean backend reuse. Focused native/refusal/reuse and book/POD/downstream sync qualify implementation only; VHDL and full compiler/override/runtime/publication remain separately owned.`
+  Verification: `pending current source and target ranges`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.4`
