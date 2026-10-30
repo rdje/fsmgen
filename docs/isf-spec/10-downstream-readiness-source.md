@@ -370,8 +370,10 @@ General source rules:
   agreement remain owned by the required reduction repair before full qualification.
   A bounded shared target kernel now renders maxima of independent prepared
   width contracts and fixed floors without freezing mutable branches to their
-  defaults. Literal source joins and actual generic declaration/ledger integration
-  remain pending; this preparation does not expand supported generic source forms.
+  defaults. Literal generic range preparation now joins actual numeric frames to
+  original mutable leaf contracts and separate fixed/literal floors, with a final
+  raw source barrier. Actual declaration/ledger integration remains pending; this
+  preparation does not expand supported generic source forms.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

@@ -730,8 +730,8 @@ explicit literal sizes and wider independent leaves preserve their own floors.
 Core source widths and original caller data stay unchanged. Missing or unsupported
 joins supply no literal authority. `t/2262-target-source-literal-numeric-inference.t`
 checks actual fixed generation, mutable numeric preparation, independent mask
-algebra and hostile row/source/epoch changes. Mutable generic floors and final
-fixed/mutable declaration agreement remain owned by the next repair. These are
+algebra and hostile row/source/epoch changes. Live generic literal declarations
+and final fixed/mutable agreement remain owned by the next repair. These are
 focused source and generated-text checks; external HDL execution and full feature
 qualification remain deferred. Saved evidence can be read without source or HDL
 execution with `python3 -B docs/audits/literal-numeric-inference-20261030/verify.py --qualify`;
@@ -749,9 +749,27 @@ The result stays a packed vector at a one-bit default. Fixed-only maxima fold.
 Inputs and output text have explicit bounds; oversize inputs or mismatched
 observed operand values refuse. `t/2263-verilog-prepared-maximum-range.t` interprets emitted
 conditional ranges under distinguishing overrides and checks hostile inputs.
-This is a prepared rendering kernel. Joining literal observations to original
-generic leaf contracts, selected target ledgers and final declaration agreement
-remains pending; native generic literal generation still has its existing refusal.
+This is a prepared rendering kernel. The separate source adapter below joins
+literal observations to original generic contracts; selected target ledgers and
+final agreement remain pending. Native generic literal generation still refuses.
+
+`SourceLiteralWidthSupport->prepare_range` now joins the actual numeric frame to
+canonical direct module preparation and the proved original parameter environment.
+Use the `prepare_inference` arguments plus a Verilog-family `target_language`.
+Every original mutable leaf supplies its own prepared width contract; fixed
+leaves and the literal floor remain separate operands of the shared maximum.
+Independent equal-default parameter names therefore survive in the prepared range.
+The detached record carries the complete numeric observation, source plan,
+environment, ordered operands and symbolic packed range. `current_range` also
+requires an exact saved `observation`. A final numeric recheck and raw module,
+parameter-map and assignment-source barrier withhold late changes. A strict UTF-8
+digest binds this complete source state and its actual namespace identities into
+the saved range; matching namespace replacements cannot reuse it. Fixed-only
+sources, foreign targets and unproved or over-bound joins withhold this generic
+preparation. `t/2264-target-source-literal-generic-range.t` covers actual installed
+rows, independent wider floors, source conservation and a late parameter change.
+Selected declarations, emitted ledgers and final fixed/mutable agreement remain
+pending; this preparation does not change live HDL generation.
 
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.

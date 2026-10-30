@@ -14,6 +14,11 @@ intent against installed owner/epoch, collected and registered rows and actual
 module members before selecting target widths ahead of compatibility metadata.
 Whole-reference reads use the same target join before nominal Core helper widths.
 Detached numeric frames supply no generic range or final declaration authority.
+SourceLiteralWidthSupport additionally imports DirectDeclaredWidthSupport,
+ParameterDefaultEnvironmentSupport and the shared Verilog-family width emitter
+for separate generic range preparation over original leaf contracts and literal
+floors. Raw source and numeric rechecks close that preparation; actual selected
+declarations, emitted ledgers and final agreement remain separately owned.
 
 CoreAST also imports `FSM::SourceLiteralWidthAllocationSupport` for separate
 detached direct literal intent under the common allocation revision lifecycle.

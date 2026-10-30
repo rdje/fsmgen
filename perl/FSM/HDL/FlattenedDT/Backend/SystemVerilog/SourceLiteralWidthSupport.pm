@@ -9,6 +9,9 @@ use FSM::CoreExpressionWidthSupport;
 use FSM::SourceLiteralWidthAllocationSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
+use FSM::DirectDeclaredWidthSupport;
+use FSM::ParameterDefaultEnvironmentSupport;
+use FSM::Backend::VerilogFamily::WidthExpressionEmitter;
 
 sub _json { return JSON::PP->new->canonical }
 sub _identity { return FSM::SourceLiteralWidthAllocationSupport::_identity($_[0]) }
@@ -224,6 +227,102 @@ sub current_inference {
     return $matches ? $current : undef;
 }
 
+# Module width preparation reads more than the literal operands: parameter
+# bindings and normalized assignment membership are canonical source inputs too.
+# This fence uses raw fields only, so the last comparison cannot invoke another
+# source getter that changes an earlier captured parameter or declaration.
+sub _range_source_frame {
+    my ($context) = @_;
+    my $module = $context->{fsm_module};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule')
+        && ref($module->{signals}) eq 'HASH' && ref($context->{assignment_analysis}) eq 'HASH';
+    my (%signals, %assignments, %maps);
+    for my $name (sort keys %{$module->{signals}}) {
+        my $signal = $module->{signals}{$name};
+        return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+        $signals{$name} = {identity => _identity($signal),
+            raw => FSM::SourceLiteralWidthAllocationSupport::_raw_signal($signal),
+            literal => $signal->{_source_literal_width_allocation}};
+    }
+    for my $key (qw(parameters _parameter_default_sources _parameter_default_bindings)) {
+        return unless ref($module->{$key}) eq 'HASH';
+        $maps{$key} = {identity => _identity($module->{$key}), value => $module->{$key}};
+    }
+    for my $name (sort keys %{$context->{assignment_analysis}}) {
+        my $entry = $context->{assignment_analysis}{$name};
+        return unless ref($entry) eq 'HASH' && blessed($entry->{lhs_ast});
+        my $lhs = $entry->{lhs_ast};
+        $assignments{$name} = {identity => _identity($entry), lhs => _identity($lhs),
+            lhs_class => ref($lhs), lhs_name => $lhs->{name},
+            signal => blessed($lhs->{signal}) ? _identity($lhs->{signal}) : undef,
+            assignments => [map {my $row = $_;
+                +{map {$_ => $row->{$_}} qw(is_state_trans assignment_intent source_provenance operator rhs)}
+            } @{$entry->{assignments} // []}]};
+    }
+    return _json()->encode({module => _identity($module), name => $module->{name},
+        signal_map => _identity($module->{signals}), signals => \%signals, maps => \%maps,
+        analysis => _identity($context->{assignment_analysis}), assignments => \%assignments});
+}
+
+sub prepare_range {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args) eq 'signal_info,signal_name,signal_registry,target_language,width_support';
+    my $language = $args{target_language};
+    return unless defined($language) && !ref($language) && $language =~ /\A(?:systemverilog|sv|verilog|v)\z/;
+    my $result = eval {
+        my %numeric_args = %args;
+        delete $numeric_args{target_language};
+        my $numeric = $class->prepare_inference(%numeric_args) or return;
+        my $context = $args{width_support}{flattened_dt};
+        my $before = _range_source_frame($context);
+        return unless defined $before;
+        my $module = $context->{fsm_module};
+        my $source = FSM::DirectDeclaredWidthSupport->prepare_module(fsm_module => $module,
+            assignment_analysis => $context->{assignment_analysis}, target_language => $language);
+        my $environment = FSM::ParameterDefaultEnvironmentSupport->prove_binding_observations(
+            parameters => $module->parameters, sources => $module->parameter_default_sources,
+            bindings => $module->parameter_default_bindings)->{environment};
+        return unless $environment && $source->{profile} eq 'symbolic';
+        my @operands;
+        my $mutable = 0;
+        for my $leaf (@{$numeric->{observation}{leaves}}) {
+            my $original = $leaf->{source};
+            my $plan = $source->{signals}{$original->{name}} or return;
+            return unless _width($plan->{width}) eq _width($original->{width});
+            my $width_plan = $plan->{width_plan};
+            my $contract = $width_plan && $width_plan->{profile} eq 'symbolic'
+                ? $width_plan->{width_contract} : undef;
+            $mutable ||= defined $contract;
+            push @operands, {width => $original->{width}, width_contract => $contract};
+        }
+        return unless $mutable;
+        push @operands, {width => $numeric->{observation}{literal_floor}};
+        my $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_maximum_range(
+            operands => \@operands, environment => $environment, target_language => $language,
+            required_scope_kind => 'direct_module');
+        my $plan = {kind => 'systemverilog_source_literal_range', numeric => $numeric,
+            source_plan => $source, environment => $environment, operands => \@operands,
+            source_state_digest => FSM::SourceLiteralWidthAllocationSupport::_capsule_digest($before),
+            profile => 'symbolic', target_language => $source->{target_language},
+            width => $numeric->{observation}{selected_width}, is_vector => 1, range_text => $range};
+        return unless $class->current_inference(%numeric_args, observation => $numeric);
+        my $after = _range_source_frame($context);
+        return unless defined($after) && $before eq $after;
+        _json()->decode(_json()->encode($plan));
+    };
+    return $@ ? undef : $result;
+}
+
+sub current_range {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args) eq 'observation,signal_info,signal_name,signal_registry,target_language,width_support';
+    my $saved = delete $args{observation};
+    return unless ref($saved) eq 'HASH';
+    my $current = $class->prepare_range(%args) or return;
+    my $matches = eval {_json()->encode($current) eq _json()->encode($saved)};
+    return $matches ? $current : undef;
+}
+
 1;
 
 =head1 NAME
@@ -231,6 +330,37 @@ sub current_inference {
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport - Target-only widths over completed literal source intent
 
 =head1 METHODS
+
+=head2 prepare_range
+
+C<prepare_range> takes the C<prepare_inference> inputs plus a Verilog-family
+C<target_language>. It joins the actual numeric frame to canonical direct module
+width preparation and the original proved parameter environment. Each original
+leaf contributes its own prepared mutable width contract or independent fixed
+width; the target literal floor is appended separately. The shared bounded
+C<WidthExpressionEmitter::lower_maximum_range> renders these operands without
+merging equal defaults or promoting helper placeholders to independent floors.
+
+The detached C<systemverilog_source_literal_range> record contains C<numeric>,
+C<source_plan>, C<environment>, ordered C<operands>, C<source_state_digest>, symbolic C<profile>, canonical
+C<target_language>, selected C<width>, packed C<is_vector> and C<range_text>.
+At least one actual mutable leaf is required; fixed-only sources withhold this
+generic preparation. Foreign targets, missing/stale rows, invalid canonical
+bindings or over-bound range inputs withhold too. A final numeric re-observation
+and raw module/namespace/assignment-source barrier reject late changes, including
+parameter changes made after numeric source rechecking. This method installs no
+declaration policy and proves no selected expression, emitted ledger or final
+source/target declaration agreement.
+The source-state digest uses the existing strict UTF-8 digest kernel and binds
+the complete raw capture and actual namespace identities into saved-plan
+currentness; replacing a namespace with matching data cannot reuse an old plan.
+
+=head2 current_range
+
+C<current_range> takes the same inputs plus C<observation> and returns a fresh
+detached plan only if the complete saved record still matches. Editing escaped
+range data grants no source authority. These are optional preparation methods;
+live generic literal declaration integration remains separately owned.
 
 =head2 prepare
 
