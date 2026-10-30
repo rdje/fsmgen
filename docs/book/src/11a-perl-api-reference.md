@@ -656,6 +656,27 @@ separate native comparisons preserve existing RHS artifacts. Exact receipts and
 replay producer: `docs/audits/concat-guard-capture-20261030/`. Generic sum
 allocation/currentness/emission, VHDL and external runtime remain separately owned.
 
+The factorizer's private `concatenation_width_birth($actual_candidate_name)` now
+exposes original allocation provenance independently of numeric inference. It
+returns a detached `concatenation_sum_candidate` record with an ordered
+`expression_tree`: `['concat', OPERANDS...]`, `['signal', NAME]`, or
+`['literal', {value, width, radix}]`. Nested and repeated occurrences preserve;
+literal fields reflect the actual Core representation at allocation, including
+an unknown width. Source parsing may already have normalized a literal's digits.
+The capsule binds the actual allocator, candidate row, AST and reference/Core
+source identities. Equal names or selected widths cannot recreate a birth, and
+copied/foreign/divergent objects withhold it. Lookup adds no tracking state.
+Built-in whole references, Core literals and concatenations qualify within the
+bounded walk documented in `FSM::ConcatenationWidthBirthSupport`; unsupported
+computed, generated, sliced/indexed, state or subclassed operands withhold.
+This diagnostic provenance supplies no source width, rank, type eligibility,
+completed allocation policy or generic target range. Later numeric widths remain
+independent. T2276 qualifies actual native fixed guards in both Verilog backends,
+ownership/refusal/boundary controls and caller preservation; the exact predecessor
+and complete native product comparison are retained in
+`docs/audits/concat-candidate-birth-20261030/`. Named/source contracts and completed
+backend events remain prerequisites of generic sum proof and emission.
+
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
 inference. Canonical shift operators and their published aliases follow the left

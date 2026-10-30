@@ -16,12 +16,14 @@ answers:
   - "why does a static slice guard test the whole signal?"
   - "why do bit and concatenation guards reference undeclared condition?"
   - "how are factorizer allocation births retained?"
+  - "how are ordered concatenation candidate births retained?"
   - "how are factorizer width inference events captured?"
   - "what owns graph proof rows?"
 date: 2026-10-30
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
+  perl/FSM/ConcatenationWidthBirthSupport.pm; t/2276-concatenation-candidate-births.t; docs/audits/concat-candidate-birth-20261030/evidence.json.gz;
   perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; t/2266-direct-target-namespace.t; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-close-20261029.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/22[23]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
@@ -186,3 +188,6 @@ Exact source/target/RHS contrasts: `docs/audits/concat-guard-capture-20261030/`.
 Slice/bit capture defects stay owned; generic proof and external execution remain
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
+
+Ordered concat births retain typed allocation identity without source/range proof.
+T2276 and `perl/FSM/ConcatenationWidthBirthSupport.pm` own the full contract/replay.

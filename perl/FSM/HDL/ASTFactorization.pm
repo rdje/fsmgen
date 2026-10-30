@@ -11,6 +11,7 @@ use FSM::Debug;
 use FSM::Package::ExpressionOperatorSupport ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphBirthSupport;
+use FSM::ConcatenationWidthBirthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 =head1 NAME
@@ -583,6 +584,9 @@ sub generate_candidate_names {
             my $graph = FSM::IntermediateWidthGraphBirthSupport->prepare_birth(
                 factorizer => $self, signal_name => $signal_name);
             $self->{_intermediate_width_graph_births}{$signal_name} = $graph if $graph;
+            my $concat = FSM::ConcatenationWidthBirthSupport->prepare_birth(
+                factorizer => $self, signal_name => $signal_name);
+            $self->{_concatenation_width_births}{$signal_name} = $concat if $concat;
         }
         
         fsm_debug("AST-FACTOR-DEBUG: Generated signal: $signal_name (usage: $candidate_info->{usage_count})", 3);
@@ -677,6 +681,34 @@ Capsules retain only plain data; unknown/copied/stale/cyclic ownership withholds
 sub intermediate_width_graph_birth {
     my ($self, $signal_name) = @_;
     my $birth = $self->_current_intermediate_width_graph_birth($signal_name);
+    return $birth ? $birth->{record} : undef;
+}
+
+=head2 concatenation_width_birth($signal_name)
+
+Return a detached original C<concatenation_sum_candidate> ordered expression
+tree for an actual fresh unresolved typed concatenation candidate. Nested and
+repeated operands retain their order; independent Core literal value/width/radix
+fields preserve, including unknown width. Whole built-in Core/runtime references
+retain actual ownership in a separate plain-data capsule. Unsupported computed,
+generated, sliced/indexed/state/subclassed, malformed, cyclic or oversized trees
+withhold. Ordinary lookup creates no tracking fields; candidate row keys and
+subsequent independent numeric widths preserve.
+
+This provenance is separate from binary maxima and arithmetic graph births.
+It supplies no source width/rank/type proof, completed policy or generic range.
+Copied/foreign rows and changed AST/reference/Core-owner identities withhold;
+the getter cannot recreate a missing birth from an equal name or width.
+See L<FSM::ConcatenationWidthBirthSupport> for the bounded private tree contract.
+
+=cut
+
+sub concatenation_width_birth {
+    my ($self, $signal_name) = @_;
+    return undef unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name)
+        && ref($self->{_concatenation_width_births}) eq 'HASH';
+    my $birth = FSM::ConcatenationWidthBirthSupport->current_birth(
+        factorizer => $self, signal_name => $signal_name, holder => $self->{_concatenation_width_births}{$signal_name});
     return $birth ? $birth->{record} : undef;
 }
 

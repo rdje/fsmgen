@@ -2,6 +2,12 @@
 
 This is a live architecture note.
 
+ASTFactorization imports `FSM::ConcatenationWidthBirthSupport` for a separate
+original ordered concatenation candidate capsule. The private helper imports
+CoreExpressionWidthSupport's walk bounds and the existing identifier policy;
+it retains plain typed-node/owner identity without selected width or source/range
+authority. Named/source completion and generic sum emission remain separate.
+
 ExpressionBuilder imports `FSM::CoreExpressionWidthSupport` for the shared
 bounded exact-width walk. Its ordinary parser call has no target literal policy;
 unsized literals remain unknown. The separate explicit callback contract passes

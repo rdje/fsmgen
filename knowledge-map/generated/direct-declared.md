@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **16** uniquely owned question entries.
+> **1** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="how are explicit Core intermediate width allocation contracts held?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="how are factorizer allocation births retained?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="how are factorizer width inference events captured?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="how are ordered concatenation candidate births retained?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="is the Core module signals map exhaustive for declared assignment targets?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="what owns graph proof rows?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do actual direct backend declaration snapshots come from?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
