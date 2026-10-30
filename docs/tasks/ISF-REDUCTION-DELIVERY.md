@@ -3028,10 +3028,33 @@ do not start broad suites between implementation slices.
     perl/FSM/ExpressionNamer.pm syntax OK
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Join original concatenation producer ownership to completed backend inference events.`
-  Acceptance: `After both producer families, select actual normalization/registry/collection joins and split before implementation. Bind original ordered source contracts to actual current generation rows without turning independent cache/native constraints into intrinsic sum authority. Preserve unknown Core profiles, failure clearing, source/caller identity and clean reuse. Focused native/refusal/hostile checks and book/POD sync precede handoff to current sum proof .3.4.3.3.3.4. Full qualification stays .6.`
-  Verification: `pending producer ownership`
+  Acceptance: `After the observed factorizer/Core source contracts, select actual normalization/registry/collection joins and split before implementation; retain the bounded standalone naming exclusion. Bind original ordered source contracts to actual current generation rows without turning independent cache/native constraints into intrinsic sum authority. Preserve unknown Core profiles, failure clearing, source/caller identity and clean reuse. Focused native/refusal/hostile checks and book/POD sync precede handoff to current sum proof .3.4.3.3.3.4. Full qualification stays .6.`
+  Verification: `Source handoff closes at c1850108e after 377014fea source preparation. Toolbox-first scoped reads select actual owners: ConsolidatedIntermediateSupport::merge_ast_factorization_signals shallow-copies the factorizer rows; initial sync installs separate registry rows before normalization. ConsolidatedIntermediateNormalizationSupport begins the width epoch and binds the canonical row view, recovers runtime ASTs, resolves widths, publishes widths/source to allocator and registry, then resolves dependencies/renders. IntermediateSignalWidthSupport::resolve_intermediate_signal_width reads native metadata, then cached width before its first unresolved runtime-AST branch; recovery and get_signal_info are semantic callbacks that must not precede the new frozen source barrier unnoticed. Repeated/cache reads may carry an existing current event, never mint one. Successful collection prunes, replaces the registry and completes inference; failure aborts. Select a native boundary observation first to verify actual row/runtime/source identities and frame availability, then intrinsic event capture, then owned publication/registry/completion carry. Keep independent cache/native constraints, original source proof and selected sum separate. Existing max/graph event capsules cannot authorize a sum; reuse only genuinely generic structural contracts. Source/rank plans are detached read observations, not persistent write history. Child .1 must retain actual input/transition observations and hostile controls before child .2 chooses implementation; no runtime or target admission changes in this decomposition. Current source API and numeric native behavior remain as documented. This prepares a decision0116 clean context checkpoint before the cross-layer generation lifecycle; the precise next action is child .1, not a completed feature or full qualification. Final-index task integrity/doctrines gate this plan.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.1`
+  Status: `pending`
+  Goal: `Qualify actual concatenation normalization and generation-completion observation boundaries.`
+  Acceptance: `Instrument the retained fixed/mutable guard/RHS producer at actual normalization entry, first unresolved inference, owned publication, registry sync/replacement and collection completion. Bind original candidate/Core sources to merged/runtime/registered row identities and epoch/revision without installing an event or changing numeric behavior. Observe whether complete original raw/canonical source frames remain current through each owned transition. Exercise native/cache/late source mutation controls and observer positive controls; preserve complete caller/HDL/declaration/contextual refusal products and exact producer identities in tracked replayable evidence. Select the smallest actual source-freeze/mint/carry protocol before child .2; split further only for a demonstrated dependency. Book/task/fact sync documents scope; generic sum, event admission and full qualification stay open.`
+  Verification: `pending actual generation-boundary observation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2`
+  Status: `pending`
+  Goal: `Capture original current concatenation inputs and intrinsic inference events at their actual owned branch.`
+  Acceptance: `After .1, implement the selected bounded source-freeze and first unresolved intrinsic event protocol, splitting actual owners further before edits if needed. Freeze original factorizer birth and independent canonical source contracts before relevant semantic callbacks; revalidate complete raw/current scope afterward, including nonoperands and late getters. Bind actual backend/module/owner/row/AST/runtime/registry and epoch/revision identities without retaining caller graphs or turning selected defaults into a sum-range proof. Native/cached/constrained/foreign/stale/unknown branches cannot mint intrinsic authority. Repeated resolver reads may preserve only a held current event. Focused native/hostile/refusal/lifetime and caller conservation checks, exact predecessor control and POD/book/fact sync qualify this event slice only; collection completion remains .3 and sum proof stays .3.4.3.3.3.4.`
+  Verification: `pending .1 actual boundary selection`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3`
+  Status: `pending`
+  Goal: `Carry current intrinsic concatenation events through owned publication and registry writes to completed collection.`
+  Acceptance: `After .2, split actual publication/registry/lifecycle consumers before implementation. Checkpoint before owned allocator/registry width/source writes, merged copies and registry replacement; bind the actual installed rows and complete current metadata afterward. Reject unrelated mutations, independent floors/caches, copied/foreign identities and late source changes rather than recapturing stale proof. Only successful actual collection exposes completed source event policy; failure/reset/reuse clears partial and old authority while permitting a clean next generation. Preserve weak row ownership and prepared-block lifetimes without retaining owner graphs. Focused actual fixed/mutable guard/RHS, hostility/refusal/recovery and complete caller/native product checks plus POD/book/fact sync precede handoff to current sum proof. No symbolic sum/range/emission or full .6/publication success is implied.`
+  Verification: `pending intrinsic event and owned-transition integration`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4`
