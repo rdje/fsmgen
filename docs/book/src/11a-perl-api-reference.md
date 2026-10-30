@@ -871,6 +871,9 @@ interprets the emitted range arithmetic against independent source maxima.
 Re-evaluating that text with different parameter values checks the preserved
 relationship; it is not external elaboration or HDL execution. Caller data,
 unknown Core widths and original parameter bindings remain unchanged.
+The retained n-ary literal child/parent case also compares the distinguishing
+high bit with the actual declaration masks and a deliberately narrowed historical
+mask. This establishes declaration algebra rather than generated-HDL execution.
 
 DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
 SignalRefs, refusing distinct objects claiming one physical name. Copied parameter

@@ -3,6 +3,7 @@ use warnings;
 use lib 'perl';
 use Test::More;
 use JSON::PP;
+use Math::BigInt;
 use Lispish;
 use FSM::Adapter::FSMGenFull;
 use FSM::HDL::FlattenedDT;
@@ -136,6 +137,50 @@ subtest 'ordinary original and nested literal HDL agrees with source algebra' =>
             is($json->encode($raw), $before, 'complete caller source and JSON kinds conserve');
         }
     }
+};
+
+subtest 'retained nested source no longer masks away the literal high bit' => sub {
+    for my $bits (1, 8) {for my $mutable (0, 1) {
+        my $params = $mutable ? "(+params (W $bits))" : '';
+        my $width = $mutable ? '(param W)' : $bits;
+        my $source = "(?fsm:literal_nested $params"
+            ." (+size (A $width) (B $width) (C $width) (DATA 1) (OTHER 1))"
+            .' (idle (<(^ (| A B 256) C) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+        my $raw = scalar Lispish::multi(\$source);
+        my $before = $json->encode($raw);
+        my $module = FSM::Adapter::FSMGenFull->new->parse_fsm($raw);
+        my $state = source_state($module);
+        my $hdl = eval {FSM::HDL::FlattenedDT->new->generate_systemverilog($module)};
+        is($@, '', 'retained original nested source generates') or next;
+        my %assignments = $hdl =~ /^  assign (\w+) = ([^;]+);/mg;
+        my %declarations;
+        while ($hdl =~ /^  wire (\[[^\n]+:0\])?\s*(\w+);$/mg) {
+            $declarations{$2} = $1 // '';
+        }
+        my @children = grep {$assignments{$_} eq 'A | B | 256'} keys %assignments;
+        is(scalar(@children), 1, 'original n-ary literal child expression survives');
+        next unless @children == 1;
+        my $child = $children[0];
+        my @parents = grep {$assignments{$_} eq "$child ^ C"} keys %assignments;
+        is(scalar(@parents), 1, 'parent consumes the complete original child and C');
+        next unless @parents == 1;
+        my $parent = $parents[0];
+        my $child_width = range_width($declarations{$child}, W => $bits);
+        my $parent_width = range_width($declarations{$parent}, W => $bits);
+        is($child_width, 32, 'unsized literal supplies the independent child floor');
+        is($parent_width, 32, 'parent retains the literal floor through its generated child');
+        # A=B=C=0 gives 256 in the authored expression. Model only the two
+        # actual declaration masks; this is independent text/algebra evidence,
+        # not execution of the generated HDL.
+        my $value = Math::BigInt->new(256);
+        $value->band(Math::BigInt->new(2)->bpow($child_width)->bdec);
+        $value->bxor(0)->band(Math::BigInt->new(2)->bpow($parent_width)->bdec);
+        is($value->bstr, '256', 'actual child and parent declarations conserve the distinguishing high bit');
+        is(Math::BigInt->new(256)->band(Math::BigInt->new(2)->bpow($bits)->bdec)->bstr,
+            '0', 'the historical narrow-parent mask loses that same high bit');
+        is(source_state($module), $state, 'retained source Core widths and policies conserve');
+        is($json->encode($raw), $before, 'retained caller source kinds conserve');
+    }}
 };
 
 done_testing();
