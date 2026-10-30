@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3`
-- next_action: Select and split actual named concatenation definition publication and ordered current source-contract joins before implementation.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3.2`
+- next_action: Prepare ordered current Core operand contracts for actual concatenation candidates, splitting capture/currentness further before edits if needed.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.

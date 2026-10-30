@@ -189,5 +189,6 @@ Slice/bit capture defects stay owned; generic proof and external execution remai
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
 
-Ordered concat births retain typed allocation identity without source/range proof.
-T2276 and `perl/FSM/ConcatenationWidthBirthSupport.pm` own the full contract/replay.
+Concat births prove allocation identity only (T2276; `perl/FSM/ConcatenationWidthBirthSupport.pm`).
+Native source selection: `docs/audits/concat-source-producer-selection-20261030/`;
+the observed rows join factorizer/Core operands; typed naming is separate.

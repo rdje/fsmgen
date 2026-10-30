@@ -674,8 +674,12 @@ completed allocation policy or generic target range. Later numeric widths remain
 independent. T2276 qualifies actual native fixed guards in both Verilog backends,
 ownership/refusal/boundary controls and caller preservation; the exact predecessor
 and complete native product comparison are retained in
-`docs/audits/concat-candidate-birth-20261030/`. Named/source contracts and completed
-backend events remain prerequisites of generic sum proof and emission.
+`docs/audits/concat-candidate-birth-20261030/`. In the retained fixed/mutable
+guard/RHS cases, native observation selects actual factorizer/Core operands;
+typed naming remains a separate API. The observed calls, positive controls and
+complete native products are in `docs/audits/concat-source-producer-selection-20261030/`.
+Current Core source contracts and completed backend events remain prerequisites
+of generic sum proof and emission.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
