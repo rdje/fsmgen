@@ -618,6 +618,17 @@ external override/compiler/runtime and transport qualification remain pending.
 The deferred full-feature task also owns collection-scale retained-fence memory
 qualification; the native cases above establish correctness in their saved scope.
 
+Focused scalar closure covers `(== A B)`, `(! A)`, `(! (+ A B))`, `(!& A B)`
+and `(== (+ A B) C)` in both Verilog-family backends. Their comparison or
+whole-value logical-NOT result remains a scalar wire, while any arithmetic or
+bitwise vector child retains its original parameterized range, including at a
+one-bit default. Scalar results do not borrow vector maximum-allocation policies.
+`t/2272-scalar-intermediate-source-target-closure.t` joins complete actual HDL
+expressions/declarations and captured widths to those source contracts, preserving
+Core expressions, parameter bindings and caller JSON kinds. Independent signed,
+named-type, state, opaque and floor constraints remain a separately owned lane;
+this check adds no external elaboration, runtime or public-profile qualification.
+
 Run the bounded source proof and live-emission checks with:
 
 ```bash

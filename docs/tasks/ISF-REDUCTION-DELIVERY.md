@@ -2814,11 +2814,40 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close remaining scalar literal and type constraint profiles after the concrete literal repair.`
   Acceptance: `After .1, complete parent .4 scalar/logical/comparison/negated and separately sized literal/signed/type/state/opaque/floor constraints, preserving whole-value truth and precise relationship boundaries. Reuse canonical expression/source/target kernels, retain original typed literal value/width/radix and caller JSON kinds, and split further safe concrete repairs as required. Optional inversion and later concat/select/shift/VHDL/full .6 remain separately owned. Focused controls and book/API sync before each commit.`
-  Verification: `Parent retained residual inventory supplies initial scalar witnesses; complete implementation remains pending after the concrete unsized literal repair.`
+  Verification: `Literal predecessor closes atb54d9bbc6. Child .1 qualifies retained actual scalar comparison/logical wrappers and symbolic vector children with focused checks; .2 selects remaining independent profiles and .3 closes any resulting required repairs before other expression shapes. Full .6 remains deferred.`
   Commit: `pending required scalar/type closure`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.1`
+  Status: `done`
+  Goal: `Close actual scalar logical/comparison wrapper relationships after literal repair.`
+  Acceptance: `Use retained residual scalar witnesses for comparison, logical NOT, arithmetic NOT, negated bitwise and nested comparison at default one/wide. Join complete actual emitted scalar declarations/expressions to independent source result semantics while preserving symbolic vector child ranges and whole-value tests. Preserve caller/Core data and distinguish fixed scalar result rank from vector ancestry. Small focused native checks and book/POD sync; external/full/public qualification stays .6.`
+  Verification: `Retained residual source cases reverify through actual Parser and both Verilog-family emitters after literal closure: comparison, direct logical NOT, arithmetic NOT, negated bitwise and nested arithmetic comparison. Complete source-selected vector expressions have actual W-dependent wire ranges at default1/8; scalar comparison/whole-value NOT results have actual plain scalar wires, selected width1 and no binary/graph/source-tree vector maximum allocation. Whole Core widths, defining expressions, parameter default sources/bindings, declared bindings/requirements and caller JSON kinds conserve. First T2272 passes; strengthening source-profile conservation and checking all vector policy families preserves that result. Focused guarded T2272/T2196: All tests successful Files=2 Tests=5. The existing comparison grouping oracle independently distinguishes bitwise/comparison precedence and literal outcomes; source/rank contrasts distinguish vector ancestry from scalar result meaning. No production code change is necessary for these retained scalar forms. Re-derive complete native HDL/capture from tracked source cases; falsify selected-default vector folding or scalar width borrowing with distinct one/wide child and scalar declarations plus independent grouping outcomes; durability tracked tests/book and retained residual receipt, exact focused commands and Git. Compiler/elaboration/runtime, constrained source profiles, broader VHDL and full/public .6 remain explicit owned gaps. Book/POD/current source-reference checks and exact aggregate authority synchronize; claim inventory regenerates without new candidate identities or containment limit changes. Fresh staged acceptance and all normal final-index doctrines gate this slice. Next .2 selects independent signed/type/state/opaque/literal/floor constraints before any concrete repair.`
+  Commit: `ISF-REDUCTION-DELIVERY: close focused scalar wrapper relationships`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Select residual actual scalar and computed-operand graph boundaries.' identifies4a378c9f2 and its residual-operator-inventory receipt. Scalar comparison/logical rows there have width1 but vector child relationships still required implementation; post-literal closure lacked a focused current join between actual complete scalar declarations and generic vector child ranges.
+  - [x] **ADDRESSED (verified)** — T2272 now exercises the retained actual source forms in both Verilog-family backends at one/wide defaults. Scalar wires and absent vector-allocation policies distinguish result meaning; actual child W ranges, full selected expressions, source profiles and caller kinds preserve. Synchronize the book and retain independent profile/full/external boundaries.
+  - [x] **NO REGRESSION** — Guarded T2272/T2196: All tests successful Files=2 Tests=5, including independent actual comparison-grouping outcomes. Guarded mdBook build and generated POD freshness pass; current source references and every normal final-index doctrine gate commitment. No broad suite or external compiler/runtime qualification is implied.
+
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2`
+  Status: `pending`
+  Goal: `Select remaining independent scalar/literal signed type state opaque and floor constraints.`
+  Acceptance: `After .1, read existing canonical eligibility and focused independent constraint contracts, select only necessary distinguishing actual source/target profiles, and own concrete repairs before editing. Separate documented fail-closed boundaries from lost generic relationships; no broad verification matrix, unsupported fallback or optional inversion.`
+  Verification: `Pending scalar relationship closure; parent acceptance retains all independent constraint families.`
+  Commit: `pending constraint consumer selection`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
+  Status: `pending`
+  Goal: `Close residual scalar and independent constraint implementation before other expression shapes.`
+  Acceptance: `After .1/.2 and any owned concrete repairs, reconcile source/target/caller contracts and explicit unsupported relationships with the book and canonical records. Complete only focused feature checks; retain VHDL/concat/select/shift/full .6 and publication ownership and advance the next required consumer.`
+  Verification: `Pending scoped constraint selection and any required repairs.`
+  Commit: `pending scalar/type family closure`
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`
   Status: `pending`
