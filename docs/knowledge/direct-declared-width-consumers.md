@@ -18,6 +18,7 @@ answers:
   - "how are factorizer allocation births retained?"
   - "how are ordered concatenation candidate births retained?"
   - "how are current concatenation sources observed without getters?"
+  - "where are original concatenation generation sources frozen?"
   - "how are factorizer width inference events captured?"
   - "what owns graph proof rows?"
 date: 2026-10-30
@@ -190,5 +191,4 @@ Slice/bit capture defects stay owned; generic proof and external execution remai
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
 
-Concat births/source contracts: T2276–T2278; `docs/book/src/11a-perl-api-reference.md`.
-Generation boundaries: `docs/audits/concat-generation-boundaries-20261030/` (events pending).
+Concat birth/source/freeze contracts: T2276–T2279 and `docs/book/src/11a-perl-api-reference.md`.

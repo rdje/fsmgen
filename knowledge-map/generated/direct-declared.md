@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **18** uniquely owned question entries.
+> **1** facts · **19** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,6 +14,7 @@
 - q="how are ordered concatenation candidate births retained?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="is the Core module signals map exhaustive for declared assignment targets?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="what owns graph proof rows?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="where are original concatenation generation sources frozen?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do actual direct backend declaration snapshots come from?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="where do direct symbolic declared-width consumers need integration?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="which consumers own concatenation selection and shift intermediate widths?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)

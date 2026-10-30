@@ -6,7 +6,14 @@ ASTFactorization imports `FSM::ConcatenationWidthBirthSupport` for a separate
 original ordered concatenation candidate capsule. The private helper imports
 CoreExpressionWidthSupport's walk bounds and the existing identifier policy;
 it retains plain typed-node/owner identity without selected width or source/range
-authority. Named/source completion and generic sum emission remain separate.
+authority. Generic sum emission remains separate.
+The installed direct width owner imports `ConcatenationGenerationSourceSupport`,
+which joins `ConcatenationSourceObservationSupport` and
+`ConcatenationSourceWidthSupport`. Actual epoch/view binding freezes every raw
+candidate scope before canonical getters. Source-only holders retain original
+row/owner/AST/epoch/initial registry identities; later lookup never recaptures.
+Intrinsic events, registry carry and symbolic sums remain separate. This is a
+scoped dependency update, not a renewed entrypoint closure census.
 
 ExpressionBuilder imports `FSM::CoreExpressionWidthSupport` for the shared
 bounded exact-width walk. Its ordinary parser call has no target literal policy;

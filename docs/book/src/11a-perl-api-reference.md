@@ -738,10 +738,23 @@ The [generation-boundary replay](../../../docs/audits/concat-generation-boundari
 qualifies original source frames through actual normalization, inference,
 publication, registry replacement and collection. Native/cache widths bypass
 intrinsic inference; recovery, metadata and late nonoperand changes revoke the
-original frames. Freeze must precede those callbacks. This observation selects
-the event protocol; source freeze, intrinsic events and generic sum emission
-remain pending. Replay retained evidence with `python3 -B
-docs/audits/concat-generation-boundaries-20261030/replay.py --saved`.
+original frames. That historical receipt is bound to its original producers.
+
+The installed width owner now imports `FSM::ConcatenationGenerationSourceSupport`.
+At actual epoch/view binding it freezes getter-free inputs for every candidate
+before the first canonical getter, then prepares each original source holder.
+`concatenation_generation_sources(NAME, ROW)` revalidates that same source,
+actual owner/row/AST/view/epoch and initial registry identity. Getter mutation,
+copied/foreign rows, unsupported or cached initial profiles and expired views
+withhold. Abort and new generations clear holders; a repeated bind in the same
+epoch cannot recapture after failure. Returned plain data retains no caller
+objects or row view. Initial registry replacement invalidates this source frame;
+owned event carry is a separate protocol.
+The [source-freeze regression](../../../t/2279-concatenation-generation-sources.t)
+checks actual two-candidate callbacks and same-backend failure/recovery; complete
+native products and exact predecessor evidence retain in
+`docs/audits/concat-source-freeze-20261030/`. This grants source observation only.
+Intrinsic events, completed allocation, symbolic sums and emission remain pending.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

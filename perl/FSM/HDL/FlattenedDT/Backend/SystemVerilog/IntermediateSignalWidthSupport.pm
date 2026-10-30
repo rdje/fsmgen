@@ -50,6 +50,7 @@ use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::IntermediateWidthGraphInferenceSupport;
+use FSM::ConcatenationGenerationSourceSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -64,6 +65,7 @@ sub _abort_factorized_width_inference ($self) {
     $self->{_source_width_allocation_events} = {};
     $self->{_source_bitwise_tree_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
+    $self->{_concatenation_source_frames} = {};
     delete $self->{_width_inference_complete};
     delete @{$self}{qw(_graph_inference_rows _graph_inference_rows_epoch)};
 }
@@ -78,7 +80,44 @@ sub _bind_graph_inference_rows ($self, $rows) {
     weaken($self->{_graph_inference_rows});
     $self->{_graph_inference_rows_epoch} = $self->{_width_inference_epoch};
     ++$self->{_graph_inference_rows_revision};
+    # Freeze original source before normalization's recovery and metadata
+    # callbacks. Later lookup may only revalidate these exact observations.
+    # A second bind in a spent epoch can invalidate the original view, never
+    # refresh source after callbacks. Abort clears holders, not this admission.
+    return 1 if ($self->{_concatenation_source_epoch} // 0) == $self->{_width_inference_epoch};
+    $self->{_concatenation_source_epoch} = $self->{_width_inference_epoch};
+    my %inputs;
+    for my $name (sort keys %$rows) {
+        next unless ref($rows->{$name}) eq 'HASH'
+            && ref($rows->{$name}{ast}) eq 'FSM::CoreAST::Concatenation';
+        my $input = FSM::ConcatenationGenerationSourceSupport->prepare_input(
+            width_support => $self, signal_name => $name, signal_info => $rows->{$name});
+        $inputs{$name} = $input if $input;
+    }
+    for my $name (sort keys %inputs) {
+        my $holder = FSM::ConcatenationGenerationSourceSupport->capture(
+            width_support => $self, signal_name => $name, signal_info => $rows->{$name}, input => $inputs{$name});
+        $self->{_concatenation_source_frames}{$name} = $holder if $holder;
+    }
     return 1;
+}
+
+=head2 concatenation_generation_sources
+
+Return only the original current detached concatenation source frame frozen at
+actual epoch/view binding before normalization callbacks. Copied/foreign rows,
+changed sources, replaced initial registries and expired views withhold. Abort
+and reuse clear the installed frames. This source-only observation supplies no
+intrinsic event, selected sum, completed policy or symbolic target range.
+
+=cut
+
+sub concatenation_generation_sources ($self, $signal_name, $signal_info) {
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name)
+        && ref($self->{_concatenation_source_frames}) eq 'HASH';
+    return FSM::ConcatenationGenerationSourceSupport->current(
+        width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
+        holder => $self->{_concatenation_source_frames}{$signal_name});
 }
 
 sub _current_graph_inference_rows ($self) {
