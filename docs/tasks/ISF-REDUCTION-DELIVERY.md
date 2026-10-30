@@ -2835,11 +2835,25 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select remaining independent scalar/literal signed type state opaque and floor constraints.`
   Acceptance: `After .1, read existing canonical eligibility and focused independent constraint contracts, select only necessary distinguishing actual source/target profiles, and own concrete repairs before editing. Separate documented fail-closed boundaries from lost generic relationships; no broad verification matrix, unsupported fallback or optional inversion.`
-  Verification: `Pending scalar relationship closure; parent acceptance retains all independent constraint families.`
-  Commit: `pending constraint consumer selection`
+  Verification: `Canonical plain source eligibility and separate physical target checks preserve independent signed/type/state/opaque/result declarations. Child .1 qualifies actual private Core generation refusal and fresh reuse; explicit sized/wider floors and unknown/scalar controls retain the preceding literal/scalar qualification. No new concrete fallback repair is exposed in this bounded cohort. Valid typed public-source/external/full .6 qualification stays separate.`
+  Commit: `child .1 and this bounded selection closure`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2.1`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2.1`
+  Status: `done`
+  Goal: `Qualify actual refusal of independently constrained literal source profiles.`
+  Acceptance: `Canonical source capture requires plain unsigned unconstrained operands/results and independent target profile agreement. Existing holder/target record tests do not alone establish actual generation refusal after Core profile divergence. Exercise signed, named-type, state, opaque and declared-result constraints on real parsed mutable literal sources through generation; require no HDL, invalidated capture and fresh same-backend reuse without treating private mutations as source syntax admission. Existing explicit/wider floors and unknown/scalar controls remain canonical. If an actual fallback escapes, own the exact concrete repair before editing production. Focused checks and book sync; no broad/external/full .6.`
+  Verification: `Canonical source capture delegates signed/type/state/opaque eligibility to the shared plain descriptor; final target proof independently preserves physical profile agreement. Existing holder and physical-row controls retain their earlier scopes. New T2273 uses real parsed mutable (& A B 3), then private post-parse signed operand/result, named/explicit typed operand, state operand, opaque operand/result and declared-result interventions. Every actual generation refuses with a literal/source-proof diagnostic, returns no HDL, invalidates complete capture, clears literal ledgers and preserves caller source kinds. Every fresh same-backend control succeeds with original expression and complete capture. Initial focused T2273 passes; stronger contextual-diagnostic assertions also pass All tests successful Files=1 Tests=1. No production change is needed. These are private Core validation interventions, not source-syntax/type admission or universal signed-generation refusal. Existing explicit/independent wider floors and unknown/scalar boundaries retain T2250/T2261/T2264/T2269/T2271 qualification, without repeating their matrices. Re-derive actual generator/capture/ledger results; falsify old-policy borrowing with independent hostile profile changes and fresh-source positive controls; durability tracked source test/book, exact focused command and Git. External compiler/elaboration/runtime, complete valid typed public-source profiles, VHDL and full/public .6 remain owned qualification gaps. Guarded mdBook/POD and complete current source-reference checks pass; exact book aggregate authority/inventory update with unchanged candidate identities and containment limits. Fresh staged acceptance and every normal final-index doctrine gate commitment. Selection parent closes; .4.2.3 reconciles this bounded residual family and the next required consumer.`
+  Commit: `ISF-REDUCTION-DELIVERY: qualify constrained literal source refusals`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _observe_signal' identifies e7fc51ed5; git log -S 'sub _literal_range' identifies ce02b1cb8. Existing private source-holder and physical-row tests prove their local profile boundaries, but do not establish actual generator/capture/ledger failure after independent Core profile divergence. SourceLiteralWidthAllocationSupport line90 delegates actual plain profile observation and declaration emission line139 requires current selected literal intent.
+  - [x] **ADDRESSED (verified)** — T2273 independently intervenes on actual parsed Core profiles and observes contextual actual generation refusals with no HDL/completed capture/ledger residue. Fresh same-backend controls recover and conserve caller source kinds. Keep this private validation boundary distinct from valid typed source admission and external/full qualification.
+  - [x] **NO REGRESSION** — Final guarded T2273: All tests successful Files=1 Tests=1. Previously qualified literal floor/unknown/scalar/physical and atomic controls retain their recorded evidence; no broad matrix is repeated. Guarded mdBook build, generated POD and current source references pass; every mandatory normal final-index doctrine must pass.
+
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
   Status: `pending`

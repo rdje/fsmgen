@@ -628,6 +628,11 @@ expressions/declarations and captured widths to those source contracts, preservi
 Core expressions, parameter bindings and caller JSON kinds. Independent signed,
 named-type, state, opaque and floor constraints remain a separately owned lane;
 this check adds no external elaboration, runtime or public-profile qualification.
+At the private Core boundary, post-parse signed, named/explicit-type, state,
+opaque or declared-result changes cannot reuse a completed plain literal policy.
+`t/2273-literal-source-profile-refusals.t` checks actual generation refusal,
+invalidated capture, cleared generation ledgers and fresh same-backend recovery.
+These interventions qualify source-proof rejection, not typed source admission.
 
 Run the bounded source proof and live-emission checks with:
 
