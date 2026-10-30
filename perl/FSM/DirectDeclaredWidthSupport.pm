@@ -358,7 +358,7 @@ sub prepare_computed_source_binary_intermediate_range ($class, %args) {
     return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_binary(%args);
 }
 
-sub prepare_declarations ($class, %args) {
+sub prepare_target_namespace ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
     my $target = eval {$json->decode($json->encode({namespace => $args{target_namespace},
@@ -414,13 +414,33 @@ sub prepare_declarations ($class, %args) {
                 && $record->{width} =~ /\A[0-9]+\z/ && $record->{width} > 0
                 && defined($record->{signed}) && !ref($record->{signed}) && $record->{signed} =~ /\A[01]\z/;
     }
-    my (%signal_targets, %ranges, @fixed, %claimed);
+    my (%signal_targets, %claimed);
     for my $name (@{$source->{signal_order}}) {
         my $target_name = _target_identifier($language, $mapping->{$name} // $name);
         confess "Direct width source Signal '$name' has no actual target declaration\n"
             unless exists($roles{$target_name});
         confess "Direct width target declaration '$target_name' has multiple source Signal owners\n"
             if $claimed{$target_name}++;
+        $signal_targets{$name} = $target_name;
+    }
+    return $json->decode($json->encode({kind => 'direct_target_namespace',
+        source_plan => $source, namespace => $namespace, declarations => $declarations,
+        roles => \%roles, module_name => $module_name, signal_targets => \%signal_targets}));
+}
+
+sub prepare_declarations ($class, %args) {
+    my $namespace_plan = $class->prepare_target_namespace(%args);
+    my $source = $namespace_plan->{source_plan};
+    my $declarations = $namespace_plan->{declarations};
+    my $module_name = $namespace_plan->{module_name};
+    my %roles = %{$namespace_plan->{roles}};
+    my %signal_targets = %{$namespace_plan->{signal_targets}};
+    my %claimed = map {$_ => 1} values %signal_targets;
+    my $language = $source->{target_language};
+    my $json = JSON::PP->new->canonical->allow_nonref;
+    my (%ranges, @fixed);
+    for my $name (@{$source->{signal_order}}) {
+        my $target_name = $signal_targets{$name};
         my $signal = $source->{signals}{$name};
         my $record = $declarations->{$target_name};
         confess "Direct width target declaration '$target_name' disagrees with observed source width or signedness\n"
@@ -432,7 +452,6 @@ sub prepare_declarations ($class, %args) {
         confess "Direct width target declaration '$target_name' disagrees with source state model\n"
             if exists($record->{state_model})
                 && $json->encode($record->{state_model}) ne $json->encode($signal->{state_model});
-        $signal_targets{$name} = $target_name;
         my $width_plan = $signal->{width_plan};
         if ($width_plan && $width_plan->{profile} eq 'symbolic') {
             $ranges{$target_name} = {source_name => $name,
@@ -751,5 +770,27 @@ source converter now uses paired plans for its bounded combinational profile.
 Full compiler, override and runtime qualification remains pending. Whole backend
 release is not claimed: task C<ISF-REDUCTION-DELIVERY.25> owns the independent
 context/helper back-reference cycle reproduced without these preparation calls.
+
+=cut
+
+=head1 METHODS
+
+=head2 prepare_target_namespace
+
+C<prepare_target_namespace> takes the same actual source arguments as
+C<prepare_module>, plus C<target_namespace> and C<target_declarations>. It exposes
+only the canonical structural part of C<prepare_declarations>: actual module and
+parameter mappings, reserved names and case-aware collisions, complete role/name/
+declaration closure, valid numeric row shapes and unique physical membership for
+every source Signal. Captured target records must still come from their producer.
+
+The detached C<direct_target_namespace> record contains C<source_plan>, complete
+C<namespace> and C<declarations>, physical C<roles>, C<module_name> and
+C<signal_targets>. It retains no caller/module owners and emits no HDL. A valid
+namespace does not establish source width, signedness, type, state, helper-origin,
+currentness or symbolic-range agreement. Callers must prove those separately.
+C<prepare_declarations> reuses this same validator, then retains all its existing
+source numeric/type/state and auxiliary-origin checks and complete target result.
+This separation supplies no literal-width exception to the full validator.
 
 =cut

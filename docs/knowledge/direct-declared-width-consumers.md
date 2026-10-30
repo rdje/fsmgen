@@ -14,11 +14,11 @@ answers:
   - "how are factorizer allocation births retained?"
   - "how are factorizer width inference events captured?"
   - "what owns graph proof rows?"
-date: 2026-10-29
+date: 2026-10-30
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
-  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-close-20261029.json.gz;
+  perl/FSM/CoreAST.pm; perl/FSM/Adapter/FSMGenFull.pm; perl/FSM/Adapter/FSMGenFull/Parser.pm; perl/FSM/DeclaredWidthBindingSupport.pm; perl/FSM/DeclaredWidthRangeSupport.pm; perl/FSM/DirectDeclaredWidthSupport.pm; t/2266-direct-target-namespace.t; perl/FSM/IntermediateWidthAllocationSupport.pm; perl/FSM/HDL/ASTFactorization.pm; docs/audits/graph-close-20261029.json.gz;
   perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm; perl/FSM/Backend/VerilogFamily/DeclarationCapture.pm; perl/FSM/Backend/VerilogFamily/WidthExpressionEmitter.pm; perl/FSM/Backend/VHDL/WidthExpressionEmitter.pm; perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm; perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm; perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm;
 reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[23489]*.t t/2204-factorizer-width-births.t t/22[23]*.t t/2198*.t t/2111-ial0-parameter-width-selection.t
 ---
@@ -134,17 +134,12 @@ Mutable paths, unsupported scalar/type/target profiles, symbol-bearing parameter
 payloads and static payloads hiding mutable dependencies refuse. Defaults preserve;
 plans retain no Signal/environment owner.
 
-DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
-SignalRefs, refusing distinct objects claiming one physical name. Copied parameter
-maps pass canonical observation proof; coherent bindings join the bounded adapter
-under original lexical scope. Fixed/type/static controls preserve. Independent
-combined mutable requirements or stale/missing bindings refuse. Detached plans
-retain no Core/backend owner. prepare_declarations joins actual namespace/declaration
-snapshots: mapped parameter/Signal membership, reserved names/collisions, numeric
-default width, signedness and type. VHDL folds case. Selected mutable root renaming
-refuses; physical module/Signal mapping stays independent of source ownership.
-Detached target plans identify symbolic port/storage ranges and independent fixed
-rows. Focused numeric rendered widths independently match planner metadata.
+DirectDeclaredWidthSupport source/target joins and the narrower
+prepare_target_namespace contract (T2266) are canonical in
+`docs/book/src/11a-perl-api-reference.md` and its generated POD reference for
+`perl/FSM/DirectDeclaredWidthSupport.pm`. The complete source/lookup, physical
+mapping, numeric/type/state and detachment rules remain there; the namespace
+result grants no semantic or currentness authority. Full validation preserves.
 
 Opt-in VerilogFamily::DeclarationCapture records actual parameter order, ports,
 state/storage/enable/intermediate declarations and allocated typedef names at
@@ -168,6 +163,8 @@ isolated target plans retain neither caller target records nor never-installed
 physical Core copies.
 
 Reverify contracts (original commands retained):
+
+`prove -Iperl t/2266-direct-target-namespace.t t/2173-direct-width-target-plans.t`.
 
 `prove -Iperl t/2162-direct-source-width-binding-publication.t t/2161-core-declared-width-binding-lifecycle.t t/2160-direct-declared-width-capture.t t/2111-ial0-parameter-width-selection.t`.
 

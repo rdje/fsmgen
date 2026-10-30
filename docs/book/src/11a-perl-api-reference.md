@@ -790,6 +790,29 @@ expression intent; actual captured declarations/events, live range ledgers and
 final generation agreement remain separate. Generic literal generation still
 refuses at its existing boundary; compiler/runtime/full qualification is pending.
 
+DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
+SignalRefs, refusing distinct objects claiming one physical name. Copied parameter
+maps pass canonical observation proof; coherent bindings join the bounded adapter
+under original lexical scope. Fixed/type/static controls preserve. Independent
+combined mutable requirements or stale/missing bindings refuse. Detached plans
+retain no Core/backend owner. prepare_declarations joins actual namespace/declaration
+snapshots: mapped parameter/Signal membership, reserved names/collisions, numeric
+default width, signedness and type. VHDL folds case. Selected mutable root renaming
+refuses; physical module/Signal mapping stays independent of source ownership.
+Detached target plans identify symbolic port/storage ranges and independent fixed
+rows. Focused numeric rendered widths independently match planner metadata.
+
+The private `DirectDeclaredWidthSupport->prepare_target_namespace` now exposes
+the canonical structural checks shared with `prepare_declarations`: complete
+module/parameter mappings, role/name/declaration closure and unique physical
+source membership. Its detached result retains the source plan, target namespace,
+actual rows, roles and source-target map. This supplies no source numeric/type/
+state/helper-origin, currentness or range proof. The full declaration validator
+still applies all those existing agreement checks. `t/2266-direct-target-namespace.t`
+distinguishes valid namespaces from mismatched widths/types; existing complete
+plans and refusal controls remain covered by `t/2173-direct-width-target-plans.t`.
+This is preparation for literal target proof; the live refusal remains unchanged.
+
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.
 Unknown exact width remains distinct from a helper's nominal scalar width;
