@@ -2729,10 +2729,26 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2265/T2264: All tests successful Files=2 Tests=6. Perl syntax, generated POD freshness, complete source references and guarded mdBook build qualify the changed private contract and docs. Staged task acceptance and mandatory final-index doctrines gate this slice; broad/full feature verification stays deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Independently bind literal expression intent to complete actual captured declarations and child events.`
   Acceptance: `After .1, join every actual typed child edge and original leaf to unrenamed physical namespace/declaration/event membership. Reprove numeric maxima and original generic operands independently of emitted-ledger membership; compare full source intent with detached target plans, ordered child inventories and complete raw currentness. Missing events, conflicting families, stale rows/epochs, changed text or constraints refuse atomically. Focused distinguishing controls and POD/book/downstream sync; commit before live ledger integration.`
-  Verification: `Pending selected expression intent .1.`
+  Verification: `Selected intent .1 is committed at bda2c01a5. Current DirectDeclaredWidthSupport::prepare_declarations combines canonical namespace validation with numeric Core/source agreement. Literal helpers intentionally still have original unknown-width placeholders until .4.4; substituting compatibility copies would not qualify actual targets. Extract the existing common namespace contract without changing full validation, then use it for the separate literal target proof. No existing refusal or final width gate is relaxed.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2.1`
+  Status: `pending`
+  Goal: `Expose the existing canonical direct target namespace validation separately from numeric source agreement.`
+  Acceptance: `Extract one shared validator for actual target module/parameter mapping, role/name/declaration closure and source target membership. Existing prepare_declarations must reuse it and preserve all numeric/type/state/helper-origin checks and refusals. The separate detached namespace result grants no width/type/origin/currentness or range authority. Focused existing capture checks plus a distinguishing namespace-only versus full-width refusal, POD/book sync and commit before literal target proof.`
+  Verification: `Pending canonical namespace extraction.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2.2`
+  Status: `pending`
+  Goal: `Join complete actual literal declarations and child events to independent current selected intent.`
+  Acceptance: `After .1, reuse canonical namespace closure and the actual qualified literal selection. Every physical helper and original leaf must have unrenamed plain unsigned declarations; each helper event must match its own fresh typed source expression and numeric maximum. Preserve original typed-edge order, duplicate occurrences, generic operands/floors and physical child inventory. Reprepare full source/selection/target inputs and close final raw barriers; stale or foreign copies, incomplete/mutated events and width/type/role mismatches withhold atomically. Focused original fixed/mutable target records with explicit capture-seam limits, POD/book/downstream sync and commit before live ledger .3. Final Core/source-width agreement remains .4.4.`
+  Verification: `Pending common namespace contract .1.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.3`
