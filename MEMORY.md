@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3`
-- next_action: Split owned concatenation publication, registry carry and collection completion into executable leaves using the committed current intrinsic events.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.2`
+- next_action: Carry a current intrinsic concatenation event through the actual normalizer allocator/registry width and width_source publication, with complete before/after source and metadata checks.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.

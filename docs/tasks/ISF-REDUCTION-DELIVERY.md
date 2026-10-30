@@ -3098,12 +3098,48 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2280: All tests successful, Files=1, Tests=4; source/test syntax OK. Positive original/repeat and native/cache/hostile/unknown/lifetime/reuse controls pass. Complete native caller/HDL/declaration/refusal replay agrees with the retained predecessor using Date-only normalization. POD/book/source freshness, native copied assets, staged acceptance and the mandatory final-index doctrines gate this targeted repair; full6/runtime/publication remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry current intrinsic concatenation events through owned publication and registry writes to completed collection.`
   Acceptance: `After .2, split actual publication/registry/lifecycle consumers before implementation. Checkpoint before owned allocator/registry width/source writes, merged copies and registry replacement; bind the actual installed rows and complete current metadata afterward. Reject unrelated mutations, independent floors/caches, copied/foreign identities and late source changes rather than recapturing stale proof. Only successful actual collection exposes completed source event policy; failure/reset/reuse clears partial and old authority while permitting a clean next generation. Preserve weak row ownership and prepared-block lifetimes without retaining owner graphs. Focused actual fixed/mutable guard/RHS, hostility/refusal/recovery and complete caller/native product checks plus POD/book/fact sync precede handoff to current sum proof. No symbolic sum/range/emission or full .6/publication success is implied.`
-  Verification: `pending intrinsic event and owned-transition integration`
+  Verification: `Actual consumers are split below before implementation. The installed event binds complete merged/allocator/initial registry rows; publication, metadata normalization and final registry replacement are distinct writes. No currentness or completion authority is added by this preparation.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.4, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.1`
+  Status: `done`
+  Goal: `Select and separate actual concatenation publication and collection transitions.`
+  Acceptance: `Read the current intrinsic event/source freeze, actual normalizer writes, registry merge/rebuild and completion owners. Split independent write families before implementation; preserve weak-view/source ownership, numeric behavior and deferred range/publication boundaries.`
+  Verification: `At clean be7f23614, ConcatenationInferenceSupport::_raw binds complete row/allocator/registered state and the original generation source. ConsolidatedIntermediateNormalizationSupport::_normalize_metadata publishes only width/width_source to allocator and registry before dependencies/render/live-usage annotations. IntermediateSignalWidthSupport::_with_factorized_width_publication carries binary/graph holders but no concat holder. ConsolidatedIntermediateSupport::sync_consolidated_signals_to_registry checkpoints before merged copies/final map reset; collect_consolidated_intermediate_signals completes only after normalization/pruning/final sync. Select separate exact width publication, later annotation, registry replacement and completed policy leaves. Existing T2280 and native replay remain canonical. External claim template equals retained reviewed bytes; README and containment authority already adopted; latest cleanup remains within its daily interval. No code/test/source/artifact change or feature admission. Basic diff/task integrity and mandatory final-index doctrines gate this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY: split owned concatenation publication transitions`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.2`
+  Status: `pending`
+  Goal: `Carry a held intrinsic concatenation event through exact normalizer width publication.`
+  Acceptance: `Checkpoint and remove only a still-current installed concat event before actual allocator/registry width and width_source writes. Compare complete expected before/after row metadata, nested identities and original source; unrelated, foreign, cache, late-getter or throwing callbacks cannot refresh. Preserve repeat inference, numeric products and weak lifetimes. Focused actual publication controls and native conservation plus POD/book/fact sync qualify only this transition; later annotations, registry replacement and completion remain siblings.`
+  Verification: `pending focused owned width/source publication`
   Commit: `pending`
 
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3`
+  Status: `pending`
+  Goal: `Carry held concatenation events through owned dependency, rendering and live-usage annotations.`
+  Acceptance: `After width publication, select the exact existing annotation writes before implementation. Checkpoint complete original state before callbacks and admit only independently derived owned metadata changes; unrelated source/row changes and independent floors cannot refresh. Preserve numeric/native products and weak row lifetimes. Focused actual annotation, hostility/refusal/recovery and POD/book/fact checks precede registry carry.`
+  Verification: `pending exact metadata transition selection`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.4`
+  Status: `pending`
+  Goal: `Carry original concatenation source and intrinsic events through actual registry copies and replacement.`
+  Acceptance: `After annotation carry, checkpoint before the installed merge/rebuild resets the map. Bind actual installed map/row identities and the complete exact merge with name field, preserving original frozen source rather than recapturing it. Reject copied views, substituted equal rows, partial installs, unrelated metadata and late source mutation. Focused actual registry/hostile/lifetime/native checks and POD/book/fact sync precede completed collection.`
+  Verification: `pending publication and annotation predecessors`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.5`
+  Status: `pending`
+  Goal: `Expose current concatenation allocation policy only after successful actual collection.`
+  Acceptance: `After exact publication/annotation/registry carry, prune invalid or removed concat events and expose detached completed source policy only for current installed rows after successful normalization/pruning/final sync. Failure/reset/reuse clears partial/old authority; clean subsequent generations recover. Preserve weak view and prepared block lifetimes without owner graphs. Focused actual fixed/mutable guard/RHS and hostile/refusal/reuse/native checks plus POD/book/fact sync hand off to current sum proof. No generic range/emission, VHDL, full .6 or publication closure.`
+  Verification: `pending owned carry predecessors`
+  Commit: `pending`
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4`
   Status: `pending`
   Goal: `Prove current concatenation source sums through canonical target range kernels.`
