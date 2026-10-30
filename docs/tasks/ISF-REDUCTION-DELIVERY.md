@@ -3126,12 +3126,48 @@ do not start broad suites between implementation slices.
   - [x] **ADDRESSED (verified)** — Checkpoint/remove a current holder before actual publication and predict only its two owned fields on both existing rows. Restore only after successful callback and complete original currentness checks. The identical settled regression fails before and passes after; wrong fields/values, copied/foreign/nested identities, source/revision/getter changes, missing/stale/tampered proof and thrown callbacks cannot refresh or remint. Full before/after/native evidence and the explicitly excluded grammar-packaging refusal retain in the dated receipt.
   - [x] **NO REGRESSION** — Guarded T2281/T2280: All tests successful, Files=2, Tests=8; source/test syntax OK. Complete actual caller/HDL/declaration/refusal products preserve with Date-only normalization and unchanged other production hashes. Generated POD/source checks, guarded mdBook/native copied assets and fresh staged acceptance plus every mandatory final-index doctrine gate this publication-only slice. Full6/runtime/publication remain deferred.
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry held concatenation events through owned dependency, rendering and live-usage annotations.`
   Acceptance: `After width publication, select the exact existing annotation writes before implementation. Checkpoint complete original state before callbacks and admit only independently derived owned metadata changes; unrelated source/row changes and independent floors cannot refresh. Preserve numeric/native products and weak row lifetimes. Focused actual annotation, hostility/refusal/recovery and POD/book/fact checks precede registry carry.`
-  Verification: `pending exact metadata transition selection`
+  Verification: `Actual write ordering is selected below. Dependency resolution calls rendering before extracting/caching dependencies; live-usage priming traverses the complete view before writing per-row flags. A single after-normalization recapture would accept mutations across these distinct callbacks. No new authority is added by decomposition.`
+  Commit: `children below`
+
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.1`
+  Status: `done`
+  Goal: `Select exact rendering, dependency and live-usage annotation transactions.`
+  Acceptance: `Read actual post-width consumers and select ordered writes and callback barriers before implementation. Separate rendering invoked inside dependency resolution, dependency array publication and whole-view live-usage priming. Preserve complete original proof and ordinary cache/fallback/context contracts.`
+  Verification: `At clean965034bfc, IntermediateSignalRecoverySupport::resolve_intermediate_signal_dependencies invokes render_intermediate_signal_expression before extraction/fallback and finally creates dependency_signal_names plus dependency_source, with dependency_fallback_source conditional on recovery. The typed render branch invokes the actual AST renderer then writes rendered_expression and rendered_expression_source; cached render returns without writes. FactorizationSupport::prime_intermediate_signal_live_usage traverses source roots before writing referenced_in_substitutions, used_in_final_expressions, live_usage_evidence_state and live_usage_source; its resolver has a separate fallback writer. Select rendering carry first, dependency publication second, complete-view priming/fallback third, then focused normalization join. Require original-holder checks before callbacks and exact installed new array identities rather than recapturing arbitrary current metadata. No source/test/runtime change. Mandatory final-index doctrines gate this bounded preparation.`
+  Commit: `ISF-REDUCTION-DELIVERY: split concatenation annotation transactions`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.2`
+  Status: `pending`
+  Goal: `Carry held concatenation events through the actual typed AST rendering annotation.`
+  Acceptance: `After exact width publication, checkpoint/remove only a current held event before the real typed AST renderer callback. Require the actual rendered AST to be the original built-in runtime/candidate AST before and after. Admit only rendered_expression equal to the actual bounded scalar return and rendered_expression_source equal to the original runtime source; cached and unsupported fallback branches cannot mint. Reject unrelated metadata/source/identity/revision changes and throwing callbacks without reminting on clean repeats. Preserve native artifacts, complete caller input and weak lifetimes; focused actual nested dependency/render and hostile checks plus POD/book/fact sync. No dependency/live-usage/registry/completed policy or symbolic emission authority.`
+  Verification: `pending exact typed-render integration`
   Commit: `pending`
 
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.3`
+  Status: `pending`
+  Goal: `Carry held concatenation events through exact dependency publication after owned rendering.`
+  Acceptance: `Checkpoint original current proof before extraction/fallback callbacks after nested rendering has carried. Bind actual created dependency array identity and exact ordered returned names, dependency_source and any narrowly qualified fallback tag at their owned assignments. Cached returns must preserve existing currentness; missing/stale/copy/substituted arrays, unrelated source/row changes, unknown fallback and throwing callbacks cannot refresh. Select narrower children if actual fallback transactions exceed this bounded profile. Focused actual dependency/hostile/native and POD/book/fact checks precede live usage.`
+  Verification: `pending rendering carry`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4`
+  Status: `pending`
+  Goal: `Carry held concatenation events through complete-view live-usage priming and owned fallback flags.`
+  Acceptance: `Freeze every eligible current event before any global priming callback. Admit only the four actual boolean/state/source assignments against original frames and exact actual per-row computed values; later row checkpoints cannot recapture mutations caused by earlier roots. Qualify cached no-write and resolver fallback separately where required. Failure/stale/foreign/partial views cannot refresh. Focused actual multi-row/getter/refusal/reuse/native checks and POD/book/fact sync precede annotation closure.`
+  Verification: `pending dependency carry`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.5`
+  Status: `pending`
+  Goal: `Join exact owned annotation transitions through actual completed normalization.`
+  Acceptance: `After render/dependency/live-usage carry, verify current intrinsic events at normalization exit while completed collection remains withheld. Preserve original allocator/registry/source scopes and complete numeric/native products, independent guards/RHS applicability and weak row lifetime. Unknown metadata/fallback branches remain conservative; failure/reuse clears old authority. Focused actual normalization/hostile controls and documentation sync hand off to sibling registry replacement .4, with sum/range/emission and full6 still open.`
+  Verification: `pending owned annotation predecessors`
+  Commit: `pending`
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.4`
   Status: `pending`
   Goal: `Carry original concatenation source and intrinsic events through actual registry copies and replacement.`
