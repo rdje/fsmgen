@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.1`
-- next_action: Observe actual concatenation normalization/inference/publication/registry/completion boundaries and select the source-freeze/event protocol.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2`
+- next_action: Split and implement the original concatenation source freeze before recovery/metadata callbacks, then first unresolved intrinsic events.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.

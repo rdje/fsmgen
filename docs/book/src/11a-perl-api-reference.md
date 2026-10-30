@@ -734,6 +734,15 @@ says nothing about arbitrary external or dynamic callers. Backend inference and
 collection must still establish their own current generation event before sum
 proof or emission can consume these source contracts.
 
+The [generation-boundary replay](../../../docs/audits/concat-generation-boundaries-20261030/replay.py)
+qualifies original source frames through actual normalization, inference,
+publication, registry replacement and collection. Native/cache widths bypass
+intrinsic inference; recovery, metadata and late nonoperand changes revoke the
+original frames. Freeze must precede those callbacks. This observation selects
+the event protocol; source freeze, intrinsic events and generic sum emission
+remain pending. Replay retained evidence with `python3 -B
+docs/audits/concat-generation-boundaries-20261030/replay.py --saved`.
+
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
 inference. Canonical shift operators and their published aliases follow the left
