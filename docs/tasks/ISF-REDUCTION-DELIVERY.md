@@ -2928,10 +2928,39 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded settled T2275/T2274/T2250/T2189: All tests successful, Files=4, Tests=15. Identical final T2275 fails all predecessor subtests after exact loaded-byte assertions. Native per-case/RHS comparisons, mdBook build and current POD/source contracts pass. Full .6, public/corpus, VHDL and external runtime remain deferred; every mandatory final-index doctrine gates this commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture actual concatenation allocation births and ordered operand source contracts.`
   Acceptance: `After fixed capture repair, select and split further if needed the actual parser/namer/factorizer producer joins before edits. Retain whole repeated occurrences, independent literals, operand rank, unknown computed allocations and generation ownership; no max relationship or selected-default width may stand for a sum. Focused hostile and current-source checks with retained actual source/caller products qualify producer metadata only.`
-  Verification: `pending capture correctness`
+  Verification: `Selected producer boundaries below; source allocation, currentness and target admission remain distinct. Parser creates a typed concat without allocating a helper; ExpressionNamer stores a named definition with a numeric sum; ASTFactorization allocates an unresolved candidate. Existing binary max/graph and literal policies cannot attest this ordered sum. No implementation or generic admission is claimed by decomposition.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.1`
+  Status: `done`
+  Goal: `Select the actual concatenation producer boundaries before introducing allocation metadata.`
+  Acceptance: `Recover the fixed guard checkpoint, query the canonical shape card, identify actual parser/namer/factorizer allocations and split bounded ownership before implementation. Keep independent literal and unknown-source behavior, symbolic refusal and deferred qualification explicit.`
+  Verification: `Clean HEAD67d9be3bc and enabled hooks recovered. Knowledge Map concatenation query routes to direct-declared-width-consumers. ExpressionBuilder::parse_recursive_expression returns a Core Concatenation after exact-width validation without a Core helper allocation. ExpressionNamer::name_concatenation_ast stores the original AST and a selected numeric sum. ASTFactorization::generate_candidate_names creates the actual unresolved candidate; existing whole-reference and arithmetic graph births exclude concat. Its substitution leaves typed concat children unchanged. Select a separate bounded ordered typed candidate birth first, then named/source ownership and completion. Fresh read-only external claim-template SHA256 equals the retained reviewed template; README/containment policy is already adopted and the cleanup record is current. No runtime behavior changes, quantitative capacity claim or full verification. First hook rejects the expanded active-index row at focused_documents max-line allowance; shorten only duplicated index narration and retain exact producer evidence in this owning node. Complete refusal is .artifacts/concat-producer-plan-commit.log, with later doctrines unrun. No allowance or ceiling changes. Normal final-index doctrines gate this decomposition.`
+  Commit: `ISF-REDUCTION-DELIVERY: split concatenation allocation producers`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.2`
+  Status: `pending`
+  Goal: `Retain actual unresolved factorizer concatenation candidate births independently of selected widths.`
+  Acceptance: `At fresh candidate allocation capture a bounded ordered typed concat tree with repeated whole references, nested concats and raw independent Core literal fields including unknown width. Anchor actual allocator/row/AST/reference/Core-owner identities in detached plain state. Withhold unsupported computed, sliced, indexed, state, malformed, cyclic or over-budget profiles without altering ordinary rows, Core rank, numeric inference or generation. Current lookup must reject copied/foreign/divergent ownership, preserve independent later widths and add no tracker. Prove actual native fixed guards in both Verilog backends, caller conservation, hostile controls and predecessor failure with the same settled assertions. POD/book/fact sync and focused existing birth/capture checks precede commit; no completed source policy, generic range or emission admission.`
+  Verification: `pending actual fresh candidate producer`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.3`
+  Status: `pending`
+  Goal: `Capture named concatenation definition births and ordered current source contracts.`
+  Acceptance: `After factorizer births, select and split actual ExpressionNamer definition publication and parser/Core source joins before edits. Preserve ordered whole occurrences, literal width/radix/value, vector rank at width one, actual source identities/revisions and unknown computed allocation. Derive no source binding from printed names, cached widths or a factorizer birth alone. Failure/replacement/reuse must revoke stale proof; detached metadata retains no owner graph. Focused actual source and hostile controls plus book/POD sync close each bounded slice. Source/current-range/target qualification remains separate.`
+  Verification: `pending selected named/source consumers`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4`
+  Status: `pending`
+  Goal: `Join original concatenation producer ownership to completed backend inference events.`
+  Acceptance: `After both producer families, select actual normalization/registry/collection joins and split before implementation. Bind original ordered source contracts to actual current generation rows without turning independent cache/native constraints into intrinsic sum authority. Preserve unknown Core profiles, failure clearing, source/caller identity and clean reuse. Focused native/refusal/hostile checks and book/POD sync precede handoff to current sum proof .3.4.3.3.3.4. Full qualification stays .6.`
+  Verification: `pending producer ownership`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4`
