@@ -1572,11 +1572,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=13 for T2191/T2190/T2188. Strict native VHDL example succeeds; actual logical refusal preserves existing/absent outputs. Syntax/book/POD/source checks and mandatory normal final-index doctrines gate commit. External runtime/override/compiler/public/corpus qualification stays .6.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Propagate canonical width relationships through supported width-preserving unary/binary intermediates.`
   Acceptance: `After scalar reductions, inspect actual AST width rules and canonical source relationships for whole-vector unary/bitwise/arithmetic families. Prove all operands and retain each distinct origin; equal defaults cannot reduce independent max-width constraints. Support equivalent proved relationships or explicit target expressions with actual backend legality, and refuse missing general max/mixed-width proof. Keep scalar logical/comparison results distinct. Split by actual consumers, focused checks and synchronized docs before each commit; full qualification stays .6.`
-  Verification: `Scalar source/VHDL profile closes at e998f1c4c with clean handoff. The normal expression contract preserves vector bitwise operations; CaptureSupport currently coerces Core binary &/| into logical operators. First probe actual source/Core/native semantics before selecting width relationships; do not infer a defect from code alone. Existing recorded-width and AST simplification cards retain their narrower facts.`
-  Commit: `pending`
+  Verification: `Original Core bitwise/literal/grouping semantics and canonical binary/arithmetic/source-tree/literal relationships close in the children with focused actual source/target evidence. Scalar logical/comparison results retain their own rank; vector children retain proved generic ranges. Independent constraints and current source/target/ledger barriers remain. This bounded plain-operand implementation closure does not qualify concat/select/shift, broader paired VHDL or full/public/external .6.`
+  Commit: `children; closure with ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
 
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3`
 
@@ -1712,11 +1712,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — knowledge-map: OK with query parity verified; book/source build and relative-source contracts pass. No runtime code or allocation policy changes, and no broader suite or external qualification is inferred. Final staged task acceptance and normal doctrine hook gate the metadata-bearing documentation commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining width-preserving unary/arithmetic and scalar logical/comparison relationships with explicit independent constraints.`
   Acceptance: `After initial bitwise relationships, inventory actual supported unary/binary AST families and emitted numeric/cache contexts. Preserve all independent max-width and signed/type constraints, literal sizing and actual source semantics; admit only proved kernels, with explicit refusals for unsupported relationships. Do not activate optional inversion. Split bounded family/producer/consumer slices with focused checks and synchronized docs; paired VHDL remains .4 and full external/public/corpus qualification .6.`
-  Verification: `.1 selects actual factorizer arithmetic allocation after bounded bitwise closure. Explicit arithmetic producer/inference and source/target consumer proof remain .2/.3; residual scalar/unary/n-ary/nested contracts remain .4. No new generic or full-qualification claim.`
-  Commit: `pending`
+  Verification: `Actual factorizer birth/inference and canonical arithmetic source/target consumers close through .1-.3; computed graphs, source n-ary and scalar/literal/independent-constraint families close through .4. Required relationships preserve original current provenance and independent floors; unsupported profiles withhold. Concat/select/shift follows; paired VHDL and full .6 stay open.`
+  Commit: `children; closure with ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.1`
@@ -1765,11 +1765,11 @@ do not start broad suites between implementation slices.
   Commit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2.1: retain closed arithmetic history`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining scalar/unary/n-ary/nested constraints and select other shapes.`
   Acceptance: `After the first arithmetic kernel, inventory residual actual scalar comparison/logical and admitted unary/n-ary/nested graphs. Preserve independent result/operand widths and value semantics, complete current provenance and explicit unsupported boundaries. Split necessary producer/proof/consumer tasks rather than guessing ancestry. No optional inversion, unqualified binary VHDL or early full verification. Close .2.3 only after required relationships are implemented or precisely qualified refusals, then select concat/select/shift .3.4.3.3.`
-  Verification: `Bounded arithmetic is implemented with focused checks. .1 identifies numeric computed arithmetic and nested source-bitwise roots; .2 owns computed graph repair, .3 source n-ary and .4 scalar/independent constraints. All remain required before family closure; no full .6 claim.`
-  Commit: `pending`
+  Verification: `Computed arithmetic graph and source n-ary/nested bitwise repairs close through .2/.3, with separate source/currentness/selected-target/range/emission proofs. Scalar/literal and independent constraints close through .4. Complete focused child evidence and explicit unsupported profiles preserve. No optional inversion, broader VHDL or full/external/public qualification is implied.`
+  Commit: `children; closure with ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.3, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.1`
@@ -2405,11 +2405,11 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — All tests successful Files=1 Tests=1 for focused T2249. Complete native default-one/wide/fixed snapshot and HDL conservation passes under its declared finite comparison, with observed rejecting controls. Prior directly affected source/binary/arithmetic tests remain .5.2 evidence; no unchanged broad rerun. Current POD/book/source checks and the normal mandatory staged doctrine hook gate commit. External compiler/override/runtime/full .6/publication remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Close residual scalar and independent literal/type constraints without inventing vector ancestry.`
   Acceptance: `After computed arithmetic and source n-ary kernels, verify actual logical/comparison/negated wrappers retain one-bit results and whole-value operands with current graph provenance. Preserve separately sized literals, signed/type/state/opaque/floor constraints and canonical supported boundaries; implement required relationships or qualify precise refusals rather than silently promoting from defaults. Optional inversion remains deferred. Reconcile this family before selecting concat/select/shift; full external/corpus/override/runtime .6 remains deferred.`
-  Verification: `Initial scalar and composite controls retain one-bit results in the residual inventory; full family implementation closure is still pending.`
-  Commit: `pending residual closure`
+  Verification: `Literal source allocation and final target agreement close in .1, including ordinary original/nested high-bit and independent-floor controls. Scalar wrappers and private constrained-source refusals close in .2. Core unknown widths, actual type/state/sign boundaries and caller kinds preserve; full .6 and other target/shapes remain owned.`
+  Commit: `children; closure with ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1`
@@ -2814,11 +2814,11 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close remaining scalar literal and type constraint profiles after the concrete literal repair.`
   Acceptance: `After .1, complete parent .4 scalar/logical/comparison/negated and separately sized literal/signed/type/state/opaque/floor constraints, preserving whole-value truth and precise relationship boundaries. Reuse canonical expression/source/target kernels, retain original typed literal value/width/radix and caller JSON kinds, and split further safe concrete repairs as required. Optional inversion and later concat/select/shift/VHDL/full .6 remain separately owned. Focused controls and book/API sync before each commit.`
-  Verification: `Literal predecessor closes atb54d9bbc6. Child .1 qualifies retained actual scalar comparison/logical wrappers and symbolic vector children with focused checks; .2 selects remaining independent profiles and .3 closes any resulting required repairs before other expression shapes. Full .6 remains deferred.`
-  Commit: `pending required scalar/type closure`
+  Verification: `Scalar logical/comparison wrappers and symbolic vector children close in .1. Canonical independent source/target constraints and actual hostile Core generation refusal/reuse close in .2. Child .3 reconciles bounded family status and preserves all explicit full/external/public qualification gaps. No optional inversion or typed source admission follows.`
+  Commit: `children; closure with ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
   Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.1`
@@ -2856,11 +2856,16 @@ do not start broad suites between implementation slices.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Close residual scalar and independent constraint implementation before other expression shapes.`
   Acceptance: `After .1/.2 and any owned concrete repairs, reconcile source/target/caller contracts and explicit unsupported relationships with the book and canonical records. Complete only focused feature checks; retain VHDL/concat/select/shift/full .6 and publication ownership and advance the next required consumer.`
-  Verification: `Pending scoped constraint selection and any required repairs.`
-  Commit: `pending scalar/type family closure`
+  Verification: `Bounded literal closure42b07a069/b54d9bbc6, scalar closure412cbdd07 and constrained-source qualification5edd5a1b9 are actual ancestors of current HEAD. Current committed T2271/T2272/T2273/T2250 bytes equal the reviewed working files; no implementation change occurs in this reconciliation. Source/target numeric/range/physical/ledger/final agreement and actual refusal/reuse evidence stays in the children. Explicit literal floors, independent wider/mutable leaves, scalar result widths and unknown Core allocation conserve. Plain unsigned/constrained-source eligibility is precise; private hostile Core interventions do not admit typed public sources. Full valid typed/corpus/API/MCP, external compiler/elaboration/runtime, VHDL and collection-scale retained-fence qualification remain with .6 or the existing dedicated owners. Close only completed unary/binary/arithmetic/source-tree/scalar/literal bounded containers and advance concatenation/selection/shift .3.4.3.3 before paired VHDL .4 and final generated-intermediate reconciliation .5. Re-derive authority by exact focused-test Git bytes and ancestor checks; falsify unsupported shortcuts with the separately executed hostile profile/ledger/width/late-write and independent range/mask/grouping controls; durability tracked tests/receipts/book/task records and Git. No broader matrix is repeated because no new runtime code changes. Guarded mdBook/POD and current source references pass; aggregate authority/inventory update with unchanged containment limits and candidate identities. Fresh staged acceptance and every normal final-index doctrine gate commitment. Under decision0116 the engineer selects a clean context-refresh checkpoint after this complete family: the next concatenation/selection/shift source-relationship design requires a separate signoff context. Commit all work, clear the brief and consume every job; resume the precise next owned consumer without changing required-delivery priority.`
+  Commit: `ISF-REDUCTION-DELIVERY: close bounded scalar and constraint family`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S of the residual boundary identifies4a378c9f2; parent nodes still contain pre-implementation literal refusal and scalar-pending projections after their actual child source/target repairs and focused qualifications. The current focused-test Git comparison and ancestor checks establish which committed implementations own the closed relationships.
+  - [x] **ADDRESSED (verified)** — Reconcile bounded unary/binary/arithmetic/source-tree/scalar/literal container states against completed child contracts; preserve every independent profile/source/public/external boundary. Advance concat/select/shift .3.4.3.3 and keep paired VHDL/full/publication owners open. Commit the clean decision0116 context-refresh checkpoint with an exact resume pointer.
+  - [x] **NO REGRESSION** — Current focused-test Git bytes equal committed qualified sources and all named closure commits are ancestors of HEAD. Prior focused suites remain All tests successful within their recorded scopes; no runtime code changed and no broad matrix is repeated. Guarded mdBook build, generated POD/current source references and every normal final-index doctrine gate this reconciliation.
 
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3`

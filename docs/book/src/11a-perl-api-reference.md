@@ -633,6 +633,9 @@ opaque or declared-result changes cannot reuse a completed plain literal policy.
 `t/2273-literal-source-profile-refusals.t` checks actual generation refusal,
 invalidated capture, cleared generation ledgers and fresh same-backend recovery.
 These interventions qualify source-proof rejection, not typed source admission.
+The bounded scalar/literal/independent-constraint implementation family is closed
+within these contracts. Concatenation, selection and shift relationships, wider
+paired VHDL consumers and full feature/public qualification remain separately owned.
 
 Run the bounded source proof and live-emission checks with:
 
