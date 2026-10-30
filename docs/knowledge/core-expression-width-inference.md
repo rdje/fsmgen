@@ -22,7 +22,8 @@ evidence: >-
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
   t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t; docs/audits/literal-target-consumers-20261030/verify.py
-reverify: python3 -B docs/audits/literal-target-consumers-20261030/verify.py --current --qualify; scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; docs/audits/target-source-literal-width-20261030/verify.py
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2261-target-source-literal-width.t; python3 -B docs/audits/literal-target-consumers-20261030/verify.py --current --qualify; scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -33,21 +34,9 @@ Core. Explicit literal widths bypass it. Unknown future classes cannot borrow it
 Scalar wrappers keep their results; cycles and over-bound walks remain unknown.
 Ordinary references read selected widths without expanding Signals' definitions.
 
-Selected widths alone prove neither allocation ancestry nor that a helper's
-compatibility placeholder is exact. This preparatory API does not yet alter the
-backend consumer or symbolic floors. Required repair continues under
-ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2. Actual mutable literal sources retain the
-final source/target disagreement; fixed sources currently generate without that
-same final check. Full qualification remains .6.
-
-Preparation-bound ownership diagnosis: nominal child widths could become exact
-and discard an unsized high bit. Ordinary fixed CLI generated; injected capture
-refused. The original audit verify.py --current --qualify authenticates producers,
-source/target products and independent mask algebra, rejecting hostile variants.
-It is a manual historical check, without an unconditional watcher or HDL runtime.
-Source propagation is now closed. The source-qualified target capture below still
-finds a nominal Core child read before its backend row, plus mutable final refusal.
-Target/final agreement .1.2.3 remains the required successor.
+Selected widths do not prove ancestry or placeholder exactness. The full source/
+target diagnosis, ordinary versus injected capture, manual evidence limits and
+open consumers remain in `docs/book/src/11a-perl-api-reference.md`.
 
 SourceLiteralWidthAllocationSupport now validates detached direct bitwise literal
 allocation holders with nullable exact width and raw literal value/radix/size.
@@ -84,3 +73,11 @@ births and child-first transport preserve independent floors and scalar results.
 T2258 covers fixed/mutable Parser/facade writes. T2259 qualifies publication:
 the original birth's phase/digest projection must match actual completed child
 capsules. T2260 closes source edge/conservation/lifetime controls; target sizing remains separate.
+
+SystemVerilog SourceLiteralWidthSupport now prepares a detached target-only
+observation over one bounded actual completed source capture. Shared Core
+inference receives explicit child resolutions and the existing target unsized32
+rule; explicit sizes and original independent leaf metadata remain separate
+floors. Raw source kinds/edges/capsule conserve; stale, foreign, matching or late
+writes withhold. T2261 qualifies Parser/facade and repeated/bounded controls.
+This supplies no target row/epoch/range/final agreement; live consumers stay open.

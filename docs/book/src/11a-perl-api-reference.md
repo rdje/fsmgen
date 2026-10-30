@@ -677,6 +677,42 @@ child's backend row. Source intent alone does not repair that target ordering.
 The saved reader starts no compiler or HDL execution; its optional `--current`
 checks only the named producer identities, not complete current behavior.
 
+The private target-only
+`FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport`
+now provides `prepare(signal => $actual_core_helper)` and
+`current(signal => $actual_core_helper, observation => $saved)`. It uses one
+bounded completed-source capture and shared Core inference with explicit typed
+child resolutions. Unsized literals contribute the existing SystemVerilog floor
+of 32; explicit sizes keep their independent floors. The detached observation
+separates `literal_floor`, `leaf_floor` and `selected_width`, retaining ordered
+raw literals, original leaf width metadata, helper widths, typed reference edges
+and the complete original source capsule. Generated placeholder widths never
+become independent leaf floors. Missing, stale, foreign, constrained or over-bound
+source intent withholds; matching writes during inference also withhold.
+This preparation supplies no backend row/epoch proof, generic range or final
+declaration agreement. The live target defect above remains open until its
+numeric and declaration consumers are installed. `t/2261-target-source-literal-width.t`
+covers the completed Parser/facade sources, explicit and independent floors,
+raw kinds, repeated edges and mutation barriers without HDL execution.
+
+```perl
+use Lispish;
+use FSM::Adapter::FSMGenFull;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
+my $text = '(?fsm:target_literal (+size (A 8) (B 16) (DATA 1) (OTHER 1))
+  (idle (<(^ (| A 256) B) (= (DATA 1)) (= (OTHER 1))) (-> idle)))';
+my $module = FSM::Adapter::FSMGenFull->new->parse_fsm(scalar Lispish::multi(\$text));
+my ($root) = grep {defined($_->source_literal_width_allocation)
+    && $_->driving_ast->operator eq '^'} values %{$module->signals};
+my $observation = FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+    ->prepare(signal => $root);
+die "missing target observation\n" unless $observation;
+print join(' ', @{$observation}{qw(selected_width literal_floor leaf_floor)}), "\n";
+```
+
+This prints `32 32 16`. It observes the completed source graph; the live HDL
+inference and final declaration repair remain the following implementation steps.
+
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.
 Unknown exact width remains distinct from a helper's nominal scalar width;
