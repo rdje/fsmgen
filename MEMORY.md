@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3`
-- next_action: Review and split selected literal declaration/expression ledger consumers as needed, then bind actual rows, epochs, typed edges and emitted ranges to the qualified generic source-range plan before final agreement.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.1`
+- next_action: Join actual root and child literal numeric/range intent to freshly selected typed expressions, then independently qualify captured targets before live emitted-ledger integration.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.

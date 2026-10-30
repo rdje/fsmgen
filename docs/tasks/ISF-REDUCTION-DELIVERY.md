@@ -2709,10 +2709,32 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2264/T2262: All tests successful Files=2 Tests=7. Existing numeric inference retains its original fixed generation and mutable preparation controls. Final syntax, POD freshness, guarded mdBook build and saved/current/hostile receipt checks pass. Mandatory final-index doctrines gate commit; external HDL and full feature/publication qualification stay deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind literal helper generic ranges to actual selected declaration and expression ledgers.`
   Acceptance: `After .2, qualify installed owners, actual selected rows/epochs, declarations, ordered typed child/reference identities and emitted expressions. Record detached exact range intent and independently rederive complete selected-target agreement. Missing or stale contracts refuse atomically; never admit through text equality or compatibility widths. Focused direct/nested fixed/mutable controls, synchronized book/POD/downstream handoff and commit.`
-  Verification: `Pending generic source range proof.`
+  Verification: `Selected source review separates typed expression selection from complete captured-target proof and live emitted-ledger integration. Existing numeric/range preparation proves neither selected text nor physical declarations. Split before implementation, preserving final source-target agreement .4.4 and full .6 deferral. Startup Git is clean at 5282e7456f; original claim template is byte-equal to its retained reviewed source, adopted containment guide and README policy remain locally authoritative, and artifact cleanup is still within its daily interval.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2, ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.1`
+  Status: `pending`
+  Goal: `Join actual literal numeric and generic-range intent to every selected typed helper expression.`
+  Acceptance: `Use installed recovery/rendering/width owners and current canonical root/child rows and epochs. Preserve actual completed source capsules, ordered typed edges and original literal kinds; freshly rendered defining/runtime/cached ASTs must agree with selected expressions. Detach complete intent, close final raw source/target barriers, and reject foreign/copied/stale/constrained or text-only authority. Focused direct/nested fixed/mutable and late-mutation controls, POD/book/downstream sync and commit. No live declaration or final agreement claim.`
+  Verification: `Pending actual selected expression proof.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2`
+  Status: `pending`
+  Goal: `Independently bind literal expression intent to complete actual captured declarations and child events.`
+  Acceptance: `After .1, join every actual typed child edge and original leaf to unrenamed physical namespace/declaration/event membership. Reprove numeric maxima and original generic operands independently of emitted-ledger membership; compare full source intent with detached target plans, ordered child inventories and complete raw currentness. Missing events, conflicting families, stale rows/epochs, changed text or constraints refuse atomically. Focused distinguishing controls and POD/book/downstream sync; commit before live ledger integration.`
+  Verification: `Pending selected expression intent .1.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.3`
+  Status: `pending`
+  Goal: `Consume qualified literal declaration intent through per-generation emitted ledgers.`
+  Acceptance: `After .1/.2, install exact literal ranges and selected expressions through an isolated per-generation ledger. Derive expected coverage independently from actual selected sources/events, reprove full selected-target plans, compare complete range/expression identities and close a whole-generation raw barrier before returning HDL. Missing/stale authority cannot select numeric fallback. Invalidate failed capture and prove fresh same-backend reuse. Focused actual fixed/mutable one/wide/nested/floor controls, synchronized POD/book/downstream handoff and commit; final unknown Core/source agreement remains .4.4.`
+  Verification: `Pending complete target proof .2.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.4`
