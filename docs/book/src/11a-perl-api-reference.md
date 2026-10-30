@@ -656,24 +656,25 @@ my $width = FSM::CoreExpressionWidthSupport->infer_width($literal,
 die "caller policy lost\n" unless $width == 32;
 ```
 
-This interface does not yet alter HDL generation. The mutable source refusal
-above remains open. Fixed-width sources currently generate through a path that
-does not run the same final source/target agreement check; that path and generic
-literal floors remain owned by the target-consumer successor. The focused
-contract/source controls are in `t/2250-core-expression-width-contract.t`.
+The mutable source refusal above remains open. Fixed-width sources generate
+through a path that does not run the same final source/target agreement check;
+that path and generic literal floors remain owned by the declaration successor.
+The focused contract/source controls are in `t/2250-core-expression-width-contract.t`.
 
-Known defect in this open family: a nested fixed-width helper can truncate an
-unsized literal's high bit in a narrower parent helper. The retained strict CLI
-reproduction and source-width diagnosis are authenticated by
+The retained predecessor defect in this family is a nested fixed-width helper
+truncating an unsized literal's high bit in a narrower parent helper. The retained
+strict CLI reproduction and source-width diagnosis are authenticated by
 `docs/audits/literal-width-ownership-20261029/verify.py`. Ordinary generation and
 injected declaration capture have different outcomes; the latter can refuse the
 source. Source allocation and nested unknown-width propagation now have focused
-qualification; target inference and final declaration agreement remain open.
+qualification. Target numeric inference now consumes it; final declaration
+agreement remains open.
 The later source-qualified capture at
 `docs/audits/literal-target-consumers-20261030/verify.py --qualify` preserves the
-strict CLI/trace, explicit-size control and independent mask algebra. Its current
-parent route reads a generated child's nominal Core width before resolving that
-child's backend row. Source intent alone does not repair that target ordering.
+strict CLI/trace, explicit-size control and independent mask algebra. Its captured
+parent route read a generated child's nominal Core width before resolving that
+child's backend row. The live numeric consumer described below repairs that
+ordering; this receipt remains historical evidence of the earlier defect.
 The saved reader starts no compiler or HDL execution; its optional `--current`
 checks only the named producer identities, not complete current behavior.
 
@@ -690,8 +691,8 @@ and the complete original source capsule. Generated placeholder widths never
 become independent leaf floors. Missing, stale, foreign, constrained or over-bound
 source intent withholds; matching writes during inference also withhold.
 This preparation supplies no backend row/epoch proof, generic range or final
-declaration agreement. The live target defect above remains open until its
-numeric and declaration consumers are installed. `t/2261-target-source-literal-width.t`
+declaration agreement. Its separate numeric consumer is now installed;
+declaration consumers remain open. `t/2261-target-source-literal-width.t`
 covers the completed Parser/facade sources, explicit and independent floors,
 raw kinds, repeated edges and mutation barriers without HDL execution.
 
@@ -710,8 +711,31 @@ die "missing target observation\n" unless $observation;
 print join(' ', @{$observation}{qw(selected_width literal_floor leaf_floor)}), "\n";
 ```
 
-This prints `32 32 16`. It observes the completed source graph; the live HDL
-inference and final declaration repair remain the following implementation steps.
+This prints `32 32 16`. It observes the completed source graph.
+
+`prepare_inference(width_support => $installed_owner, signal_name => $name,
+signal_info => $actual_row, signal_registry => $consumer_rows)` joins this
+observation to the installed backend, current normalization epoch, canonical
+collected row, registered row and actual module source membership. Independent
+row constraints and complete AST ownership must agree. It rechecks target state
+after source reads. `current_inference` additionally compares a saved frame;
+changed epochs, row identities, raw kinds or constraints withhold saved authority.
+Frames contain detached data and confer no completed allocation or range proof.
+
+The live width resolver selects this qualified result before native or cached
+compatibility widths and records `source_literal_intent`. Nested source references
+also consume the actual target row before their nominal Core widths. Thus the
+fixed nested high-bit witness keeps its bit through both child and parent;
+explicit literal sizes and wider independent leaves preserve their own floors.
+Core source widths and original caller data stay unchanged. Missing or unsupported
+joins supply no literal authority. `t/2262-target-source-literal-numeric-inference.t`
+checks actual fixed generation, mutable numeric preparation, independent mask
+algebra and hostile row/source/epoch changes. Mutable generic floors and final
+fixed/mutable declaration agreement remain owned by the next repair. These are
+focused source and generated-text checks; external HDL execution and full feature
+qualification remain deferred. Saved evidence can be read without source or HDL
+execution with `python3 -B docs/audits/literal-numeric-inference-20261030/verify.py --qualify`;
+its optional `--current` checks only the named producer identities.
 
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.

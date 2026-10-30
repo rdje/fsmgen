@@ -22,8 +22,8 @@ evidence: >-
   t/2255-core-source-reference-width.t; docs/audits/source-reference-width-20261029.json.gz;
   t/2256-source-nested-literal-holder.t; docs/audits/source-nested-literal-holder-20261029.json.gz;
   t/2257-source-nested-literal-transitions.t; docs/audits/source-nested-literal-transitions-20261029.json.gz; t/2258-source-nested-literal-allocation.t; t/2259-source-nested-literal-publication.t; t/2260-source-nested-literal-closure.t; docs/audits/literal-target-consumers-20261030/verify.py
-  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; docs/audits/target-source-literal-width-20261030/verify.py
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2261-target-source-literal-width.t; python3 -B docs/audits/literal-target-consumers-20261030/verify.py --current --qualify; scripts/run_with_ram_guard.sh -- prove -Iperl t/225[0-9]*.t t/2260-*.t
+  perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm; t/2261-target-source-literal-width.t; t/2262-target-source-literal-numeric-inference.t; docs/audits/target-source-literal-width-20261030/verify.py
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2261-target-source-literal-width.t t/2262-target-source-literal-numeric-inference.t; python3 -B docs/audits/literal-target-consumers-20261030/verify.py --qualify
 ---
 
 CoreExpressionWidthSupport::infer_width is the bounded direct builder exact-width
@@ -80,4 +80,5 @@ inference receives explicit child resolutions and the existing target unsized32
 rule; explicit sizes and original independent leaf metadata remain separate
 floors. Raw source kinds/edges/capsule conserve; stale, foreign, matching or late
 writes withhold. T2261 qualifies Parser/facade and repeated/bounded controls.
-This supplies no target row/epoch/range/final agreement; live consumers stay open.
+prepare_inference now joins current rows/epoch before compatibility widths
+(T2262); generic range and final agreement consumers stay open.

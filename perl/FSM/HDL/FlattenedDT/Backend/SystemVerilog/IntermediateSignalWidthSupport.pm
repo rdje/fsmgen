@@ -50,6 +50,7 @@ use JSON::PP ();
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::IntermediateWidthGraphInferenceSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _begin_factorized_width_inference ($self) {
@@ -516,7 +517,14 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $width_source = 'default_1bit';
 
     my $native_signal_info = $ctx->{enable_graph_assignment_support}->get_signal_info($signal_name);
-    if ($native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 1) {
+    my $literal = FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+        ->prepare_inference(width_support => $self, signal_name => $signal_name,
+            signal_info => $signal_info, signal_registry => $signal_registry);
+    if ($literal) {
+        $resolved_width = $literal->{observation}{selected_width};
+        $width_source = 'source_literal_intent';
+    }
+    if (!defined($resolved_width) && $native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 1) {
         $resolved_width = $native_signal_info->{width};
         $width_source = 'native_signal_metadata';
     }
@@ -675,6 +683,12 @@ sub resolve_ast_signal_ref_width ($self, $signal_name, $signal_registry = undef,
 
     if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals->{$signal_name}) {
         my $signal = $ctx->{fsm_module}->signals->{$signal_name};
+        if (ref($signal_registry) eq 'HASH' && ref($signal_registry->{$signal_name}) eq 'HASH') {
+            my $literal = FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+                ->prepare_inference(width_support => $self, signal_name => $signal_name,
+                    signal_info => $signal_registry->{$signal_name}, signal_registry => $signal_registry);
+            return $literal->{observation}{selected_width} if $literal;
+        }
         my $width = eval { $signal->width };
         return $width if defined($width) && $width > 0;
     }

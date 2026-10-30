@@ -4,10 +4,11 @@ use v5.20;
 use strict;
 use warnings;
 use JSON::PP ();
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 use FSM::CoreExpressionWidthSupport;
 use FSM::SourceLiteralWidthAllocationSupport;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _json { return JSON::PP->new->canonical }
 sub _identity { return FSM::SourceLiteralWidthAllocationSupport::_identity($_[0]) }
@@ -127,6 +128,102 @@ sub current {
     return $matches ? $observation : undef;
 }
 
+# A numeric observation is deliberately short-lived. Re-derive it at each
+# inference read; it is not a completed allocation or an emitted-range policy.
+sub _inference_frame {
+    my ($args, $observation) = @_;
+    my $owner = $args->{width_support};
+    return unless blessed($owner)
+        && $owner->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport');
+    my $context = $owner->{flattened_dt};
+    return unless blessed($context) && $context->isa('FSM::HDL::FlattenedDT')
+        && (refaddr($context->{backend_sv_intermediate_width_support}) // 0) == refaddr($owner);
+    my $rows = $owner->_current_graph_inference_rows or return;
+    my $name = $args->{signal_name};
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name)
+        && ref($args->{signal_registry}) eq 'HASH'
+        && ref($args->{signal_info}) eq 'HASH'
+        && (refaddr($rows->{$name}) // 0) == refaddr($args->{signal_info})
+        && (refaddr($args->{signal_registry}{$name}) // 0) == refaddr($args->{signal_info});
+    my $module = $context->{fsm_module};
+    return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule');
+    my $signals = $module->{signals};
+    my $registry = $context->{intermediate_signals};
+    return unless ref($signals) eq 'HASH' && ref($registry) eq 'HASH';
+    my $signal = $signals->{$name};
+    return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+    my $source = _json()->decode($observation->{source_capsule}{state});
+    my @members = ($source->{signal}, @{$source->{operands}});
+    for my $member (@members) {
+        my $actual = $signals->{$member->{name}};
+        return unless blessed($actual) && _identity($actual) eq $member->{identity_token};
+    }
+    return unless _identity($signal) eq $observation->{source_identity};
+    my $ast = $signal->{driving_ast};
+    my @states;
+    for my $row ($args->{signal_info}, $registry->{$name}) {
+        return unless ref($row) eq 'HASH' && !defined($row->{state_model})
+            && defined($row->{source}) && !ref($row->{source}) && $row->{source} eq 'fsmgen_parsing';
+        for my $key (qw(ast driving_ast)) {
+            return unless blessed($row->{$key}) && refaddr($row->{$key}) == refaddr($ast);
+        }
+        my $state = FSM::IntermediateWidthAllocationSupport::_factorized_metadata_state($row, $ast) or return;
+        my $width = _width($row->{width});
+        return unless defined $width;
+        # Before normalization these rows carry the original Core compatibility
+        # width. Only this branch's own numeric publication can be read again.
+        if (defined $row->{width_source}) {
+            return unless $row->{width_source} eq 'source_literal_intent'
+                && $width eq $observation->{selected_width};
+        } else {
+            return unless $width eq _width($source->{signal}{width});
+        }
+        push @states, $state;
+    }
+    return {kind => 'systemverilog_source_literal_numeric', observation => $observation,
+        owner_identity => _identity($owner), context_identity => _identity($context),
+        module_identity => _identity($module), signals_identity => _identity($signals),
+        registry_identity => _identity($registry), rows_identity => _identity($rows),
+        epoch => $owner->{_width_inference_epoch}, rows_revision => $owner->{_graph_inference_rows_revision},
+        signal_name => $name, signal_info => $states[0], registered => $states[1]};
+}
+
+sub prepare_inference {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args) eq 'signal_info,signal_name,signal_registry,width_support';
+    my $result = eval {
+        my $owner = $args{width_support};
+        return unless blessed($owner)
+            && $owner->isa('FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport')
+            && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($args{signal_name});
+        my $context = $owner->{flattened_dt};
+        return unless blessed($context) && $context->isa('FSM::HDL::FlattenedDT');
+        my $module = $context->{fsm_module};
+        return unless blessed($module) && $module->isa('FSM::CoreAST::FSMModule')
+            && ref($module->{signals}) eq 'HASH';
+        my $signal = $module->{signals}{$args{signal_name}};
+        my $observation = $class->prepare(signal => $signal) or return;
+        my $frame = _inference_frame(\%args, $observation) or return;
+        # Source getters can mutate an earlier row or module membership. Read
+        # all source state again, then close the join using raw target reads.
+        return unless $class->current(signal => $signal, observation => $observation);
+        my $after = _inference_frame(\%args, $observation) or return;
+        return unless _json()->encode($frame) eq _json()->encode($after);
+        _json()->decode(_json()->encode($frame));
+    };
+    return $@ ? undef : $result;
+}
+
+sub current_inference {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args) eq 'observation,signal_info,signal_name,signal_registry,width_support';
+    my $saved = delete $args{observation};
+    return unless ref($saved) eq 'HASH';
+    my $current = $class->prepare_inference(%args) or return;
+    my $matches = eval {_json()->encode($current) eq _json()->encode($saved)};
+    return $matches ? $current : undef;
+}
+
 1;
 
 =head1 NAME
@@ -174,5 +271,36 @@ C<< current(signal => $actual_core_signal, observation => $saved_observation) >>
 re-derives the complete observation and returns fresh detached data only on exact
 JSON equality. Changed kinds, floors, identities, source metadata and extra fields
 withhold. It does not upgrade the observation to target eligibility.
+
+=head2 prepare_inference
+
+C<< prepare_inference(width_support => $installed_owner, signal_name => $name,
+signal_info => $actual_row, signal_registry => $consumer_rows) >> returns a
+detached numeric observation for the current normalization epoch. The actual
+row must belong to the owner's current weak canonical row view and the supplied
+consumer map. The installed context/module/registry, root and every original
+source member, driving AST and independent row constraints must agree. Both
+collected and registered rows must carry either the original Core compatibility
+width or this branch's own C<source_literal_intent> width publication. Foreign
+width branches, signed/typed/constrained rows and missing or revoked source
+intent withhold. Source re-observation followed by a raw target-frame comparison
+rejects target changes made during source reads.
+
+The direct width resolver consumes this fresh observation before native/cached
+compatibility metadata. Its whole-reference resolver also uses the qualified
+target width before a Core helper's nominal width. This repairs fixed nested
+literal truncation without writing Core widths or reconstructing dependencies
+from numeric equality. Existing unsupported profiles retain their compatibility
+path and acquire no literal authority. Independent floors, generic ranges,
+selected text, final declaration/source agreement and emitted ledgers still
+require their separate consumers. This frame supplies no completed allocation
+or range eligibility and is re-derived at each numeric read.
+
+=head2 current_inference
+
+Accept the same arguments plus C<observation>. Re-derive the entire numeric
+frame and return detached data only on exact JSON agreement, including epoch,
+row and registry identities and raw source kinds. A copied or changed saved
+frame cannot authorize a later row or epoch. The frame contains no live owners.
 
 =cut

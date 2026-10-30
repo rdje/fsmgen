@@ -7,7 +7,13 @@ bounded exact-width walk. Its ordinary parser call has no target literal policy;
 unsized literals remain unknown. The separate explicit callback contract passes
 detached raw literal data and preserves independent explicit widths. It supplies
 no allocation ancestry, generic range or final target agreement. This is a scoped
-import update; backend literal consumers and full qualification remain pending.
+import update; full qualification remains pending. SystemVerilog's
+IntermediateSignalWidthSupport now imports its target-owned
+SourceLiteralWidthSupport numeric join. It authenticates current completed source
+intent against installed owner/epoch, collected and registered rows and actual
+module members before selecting target widths ahead of compatibility metadata.
+Whole-reference reads use the same target join before nominal Core helper widths.
+Detached numeric frames supply no generic range or final declaration authority.
 
 CoreAST also imports `FSM::SourceLiteralWidthAllocationSupport` for separate
 detached direct literal intent under the common allocation revision lifecycle.

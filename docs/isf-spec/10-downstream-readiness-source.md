@@ -363,9 +363,11 @@ General source rules:
   replacement epochs, changed record kinds and late writes cannot license a join.
   Independent declared floors, explicit sizes and scalar wrappers preserve.
   Failed validation/publication and reuse revoke partial/old policy. This internal
-  source contract adds no public semantic/MCP field or target literal sizing;
-  unsized-literal floors, fixed truncation and final target agreement remain owned
-  by the required reduction repair before full qualification.
+  source contract adds no public semantic/MCP field. The direct SystemVerilog
+  numeric consumer now joins completed literal intent to current actual rows
+  before compatibility widths, preserving nested fixed high bits and independent
+  literal/leaf floors. Mutable generic floors and final fixed/mutable target
+  agreement remain owned by the required reduction repair before full qualification.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
