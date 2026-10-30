@@ -93,7 +93,7 @@ subtest 'scalar wrappers known composites cycles and shared occurrences have pre
     ok(!defined(width(binary('|', $shared, $shared))), 'over-budget repeated occurrences refuse');
 };
 
-subtest 'actual source allocation and caller products conserve while the target consumer remains open' => sub {
+subtest 'actual source allocation and caller products conserve through final target agreement' => sub {
     for my $bits (1, 8) {for my $mutable (0, 1) {
         my $params = $mutable ? "(+params (W $bits))" : '';
         my $slot = $mutable ? '(param W)' : $bits;
@@ -111,11 +111,13 @@ subtest 'actual source allocation and caller products conserve while the target 
             'ordinary builder still reports unknown exact source width');
         is(width($helper->driving_ast, unsized_literal_width => sub {32}), 32, 'same actual source can be sized by explicit target policy');
         my $hdl = eval {FSM::HDL::FlattenedDT->new->generate_systemverilog($module)};
+        is($@, '', 'actual fixed or mutable source completes final target agreement');
+        ok(defined($hdl), 'generation returns the complete HDL');
+        my $name = $helper->name;
         if ($mutable) {
-            like($@, qr/disagrees with observed source width/, 'mutable target agreement refusal remains owned by successor');
+            like($hdl // '', qr/^  wire \[[^\n]*\bW\b[^\n]*\b32\b[^\n]*:0\] \Q$name\E;$/m,
+                'mutable target retains the original parameter and unsized literal floor');
         } else {
-            ok(defined($hdl), 'fixed source retains its existing generation path') or diag $@;
-            my $name = $helper->name;
             like($hdl // '', qr/^  wire \[31:0\] \Q$name\E;$/m,
                 'fixed target sizes its unsized literal while the Core placeholder remains unresolved');
         }

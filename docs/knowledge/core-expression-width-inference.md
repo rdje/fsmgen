@@ -82,3 +82,5 @@ physical proof (T2267), live ledgers (T2268) and final literal agreement (T2269)
 route to `docs/book/src/11a-perl-api-reference.md`. Bounded mutable emission passes
 with original unknown Core widths intact; full/external qualification stays open.
 Private target-record seams alone qualify no generation.
+
+T2271 checks ordinary source/HDL expressions and ranges; T2250 now expects repaired mutable generation. See the book for closure and external/full/public gaps.

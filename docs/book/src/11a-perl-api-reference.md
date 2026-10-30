@@ -661,19 +661,19 @@ my $width = FSM::CoreExpressionWidthSupport->infer_width($literal,
 die "caller policy lost\n" unless $width == 32;
 ```
 
-The mutable source refusal above remains open. Fixed-width sources generate
-through a path that does not run the same final source/target agreement check;
-that path and generic literal floors remain owned by the declaration successor.
-The focused contract/source controls are in `t/2250-core-expression-width-contract.t`.
+The Core walk alone does not authorize target generation. The completed source,
+numeric, range, emission and final-agreement consumers described here now qualify
+bounded fixed and mutable literal helpers. The focused Core/source controls in
+`t/2250-core-expression-width-contract.t` retain unknown target-neutral widths
+while checking successful target generation and unchanged caller data.
 
 The retained predecessor defect in this family is a nested fixed-width helper
 truncating an unsized literal's high bit in a narrower parent helper. The retained
 strict CLI reproduction and source-width diagnosis are authenticated by
-`docs/audits/literal-width-ownership-20261029/verify.py`. Ordinary generation and
-injected declaration capture have different outcomes; the latter can refuse the
-source. Source allocation and nested unknown-width propagation now have focused
-qualification. Target numeric inference now consumes it; final declaration
-agreement remains open.
+`docs/audits/literal-width-ownership-20261029/verify.py`. At that retained revision,
+ordinary generation and injected declaration capture had different outcomes;
+the latter could refuse the source. Current source allocation, nested unknown-width
+propagation, target inference and final declaration agreement repair that defect.
 The later source-qualified capture at
 `docs/audits/literal-target-consumers-20261030/verify.py --qualify` preserves the
 strict CLI/trace, explicit-size control and independent mask algebra. Its captured
@@ -862,6 +862,16 @@ These checks qualify native generated declarations/expressions, complete capture
 atomic refusals and reuse. External compiler/override/runtime, full feature and
 public corpus/API/MCP qualification remain deferred.
 
+The bounded repair closure also exercises ordinary generation without a supplied
+declaration capture. `t/2271-literal-source-target-closure.t` checks the original
+`(& A B 3)` and nested `(^ (| A 256) B)` expressions in both Verilog-family
+backends, plus explicit literal sizes, wider independent leaves and one-bit
+defaults. It reads complete assignments and wire ranges directly from HDL and
+interprets the emitted range arithmetic against independent source maxima.
+Re-evaluating that text with different parameter values checks the preserved
+relationship; it is not external elaboration or HDL execution. Caller data,
+unknown Core widths and original parameter bindings remain unchanged.
+
 DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
 SignalRefs, refusing distinct objects claiming one physical name. Copied parameter
 maps pass canonical observation proof; coherent bindings join the bounded adapter
@@ -883,7 +893,8 @@ state/helper-origin, currentness or range proof. The full declaration validator
 still applies all those existing agreement checks. `t/2266-direct-target-namespace.t`
 distinguishes valid namespaces from mismatched widths/types; existing complete
 plans and refusal controls remain covered by `t/2173-direct-width-target-plans.t`.
-This is preparation for literal target proof; the live refusal remains unchanged.
+This namespace-only preparation grants no numeric authority; literal target proof
+and final declaration agreement use the separate consumers described above.
 
 The private `FSM::SourceLiteralWidthAllocationSupport` holder now preserves
 raw literal `{value, width, radix}` and a nullable exact allocation width.
@@ -931,9 +942,9 @@ die "nominal width changed\n" unless $helpers[0]->width == 1;
 
 T2254 checks both completion paths, raw kinds, explicit floors, revocation,
 failure/reuse and distinguishing stale-epoch/foreign-registry controls. This
-internal policy supplies no backend default or target sizing. The fixed nested
-truncation repair above remains open; no new
-public semantic schema, MCP field, source grammar or HDL profile is admitted.
+internal policy supplies no backend default or target sizing. The separate target
+consumers above repair fixed nested truncation; this policy alone admits no new
+public semantic schema, MCP field, source grammar or HDL profile.
 
 The shared width walk now has a preparatory `source_reference_width` option.
 It passes the actual whole Core SignalRef to an explicit source resolver, so

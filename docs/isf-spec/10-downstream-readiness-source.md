@@ -382,7 +382,10 @@ General source rules:
   and a whole-generation raw fence; missing intent cannot select numeric fallback.
   Explicitly sized fixed/mutable cases pass focused native emission checks.
   Sized and unsized mutable final agreement passes focused native checks;
-  full feature, external HDL and public corpus/API/MCP qualification remain open.
+  ordinary capture-free SystemVerilog/Verilog generation also preserves complete
+  direct/nested literal assignments and independent generic range relationships.
+  Emitted-text arithmetic checks do not qualify external parameter elaboration.
+  Full feature, external HDL and public corpus/API/MCP qualification remain open.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.
