@@ -95,9 +95,9 @@ behavior. Generated child declarations now retain private source and lexical
 environment associations; their carriers/public reports remain fixed at resolved
 defaults. Reusable/domain propagation and generic HDL remain pending.
 The direct literal-width prerequisite now closes emitted declaration/assignment
-ledgers with complete physical-target proof and late-mutation refusal. Sized
-mutable cases have focused native emission evidence; unsized mutable final Core
-agreement and full/public qualification remain open. See the
+ledgers with complete physical-target proof and late-mutation refusal. Sized and
+unsized mutable final declaration agreement now has focused native evidence,
+preserving original Core widths; full/public qualification remains open. See the
 [private width contracts](book/src/11a-perl-api-reference.md).
 Logical `!` stays Boolean; optional vector inversion is separately
 owned. Private complement classification now follows known width; direct VHDL

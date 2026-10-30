@@ -147,14 +147,15 @@ subtest 'actual fixed and mutable declarations consume independent literal and l
     }
 };
 
-subtest 'unsized mutable final Core agreement remains a separately owned refusal' => sub {
+subtest 'unsized mutable final Core agreement now closes without changing Core' => sub {
     my $fixed = fixture(fixed => 1, unsized => 1);
     is($fixed->{error}, undef, 'ordinary fixed unsized emission remains admitted') or diag($fixed->{error});
     ok(@{$fixed->{proved} // []}, 'fixed unsized literals now receive complete emission proof');
     for my $direct (0,1) {
         my $p = fixture(unsized => 1, direct => $direct);
-        refused($p, qr/disagrees with observed source width or signedness/);
-        is_deeply([sort @{$p->{proved}}], $p->{names}, 'literal ledger closes before unchanged Core-width refusal');
+        is($p->{error}, undef, 'unsized mutable final source/target agreement succeeds') or diag($p->{error});
+        ok(defined($p->{hdl}) && eval {$p->{capture}->snapshot;1}, 'generation returns HDL and complete capture');
+        is_deeply([sort @{$p->{proved}}], $p->{names}, 'literal ledger still closes before final Core agreement');
     }
 };
 

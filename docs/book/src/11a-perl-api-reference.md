@@ -624,16 +624,21 @@ Run the bounded source proof and live-emission checks with:
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2247-computed-source-binary-proof.t t/2248-source-tree-symbolic-range-emission.t t/2249-source-bitwise-family-closure.t
 ```
 
-The separately owned unsized-literal constraint gap remains: with `(W 8)`,
+Completed literal source intent now closes the former final-width gap: with `(W 8)`,
 `(& A B 3)` keeps an unknown Core literal width and helper placeholder 1, while
-SystemVerilog inference selects width 32. Final source/target agreement then
-refuses generation. This reproduces before the selected-tree publisher; it is
-tracked under `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1`, first in the following
-literal/type constraint lane. Explicitly sized literal cases preserve their
-independent widths and receive no source-tree origin. This gap remains a required
-repair; source-tree metadata alone qualifies no literal range support.
-The retained diagnosis has source-matched before/after evidence. An unconditional
-staleness watcher for this open literal limitation remains owned by that repair.
+SystemVerilog inference selects width 32. Final declaration agreement independently
+rederives that target width from current completed source intent. The original
+Core and caller widths remain intact. Explicit literal sizes preserve their own
+floors, and every existing signedness, type, state and auxiliary-origin check
+remains in force. Literal observation supplies no VHDL exception. All source
+observations recheck before a final raw whole-set barrier, so a later source
+getter cannot silently change an earlier proved literal. The focused
+`t/2269-literal-final-declaration-agreement.t` checks actual direct/nested
+fixed/mutable emission, false placeholder matches and those preserved boundaries.
+Full feature, external compiler/override/runtime and public qualification remain
+deferred; the earlier diagnosis is retained as historical evidence.
+Read the final source/target proof, real predecessor and raw-barrier controls with
+`python3 -B docs/audits/literal-final-agreement-20261030/verify.py --qualify`.
 
 The preparatory `FSM::CoreExpressionWidthSupport->infer_width` contract now
 centralizes the direct builder's exact-width walk. Unsized literals stay unknown
@@ -692,7 +697,7 @@ become independent leaf floors. Missing, stale, foreign, constrained or over-bou
 source intent withholds; matching writes during inference also withhold.
 This preparation supplies no backend row/epoch proof, generic range or final
 declaration agreement. Separate numeric and emission consumers are now installed;
-final Core agreement remains open. `t/2261-target-source-literal-width.t`
+final agreement uses a separate consumer. `t/2261-target-source-literal-width.t`
 covers the completed Parser/facade sources, explicit and independent floors,
 raw kinds, repeated edges and mutation barriers without HDL execution.
 
@@ -731,7 +736,7 @@ Core source widths and original caller data stay unchanged. Missing or unsupport
 joins supply no literal authority. `t/2262-target-source-literal-numeric-inference.t`
 checks actual fixed generation, mutable numeric preparation, independent mask
 algebra and hostile row/source/epoch changes. Separate emission ledgers now consume
-generic ranges; final unsized Core agreement remains open. These are
+generic ranges; final agreement now consumes the completed source observation. These are
 focused source and generated-text checks; external HDL execution and full feature
 qualification remain deferred. Saved evidence can be read without source or HDL
 execution with `python3 -B docs/audits/literal-numeric-inference-20261030/verify.py --qualify`;
@@ -751,7 +756,7 @@ observed operand values refuse. `t/2263-verilog-prepared-maximum-range.t` interp
 conditional ranges under distinguishing overrides and checks hostile inputs.
 This is a prepared rendering kernel. The separate source adapter below joins
 literal observations to original generic contracts; separate emission ledgers now
-consume that intent. Unsized mutable final Core agreement still refuses.
+consume that intent; final declaration agreement remains independently proved.
 
 `SourceLiteralWidthSupport->prepare_range` now joins the actual numeric frame to
 canonical direct module preparation and the proved original parameter environment.
@@ -787,8 +792,8 @@ fresh result. `t/2265-target-source-literal-selection.t` covers direct/nested,
 fixed/mutable and explicit/wider floors, altered caches, foreign ASTs, owner/row/
 epoch changes and late child-cache writes. This qualifies private selected
 expression intent; actual captured declarations/events and live range ledgers have
-separate consumers below. Unsized mutable generation still refuses final Core
-agreement; compiler/runtime/full qualification is pending.
+separate consumers below. Final declaration agreement has its own source observer;
+compiler/runtime/full qualification is pending.
 
 `prepare_targets` adds complete actual `target_namespace`, `target_declarations`
 and `target_intermediates` snapshots to the selection arguments. It reuses canonical
@@ -843,11 +848,14 @@ the independent `X` dependency. A one-bit explicit literal similarly keeps vecto
 rank when the default maximum is one. The canonical source view is available
 before normalization can fold default-one expressions and is refreshed after
 helper discovery; complete target proof still follows actual emission.
-Unsized mutable literals still refuse the separate final Core/source-width check;
-the emission ledger grants no exception. Run the focused actual-emitter controls:
+Unsized mutable literals now complete the separate final declaration check through
+current source observation; the emission ledger alone grants no numeric authority.
+Run the focused actual-emitter and final-agreement controls:
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl t/2268-target-source-literal-emission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2269-literal-final-declaration-agreement.t
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2270-literal-final-atomic-reuse.t
 ```
 
 These checks qualify native generated declarations/expressions, complete capture,

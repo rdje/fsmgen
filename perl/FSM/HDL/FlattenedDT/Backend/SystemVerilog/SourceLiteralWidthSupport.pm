@@ -775,9 +775,9 @@ each complete physical target proof and compare exact declaration records and
 assignment expressions with both emitted ledgers. Missing events, extra ledger
 members, changed ranges, expressions or source authority throw; success returns
 one. Complete target inputs and the whole-generation raw fence must still agree
-after subsequent proofs. This does not relax final Core/source-width agreement:
-unsized mutable generation still refuses there. Explicit literal sizes can now
-complete normal bounded fixed/mutable generation. External HDL execution and
+after subsequent proofs. Final declaration agreement independently consumes the
+completed-source literal observation while leaving unknown Core widths intact.
+Bounded fixed/mutable sized and unsized generation can now complete. External HDL execution and
 full feature qualification remain separate.
 
 =head2 prepare_targets

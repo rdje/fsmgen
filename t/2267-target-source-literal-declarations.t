@@ -85,10 +85,8 @@ sub fixture {
         my $hdl = eval {$ctx->generate_systemverilog($module)};
         if ($args{fixed}) {
             ok(defined($hdl), 'ordinary fixed numeric generation succeeds') or diag($@);
-        } elsif (!$args{explicit} && !$args{mutating}) {
-            like($@, qr/disagrees with observed source width or signedness/,
-                'private mutable capture still reaches the unchanged final Core-width refusal');
-            ok(!defined($hdl), 'mutable record proof returns no qualified HDL');
+        } elsif (!$args{mutating}) {
+            ok(defined($hdl), 'literal generation closes independent final source/target agreement') or diag($@);
         } elsif ($args{mutating}) {
             ok(!defined($hdl) && length($@), 'mutated source still returns no qualified HDL');
         }
@@ -194,15 +192,19 @@ subtest 'missing changed conflicting or foreign target rows cannot borrow select
 };
 
 subtest 'last source recheck cannot hide earlier target source or owner changes' => sub {
-    for my $change (
+    my @changes = (
         sub {$_[0]{snapshot}{target_intermediates}{$_[1]}{expression} = 'late'},
         sub {$_[0]{snapshot}{target_declarations}{A}{width} = 2},
         sub {$_[0]{snapshot}{target_namespace}{identifier_map}{unused} = 'late'},
         sub {$_[0]{rows}{$_[1]}{rendered_expression} = 'late'},
         sub {$_[0]{module}{parameters}{W}{value_payload}{payload} = '2'},
         sub {$_[0]{owner}{_width_inference_epoch}++},
-    ) {
-        fixture(mutating => 1, check => sub {
+    );
+    for my $index (0 .. $#changes) {
+        my $change = $changes[$index];
+        # The first three interventions corrupt only the detached proof input.
+        # The actual collector is unchanged and native generation must succeed.
+        fixture(mutating => $index >= 3, check => sub {
             my $p = shift;
             my $baseline = targets($p);
             ok($baseline, 'baseline whole target prepares') or return;

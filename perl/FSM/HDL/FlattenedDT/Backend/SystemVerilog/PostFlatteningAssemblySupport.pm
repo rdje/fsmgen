@@ -104,8 +104,8 @@ fixed numeric declarations. Required coverage derives from selected typed source
 rows, independently of ledger/event membership. Complete current physical target
 proof compares exact selected ranges and expressions; a raw generation fence
 closes after every final proof. Any exception invalidates capture. The independent
-Core/source-width validator remains unchanged, including its unsized mutable
-literal refusal.
+declaration validator independently joins completed literal source widths while
+preserving unknown Core allocation and every explicit constraint.
 
 =cut
 

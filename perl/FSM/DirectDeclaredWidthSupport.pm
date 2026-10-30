@@ -439,12 +439,31 @@ sub prepare_declarations ($class, %args) {
     my $language = $source->{target_language};
     my $json = JSON::PP->new->canonical->allow_nonref;
     my (%ranges, @fixed);
+    my @literal_sources;
     for my $name (@{$source->{signal_order}}) {
         my $target_name = $signal_targets{$name};
         my $signal = $source->{signals}{$name};
         my $record = $declarations->{$target_name};
+        my $expected_width = $signal->{width};
+        my $actual = $args{fsm_module}{signals}{$name};
+        if ($language ne 'vhdl' && blessed($actual)
+            && exists($actual->{_source_literal_width_allocation})) {
+            # Core deliberately leaves unsized source allocation unknown. The
+            # target's completed-source observer supplies its own literal rule;
+            # neither the target row nor a copied compatibility width is proof.
+            require FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
+            my $capture = FSM::SourceLiteralWidthAllocationSupport::_capture($actual, {phase => 'completed'});
+            my $literal = FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+                ->prepare(signal => $actual);
+            confess "Direct literal declaration agreement requires current completed source intent\n"
+                unless $capture && $literal
+                    && FSM::IntermediateWidthAllocationSupport::_width($actual->{_width})
+                        eq FSM::IntermediateWidthAllocationSupport::_width($signal->{width});
+            $expected_width = $literal->{selected_width};
+            push @literal_sources, [$name, $actual, $literal, $capture];
+        }
         confess "Direct width target declaration '$target_name' disagrees with observed source width or signedness\n"
-            unless $record->{width} == $signal->{width} && $record->{signed} == $signal->{signed};
+            unless $record->{width} == $expected_width && $record->{signed} == $signal->{signed};
         for my $field (qw(declared_type_name declared_type_spec)) {
             confess "Direct width target declaration '$target_name' disagrees with source $field\n"
                 unless $json->encode($record->{$field}) eq $json->encode($signal->{$field});
@@ -489,6 +508,21 @@ sub prepare_declarations ($class, %args) {
         next unless $width_plan && $width_plan->{profile} eq 'symbolic';
         $ranges{$target_name} = {source_name => $name, declaration_kind => 'signal',
             width_plan => $width_plan, width_origin => $origin};
+    }
+    for my $proof (@literal_sources) {
+        confess "Direct literal declaration agreement lost its current source observation\n"
+            unless FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+                ->current(signal => $proof->[1], observation => $proof->[2]);
+    }
+    # No source getters follow this whole-set barrier: a later observation must
+    # not revoke an earlier helper after its own recheck.
+    for my $proof (@literal_sources) {
+        my ($name, $actual, $literal, $capture) = @$proof;
+        confess "Direct literal declaration agreement source changed during final proof\n"
+            unless (refaddr($args{fsm_module}{signals}{$name}) // 0) == refaddr($actual)
+                && FSM::SourceLiteralWidthAllocationSupport::_unchanged($capture->{walk})
+                && $json->encode($actual->{_source_literal_width_allocation})
+                    eq $json->encode($literal->{source_capsule});
     }
     return $json->decode($json->encode({profile => $source->{profile}, target_language => $language,
         source_scope => $source->{source_scope}, module_name => $module_name,
@@ -742,6 +776,19 @@ signal mappings remain separate from lexical scope. Every actual source Signal
 must match one target declaration with the same observed width, signedness and
 declared type; a supplied state model must agree too.
 
+For Verilog-family targets, an actual installed completed literal capsule has a
+separate target-width observation. The canonical completed-source observer
+independently derives the target literal floor and transitive leaf maximum;
+Core's unknown allocation and compatibility width remain unchanged. This width
+must match the physical declaration even when its placeholder would numerically
+match an incorrect width-one row. Stale installed capsules refuse. Explicit
+literal sizes retain their own floors. All signed/type/state and register-helper
+checks remain in force; VHDL receives no such width observation. After complete
+validation, recheck every literal observation and close all raw source/AST/holder
+barriers without further source getters. This proves numeric declaration
+agreement only: actual generation must also prove selected targets, expressions,
+emitted ranges and whole-generation currentness through the separate ledgers.
+
 The detached target result contains C<profile>, C<target_language>,
 C<source_scope>, actual C<module_name>, ordered unique C<parameter_references>,
 C<signal_targets>, C<fixed_signals> and C<ranges>. Each symbolic range entry
@@ -791,6 +838,8 @@ namespace does not establish source width, signedness, type, state, helper-origi
 currentness or symbolic-range agreement. Callers must prove those separately.
 C<prepare_declarations> reuses this same validator, then retains all its existing
 source numeric/type/state and auxiliary-origin checks and complete target result.
-This separation supplies no literal-width exception to the full validator.
+This separation supplies no numeric inference. The full validator's separate
+completed-source literal observation does not derive authority from namespace
+membership or copied numeric rows.
 
 =cut

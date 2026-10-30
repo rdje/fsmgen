@@ -77,8 +77,8 @@ capsules. T2260 closes source edge/conservation/lifetime controls; target sizing
 Target-only SourceLiteralWidthSupport prepares current source literal widths;
 prepare_inference joins actual rows/epoch before compatibility metadata (T2261/2).
 Shared WidthExpressionEmitter lower_maximum_range retains independent prepared
-contracts/floors under overrides (T2263). Generic joins (T2264), typed selection
-(T2265), physical proof (T2267) and live ledgers/fences (T2268) are canonical in
-`docs/book/src/11a-perl-api-reference.md`. Sized mutable emission now passes;
-unsized mutable final Core agreement remains open. Private target-record seams
-alone qualify no generation.
+contracts/floors under overrides (T2263). Generic joins (T2264), selection (T2265),
+physical proof (T2267), live ledgers (T2268) and final literal agreement (T2269)
+route to `docs/book/src/11a-perl-api-reference.md`. Bounded mutable emission passes
+with original unknown Core widths intact; full/external qualification stays open.
+Private target-record seams alone qualify no generation.
