@@ -2765,7 +2765,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Consume qualified literal declaration intent through per-generation emitted ledgers.`
   Acceptance: `After .1/.2, install exact literal ranges and selected expressions through an isolated per-generation ledger. Derive expected coverage independently from actual selected sources/events, reprove full selected-target plans, compare complete range/expression identities and close a whole-generation raw barrier before returning HDL. Missing/stale authority cannot select numeric fallback. Invalidate failed capture and prove fresh same-backend reuse. Focused actual fixed/mutable one/wide/nested/floor controls, synchronized POD/book/downstream handoff and commit; final unknown Core/source agreement remains .4.4.`
-  Verification: `Complete private selected-target proof .2 passes focused checks. After due daily cleanup .37, consume it through live declaration/assignment ledgers; private mutable record-contract seams do not qualify actual generic generation. Preserve final Core/source agreement .4.4 and full .6 deferral.`
+  Verification: `Complete private selected-target proof .2 passes focused checks. Daily cleanup .37 is complete; consume it through live declaration/assignment ledgers; private mutable record-contract seams do not qualify actual generic generation. Preserve final Core/source agreement .4.4 and full .6 deferral.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.4`
@@ -3283,11 +3283,16 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Saved census review and all hostile controls pass. Source/claim freshness and knowledge-map: OK are enforced in the normal final-index hook; no changed runtime feature, cap or authority. No full CI or reclamation claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.37`
-  Status: `pending`
+  Status: `done`
   Goal: `Perform the due October30 safe artifact census before literal emitted-ledger integration.`
   Acceptance: `After the complete literal target-proof commit is clean, reuse the installed authenticated census/reviewer in an exclusive dated slot. Capture same-volume regular log/bin membership and root/Rust locations, excluding foreign repositories, Git metadata and symlinks. Preserve candidates without exact disposal authority. Verify independent rg membership and saved hostile controls; overwrite the latest-only cleanup record and same-size book reader link. Complete mandatory commit integrity, then resume .3.4.3.2.3.4.4.1.2.3.4.3.3. No source/HDL replay or broad verification.`
-  Verification: `Actual startup UTC 2026-10-30T12:36:43Z exceeds the latest cleanup record 2026-10-29T11:47:43.683160+00:00 by the daily interval. Literal target work commits first under the no-dirty-pivot rule; cleanup follows without disposal authority inferred from age or suffix.`
-  Commit: `pending`
+  Verification: `At clean native 8f4c0d9ccf6f2a0f7a8174fc15b14e42d4800e66 after the literal target-proof commit, the authenticated published collector admits the actual due interval. Complete same-volume regular log/bin metadata, root/Rust locations, excluded boundaries and independent rg membership retain in docs/audits/artifact-census-20261030/census.json.gz. Every candidate retains without exact disposal authority; no deletion occurs. Saved review and hostile missing-member/unsafe-path/Boolean-size/invented-removal controls pass. Latest-only cleanup record uses the actual captured UTC; the book reader advances with identical bytes/lines and existing reference authority. Re-derive the actual dated filesystem census; falsify independent rg membership and saved interventions; durability tracked wrapper/receipt, latest record, book/task and Git. Content identity, reclamation, future absence and original/native/HDL replay remain outside scope. First normal hook rejects cleanup-date claim-inventory drift; complete failed hook output retains in docs/audits/artifact-census-20261030/first-hook-refusal.json.gz, with later checks explicitly unrun. Regenerate the canonical inventory and require a fresh entire normal hook before commitment. Required delivery resumes at literal ledger .3.4.3.2.3.4.4.1.2.3.4.3.3. Decision0116 selects a clean context-refresh checkpoint after this completed physical target proof and maintenance; the next generation/ledger join requires a fresh focused cross-layer review.`
+  Commit: `ISF-REDUCTION-DELIVERY.37: record due safe artifact census`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup identifies record registration; git log -1 for docs/ARTIFACT_CLEANUP.md identifies the exact prior update; authenticated Git prior bytes and captured UTC pass the unchanged collector daily-admission assertion. Neither age nor suffix grants disposal authority.
+  - [x] **ADDRESSED (verified)** — Fresh exclusive wrapper binds installed collector bytes to native 8f4c0d9cc. Actual census and independent complete rg membership agree; saved hostile member/path/Boolean/removal controls reject. Every candidate retains. Latest-only date and same-size book reader advance without replaying original workloads.
+  - [x] **NO REGRESSION** — Published saved census review and all hostile controls pass; knowledge-map: OK. Book source freshness and mandatory final-index doctrines qualify this maintenance commit; feature behavior, public schemas and all ceilings preserve. No full CI, reclaim or future-absence claim.
 
 ## Blockers
 
