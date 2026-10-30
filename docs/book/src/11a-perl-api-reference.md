@@ -754,7 +754,27 @@ The [source-freeze regression](../../../t/2279-concatenation-generation-sources.
 checks actual two-candidate callbacks and same-backend failure/recovery; complete
 native products and exact predecessor evidence retain in
 `docs/audits/concat-source-freeze-20261030/`. This grants source observation only.
-Intrinsic events, completed allocation, symbolic sums and emission remain pending.
+The installed resolver now uses `FSM::ConcatenationInferenceSupport` for a
+separate first unresolved `concatenation_sum_inference` event. Before metadata
+callbacks it observes the complete bounded merged/allocator/initial-registry rows
+against the original source freeze. The actual typed inference branch rechecks
+that input before and after inference; only its own subsequent width/source
+writes may change it. `concatenation_inference_event(NAME, ROW)` returns detached
+`kind`, independently selected numeric `selected_width` and ordered canonical
+`source_contract`. Independent fixed/mutable operand plans, nested/repeated slots
+and explicit literal widths retain their distinct meanings.
+
+Equal native/cache widths, scalar fallbacks, unknown literal widths, constraints,
+changed metadata/sources/revisions and foreign or expired identities cannot mint.
+Repeated resolver reads carry only a still-current installed event through their
+own revision and width/source writes. Abort/reset/reuse clears events; holders
+retain no caller graph. The raw observer's restored-scalar-write limitation still
+applies. Numeric agreement supplies no symbolic sum-range proof. Initial allocator
+or registry publication invalidates this event; owned carry and completed
+collection remain the next implementation step. Symbolic sums/emission and full
+qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
+and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
+retain focused currentness, refusal, lifecycle and complete native product evidence.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

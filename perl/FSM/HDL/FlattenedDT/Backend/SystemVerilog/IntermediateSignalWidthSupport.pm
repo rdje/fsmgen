@@ -51,6 +51,7 @@ use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::IntermediateWidthGraphInferenceSupport;
 use FSM::ConcatenationGenerationSourceSupport;
+use FSM::ConcatenationInferenceSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -66,6 +67,7 @@ sub _abort_factorized_width_inference ($self) {
     $self->{_source_bitwise_tree_allocation_events} = {};
     $self->{_width_inference_revisions} = {};
     $self->{_concatenation_source_frames} = {};
+    $self->{_concatenation_inference_events} = {};
     delete $self->{_width_inference_complete};
     delete @{$self}{qw(_graph_inference_rows _graph_inference_rows_epoch)};
 }
@@ -118,6 +120,29 @@ sub concatenation_generation_sources ($self, $signal_name, $signal_info) {
     return FSM::ConcatenationGenerationSourceSupport->current(
         width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
         holder => $self->{_concatenation_source_frames}{$signal_name});
+}
+
+=head2 concatenation_inference_event
+
+Return the current detached intrinsic concatenation event for the actual row
+in the installed weak view. First unresolved typed inference alone mints it;
+native/cache/constraint/unknown/stale inputs do not. Original source and complete
+row metadata revalidate around callbacks and inference. Repeated reads preserve
+only an already current event through their own revision and width/source writes.
+Initial allocator/registry publication invalidates this event until the separate
+owned carry protocol is installed. Abort/reset/reuse clears all events. Numeric
+sum agreement is separate from symbolic range or completed collection policy.
+
+=cut
+
+sub concatenation_inference_event ($self, $signal_name, $signal_info) {
+    my $rows = $self->_current_graph_inference_rows or return;
+    return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name)
+        && ref($self->{_concatenation_inference_events}) eq 'HASH'
+        && exists($self->{_concatenation_inference_events}{$signal_name});
+    return FSM::ConcatenationInferenceSupport->current(
+        width_support => $self, signal_name => $signal_name, signal_info => $signal_info,
+        signal_registry => $rows, holder => $self->{_concatenation_inference_events}{$signal_name});
 }
 
 sub _current_graph_inference_rows ($self) {
@@ -538,6 +563,12 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         ? $self->_take_current_factorized_inference($signal_name, $signal_info) : undef;
     my $graph_held = $self->{_width_inference_epoch}
         ? $self->_take_current_graph_inference($signal_name, $signal_info) : undef;
+    my $concat_held;
+    if ($self->{_width_inference_epoch}) {
+        my $record = $self->concatenation_inference_event($signal_name, $signal_info);
+        my $holder = delete $self->{_concatenation_inference_events}{$signal_name};
+        $concat_held = JSON::PP->new->decode(JSON::PP->new->encode($holder)) if $record;
+    }
     ++$self->{_width_inference_revisions}{$signal_name} if $self->{_width_inference_epoch};
     my ($input_frame, $graph_input, $graph_ready, $intrinsic_inference);
 
@@ -551,6 +582,17 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         return $cached_width;
     }
     local $seen_signals->{$signal_name} = 1;
+
+    # Bind original sources and row state before native metadata or recovery.
+    # A repeat may carry only held authority, with this exact owned increment.
+    my %concat_args = (width_support => $self, signal_name => $signal_name,
+        signal_info => $signal_info, signal_registry => $signal_registry);
+    my $concat_input = FSM::ConcatenationInferenceSupport->prepare_input(%concat_args);
+    my $concat_ready;
+    if ($concat_held) {
+        $concat_held->{frame}{state}{revision} =
+            FSM::IntermediateWidthAllocationSupport::_width($self->{_width_inference_revisions}{$signal_name});
+    }
 
     my $resolved_width;
     my $width_source = 'default_1bit';
@@ -576,6 +618,8 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     if (!defined($resolved_width) || $resolved_width < 1) {
         my $runtime_ast = $ctx->{backend_sv_intermediate_recovery_support}->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
         if ($runtime_ast && blessed($runtime_ast)) {
+            my $concat_branch = FSM::ConcatenationInferenceSupport->current_input(
+                %concat_args, input => $concat_input, native_signal_info => $native_signal_info);
             $input_frame = $self->_unresolved_factorized_input_frame($signal_name, $signal_info, $signal_registry)
                 unless $native_signal_info;
             $graph_input = FSM::IntermediateWidthGraphInferenceSupport->prepare_input(
@@ -587,6 +631,9 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
                 $resolved_width = $ast_width;
                 $width_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
                 $intrinsic_inference = 1;
+                $concat_ready = FSM::ConcatenationInferenceSupport->current_input(
+                    %concat_args, input => $concat_branch, native_signal_info => $native_signal_info)
+                    if $concat_branch;
                 $graph_ready = FSM::IntermediateWidthGraphInferenceSupport->prepare_frame(
                     width_support => $self, input => $graph_input) if $graph_input;
             }
@@ -602,6 +649,13 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     if ($signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{width} = $resolved_width;
         $signal_info->{width_source} = $width_source;
+    }
+
+    if (!defined($native_signal_info) && ($concat_ready || $concat_held)) {
+        my $event = FSM::ConcatenationInferenceSupport->after_write(
+            %concat_args, input => $concat_ready || $concat_held->{frame},
+            selected_width => $resolved_width, selected_source => $width_source);
+        $self->{_concatenation_inference_events}{$signal_name} = $event if $event;
     }
 
     $self->_record_factorized_inference($signal_name, $signal_info, $resolved_width, $width_source, $input_frame)
