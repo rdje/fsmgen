@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-30`
+- Last updated: `2026-10-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -3056,7 +3056,7 @@ do not start broad suites between implementation slices.
   Verification: `Observed .1 selects source freeze after the actual epoch/view binds and before recovery/native metadata callbacks. Separate that original source observation from first unresolved intrinsic event capture; independent caches and later registry carries retain distinct ownership.`
   Commit: `pending`
 
-  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.2`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.1`
   Status: `done`
@@ -3083,6 +3083,19 @@ do not start broad suites between implementation slices.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S my $native_signal_info identifies30686f88eda3a574b8fc0bf02ef07567103af37d. Actual boundary replay distinguishes first unresolved typed inference from equal native/cache widths and later publication. The committed original source freeze supplied no intrinsic branch event; a selected numeric sum alone cannot attest that branch or current source identity.
   - [x] **ADDRESSED (verified)** — Freeze complete bounded row state before resolver callbacks, revalidate the same original source/input around actual intrinsic inference and admit only owned row width/source writes. Separate detached sum events preserve independent source contracts. Held repeats carry exact revisions; native/cache/unknown/hostile/stale profiles cannot mint or refresh. Initial publication remains deliberately unqualified; original harness failures retain with corrected scope.
   - [x] **NO REGRESSION** — Guarded T2280/T2279: All tests successful, Files=2, Tests=7; source/test syntax OK. Complete native caller/HDL/declaration/refusal replay matches the retained predecessor with Date-only normalization; unchanged production owners preserve exact hashes. POD/source checks, guarded mdBook and native copied assets qualify documentation. Fresh staged acceptance and the normal final-index doctrine hook gate this intrinsic-event slice; full6, generic/runtime and publication remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.2.3`
+  Status: `done`
+  Goal: `Bind intrinsic concatenation authority to the actual AST returned by recovery and inferred.`
+  Acceptance: `Review of committed .2 finds that row runtime identity is checked but the resolver-local recovery return is not passed into the intrinsic barrier. Reproduce an equal-sum foreign returned AST with the original installed row unchanged; it must not mint. Require the actual returned built-in AST to be the exact original row/allocator AST before and after inference. Preserve original source freeze, numeric behavior, held repeats, callback refusals and completion boundaries. Retain identical before/after regression and complete native conservation; POD/book/fact sync, focused check and normal commitment precede returning to owned publication .3.`
+  Verification: `Actual localized recovery returns a reversed equal-sum foreign built-in concat while leaving the original stored runtime AST unchanged. Identical settled T2280 fails at clean0be39e3b0 because the old resolver mints authority; the native loaded width-module path/SHA and complete unchanged production census authenticate that boundary. Pass the actual resolver-local runtime_ast into both intrinsic barriers and require exact original built-in identity. The identical regression now passes: All tests successful Files=1 Tests=4, preserving positive original, held-repeat, hostile/native/cache/unknown, abort and reuse controls. Complete current native caller/HDL/declaration/contextual-refusal products equal the previous receipt with Date-only normalization; all other production sources preserve exact hashes. Before source/test/log/loaded witness and current replay/native/green receipt retain in docs/audits/concat-inference-runtime-20261031/. Re-derive actual returned-versus-stored identity; falsify the identical failing/passing foreign-return control and complete native conservation; durability exact tracked source/test/producer/receipts and Git. This is private event-currentness repair; source grammar/report/MCP/corpus and numeric products preserve. Existing fact card routes T2280 and the canonical API reference; POD/book now explain the actual-return requirement and retained control. Syntax, generated POD/source/native copied assets and guarded mdBook plus fresh staged acceptance and every normal final-index doctrine gate commitment. Publication carry/completion, symbolic sum/range/emission, VHDL and full .6/publication remain open. Decision0116 selects the clean context-refresh checkpoint after this implemented event unit and demonstrated identity repair: the next lifecycle carry crosses normalization annotations, allocator writes and registry replacement, and requires fresh focused owner review. Commit everything and consume jobs; resume exact .4.3 from committed Memory.`
+  Commit: `ISF-REDUCTION-DELIVERY: bind intrinsic events to actual recovered AST`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub concatenation_inference_event identifies0be39e3b0a8130159b903bc6ff4d36347d4e244c. The actual foreign_runtime control leaves stored row/allocator/source identities unchanged, returns a distinct equal-sum concat to inference and wrongly installs authority. The missing comparison is the resolver-local recovery return at current_input, not numeric sum arithmetic.
+  - [x] **ADDRESSED (verified)** — Pass the actual recovered AST to both pre/post inference barriers and require the exact original built-in identity. The identical settled regression fails before and passes after; detached source/event contracts and numeric resolution preserve. Complete before source/test/log/loaded identity and current native/green evidence retain; no registry carry or completed policy is added.
+  - [x] **NO REGRESSION** — Guarded T2280: All tests successful, Files=1, Tests=4; source/test syntax OK. Positive original/repeat and native/cache/hostile/unknown/lifetime/reuse controls pass. Complete native caller/HDL/declaration/refusal replay agrees with the retained predecessor using Date-only normalization. POD/book/source freshness, native copied assets, staged acceptance and the mandatory final-index doctrines gate this targeted repair; full6/runtime/publication remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3`
   Status: `pending`

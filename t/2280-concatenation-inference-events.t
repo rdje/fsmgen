@@ -104,7 +104,7 @@ subtest 'actual first intrinsic branch and held repeat preserve independent orde
 
 subtest 'native cache constraints and callback changes cannot mint or refresh' => sub {
     for my $mode (qw(native empty_native zero_native cache scalar_cache signed row_metadata
-        recovery_source metadata_source inference_source inference_row inference_revision wrong_sum late_getter)) {
+        recovery_source foreign_runtime metadata_source inference_source inference_row inference_revision wrong_sum late_getter)) {
         my ($module) = fixture(0);
         my $backend=FSM::HDL::FlattenedDT->new;
         my ($seen,$mutated)= (0,0);
@@ -115,7 +115,12 @@ subtest 'native cache constraints and callback changes cannot mint or refresh' =
                 if ($mode eq 'recovery_source' && ref($_[2]{ast}) eq 'FSM::CoreAST::Concatenation') {
                     $lhs=$backend->{assignment_analysis}{OTHER}{lhs_ast}{signal};$lhs->{_width}=2;$mutated++;
                 }
-                return $recover->(@_);
+                my $result=$recover->(@_);
+                if ($mode eq 'foreign_runtime' && ref($result) eq 'FSM::CoreAST::Concatenation') {
+                    $mutated++;
+                    return FSM::CoreAST::Concatenation->new(reverse @{$result->{operands}});
+                }
+                return $result;
             };
             local *FSM::Synthesis::EnableGraph::AssignmentSupport::get_signal_info = sub {
                 if ($ACTIVE && $_[1] eq $ACTIVE->{name}) {
@@ -169,7 +174,7 @@ subtest 'native cache constraints and callback changes cannot mint or refresh' =
             ok($ok,"$mode permits clean ordinary continuation") or diag $@;
         }
         is($seen,1,"$mode actual resolver exercised");
-        ok($mutated,"$mode actual mutation exercised") if $mode =~ /source|row|revision|sum|getter/;
+        ok($mutated,"$mode actual mutation exercised") if $mode =~ /source|row|revision|sum|getter|runtime/;
     }
 };
 

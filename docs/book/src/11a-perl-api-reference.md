@@ -758,7 +758,9 @@ The installed resolver now uses `FSM::ConcatenationInferenceSupport` for a
 separate first unresolved `concatenation_sum_inference` event. Before metadata
 callbacks it observes the complete bounded merged/allocator/initial-registry rows
 against the original source freeze. The actual typed inference branch rechecks
-that input before and after inference; only its own subsequent width/source
+that input before and after inference, including the exact AST returned by
+recovery and actually passed to inference. An equal-sum foreign return cannot
+borrow the unchanged stored row's identity. Only its own subsequent width/source
 writes may change it. `concatenation_inference_event(NAME, ROW)` returns detached
 `kind`, independently selected numeric `selected_width` and ordered canonical
 `source_contract`. Independent fixed/mutable operand plans, nested/repeated slots
@@ -775,6 +777,8 @@ collection remain the next implementation step. Symbolic sums/emission and full
 qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
 retain focused currentness, refusal, lifecycle and complete native product evidence.
+The [returned-AST control](../../../docs/audits/concat-inference-runtime-20261031/replay.py)
+retains the identical failing/passing regression and native conservation proof.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

@@ -116,6 +116,10 @@ sub current_input {
     my $frame = eval {
         return unless exists($args{native_signal_info}) && !defined($args{native_signal_info});
         my $current = $class->prepare_input(%args) or return;
+        # The callback's returned AST is what the resolver actually infers.
+        # Stored row identity alone cannot attest that local return value.
+        return unless ref($args{runtime_ast}) eq 'FSM::CoreAST::Concatenation'
+            && $args{runtime_ast} == $args{signal_info}{runtime_ast};
         return unless _same($args{input}, $current);
         return $current;
     };
@@ -196,10 +200,12 @@ still applies.
 
 Observe first-revision unresolved inputs before resolver callbacks, or undef.
 
-=head2 current_input(..., input => INPUT, native_signal_info => undef)
+=head2 current_input(..., input => INPUT, runtime_ast => ACTUAL_RETURN, native_signal_info => undef)
 
 Revalidate the same original input at and after the intrinsic branch, or undef.
 Defined native metadata, including an empty record, cannot qualify.
+The actual recovery return that is passed to inference must be the original
+built-in concatenation AST, even when a foreign return has the same numeric sum.
 
 =head2 after_write(..., input => INPUT, selected_width => WIDTH, selected_source => SOURCE)
 

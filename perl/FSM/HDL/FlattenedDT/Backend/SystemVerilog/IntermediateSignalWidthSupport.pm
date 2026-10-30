@@ -619,7 +619,8 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         my $runtime_ast = $ctx->{backend_sv_intermediate_recovery_support}->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
         if ($runtime_ast && blessed($runtime_ast)) {
             my $concat_branch = FSM::ConcatenationInferenceSupport->current_input(
-                %concat_args, input => $concat_input, native_signal_info => $native_signal_info);
+                %concat_args, input => $concat_input, runtime_ast => $runtime_ast,
+                native_signal_info => $native_signal_info);
             $input_frame = $self->_unresolved_factorized_input_frame($signal_name, $signal_info, $signal_registry)
                 unless $native_signal_info;
             $graph_input = FSM::IntermediateWidthGraphInferenceSupport->prepare_input(
@@ -632,7 +633,8 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
                 $width_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
                 $intrinsic_inference = 1;
                 $concat_ready = FSM::ConcatenationInferenceSupport->current_input(
-                    %concat_args, input => $concat_branch, native_signal_info => $native_signal_info)
+                    %concat_args, input => $concat_branch, runtime_ast => $runtime_ast,
+                    native_signal_info => $native_signal_info)
                     if $concat_branch;
                 $graph_ready = FSM::IntermediateWidthGraphInferenceSupport->prepare_frame(
                     width_support => $self, input => $graph_input) if $graph_input;
