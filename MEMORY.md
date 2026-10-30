@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1.2.3.4.3.2.2`
-- next_action: Capture actual literal declaration/event shapes and select the mutable capture seam, then join complete physical targets to the qualified selection without bypassing final Core-width agreement.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.37`
+- next_action: Run the due safe artifact census with the authenticated installed collector in a fresh dated slot, then resume literal emitted-ledger integration at .3.4.3.2.3.4.4.1.2.3.4.3.3.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Required literal repair, remaining feature implementation, owned backend repairs and full/publication qualification remain open.

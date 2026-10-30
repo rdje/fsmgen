@@ -466,6 +466,127 @@ sub current_selection {
     return $matches ? $current : undef;
 }
 
+# Captured records are data, not provenance. Rebuild source/selection authority
+# first, then join every reachable helper and original leaf to physical records.
+# The final Core/source declaration validator remains a separate obligation.
+sub _target_inputs {
+    my ($args) = @_;
+    return _json()->encode({map {$_ => $args->{$_}}
+        qw(target_namespace target_declarations target_intermediates)});
+}
+
+sub _plain_target {
+    my ($namespace, $name, $width, $helper) = @_;
+    return unless exists($namespace->{signal_targets}{$name})
+        && $namespace->{signal_targets}{$name} eq $name
+        && (!$helper || $namespace->{roles}{$name} eq 'signals');
+    my $row = $namespace->{declarations}{$name};
+    return unless ref($row) eq 'HASH' && defined(_width($row->{width}))
+        && _width($row->{width}) eq $width && !$row->{signed}
+        && !grep {defined($row->{$_})} qw(state_model declared_type_name declared_type_spec);
+    return if grep {$_ ne 'name' && $_ ne 'width' && $_ ne 'signed'
+        && $_ ne 'state_model' && $_ ne 'declared_type_name' && $_ ne 'declared_type_spec'} keys %$row;
+    return $row;
+}
+
+sub prepare_targets {
+    my ($class, %args) = @_;
+    return unless join(',', sort keys %args) eq 'expression,signal_info,signal_name,signal_registry,'
+        .'target_declarations,target_intermediates,target_language,target_namespace,width_support';
+    my $result = eval {
+        my $raw_targets = _target_inputs(\%args);
+        return unless ref($args{target_intermediates}) eq 'HASH';
+        my %input = %args;
+        delete @input{qw(target_namespace target_declarations target_intermediates)};
+        my $selection = $class->prepare_selection(%input) or return;
+        my $context = $args{width_support}{flattened_dt};
+        my $before = _range_source_frame($context);
+        return unless defined $before;
+        my $signal = $context->{fsm_module}{signals}{$args{signal_name}};
+        my $capture = FSM::SourceLiteralWidthAllocationSupport::_capture($signal, {phase => 'completed'}) or return;
+        my $namespace = FSM::DirectDeclaredWidthSupport->prepare_target_namespace(
+            fsm_module => $context->{fsm_module}, assignment_analysis => $context->{assignment_analysis},
+            target_language => $args{target_language},
+            target_namespace => $args{target_namespace}, target_declarations => $args{target_declarations});
+        return unless _json()->encode($namespace->{source_plan}) eq _json()->encode($selection->{source_plan});
+        # Even unrelated event names must be actual internal declarations.
+        # Their semantic families remain the responsibility of their own proof.
+        for my $name (keys %{$args{target_intermediates}}) {
+            return unless ($namespace->{roles}{$name} // '') eq 'signals';
+            return if exists($namespace->{source_plan}{signals}{$name})
+                && !$context->{fsm_module}{signals}{$name}{attributes}{is_intermediate};
+        }
+        my (%nodes, @leaves);
+        for my $name (@{$selection->{node_order}}) {
+            my $selected = $selection->{nodes}{$name};
+            my $numeric = $selected->{numeric};
+            my $observation = $numeric->{observation};
+            my $width = $observation->{selected_width};
+            my $declaration = _plain_target($namespace, $name, $width, 1) or return;
+            my $ast = $context->{fsm_module}{signals}{$name}{driving_ast};
+            my $shape = FSM::IntermediateWidthAllocationSupport->binary_whole_signal_shape($ast);
+            my $expected = {expression => $selected->{expression},
+                ($shape ? (bitwise_origin => {kind => 'binary_bitwise', %$shape}) : ())};
+            if ($shape) {
+                my $policy = $context->{backend_sv_intermediate_recovery_support}->binary_width_allocation(
+                    $name, $args{signal_registry}{$name}, $selected->{expression});
+                $expected->{width_allocation} = $policy if $policy;
+            }
+            my $event = $args{target_intermediates}{$name};
+            return unless ref($event) eq 'HASH' && _json()->encode($event) eq _json()->encode($expected);
+            # The original typed capsule retains ordered/repeated child edges;
+            # the selection inventory deduplicates physical helper membership.
+            my $state = _json()->decode($observation->{source_capsule}{state});
+            my @children;
+            for my $edge (@{$state->{children} // []}) {
+                my @matches = grep {$selection->{nodes}{$_}{numeric}{observation}{source_identity}
+                    eq $edge->{signal_identity}} @{$selection->{node_order}};
+                return unless @matches == 1 && exists($nodes{$matches[0]});
+                push @children, {target_name => $matches[0], %$edge};
+            }
+            my $maximum = $observation->{literal_floor};
+            for my $leaf (@{$observation->{leaves}}) {
+                my $source = $leaf->{source};
+                my $row = _plain_target($namespace, $source->{name}, $source->{width}, 0) or return;
+                return if exists($args{target_intermediates}{$source->{name}});
+                $maximum = _maximum($maximum, _width($row->{width}));
+            }
+            return unless $maximum eq $width;
+            $nodes{$name} = {target_name => $name, declaration_kind => 'signal',
+                declaration => $declaration, event => $event, children => \@children,
+                numeric => $numeric};
+        }
+        for my $leaf (@{$selection->{numeric}{observation}{leaves}}) {
+            my $source = $leaf->{source};
+            push @leaves, {reference_identity => $leaf->{reference_identity}, target_name => $source->{name},
+                declaration => $namespace->{declarations}{$source->{name}}};
+        }
+        # Reprepare the complete selected source, including original generic
+        # operands/floors, after every target read. Only raw barriers follow.
+        return unless $class->current_selection(%input, observation => $selection);
+        my $target = _selection_target_frame(\%input, $selection->{nodes}) or return;
+        return unless _json()->encode($target) eq _json()->encode($selection->{target_state})
+            && FSM::SourceLiteralWidthAllocationSupport::_unchanged($capture->{walk})
+            && $before eq (_range_source_frame($context) // '')
+            && $raw_targets eq _target_inputs(\%args);
+        _json()->decode(_json()->encode({kind => 'systemverilog_source_literal_targets',
+            target_language => $selection->{target_language}, target_name => $args{signal_name},
+            width => $selection->{numeric}{observation}{selected_width},
+            selection => $selection, namespace => $namespace, nodes => \%nodes,
+            node_order => $selection->{node_order}, leaf_targets => \@leaves}));
+    };
+    return $@ ? undef : $result;
+}
+
+sub current_targets {
+    my ($class, %args) = @_;
+    return unless exists($args{observation}) && ref($args{observation}) eq 'HASH';
+    my $saved = delete $args{observation};
+    my $current = $class->prepare_targets(%args) or return;
+    my $matches = eval {_json()->encode($current) eq _json()->encode($saved)};
+    return $matches ? $current : undef;
+}
+
 1;
 
 =head1 NAME
@@ -473,6 +594,37 @@ sub current_selection {
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport - Target-only widths over completed literal source intent
 
 =head1 METHODS
+
+=head2 prepare_targets
+
+Takes the C<prepare_selection> arguments and complete actual C<target_namespace>,
+C<target_declarations> and C<target_intermediates> snapshots. Canonical namespace
+closure is shared with C<DirectDeclaredWidthSupport>. Every selected helper and
+original leaf must have its unrenamed plain unsigned declaration, independently
+matching its selected maximum or original leaf width. Helpers require internal
+signal roles. Each complete assignment event must match fresh typed selection,
+including the existing ordered binary origin/allocation when independently
+proved; missing, conflicting or foreign families withhold.
+
+The detached C<systemverilog_source_literal_targets> result retains complete
+C<selection> (including original generic operands and fixed floors), canonical
+C<namespace>, C<node_order>, C<nodes>, duplicate-preserving C<leaf_targets> and
+root C<width>. Nodes include actual declarations/events, numeric observations and
+ordered typed child edges; physical helpers deduplicate in postorder. Complete
+selection re-observation and raw source/row/owner/target barriers close the join.
+Target snapshots are data inputs, not collector provenance or proof of emitted
+range text. Other event families retain their own semantic qualification.
+
+This private proof does not install live ranges or bypass final Core/source
+width agreement. The mutable regression observes actual numeric emitter events
+through explicit test-only source/binary symbolic-selector seams; it does not
+qualify normal generic generation. Live ledger and final agreement are separate.
+
+=head2 current_targets
+
+Also takes C<observation>. Reprepares the entire physical proof and compares the
+complete saved record with raw scalar kinds intact. Edited detached output,
+stale rows/epochs/owners or changed source/target records supply no saved authority.
 
 =head2 prepare_selection
 

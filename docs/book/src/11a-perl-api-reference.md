@@ -790,6 +790,26 @@ expression intent; actual captured declarations/events, live range ledgers and
 final generation agreement remain separate. Generic literal generation still
 refuses at its existing boundary; compiler/runtime/full qualification is pending.
 
+`prepare_targets` adds complete actual `target_namespace`, `target_declarations`
+and `target_intermediates` snapshots to the selection arguments. It reuses canonical
+namespace closure, then independently checks every selected helper and original
+leaf against its unrenamed plain unsigned physical declaration and numeric maximum.
+Every helper assignment must match its own fresh typed expression and existing
+ordered binary origin/allocation, when present. Missing events, conflicting
+families, wrong roles and changed widths/types refuse. The detached result retains
+complete selection and generic operands/floors, physical nodes in postorder,
+ordered repeated typed edges and duplicate-preserving original leaf targets.
+`current_targets` also compares a saved `observation`. Full selection re-observation
+and final raw source, row, owner and complete target-input barriers withhold late
+mutations. Snapshots remain data inputs; this does not prove collector provenance
+or emitted range text. `t/2267-target-source-literal-declarations.t` uses ordinary
+fixed emission and explicit test-only mutable source/binary selector seams to
+observe real numeric emitter records. Mutable record-contract checks do not
+qualify normal generic generation. Live ledgers and final Core/source-width
+agreement remain separate; external/full qualification is deferred.
+Read the saved proof and hostile-record checks with
+`python3 -B docs/audits/literal-target-proof-20261030/verify.py --qualify`.
+
 DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
 SignalRefs, refusing distinct objects claiming one physical name. Copied parameter
 maps pass canonical observation proof; coherent bindings join the bounded adapter
