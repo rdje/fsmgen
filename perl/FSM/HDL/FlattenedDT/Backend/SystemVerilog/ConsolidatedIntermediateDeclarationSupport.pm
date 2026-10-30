@@ -46,6 +46,7 @@ use FSM::DirectDeclaredWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport;
 use FSM::SourceBitwiseTreeOriginSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 
 =head2 new
 
@@ -87,6 +88,12 @@ and selected maximum. Missing policy cannot silently select a numeric fallback.
 Fixed independent leaves retain numeric declarations. Complete selected-target
 proof and the whole-generation source fence close this ledger before HDL returns.
 
+Literal helpers have a separate generation-local declaration ledger. Actual
+selected literal intent supplies either its fixed numeric range or its mutable
+maximum. Required typed literal expressions cannot use the other range families
+or numeric fallback when that intent is absent. Complete physical target proof
+and a whole-generation raw fence independently close this ledger.
+
 =cut
 
 sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
@@ -103,7 +110,8 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
             {name => $signal_name, width => $width, signed => 0})
             if $ctx->{declared_width_declaration_capture};
 
-        my $range = $self->_source_bitwise_symbolic_range($signal_name, $signal_info, $width);
+        my $range = $self->_literal_range($signal_name, $signal_info, $width, $filtered_signals);
+        $range //= $self->_source_bitwise_symbolic_range($signal_name, $signal_info, $width);
         $range //= $self->_binary_symbolic_range($signal_name, $signal_info, $width);
         $range //= $self->_graph_symbolic_range($signal_name, $signal_info, $width);
         if ($range) {
@@ -116,6 +124,21 @@ sub render_consolidated_intermediate_declarations ($self, $prepared_block) {
     }
 
     return $hdl;
+}
+
+sub _literal_range ($self, $name, $info, $width, $rows) {
+    my $ctx = $self->{flattened_dt};
+    my $literal = 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport';
+    return unless $literal->requires_emission($ctx->{fsm_module}{signals}{$name}, $rows);
+    my $expression = $ctx->{backend_sv_intermediate_recovery_support}
+        ->render_intermediate_signal_expression($name, $info);
+    my $emitted = $literal->prepare_emission(width_support => $ctx->{backend_sv_intermediate_width_support},
+        signal_name => $name, signal_info => $info, signal_registry => $rows,
+        target_language => 'systemverilog', expression => $expression);
+    confess "Direct literal declaration requires current selected source intent and width\n"
+        unless $emitted && $emitted->{width} eq FSM::IntermediateWidthAllocationSupport::_width($width);
+    $ctx->{direct_declared_width_emitted_literal_ranges}{$name} = $emitted;
+    return $emitted;
 }
 
 # These selectors decide when proof is required. They install no policy and
@@ -143,6 +166,9 @@ sub _source_bitwise_family ($self, $name, $info) {
 
 sub _source_bitwise_uses_symbolic ($self, $name) {
     my $ctx = $self->{flattened_dt};
+    return 0 if FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+        ->requires_emission($ctx->{fsm_module}{signals}{$name},
+            $ctx->{backend_sv_intermediate_width_support}{_graph_inference_rows});
     my $source = $ctx->{direct_declared_width_source_plan};
     return 0 unless $source && $source->{profile} eq 'symbolic';
     my $signal = $ctx->{fsm_module}->signals->{$name};

@@ -50,6 +50,7 @@ use JSON::PP ();
 use Scalar::Util qw(blessed);
 use FSM::DirectDeclaredWidthSupport;
 use FSM::Backend::VerilogFamily::DeclarationCapture;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 
 use constant STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN_MARKER =>
     'FSMGEN_STRUCTURAL_RTLIR_ENABLE_ASSIGNMENTS_BEGIN';
@@ -98,13 +99,24 @@ earlier proved helper. Complete selected input identity also remains unchanged.
 Missing events, changed source or any emitted-ledger disagreement invalidate
 capture and return no HDL; fresh same-backend generations do not retain ledgers.
 
+Literal helpers retain separate declaration and assignment ledgers, including
+fixed numeric declarations. Required coverage derives from selected typed source
+rows, independently of ledger/event membership. Complete current physical target
+proof compares exact selected ranges and expressions; a raw generation fence
+closes after every final proof. Any exception invalidates capture. The independent
+Core/source-width validator remains unchanged, including its unsized mutable
+literal refusal.
+
 =cut
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $prepare_widths = _needs_declared_width_preparation($ctx, $fsm_module);
+    my $prepare_literals = grep {
+        FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport->requires_emission($_)
+    } values %{$fsm_module->signals};
     my $capture = $ctx->{declared_width_declaration_capture}
-        // ($prepare_widths ? FSM::Backend::VerilogFamily::DeclarationCapture->new : undef);
+        // ($prepare_widths || $prepare_literals ? FSM::Backend::VerilogFamily::DeclarationCapture->new : undef);
     local $ctx->{declared_width_declaration_capture} = $capture;
     local $ctx->{direct_declared_width_source_plan};
     local $ctx->{direct_declared_width_emitted_ports} = {};
@@ -113,18 +125,45 @@ sub generate_systemverilog_module ($self, $fsm_module) {
     local $ctx->{direct_declared_width_emitted_binary_ranges} = {};
     local $ctx->{direct_declared_width_emitted_graph_ranges} = {};
     local $ctx->{direct_declared_width_emitted_source_tree_ranges} = {};
+    local $ctx->{direct_declared_width_emitted_literal_ranges} = {};
+    local $ctx->{direct_declared_width_emitted_literal_assignments} = {};
+    my $hdl;
+    my $ok = eval {
+        $hdl = $self->_assemble_captured_module($fsm_module, $prepare_widths, $prepare_literals, $capture);
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $capture->invalidate if $capture;
+        die $error;
+    }
+    return $hdl;
+}
+
+sub _assemble_captured_module ($self, $fsm_module, $prepare_widths, $prepare_literals, $capture) {
+    my $ctx = $self->{flattened_dt};
     $capture->begin_module($fsm_module->name) if $capture;
+    # Normalization renders compatibility expressions. Mutable source rank must
+    # already be known, otherwise a default-one literal identity can be folded
+    # before the later fresh typed-expression proof. Refresh after helper discovery;
+    # this early view grants no emitted declaration or final agreement authority.
+    if ($prepare_literals && $prepare_widths) {
+        $ctx->{direct_declared_width_source_plan} = FSM::DirectDeclaredWidthSupport->prepare_module(
+            fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
+            target_language => 'systemverilog');
+    }
     my $stage = $ctx->{backend_sv_consolidated_intermediate_stage_support};
     my $split_stage = $stage->can('prepare_consolidated_intermediate_block')
         && $stage->can('render_prepared_consolidated_intermediate_block');
-    my ($prepared_block, $consolidated_intermediate_hdl, $source_tree_fence);
+    my ($prepared_block, $consolidated_intermediate_hdl, $source_tree_fence, $literal_fence);
+    confess "Direct literal emission requires a prepared intermediate stage\n" if $prepare_literals && !$split_stage;
     if ($split_stage) {
         $prepared_block = $stage->prepare_consolidated_intermediate_block($fsm_module);
     } else {
         # Older injected providers expose only the combined stage contract.
         $consolidated_intermediate_hdl = $self->prepare_consolidated_intermediate_stage($fsm_module);
     }
-    if ($prepare_widths) {
+    if ($prepare_widths || $prepare_literals) {
         $ctx->{direct_declared_width_source_plan} = FSM::DirectDeclaredWidthSupport->prepare_module(
             fsm_module => $fsm_module, assignment_analysis => $ctx->{assignment_analysis},
             target_language => 'systemverilog');
@@ -132,6 +171,8 @@ sub generate_systemverilog_module ($self, $fsm_module) {
         my $recovery = $ctx->{backend_sv_intermediate_recovery_support};
         my %roots;
         my $source_rows = ref($prepared_block) eq 'HASH' ? ($prepared_block->{filtered_signals} // {}) : {};
+        $literal_fence = FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+            ->capture_generation_fence(flattened_dt => $ctx, signal_registry => $source_rows);
         for my $name (sort keys %$source_rows) {
             my $info = $source_rows->{$name};
             my $family = $declarations->_source_bitwise_family($name, $info) or next;
@@ -167,6 +208,16 @@ sub generate_systemverilog_module ($self, $fsm_module) {
         ->generate_systemverilog_tail($fsm_module);
 
     $capture->complete if $capture;
+    my ($literal_inputs, $literal_snapshot);
+    if ($literal_fence) {
+        $literal_snapshot = $capture->snapshot;
+        $literal_inputs = JSON::PP->new->canonical->encode([$literal_snapshot,
+            $ctx->{direct_declared_width_emitted_literal_ranges},
+            $ctx->{direct_declared_width_emitted_literal_assignments}]);
+        FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+            ->validate_emission(flattened_dt => $ctx, signal_registry => $prepared_block->{filtered_signals},
+                %$literal_snapshot);
+    }
     if ($prepare_widths) {
         my $ok = eval {
             my $snapshot = $capture->snapshot;
@@ -211,6 +262,8 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             for my $name (sort keys %{$snapshot->{target_intermediates} || {}}) {
                 my $event = $snapshot->{target_intermediates}{$name};
                 next unless $event->{width_allocation};
+                next if FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+                    ->requires_emission($fsm_module->{signals}{$name}, $prepared_block->{filtered_signals});
                 next if exists($expected_source_tree{$name});
                 my $has_symbolic_operand = grep {
                     exists($qualified->{ranges}{$_});
@@ -248,6 +301,13 @@ sub generate_systemverilog_module ($self, $fsm_module) {
             $capture->invalidate;
             die $error;
         }
+    }
+    if ($literal_fence) {
+        confess "Direct literal emission inputs changed during final proof\n"
+            unless $literal_inputs eq JSON::PP->new->canonical->encode([$literal_snapshot,
+                $ctx->{direct_declared_width_emitted_literal_ranges},
+                $ctx->{direct_declared_width_emitted_literal_assignments}]);
+        $literal_fence->();
     }
     return $hdl;
 }

@@ -3,6 +3,7 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
 use FSM::CoreExpressionWidthSupport;
@@ -587,6 +588,146 @@ sub current_targets {
     return $matches ? $current : undef;
 }
 
+# A requirement selector, never an allocation proof. In particular, removing a
+# completed holder must not turn a typed literal expression into numeric fallback.
+sub requires_emission {
+    my ($class, $signal, $rows) = @_;
+    return 0 unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
+    return 1 if exists $signal->{_source_literal_width_allocation};
+    return 0 unless $signal->{attributes}{is_intermediate}
+        || (ref($rows) eq 'HASH' && ref($rows->{$signal->{name}}) eq 'HASH'
+            && ($rows->{$signal->{name}}{source} // '') eq 'fsmgen_parsing');
+    my $ast = $signal->{driving_ast};
+    return 0 unless blessed($ast) && $ast->isa('FSM::CoreAST::BinaryOp')
+        && ($ast->{operator} // '') =~ /\A[&|^]\z/
+        && ref($ast->{operands}) eq 'ARRAY' && @{$ast->{operands}} >= 2;
+    my $remaining = FSM::CoreExpressionWidthSupport::MAX_NODES();
+    return _contains_literal($ast, {}, \$remaining, 0, $rows);
+}
+
+sub _contains_literal {
+    my ($node, $active, $remaining, $depth, $rows) = @_;
+    return 0 unless blessed($node);
+    confess "Direct literal emission selector exceeds its bounded tree\n"
+        if $depth > FSM::CoreExpressionWidthSupport::MAX_DEPTH() || --$$remaining < 0;
+    my $identity = refaddr($node);
+    confess "Direct literal emission selector contains a cycle\n" if $active->{$identity};
+    local $active->{$identity} = 1;
+    return 1 if $node->isa('FSM::CoreAST::Literal');
+    if ($node->isa('FSM::CoreAST::SignalRef')) {
+        my $signal = $node->{signal};
+        return blessed($signal) && ($signal->{attributes}{is_intermediate}
+            || (ref($rows) eq 'HASH' && ref($rows->{$signal->{name}}) eq 'HASH'
+                && ($rows->{$signal->{name}}{source} // '') eq 'fsmgen_parsing'))
+            ? _contains_literal($signal->{driving_ast}, $active, $remaining, $depth + 1, $rows) : 0;
+    }
+    for my $operand (@{ref($node->{operands}) eq 'ARRAY' ? $node->{operands} : []}) {
+        return 1 if _contains_literal($operand, $active, $remaining, $depth + 1, $rows);
+    }
+    return 0;
+}
+
+sub _required_names {
+    my ($class, $context, $rows) = @_;
+    return [grep {$class->requires_emission($context->{fsm_module}{signals}{$_}, $rows)} sort keys %$rows];
+}
+
+sub _emission_record {
+    my ($selection) = @_;
+    my $width = $selection->{numeric}{observation}{selected_width};
+    my $range = $selection->{range};
+    return _json()->decode(_json()->encode({selection => $selection,
+        width => $width, expression => $selection->{expression},
+        profile => $range ? 'symbolic' : 'fixed',
+        range_text => $range ? $range->{range_text} : $width > 1 ? '['.($width - 1).':0] ' : ''}));
+}
+
+sub prepare_emission {
+    my ($class, %args) = @_;
+    my $selection = $class->prepare_selection(%args) or return;
+    return _emission_record($selection);
+}
+
+# This frame invokes no Core or renderer getters. Capture all participating AST
+# stamps separately; raw Signal fields alone include only each root AST identity.
+sub _generation_frame {
+    my ($context, $rows) = @_;
+    my $owner = $context->{backend_sv_intermediate_width_support};
+    my %selected;
+    for my $name (sort keys %$rows) {
+        my $signal = $context->{fsm_module}{signals}{$name};
+        next unless blessed($signal) && $signal->{attributes}{is_intermediate};
+        my $ast = $signal->{driving_ast};
+        my $row = _selection_row_state($rows->{$name}, $ast);
+        my $registered = _selection_row_state($context->{intermediate_signals}{$name}, $ast);
+        $selected{$name} = {row => $row, registered => $registered};
+    }
+    return _json()->encode({source => _range_source_frame($context),
+        rows => _identity($rows), row_names => [sort keys %$rows], selected => \%selected,
+        graph_rows => _identity($owner->{_graph_inference_rows}),
+        epoch => $owner->{_width_inference_epoch}, rows_epoch => $owner->{_graph_inference_rows_epoch},
+        rows_revision => $owner->{_graph_inference_rows_revision},
+        owners => {map {$_ => _identity($context->{$_})} qw(backend_sv_intermediate_width_support
+            backend_sv_intermediate_recovery_support enable_graph_ast_support
+            backend_sv_consolidated_intermediate_declaration_support
+            backend_sv_consolidated_intermediate_assignment_support)}});
+}
+
+sub capture_generation_fence {
+    my ($class, %args) = @_;
+    my ($context, $rows) = @args{qw(flattened_dt signal_registry)};
+    my $names = $class->_required_names($context, $rows);
+    return unless @$names;
+    my @captures;
+    for my $name (@$names) {
+        my $signal = $context->{fsm_module}{signals}{$name};
+        my $capture = FSM::SourceLiteralWidthAllocationSupport::_capture($signal, {phase => 'completed'});
+        confess "Direct literal emission requires current completed source intent\n"
+            unless $capture && $class->prepare(signal => $signal);
+        push @captures, $capture;
+    }
+    # A later root's capture may mutate an earlier root. Close all walks before
+    # establishing the generation boundary and again after the last final proof.
+    confess "Direct literal emission source changed during generation capture\n"
+        if grep {!FSM::SourceLiteralWidthAllocationSupport::_unchanged($_->{walk})} @captures;
+    my $before = _generation_frame($context, $rows);
+    return sub {
+        confess "Direct literal emission source changed during generation\n"
+            unless $before eq _generation_frame($context, $rows)
+                && !grep {!FSM::SourceLiteralWidthAllocationSupport::_unchanged($_->{walk})} @captures;
+        return 1;
+    };
+}
+
+sub validate_emission {
+    my ($class, %args) = @_;
+    my ($context, $rows) = @args{qw(flattened_dt signal_registry)};
+    my %targets = map {$_ => $args{$_}} qw(target_namespace target_declarations target_intermediates);
+    my $before = _target_inputs(\%targets);
+    my (%declarations, %assignments);
+    # Required coverage comes from the selected rows and actual typed sources,
+    # independently of either emitted ledger or the presence of assignment events.
+    for my $name (@{$class->_required_names($context, $rows)}) {
+        my $expression = $context->{backend_sv_intermediate_recovery_support}
+            ->render_intermediate_signal_expression($name, $rows->{$name});
+        my $plan = $class->prepare_targets(width_support => $context->{backend_sv_intermediate_width_support},
+            signal_name => $name, signal_info => $rows->{$name}, signal_registry => $rows,
+            expression => $expression, target_language => 'systemverilog', %targets);
+        confess "Direct literal emission requires complete current selected targets\n" unless $plan;
+        $declarations{$name} = _emission_record($plan->{selection});
+        $assignments{$name} = $plan->{nodes}{$name}{event}{expression};
+    }
+    confess "Direct literal emitted declarations disagree with complete selected targets\n"
+        unless _json()->encode(\%declarations)
+            eq _json()->encode($context->{direct_declared_width_emitted_literal_ranges});
+    confess "Direct literal emitted assignments disagree with complete selected targets\n"
+        unless _json()->encode(\%assignments)
+            eq _json()->encode($context->{direct_declared_width_emitted_literal_assignments});
+    confess "Direct literal captured targets changed during emission proof\n"
+        unless $before eq _target_inputs(\%targets);
+    return 1;
+}
+
 1;
 
 =head1 NAME
@@ -594,6 +735,50 @@ sub current_targets {
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport - Target-only widths over completed literal source intent
 
 =head1 METHODS
+
+=head2 requires_emission
+
+Internal requirement selector taking the actual Core Signal as its positional
+argument and optionally the actual selected row registry. A completed holder
+or selected source row still requires proof after loss of its intermediate role.
+A bounded typed bitwise expression
+containing a literal requires proof, including through generated child references.
+This selector grants no width or ancestry authority. Removing a holder does not
+authorize numeric fallback; malformed required intent fails its subsequent proof.
+
+=head2 prepare_emission
+
+Take the exact C<prepare_selection> arguments and return detached C<selection>,
+C<width>, C<expression>, C<profile> and C<range_text>. Fixed sources retain numeric
+ranges; mutable sources retain the complete independently prepared maximum. The
+declaration emitter records precisely this result in its generation-local ledger
+and uses its range text. The assignment emitter separately records its agreeing
+selected expression. This is emission intent, not complete physical target proof.
+
+=head2 capture_generation_fence
+
+Internal assembly boundary taking C<flattened_dt> and the actual selected
+C<signal_registry>. Return a closure, or undef when no selected literal helper
+requires proof. Capture every participating completed source walk before emission;
+missing intent throws. The returned closure compares raw source/AST/capsule,
+selected row, namespace, installed owner and inference-epoch state after all final
+proofs. It invokes no Core or renderer getters and throws on change. Assembly
+invalidates capture for any generation exception and localizes both ledgers, so
+fresh same-backend reuse cannot inherit failed emission intent.
+
+=head2 validate_emission
+
+Internal final assembly check taking C<flattened_dt>, C<signal_registry> and the
+complete C<target_namespace>, C<target_declarations>, C<target_intermediates>
+snapshot. Independently enumerate required selected typed sources, reprepare
+each complete physical target proof and compare exact declaration records and
+assignment expressions with both emitted ledgers. Missing events, extra ledger
+members, changed ranges, expressions or source authority throw; success returns
+one. Complete target inputs and the whole-generation raw fence must still agree
+after subsequent proofs. This does not relax final Core/source-width agreement:
+unsized mutable generation still refuses there. Explicit literal sizes can now
+complete normal bounded fixed/mutable generation. External HDL execution and
+full feature qualification remain separate.
 
 =head2 prepare_targets
 
@@ -618,7 +803,8 @@ range text. Other event families retain their own semantic qualification.
 This private proof does not install live ranges or bypass final Core/source
 width agreement. The mutable regression observes actual numeric emitter events
 through explicit test-only source/binary symbolic-selector seams; it does not
-qualify normal generic generation. Live ledger and final agreement are separate.
+qualify normal generic generation. Live emission now has separate ledgers and
+complete-target comparison; final Core/source-width agreement stays independent.
 
 =head2 current_targets
 

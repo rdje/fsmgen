@@ -35,6 +35,8 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use Carp qw(confess);
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 
 =head2 new
 
@@ -68,6 +70,10 @@ The separate optional graph publisher adds graph_width_allocation only for a
 current selected arithmetic graph with plain transitive source/result profiles.
 HDL text and symbolic range admission are unchanged.
 
+Literal helpers additionally require their same selected declaration expression
+and record the exact emitted expression in a separate generation-local ledger.
+Complete physical target proof compares both ledgers before HDL returns.
+
 =cut
 
 sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
@@ -85,6 +91,13 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
             unless defined($source) && length($source);
 
         my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
+        if (FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport
+            ->requires_emission($ctx->{fsm_module}{signals}{$signal_name}, $filtered_signals)) {
+            my $declaration = $ctx->{direct_declared_width_emitted_literal_ranges}{$signal_name};
+            confess "Direct literal assignment requires its same selected declaration expression\n"
+                unless $declaration && defined($expression) && $expression eq $declaration->{expression};
+            $ctx->{direct_declared_width_emitted_literal_assignments}{$signal_name} = $expression;
+        }
         unless (defined($expression) && $expression ne '') {
             fsm_warn("CONSOL_INTER_SIG: No renderable expression for $signal_name, skipping assign emission");
             next;

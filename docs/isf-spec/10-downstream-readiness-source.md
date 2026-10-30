@@ -366,8 +366,8 @@ General source rules:
   source contract adds no public semantic/MCP field. The direct SystemVerilog
   numeric consumer now joins completed literal intent to current actual rows
   before compatibility widths, preserving nested fixed high bits and independent
-  literal/leaf floors. Mutable generic floors and final fixed/mutable target
-  agreement remain owned by the required reduction repair before full qualification.
+  literal/leaf floors. Final unsized Core/target agreement remains owned by the
+  required reduction repair before full qualification.
   A bounded shared target kernel now renders maxima of independent prepared
   width contracts and fixed floors without freezing mutable branches to their
   defaults. Literal generic range preparation now joins actual numeric frames to
@@ -377,8 +377,12 @@ General source rules:
   source rendering, with final raw source and row/text checks. Complete physical
   declaration/event preparation now joins every selected helper and original leaf
   to fresh typed intent, ordered edges and independent numeric maxima. Mutable
-  record checks use explicit private capture seams. Live ledgers and final agreement
-  remain pending; these preparations do not expand supported generic source forms.
+  record checks use explicit private capture seams. Actual generation now closes
+  separate literal declaration/assignment ledgers against complete target proof
+  and a whole-generation raw fence; missing intent cannot select numeric fallback.
+  Explicitly sized fixed/mutable cases pass focused native emission checks.
+  Unsized mutable final Core agreement, full feature, external HDL and public
+  corpus/API/MCP qualification remain open.
 
 - Declared actor output roles survive lowering even when undriven; inspect
   realized semantic/HDL outputs rather than inferring presence from drives.

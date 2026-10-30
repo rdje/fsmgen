@@ -786,10 +786,13 @@ sub _signal_has_symbolic_range ($self, $name) {
     my $graph = $graph_ranges ? $graph_ranges->{$name} : undef;
     my $source_tree_ranges = $ctx->{direct_declared_width_emitted_source_tree_ranges};
     my $source_tree = $source_tree_ranges ? $source_tree_ranges->{$name} : undef;
+    my $literal_ranges = $ctx->{direct_declared_width_emitted_literal_ranges};
+    my $literal = $literal_ranges ? $literal_ranges->{$name} : undef;
     my @plans = ($signal ? $signal->{width_plan} : undef,
         $binary ? $binary->{width_plan} : undef,
         $graph ? $graph->{width_plan} : undef,
-        $source_tree ? $source_tree->{width_plan} : undef);
+        $source_tree ? $source_tree->{width_plan} : undef,
+        $literal);
     for my $field (qw(direct_declared_width_emitted_ports direct_declared_width_emitted_signals)) {
         my $map = $ctx->{$field};
         push @plans, $map->{$name} if $map && exists($map->{$name});

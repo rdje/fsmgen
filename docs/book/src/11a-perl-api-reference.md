@@ -631,7 +631,7 @@ refuses generation. This reproduces before the selected-tree publisher; it is
 tracked under `ISF-REDUCTION-DELIVERY.3.4.3.2.3.4.4.1`, first in the following
 literal/type constraint lane. Explicitly sized literal cases preserve their
 independent widths and receive no source-tree origin. This gap remains a required
-repair; the new metadata does not qualify unsized-literal or symbolic range support.
+repair; source-tree metadata alone qualifies no literal range support.
 The retained diagnosis has source-matched before/after evidence. An unconditional
 staleness watcher for this open literal limitation remains owned by that repair.
 
@@ -691,8 +691,8 @@ and the complete original source capsule. Generated placeholder widths never
 become independent leaf floors. Missing, stale, foreign, constrained or over-bound
 source intent withholds; matching writes during inference also withhold.
 This preparation supplies no backend row/epoch proof, generic range or final
-declaration agreement. Its separate numeric consumer is now installed;
-declaration consumers remain open. `t/2261-target-source-literal-width.t`
+declaration agreement. Separate numeric and emission consumers are now installed;
+final Core agreement remains open. `t/2261-target-source-literal-width.t`
 covers the completed Parser/facade sources, explicit and independent floors,
 raw kinds, repeated edges and mutation barriers without HDL execution.
 
@@ -730,8 +730,8 @@ explicit literal sizes and wider independent leaves preserve their own floors.
 Core source widths and original caller data stay unchanged. Missing or unsupported
 joins supply no literal authority. `t/2262-target-source-literal-numeric-inference.t`
 checks actual fixed generation, mutable numeric preparation, independent mask
-algebra and hostile row/source/epoch changes. Live generic literal declarations
-and final fixed/mutable agreement remain owned by the next repair. These are
+algebra and hostile row/source/epoch changes. Separate emission ledgers now consume
+generic ranges; final unsized Core agreement remains open. These are
 focused source and generated-text checks; external HDL execution and full feature
 qualification remain deferred. Saved evidence can be read without source or HDL
 execution with `python3 -B docs/audits/literal-numeric-inference-20261030/verify.py --qualify`;
@@ -750,8 +750,8 @@ Inputs and output text have explicit bounds; oversize inputs or mismatched
 observed operand values refuse. `t/2263-verilog-prepared-maximum-range.t` interprets emitted
 conditional ranges under distinguishing overrides and checks hostile inputs.
 This is a prepared rendering kernel. The separate source adapter below joins
-literal observations to original generic contracts; selected target ledgers and
-final agreement remain pending. Native generic literal generation still refuses.
+literal observations to original generic contracts; separate emission ledgers now
+consume that intent. Unsized mutable final Core agreement still refuses.
 
 `SourceLiteralWidthSupport->prepare_range` now joins the actual numeric frame to
 canonical direct module preparation and the proved original parameter environment.
@@ -768,8 +768,8 @@ the saved range; matching namespace replacements cannot reuse it. Fixed-only
 sources, foreign targets and unproved or over-bound joins withhold this generic
 preparation. `t/2264-target-source-literal-generic-range.t` covers actual installed
 rows, independent wider floors, source conservation and a late parameter change.
-Selected declaration/event membership, emitted ledgers and final fixed/mutable
-agreement remain pending; this preparation does not change live HDL generation.
+Selected declaration/event proof and live ledgers have separate consumers below;
+this preparation alone grants no generation or final Core agreement.
 
 `prepare_selection` takes the same actual inputs plus the root `expression`
 selected for emission. It joins every typed child helper to its own current
@@ -786,9 +786,9 @@ owner and row/text barriers reject late changes to earlier children.
 fresh result. `t/2265-target-source-literal-selection.t` covers direct/nested,
 fixed/mutable and explicit/wider floors, altered caches, foreign ASTs, owner/row/
 epoch changes and late child-cache writes. This qualifies private selected
-expression intent; actual captured declarations/events, live range ledgers and
-final generation agreement remain separate. Generic literal generation still
-refuses at its existing boundary; compiler/runtime/full qualification is pending.
+expression intent; actual captured declarations/events and live range ledgers have
+separate consumers below. Unsized mutable generation still refuses final Core
+agreement; compiler/runtime/full qualification is pending.
 
 `prepare_targets` adds complete actual `target_namespace`, `target_declarations`
 and `target_intermediates` snapshots to the selection arguments. It reuses canonical
@@ -805,10 +805,54 @@ mutations. Snapshots remain data inputs; this does not prove collector provenanc
 or emitted range text. `t/2267-target-source-literal-declarations.t` uses ordinary
 fixed emission and explicit test-only mutable source/binary selector seams to
 observe real numeric emitter records. Mutable record-contract checks do not
-qualify normal generic generation. Live ledgers and final Core/source-width
-agreement remain separate; external/full qualification is deferred.
+qualify normal generic generation. Live ledgers now have the separate actual
+consumer below; final Core/source-width agreement remains independent.
 Read the saved proof and hostile-record checks with
 `python3 -B docs/audits/literal-target-proof-20261030/verify.py --qualify`.
+
+Actual Verilog-family generation now records each literal helper's complete
+selected declaration intent and its exact assignment expression in separate
+per-generation ledgers. Fixed helpers retain numeric ranges; mutable helpers keep
+the independent original width contracts and literal floor. Required coverage
+comes from selected typed source rows, independently of either ledger or event
+membership. Final assembly re-proves complete physical targets and compares every
+record, range and expression. Missing policy or events, extra ledger members and
+changed text cannot select a fallback. A raw fence spans emission through the last
+final proof, including earlier roots that a later proof might mutate. Any exception
+invalidates capture; fresh same-backend generation starts with new ledgers.
+
+This admits bounded explicitly sized literal cases such as
+`(^ (| A 9'b100000000) B)` with independently parameterized `A` and `B` widths.
+For example, save this as `.artifacts/literal_ranges.fsm`:
+
+```lisp
+(?fsm:literal_ranges
+  (+params (W 1) (X 1))
+  (+size (A (param W)) (B (param X)) (DATA 1) (OTHER 1))
+  (idle
+    (<(^ (| A 9'b100000000) B) (= (DATA 1)) (= (OTHER 1)))
+    (-> idle)))
+```
+
+```bash
+./bin/fsmgen --strict --output .artifacts/sv/literal_ranges.sv .artifacts/literal_ranges.fsm
+```
+
+The child range retains `W` and the literal floor of 9; the parent also retains
+the independent `X` dependency. A one-bit explicit literal similarly keeps vector
+rank when the default maximum is one. The canonical source view is available
+before normalization can fold default-one expressions and is refreshed after
+helper discovery; complete target proof still follows actual emission.
+Unsized mutable literals still refuse the separate final Core/source-width check;
+the emission ledger grants no exception. Run the focused actual-emitter controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/2268-target-source-literal-emission.t
+```
+
+These checks qualify native generated declarations/expressions, complete capture,
+atomic refusals and reuse. External compiler/override/runtime, full feature and
+public corpus/API/MCP qualification remain deferred.
 
 DirectDeclaredWidthSupport joins module Signals and normalized assignment-target
 SignalRefs, refusing distinct objects claiming one physical name. Copied parameter
