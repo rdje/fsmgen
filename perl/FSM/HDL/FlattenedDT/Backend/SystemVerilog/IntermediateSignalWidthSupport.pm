@@ -198,7 +198,42 @@ sub _complete_factorized_width_inference ($self, $all_intermediate_signals) {
             signal_info => $all_intermediate_signals->{$name}, epoch => $self->{_width_inference_epoch})};
         $self->{_source_bitwise_tree_allocation_events}{$name} = $tree_holder if $tree_holder;
     }
+    for my $name (sort keys %{$self->{_concatenation_inference_events}}) {
+        delete $self->{_concatenation_inference_events}{$name}
+            unless ref($all_intermediate_signals->{$name}) eq 'HASH'
+                && $self->concatenation_inference_event($name, $all_intermediate_signals->{$name});
+    }
+    # A later candidate's semantic getter can invalidate an earlier candidate.
+    # Finish without getters, after every other completion callback, and never
+    # recapture source or recreate a missing event at this boundary.
+    for my $name (sort keys %{$self->{_concatenation_inference_events}}) {
+        delete $self->{_concatenation_inference_events}{$name}
+            unless FSM::ConcatenationInferenceSupport->live_usage_current_raw(
+                width_support => $self, signal_name => $name,
+                signal_info => $all_intermediate_signals->{$name}, signal_registry => $all_intermediate_signals,
+                holder => $self->{_concatenation_inference_events}{$name});
+    }
     $self->{_width_inference_complete} = $self->{_width_inference_epoch};
+}
+
+=head2 factorized_concatenation_width_allocation
+
+Return the detached original current concatenation inference record only after
+successful normalization, pruning and final registry publication in this epoch.
+Completion prunes removed or stale events and finishes with getter-free source
+and row validation after its semantic reads. It cannot mint missing proof or
+recapture source. The actual original weak row view must remain owned; a prepared
+block extends that lifetime, while detached records or retained rows do not.
+Source/row/constraint changes, failure, reset and later generations withhold.
+Other allocation families retain their profiles. This selected numeric policy
+does not prove a symbolic sum range or authorize generic target emission.
+
+=cut
+
+sub factorized_concatenation_width_allocation ($self, $signal_name, $signal_info) {
+    return unless $self->{_width_inference_complete}
+        && $self->{_width_inference_complete} == $self->{_width_inference_epoch};
+    return $self->concatenation_inference_event($signal_name, $signal_info);
 }
 
 =head2 factorized_width_inference_event

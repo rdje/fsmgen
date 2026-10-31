@@ -829,7 +829,21 @@ proof-map interference and late source/getter mutations cannot refresh. Rejectio
 clears partial proof; original callback exceptions and clean backend reuse preserve.
 Optional providers retain the original graph callback's scalar/list/void contexts
 and exact returned values, including the absent-provider branch.
-Completed collection policy remains separate.
+`factorized_concatenation_width_allocation(NAME, ROW)` now returns that same
+original detached numeric record only after successful normalization, pruning
+and final registry publication in the current epoch. Completion removes missing
+or stale events, then rechecks source and row state without getters after its
+semantic reads. It never recaptures source or mints from equal numeric/cache
+widths. Current original rows and their weak canonical map must still be owned;
+the actual prepared block extends that map's lifetime, while detached records
+and retained rows alone do not. Failure, reset, new generations and source/row
+changes withhold policy; a clean backend generation can recover.
+The selected inline RHS profiles have no helper candidates. Mutable guards
+reach completed numeric collection but still refuse the unproved symbolic sum
+at declaration time. Ordinary fixed declaration rendering currently passes a
+filtered map to the resolver and revokes concat proof there; that later target
+carry belongs to the sum/emission integration task. This getter supplies current
+collection policy, not persistent authority through unqualified target writes.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -851,7 +865,7 @@ retain actual multi-row/root, mixed cache, cross-row callback and native preserv
 checks. The [single-row fallback regression](../../../t/2285-concatenation-fallback-live-usage.t)
 and [predecessor/native replay](../../../docs/audits/concat-fallback-live-usage-20261031/replay.py)
 qualify actual query order, independent usage roots, cached reads, hostile callbacks
-and weak lifetimes. These are focused carry checks; completed policy remains pending.
+and weak lifetimes. These are focused annotation checks; completion is qualified below.
 The [normalization join regression](../../../t/2286-concatenation-normalization-live-usage.t)
 and [native/prerequisite replay](../../../docs/audits/concat-normalization-live-usage-20261031/replay.py)
 retain both actual exits, late cached-callback refusal and original-error cleanup.
@@ -863,6 +877,11 @@ The [registry carry regression](../../../t/2288-concatenation-registry-carry.t) 
 [exact predecessor/native replay](../../../docs/audits/concat-registry-carry-20261031/replay.py)
 qualify actual registry reset and merge with paired source/event preservation,
 hostile callbacks and weak lifetimes. Source-only frames cannot mint a new event.
+The [completion regression](../../../t/2289-concatenation-policy-completion.t) and
+[predecessor/native replay](../../../docs/audits/concat-policy-completion-20261031/replay.py)
+check actual completion/prepared ownership, stale/removed proof, late cross-row
+callbacks, failure/reset/reuse, detached returns and the later target revocation.
+An isolated missing-final-barrier control must fail the late-callback check.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
