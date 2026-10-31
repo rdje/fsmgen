@@ -810,8 +810,14 @@ and late cross-row changes cannot refresh or remint; a clean new generation reco
 Bulk, fallback and mixed fallback-then-bulk paths are jointly checked through the
 actual metadata and public normalization exits. Original events and annotations,
 scalar/list/void context, failure cleanup, fresh-generation recovery and weak view
-lifetimes preserve. This pass grants no completed collection policy. Complete
-annotation closure, registry replacement and completed collection remain separate.
+lifetimes preserve. The complete annotation sequence also preserves the original
+event and merged/allocator/initial-registry/source identities for the selected
+fixed and mutable guards, ordered/repeated sources, nested explicit literals and
+width-one rank. The selected inline RHS profiles expose no concatenation candidate;
+they supply no helper-event authority. Unowned changes during rendering cannot
+borrow later annotations, and original errors clear partial events before clean
+backend reuse. This pass grants no completed collection policy. Registry
+replacement and completed collection remain separate.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -837,6 +843,10 @@ and weak lifetimes. These are focused carry checks; completed policy remains pen
 The [normalization join regression](../../../t/2286-concatenation-normalization-live-usage.t)
 and [native/prerequisite replay](../../../docs/audits/concat-normalization-live-usage-20261031/replay.py)
 retain both actual exits, late cached-callback refusal and original-error cleanup.
+The [annotation closure regression](../../../t/2287-concatenation-annotation-closure.t)
+and [native conservation replay](../../../docs/audits/concat-annotation-closure-20261031/replay.py)
+join the full sequence to these actual guard/RHS boundaries. This is focused
+integration qualification; generic ranges and external execution remain open.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
