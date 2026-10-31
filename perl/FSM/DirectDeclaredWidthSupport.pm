@@ -358,6 +358,11 @@ sub prepare_computed_source_binary_intermediate_range ($class, %args) {
     return FSM::DirectSourceBitwiseTreeRangeSupport->prepare_binary(%args);
 }
 
+sub prepare_concatenation_declaration ($class, %args) {
+    require FSM::DirectConcatenationRangeSupport;
+    return FSM::DirectConcatenationRangeSupport->prepare_declaration(%args);
+}
+
 sub prepare_target_namespace ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -821,6 +826,16 @@ context/helper back-reference cycle reproduced without these preparation calls.
 =cut
 
 =head1 METHODS
+
+=head2 prepare_concatenation_declaration
+
+Delegate private current source-only declaration intent to
+C<FSM::DirectConcatenationRangeSupport::prepare_declaration>. The actual backend,
+completed original sum, selected typed expression and explicit Verilog-family
+target language must agree through final getter-free closure. The detached
+result preserves original ordered contracts and packed rank. It supplies no
+physical namespace, target declaration or emission proof; those joins and live
+consumers remain separate.
 
 =head2 prepare_target_namespace
 

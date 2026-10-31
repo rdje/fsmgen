@@ -786,6 +786,29 @@ expressions and final emitted ledgers, VHDL, external execution and full
 publication qualification remain open. Public source/report/API/MCP/corpus
 capabilities do not expand in this slice.
 
+`DirectDeclaredWidthSupport->prepare_concatenation_declaration` delegates private
+source-only declaration intent to `DirectConcatenationRangeSupport`. Supply the
+actual `flattened_dt`, `signal_name`, `signal_info`, selected `expression` and
+explicit Verilog-family `target_language`. The original completed sum must remain
+current. The selected expression must match both its installed cache and a fresh
+direct rendering of the original typed AST: a cache present before source capture
+can already carry the same source tag, so that tag alone proves no rendering.
+
+The detached `concatenation_source_declaration` preserves original `allocation`,
+`sum`, ordered repeated `source_names`, selected expression, decimal-string width,
+packed rank and optional symbolic range. `source_profile` retains the shared
+SystemVerilog source profile independently of the canonical actual target language.
+Every original term supplies its own width contract to target range rendering.
+Original source/event/map/row/epoch and renderer identities must survive all
+callbacks, including equal holder substitutions; the final fence invokes no
+semantic getters. Results retain no caller graph or weak row-view ownership.
+
+This preparation emits no HDL. Complete physical namespace/declaration proof,
+live emission, final ledgers and full qualification remain separate obligations.
+The focused regression is `t/2294-concatenation-source-declarations.t`; exact
+predecessor, defect controls and native replay are owned by
+`docs/audits/concat-source-declarations-20261031/replay.py`.
+
 The standalone typed `ExpressionNamer` definition API retains its original Core
 AST and selected numeric width; it is not a source-width provenance protocol.
 For the retained required native guard/RHS profiles, current source preparation
