@@ -3969,3 +3969,22 @@ decision is pending for the current publication path.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies _library_instance_metadata introduction at 220dd8a18; git show 3994e966e:perl/FSM/Scheduler/ISF/LoweringIR.pm confirms separate library/ATL constructors and their common parent builder; the existing parameter metadata producer retains raw default aliases. Parser ATL resolution inspection confirms default-only source metadata. Only task preparation is dirty when the director requests the POD pivot.
 - [x] **ADDRESSED (verified)** — Save the refined scope and precise pending frontier, return .4.2 to pending without claiming implementation, and record the latest director priority before the new task is activated.
 - [x] **NO REGRESSION** — Current task integrity and knowledge-map: OK remain required through scripts/check_doctrines.sh and normal hooks. No code, source feature, API, carrier, or book behavior changes in this checkpoint.
+
+- ID: `ISF-REDUCTION-DELIVERY.22.2.1`
+  Status: `done`
+  Goal: `Diagnose the legacy scaffold naming expectations and its existing no-transition blocker.`
+  Acceptance: `After clean .22.2 production repair, preserve original T1420 source and native RED before edits. Separate invalid keyword target expectations from any non-oracle failure; route actual blockers to existing canonical owners. Do not rename source fixtures or remove guards. Commit the diagnosis before repairs; retain full-suite/publication boundaries.`
+  Verification: `Original unchanged T1420 fails OUT/REM target spelling assertions then aborts255 after25 subtests at the documented symbolic no-transition state-hold guard. The exact old/current VHDL module comparison in fixed-vhdl-vector-logic audit already reproduces that subtest25 guard; .27 owns its actual missing state driver and now meets required-integration earlier activation. No production/test source changes in this diagnosis. Complete native RED and original T1420 source/hash retain in vhdl-reserved-legacy-intake.json.gz and referenced red receipt. .27 repairs the state hold before .22.2.2 aligns legacy naming/declaration expectations and .18.2/full7. Neither partial test output nor receipt collection proves a passing scaffold/full suite. Native book and mandatory normal integrity gate this handoff.`
+  Commit: `ISF-REDUCTION-DELIVERY.22.2.1: own legacy scaffold qualification blockers`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Native original T1420 aborts at perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm line 66 after invalid OUT/REM oracle mismatches; .27 and the prior exact predecessor comparison independently own the actual missing state-hold driver.
+  - [x] **ADDRESSED (verified)** — Complete original source/hash and native RED retain with separate canonical .27 and naming .22.2.2 schedules. First normal hook refuses the registry update without fresh acceptance; its exact staged diff/log retain and these diagnosis boxes satisfy that requirement without a bypass.
+  - [x] **NO REGRESSION** — Product/test sources stay unchanged; native book build/source checks pass and knowledge-map: OK in the normal gate. Full T1420/full CI/hosted publication remain explicitly unqualified.
+
+- ID: `ISF-REDUCTION-DELIVERY.22.2.2`
+  Status: `pending`
+  Goal: `Qualify legacy scaffold assertions against legal declared VHDL names and current source contracts.`
+  Acceptance: `P1 after canonical .27 state-hold repair commits clean, before publication full7. Use retained original T1420/native RED; align only stale physical name and supported symbolic declaration expectations with independently proved public output. Preserve fixtures, widths, literal/expression semantics and all adverse controls. Investigate non-oracle failures through canonical owners. Qualify complete T1420 plus directly affected T2298, update book/live evidence and commit before clean .18.2 integration/full7.`
+  Verification: `Original native naming mismatches are owned by .22.2.1 intake; remaining scaffold assertions after subtest25 have no current execution credit. Complete original source remains retained, and production naming is independently qualified by .22.2.`
+  Commit: `pending`
