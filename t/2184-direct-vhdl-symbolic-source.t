@@ -60,8 +60,7 @@ subtest 'actual source generation joins symbolic ports, assignments and natural 
 };
 subtest 'unqualified generated helper shapes refuse before any artifact returns' => sub {
     for my $text (source(8) =~ s/\(= \(DATA INPUT_PORT\)\)/(= (DATA INPUT_PORT)) (<3 (PULSE 1))/r,
-        source(8) =~ s/\(= \(DATA INPUT_PORT\)\)/(= (DATA (+ INPUT_PORT INPUT_PORT)))/r,
-        source(8) =~ s/ \(-> idle\)//r) {
+        source(8) =~ s/\(= \(DATA INPUT_PORT\)\)/(= (DATA (+ INPUT_PORT INPUT_PORT)))/r) {
         my $m = parse($text);
         my $before = captures($m);
         my $hdl = eval {FSM::HDL::FlattenedDT->new(debug => 0)->generate_vhdl($m)};

@@ -825,6 +825,12 @@ sub build_multiplexer_config ($self, $lhs) {
 
 =head2 generate_signal_assignments
 
+For an allocated FSM state register without an authored transition family,
+emit an explicit next-state feedback mux. Publish its exact internal hold
+witness for source-aware VHDL admission, clearing the witness on every call.
+This adds no authored assignment, enable or source data-width row. Existing
+transition families and DT-only modules retain their normal ownership.
+
 Emit the unified mux and delayed-pulse HDL block from the prepared
 assignment-analysis structure.
 
@@ -832,6 +838,7 @@ assignment-analysis structure.
 
 sub generate_signal_assignments ($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
+    delete $ctx->{implicit_state_hold};
     my $hdl = "\n  // Unified Multiplexer Logic from Phase 1 Analysis\n";
 
     fsm_debug("\n\n*** UNIFIED PHASE 3: GENERATING MULTIPLEXERS FROM ANALYSIS ***", 3);
@@ -852,6 +859,20 @@ sub generate_signal_assignments ($self, $fsm_module = undef) {
         }
 
         fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type}, assignment_type: $assignment_type)", 3);
+    }
+
+    # An FSM without authored transitions still owns state registers. Give
+    # their next value explicit feedback, without fabricating a source
+    # transition, enable or data-width analysis row. DT-only modules have no
+    # state registers and must not gain this mux.
+    my $state = $ctx->{enable_graph_module_planning_support}
+        ->build_state_register_plan($fsm_module);
+    if ($state->{has_state_registers} && !exists($ctx->{assignment_analysis}{next_state})) {
+        $hdl .= "\n  // Implicit state hold without authored transitions\n";
+        $hdl .= "  always_comb begin\n    next_state = current_state;\n  end\n";
+        $ctx->{implicit_state_hold} = {
+            lhs => 'next_state', rhs => 'current_state', width => $state->{state_bits},
+        };
     }
 
     fsm_debug("*** UNIFIED PHASE 3 COMPLETE ***", 3);

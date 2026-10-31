@@ -291,9 +291,12 @@ strict-CLI output for `direct_rhs_concat_pack`, `apb_requester`, and its scalar
 generic variant. This proves analysis of those artifacts; elaboration, runtime
 and general direct-profile qualification remain open. The separate portable
 VIAL fixture retains its own exact tool qualification.
-Symbolic-width FSMs without transitions still require the separately owned
-state-hold repair (`ISF-REDUCTION-DELIVERY.27`); the guard refuses output until
-the missing next-state driver has been qualified.
+FSMs without authored transitions now emit explicit `next_state = current_state`
+feedback when they allocate state registers. Symbolic VHDL checks the current
+emitter's exact hold witness before admitting that shape; missing or foreign
+witnesses still refuse. Decision-tree-only roots gain no state registers.
+The focused symbolic no-transition artifact passes GHDL analysis; dynamic
+simulation and general qualification remain separate.
 
 ### Warning-Clean External Validation For Every Historical Sample
 

@@ -523,6 +523,12 @@ If the body contains `(-> other_state)`, that transition can drive
 `next_state` under the external activation condition as well as under the
 ordinary state decode.
 
+An FSM with no authored transitions retains its current state. For example,
+`(idle (= (DATA_PORT INPUT_PORT)))` needs no explicit `(-> idle)` to hold
+`idle`: the backend supplies next-state feedback and preserves the normal
+reset state. Conditional transitions retain their existing feedback default.
+A module containing only non-state decision trees has no state register.
+
 The parser captures the authored DTE guard as CoreAST state metadata, signal
 analysis validates referenced operands before HDL generation, and the
 SystemVerilog backend emits the top-level `*_en` assignment plus the final

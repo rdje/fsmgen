@@ -13,7 +13,7 @@ answers:
   - "why did fixed VHDL vector guards fail analysis?"
   - "why does source-aware symbolic VHDL require a captured transition?"
   - "which task owns the direct no-transition state-hold repair?"
-date: 2026-10-28
+date: 2026-11-01
 status: current
 tags: [vhdl, parameters, namespaces, lowering]
 evidence: perl/FSM/Backend/VHDL/DirectParameterEmitter.pm; perl/FSM/Backend/VHDL/DirectDeclarationPlan.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/2179-direct-vhdl-declaration-parser.t; docs/audits/direct-vhdl-declaration-parser-20261027.json.gz; t/2178-direct-vhdl-declaration-plan.t; docs/audits/direct-vhdl-declaration-plan-20261027.json.gz; t/2177-direct-vhdl-width-generic-roots.t; t/2154-direct-vhdl-generic-integration.t
@@ -61,20 +61,19 @@ truncating low bits before signedness. Scalars/reductions extend from one bit; s
 destinations take the low source bit. Selected operands/lvalues, signed-vector resizing
 and computed expressions refuse before default sizing. Actual ports/storage/registers,
 exact strings/caller kinds/static/refusal controls qualify; reverify T2183/T2180.
-Run named regression files under scripts/run_with_ram_guard.sh -- prove -Iperl.
 
 Source generation joins completed collector, analysis and normalized paired plan.
 T2184/T2188 check bounded unsigned ranges, target-length transfers/zero resets, caller
 kinds and reuse. Flagged complete compiler transitions with fixed state targets are
 separate from Core Signal ownership. Next/q uses proved parents; scalar whole unsigned
-reductions use actual AST/event proof (T2191). Other intermediates/pulses/no-transition
-shapes refuse (.27). Reverify `prove -Iperl t/2188-direct-vhdl-register-helpers.t
+reductions use actual AST/event proof (T2191). Other intermediates/pulses refuse. Reverify `prove -Iperl t/2188-direct-vhdl-register-helpers.t
 t/2191*.t`. Raw text gains no source authority; full transport/compiler/runtime stays .6.
 Example: t/data/ial0-direct-symbolic-comb.fsm.
 
-Task .27 owns missing no-transition next_state drive: registers allocate, but only
-transitions add that family. Source/loci/unobserved dynamic impact retain in
-.27/source-activation audit. Symbolic refuses; fixed behavior is unrepaired.
+Task .27 supplies explicit next_state/current_state feedback for FSMs without
+transitions; no source assignment is invented. Symbolic VHDL requires the exact
+current emitted hold witness. T2299 covers fixed/symbolic/DT/reuse/refusal;
+conditional/DT artifacts preserve. GHDL analysis passes; runtime remains open.
 Fixed scalar/vector logical guards formerly emitted ill-typed and. T2193 binds actual
 fixed declarations, whole-vector OR folds, scalar operators and case-fold helper
 refusal; signed operands cast first. Scalar/data/comparison products preserve. Selected

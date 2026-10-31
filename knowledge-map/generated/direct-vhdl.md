@@ -150,7 +150,7 @@ _Direct VHDL generic conversion and canonical composition preparation are distin
 
 _Direct VHDL preparation separates related natural declarations from static defaults_
 
-- **date:** 2026-10-28 · **status:** current
+- **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-parameter-profiles.md`](../../docs/knowledge/direct-vhdl-parameter-profiles.md)
 
 ### direct-vhdl-reduction-expression-lowering-behavior

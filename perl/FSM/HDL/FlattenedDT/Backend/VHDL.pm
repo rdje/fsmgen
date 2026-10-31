@@ -62,8 +62,15 @@ sub _validate_symbolic_generated_shapes ($ctx, $fsm_module, $source, $snapshot =
     }
     _validate_scalar_intermediate_shapes($ctx, $source, $snapshot);
     my $state = $ctx->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
-    confess _unsupported('symbolic source without transitions requires qualified state-hold lowering')
-        if $state->{has_state_registers} && !exists($ctx->{assignment_analysis}{next_state});
+    if ($state->{has_state_registers} && !exists($ctx->{assignment_analysis}{next_state})) {
+        my $hold = $ctx->{implicit_state_hold};
+        confess _unsupported('symbolic source without transitions requires qualified state-hold lowering')
+            unless ref($hold) eq 'HASH' && join(',', sort keys %$hold) eq 'lhs,rhs,width'
+                && defined($hold->{lhs}) && !ref($hold->{lhs}) && $hold->{lhs} eq 'next_state'
+                && defined($hold->{rhs}) && !ref($hold->{rhs}) && $hold->{rhs} eq 'current_state'
+                && defined($hold->{width}) && !ref($hold->{width})
+                && $hold->{width} eq $state->{state_bits};
+    }
     return;
 }
 
@@ -2146,6 +2153,12 @@ sub _unsupported ($message) {
 FSM::HDL::FlattenedDT::Backend::VHDL - Bounded direct generated-SystemVerilog conversion
 
 =head1 PRIVATE DECLARATION PREPARATION
+
+Symbolic FSMs without authored transitions require the current assignment
+emitter's exact implicit state-hold witness: next_state, current_state and the
+planned state-register width. A missing, malformed or foreign witness refuses.
+The source assignment analysis and lexical width environment gain no invented
+transition. DT-only roots need no state hold.
 
 C<_plan_generated_vhdl_identifiers> discovers module, port, storage, constant
 and packed-type declaration names without evaluating ranges or defaults. It
