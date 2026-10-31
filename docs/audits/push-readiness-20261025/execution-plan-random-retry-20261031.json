@@ -1,0 +1,43 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+  "baseline": "ad0d7b136125a481b9bd011930b734331683e335",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t",
+    "t/1611-vial-architecture-scale-execution-plan-limit.t",
+    "t/1613-vial-architecture-scale-execution-random-qualification.t",
+    "t/1614-vial-architecture-scale-execution-random-limit.t",
+    "t/1615-vial-architecture-scale-execution-random-over-limit.t",
+    "t/1602-vial-architecture-scale-bridge-fanout.t"
+  ],
+  "expected_status": 0,
+  "exit_status": 0,
+  "complete": true,
+  "log": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.log.gz",
+  "original_log_sha256": "57cdbfb0121a82c9fca4920f24d85ce0ac0f1168c23b7269205b598d5c1c0d31",
+  "retained_log_sha256": "57cdbfb0121a82c9fca4920f24d85ce0ac0f1168c23b7269205b598d5c1c0d31",
+  "normalization": "Dynamic repository-root prefix only; statuses/assertions unchanged.",
+  "sources": {
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t": "419f817f86f06355a70d963228dd2788ecc8205cf9a42c2b167458be3d95e829",
+    "t/1611-vial-architecture-scale-execution-plan-limit.t": "bb44b3fb0ded449d2530ceaec1f1e149fc94d93b1af1b778b7374cd8a2a65d35",
+    "t/1613-vial-architecture-scale-execution-random-qualification.t": "670101dfdb644e8b5f6ee2db112b36c6c377888dafc69672d5983400bfa968e7",
+    "t/1614-vial-architecture-scale-execution-random-limit.t": "a8934034ec6796c3421aa98fce885c282d44a2bd66af1de477352be8f63027a9",
+    "t/1615-vial-architecture-scale-execution-random-over-limit.t": "4539be48722a5816f0918db1d1f44c126254e3f12bd1f152964a909befdf22fa",
+    "t/1602-vial-architecture-scale-bridge-fanout.t": "310fdb1ab1596eeb723769cfdf504fc5c502c13c4466ed7e67949b65806bb600",
+    "t/lib/FSM/Test/AhbReference.pm": "551877ecfd8880ff83154783f959f35fb9a461fd9d8195e592af6cd3e14102d5"
+  },
+  "source_witness": "docs/audits/push-readiness-20261025/execution-plan-random-source-20261031.json.gz",
+  "source_witness_sha256": "1091696195a9606ed557278127a73ca62de6b970b4f9c5951279adf13c817c9f",
+  "admission": "execution-plan-random-retry-admission-20261031.json",
+  "previous_outcomes": [
+    "execution-plan-random-red-20261031.json",
+    "execution-plan-random-interruption-20261031.json"
+  ],
+  "rederive": "Native current five defaults and independent checked public AHB reference, exact raw provenance and frozen non-provenance contract.",
+  "falsify": "Original default REDs fail only old bridge assertions; inverse source conservation retains all other assertions. T1602 changed-role/argument/type/mutable-state refusals remain live.",
+  "durability": "Authenticated original/proposed sources, current tests, complete dated native streams/statuses and task/Git commitment.",
+  "scope": "Focused test-only reference repair. Explicit large T1602 branch remains skipped; no new capability, full CI or hosted success."
+}

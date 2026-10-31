@@ -277,11 +277,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify and repair default plan/random qualification and boundary bridge oracles.`
   Acceptance: `After .1 commits clean, read/reproduce exact defaults T1610/T1611/T1613/T1614/T1615. Apply the common current reference only for independently proved bridge-only stale assertions. Preserve source/semantic/plan/byte/count/earliest-cap/replay/negative checks and all original opt-in controls; do not enable unsafe large paths. Retain complete results/identity, explicit unrun scope, synced book/live docs and normal commit.`
-  Verification: `Complete native RED from d25c8a23e returns1/Files5 Tests22 with exactly five obsolete bridge expectations, all current240db972 versus historicala4565d40; every other assertion passes. The byte-conserved proposed repair passes T1610, then its native programme exits137 at host88.3 against88; remaining files/control have no complete result. Preserve complete RED/partial GREEN, exact original/proposed sources and restore every test to its committed original. .1 closes this diagnostic handoff; .2 owns repair/qualification after specific shared-capacity coordination under .13. No opt-in branch exists in these five files, no cap changes or unrelated process actions occur, and full6/push remain unrun.`
-  Commit: `Diagnostic child .1; repair pending.`
+  Verification: `Diagnostic .1 preserves complete RED/partial host-cutoff GREEN and restores originals. Director explicitly requests retry; .2 authenticates the exact saved proposal and records current lower occupied capacity with normal pressure. The separate native retry completes0/Files6 Tests28 under unchanged88/4096, including all five defaults and the independent current-reference adverse control. Only imports/local library path and one bridge literal per file differ; every other assertion byte is conserved. No explicit-large/full/hosted result is inferred. .2 commits the focused repair before remaining .3/.4 groups and .5 full6 preflight.`
+  Commit: `Diagnostic .1 and qualified repair .2 work-unit commits.`
   Children: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.1, PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.1`
@@ -292,11 +292,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Apply and qualify the retained plan/random bridge-reference repair after capacity coordination.`
   Acceptance: `After .1 commits clean and the director coordinates shared capacity, inspect existing finished journals before choosing a unique GREEN slot. Reapply only the authenticated proposed test bytes from execution-plan-random-source-20261031.json.gz, recheck baseline/source identities, and qualify the exact five defaults plus current-reference adverse control under unchanged88/4096. Preserve all other assertions and any first outcome. Commit focused success before .3; do not infer full CI, exact large opt-ins or hosted success.`
-  Verification: `Waiting for capacity coordination; no expensive replay authorized by elapsed time or a transient reading.`
-  Commit: `pending`
+  Verification: `Director2026-10-31 explicitly instructs try again. Finished original RED/partial GREEN are inspected without replay. Fresh raw OS intake independently reparses occupied capacity50.95971425374349 with normal pressure1; this is admission, not a future guarantee or original cutoff cause. Reapply exactly the authenticated saved proposal: only independent current-reference import/local library path plus one old bridge literal per file change. Every other source/assertion byte remains exact. Native execution-plan-random-retry-20261031 completes0/Files6 Tests28, covering all five defaults plus T1602 current-reference changed-role/argument/type/mutable-state controls. The original RED1 and host137 retain unchanged; T1602 explicit large route remains skipped and unclaimed. Exact tested source/helper identities, admission, whole native streams/statuses, distinct re-derivation/falsification/durability legs retain in the dated packets. No product module, input source, syntax, capability, API/POD contract, guard or resource limit changes. Book extends the same checked-reference explanation to these qualifiers; native book test passes. Final build/copied-source/index/claim and normal staged doctrines gate commitment before .3. Full6/push/hosted remain open.`
+  Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.3`
   Status: `pending`
@@ -325,7 +325,7 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2` | `pending` | Obtain specific shared-capacity coordination, then reapply the authenticated proposal and qualify a new exclusive GREEN. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4.3` | `pending` | Reproduce six scenario/operation defaults, repair only proved bridge-reference drift and commit before the fiber group. |
 
 ## Decisions
 
@@ -334,7 +334,7 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 
 ## Blockers
 
-- Current .17.2.4.2 native GREEN stops137 at host88.3/88 after T1610. Shared-capacity coordination is required by .13 before another expensive replay; the exact proposed patch is retained and active tests restored. Full6, push and hosted publication remain pending.
+- No current input blocker after the authorized plan/random retry passes. Original interruptions remain retained; remaining .3/.4 candidates and .5 full6 preflight precede complete local/hosted publication qualification.
 - Full5 is deliberately settled143 after stale T1475 history; .14 now passes focused checks. Adjacent .15 historical-byte failures are repaired with focused invariance/adverse controls; .16 now verifies exact contract identity with current provenance and restores the full canonical field to green; Remaining exact-literal preflight finds further VIAL candidates; .17 owns classification/repairs before .13 resumes complete fresh qualification. No current resource/native cause, complete suite, push or hosted success is claimed. Original resource attribution stays open.
 
 ## Acceptance Checklist — `.1`
@@ -498,3 +498,9 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 - [x] **ROOT CAUSE (WHY + WHERE)** — Complete native RED reports at t/1610-vial-architecture-scale-execution-plan-qualification.t line 239 and the four adjacent files only the old bridge hash; every other assertion passes. Partial GREEN emits host memory 88.3% reached cutoff 88% and exits137 after T1610 passes. Original at-cutoff allocation/pressure cause is unobserved; no product-memory diagnosis is inferred.
 - [x] **ADDRESSED (verified)** — Full original/proposed sources and both complete available native streams/statuses are sealed. Every active test is restored exactly to its committed original, and the proposed byte-conserved repair remains evidence only. The post-stop raw VM/physical/pressure and exact known-PID packet is separately scoped, with independent saved-counter parsing. .2 owns repair after specific capacity coordination; no expensive replay or resource-policy change occurs.
 - [x] **NO REGRESSION** — This slice changes no product/test source. Exact source restoration and git diff --check pass; native mdBook/POD/current-source checks, knowledge-map: OK and final normal staged doctrines qualify the diagnostic handoff. T1610 alone passed proposed-repair qualification; remaining native outcomes, full CI and hosted publication are explicitly pending.
+
+## Acceptance Checklist — `.17.2.4.2.2` plan/random bridge references
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained complete native RED reports at t/1610-vial-architecture-scale-execution-plan-qualification.t line 239 and each adjacent selected file only historicala456 versus current240db; all other original assertions pass. The first GREEN137 is separately a host-capacity interruption. Exact archived baseline/proposal bytes establish the same source contract for this retry.
+- [x] **ADDRESSED (verified)** — Reapply only the saved independent checked-reference import/local library path and old bridge literal substitution. Exact source hashes and inverse transformation preserve every remaining assertion. The unique retry completes all five native defaults plus current-reference adverse controls under unchanged guards; complete admission/status/TAP and tested source/helper seals retain in execution-plan-random-retry-20261031.
+- [x] **NO REGRESSION** — All tests successful; Files=6, Tests=28. Exact plan/source/semantic identities, byte/count/limit/exhaustion/replay and source-mutation checks remain active. T1602 explicit large branch and complete full/hosted qualification remain unclaimed. Native book test passes; final build/copied-source/KMap/claim and normal staged doctrines qualify this test-only repair.

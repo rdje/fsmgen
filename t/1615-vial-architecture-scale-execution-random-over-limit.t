@@ -12,6 +12,9 @@ use Math::BigInt;
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 
@@ -33,7 +36,7 @@ my %expected = (
     semantic_sha256 =>
         '9b43205592907fb69f1a9d68a2345a747ef4926f121ab81da8fa9734a56162e0',
     bridge_sha256 =>
-        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
+        current_ahb_report_sha256(),
 );
 my $expected_diagnostic = {
     schema_version => 1,

@@ -1,0 +1,105 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+  "authorization": "Director2026-10-31: try again.",
+  "contract": "docs/audits/current-capacity-admission-20261025/contract.json",
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/vm_stat"
+      ],
+      "started_utc": "2026-10-31T22:00:14.768181+00:00",
+      "finished_utc": "2026-10-31T22:00:14.770615+00:00",
+      "elapsed_ns": 2311375,
+      "exit_status": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   448418.\nPages active:                                 329399.\nPages inactive:                               317622.\nPages speculative:                             19780.\nPages throttled:                                   0.\nPages wired down:                             247654.\nPages purgeable:                                4673.\n\"Translation faults\":                   251747481549.\nPages copy-on-write:                     34319727441.\nPages zero filled:                       73474519281.\nPages reactivated:                        6894591130.\nPages purged:                              222083376.\nFile-backed pages:                            284447.\nAnonymous pages:                              382354.\nPages stored in compressor:                   345294.\nPages occupied by compressor:                 176192.\nDecompressions:                           6223671249.\nCompressions:                             7130685119.\nPageins:                                  2516783355.\nPageouts:                                     930136.\nSwapins:                                    62432056.\nSwapouts:                                   85178437.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "started_utc": "2026-10-31T22:00:14.770629+00:00",
+      "finished_utc": "2026-10-31T22:00:14.772633+00:00",
+      "elapsed_ns": 2013291,
+      "exit_status": 0,
+      "stdout": "25769803776\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "kern.memorystatus_vm_pressure_level"
+      ],
+      "started_utc": "2026-10-31T22:00:14.772647+00:00",
+      "finished_utc": "2026-10-31T22:00:14.774503+00:00",
+      "elapsed_ns": 1866750,
+      "exit_status": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  ],
+  "capacity": {
+    "page_bytes": 16384,
+    "physical_bytes": 25769803776,
+    "counters": {
+      "Pages active": 329399,
+      "Pages inactive": 317622,
+      "Pages speculative": 19780,
+      "Pages wired down": 247654,
+      "Pages occupied by compressor": 176192,
+      "Pages purgeable": 4673,
+      "File-backed pages": 284447
+    },
+    "used_bytes": 13132218368,
+    "used_pct": 50.95971425374349
+  },
+  "kernel_pressure_level": 1,
+  "independent_saved_counter_parser": {
+    "command": [
+      "/usr/bin/awk",
+      "-v",
+      "t=25769803776",
+      "/page size of/ {for(j=1;j<=NF;j++)if($j==\"size\")ps=$(j+2)} /^Pages active:/{a=$3+0} /^Pages inactive:/{i=$3+0} /^Pages speculative:/{s=$3+0} /^Pages wired down:/{w=$4+0} /^Pages occupied by compressor:/{c=$5+0} /^Pages purgeable:/{p=$3+0} /^File-backed pages:/{e=$3+0} END{printf \"%.12f\\n\",(a+i+s+w+c-p-e)*ps*100/t}"
+    ],
+    "input": "commands[0].stdout",
+    "exit_status": 0,
+    "stdout": "50.959714253743\n",
+    "stderr": "",
+    "scope": "Same raw VM sample and adopted formula; separate parser, not separate Mach sampler."
+  },
+  "source_witness": "docs/audits/push-readiness-20261025/execution-plan-random-source-20261031.json.gz",
+  "source_witness_sha256": "1091696195a9606ed557278127a73ca62de6b970b4f9c5951279adf13c817c9f",
+  "sources": {
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t": {
+      "baseline_sha256": "1a24a3988bab185f0fd99b8cd8cbdb08f482ecc76f9ad30e41524367702a9de2",
+      "proposed_sha256": "419f817f86f06355a70d963228dd2788ecc8205cf9a42c2b167458be3d95e829"
+    },
+    "t/1611-vial-architecture-scale-execution-plan-limit.t": {
+      "baseline_sha256": "98ab2d91e68699f09e6322baf93e82cf033338974b7530eb4572414d80eb84d9",
+      "proposed_sha256": "bb44b3fb0ded449d2530ceaec1f1e149fc94d93b1af1b778b7374cd8a2a65d35"
+    },
+    "t/1613-vial-architecture-scale-execution-random-qualification.t": {
+      "baseline_sha256": "80e7b2917751fd3db9148e147652cde1f69813eed48cf85613db903a2a8234ca",
+      "proposed_sha256": "670101dfdb644e8b5f6ee2db112b36c6c377888dafc69672d5983400bfa968e7"
+    },
+    "t/1614-vial-architecture-scale-execution-random-limit.t": {
+      "baseline_sha256": "19e1125f3a98e369c98679a219a30da911da9551e163cf482ec9a56bca4b1bec",
+      "proposed_sha256": "a8934034ec6796c3421aa98fce885c282d44a2bd66af1de477352be8f63027a9"
+    },
+    "t/1615-vial-architecture-scale-execution-random-over-limit.t": {
+      "baseline_sha256": "a35d3cfb45da950fe3784932da7f8cb6a16a97ed6fa36fcf09e9661f837e985a",
+      "proposed_sha256": "4539be48722a5816f0918db1d1f44c126254e3f12bd1f152964a909befdf22fa"
+    }
+  },
+  "rederive": "Raw dated OS counters, adopted capacity formula and exact source/proposal hashes.",
+  "falsify": "Independent saved-counter parser agrees; pressure is separate from capacity. Every original byte outside the previously proved import/literal substitution remains exact.",
+  "durability": "Tracked admission/source witness, exact native live log/status and sealed outcome under the owning task.",
+  "limits": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "scope": "Current admission only. No original cutoff cause, external-process action or future capacity guarantee."
+}

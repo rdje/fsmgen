@@ -2232,7 +2232,8 @@ witness reproduces the original hashes exactly; the current DUT is generated
 and checked separately. No historical HDL is run as current behavior. Other
 execution/profile identity repairs and full local/hosted qualification remain
 owned by the [publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
-The fiber, source-map, random/replay and exact-plan gate tests now use the same
+The fiber, source-map, random/replay and exact-plan gate tests, together with
+the plan-byte and random-attempt qualification and boundary tests, use the same
 checked current bridge reference. Their semantic/plan identities, metrics,
 source-map coverage and adverse cases remain frozen. Default gate execution does
 not requalify the explicitly enabled exact source-map route boundary.
