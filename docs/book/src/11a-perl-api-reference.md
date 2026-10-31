@@ -756,6 +756,37 @@ event/currentness, target projection, declarations and ledgers remain separate
 joins. Actual mutable guard generation still refuses without target sum proof.
 VHDL and external compiler/override/runtime qualification remain open.
 
+The installed width owner's private `factorized_concatenation_sum(NAME, ROW)`
+now joins those independent source sums to a held original completed inference
+event. It derives on read and returns detached `{allocation, sum}` records:
+`allocation` is the original numeric inference record; `sum` is the canonical
+ordered source-sum record above. Its selected width must agree exactly with the
+independent sum, and both must name the same original source contract. The
+shared source profile is `systemverilog` for both Verilog-family backends;
+physical target selection remains a separate contract.
+
+Intrinsic events before successful collection supply no completed sum. The
+original installed source/event holders, complete row and registry identities,
+weak row view and completed epoch must survive all semantic reads. The last
+barrier reads raw state without invoking getters, so a late source, nonoperand,
+row, proof-map or epoch change withholds the result. No additional cache is
+installed and missing proof cannot be minted. Returned records retain no caller
+graph or row-view ownership. Failure, reset and backend reuse revoke old joins;
+a fresh successful generation obtains its own original events.
+
+`t/2292-concatenation-completed-sums.t` checks actual collection/prepared
+boundaries, ordered repeated and explicit-literal sums, width-one operand rank
+and independently interpreted range arithmetic under distinguishing overrides.
+It also checks actual inline-RHS applicability and hostile late mutations.
+`docs/audits/concat-completed-sums-20261031/replay.py` retains the identical
+predecessor test and controls removing the final raw barrier or numeric agreement.
+This qualifies the private completed join. The existing filtered-map revocation
+at declaration rendering remains owned by target integration; mutable guards
+still refuse without target sum proof. Target namespaces, declarations,
+expressions and final emitted ledgers, VHDL, external execution and full
+publication qualification remain open. Public source/report/API/MCP/corpus
+capabilities do not expand in this slice.
+
 The standalone typed `ExpressionNamer` definition API retains its original Core
 AST and selected numeric width; it is not a source-width provenance protocol.
 For the retained required native guard/RHS profiles, current source preparation

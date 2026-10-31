@@ -191,4 +191,4 @@ Slice/bit capture defects stay owned; generic proof and external execution remai
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
 
-Concat T2276–T2291 source/sum (target carry pending): `docs/book/src/11a-perl-api-reference.md`.
+Concat T2276–T2292 completed sum join (target pending): `docs/book/src/11a-perl-api-reference.md`.

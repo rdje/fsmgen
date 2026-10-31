@@ -16,7 +16,11 @@ The resolver imports `ConcatenationInferenceSupport` for a separate first
 unresolved intrinsic event over those sources and bounded complete row snapshots.
 It shares the raw observer, generic metadata validation and exact BigInt numeric
 addition. Repeated reads preserve only held events; registry carry/completion and
-symbolic sums remain separate. This scoped dependency update renews no closure census.
+symbolic sums remain separate. The width owner also directly imports
+`ConcatenationSourceWidthSupport` for its derived completed-event sum accessor:
+original paired source/event holders, exact numeric agreement and final raw
+currentness are required. Target projection/emission remains separate. These
+scoped dependency updates renew no closure census.
 
 ExpressionBuilder imports `FSM::CoreExpressionWidthSupport` for the shared
 bounded exact-width walk. Its ordinary parser call has no target literal policy;

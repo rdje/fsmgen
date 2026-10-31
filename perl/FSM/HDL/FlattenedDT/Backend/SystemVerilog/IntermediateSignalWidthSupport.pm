@@ -51,6 +51,7 @@ use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
 use FSM::IntermediateWidthGraphInferenceSupport;
 use FSM::ConcatenationGenerationSourceSupport;
+use FSM::ConcatenationSourceWidthSupport;
 use FSM::ConcatenationInferenceSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::SourceLiteralWidthSupport;
 use FSM::Support::HDLInstanceIdentifierPolicy;
@@ -234,6 +235,72 @@ sub factorized_concatenation_width_allocation ($self, $signal_name, $signal_info
     return unless $self->{_width_inference_complete}
         && $self->{_width_inference_complete} == $self->{_width_inference_epoch};
     return $self->concatenation_inference_event($signal_name, $signal_info);
+}
+
+=head2 factorized_concatenation_sum
+
+Return detached C<{allocation, sum}> records only for an original current
+completed concatenation event and its paired original generation source.
+C<allocation> preserves the numeric inference record; C<sum> is the canonical
+independent ordered source-sum record, including its decimal-string width and
+optional symbolic range. Derivation uses the existing shared SystemVerilog
+source profile for both Verilog-family backends. It does not select a physical
+target namespace or authorize declarations, filtered row projections or emission.
+
+The accessor derives on read, installs no cache and cannot mint a missing event
+or refresh a source observation. Source contracts and numeric widths must agree.
+Original installed holders, row view, registry and completed epoch must survive
+all semantic reads; a final getter-free barrier checks complete row/source
+state. Missing, stale, foreign, incomplete or unsupported inputs return undef.
+Detached results retain no caller graph or weak row-view ownership. Abort,
+failure, reset and new generations retain their existing revocation semantics.
+
+=cut
+
+sub factorized_concatenation_sum ($self, $signal_name, $signal_info) {
+    my $result = eval {
+        my $rows = $self->_current_graph_inference_rows or return;
+        my $epoch = $self->{_width_inference_epoch};
+        return unless $self->{_width_inference_complete}
+            && $self->{_width_inference_complete} == $epoch
+            && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($signal_name);
+        my $events = $self->{_concatenation_inference_events};
+        my $sources = $self->{_concatenation_source_frames};
+        return unless ref($events) eq 'HASH' && ref($sources) eq 'HASH';
+        my $event = $events->{$signal_name};
+        my $source = $sources->{$signal_name};
+        return unless ref($event) eq 'HASH' && ref($source) eq 'HASH';
+        my $allocation = $self->factorized_concatenation_width_allocation($signal_name, $signal_info)
+            or return;
+        # Successful policy validation bounds this original holder. Freeze it
+        # before the sum's semantic callbacks; neither map may refresh it.
+        my $checkpoint = FSM::ConcatenationInferenceSupport::_copy($event);
+        return unless FSM::ConcatenationInferenceSupport::_same($source, $checkpoint->{frame}{sources});
+        my %args = (width_support => $self, signal_name => $signal_name,
+            signal_info => $signal_info, signal_registry => $rows);
+        my $sum = FSM::ConcatenationSourceWidthSupport->prepare_sum(
+            FSM::ConcatenationGenerationSourceSupport::_source_args(%args), holder => $source->{sources});
+        return unless FSM::ConcatenationInferenceSupport::_same(
+                $sum->{sources}, $checkpoint->{frame}{sources}{sources})
+            && FSM::ConcatenationInferenceSupport::_same(
+                $allocation->{source_contract}, $sum->{sources}{record})
+            && $sum->{record}{width} eq FSM::IntermediateWidthAllocationSupport::_width($allocation->{selected_width});
+        # No semantic getters after this point. A later callback can change an
+        # earlier row, proof map or completion flag without touching sum text.
+        return unless $self->{_width_inference_complete}
+            && $self->{_width_inference_complete} == $epoch
+            && $self->{_width_inference_epoch} == $epoch
+            && ($self->_current_graph_inference_rows // 0) == $rows
+            && ($self->{_concatenation_inference_events} // 0) == $events
+            && ($self->{_concatenation_source_frames} // 0) == $sources
+            && ($events->{$signal_name} // 0) == $event
+            && ($sources->{$signal_name} // 0) == $source
+            && FSM::ConcatenationInferenceSupport::_same($event, $checkpoint)
+            && FSM::ConcatenationInferenceSupport::_same($source, $checkpoint->{frame}{sources})
+            && FSM::ConcatenationInferenceSupport->live_usage_current_raw(%args, holder => $checkpoint);
+        return {allocation => $allocation, sum => $sum->{record}};
+    };
+    return $@ ? undef : $result;
 }
 
 =head2 factorized_width_inference_event
