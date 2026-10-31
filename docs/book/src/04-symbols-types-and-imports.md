@@ -679,6 +679,12 @@ on the existing static path. Sized, bitwise, aggregate and path relationships
 refuse when they cannot satisfy the natural profile. Related source names must
 already be valid VHDL identifiers; independent generated names still normalize.
 
+Related literal tokens must use plain nonnegative decimal spelling. For example,
+`(+ 0d10 -2)` remains outside this profile even though its selected value is
+positive. Standalone conversion of numeric SystemVerilog declarations retains
+its static generic profile; it does not establish source-aware support for the
+original `.fsm` relationships or symbolic declarations.
+
 The [complete direct VHDL fixture](../../../t/data/ial0-direct-vhdl-natural-defaults.fsm)
 contains forward aliases, arithmetic, a distinct equal literal, a vector default
 and a negative static control:

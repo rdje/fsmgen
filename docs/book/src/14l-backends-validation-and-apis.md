@@ -221,7 +221,7 @@ emits `SUM <= A + B;`, a signed `DIFF = (- A B)` assignment emits
 `DIFF <= A - B;`, and a signed `PROD = (* A B)` assignment emits
 `PROD <= resize(A * B, 8);`. Signed `QUOT = (/ A B)` emits
 `QUOT <= resize(A / B, 8);`, and signed `REM = (% A B)` emits
-`REM <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
+`REM_identifier <= resize(A mod B, 8);`, rather than unsigned casts. Scalar signed
 division/modulo, mixed signed/unsigned arithmetic, broader generated-FSM/C4
 composition VHDL beyond the exact shipped fixtures, internal-net-heavy
 composition tops beyond APB, composition generic maps beyond external-RTL
@@ -243,7 +243,7 @@ target-width `to_signed`, so `SUM = (+ A 1)` emits
 `DIFF <= A - to_signed(1, 8);`, `PROD = (* A 2)` emits
 `PROD <= resize(A * to_signed(2, 8), 8);`, `QUOT = (/ A 2)` emits
 `QUOT <= resize(A / to_signed(2, 8), 8);`, and `REM = (% A 2)` emits
-`REM <= resize(A mod to_signed(2, 8), 8);`. Mixed signed/unsigned vector
+`REM_identifier <= resize(A mod to_signed(2, 8), 8);`. Mixed signed/unsigned vector
 numeric arithmetic is locked fail-closed rather than lowering signed operands
 through unsigned casts.
 The AMBA requester direct fixture now lowers its bounded generated wrap
@@ -953,7 +953,7 @@ composition-top structural facts. Completed
 implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.131.1` lowers an 8-bit non-signed
 `REM = (% 2 3)` fixture into
-`REM <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.
+`REM_identifier <= std_logic_vector(resize(to_unsigned(2, 8) mod to_unsigned(3, 8), 8));`.
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.130.1` lowers an 8-bit non-signed
 `QUOT = (/ 2 3)` fixture into
@@ -965,7 +965,7 @@ Completed implementation leaf
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.128.1` lowers an 8-bit non-signed
 `REM = (% 2 A)` fixture into
-`REM <= std_logic_vector(resize(to_unsigned(2, 8) mod unsigned(A), 8));`.
+`REM_identifier <= std_logic_vector(resize(to_unsigned(2, 8) mod unsigned(A), 8));`.
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.127.1` lowers an 8-bit non-signed
 `QUOT = (/ 2 A)` fixture into
@@ -977,7 +977,7 @@ Completed implementation leaf
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.125.1` lowers an 8-bit non-signed
 `REM = (% A 2)` fixture into
-`REM <= std_logic_vector(resize(unsigned(A) mod to_unsigned(2, 8), 8));`.
+`REM_identifier <= std_logic_vector(resize(unsigned(A) mod to_unsigned(2, 8), 8));`.
 Completed implementation leaf
 `BACKEND-API-VALIDATION-FRONTIER.124.1` lowers an 8-bit non-signed
 `QUOT = (/ A 2)` fixture into
@@ -990,7 +990,7 @@ Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.122.1` lowers
 direct VHDL non-signed vector modulo with a negative decimal numeric literal
 into target-width resized unsigned arithmetic over a two-complement literal,
 so the selected 8-bit fixture emits
-`REM <= std_logic_vector(resize(unsigned(A) mod unsigned(to_signed(-2, 8)), 8));`
+`REM_identifier <= std_logic_vector(resize(unsigned(A) mod unsigned(to_signed(-2, 8)), 8));`
 instead of failing at arithmetic expression `'A % -2'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.121.1` lowers
 direct VHDL non-signed vector division with a negative decimal numeric literal
@@ -1019,7 +1019,7 @@ of failing at arithmetic expression `'A + -1'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.117.1` lowers
 direct VHDL signed vector modulo with a negative decimal numeric literal into
 target-width resized signed VHDL arithmetic, so the selected 8-bit signed
-fixture emits `REM <= resize(A mod to_signed(-2, 8), 8);` instead of failing
+fixture emits `REM_identifier <= resize(A mod to_signed(-2, 8), 8);` instead of failing
 at arithmetic expression `'A % -2'`.
 Completed implementation leaf `BACKEND-API-VALIDATION-FRONTIER.116.1` lowers
 direct VHDL signed vector division by a negative decimal numeric literal into

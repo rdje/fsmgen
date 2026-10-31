@@ -11,6 +11,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::HDL::FlattenedDT::Backend::VHDL;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 
@@ -24,12 +25,12 @@ subtest 'direct VHDL scaffold emits deterministic entity architecture and concat
 
     like($hdl, qr/\bHI\s+:\s+in\s+std_logic_vector\(3\s+downto\s+0\);/s, 'VHDL scaffold emits vector input port');
     like($hdl, qr/\bCOND\s+:\s+in\s+std_logic;/s, 'VHDL scaffold emits scalar input port');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'VHDL scaffold emits vector internal signal');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'VHDL scaffold emits vector internal signal');
     like($hdl, qr/\bsignal\s+idle_en\s+:\s+std_logic;/s, 'VHDL scaffold emits scalar enable signal');
 
     like($hdl, qr/\bidle_en\s+<=\s+'1'\s+when\s+current_state\s+=\s+IDLE\s+else\s+'0';/s, 'state enable equality lowers to VHDL conditional signal assignment');
     like($hdl, qr/\bidle_out_hi_mid_lo_en\s+<=\s+idle_en\s+and\s+COND;/s, 'boolean enable expression lowers to VHDL and expression');
-    like($hdl, qr/\bOUT\s+<=\s+\(HI\s+&\s+MID\s+&\s+LO\);/s, 'flat concat lowers to VHDL concatenation');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+\(HI\s+&\s+MID\s+&\s+LO\);/s, 'flat concat lowers to VHDL concatenation');
     like($hdl, qr/\bOUT_NESTED\s+<=\s+\(HI\s+&\s+\(MID\s+&\s+LO\)\);/s, 'nested concat lowers to nested VHDL concatenation');
 
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b|\breg\b|\bwire\b/s, 'VHDL scaffold does not leak SystemVerilog syntax');
@@ -634,8 +635,8 @@ FSM
     );
 
     my $hdl = generate_vhdl($fsm_path);
-    like($hdl, qr/\bsignal\s+REM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal-literal modulo fixture lowers non-signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'non-signed vector positive literal-literal modulo lowers through resized to_unsigned arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal-literal modulo fixture lowers non-signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'non-signed vector positive literal-literal modulo lowers through resized to_unsigned arithmetic');
     unlike($hdl, qr/to_signed\([23],\s+8\)|arithmetic expression '2 % 3'/s, 'non-signed vector positive literal-literal modulo avoids signed casts and the prior arithmetic guard');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -647,7 +648,7 @@ FSM
     ok(-e $output_path, 'CLI writes non-signed vector positive literal-literal modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal-literal modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+to_unsigned\(3,\s+8\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal-literal modulo assignment');
     unlike($cli_hdl, qr/to_signed\([23],\s+8\)|arithmetic expression '2 % 3'/s, 'CLI non-signed vector positive literal-literal modulo avoids signed casts and the prior arithmetic guard');
 };
 
@@ -814,8 +815,8 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector negative literal modulo fixture lowers non-signed input port A');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector negative literal modulo fixture lowers non-signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'non-signed vector negative literal modulo lowers through resized unsigned two-complement literal arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector negative literal modulo fixture lowers non-signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'non-signed vector negative literal modulo lowers through resized unsigned two-complement literal arithmetic');
     unlike($hdl, qr/to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'non-signed vector negative literal modulo avoids invalid to_unsigned and the prior arithmetic guard');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -827,7 +828,7 @@ FSM
     ok(-e $output_path, 'CLI writes non-signed vector negative literal modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector negative literal modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(to_signed\(-2,\s+8\)\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector negative literal modulo assignment');
     unlike($cli_hdl, qr/to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'CLI non-signed vector negative literal modulo avoids invalid to_unsigned and the prior arithmetic guard');
 };
 
@@ -859,8 +860,8 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector positive literal modulo fixture lowers non-signed input port A');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal modulo fixture lowers non-signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+to_unsigned\(2,\s+8\),\s+8\)\);/s, 'non-signed vector positive literal modulo lowers through resized to_unsigned arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal modulo fixture lowers non-signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+to_unsigned\(2,\s+8\),\s+8\)\);/s, 'non-signed vector positive literal modulo lowers through resized to_unsigned arithmetic');
     unlike($hdl, qr/to_signed\(2,\s+8\)|arithmetic expression 'A % 2'/s, 'non-signed vector positive literal modulo avoids signed casts and the prior arithmetic guard');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -872,7 +873,7 @@ FSM
     ok(-e $output_path, 'CLI writes non-signed vector positive literal modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+to_unsigned\(2,\s+8\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+to_unsigned\(2,\s+8\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal modulo assignment');
     unlike($cli_hdl, qr/to_signed\(2,\s+8\)|arithmetic expression 'A % 2'/s, 'CLI non-signed vector positive literal modulo avoids signed casts and the prior arithmetic guard');
 };
 
@@ -904,8 +905,8 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector positive literal-first modulo fixture lowers non-signed input port A');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal-first modulo fixture lowers non-signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+unsigned\(A\),\s+8\)\);/s, 'non-signed vector positive literal-first modulo lowers through resized to_unsigned arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector positive literal-first modulo fixture lowers non-signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+unsigned\(A\),\s+8\)\);/s, 'non-signed vector positive literal-first modulo lowers through resized to_unsigned arithmetic');
     unlike($hdl, qr/to_signed\(2,\s+8\)|arithmetic expression '2 % A'/s, 'non-signed vector positive literal-first modulo avoids signed casts and the prior arithmetic guard');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -917,7 +918,7 @@ FSM
     ok(-e $output_path, 'CLI writes non-signed vector positive literal-first modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+unsigned\(A\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal-first modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(to_unsigned\(2,\s+8\)\s+mod\s+unsigned\(A\),\s+8\)\);/s, 'CLI VHDL output includes non-signed vector positive literal-first modulo assignment');
     unlike($cli_hdl, qr/to_signed\(2,\s+8\)|arithmetic expression '2 % A'/s, 'CLI non-signed vector positive literal-first modulo avoids signed casts and the prior arithmetic guard');
 };
 
@@ -1067,7 +1068,7 @@ subtest 'direct VHDL scaffold lowers same-width vector division/modulo RHS chain
     );
     like(
         $hdl,
-        qr/\bREM\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\);/s,
+        qr/\bREM_identifier\s+<=\s+std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\);/s,
         'same-width vector modulo lowers through target-width numeric_std resize',
     );
     like(
@@ -1114,11 +1115,28 @@ subtest 'direct VHDL scaffold lowers same-width vector division/modulo RHS chain
     );
 };
 
-subtest 'direct VHDL scaffold lowers generated parameterized direct headers to generics' => sub {
+subtest 'raw VHDL keeps static generics while source-aware unsupported defaults refuse' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $output_path = File::Spec->catfile($tempdir, 'direct_size_expression_widths.vhd');
 
-    my $hdl = generate_vhdl('t/corpus/direct_size_expression_widths.fsm');
+    my $result = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0, target_language => 'systemverilog', quiet => 1,
+    )->generate_hdl_from_file(repo_file('t/corpus/direct_size_expression_widths.fsm'));
+    my $raw = FSM::HDL::FlattenedDT::Backend::VHDL->new(flattened_dt => {});
+    my $symbolic = eval {$raw->convert_systemverilog_to_vhdl($result->{hdl_code})};
+    my $raw_error = $@;
+    ok(!defined($symbolic), 'raw conversion gains no source authority for symbolic declarations');
+    like($raw_error, qr/unsupported generated declaration name/,
+        'raw refusal stays at its numeric declaration boundary');
+    # An explicit numeric raw control keeps the old static-header coverage.
+    # These are the two selected ranges in this unchanged fixture; this control
+    # does not assert source-aware symbolic or natural-default support.
+    my $numeric = $result->{hdl_code};
+    is(($numeric =~ s/\Qreg [((PARAM_W + 1) - 1):0] B;\E/reg [3:0] B;/g), 1,
+        'numeric raw control selects exactly the B declaration');
+    is(($numeric =~ s/\Qreg [(PARAM_DEC_W - 1):0] F;\E/reg [7:0] F;/g), 1,
+        'numeric raw control selects exactly the F declaration');
+    my $hdl = $raw->convert_systemverilog_to_vhdl($numeric);
     like($hdl, qr/\bentity\s+direct_size_expression_widths\s+is\b/s, 'generic-bearing fixture emits direct VHDL entity');
     like(
         $hdl,
@@ -1133,22 +1151,21 @@ subtest 'direct VHDL scaffold lowers generated parameterized direct headers to g
     like($hdl, qr/\bH\s+<=\s+"100000001";/s, 'wide hex literal assignment lowers to exact VHDL bit string');
     unlike($hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s, 'generic-bearing VHDL output does not leak SystemVerilog module syntax');
 
+    my $source_hdl = eval {generate_vhdl('t/corpus/direct_size_expression_widths.fsm')};
+    my $source_error = $@;
+    ok(!defined($source_hdl), 'source-aware generation refuses unsupported related natural defaults');
+    like($source_error, qr/plain nonnegative decimal source literal/,
+        'source-aware refusal retains the natural default boundary');
+
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/direct_size_expression_widths.fsm')],
     );
 
     my $combined_output = join('', @{ $stdout_buf || [] }, @{ $stderr_buf || [] }, ($error_message || ''));
-    ok($success, 'CLI accepts direct --language vhdl for the generic-bearing direct fixture')
-        or diag($combined_output);
-    ok(-e $output_path, 'CLI writes generic-bearing direct VHDL output file');
-
-    my $cli_hdl = read_file($output_path);
-    like(
-        $cli_hdl,
-        qr/\bgeneric\s*\(\s+PARAM_DEC_W\s+:\s+integer\s+:=\s+\(10\s+-\s+2\);\s+PARAM_W\s+:\s+integer\s+:=\s+\(2\s+\+\s+1\)\s+\);/s,
-        'CLI generic-bearing VHDL output includes the integer generic block',
-    );
-    unlike($cli_hdl, qr/\bmodule\b|#\s*\(|\bparameter\b|\balways_(?:ff|comb)\b/s, 'CLI generic-bearing VHDL output remains VHDL-shaped');
+    ok(!$success, 'CLI refuses the same unsupported source-aware natural defaults');
+    ok(!-e $output_path, 'CLI refusal leaves no partial VHDL artifact');
+    like($combined_output, qr/plain nonnegative decimal source literal/,
+        'CLI reports the same natural source boundary');
 };
 
 subtest 'direct VHDL scaffold lowers generated sized-literal parameter defaults to typed generics' => sub {
@@ -1557,7 +1574,7 @@ subtest 'direct VHDL scaffold lowers scalar bit and signed vector internal decla
     like($hdl, qr/\bentity\s+declarative_bits_symbol_widths\s+is\b/s, 'declarative bits fixture emits direct VHDL entity');
     like($hdl, qr/\bsignal\s+FLAG\s+:\s+std_logic;/s, 'scalar SystemVerilog bit declaration lowers to std_logic signal');
     like($hdl, qr/\bsignal\s+NIB\s+:\s+signed\(3\s+downto\s+0\);/s, 'signed vector reg declaration lowers to numeric_std signed signal');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'unsigned vector reg declaration remains std_logic_vector signal');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'unsigned vector reg declaration remains std_logic_vector signal');
     like($hdl, qr/\bFLAG\s+<=\s+'0';\s+if\s+flag_1_en\s+=\s+'1'\s+then\s+FLAG\s+<=\s+'1';/s, 'scalar bit literal assignments lower to std_logic literals');
     like($hdl, qr/\bNIB\s+<=\s+"0000";\s+if\s+nib_4_h7_en\s+=\s+'1'\s+then\s+NIB\s+<=\s+"0111";/s, 'signed vector literal assignments lower through a legal VHDL basic identifier');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b|\bnib__4_h7_en\b/s, 'declarative bits VHDL output leaks neither SystemVerilog syntax nor illegal double-underscore identifiers');
@@ -1612,11 +1629,11 @@ FSM
     my $hdl = $pipeline->generate_hdl_from_file($fsm_path)->{hdl_code};
 
     like($hdl, qr/\bentity\s+direct_vhdl_two_state_vector_bit\s+is\b/s, 'two-state vector bit fixture emits direct VHDL entity');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'generated vector bit declaration lowers to std_logic_vector signal');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'generated vector bit declaration lowers to std_logic_vector signal');
     like($hdl, qr/\bsignal\s+FLAG\s+:\s+std_logic;/s, 'generated scalar bit declaration still lowers to std_logic signal');
-    like($hdl, qr/\bOUT\s+<=\s+"10100101";/s, 'two-state vector bit literal assignment lowers to deterministic bit string');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+"10100101";/s, 'two-state vector bit literal assignment lowers to deterministic bit string');
     like($hdl, qr/\bFLAG\s+<=\s+'1';/s, 'two-state scalar bit literal assignment remains std_logic-shaped');
-    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+OUT\b/s, 'two-state vector bit VHDL output does not leak SystemVerilog declaration syntax');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+(?:OUT|OUT_identifier)\b/s, 'two-state vector bit VHDL output does not leak SystemVerilog declaration syntax');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, $fsm_path],
@@ -1627,9 +1644,9 @@ FSM
     ok(-e $output_path, 'CLI writes two-state vector bit declaration VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'CLI VHDL output includes vector bit declaration lowering');
-    like($cli_hdl, qr/\bOUT\s+<=\s+"10100101";/s, 'CLI VHDL output includes two-state vector literal lowering');
-    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+OUT\b/s, 'CLI two-state vector bit VHDL output remains VHDL-shaped');
+    like($cli_hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'CLI VHDL output includes vector bit declaration lowering');
+    like($cli_hdl, qr/\bOUT_identifier\s+<=\s+"10100101";/s, 'CLI VHDL output includes two-state vector literal lowering');
+    unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\bbit\s+\[7:0\]\s+(?:OUT|OUT_identifier)\b/s, 'CLI two-state vector bit VHDL output remains VHDL-shaped');
 };
 
 subtest 'direct VHDL scaffold lowers two-state bit input port declarations' => sub {
@@ -1674,8 +1691,8 @@ FSM
     like($hdl, qr/\bentity\s+direct_vhdl_two_state_bit_inputs\s+is\b/s, 'two-state bit input fixture emits direct VHDL entity');
     like($hdl, qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s, 'generated vector input bit declaration lowers to std_logic_vector port');
     like($hdl, qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s, 'generated scalar input bit declaration lowers to std_logic port');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'assigned vector bit remains an internal std_logic_vector signal');
-    like($hdl, qr/\bOUT\s+<=\s+BYTE_IN;/s, 'vector input bit assignment remains VHDL-shaped');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'assigned vector bit remains an internal std_logic_vector signal');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+BYTE_IN;/s, 'vector input bit assignment remains VHDL-shaped');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+bit\b/s, 'two-state bit input VHDL output does not leak SystemVerilog port syntax');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -1734,8 +1751,8 @@ FSM
     like($hdl, qr/\bentity\s+direct_vhdl_four_state_logic_inputs\s+is\b/s, 'four-state logic input fixture emits direct VHDL entity');
     like($hdl, qr/\bBYTE_IN\s+:\s+in\s+std_logic_vector\(7\s+downto\s+0\);/s, 'generated vector input logic declaration lowers to std_logic_vector port');
     like($hdl, qr/\bFLAG_IN\s+:\s+in\s+std_logic;?/s, 'generated scalar input logic declaration lowers to std_logic port');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'assigned vector logic remains an internal std_logic_vector signal');
-    like($hdl, qr/\bOUT\s+<=\s+BYTE_IN;/s, 'vector input logic assignment remains VHDL-shaped');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'assigned vector logic remains an internal std_logic_vector signal');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+BYTE_IN;/s, 'vector input logic assignment remains VHDL-shaped');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\binput\s+logic\b/s, 'four-state logic input VHDL output does not leak SystemVerilog port syntax');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -1836,7 +1853,7 @@ FSM
     like($hdl, qr/\bentity\s+direct_vhdl_four_state_logic\s+is\b/s, 'four-state logic fixture emits direct VHDL entity');
     like($hdl, qr/\bsignal\s+ISYM\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'non-signed vector logic declaration lowers to std_logic_vector signal');
     like($hdl, qr/\bsignal\s+LFLAG\s+:\s+std_logic;/s, 'non-signed scalar logic declaration lowers to std_logic signal');
-    like($hdl, qr/\bISYM\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+ISYM\s+<=\s+OUT;/s, 'logic vector assignment lowering remains VHDL-shaped');
+    like($hdl, qr/\bISYM\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+ISYM\s+<=\s+OUT_identifier;/s, 'logic vector assignment lowering remains VHDL-shaped');
     like($hdl, qr/\bLFLAG\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+LFLAG\s+<=\s+'1';/s, 'logic scalar assignment lowering uses std_logic literals');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\b/s, 'four-state logic VHDL output does not leak SystemVerilog declaration syntax');
 
@@ -1856,17 +1873,17 @@ FSM
     my $signed_hdl = $pipeline->generate_hdl_from_file($signed_fsm_path)->{hdl_code};
     like(
         $signed_hdl,
-        qr/\bIN\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        qr/\bIN_identifier\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
         'signed vector logic input port lowers to numeric_std signed port',
     );
     like(
         $signed_hdl,
-        qr/\bsignal\s+OUT\s+:\s+signed\(7\s+downto\s+0\);/s,
+        qr/\bsignal\s+OUT_identifier\s+:\s+signed\(7\s+downto\s+0\);/s,
         'signed vector logic declaration lowers to numeric_std signed signal',
     );
     like(
         $signed_hdl,
-        qr/\bOUT\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+IN;/s,
+        qr/\bOUT_identifier\s+<=\s+"00000000";\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT_identifier\s+<=\s+IN_identifier;/s,
         'signed vector logic input assignment lowering remains VHDL-shaped',
     );
     unlike($signed_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'signed logic VHDL output does not leak SystemVerilog declaration syntax');
@@ -1882,12 +1899,12 @@ FSM
     my $signed_cli_hdl = read_file($signed_output_path);
     like(
         $signed_cli_hdl,
-        qr/\bIN\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
+        qr/\bIN_identifier\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s,
         'CLI VHDL output includes signed vector input port lowering',
     );
     like(
         $signed_cli_hdl,
-        qr/\bsignal\s+OUT\s+:\s+signed\(7\s+downto\s+0\);/s,
+        qr/\bsignal\s+OUT_identifier\s+:\s+signed\(7\s+downto\s+0\);/s,
         'CLI VHDL output includes signed vector logic declaration lowering',
     );
     unlike($signed_cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'CLI signed logic VHDL output remains VHDL-shaped');
@@ -1921,9 +1938,9 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bentity\s+direct_vhdl_signed_scalar_logic\s+is\b/s, 'signed scalar logic fixture emits direct VHDL entity');
-    like($hdl, qr/\bIN\s+:\s+in\s+std_logic;?/s, 'signed scalar logic input port lowers to std_logic');
-    like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic;/s, 'signed scalar logic declaration lowers to std_logic signal');
-    like($hdl, qr/\bOUT\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT\s+<=\s+IN;/s, 'signed scalar logic assignment lowering remains VHDL-shaped');
+    like($hdl, qr/\bIN_identifier\s+:\s+in\s+std_logic;?/s, 'signed scalar logic input port lowers to std_logic');
+    like($hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic;/s, 'signed scalar logic declaration lowers to std_logic signal');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+'0';\s+if\s+\w+\s+=\s+'1'\s+then\s+OUT_identifier\s+<=\s+IN_identifier;/s, 'signed scalar logic assignment lowering remains VHDL-shaped');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'signed scalar logic VHDL output does not leak SystemVerilog declaration syntax');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -1935,8 +1952,8 @@ FSM
     ok(-e $output_path, 'CLI writes signed scalar logic declaration VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bIN\s+:\s+in\s+std_logic;?/s, 'CLI VHDL output includes signed scalar input port lowering');
-    like($cli_hdl, qr/\bsignal\s+OUT\s+:\s+std_logic;/s, 'CLI VHDL output includes signed scalar logic declaration lowering');
+    like($cli_hdl, qr/\bIN_identifier\s+:\s+in\s+std_logic;?/s, 'CLI VHDL output includes signed scalar input port lowering');
+    like($cli_hdl, qr/\bsignal\s+OUT_identifier\s+:\s+std_logic;/s, 'CLI VHDL output includes signed scalar logic declaration lowering');
     unlike($cli_hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\blogic\s+signed\b/s, 'CLI signed scalar logic VHDL output remains VHDL-shaped');
 
     my @signed_scalar_arithmetic_cases = (
@@ -2387,8 +2404,8 @@ FSM
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);/s, 'signed modulo fixture lowers signed input port A');
     like($hdl, qr/\bB\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed modulo fixture lowers signed input port B');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed modulo fixture lowers signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+B,\s+8\);/s, 'same-width signed vector modulo lowers as resized signed VHDL arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed modulo fixture lowers signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+B,\s+8\);/s, 'same-width signed vector modulo lowers as resized signed VHDL arithmetic');
     unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\)/s, 'signed modulo does not use unsigned std_logic_vector casts');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -2400,7 +2417,7 @@ FSM
     ok(-e $output_path, 'CLI writes signed vector modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+B,\s+8\);/s, 'CLI VHDL output includes signed modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+B,\s+8\);/s, 'CLI VHDL output includes signed modulo assignment');
     unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)\s+mod\s+unsigned\(B\),\s+8\)\)/s, 'CLI signed modulo output avoids unsigned casts');
 };
 
@@ -2792,8 +2809,8 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed literal modulo fixture lowers signed input port A');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed literal modulo fixture lowers signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'signed vector literal modulo lowers through resized to_signed arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed literal modulo fixture lowers signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'signed vector literal modulo lowers through resized to_signed arithmetic');
     unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'signed literal modulo avoids unsigned casts');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -2805,7 +2822,7 @@ FSM
     ok(-e $output_path, 'CLI writes signed vector literal modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed literal modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+to_signed\(2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed literal modulo assignment');
     unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(2,\s+8\)/s, 'CLI signed literal modulo output avoids unsigned casts');
 };
 
@@ -2837,8 +2854,8 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bA\s+:\s+in\s+signed\(7\s+downto\s+0\);?/s, 'signed negative literal modulo fixture lowers signed input port A');
-    like($hdl, qr/\bsignal\s+REM\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed negative literal modulo fixture lowers signed output signal');
-    like($hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(-2,\s+8\),\s+8\);/s, 'signed vector negative literal modulo lowers through resized to_signed arithmetic');
+    like($hdl, qr/\bsignal\s+REM_identifier\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed negative literal modulo fixture lowers signed output signal');
+    like($hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+to_signed\(-2,\s+8\),\s+8\);/s, 'signed vector negative literal modulo lowers through resized to_signed arithmetic');
     unlike($hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'signed negative literal modulo avoids unsigned casts and the prior arithmetic guard');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -2850,7 +2867,7 @@ FSM
     ok(-e $output_path, 'CLI writes signed vector negative literal modulo VHDL output file');
 
     my $cli_hdl = read_file($output_path);
-    like($cli_hdl, qr/\bREM\s+<=\s+resize\(A\s+mod\s+to_signed\(-2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed negative literal modulo assignment');
+    like($cli_hdl, qr/\bREM_identifier\s+<=\s+resize\(A\s+mod\s+to_signed\(-2,\s+8\),\s+8\);/s, 'CLI VHDL output includes signed negative literal modulo assignment');
     unlike($cli_hdl, qr/std_logic_vector\(resize\(unsigned\(A\)|unsigned\(A\)|to_unsigned\(-2,\s+8\)|arithmetic expression 'A % -2'/s, 'CLI signed negative literal modulo output avoids unsigned casts and the prior arithmetic guard');
 };
 
@@ -2973,9 +2990,9 @@ subtest 'direct VHDL scaffold lowers bounded aggregate outputs as packed vectors
     my $concat_hdl = generate_vhdl('t/corpus/direct_rhs_concat_target_autogrowth.fsm');
     like($concat_hdl, qr/\bentity\s+direct_rhs_concat_target_autogrowth\s+is\b/s, 'aggregate concat fixture emits direct VHDL entity');
     like($concat_hdl, qr/\bNESTED\s+:\s+out\s+std_logic_vector\(6\s+downto\s+0\);/s, 'nested aggregate output lowers to packed vector width');
-    like($concat_hdl, qr/\bOUT\s+:\s+out\s+std_logic_vector\(2\s+downto\s+0\)/s, 'flat aggregate output lowers to packed vector width');
+    like($concat_hdl, qr/\bOUT_identifier\s+:\s+out\s+std_logic_vector\(2\s+downto\s+0\)/s, 'flat aggregate output lowers to packed vector width');
     like($concat_hdl, qr/\bNESTED\s+<=\s+\(\(FLAG\s+&\s+DATA\)\s+&\s+TAG\);/s, 'nested aggregate concat assignment lowers to VHDL concatenation');
-    like($concat_hdl, qr/\bOUT\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'flat aggregate concat assignment lowers to VHDL concatenation');
+    like($concat_hdl, qr/\bOUT_identifier\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'flat aggregate concat assignment lowers to VHDL concatenation');
     unlike($concat_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b|\brecord\b|\barray\b/s, 'aggregate concat VHDL output stays in the packed-vector scaffold');
 
     my $constant_hdl = generate_vhdl('t/corpus/direct_aggregate_constant_target_autogrowth.fsm');
@@ -2997,7 +3014,7 @@ subtest 'direct VHDL scaffold lowers bounded aggregate outputs as packed vectors
 
     my $cli_hdl = read_file($concat_output_path);
     like($cli_hdl, qr/\bNESTED\s+:\s+out\s+std_logic_vector\(6\s+downto\s+0\);/s, 'CLI aggregate concat output includes packed nested port');
-    like($cli_hdl, qr/\bOUT\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'CLI aggregate concat output includes packed assignment');
+    like($cli_hdl, qr/\bOUT_identifier\s+<=\s+\(FLAG\s+&\s+DATA\);/s, 'CLI aggregate concat output includes packed assignment');
     unlike($cli_hdl, qr/\btypedef\b|\bstruct\b|\bmodule\b|\balways_(?:ff|comb)\b/s, 'CLI aggregate concat VHDL output does not leak SystemVerilog syntax');
 
     my ($constant_success, $constant_error_message, $constant_full_buf, $constant_stdout_buf, $constant_stderr_buf) = run(
@@ -3042,10 +3059,10 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bentity\s+direct_vhdl_vector_output_decimal_literal\s+is\b/s, 'vector output decimal fixture emits direct VHDL entity');
-    like($hdl, qr/\bOUT\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector output decimal fixture lowers output port to std_logic_vector');
+    like($hdl, qr/\bOUT_identifier\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector output decimal fixture lowers output port to std_logic_vector');
     like($hdl, qr/\bsignal\s+OUT_next\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector output decimal fixture declares vector next signal');
     like($hdl, qr/\bOUT_next\s+<=\s+std_logic_vector\(to_unsigned\(165,\s+8\)\);/s, 'vector output decimal literal lowers through target-width to_unsigned');
-    like($hdl, qr/\bOUT\s+<=\s+"00000000";/s, 'vector output decimal fixture keeps vector reset literal');
+    like($hdl, qr/\bOUT_identifier\s+<=\s+"00000000";/s, 'vector output decimal fixture keeps vector reset literal');
     unlike($hdl, qr/\bOUT_next\s+<=\s+165;/s, 'vector output decimal fixture does not emit a raw integer-to-vector assignment');
     unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b/s, 'vector output decimal VHDL output does not leak SystemVerilog structural syntax');
 
@@ -3090,7 +3107,7 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bentity\s+direct_vhdl_vector_output_negative_decimal_literal\s+is\b/s, 'vector output negative decimal fixture emits direct VHDL entity');
-    like($hdl, qr/\bOUT\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector output negative decimal fixture lowers output port to std_logic_vector');
+    like($hdl, qr/\bOUT_identifier\s+:\s+out\s+std_logic_vector\(7\s+downto\s+0\);?/s, 'vector output negative decimal fixture lowers output port to std_logic_vector');
     like($hdl, qr/\bsignal\s+OUT_next\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'vector output negative decimal fixture declares vector next signal');
     like($hdl, qr/\bOUT_next\s+<=\s+std_logic_vector\(to_signed\(-1,\s+8\)\);/s, 'vector output negative decimal literal lowers through target-width signed conversion');
     unlike($hdl, qr/\bOUT_next\s+<=\s+-1;|to_unsigned\(-1,\s+8\)/s, 'vector output negative decimal fixture avoids raw integer assignments and unsigned casts');
@@ -3140,7 +3157,7 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bentity\s+direct_vhdl_signed_vector_output_decimal_literal\s+is\b/s, 'signed vector output decimal fixture emits direct VHDL entity');
-    like($hdl, qr/\bOUT\s+:\s+out\s+signed\(7\s+downto\s+0\);?/s, 'signed vector output decimal fixture lowers output port to signed');
+    like($hdl, qr/\bOUT_identifier\s+:\s+out\s+signed\(7\s+downto\s+0\);?/s, 'signed vector output decimal fixture lowers output port to signed');
     like($hdl, qr/\bsignal\s+OUT_next\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed vector output decimal fixture declares signed next signal');
     like($hdl, qr/\bOUT_next\s+<=\s+to_signed\(5,\s+8\);/s, 'signed vector output decimal literal lowers through target-width to_signed');
     unlike($hdl, qr/\bOUT_next\s+<=\s+5;|to_unsigned\(5,\s+8\)/s, 'signed vector output decimal fixture avoids raw integer assignments and unsigned casts');
@@ -3190,7 +3207,7 @@ FSM
 
     my $hdl = generate_vhdl($fsm_path);
     like($hdl, qr/\bentity\s+direct_vhdl_signed_vector_output_negative_decimal_literal\s+is\b/s, 'signed vector output negative decimal fixture emits direct VHDL entity');
-    like($hdl, qr/\bOUT\s+:\s+out\s+signed\(7\s+downto\s+0\);?/s, 'signed vector output negative decimal fixture lowers output port to signed');
+    like($hdl, qr/\bOUT_identifier\s+:\s+out\s+signed\(7\s+downto\s+0\);?/s, 'signed vector output negative decimal fixture lowers output port to signed');
     like($hdl, qr/\bsignal\s+OUT_next\s+:\s+signed\(7\s+downto\s+0\);/s, 'signed vector output negative decimal fixture declares signed next signal');
     like($hdl, qr/\bOUT_next\s+<=\s+to_signed\(-1,\s+8\);/s, 'signed vector output negative decimal literal lowers through target-width to_signed');
     unlike($hdl, qr/\bOUT_next\s+<=\s+-1;|to_unsigned\(-1,\s+8\)/s, 'signed vector output negative decimal fixture avoids raw integer assignments and unsigned casts');
