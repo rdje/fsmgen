@@ -1,11 +1,16 @@
 # Decision Trees and FSMs
 
-FSMGen has two main direct authored roots:
+IAL0 `.fsm` has two main direct authored behavioral roots:
 
 - `?fsm:name`
 - `?dt:name`
 
 They are related, but not interchangeable.
+
+IAL1 actors and IAL2 protocol objects use their own source forms and lower to
+explicit IAL0 behavior. See [Intent Scheduling](13-intent-scheduling.md) and
+[Protocol and Platform Intent](16-ial2-protocol-platform-intent.md) for those
+authoring entry points.
 
 ## Direct Root Boundary
 

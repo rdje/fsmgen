@@ -1,7 +1,7 @@
 # Reference Map
 
-This chapter helps you navigate between the new book and the older focused
-reference docs.
+This chapter maps IAL0, IAL1 and IAL2 authoring, shared tooling and verification
+to the book and its focused canonical references.
 
 Contributor check: keep the ISF specification's focused-test list aligned with
 `t/*-isf-*.t`. Run `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`
@@ -19,7 +19,9 @@ Use the book when you want:
 Start here:
 
 - [Introduction](00-introduction.md)
-- [Your First FSM](01-first-fsm.md)
+- [IAL2 Protocol and Platform Intent](16-ial2-protocol-platform-intent.md)
+- [IAL1 Intent Scheduling](13-intent-scheduling.md)
+- [IAL0: Your First FSM](01-first-fsm.md)
 - [Cookbook](12-cookbook.md)
 - [Implementation Blueprint](15-implementation-blueprint.md)
 - [Perl API Reference](11a-perl-api-reference.md)

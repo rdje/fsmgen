@@ -1,6 +1,6 @@
 # Reusable Procedures
 
-A **procedure** is a named, parameterized block of clauses you can reuse across
+In IAL1, a **procedure** is a named, parameterized block of clauses you can reuse across
 transactions instead of repeating yourself. It is the high-level-language idea of a
 *function* — a callable block of code with its own actual arguments. Inline
 substitution and handshake expansion have the distinct qualification boundaries

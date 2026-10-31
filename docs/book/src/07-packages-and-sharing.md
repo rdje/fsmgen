@@ -1,6 +1,8 @@
 # Packages and Sharing
 
-FSMGen now has a real semantic package lane through `?pkg:name`.
+IAL0 `.fsm` sources share semantic declarations through `?pkg:name` and `+import`.
+IAL1's supported use of the same package/type machinery is described in
+[ISF Types, Enums, and Aggregates](13j-type-enum-aggregate.md).
 
 The goal is reuse without falling back to textual include or macro behavior.
 

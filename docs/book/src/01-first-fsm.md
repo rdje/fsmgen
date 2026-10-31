@@ -1,6 +1,9 @@
 # Your First FSM
 
-This chapter gets you from zero to a generated HDL file quickly.
+This chapter gets you from an **IAL0 `.fsm` source** to generated HDL. You
+choose states and cycle-level updates explicitly. For actor/transaction
+scheduling, start with [IAL1](13-intent-scheduling.md); for protocol or platform
+objects, start with [IAL2](16-ial2-protocol-platform-intent.md).
 
 ## Minimal CLI Shape
 

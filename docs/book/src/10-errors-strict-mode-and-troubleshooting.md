@@ -2,6 +2,14 @@
 
 This chapter is about understanding failures quickly and safely.
 
+Start with the original authored source and identify its layer. IAL2 errors may
+concern protocol/profile validation or generated IAL1; IAL1 errors may concern
+actor declarations, scheduling or generated IAL0; IAL0 errors concern explicit
+FSM/DT and composition forms. HDL diagnostics follow those lowering stages.
+The [layer map](00-introduction.md#choose-your-authoring-layer) and
+[inspection workflow](09-generated-hdl-debugging-and-inspection.md) help locate
+the relevant review artifact without losing the authored source identity.
+
 ## Common Failure Families
 
 ### Parser And Shape Errors

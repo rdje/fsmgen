@@ -19,7 +19,7 @@ selector records, and regression corpus.
 
 | Section family | Current home |
 | --- | --- |
-| Source-layer contract map | Chapters 02-08 for `.fsm`, Chapters 13-13m for `.isf`, Chapter 14 for bounded `.ppif` status |
+| Source-layer contract map | [IAL0 `.fsm`](02-language-basics.md) and Chapters 03-08; [IAL1 `.isf`](13-intent-scheduling.md) and its subchapters; [IAL2 `.ppif` and profiles](16-ial2-protocol-platform-intent.md) and its protocol chapters; [backlog](14-feature-backlog.md) for remaining work |
 | Layering and lowering order | Chapter 13h plus the `.isf` and `.ppif` public contract docs |
 | Adding IAL2 protocol surfaces | Chapter 15a plus [IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md](../../IAL2_NEW_PROTOCOL_SUPPORT_WORKFLOW.md) |
 | Portable request/result API | [BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md) |
@@ -37,8 +37,11 @@ selector records, and regression corpus.
 
 `.fsm` is IAL0: explicit cycle-authored hardware intent. `.isf` is IAL1:
 scheduling intent that lowers into reviewable scheduled `.fsm` artifacts.
-`.ppif` is the first IAL2 public file surface: protocol/platform intent that
-currently lowers through generated `.isf` before generated `.fsm`.
+`.ppif` is the generic IAL2 public file surface: protocol/platform intent that
+lowers through generated `.isf` before generated `.fsm`. Supported `.axi`,
+`.apb` and `.ahb` aliases select vocabulary within the same IAL2 model. The
+[IAL2 guide](16-ial2-protocol-platform-intent.md) documents current profiles and
+the separately owned complete actor-network lowering gap.
 
 A variant must not invent parallel semantics for these layers. It may use any
 host-native internal representation, but the observable source syntax, lowering

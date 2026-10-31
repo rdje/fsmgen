@@ -1,6 +1,6 @@
 # Rules and Priorities
 
-Rules lower to non-state DTs whose DTE is the rule condition. Their assignments
+IAL1 rules lower to IAL0 non-state DTs whose DTE is the rule condition. Their assignments
 are independent of the transaction state machine.
 
 ## Rule Syntax

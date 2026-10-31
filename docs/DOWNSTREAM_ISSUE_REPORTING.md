@@ -3,7 +3,8 @@
 Primary audience: SPECFORGE and other downstream tools that call FSMGen.
 
 This is a strict, format-agnostic bug-report protocol. SPECFORGE does not need
-to classify an issue as `.fsm`, `.isf`, parser, lowering, HDL, or API-specific
+to classify an issue as IAL0 (`.fsm`), IAL1 (`.isf`), IAL2 (`.ppif` or a supported
+profile alias), parser, lowering, HDL, or API-specific
 before filing it. It only needs to provide the exact FSMGen-facing artifacts,
 the exact invocation, and the captured results. FSMGen maintainers will use
 that bundle to reproduce locally, identify the root cause, and decide whether

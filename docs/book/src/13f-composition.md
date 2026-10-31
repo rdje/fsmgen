@@ -1,6 +1,8 @@
 # Composition
 
-Composition lets transactions call other transactions.
+IAL1 composition lets transactions call other transactions and describes actor
+networks through ATL. This is the behavioral/orchestration layer; the generated
+IAL0 structural top uses the [`?top` composition forms](05-composition-basics.md).
 
 ## `(do child)` — Blocking Call
 

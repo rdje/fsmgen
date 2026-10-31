@@ -1,6 +1,6 @@
 # Drive Blocks
 
-Drives lower to non-state DT blocks that are enabled when their `_start` signal
+IAL1 drives lower to IAL0 non-state DT blocks that are enabled when their `_start` signal
 is asserted. One `(drive ...)` call = one cycle. The DT computes
 combinational selector enables; the assignment operators decide the selected
 target behavior. Current drive bodies use `<-`, so driven ports update on the

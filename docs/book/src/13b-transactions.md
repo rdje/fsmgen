@@ -1,6 +1,6 @@
 # Transactions
 
-A transaction is a behavioral sequence lowered into scheduled `.fsm` states
+An IAL1 transaction is a behavioral sequence lowered into scheduled IAL0 `.fsm` states
 and associated data-path logic. Declarations alone do not create execution.
 
 It is useful to think of an ISF transaction as a hardware task: it consumes

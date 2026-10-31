@@ -1,7 +1,8 @@
 # Composition Advanced
 
-This chapter covers the richer source-side expression and structural-actual
-features of `?wiring`.
+This chapter covers the richer IAL0 source-side expression and structural-actual
+features of `?wiring` within `?top` composition. For IAL1 actor-network
+orchestration, see [ISF composition](13f-composition.md).
 
 The guiding rule is simple:
 

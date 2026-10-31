@@ -1,6 +1,44 @@
 # Introduction
 
-FSMGen compiles state-machine and intent specifications into synthesizable HDL.
+FSMGen compiles hardware intent into synthesizable HDL. Authors can start with
+protocol/platform intent at **IAL2**, scheduled behavior at **IAL1**, or explicit
+cycle-by-cycle control at **IAL0**.
+
+## Choose Your Authoring Layer
+
+IAL means **Intent Abstraction Layer**. Choose the layer that expresses the
+design decisions you want to make:
+
+| Layer | Source | What you author | Start here |
+| --- | --- | --- | --- |
+| **IAL2** | `.ppif`; supported `.axi`, `.apb`, `.ahb` profile aliases | Protocol objects and platform intent using a selected protocol vocabulary | [Protocol and Platform Intent](16-ial2-protocol-platform-intent.md) |
+| **IAL1** | `.isf` | Actors, transactions, rules, data operations, timing and scheduling constraints | [Intent Scheduling](13-intent-scheduling.md) |
+| **IAL0** | `.fsm` | Explicit states, decision trees, assignment timing and structural composition | [Your First FSM](01-first-fsm.md) |
+
+The lowering contract is:
+
+```text
+IAL2 -> reviewable IAL1 .isf -> reviewable IAL0 .fsm -> HDL
+```
+
+You can also enter at IAL1 or IAL0. Higher-level authoring keeps the lower-level
+review artifacts available; it does not require you to hand-author those files.
+Protocol suffixes select vocabularies within IAL2, not additional layers.
+Each layer has its own documented supported subsets. The
+[lowering reference](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification)
+explains the contract, and the
+[IAL2 actor-network boundary](16-ial2-protocol-platform-intent.md#actor-networks-in-the-lowering-chain)
+identifies the current composition gap rather than claiming complete lowering.
+
+The same CLI checks authored sources from each layer:
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.ppif
+./bin/fsmgen --quiet --strict --check --json isf/phase_test.isf
+./bin/fsmgen --quiet --strict --check --json fsm/ahb_lite_subordinate.fsm
+```
+
+## Product Direction
 
 The long-term goal is complete digital-chip source authoring: real CPU, DSP,
 MCU, ASIC and SoC designs from either IAL1 or IAL2, with VIAL for initial
@@ -65,7 +103,7 @@ That means:
 - how to use it,
 - why the user-facing model works the way it does,
 - and what the current shipped boundaries really are.
-- every user-visible `.fsm` feature, composition form, package/type/import
+- every user-visible IAL0, IAL1 and IAL2 feature, composition form, package/type/import
   surface, CLI/debug behavior, diagnostic boundary, generated-HDL expectation,
   and support limitation should have a chapter home here.
 - examples are part of the contract: users should be able to learn FSMGen by
@@ -87,7 +125,9 @@ thread that lets the project keep moving safely.
 
 FSMGen is designed for:
 
-- state-machine and decision-tree authoring at the intent level,
+- protocol/platform authoring through bounded IAL2 profiles,
+- actor, transaction and scheduling intent through IAL1,
+- explicit state-machine and decision-tree authoring through IAL0,
 - explicit, regression-backed language contracts,
 - generated HDL that stays understandable enough to debug,
 - composition of generated children and external RTL,
@@ -95,13 +135,20 @@ FSMGen is designed for:
 
 ## How To Read This Book
 
-Recommended order:
+Start with the intent you want to express:
 
-1. Read [Your First FSM](01-first-fsm.md).
-2. Read [Language Basics](02-language-basics.md).
-3. Read [Decision Trees and FSMs](03-decision-trees-and-fsms.md).
-4. Move into [Composition Basics](05-composition-basics.md) only when you need hierarchy or external RTL.
-5. Use [Cookbook](12-cookbook.md) when you want practical patterns quickly.
+| Your goal | Reading path |
+| --- | --- |
+| Describe a protocol or platform object | [IAL2 overview](16-ial2-protocol-platform-intent.md), then [AXI](16a-ial2-axi.md), [APB](16b-ial2-apb.md) or [AHB](16c-ial2-ahb.md) examples |
+| Describe behavioral sequences and scheduling | [IAL1 intent scheduling](13-intent-scheduling.md), then actors, transactions, rules and control flow |
+| Author exact cycles or understand generated FSMs | [Your First FSM](01-first-fsm.md), [IAL0 language basics](02-language-basics.md), then [decision trees](03-decision-trees-and-fsms.md) and [structural composition](05-composition-basics.md) |
+| Inspect generated behavior from any source layer | [HDL, Debugging, and Inspection](09-generated-hdl-debugging-and-inspection.md) and the [Lowering Reference](13h-lowering-reference.md) |
+| Verify hardware intent | [HIAL/VIAL: Start Here](16d-hial-vial-verification-architecture.md) |
+| Integrate a tool or agent | [Extensions and Embedding](11-extensions-and-embedding.md) and [API and Model Reference](11a-perl-api-reference.md) |
+
+Use the [Cookbook](12-cookbook.md) for practical patterns. The early `.fsm`
+chapters teach IAL0 and help you read generated artifacts; they are one learning
+path through FSMGen, not a prerequisite for beginning with IAL1 or IAL2.
 
 ## Current Documentation Shape
 
@@ -151,7 +198,7 @@ mdbook serve --open
 
 ## Current Product Boundaries
 
-The active `.fsm` surface already covers:
+The current IAL0 `.fsm` surface includes:
 
 - direct `?fsm` and `?dt` module roots,
 - composition through `?top`,
@@ -159,6 +206,16 @@ The active `.fsm` surface already covers:
 - constants, enums, and bounded `+types`,
 - typed composition links and typed aggregate compatibility checks,
 - and typed extensions for explicit embedding hooks.
+
+IAL1 `.isf` provides actors, transactions, rules, drives, control flow, data
+operations and bounded actor networks. Its
+[feature matrix](13k-isf-feature-support-matrix.md) distinguishes shipped
+constructs from remaining width, composition and scheduling work.
+
+IAL2 `.ppif` and the supported profile aliases provide bounded AXI, APB and AHB
+objects. The [IAL2 guide](16-ial2-protocol-platform-intent.md) and its protocol
+chapters describe the exact object, generation and review-artifact boundaries.
+An accepted profile does not imply support for every operation in that protocol.
 
 Not every future direction is complete yet. When this book says “current
 support boundary,” it means the shipped, regression-backed boundary. The

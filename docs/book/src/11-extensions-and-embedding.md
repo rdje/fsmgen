@@ -2,6 +2,15 @@
 
 This chapter covers the current supported integration seam for tool builders.
 
+Integrations must distinguish the authored hardware layer—IAL2 `.ppif` and
+supported profile aliases, IAL1 `.isf`, or IAL0 `.fsm`—from the selected HDL
+backend and the current implementation language. Use the capability manifest
+and documented operation contracts to select supported sources and reports.
+The [source-layer map](00-introduction.md#choose-your-authoring-layer),
+[IAL1 downstream contract](13i-downstream-integration.md) and
+[IAL2 guide](16-ial2-protocol-platform-intent.md) explain the observable lowering
+and review artifacts. Perl entry points below document the reference implementation.
+
 ## Working directories and legacy search initialization
 
 The legacy `PathSearch` helper retains its installed tree when loaded through a

@@ -2,8 +2,10 @@
 
 ### IAL2 Protocol And Platform Intent Exploration
 
-Status: first bounded IAL2 implementations and `.ppif` Valid-Ready parser/CLI
-surface shipped; broader IAL2 remains backlog. IAL2 feature completeness on the
+Status: bounded AXI, APB and AHB IAL2 objects ship through `.ppif` and the
+supported profile aliases; broader IAL2 remains backlog. Start with the
+[current IAL2 guide](16-ial2-protocol-platform-intent.md) and its worked protocol
+chapters. IAL2 feature completeness on the
 SystemVerilog-backed path is the current priority before VHDL backend/reroute
 work resumes.
 
@@ -20,7 +22,7 @@ composition generators are not advertised as complete ATL emitters.
 Historical feature-completeness sequence (the direct children through .844
 are now terminal):
 [IAL2-FEATURE-COMPLETENESS-FRONTIER](../../tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md)
-owns the next IAL2 feature-completeness work. Its first selector audited the
+records that bounded IAL2 feature-completeness sequence. Its first selector audited the
 shipped `.ppif` Valid-Ready single/bundle surface and moved the frontier to
 the first AXI manager rule-subset selection/pre-code contract. That selector
 chose outstanding-capacity plus acceptance/status feedback as the first

@@ -2,6 +2,17 @@
 
 This chapter collects practical, copyable patterns.
 
+Choose recipes by authoring layer:
+
+| Layer | Recipes |
+| --- | --- |
+| IAL0 `.fsm` | The counter, routing DT, structural composition, packages and typed-boundary recipes below |
+| IAL1 `.isf` | Start at [A Small ISF Actor](#9-a-small-isf-actor), then child calls, rules and repeat bodies |
+| IAL2 `.ppif` and supported aliases | Use the worked [AXI](16a-ial2-axi.md), [APB](16b-ial2-apb.md) and [AHB](16c-ial2-ahb.md) profile examples |
+
+Higher-layer examples preserve the [IAL2 -> IAL1 -> IAL0 lowering
+contract](13h-lowering-reference.md#lowering-contract-for-hardware-and-verification).
+
 ## 1. A Small Counter FSM
 
 ```lisp

@@ -4,6 +4,11 @@ This chapter is the canonical book-facing backlog for user-visible features
 that are discussed elsewhere as future work, deferred, not fully shipped, or
 not yet a fully frozen public contract.
 
+Its scope includes IAL0 cycle-level authoring, IAL1 scheduling, IAL2
+protocol/platform profiles, shared backends and APIs, and verification intent.
+Use the [layer map](00-introduction.md#choose-your-authoring-layer) for current
+entry points and the dedicated language/profile chapters for shipped examples.
+
 When another chapter mentions a limitation of that kind, the item must also be
 listed here. Local chapters may keep short contextual notes, but this chapter
 is the consolidated review list.

@@ -1,7 +1,10 @@
 # Symbols, Types, and Imports
 
-This chapter covers the declarative surfaces that let you name things instead
-of repeating raw numerics everywhere.
+This chapter covers the IAL0 `.fsm` declaration and import forms that let you
+name things instead of repeating raw numerics. IAL1 reuses selected type,
+constant and package semantics through its own
+[ISF declaration syntax](13j-type-enum-aggregate.md); IAL2 source forms are
+described by the [selected protocol profile](16-ial2-protocol-platform-intent.md).
 
 The current canonical intent-level families are:
 

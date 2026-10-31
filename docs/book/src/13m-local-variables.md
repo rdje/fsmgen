@@ -1,6 +1,6 @@
 # Local Variables
 
-ISF lets a transaction keep **named local state** and **named intermediate values** —
+IAL1/ISF lets a transaction keep **named local state** and **named intermediate values** —
 the *variables* half of programming in ISF (the *functions* half is
 [Reusable Procedures](13l-procedures.md)). Both lower cleanly to `.fsm`: a `(local …)`
 is a declared register, and a `(let …)` is pure substitution.

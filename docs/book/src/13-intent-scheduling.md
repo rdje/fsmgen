@@ -1,13 +1,14 @@
 # Intent Scheduling Format (`.isf`)
 
-The Intent Scheduling Format abstracts cycle counting away from the author.
+The Intent Scheduling Format (ISF, `.isf`) is **IAL1**. It expresses behavioral
+and scheduling intent above IAL0's explicit cycle-authored states.
 
 You describe **what** happens — the compiler infers **when** and produces
 explicit cycle-accurate `.fsm`.
 
 ```text
-IAL1 .isf → LoweringIR → Emitter::FSM → IAL0 .fsm → SystemVerilog / Verilog
-                    → Emitter::JSON → Schedule Report
+IAL1 .isf -> scheduling/lowering -> IAL0 .fsm -> HDL
+                               -> schedule report
 ```
 
 ## Intent Abstraction Layers
@@ -32,10 +33,13 @@ AXI manager capacity/status objects, APB requester-transfer objects, APB
 completers, and fixed APB requester/completer compositions.
 
 IAL2 is not a macro or alias layer. The generic `.ppif` container and bounded
-profile aliases such as `.axi` and `.apb` lower through generated `.isf`, then
+profile aliases such as `.axi`, `.apb` and `.ahb` lower through generated `.isf`, then
 generated `.fsm`, before HDL generation. Historical spellings such as `.pif`
 and `.ppi`, and future profile aliases that do not yet have selected behavior,
 remain unsupported until an exact task-tree owner selects and verifies them.
+
+The [IAL2 guide](16-ial2-protocol-platform-intent.md) covers the current AXI,
+APB and AHB profiles and the separate complete actor-network lowering boundary.
 
 Every IAL2 surface must keep the same chain: clear source semantics, clear
 lower-layer mapping, reviewable generated artifacts, and clear runtime

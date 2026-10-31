@@ -1,6 +1,7 @@
 # Lowering Reference
 
-Supported ISF constructs map to specific `.fsm` patterns.
+Supported IAL1/ISF constructs map to specific IAL0 `.fsm` patterns. IAL2
+protocol/platform sources first produce IAL1 intent before this scheduling step.
 
 This chapter first explains the compiler contract, then gives the generated
 `.fsm` patterns and current boundaries for individual constructs.

@@ -1,10 +1,14 @@
 # Language Basics
 
-This chapter covers the core authoring surface you use before composition.
+This chapter covers **IAL0 `.fsm` authoring**, including the forms you will see
+in generated lower-level review artifacts. IAL1 has its own
+[actor and scheduling syntax](13-intent-scheduling.md); IAL2 has
+[protocol/platform forms](16-ial2-protocol-platform-intent.md).
 
 ## Mental Model
 
-FSMGen sources are Lisp-like trees.
+IAL0 sources are Lisp-like trees. The forms below describe explicit cycle-level
+control; higher-layer sources express intent that lowers to this layer.
 
 You are usually writing:
 

@@ -1,7 +1,7 @@
 [book]
 title = "FSMGen Book"
 authors = ["FSMGen contributors"]
-description = "Progressive, example-rich documentation for FSMGen and the .fsm language."
+description = "FSMGen hardware intent: IAL2 protocol/platform sources, IAL1 scheduling, IAL0 cycle control, and HDL generation."
 language = "en"
 src = "src"
 

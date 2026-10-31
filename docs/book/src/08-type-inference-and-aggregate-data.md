@@ -1,7 +1,9 @@
 # Type Inference and Aggregate Data
 
-This chapter explains the long-term typing philosophy and the current shipped
-boundary.
+This chapter explains the shared typing direction and the current IAL0 `.fsm`
+declaration/composition boundary. IAL1's supported reuse is documented in
+[ISF Types, Enums, and Aggregates](13j-type-enum-aggregate.md); IAL2 objects
+apply their [profile-specific source contracts](16-ial2-protocol-platform-intent.md).
 
 ## The Direction
 

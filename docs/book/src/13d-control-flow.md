@@ -1,6 +1,6 @@
 # Control Flow
 
-This chapter describes transaction-local branches and loops. A `when` after
+This chapter describes IAL1 transaction-local branches and loops. A `when` after
 an explicit activation such as `(on start)`, or another scheduled state, is a
 branch. A first scheduled authored `when` selects an activation guard instead;
 its body supports only inline samples. See [Transactions](13b-transactions.md)

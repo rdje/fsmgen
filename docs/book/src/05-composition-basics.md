@@ -1,7 +1,10 @@
 # Composition Basics
 
-Composition is the `?top` layer that lets FSMGen build one top module from
-multiple child blocks.
+This chapter covers IAL0 structural composition: `?top` builds one top module
+from child blocks, including the documented generated-child source profiles.
+IAL1 transaction calls and actor networks have a separate
+[composition guide](13f-composition.md); IAL2 protocol composition follows the
+[protocol/platform guide](16-ial2-protocol-platform-intent.md).
 
 Current child kinds are:
 

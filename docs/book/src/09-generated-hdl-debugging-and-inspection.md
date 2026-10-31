@@ -1,14 +1,16 @@
 # Generated HDL, Debugging, and Inspection
 
 This chapter covers the CLI loop, what to expect from emitted HDL, and how to
-inspect deeper semantic surfaces.
+inspect deeper semantic surfaces across IAL0, IAL1 and IAL2. The source suffix
+selects the authoring layer: `.fsm`, `.isf`, or `.ppif` and its supported profile
+aliases. HDL backend selection is a separate choice.
 
 ## Basic CLI Flow
 
 From repository root:
 
 ```bash
-./bin/fsmgen [options] <fsm_file>
+./bin/fsmgen [options] <source_file>
 ```
 
 Common commands:
@@ -23,6 +25,18 @@ Common commands:
 ./bin/fsmgen --strict --check --json fsm/apb_requester.fsm
 ./bin/fsmgen --strict --emit-semantic-json fsm/apb_requester.fsm
 ```
+
+For higher-layer sources, inspect scheduling and lowering before reading HDL:
+
+```bash
+./bin/fsmgen --quiet --strict --emit-schedule-json isf/i2c_master.isf
+./bin/fsmgen --quiet --strict --emit-schedule-json ppif/axi_aw_valid_ready.ppif
+```
+
+IAL1 produces scheduled IAL0 `.fsm` artifacts. IAL2 first produces IAL1 `.isf`,
+then IAL0 `.fsm`; the [IAL2 guide](16-ial2-protocol-platform-intent.md) explains
+how to inspect those artifacts and the current actor-network limitation. The
+remaining direct-FSM examples show the shared HDL/inspection end of that flow.
 
 If `--output` is omitted, generated HDL is written below the git-ignored
 `.artifacts/<language>/` tree, for example `.artifacts/sv/trial_0.sv` for
@@ -518,11 +532,14 @@ Perl objects.
 
 ## Report-Only CLI Modes
 
-The first bounded check-only JSON surface is:
+Check a supported source without writing HDL:
 
 ```bash
 ./bin/fsmgen --strict --check --json path/to/file.fsm
 ```
+
+The same mode accepts supported IAL1 `.isf` and IAL2 `.ppif`/profile-alias
+sources. Use the original authored path when checking a higher-layer design.
 
 `--check-json` is an alias for the same mode. The command runs the full
 pipeline, emits JSON to stdout, exits non-zero when the check fails, and never
@@ -546,7 +563,7 @@ diagnostic identity exists. For `.isf` inputs, parser, lowering,
 schedule-report, and semantic check failures also use this JSON failure path
 instead of leaving stdout empty.
 
-The first bounded normalized semantic JSON surface is:
+Inspect normalized semantics from a supported source layer:
 
 ```bash
 ./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
@@ -568,7 +585,8 @@ stable diagnostic-code classifier and do not expose partial semantics.
 
 ## Input Resolution
 
-FSMGen resolves `<fsm_file>` by shape:
+The positional `<source_file>` selects a source layer by its supported suffix.
+The direct IAL0 `.fsm` filename-search rules are:
 
 1. Bare names such as `foo` or `foo.fsm` are searched in repeated
    `--path DIR` roots, then `FSMLIB` roots, then the current directory.

@@ -1,5 +1,9 @@
 # Actor and Interface
 
+An actor is an IAL1 `.isf` hardware agent. Its interface, state and transactions
+are scheduled into the explicit IAL0 review artifacts described in the
+[lowering reference](13h-lowering-reference.md).
+
 ## Actor Declaration
 
 ```text
