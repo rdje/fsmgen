@@ -180,6 +180,12 @@ result maximum. Original amount data still participates in currentness checks.
 The shared generation path proves actual sampled-storage LHS ownership and final
 physical declarations; mutable inline-shift widths remain outside this repair.
 
+Generated AHB comparison/logical guards retain their scalar result widths.
+Literal data inside comparison or logical-negation operands does not select the
+separate bitwise data-literal width proof. Each separately emitted data-literal
+child still requires its own original proof; this changes neither ISF syntax nor
+mutable data-width support.
+
 The burst-reader fixture is covered by `t/1310-isf-burst-fixture-coverage.t`,
 which proves strict schedule JSON parity, scheduled `.fsm` structure, plain
 and strict HDL generation, dynamic repeat counter storage, watchdog and

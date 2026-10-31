@@ -634,6 +634,13 @@ sub _contains_literal {
     confess "Direct literal emission selector contains a cycle\n" if $active->{$identity};
     local $active->{$identity} = 1;
     return 1 if $node->isa('FSM::CoreAST::Literal');
+    # These typed operators produce one bit independently of their operands.
+    # Their literals cannot contribute to the enclosing operand maximum.
+    # Any physical generated child is still selected separately by its own
+    # root, and an installed holder always requires proof before this walk.
+    return 0 if ($node->isa('FSM::CoreAST::UnaryOp') && ($node->{operator} // '') eq '!')
+        || ($node->isa('FSM::CoreAST::BinaryOp')
+            && ($node->{operator} // '') =~ /\A(?:==|!=|<|<=|>|>=)\z/);
     if ($node->isa('FSM::CoreAST::SignalRef')) {
         my $signal = $node->{signal};
         return blessed($signal) && ($signal->{attributes}{is_intermediate}
@@ -762,7 +769,13 @@ Internal requirement selector taking the actual Core Signal as its positional
 argument and optionally the actual selected row registry. A completed holder
 or selected source row still requires proof after loss of its intermediate role.
 A bounded typed bitwise expression
-containing a literal requires proof, including through generated child references.
+containing a data-width literal requires proof, including through generated child
+references. Typed comparisons and logical negation terminate this requirement
+walk: their scalar result does not inherit operand or literal widths. The walk
+still examines every physical generated helper independently, so scalar parents
+cannot hide an emitted data-literal child. Existing inline-shift policies and
+holder-presence priority remain unchanged. This is family selection, not new
+source admission or proof from a numeric width.
 This selector grants no width or ancestry authority. Removing a holder does not
 authorize numeric fallback; malformed required intent fails its subsequent proof.
 

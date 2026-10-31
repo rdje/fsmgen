@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **20** uniquely owned question entries.
+> **1** facts · **21** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -20,6 +20,7 @@
 - q="which consumers own concatenation selection and shift intermediate widths?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why can a shift helper borrow the shift amount width?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why did guard XOR become NOT?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="why do AHB comparison guards falsely require literal data width intent?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why do bit and concatenation guards reference undeclared condition?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why does I2C generation refuse inline shifts with literals?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why does a static slice guard test the whole signal?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
