@@ -185,6 +185,52 @@ sub publication_checkpoint {
     return $@ ? undef : $checkpoint;
 }
 
+sub render_input {
+    my ($class, %args) = @_;
+    my $input = eval {
+        my $frame = _observe(%args) or return;
+        return unless ref($args{runtime_ast}) eq 'FSM::CoreAST::Concatenation'
+            && $args{runtime_ast} == $args{signal_info}{runtime_ast};
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        my $input = {record => $record, frame => $frame};
+        return unless _same($args{holder}, $input);
+        return $input;
+    };
+    return $@ ? undef : $input;
+}
+
+sub after_render {
+    my ($class, %args) = @_;
+    my $holder = eval {
+        my $frame = _observe(%args) or return;
+        return unless ref($args{runtime_ast}) eq 'FSM::CoreAST::Concatenation'
+            && $args{runtime_ast} == $args{signal_info}{runtime_ast}
+            && !ref($args{selected_expression});
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        my $input_row = $args{input};
+        for my $key (qw(frame state row data)) {
+            return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+            $input_row = $input_row->{$key};
+        }
+        return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+        my $before = {record => $record, frame => _copy($frame)};
+        for my $field (qw(rendered_expression rendered_expression_source)) {
+            if (exists $input_row->{$field}) {
+                return if ref($input_row->{$field}) || (defined($input_row->{$field})
+                    && length($input_row->{$field}) > FSM::CoreExpressionWidthSupport::MAX_NODES());
+                $before->{frame}{state}{row}{data}{$field} = $input_row->{$field};
+            } else {
+                delete $before->{frame}{state}{row}{data}{$field};
+            }
+        }
+        return unless _same($args{input}, $before)
+            && _same($args{selected_expression}, $frame->{state}{row}{data}{rendered_expression})
+            && _same($input_row->{runtime_ast_source}, $frame->{state}{row}{data}{rendered_expression_source});
+        return {record => $record, frame => $frame};
+    };
+    return $@ ? undef : $holder;
+}
+
 1;
 
 =head1 NAME
@@ -209,8 +255,10 @@ slots and explicit literal widths preserve. Numeric sum agreement supplies no
 generic sum-range or emission authority. Later resolver reads can carry only an
 already current installed event through their own revision and width/source
 writes. Exact normalizer width publication also carries held events through
-C<publication_checkpoint>; later annotations and registry replacement invalidate
-until their separate carry protocols qualify. Completed policy remains separate.
+C<publication_checkpoint>. Typed rendering carries the held event through only
+its actual scalar expression/source annotations, binding the exact returned
+runtime AST before and after the renderer. Dependency/live-usage annotations
+and registry replacement remain separate. Completed policy remains separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.
@@ -249,7 +297,27 @@ can restore it. Complete remaining metadata, nested container identities,
 original source contracts, rows, registry map, epoch and revision must preserve;
 unrelated or late getter changes cannot refresh. Exceptions propagate from the
 actual callback with the event already removed. This observer installs nothing
-and grants no completed policy. Later normalization annotations and registry
-replacement remain separate, unqualified transitions.
+and grants no completed policy. Other normalization and registry transitions
+require their own checks.
+
+=head2 render_input(..., holder => HOLDER, runtime_ast => ACTUAL_RETURN)
+
+Validate the held current event and the actual original built-in runtime AST
+before the typed renderer callback. The installed width owner removes the event
+while rendering. Cached no-write returns preserve existing currentness; cleaned
+or compatibility fallback branches receive no new authority.
+
+=head2 after_render(..., input => INPUT, runtime_ast => ACTUAL_RETURN, selected_expression => EXPRESSION)
+
+Revalidate the original input and actual rendered AST after the real callback
+and its annotations. Only the merged row's C<rendered_expression>, equal to the
+bounded scalar callback return, and C<rendered_expression_source>, equal to its
+original runtime source, may change. Preserve prior field absence as well as
+values, complete other metadata/container identities and original sources.
+Missing/stale/foreign input, unrelated or late getter mutations and malformed
+returns withhold. Actual renderer exceptions propagate with no installed event.
+Return only a detached holder; this observer installs nothing. Dependency and
+live-usage metadata, registry replacement, completed policy and symbolic emission
+remain separate.
 
 =cut

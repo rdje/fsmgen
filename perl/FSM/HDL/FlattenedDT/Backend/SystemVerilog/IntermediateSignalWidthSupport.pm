@@ -132,8 +132,10 @@ only an already current event through their own revision and width/source writes
 The actual normalizer carries a held current event through only its exact
 allocator/registry width and width_source writes, withholding it during the
 callback and rechecking complete original source/metadata afterward. Unrelated
-mutations or callback failure cannot refresh it. Later normalization annotations
-and registry replacement remain unqualified. Abort/reset/reuse clears all
+mutations or callback failure cannot refresh it. Typed rendering also carries
+only its actual scalar expression/source writes, binding the actual original
+runtime AST around the renderer. Dependency/live-usage annotations and registry
+replacement remain unqualified. Abort/reset/reuse clears all
 events. Numeric sum agreement is separate from symbolic range or completed
 collection policy.
 
@@ -427,6 +429,22 @@ sub _with_factorized_width_publication ($self, $signal_name, $signal_info, $publ
     }
     $self->_restore_factorized_inference($signal_name, $signal_info, $holder, $expected);
     $self->_restore_graph_inference_state($signal_name, $signal_info, $graph_holder, $graph_expected);
+}
+
+sub _with_concatenation_render ($self, $name, $info, $runtime_ast, $render) {
+    return $render->() unless ref($info) eq 'HASH'
+        && ref($info->{ast}) eq 'FSM::CoreAST::Concatenation';
+    my %args = (width_support => $self, signal_name => $name, signal_info => $info,
+        signal_registry => $self->_current_graph_inference_rows, runtime_ast => $runtime_ast);
+    my $input = FSM::ConcatenationInferenceSupport->render_input(
+        %args, holder => delete $self->{_concatenation_inference_events}{$name});
+    my $expression = $render->();
+    if ($input) {
+        my $holder = FSM::ConcatenationInferenceSupport->after_render(
+            %args, input => $input, selected_expression => $expression);
+        $self->{_concatenation_inference_events}{$name} = $holder if $holder;
+    }
+    return $expression;
 }
 
 sub _checkpoint_factorized_registry_copies ($self, $all_intermediate_signals, $replace_registry = 0) {

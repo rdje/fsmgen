@@ -177,6 +177,11 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
 Render one intermediate signal expression from its resolved runtime AST when
 available, otherwise fall back to stored compatibility expressions or the
 enable-graph registry.
+The default width owner carries only a held current concatenation event through
+the typed renderer and its exact expression/source writes, binding the actual
+original runtime AST before and after. Unrelated changes and exceptions cannot
+refresh authority. Cached no-write reads retain currentness; other fallbacks and
+injected legacy width providers keep their original behavior without new proof.
 
 =cut
 
@@ -209,11 +214,18 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
             return $signal_info->{expression};
         }
 
-        my $expression = $ctx->{enable_graph_ast_support}->ast_to_systemverilog($runtime_ast);
-        if ($signal_info && ref($signal_info) eq 'HASH') {
-            $signal_info->{rendered_expression} = $expression;
-            $signal_info->{rendered_expression_source} = $runtime_ast_source;
-        }
+        my $render = sub {
+            my $expression = $ctx->{enable_graph_ast_support}->ast_to_systemverilog($runtime_ast);
+            if ($signal_info && ref($signal_info) eq 'HASH') {
+                $signal_info->{rendered_expression} = $expression;
+                $signal_info->{rendered_expression_source} = $runtime_ast_source;
+            }
+            return $expression;
+        };
+        my $width_support = $ctx->{backend_sv_intermediate_width_support};
+        my $expression = $width_support && $width_support->can('_with_concatenation_render')
+            ? $width_support->_with_concatenation_render($signal_name, $signal_info, $runtime_ast, $render)
+            : $render->();
         fsm_debug("[IntermediateSignalRecoverySupport.pm][render_intermediate_signal_expression()] Rendered '$signal_name' from AST", 3);
         return $expression;
     }

@@ -778,8 +778,14 @@ Only successful publication and complete original source/metadata revalidation
 restore that same event. Wrong width/source values, unrelated metadata, equal
 object/container replacements, late getter mutations and throwing callbacks
 cannot refresh it; a clean later cache read cannot remint spent authority.
-Later dependency/render/live-usage annotations, registry replacement and completed
-collection policy remain separate implementation steps. Symbolic sums/emission
+The actual typed renderer now carries the event through only its scalar
+`rendered_expression` return and original `rendered_expression_source`. It binds
+the actual original runtime AST before and after rendering, including the nested
+call from dependency resolution. Cached no-write reads preserve currentness;
+foreign AST returns, source/metadata changes and renderer exceptions cannot
+refresh it. Cleaned/compatibility fallbacks gain no authority. Dependency-array
+and live-usage annotations, registry replacement and completed collection policy
+remain separate implementation steps. Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
 retain focused currentness, refusal, lifecycle and complete native product evidence.
@@ -788,6 +794,9 @@ retains the identical failing/passing regression and native conservation proof.
 The [publication regression](../../../t/2281-concatenation-width-publication.t) and
 [exact predecessor/native replay](../../../docs/audits/concat-width-publication-20261031/replay.py)
 qualify only the owned width publication and retain complete native products.
+The [typed-render regression](../../../t/2282-concatenation-render-events.t) and
+[render predecessor/native replay](../../../docs/audits/concat-render-events-20261031/replay.py)
+retain its focused carry/refusal and complete product evidence.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
