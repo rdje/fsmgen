@@ -1,0 +1,34 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+  "baseline": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1623-vial-architecture-scale-execution-fiber-qualification.t",
+    "t/1624-vial-architecture-scale-execution-live-fiber-limit.t",
+    "t/1625-vial-architecture-scale-execution-total-fiber-limit.t",
+    "t/1626-vial-architecture-scale-execution-total-operation-limit.t"
+  ],
+  "expected_status": 0,
+  "exit_status": 0,
+  "complete": true,
+  "log": "docs/audits/push-readiness-20261025/execution-fiber-total-green-20261031.log.gz",
+  "original_log_sha256": "da2071df8eb86cdfa2332f6a589458f7e4b15aefecead47696192bc0859d562e",
+  "retained_log_sha256": "da2071df8eb86cdfa2332f6a589458f7e4b15aefecead47696192bc0859d562e",
+  "normalization": "Dynamic repository-root prefix only.",
+  "sources": {
+    "t/1623-vial-architecture-scale-execution-fiber-qualification.t": "16cb20a4e46b0d14a211128ddef2ff13fce26a7ae47913f2b895a3b602f94812",
+    "t/1624-vial-architecture-scale-execution-live-fiber-limit.t": "fd49bf3643a9e6cf2e188f76ada06e3c6bfc26f9059a5d4edc8b14d4799741d2",
+    "t/1625-vial-architecture-scale-execution-total-fiber-limit.t": "894a9f222a63f0058ca3c644118269747c88867c0106c83dc68d21af57a12057",
+    "t/1626-vial-architecture-scale-execution-total-operation-limit.t": "49f4885772c2358508d3564a90c1197b7a517d9e29c04e6f77561750b1e52450"
+  },
+  "helper_sha256": "551877ecfd8880ff83154783f959f35fb9a461fd9d8195e592af6cd3e14102d5",
+  "source_witness": "docs/audits/push-readiness-20261025/execution-fiber-total-source-20261031.json.gz",
+  "source_witness_sha256": "82872fd5d15726d462211c85216696e98ef062bddbaba9277474ad92b57ac08b",
+  "rederive": "Four native fiber/aggregate-operation defaults use independent public AHB raw provenance and the frozen non-provenance contract.",
+  "falsify": "Complete original RED has exactly eight stale bridge assertions; inverse source conservation leaves every other identity, count, cap, orthogonality, staging, mutation and explicit opt-in unchanged. Existing unchanged helper adverse controls remain qualified by execution-plan-random-retry-20261031.",
+  "durability": "Tracked current tests, complete original source witness, whole dated RED/GREEN streams/statuses and task/Git.",
+  "scope": "Four native defaults. T1626 explicit exact total-operation excess is skipped and unclaimed; no product/full/hosted qualification."
+}

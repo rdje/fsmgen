@@ -11,6 +11,9 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 use FSM::VIAL::ArchitectureScaleWorkload;
@@ -19,7 +22,7 @@ my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my $bridge_sha256 =
-    'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';
+    current_ahb_report_sha256();
 my $source_cap = 1_048_576;
 my $plan_cap = 16_777_216;
 

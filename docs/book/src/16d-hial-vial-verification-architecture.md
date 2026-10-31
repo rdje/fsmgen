@@ -2232,12 +2232,13 @@ witness reproduces the original hashes exactly; the current DUT is generated
 and checked separately. No historical HDL is run as current behavior. Other
 execution/profile identity repairs and full local/hosted qualification remain
 owned by the [publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
-The fiber, source-map, random/replay and exact-plan gate tests share this
-checked current bridge reference with the plan-byte, random-attempt and
-scenario qualification/boundary tests, per-scenario operation qualification
-and limit tests, and total-operation qualification test. Their semantic/plan
-identities, metrics, source-map coverage and adverse cases remain frozen. Default gate execution does
-not requalify the explicitly enabled exact source-map route boundary.
+The checked-AHB execution tests for fiber counts, source maps, random/replay,
+plan bytes, scenarios and operation counts share this current bridge reference
+for their gate, qualification and boundary identity checks. Their semantic/plan
+identities, metrics, source-map coverage and adverse cases remain frozen.
+Default runs leave the explicitly enabled bridge-scale qualifiers and
+boundaries, exact source-map route boundary and total-operation excess proof
+unqualified.
 Exact-plan and random-attempt boundary qualification requires complete normal
 test outcomes. A resource-guard interruption leaves that qualification pending,
 even when earlier gate tests pass.

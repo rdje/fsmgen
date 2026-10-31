@@ -1,0 +1,73 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+  "source_witness": "docs/audits/push-readiness-20261025/execution-fiber-total-history-rollover-source-20261031.json.gz",
+  "manifest": "docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl",
+  "source_identity": {
+    "revision": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+    "path": "docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md",
+    "git_blob": "2706009f3d34f2c617617eb6e8dcde12a1e7a8f2",
+    "sha256": "f421d3505cdfe4a1da90e98e8b71cd1727e2839aef144a821673c50658b01c5e",
+    "lines": 512,
+    "bytes": 128005,
+    "independent_blob_retrieval_equal": true
+  },
+  "historical_suffix": {
+    "start_heading": "Blockers",
+    "sha256": "ae1682b62b1ecef7bb5d2efe8310578b057644cc685567880eb0c3a80cbecc58",
+    "lines": 178,
+    "bytes": 40342,
+    "sections": 30,
+    "exact_removed_historical_bytes_retained": true
+  },
+  "semantic_closure": {
+    "live_node_graph_bytes": 87658,
+    "live_node_graph_sha256": "7ad76856cb718a5d31ee1b06880143c0310b211980ae05080dd3d9bea837af65",
+    "node_graph_byte_identical_before_after": true,
+    "current_acceptance_bytes": 1683,
+    "current_acceptance_sha256": "8155908b300f5962cdd3f932939eb59f7145c272f9b66f1fdf863e41a0f2b812",
+    "fresh_acceptance_byte_identical": true,
+    "blockers_projection_authority": "Current retained .13/.17 live node fields; previous blocker wording remains historical."
+  },
+  "live_dimensions": {
+    "task_before": {
+      "bytes": 132051,
+      "lines": 518,
+      "sha256": "1aabf49f77f4c0f4f552b25a1ed21710e99e63f6f8df349d01f2e0f301ef1b29"
+    },
+    "task_after": {
+      "bytes": 92367,
+      "lines": 351,
+      "sha256": "ea6588d6e1d403e2b0b9eb38fc3dbdbde221a6f06bac66e2c733b86f3800075b"
+    },
+    "collection_before": {
+      "files": 608,
+      "bytes_total": 15102411,
+      "lines_total": 127059
+    },
+    "collection_after": {
+      "files": 608,
+      "bytes_total": 15062727,
+      "lines_total": 126892
+    }
+  },
+  "unretained_residue": {
+    "bytes": 0,
+    "lines": 0,
+    "kind": "none"
+  },
+  "overlap": "Complete predecessor, suffix, node graph and current live view overlap; products are not disjoint. The old blocker view is superseded and exactly archived; all current owning nodes remain live.",
+  "rederive": "git show exact predecessor and git cat-file exact blob agree; authenticate complete source and historical suffix/dimensions.",
+  "falsify": "Exact byte comparisons require the old historical suffix to be present before removal and the complete live graph/current acceptance to survive unchanged. The mandatory first-hook refusal proves why ordinary growth could not proceed.",
+  "durability": "Named required-history retention contract, tracked closed-schema manifest, finite live pointer, complete source witness/proof, normal task-tree integrity and pressure gates, and Git commitment.",
+  "policy_scope": "Existing own-tree suffix-rollover protocol; no task pivot or baseline/ceiling/allowance/state/milestone relaxation. Existing .32 retains broader collection-level remediation.",
+  "sealed_on": "2026-10-31",
+  "sealing_reason": "Mandatory first-hook aggregate rollover milestone refusal; retain complete historical evidence while restoring live headroom.",
+  "verifier": "scripts/check_task_tree_integrity.pl",
+  "retrieval": [
+    "git",
+    "show",
+    "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3:docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md"
+  ],
+  "current_view": "docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md",
+  "source_witness_sha256": "cde6298cef20d3eaba7af5184c3270200a9b19955d935ef5742411827be9a601"
+}
