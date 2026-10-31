@@ -1,0 +1,12 @@
+Private complete concatenation target preparation — October 31, 2026
+
+Owner: ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.3.3.
+Replay: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/concat-target-ranges-20261031/replay.py
+
+The replay authenticates native0781b80c9 bin/perl/grammar, executes the identical target regression against that predecessor and the current owner, and exercises isolated missing-target-fence, missing-original-source-fence and missing-result-width-agreement owners. Complete commands, statuses, streams, source identities and bounded native products retain in evidence.json.gz. syntax-policy.json.gz retains syntax and the authorized read-only policy-source comparison.
+
+Actual fixed declaration snapshots are produced by the installed DeclarationCapture. Mutable source preparation consumes proposed target records with matching physical numeric declarations; it does not claim those ranges were emitted. The independent range oracle interprets emitted arithmetic and compares authored ordered signal-slot weights under distinguishing parameter overrides. Complete target membership and declarations, original current source contracts, selected result width, signed/type/state agreement, repeated/literal terms, default-one rank and final original target/source container identities remain separate obligations.
+
+Initial draft sources retain in initial-draft.json.gz. The first interactive test output was truncated and is not reconstructed. The later complete same-source replay is explicitly a distinct observation. draft-check.json.gz retains the corrected first focused pass before final POD and the additional selected-result counterexample. guard-interruption.json.gz retains the actual standard host-memory cutoff, the complete partial epoch, empty owned-session census and exact interrupted-checkout cleanup; the interrupted child is not counted as successful. No guard threshold changes.
+
+Only private preparation is qualified here. Record producer origin, actual expression/declaration writers, final emitted ledgers, unknown literal sizing, VHDL, public source/report/API/MCP/corpus expansion and full compiler/override/runtime/publication qualification remain outside this slice. Full verification remains owned by .6. No foreign repository/submodule writes, external HDL execution or push occurs.

@@ -92,9 +92,9 @@ emission queries its separate optional source origin/current completed policy
 methods and records the two separate fields. Final origin/policy reads reject
 late changes; legacy providers retain their shape. No declaration/range change.
 
-DirectDeclaredWidthSupport lazily delegates concatenation source declaration intent
-to DirectConcatenationRangeSupport; physical target proof and live emission remain
-separate. It imports the separate source-tree schema for frozen
+DirectDeclaredWidthSupport lazily delegates concatenation source intent and complete
+target ranges to DirectConcatenationRangeSupport, which reuses independent source
+terms and canonical integer/range kernels; live emission remains separate. It imports the separate source-tree schema for frozen
 original-leaf relationship selection and lazily loads
 `FSM::DirectSourceBitwiseTreeRangeSupport` for actual source-only declaration
 intent over original module leaves and typed source-helper edges. Installed completed source policy, selected

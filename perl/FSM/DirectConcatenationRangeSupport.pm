@@ -8,6 +8,8 @@ use JSON::PP ();
 use FSM::CoreExpressionWidthSupport;
 use FSM::ConcatenationInferenceSupport;
 use FSM::ParameterDefaultEnvironmentSupport;
+use FSM::ConcatenationSourceWidthSupport;
+use FSM::WidthExpressionSupport;
 use FSM::Backend::VerilogFamily::WidthExpressionEmitter;
 
 sub _fail { confess "Direct concatenation declaration $_[0]\n" }
@@ -118,6 +120,128 @@ sub prepare_declaration {
     return _copy($plan);
 }
 
+# Freeze every original target container before invoking source getters. The
+# bounded raw walker rejects tied/blessed/cyclic records without calling them.
+# Equal-valued replacements are changes too; plans contain only detached data.
+sub _target_snapshot {
+    my (%args) = @_;
+    my $walk = {remaining => FSM::CoreExpressionWidthSupport::MAX_NODES(), active => {}, containers => []};
+    my %data;
+    for my $field (qw(target_namespace target_declarations)) {
+        $data{$field} = FSM::ConcatenationSourceObservationSupport::_plain($args{$field}, $walk, 0);
+        _fail('requires complete target namespace and declaration maps') unless ref($data{$field}) eq 'HASH';
+    }
+    return {data => \%data, containers => $walk->{containers}};
+}
+
+sub _plain_declaration {
+    my ($declarations, $name) = @_;
+    my $row = $declarations->{$name};
+    _fail("requires a plain unsigned target declaration '$name'")
+        unless ref($row) eq 'HASH' && !$row->{signed} && !defined($row->{state_model})
+            && !defined($row->{declared_type_name}) && !defined($row->{declared_type_spec})
+            && !exists($row->{width_origin});
+    return $row;
+}
+
+sub _target_root {
+    my ($intent, $namespace, $ctx) = @_;
+    my $name = $intent->{target_name};
+    _fail('requires unrenamed physical module and intermediate signal membership')
+        unless $namespace->{module_name} eq $intent->{module_name}
+            && ($namespace->{namespace}{identifier_map}{$name} // $name) eq $name
+            && ($namespace->{roles}{$name} // '') eq 'signals'
+            && !exists($namespace->{signal_targets}{$name});
+    my $declarations = $namespace->{declarations};
+    my $result = _plain_declaration($declarations, $name);
+    # Independent declarations retain the shared source profile in their
+    # source-sum records. Render the actual target separately below; do not
+    # compare a Verilog-labelled operand plan with a SystemVerilog source plan.
+    my $source = FSM::DirectDeclaredWidthSupport->prepare_module(
+        fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
+        target_language => $intent->{source_profile});
+    _fail('target declarations disagree with the original source scope')
+        unless _same($source->{source_scope}, $intent->{source_scope});
+    my @operands;
+    for my $operand (@{$intent->{source_names}}) {
+        _fail("requires original unrenamed operand mapping '$operand'")
+            unless ($namespace->{signal_targets}{$operand} // '') eq $operand;
+        my $row = _plain_declaration($declarations, $operand);
+        my $signal = $source->{signals}{$operand};
+        _fail("target operand '$operand' disagrees with its independent declaration")
+            unless $row->{width} == $signal->{width} && !$signal->{signed}
+                && !defined($signal->{state_model}) && !defined($signal->{declared_type_name})
+                && !defined($signal->{declared_type_spec});
+        my $plan = $signal->{width_plan};
+        push @operands, {name => $operand, width => $signal->{width}, width_plan => $plan,
+            is_vector => $plan ? $plan->{is_vector} : ($signal->{width} > 1 ? 1 : 0)};
+    }
+    my (@terms, $cursor);
+    $cursor = 0;
+    FSM::ConcatenationSourceWidthSupport::_sum_terms(
+        $intent->{allocation}{source_contract}{expression_tree}, \@operands, \@terms, \$cursor);
+    _fail('target operand slots disagree with original ordered source contracts')
+        unless $cursor == @operands && _same(\@terms, $intent->{sum}{terms});
+    my $evaluator = FSM::WidthExpressionSupport->new;
+    my @widths = map {$evaluator->evaluate_constant_integer_scalar($_->{width}, 'Concatenation target sum')} @terms;
+    my $width = sprintf('%s', $evaluator->apply_constant_width_operator('+', \@widths, 'Concatenation target sum')->bstr);
+    _fail('target result disagrees with the independent ordered operand sum')
+        unless FSM::IntermediateWidthAllocationSupport::_width($result->{width}) eq $width
+            && _same($width, $intent->{width});
+    my $range;
+    if ($intent->{profile} eq 'symbolic') {
+        my $module = $ctx->{fsm_module};
+        my $environment = FSM::ParameterDefaultEnvironmentSupport->prove_binding_observations(
+            parameters => $module->parameters, sources => $module->parameter_default_sources,
+            bindings => $module->parameter_default_bindings)->{environment};
+        _fail('target sum requires the matching original parameter environment')
+            unless $environment && _same($environment->{scope}, $intent->{source_scope});
+        $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_sum_range(
+            target_language => $intent->{target_language}, environment => $environment,
+            required_scope_kind => 'direct_module', context => "Concatenation '$name' physical target",
+            operands => [map {{width => $_->{width},
+                width_contract => $_->{width_plan} ? $_->{width_plan}{width_contract} : undef}} @terms]);
+    }
+    my $root = {%$intent, width => $width, range_text => $range};
+    _fail('complete target root disagrees with independent source declaration intent') unless _same($root, $intent);
+    return $root;
+}
+
+sub prepare_range {
+    my ($class, %args) = @_;
+    my $snapshot = _target_snapshot(%args);
+    my $intent = $class->prepare_declaration(%args);
+    my $ctx = $args{flattened_dt};
+    my $owner = $ctx->{backend_sv_intermediate_width_support};
+    my $renderer = $ctx->{enable_graph_ast_support};
+    my %current_args = (width_support => $owner, signal_name => $args{signal_name}, signal_info => $args{signal_info});
+    my $checkpoint = _checkpoint(%current_args)
+        // _fail('requires the original installed source and event holders');
+    my %target_args = (fsm_module => $ctx->{fsm_module}, assignment_analysis => $ctx->{assignment_analysis},
+        target_language => $intent->{target_language}, %{$snapshot->{data}});
+    my $direct = 'FSM::DirectDeclaredWidthSupport';
+    my $namespace = $direct->prepare_target_namespace(%target_args);
+    $direct->prepare_declarations(%target_args);
+    my $root = _target_root($intent, $namespace, $ctx);
+    my $again = $class->prepare_declaration(%args);
+    my $namespace_again = $direct->prepare_target_namespace(%target_args);
+    $direct->prepare_declarations(%target_args);
+    my $root_again = _target_root($again, $namespace_again, $ctx);
+    _fail('source intent or complete target plan changed during preparation')
+        unless _same($intent, $again) && _same($namespace, $namespace_again) && _same($root, $root_again);
+    # No semantic callbacks follow: even equal plans must retain the original
+    # physical input containers, completed holders and installed renderer.
+    _fail('complete original target inputs changed during preparation')
+        unless _same($snapshot, _target_snapshot(%args));
+    _fail('original source or completed event changed during target preparation')
+        unless _current_raw($checkpoint, %current_args);
+    _fail('installed original typed renderer changed during target preparation')
+        unless ($ctx->{enable_graph_ast_support} // 0) == $renderer
+            && ($renderer->{flattened_dt} // 0) == $ctx;
+    return _copy({%$root, operand_targets => $intent->{source_names},
+        target_namespace => $namespace->{namespace}, target_declarations => $namespace->{declarations}});
+}
+
 1;
 
 =head1 NAME
@@ -156,5 +280,38 @@ This is source-only intent. Names and roles grant no physical namespace,
 declaration agreement or emission authority. Complete target proof, actual
 declaration/expression consumers, final ledgers, VHDL and external execution
 remain separate obligations.
+
+=head2 prepare_range
+
+Take the same current source arguments as C<prepare_declaration>, plus complete
+plain C<target_namespace> and C<target_declarations> maps. The canonical direct
+namespace and declaration validators must establish complete physical
+membership, parameter mapping, identifier/collision rules and source declaration
+agreement. The selected result must be an unrenamed intermediate signal with
+no competing C<width_origin>. Module and operand renaming currently refuse.
+Every selected operand and result must be plain unsigned, without declared type
+or state model. The result width must equal the independently recomputed ordered
+sum, including repeated signal slots and explicit literal widths.
+
+Independent current declaration plans must match every original source-sum
+term, including width-one vector rank and captured parameter contracts. Their
+shared source profile remains separate from the actual Verilog-family target;
+the latter selects fresh canonical sum-range rendering. The complete target
+root must exactly match the separately prepared current source intent.
+
+The detached result extends C<concatenation_source_declaration> with ordered
+C<operand_targets>, complete C<target_namespace> and C<target_declarations>.
+These data records retain no source or caller container ownership. A raw target
+snapshot precedes all semantic reads, and final getter-free fences require
+unchanged complete target values and container identities, original source and
+completed-event holders, row/map/epoch and installed renderer. Equal-valued
+replacement containers refuse. Raw target traversal shares the Core expression
+depth/occurrence and scalar/key bounds, rejects tied, blessed and cyclic input,
+and invokes no serialization hooks.
+
+This private preparation does not attest the records' producer origin or prove
+that a writer emitted them. Actual declaration/expression consumers, final
+ledgers, unknown literal sizing, VHDL, public API/MCP/corpus capability expansion
+and full compiler/override/runtime/publication qualification remain separate.
 
 =cut

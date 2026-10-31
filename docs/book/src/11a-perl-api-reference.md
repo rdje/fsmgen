@@ -803,11 +803,36 @@ Original source/event/map/row/epoch and renderer identities must survive all
 callbacks, including equal holder substitutions; the final fence invokes no
 semantic getters. Results retain no caller graph or weak row-view ownership.
 
-This preparation emits no HDL. Complete physical namespace/declaration proof,
-live emission, final ledgers and full qualification remain separate obligations.
+This source preparation emits no HDL. Complete physical namespace/declaration
+proof uses the separate target join below; live emission, final ledgers and full
+qualification remain separate obligations.
 The focused regression is `t/2294-concatenation-source-declarations.t`; exact
 predecessor, defect controls and native replay are owned by
 `docs/audits/concat-source-declarations-20261031/replay.py`.
+
+`DirectDeclaredWidthSupport->prepare_concatenation_intermediate_range` takes the
+same source arguments plus complete plain `target_namespace` and
+`target_declarations` records. Canonical namespace and declaration validation
+checks complete membership, physical identifiers, parameter mappings and source
+agreement. The selected helper must be an unrenamed signal without another
+allocation origin. Selected operands and result must be unsigned and have no
+declared type or state model; module and operand renaming currently refuse.
+
+Independent current declarations reproduce every ordered source-sum term,
+including repeated operands, explicit literal widths and width-one vector rank.
+The actual target language selects fresh canonical range rendering. The target
+root equals the separate current source intent; the detached result additionally
+contains ordered `operand_targets` and complete target namespace/declarations.
+Bounded raw snapshots precede semantic reads. Final getter-free checks reject
+changed source/holder/renderer state and any changed target value or container
+identity, including equal replacements hidden by unchanged range text.
+
+`t/2295-concatenation-target-ranges.t` covers native fixed emission records and
+proposed matching numeric records for mutable sources whose live emitter still
+refuses. Preparation attests neither record producer origin nor actual emission.
+Its focused predecessor and bad-owner replay is
+`docs/audits/concat-target-ranges-20261031/replay.py`. Actual expression/declaration
+writers, final ledgers, VHDL and full external/publication qualification remain open.
 
 The standalone typed `ExpressionNamer` definition API retains its original Core
 AST and selected numeric width; it is not a source-width provenance protocol.

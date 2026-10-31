@@ -363,6 +363,11 @@ sub prepare_concatenation_declaration ($class, %args) {
     return FSM::DirectConcatenationRangeSupport->prepare_declaration(%args);
 }
 
+sub prepare_concatenation_intermediate_range ($class, %args) {
+    require FSM::DirectConcatenationRangeSupport;
+    return FSM::DirectConcatenationRangeSupport->prepare_range(%args);
+}
+
 sub prepare_target_namespace ($class, %args) {
     my $source = $class->prepare_module(%args);
     my $json = JSON::PP->new->canonical->allow_nonref;
@@ -836,6 +841,18 @@ target language must agree through final getter-free closure. The detached
 result preserves original ordered contracts and packed rank. It supplies no
 physical namespace, target declaration or emission proof; those joins and live
 consumers remain separate.
+
+=head2 prepare_concatenation_intermediate_range
+
+Delegate private complete target preparation to
+C<FSM::DirectConcatenationRangeSupport::prepare_range>. Supply the same current
+source arguments as C<prepare_concatenation_declaration> plus complete plain
+C<target_namespace> and C<target_declarations>. Canonical namespace/declaration
+validation, independent ordered operand sums, actual target rendering and final
+raw identity fences must agree with the separate current source intent. Results
+detach, including complete target records and repeated C<operand_targets>.
+Unproved mappings, width/type/state disagreement or late equal-container
+replacement refuse. Live emission and its final ledgers remain separate.
 
 =head2 prepare_target_namespace
 
