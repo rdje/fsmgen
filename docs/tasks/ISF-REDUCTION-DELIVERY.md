@@ -3307,10 +3307,44 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2292/T2289/T2291: All tests successful, Files=3, Tests=14; changed source/test syntax OK. No new cache, source admission or numeric generation branch; mutable target refusal and filtered-map revocation preserve. POD/book/source freshness, fresh staged acceptance and all normal final-index doctrines gate commit. Full6/external/runtime/publication remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Join proved concatenation sums to actual Verilog-family declarations and emitted ledgers.`
   Acceptance: `After source/range proof, split actual emission/ledger consumers before implementation. Complete target namespace/currentness and final actual declaration/expression agreement must retain every ordered operand and source contract, reject late divergence atomically and permit clean backend reuse. Focused native/refusal/reuse and book/POD/downstream sync qualify implementation only; VHDL and full compiler/override/runtime/publication remain separately owned.`
-  Verification: `Pending current source and target ranges. Completion T2289 and its dated retained-row diagnostic demonstrate that ordinary declaration rendering passes filtered_signals to resolve_intermediate_signal_width, whose concat after_write requires the canonical row map and therefore removes held events. Own this target integration gap here before declarations/emitted-ledger consumption: qualify the actual filtered projection with unchanged canonical rows and complete original proof, never weaken source/currentness identity or recapture a cache. The completion getter promises only currently held events; fixed numeric artifacts remain unchanged. Reproduce through T2289 actual caller/map revocation observations and docs/audits/concat-policy-completion-20261031/.`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4, ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.5`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.1`
+  Status: `done`
+  Goal: `Select bounded target-projection, declaration and final-ledger consumers for concatenation sums.`
+  Acceptance: `Read the actual declaration resolver, prepared projection and existing symbolic target consumers before splitting integration. Keep original canonical currentness and numeric inference separate from target membership. Own the demonstrated filtered-map event loss first, then source-to-target planning, declaration/expression emission and final agreement. Preserve precise refusals, full6 and public qualification obligations.`
+  Verification: `At clean7c3b3f3ab, ConsolidatedIntermediateDeclarationSupport passes prepared filtered_signals into resolve_intermediate_signal_width. ConcatenationInferenceSupport::_raw requires the original canonical graph row map; the normal repeat resolver therefore drops the held event despite identical actual selected rows. T2289 already captures the exact caller/map mismatch. Select .2 to carry only held original events across a bounded identity-checked subset projection, keeping original numeric resolver inputs unchanged and canonical inference/currentness unchanged. First intrinsic inference through a foreign projection must not mint proof. Complete supplied member/key identities and original selected row must survive every semantic read; stage restoration until a final raw source/row and projection barrier. Missing/stale/foreign/late-mutated projections withhold; clean reuse preserves. .3 selects complete physical target namespace/range plans from the qualified completed sum; .4 integrates actual declarations/expressions without selected-default fallback; .5 closes emitted ledgers and bounded inventories. Unsized literal widths remain refused until a separately selected target sizing contract. The public source/report/API/MCP/corpus boundary does not expand during private projection carry; broad/runtime/override qualification remains .6.`
+  Commit: `ISF-REDUCTION-DELIVERY: split concatenation target integration`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.2`
+  Status: `pending`
+  Goal: `Preserve original concatenation events through actual filtered resolver projections.`
+  Acceptance: `Repair the demonstrated T2289 declaration revocation without changing numeric resolver inputs or relaxing canonical inference/source currentness. Only an already held original event may carry across a bounded plain subset map whose every key maps to the actual original canonical row and whose selected row is present. Preserve exact supplied map/key/member identities through semantic reads; withhold the candidate until final getter-free canonical source/row, projection and installed-map checks pass. Fresh inference through a foreign projection cannot mint proof. Missing/stale/copied/equal-foreign/extra/mutated maps or rows, native metadata, late getters and failures cannot refresh; failure/reset/reuse and weak ownership preserve. Qualify actual fixed declaration carry and retained mutable/inline-RHS boundaries with focused T2289/T2292 and new projection controls plus an identical predecessor. Synchronize POD/book/fact/import and exact authority, commit before .3. No target namespace, symbolic declaration/ledger, unsized literal or public source/API/MCP/corpus capability admission.`
+  Verification: `pending selected projection carry`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.3`
+  Status: `pending`
+  Goal: `Prepare concatenation target ranges from current completed sums and complete physical namespaces.`
+  Acceptance: `After projection carry, select/split actual target-plan contracts before implementation. Reuse complete namespace validation, original current sum/source slots, actual operand names/rank, selected numeric agreement and target identifier rules. Distinguish source profile from actual target language; reject stale/foreign/combined/signed/type/opaque or unsupported literal inputs without default-sized substitution. Recheck complete target/source state after callbacks and retain detached plans without owner graphs. Focused physical-name/currentness/refusal/override-arithmetic checks and POD/book/public applicability sync precede actual emission. Unknown literal sizing requires its own selected contract; no implicit admission.`
+  Verification: `pending projection carry and target contract selection`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4`
+  Status: `pending`
+  Goal: `Emit proved concatenation declarations and expressions through actual target consumers.`
+  Acceptance: `After target plans, split actual declaration and expression writers if needed. Replace the mutable helper refusal only when current original completed sum, actual target namespace and range/operand expression proof agree. Preserve repeated ordered operands, explicit literal sizing and width-one packed rank. Record actual declaration/assignment products at emission; retain exact unsupported boundaries and failure/reset/reuse. Focused native actual source/target/predecessor/hostile checks and runnable book/downstream sync qualify implementation only; final ledgers, VHDL and full6 remain separate.`
+  Verification: `pending proved target plans`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.5`
+  Status: `pending`
+  Goal: `Close concatenation emitted ledgers and bounded source/target agreement inventories.`
+  Acceptance: `After actual emission, select/split assembly and final raw-barrier consumers. Join every actual declaration/expression ledger to the same original completed sum, complete physical target and current original source/row/registry/epoch after all late callbacks. Refuse omitted/duplicate/foreign/stale/mismatched output atomically, clear partial capture and allow clean backend reuse. Preserve whole-generation independence from selected numeric widths. Focused final-ledger/known-bad/native checks, exact public applicability/refusal inventories and synchronized book/downstream/feedback close bounded Verilog-family concatenation implementation; VHDL and full6/compiler/override/runtime/publication remain owned and unqualified.`
+  Verification: `pending actual declaration/expression emission`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.4`
