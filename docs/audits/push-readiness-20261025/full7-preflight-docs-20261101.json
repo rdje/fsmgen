@@ -1,0 +1,35 @@
+{
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+  "commands": [
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book"
+      ],
+      "expected_status": 0,
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--verify-build",
+        "docs/book/book"
+      ],
+      "expected_status": 0,
+      "exit_status": 0
+    }
+  ],
+  "complete": true,
+  "log": "docs/audits/push-readiness-20261025/full7-preflight-docs-20261101.log.gz",
+  "original_log_sha256": "ff8d1ab8004fd1583388b4b0572e9524042be604b95d9171f72e3081b69979ed",
+  "retained_log_sha256": "9ceafb011ec7f5d43df5860b690cf26417605b5b3bc231037689da5caf915027",
+  "normalization": "Dynamic repository-root prefix only; command statuses unchanged.",
+  "instrument": {
+    "path": "docs/audits/push-readiness-20261025/capture.py",
+    "text": "#!/usr/bin/env python3\n\"\"\"Retain guarded results for the current push-readiness preparation.\"\"\"\nimport argparse\nimport gzip\nimport hashlib\nimport json\nimport subprocess\nfrom pathlib import Path\nimport tempfile\n\nBASE = Path(__file__).resolve().parent\nROOT = BASE.parents[2]\nOWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3'\n\n\ndef main():\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('name')\n    parser.add_argument('commands', help='JSON list of {command, expected_status} records')\n    args = parser.parse_args()\n    if not args.name.replace('-', '').isalnum():\n        raise SystemExit('Invalid capture name')\n    record = BASE / (args.name + '.json')\n    log = BASE / (args.name + '.log.gz')\n    if record.exists() or log.exists():\n        raise SystemExit('Refusing to overwrite retained results')\n    commands = json.loads(args.commands)\n    rows = []\n    scratch = ROOT / '.artifacts/push-readiness'\n    scratch.mkdir(parents=True, exist_ok=True)\n    with tempfile.TemporaryFile(dir=scratch) as stream:\n        for row in commands:\n            command = row['command']\n            stream.write((json.dumps(command) + '\\n').encode()); stream.flush()\n            result = subprocess.run(['scripts/run_with_ram_guard.sh', '--'] + command,\n                                    cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT)\n            rows.append({'command': command, 'expected_status': row.get('expected_status', 0),\n                         'exit_status': result.returncode})\n            print(json.dumps(rows[-1]), flush=True)\n            if result.returncode != row.get('expected_status', 0):\n                break\n        stream.seek(0)\n        raw = stream.read()\n    normalized = raw.replace(str(ROOT).encode(), b'<repository>')\n    log.write_bytes(gzip.compress(normalized, mtime=0))\n    record.write_text(json.dumps({'owner': OWNER, 'commands': rows,\n        'complete': len(rows) == len(commands),\n        'log': log.relative_to(ROOT).as_posix(),\n        'original_log_sha256': hashlib.sha256(raw).hexdigest(),\n        'retained_log_sha256': hashlib.sha256(normalized).hexdigest(),\n        'normalization': 'Dynamic repository-root prefix only; command statuses unchanged.',\n        'instrument': {'path': Path(__file__).relative_to(ROOT).as_posix(),\n                       'text': Path(__file__).read_text(),\n                       'sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}, indent=2) + '\\n')\n    if len(rows) != len(commands) or any(row['exit_status'] != row['expected_status'] for row in rows):\n        raise SystemExit('Unexpected check result; original output retained')\n\n\nif __name__ == '__main__':\n    main()\n",
+    "sha256": "6844368c48f5e03edcf205957528e729d89ddb12c019118a93fd2bc3a076eb27"
+  }
+}
