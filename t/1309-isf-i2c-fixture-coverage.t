@@ -26,7 +26,7 @@ subtest 'I2C-like fixture lowers to the expected scheduled FSM structure' => sub
     like($fsm, qr/\(i2c_transfer_cnt 4\)/, 'scheduled FSM declares the repeat counter width');
     like($fsm, qr/\(<= \(is_read rw\) <start\)/, 'scheduled FSM samples rw on start');
     like($fsm, qr/\(<= \(addr dev_addr\) <start\)/, 'scheduled FSM samples dev_addr on start');
-    like($fsm, qr/\(<= \(reg reg_addr\) <start\)/, 'scheduled FSM samples reg_addr on start');
+    like($fsm, qr/\(<= \(sampled_reg_addr reg_addr\) <start\)/, 'scheduled FSM samples reg_addr on start');
     like($fsm, qr/\(<= \(data wdata\) <start\)/, 'scheduled FSM samples wdata on start');
     like($fsm, qr/\(= \(sda_val data\[7\]\)\)/, 'scheduled FSM drives SDA from the sampled write-data MSB');
     like($fsm, qr/\(<- \(data \(\| \(<< data 1\) 0\)\)\)/, 'scheduled FSM shifts write data after driving SDA');
@@ -107,7 +107,7 @@ subtest 'I2C-like fixture lowers to the expected scheduled FSM structure' => sub
 
     assert_storage($report, 'is_read', 'register', 'sample_alias', 1);
     assert_storage($report, 'addr', 'register', 'sample_alias', 7);
-    assert_storage($report, 'reg', 'register', 'sample_alias', 8);
+    assert_storage($report, 'sampled_reg_addr', 'register', 'sample_alias', 8);
     assert_storage($report, 'data', 'register', 'sample_alias', 8);
     assert_storage($report, 'i2c_transfer_cnt', 'counter', 'repeat_counter', 4);
     assert_storage($report, 'rdata', 'register', 'data_register', 8);

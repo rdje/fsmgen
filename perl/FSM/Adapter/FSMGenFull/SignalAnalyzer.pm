@@ -338,7 +338,13 @@ sub generate_fsm_interface($self, $fsm_module) {
             $input_count++;
             fsm_debug("  Added INPUT: $signal_name", 3);
         } elsif ($role eq 'OUTPUT') {
-            $signal->set_attribute('is_output', 1);
+            if (my $builder = $self->{expression_builder}) {
+                $builder->_allocation_transition($signal, 'is_output', 1, sub {
+                    $signal->set_attribute('is_output', 1);
+                });
+            } else {
+                $signal->set_attribute('is_output', 1);
+            }
             $fsm_module->add_signal($signal);
             $output_count++;
             fsm_debug("  Added OUTPUT: $signal_name", 3);

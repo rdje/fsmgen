@@ -1147,7 +1147,12 @@ HDL checks, and
 [ISF-I2C-FIXTURE-PROMOTION](../../tasks/ISF-I2C-FIXTURE-PROMOTION.md) now
 covers `isf/i2c_master.isf` as a bounded I2C-like serial-transfer fixture
 through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict
-HDL checks.
+HDL checks. The I2C fixture's sampled register-address alias is
+`sampled_reg_addr`, avoiding the SystemVerilog keyword `reg`. Its write-data
+shift combines the shifted register with data literal `0`; its read-data shift
+combines the shifted register with sampled `sda_in`. Shift amounts do not widen
+the data result, while data literals follow the target's literal-sizing rules.
+Both paths retain original-source and final declaration/assignment checks.
 
 These are not complete SPI or I2C protocol compliance suites.
 

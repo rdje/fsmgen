@@ -173,6 +173,13 @@ schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, switch-branch repeats, read-data shifting, sampled write-data bit
 selection from `data[7]`, and no implicit `data_bit` input.
 
+The I2C fixture uses `sampled_reg_addr` for the sampled register address,
+avoiding the SystemVerilog keyword `reg`. Fixed inline shifts within bitwise
+literal expressions retain data widths while excluding amount widths from the
+result maximum. Original amount data still participates in currentness checks.
+The shared generation path proves actual sampled-storage LHS ownership and final
+physical declarations; mutable inline-shift widths remain outside this repair.
+
 The burst-reader fixture is covered by `t/1310-isf-burst-fixture-coverage.t`,
 which proves strict schedule JSON parity, scheduled `.fsm` structure, plain
 and strict HDL generation, dynamic repeat counter storage, watchdog and

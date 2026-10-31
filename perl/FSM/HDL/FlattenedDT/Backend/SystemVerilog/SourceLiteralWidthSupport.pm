@@ -66,7 +66,7 @@ sub _infer_capture {
 sub _contributions {
     my ($capture, $observation) = @_;
     my %sources = map {$_->{identity_token} => $_} @{$capture->{walk}{operands}};
-    for my $stamp (@{$capture->{walk}{stamps}}) {
+    for my $stamp (@{$capture->{walk}{width_stamps}}) {
         my ($node, $raw, $kind) = @$stamp;
         next unless $kind eq 'node';
         if ($node->isa('FSM::CoreAST::Literal')) {
@@ -87,7 +87,7 @@ sub _contributions {
                 ? _maximum($observation->{leaf_floor}, $source->{width}) : $source->{width};
         }
     }
-    return defined $observation->{literal_floor};
+    return defined($observation->{literal_floor}) || defined($observation->{leaf_floor});
 }
 
 sub prepare {
@@ -111,7 +111,8 @@ sub prepare {
             literal_floor => undef, leaf_floor => undef};
         my $width = _infer_capture($capture, $result);
         return unless defined($width) && _contributions($capture, $result);
-        my $maximum = defined($result->{leaf_floor})
+        my $maximum = !defined($result->{literal_floor}) ? $result->{leaf_floor}
+            : defined($result->{leaf_floor})
             ? _maximum($result->{literal_floor}, $result->{leaf_floor}) : $result->{literal_floor};
         return unless $width eq $maximum;
         $result->{selected_width} = $width;
@@ -158,8 +159,24 @@ sub _inference_frame {
     return unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
     my $source = _json()->decode($observation->{source_capsule}{state});
     my @members = ($source->{signal}, @{$source->{operands}});
+    my @assignment_sources;
     for my $member (@members) {
         my $actual = $signals->{$member->{name}};
+        if (!defined($actual)) {
+            # Input-named register storage can be owned by the normalized LHS
+            # instead of the module port/helper map. Join its actual object,
+            # never a same-named numeric declaration or cached width.
+            my $analysis = $context->{assignment_analysis};
+            return unless ref($analysis) eq 'HASH';
+            my $entry = $analysis->{$member->{name}};
+            return unless ref($entry) eq 'HASH';
+            my $lhs = $entry->{lhs_ast};
+            return unless blessed($lhs) && $lhs->isa('FSM::CoreAST::SignalRef')
+                && !defined($lhs->{slice});
+            $actual = $lhs->{signal};
+            push @assignment_sources, {name => $member->{name}, analysis => _identity($analysis),
+                entry => _identity($entry), lhs => _identity($lhs)};
+        }
         return unless blessed($actual) && _identity($actual) eq $member->{identity_token};
     }
     return unless _identity($signal) eq $observation->{source_identity};
@@ -189,6 +206,7 @@ sub _inference_frame {
         module_identity => _identity($module), signals_identity => _identity($signals),
         registry_identity => _identity($registry), rows_identity => _identity($rows),
         epoch => $owner->{_width_inference_epoch}, rows_revision => $owner->{_graph_inference_rows_revision},
+        (@assignment_sources ? (assignment_sources => \@assignment_sources) : ()),
         signal_name => $name, signal_info => $states[0], registered => $states[1]};
 }
 
@@ -297,7 +315,8 @@ sub prepare_range {
             push @operands, {width => $original->{width}, width_contract => $contract};
         }
         return unless $mutable;
-        push @operands, {width => $numeric->{observation}{literal_floor}};
+        push @operands, {width => $numeric->{observation}{literal_floor}}
+            if defined($numeric->{observation}{literal_floor});
         my $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_maximum_range(
             operands => \@operands, environment => $environment, target_language => $language,
             required_scope_kind => 'direct_module');
@@ -550,7 +569,8 @@ sub prepare_targets {
                 my $source = $leaf->{source};
                 my $row = _plain_target($namespace, $source->{name}, $source->{width}, 0) or return;
                 return if exists($args{target_intermediates}{$source->{name}});
-                $maximum = _maximum($maximum, _width($row->{width}));
+                $maximum = defined($maximum) ? _maximum($maximum, _width($row->{width}))
+                    : _width($row->{width});
             }
             return unless $maximum eq $width;
             $nodes{$name} = {target_name => $name, declaration_kind => 'signal',
@@ -806,6 +826,15 @@ through explicit test-only source/binary symbolic-selector seams; it does not
 qualify normal generic generation. Live emission now has separate ledgers and
 complete-target comparison; final Core/source-width agreement stays independent.
 
+Fixed inline logical shifts inside literal-containing bitwise trees retain the
+left data width. Amount branches contribute neither literal nor leaf floors;
+the complete original amount remains in source/currentness fences. A tree whose
+only literals are amounts can therefore have no literal floor. Data literals
+keep independent explicit sizes or the existing target unsized floor.
+Input-named storage joins its actual normalized assignment LHS when absent from
+the module Signal map; saved numeric frames bind analysis, row and LHS identities.
+Mutable inline-shift dependencies and standalone shift policies are not added.
+
 =head2 current_targets
 
 Also takes C<observation>. Reprepares the entire physical proof and compares the
@@ -890,7 +919,7 @@ mutable parameter metadata are never changed.
 The observation keeps the complete original C<source_capsule>, root lifetime
 C<source_identity>, ordered C<helper_widths> and typed C<reference_widths>, and
 ordered original C<leaves> and C<literals>, including repeated occurrences.
-C<selected_width>, C<literal_floor> and nullable C<leaf_floor> are canonical
+C<selected_width>, nullable C<literal_floor> and nullable C<leaf_floor> are canonical
 positive decimal strings. Leaf source descriptors retain their original raw
 metadata and independent width contracts. Literal entries retain raw source
 records, target width and C<explicit> or C<target_unsized> sizing. A generated

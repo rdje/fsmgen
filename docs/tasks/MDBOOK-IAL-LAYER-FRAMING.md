@@ -21,7 +21,8 @@ This explicit request temporarily selects documentation ahead of saved
 
 ## Non-Goals
 
-- No language, lowering, compiler, source corpus or capability changes.
+- Documentation-first scope; publication-blocking supported-source regressions
+  are owned explicitly by `.3` before compiler/corpus changes.
 - No unsupported protocol, VHDL parity or full-chip completeness claims.
 - Do not mechanically replace valid IAL0 syntax with higher-layer vocabulary.
 - Do not rewrite retained historical builds or immutable evidence.
@@ -60,7 +61,7 @@ This explicit request temporarily selects documentation ahead of saved
   - [x] **NO REGRESSION** — knowledge-map: OK; complete source-census and unchanged Lisp-example comparison pass. Public cross-layer command products are complete valid JSON with successful selected checks. Final mdBook test/build, rendered layer/navigation and copied-source verification, exact aggregate authority and every normal final-index doctrine gate this documentation slice. Full CI and hosted publication remain pending.
 
 - ID: `MDBOOK-IAL-LAYER-FRAMING.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify and publish the updated book and accumulated commits, then verify hosted deployment.`
   Acceptance: `The director supplies https://rdje.github.io/fsmgen and flags the actual1206-commit upstream backlog. After .1 commits clean and .3 is dispositioned, follow existing SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3 and COMMIT.md publication ownership: required guarded full local CI, task-owned repair of exposed failures, a normal push without history rewriting, equal local/upstream/ls-remote full SHAs and every expected exact-SHA hosted workflow/job success. Verify GitHub Pages deployment/source revision and rendered introduction/navigation against the same committed book source. Preserve complete first failures and consume all required jobs. This request explicitly selects publication now ahead of saved private feature implementation; no full-CI or hosted success is inferred from focused checks.`
   Verification: `Director confirms GitHub Pages reader URL and requests overdue publication. Current source/default build differ from the quoted published sentence; actual remote content and current remote revision need network verification. Full local/hosted qualification remain open under the existing publication owners. Finish the book edit first, commit clean, then activate this leaf.`
@@ -68,11 +69,18 @@ This explicit request temporarily selects documentation ahead of saved
 
 
 - ID: `MDBOOK-IAL-LAYER-FRAMING.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose the observed I2C full-check refusal and resolve any publication-blocking regression.`
   Acceptance: `After the documentation slice commits clean, use the Knowledge Map, public source/corpus contract and retained native failure to classify ./bin/fsmgen --quiet --strict --check --json isf/i2c_master.isf returning Direct literal emission requires current completed source intent. Determine actual supported scope and root mechanism before changing code. If a supported source regressed, own the smallest source/proof repair with focused original/current/adverse controls and synchronized book/task evidence before full CI/publication. Preserve first failure, guards and original dependency black-box boundaries. If the shape is intentionally outside current support, document the precise canonical boundary and retain the appropriate existing implementation owner rather than inventing successful generation.`
-  Verification: `The proposed cross-layer introduction command fails status1 on isf/i2c_master.isf with a complete public JSON diagnostic; the preceding IAL2 check passes. Complete original example epoch retains in docs/audits/mdbook-ial-layer-framing-20261031/examples.json.gz. README currently demonstrates schedule preview for this file, which is a different operation. Full generation applicability and original-versus-current cause remain to be established; no production regression or intended-refusal classification is claimed yet. Finish .1 before this diagnosis; .2 publication depends on its disposition.`
-  Commit: `pending`
+  Verification: `The existing I2C plain/strict contract regressed at the literal-emission selector: actual roots combine inline shifts with bitwise literals but lacked source capture. Fixed unsigned inline logical shifts now retain original complete data/amount stamps; only data branches contribute target floors. Ordinary output marking uses the existing exact role transition; repeated equal target sizing avoids a redundant write, and original unresolved helper births survive both immediate propagation and reconciliation. Numeric joins bind actual normalized storage LHS identities when outside module membership. Complete target preparation separately exposed the fixture alias reg as a reserved SystemVerilog keyword; it is now sampled_reg_addr with the structural oracle aligned. The focused native I2C, lifecycle and new amount/data/storage/mutation tests plus original literal/shift tests pass; the deliberately wrong amount-floor projection fails. Exact source seals, complete first/subsequent failures and final qualification retain under docs/audits/mdbook-i2c-check-20261031/. Re-derivation is actual declarations and shared Core inference; falsification is the wrong-projection control and changed amount/LHS refusals; durability is tracked tests and qualification producer/receipt. Public sync scope: restored existing fixture/shared generation only, with API POD, book and downstream integration conformance updated; no new syntax, manifest capability, schedule schema or MCP interface. Fixed profile refuses mutable/opaque/combined/signed/type inputs; standalone shifts stay separately owned. Knowledge Map routes the previous duplicate binary-allocation paragraph to canonical API/POD while preserving every answer question, original source/hash and nonpositive card byte growth. First hooked commit refuses a stale independent ISF aggregate authority; retain complete staged source/log, measure the correct HEAD baseline/delta and assign this leaf a fresh authority without changing ceilings. Full CI, external HDL qualification and hosted publication remain open in .2.`
+  Commit: `This work-unit commit.`
+
+## Acceptance Checklist — `.3` I2C publication blocker
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The native --check --json and T1309 failures return Direct literal emission requires current completed source intent; git log -S locates selector activation at ce02b1cb8. Bounded raw observations show both actual inline-shift trees without holders. Birth/publication and target probes locate unowned parser sizing/role writes, omitted assignment-owned storage and the reserved reg declaration. Complete original failures and diagnostic producers are retained.
+- [x] **ADDRESSED (verified)** — Exact-source qualification runs the supported I2C CLI, T1309, the new T2296 actual declaration and adverse-source cases, source holder/birth/transition/publication controls and existing literal-emission/shift tests. All pass. The bad-width-projection control deliberately restores amount floors and fails distinguishing data-width assertions with all original guards live. Complete outputs and hashes retain in qualification.json.gz.
+- [x] **NO REGRESSION** — All tests successful in the final focused lifecycle/native/target set; the strict I2C structured check succeeds. POD, native mdBook test/build/copied-source checks, Knowledge Map and final staged doctrine integrity qualify this slice. Full CI and exact-SHA publication are deferred to active .2 and are not claimed here.
+
 
 ## Decisions
 

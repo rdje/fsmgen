@@ -585,6 +585,7 @@ sub _simple_assignment_signal_pair($self, $assignment) {
 sub _signal_width_accepts_inference($self, $signal) {
     return 0 unless $signal && $signal->can('width');
     return 0 if $signal->can('get_attribute') && $signal->get_attribute('width_declared');
+    return 0 if $self->{expression_builder}->_has_unresolved_inline_shift_birth($signal);
 
     my $width = $signal->width;
     return 1 unless defined $width;
@@ -3622,7 +3623,13 @@ sub parse_signal_action($self, $action) {
         : '';
     for my $target_base_spec (@target_base_specs) {
         if ($target_base_spec->{name} ne '' && $target_base_spec->{width} > 1) {
-            $self->{signal_manager}->register_signal($target_base_spec->{name}, width => $target_base_spec->{width});
+            my $existing = $self->{signal_manager}->get_signal($target_base_spec->{name});
+            # A repeated assignment to an already-sized target contributes no
+            # new width. Avoid revoking original RHS allocation births that
+            # depend on that same target (for example a shift-register update).
+            $self->{signal_manager}->register_signal($target_base_spec->{name}, width => $target_base_spec->{width})
+                unless $existing && defined($existing->width)
+                    && $existing->width == $target_base_spec->{width};
         }
     }
     

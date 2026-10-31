@@ -21,6 +21,7 @@ answers:
   - "where are original concatenation generation sources frozen?"
   - "how are factorizer width inference events captured?"
   - "what owns graph proof rows?"
+  - "why does I2C generation refuse inline shifts with literals?"
 date: 2026-10-31
 status: current
 tags: [widths, parameters, lowering, declarations]
@@ -78,10 +79,17 @@ success publishes; invalidation clears every new map. Both sizing orders/copy
 chains retain origins. Ordinary unscoped late sizing stays legacy; computed shapes
 remain separately owned.
 
-Core binary_operand_max (T2198) binds helper/AST/ordered whole operands and source/result revisions.
-Scoped births publish on Parser/full-facade success; failure/reuse clears, dependency epochs preserve; no owner refs.
-Only INTERNAL_INTERMEDIATE/legacy intermediate/absent roles qualify; equal widths install nothing.
-Owned bare-reference/final-width/classifier writes refresh births. Whole births stay unresolved; graph births retain original trees through owned substitution. Whole intrinsic events bind plain unsigned module operands without native/cache constraints. Owned width/registry/cache writes retain events; collection success completes policy, failure/reset/reuse clears. Weak actual-row graph frames bind held transitive max events and owned normalizer/registry writes through completed policy. Prepared blocks own rows through render. Source attachments bind epoch/Core/helper/AST/input/registry identity/state; cloned/foreign/stale inputs withhold. Frozen/current bitwise/arithmetic events emit after source proof/final target reproof; complete target inputs recheck.
+Core binary_operand_max, scoped births, graph rows, source attachments and
+complete target/currentness contracts route to `docs/book/src/11a-perl-api-reference.md`
+and its linked canonical POD. Exact former paragraph and source hash survive in
+`docs/audits/mdbook-i2c-check-20261031/qualification.json.gz` under `routed_prior_card`.
+
+I2C's original literal selector required inline shifts unsupported by its source
+capture. Fixed inline shifts now retain full amount fences but exclude amount
+widths from data floors; parser-owned marking/sizing preserves original births.
+Actual sampled-storage LHS identity joins sources absent from module membership.
+Fixture alias `reg` also collided with a target keyword; it is `sampled_reg_addr`.
+Proof/boundaries: the same API/POD; replay: `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/mdbook-i2c-check-20261031/qualify.py`.
 
 Primary/auxiliary bindings derive from that same current requirement map; no
 pending-primary bypass exists. One requirement must match actual legacy source,

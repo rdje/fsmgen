@@ -27,7 +27,7 @@
     (on start
       (sample rw       as is_read)
       (sample dev_addr as addr)
-      (sample reg_addr as reg)
+      (sample reg_addr as sampled_reg_addr)
       (sample wdata    as data))
 
     ;; START: SDA low while SCL high

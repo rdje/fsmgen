@@ -915,8 +915,12 @@ sub parse_scalar_expression($self, $scalar, %options) {
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
         
         my $signal_name = $base_name;
-        my $signal = !$member_name && !$slice && !$width_annotation && !defined($output_marker)
-            ? $self->_register_unannotated_reference($signal_name)
+        my $signal = !$member_name && !$slice && !$width_annotation
+            ? $self->_allocation_transition($self->{signal_manager}->get_signal($signal_name),
+                'is_output', defined($output_marker), sub {
+                    $self->{signal_manager}->register_signal($signal_name,
+                        width => undef, is_output => defined($output_marker));
+                })
             : $self->{signal_manager}->register_signal($signal_name,
                 width => $width, is_output => defined($output_marker));
         
@@ -1361,6 +1365,19 @@ sub handle_width_mismatch($self, $lhs_width, $rhs_width, $signal_name, $value_ex
     }
 }
 
+sub _has_unresolved_inline_shift_birth($self, $signal) {
+    my ($event) = grep {$_->{signal_name} eq $signal->{name}}
+        @{$self->{_source_literal_width_allocation_capture} // []};
+    return unless $event;
+    my $children = $self->_source_literal_birth_children;
+    my $holder = $event->{holder};
+    my $capture = $self->_source_literal_allocation_registry_matches($signal, $children) or return;
+    return $capture->{walk}{shifts} && !defined($capture->{record}{selected_width})
+        && FSM::SourceLiteralWidthAllocationSupport->current_core(
+            signal => $signal, holder => $holder, children => $children)
+        && $self->_literal_registry_contains($capture->{objects});
+}
+
 sub propagate_width_to_expression($self, $expr, $width) {
     return unless $expr && $width;
     
@@ -1369,6 +1386,10 @@ sub propagate_width_to_expression($self, $expr, $width) {
     if (ref($expr) eq 'FSM::CoreAST::SignalRef') {
         my $signal = $expr->signal;
         if ($signal && (!$signal->width || $signal->width == 1) && $width > 1) {
+            # A destination width cannot resolve a source tree containing an
+            # unsized literal. Preserve this original inline-shift birth until
+            # target-owned literal sizing supplies the actual helper width.
+            return if $self->_has_unresolved_inline_shift_birth($signal);
             my $updated_signal = $self->{signal_manager}->register_signal($signal->name, 
                 width => $width,
                 type => $signal->type,

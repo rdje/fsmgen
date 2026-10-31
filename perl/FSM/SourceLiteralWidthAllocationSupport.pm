@@ -45,7 +45,8 @@ sub _validate_tree {
     if ($kind eq 'literal') {
         return @$tree == 2 && _literal_record($tree->[1]);
     }
-    return unless @$tree == 3 && $kind =~ /\A[&|^]\z/;
+    return unless @$tree == 3 && ($kind =~ /\A[&|^]\z/
+        || ($depth > 0 && $kind =~ /\A(?:<<|>>)\z/));
     return _validate_tree($tree->[1], $walk, $depth + 1)
         && _validate_tree($tree->[2], $walk, $depth + 1);
 }
@@ -97,7 +98,8 @@ sub _observe_signal {
 }
 
 sub _core_tree {
-    my ($node, $root, $walk, $depth) = @_;
+    my ($node, $root, $walk, $depth, $width_relevant) = @_;
+    $width_relevant //= 1;
     return unless blessed($node) && $depth <= FSM::CoreExpressionWidthSupport::MAX_DEPTH()
         && --$walk->{shared}{remaining} >= 0;
     my $address = refaddr($node);
@@ -105,7 +107,9 @@ sub _core_tree {
     local $walk->{shared}{active_nodes}{$address} = 1;
     return unless $node->isa('FSM::CoreAST::Literal') || $node->isa('FSM::CoreAST::SignalRef')
         || ($node->isa('FSM::CoreAST::BinaryOp') && ref($node->{operands}) eq 'ARRAY' && @{$node->{operands}} == 2);
-    push @{$walk->{stamps}}, [$node, _raw_node($node), 'node'];
+    my $stamp = [$node, _raw_node($node), 'node'];
+    push @{$walk->{stamps}}, $stamp;
+    push @{$walk->{width_stamps}}, $stamp if $width_relevant;
     push @{$walk->{nodes}}, _identity($node);
     if ($node->isa('FSM::CoreAST::Literal')) {
         my $record = _literal_record({value => $node->value, width => $node->width, radix => $node->radix}) or return;
@@ -123,20 +127,26 @@ sub _core_tree {
         $names->{$name} = $descriptor->{identity_token};
         push @{$walk->{operands}}, $descriptor;
         if ($descriptor->{roles}{is_intermediate}) {
-            return _child_tree($node, $source, $walk, $depth);
+            return _child_tree($node, $source, $walk, $depth, $width_relevant);
         }
         return ['signal', $name];
     }
     my $operator = $node->operator;
-    return unless defined($operator) && !ref($operator) && $operator =~ /\A[&|^]\z/;
-    my $left = _core_tree($node->left, $root, $walk, $depth + 1) or return;
-    my $right = _core_tree($node->right, $root, $walk, $depth + 1) or return;
+    return unless defined($operator) && !ref($operator) && $operator =~ /\A(?:[&|^]|<<|>>)\z/;
+    my $shift = $operator eq '<<' || $operator eq '>>';
+    # This extends inline operands of the existing bitwise source family;
+    # standalone shift allocations retain their separate ownership.
+    return if $shift && refaddr($node) == refaddr($root->{driving_ast});
+    my $left = _core_tree($node->left, $root, $walk, $depth + 1, $width_relevant) or return;
+    my $right = _core_tree($node->right, $root, $walk, $depth + 1,
+        $width_relevant && !$shift) or return;
+    ++$walk->{shifts} if $shift;
     ++$walk->{operators};
     return [$operator, $left, $right];
 }
 
 sub _child_tree {
-    my ($reference, $source, $walk, $depth) = @_;
+    my ($reference, $source, $walk, $depth, $width_relevant) = @_;
     my $options = $walk->{shared}{children} or return;
     # Births are explicitly supplied by the capture owner. Completion never
     # calls that lookup: it requires the actual installed Core child policy.
@@ -157,6 +167,8 @@ sub _child_tree {
     for my $key (qw(signals stamps nodes operands holders)) {
         push @{$walk->{$key}}, @{$child->{walk}{$key}};
     }
+    push @{$walk->{width_stamps}}, @{$child->{walk}{width_stamps}} if $width_relevant;
+    $walk->{shifts} += $child->{walk}{shifts};
     $walk->{operators} += $child->{walk}{operators};
     $walk->{literals} += $child->{walk}{literals};
     $walk->{reference_widths}{refaddr($reference)} = $record->{selected_width};
@@ -193,6 +205,31 @@ sub _capture {
         active_nodes => {}, active_signals => {}, names => {}, children => $children}, 0);
 }
 
+sub _fixed_shift_sources {
+    my ($walk) = @_;
+    for my $signal (@{$walk->{signals}}) {
+        return if defined($signal->{_declared_width_source})
+            || defined($signal->{_declared_width_binding});
+        my $requirements = $signal->{_declared_width_requirements};
+        next unless defined $requirements;
+        return unless ref($requirements) eq 'HASH'
+            && ref($requirements->{requirements}) eq 'ARRAY'
+            && @{$requirements->{requirements}} == 1;
+        my $row = $requirements->{requirements}[0];
+        return unless ref($row) eq 'HASH' && ($row->{kind} // '') eq 'declaration'
+            && !defined($row->{width_capture}) && !defined($row->{declared_type_name})
+            && !defined($row->{declared_type_spec});
+        my $expression = $row->{expression};
+        return unless defined($expression) && !ref($expression)
+            && $expression =~ /\A[0-9]*[1-9][0-9]*\z/;
+        my $declared = FSM::IntermediateWidthAllocationSupport::_width($row->{width});
+        my $actual = FSM::IntermediateWidthAllocationSupport::_width($signal->{_width});
+        return unless defined($declared) && defined($actual) && $declared eq $actual
+            && FSM::IntermediateWidthAllocationSupport::_width($expression) eq $actual;
+    }
+    return 1;
+}
+
 sub _capture_signal {
     my ($signal, $shared, $depth) = @_;
     return unless blessed($signal) && $depth <= FSM::CoreExpressionWidthSupport::MAX_DEPTH();
@@ -200,7 +237,8 @@ sub _capture_signal {
     return if $shared->{active_signals}{$identity};
     local $shared->{active_signals}{$identity} = 1;
     my $walk = {shared => $shared, signals => [], stamps => [], nodes => [], operands => [],
-        holders => [], children => [], child_captures => [], reference_widths => {}, operators => 0, literals => 0};
+        holders => [], children => [], child_captures => [], reference_widths => {},
+        width_stamps => [], operators => 0, literals => 0, shifts => 0};
     my $own = _observe_signal($signal, $walk) or return;
     return if exists($shared->{names}{$own->{name}}) && $shared->{names}{$own->{name}} ne $own->{identity_token};
     $shared->{names}{$own->{name}} = $own->{identity_token};
@@ -212,6 +250,7 @@ sub _capture_signal {
     return if grep {exists($signal->{$_})} qw(_declared_width_source _declared_width_binding _declared_width_requirements);
     my $tree = _core_tree($signal->driving_ast, $signal, $walk, $depth) or return;
     return unless $walk->{operators} && $walk->{literals};
+    return if $walk->{shifts} && !_fixed_shift_sources($walk);
     my %inference = %{$walk->{reference_widths}} ? (source_reference_width => sub {
         my ($reference) = @_;
         my $key = refaddr($reference);
@@ -455,7 +494,7 @@ FSM::SourceLiteralWidthAllocationSupport - Current raw source literal allocation
 Validate and detach C<{kind =E<gt> source_literal_operand_max, selected_width,
 expression_tree}>. Exact C<selected_width> may be undef; it is distinct from a
 Core Signal's nominal scalar compatibility width. Tree nodes are canonical
-binary bitwise C<&>, C<|>, C<^>, C<[signal, name]> or
+binary bitwise C<&>, C<|>, C<^>, nested logical C<< << >> / C<< >> >>, C<[signal, name]> or
 C<[literal, {value, width, radix}]>. Literal data retains supplied JSON kinds.
 An explicit literal size is independent; this holder assigns no backend default.
 Closed schema, cycle, depth and occurrence validation precede serialization.
@@ -470,6 +509,15 @@ families withhold. Result declarations, constraints, named/signed types and conf
 roles withhold. Nullable exact width comes from the shared Core width walk;
 unknown results must still have their nominal compatibility width. Explicit
 sizes must agree with the actual exact operand maximum.
+
+Inline logical shifts within this bitwise family admit only fixed, plain
+unsigned leaf widths. Parameter bindings, authored width sources, opaque or
+combined requirements and typed/signed leaves withhold. A literal declaration
+requirement must agree with the actual leaf width. Standalone shift roots and
+other computed operators remain separate families. Both data and amount trees
+retain bounded original AST stamps and revocation; only data branches contribute
+to the target result-width maximum. Amount expressions are still validated and
+fenced even though their widths do not enlarge the result.
 
 C<track =E<gt> 1> opts validated result and source Signals into the existing
 revocation counters. Complete validation precedes tracking, followed by an

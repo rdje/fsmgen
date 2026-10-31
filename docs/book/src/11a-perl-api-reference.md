@@ -1105,6 +1105,25 @@ final agreement uses a separate consumer. `t/2261-target-source-literal-width.t`
 covers the completed Parser/facade sources, explicit and independent floors,
 raw kinds, repeated edges and mutation barriers without HDL execution.
 
+Fixed inline logical shifts within literal-containing bitwise expressions now
+preserve data widths through the same original-source and emitted-target proof.
+For `(| (<< A 1) B)`, with fixed `A` eight bits and `B` one bit, the helper
+is eight bits: the unsized shift amount supplies no data-width floor.
+For `(| (<< A 1) 0)`, the data literal `0` contributes the existing target
+unsized floor, so the helper is 32 bits before assignment sizing. Explicit data
+literal sizes remain independent. A 128-bit amount still does not widen the data.
+Every original amount node remains fenced; editing it revokes the proof.
+
+This profile requires fixed, plain unsigned sources and a bitwise root. Mutable,
+opaque, combined-width, signed and typed sources remain refused; standalone shift
+allocation belongs to its separate work. Ordinary output marking uses the existing
+named role transition, and assignment sizing preserves an unresolved original
+inline-shift helper until target sizing. Input-named sampled storage is joined
+through its actual normalized assignment LHS when absent from the module signal
+map. Replacing that LHS with an equal-looking object invalidates the saved join.
+`t/2296-inline-shift-literal-emission.t` checks actual Verilog-family declarations,
+self-updates, data/amount floors, storage ownership and mutation refusals.
+
 ```perl
 use Lispish;
 use FSM::Adapter::FSMGenFull;
