@@ -1,0 +1,237 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.5",
+  "baseline": "5acc8449464eaa5ec66bac0cdcab94cbdbcd3271",
+  "prior_manifest": "docs/audits/push-readiness-20261025/remaining-identity-census-20261031.json",
+  "command": [
+    "rg",
+    "-n",
+    "-F",
+    "-e",
+    "3d8fa7ac7c3a7f2c9ca063aca2cf707106b511219243d8b277ac3e2e8cf47bcf",
+    "-e",
+    "a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca",
+    "-e",
+    "95dbfc0fb7efecc5b1a04f98365cacad3dcb250d9c69523562368aebe8cfd28c",
+    "-e",
+    "ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa",
+    "t"
+  ],
+  "exit_status": 0,
+  "stdout": "t/1629-vial-architecture-scale-checking-foundation.t:36:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',\nt/1645-vial-architecture-scale-backend-emission-foundation.t:65:        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';\n",
+  "stderr": "",
+  "original_candidate_classification": {
+    "t/1556-vial-public-planning-artifacts.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/vial1556-planning-green.json",
+      "receipt_sha256": "b19d83b4102ecadcaff274668de9dcb0a260ba5a0c9c824882129bb13ab29985",
+      "source_sha256": "9c0a7f9a36e38e671ea756405dbd0899384105c4224461c9cbf5551b73edfa62",
+      "last_source_commit": "571b89f25c6085f2d26b5593cae57dbb2a783ddb",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1604-vial-architecture-scale-execution-topology.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/vial-ahb-reference-helper-final-focused.json",
+      "receipt_sha256": "c23623d6949d1ba0d4dff8d245bd09b58451b97503c3a5898dd9ccee8168dea8",
+      "source_sha256": "b623c80dc86c362e434a5abf7bf94707f5f00f1763797e7e71fd14f1667594cd",
+      "last_source_commit": "e06b15d831e5fb6dc268f8194902c64df064c4ec",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1629-vial-architecture-scale-checking-foundation.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/checking-foundation-qualified-20261031.json",
+      "receipt_sha256": "1d7888e0d92d0a5ff293973ce1d29d0ec3de25ec6c44b55b47886d175bedc399",
+      "source_sha256": "2f6bafa8a57d83dfc6919394dc69f5c09fe2d94ec2dba40cbf0a44c52ab0b800",
+      "last_source_commit": "5dd05ab728fc51c3f68d6afbd65581ff4d6976ab",
+      "classification": "intentional frozen historical witness with separately checked current inputs"
+    },
+    "t/1645-vial-architecture-scale-backend-emission-foundation.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.3.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/backend-foundation-qualified-20261031.json",
+      "receipt_sha256": "19193a60755e6bdd1e4b3db864567bdc8914e27ec1a56513947e41bfdbe7697d",
+      "source_sha256": "d1605570fa9e24d141bc1e9ecf977c99d215487356b2d575beed58625422a944",
+      "last_source_commit": "821671418215eaf21bc18935f8204c240b571440",
+      "classification": "intentional frozen historical witness with separately checked current inputs"
+    },
+    "t/1605-vial-architecture-scale-execution-fibers.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-small-qualified-20261031.json",
+      "receipt_sha256": "1ac5cb133041f6de1a75080a3b466126302bc30ef80265a9bb8fc782cba62703",
+      "source_sha256": "11813b854c40f9c6a6b60c13fd680fcd0cad886a8b17c296e0cbf67927ab7608",
+      "last_source_commit": "d25c8a23ea1b8268a60bad2d25f7e2930c4f14b2",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1607-vial-architecture-scale-execution-source-maps.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-small-qualified-20261031.json",
+      "receipt_sha256": "1ac5cb133041f6de1a75080a3b466126302bc30ef80265a9bb8fc782cba62703",
+      "source_sha256": "73e7fffb110ec803ae37b7923085da47c7daa253c240116c8c8aaf39d0961fcb",
+      "last_source_commit": "d25c8a23ea1b8268a60bad2d25f7e2930c4f14b2",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1608-vial-architecture-scale-execution-random-replay.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-small-qualified-20261031.json",
+      "receipt_sha256": "1ac5cb133041f6de1a75080a3b466126302bc30ef80265a9bb8fc782cba62703",
+      "source_sha256": "3bc9d95ef2ef72b9027cdf9214c630f39ed6f4f60fe54786d4dc21056f12f403",
+      "last_source_commit": "d25c8a23ea1b8268a60bad2d25f7e2930c4f14b2",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1609-vial-architecture-scale-execution-plan-bytes.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.1",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-small-qualified-20261031.json",
+      "receipt_sha256": "1ac5cb133041f6de1a75080a3b466126302bc30ef80265a9bb8fc782cba62703",
+      "source_sha256": "f529db2c764ddac9053788d820315f8ff2520d2255e194cf56dacfb0a47cc8ae",
+      "last_source_commit": "d25c8a23ea1b8268a60bad2d25f7e2930c4f14b2",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.json",
+      "receipt_sha256": "b5b94d8b1beeaf4643b2dc705bb8f18e5bb3aed08754aa976ad420e945d015e3",
+      "source_sha256": "419f817f86f06355a70d963228dd2788ecc8205cf9a42c2b167458be3d95e829",
+      "last_source_commit": "8a88877766613efe700d49f21698c78d11363f53",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1611-vial-architecture-scale-execution-plan-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.json",
+      "receipt_sha256": "b5b94d8b1beeaf4643b2dc705bb8f18e5bb3aed08754aa976ad420e945d015e3",
+      "source_sha256": "bb44b3fb0ded449d2530ceaec1f1e149fc94d93b1af1b778b7374cd8a2a65d35",
+      "last_source_commit": "8a88877766613efe700d49f21698c78d11363f53",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1613-vial-architecture-scale-execution-random-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.json",
+      "receipt_sha256": "b5b94d8b1beeaf4643b2dc705bb8f18e5bb3aed08754aa976ad420e945d015e3",
+      "source_sha256": "670101dfdb644e8b5f6ee2db112b36c6c377888dafc69672d5983400bfa968e7",
+      "last_source_commit": "8a88877766613efe700d49f21698c78d11363f53",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1614-vial-architecture-scale-execution-random-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.json",
+      "receipt_sha256": "b5b94d8b1beeaf4643b2dc705bb8f18e5bb3aed08754aa976ad420e945d015e3",
+      "source_sha256": "a8934034ec6796c3421aa98fce885c282d44a2bd66af1de477352be8f63027a9",
+      "last_source_commit": "8a88877766613efe700d49f21698c78d11363f53",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1615-vial-architecture-scale-execution-random-over-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-plan-random-retry-20261031.json",
+      "receipt_sha256": "b5b94d8b1beeaf4643b2dc705bb8f18e5bb3aed08754aa976ad420e945d015e3",
+      "source_sha256": "4539be48722a5816f0918db1d1f44c126254e3f12bd1f152964a909befdf22fa",
+      "last_source_commit": "8a88877766613efe700d49f21698c78d11363f53",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1616-vial-architecture-scale-execution-scenario-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "7ba4eaedbe8d77664f56ddb42a37436d6a6f925140adb2e0927942d99c66d252",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1617-vial-architecture-scale-execution-scenario-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "b9637e804e05500811f3847b63d4eee2ef686e40303a0f8e230a1e9e843b8a4e",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1618-vial-architecture-scale-execution-scenario-over-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "5f8c639c12260e77cd0d57330121530fa097fd97522571a2c7b5f973719fbc69",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1619-vial-architecture-scale-execution-operation-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "e5fcf20e033d9fbd7ba79f23624897849a826448905b07c66174e5b30233d683",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1620-vial-architecture-scale-execution-operation-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "be3ed9256df12dce0f48fcb372b892e71f4512e154f0e7c4ce1248ff466d0641",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1622-vial-architecture-scale-execution-total-operation-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.json",
+      "receipt_sha256": "aaa2387bf621fc4698fe9d09470f488c514d848c758c2f259fe71f90cb933bdd",
+      "source_sha256": "4be773842e03836336a69cf7a77b366e15576a29245193c1b16557b2e8cdfc80",
+      "last_source_commit": "0b09ea98a305392a9e6bdef3e1ff8b85dbd7adb3",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1623-vial-architecture-scale-execution-fiber-qualification.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-fiber-total-green-20261031.json",
+      "receipt_sha256": "7881c47697f9fb97f13548c2e8e63c167d27baada4fa1963b783f344a2974ea1",
+      "source_sha256": "16cb20a4e46b0d14a211128ddef2ff13fce26a7ae47913f2b895a3b602f94812",
+      "last_source_commit": "5acc8449464eaa5ec66bac0cdcab94cbdbcd3271",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1624-vial-architecture-scale-execution-live-fiber-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-fiber-total-green-20261031.json",
+      "receipt_sha256": "7881c47697f9fb97f13548c2e8e63c167d27baada4fa1963b783f344a2974ea1",
+      "source_sha256": "fd49bf3643a9e6cf2e188f76ada06e3c6bfc26f9059a5d4edc8b14d4799741d2",
+      "last_source_commit": "5acc8449464eaa5ec66bac0cdcab94cbdbcd3271",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1625-vial-architecture-scale-execution-total-fiber-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-fiber-total-green-20261031.json",
+      "receipt_sha256": "7881c47697f9fb97f13548c2e8e63c167d27baada4fa1963b783f344a2974ea1",
+      "source_sha256": "894a9f222a63f0058ca3c644118269747c88867c0106c83dc68d21af57a12057",
+      "last_source_commit": "5acc8449464eaa5ec66bac0cdcab94cbdbcd3271",
+      "classification": "current oracle repaired and focused defaults qualified"
+    },
+    "t/1626-vial-architecture-scale-execution-total-operation-limit.t": {
+      "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.4",
+      "focused_receipt": "docs/audits/push-readiness-20261025/execution-fiber-total-green-20261031.json",
+      "receipt_sha256": "7881c47697f9fb97f13548c2e8e63c167d27baada4fa1963b783f344a2974ea1",
+      "source_sha256": "49f4885772c2358508d3564a90c1197b7a517d9e29c04e6f77561750b1e52450",
+      "last_source_commit": "5acc8449464eaa5ec66bac0cdcab94cbdbcd3271",
+      "classification": "current oracle repaired and focused defaults qualified"
+    }
+  },
+  "intentional_historical_anchors": [
+    "t/1629-vial-architecture-scale-checking-foundation.t",
+    "t/1645-vial-architecture-scale-backend-emission-foundation.t"
+  ],
+  "unowned_original_candidates": [],
+  "explicit_unqualified_optins": [
+    {
+      "path": "t/1602-vial-architecture-scale-bridge-fanout.t",
+      "sha256": "310fdb1ab1596eeb723769cfdf504fc5c502c13c4466ed7e67949b65806bb600",
+      "selector": "FSMGEN_VIAL_SCALE_EXACT=1",
+      "qualification": "Not enabled by this publication programme; unqualified, including in planned default full CI."
+    },
+    {
+      "path": "t/1607-vial-architecture-scale-execution-source-maps.t",
+      "sha256": "73e7fffb110ec803ae37b7923085da47c7daa253c240116c8c8aaf39d0961fcb",
+      "selector": "FSMGEN_VIAL_SCALE_EXACT=1",
+      "qualification": "Not enabled by this publication programme; unqualified, including in planned default full CI."
+    },
+    {
+      "path": "t/1626-vial-architecture-scale-execution-total-operation-limit.t",
+      "sha256": "49f4885772c2358508d3564a90c1197b7a517d9e29c04e6f77561750b1e52450",
+      "selector": "FSMGEN_VIAL_SCALE_EXACT=1",
+      "qualification": "Not enabled by this publication programme; unqualified, including in planned default full CI."
+    }
+  ],
+  "rederive": "Exact same four-literal census and original path membership; join every original candidate to its tracked focused-green receipt and current source hash.",
+  "falsify": "Require set equality, no duplicate/missing owner, all original/current receipts successful, only the two declared historical anchors still matching, and current sources identical to the committed baseline.",
+  "durability": "Tracked complete census/classification/source/receipt identities, task frontier and exact Git source commits.",
+  "scope": "Bounded original-candidate closure only, not a complete stale-oracle census or complete local/hosted qualification."
+}

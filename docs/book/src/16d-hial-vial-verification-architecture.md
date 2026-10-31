@@ -2229,9 +2229,10 @@ against independent public generation and reconstruct their complete historical
 oracles. Backend inputs include actual DUT text: scalar guard spelling and the
 compatible same-value fan-in policy changed those bytes. The historical input
 witness reproduces the original hashes exactly; the current DUT is generated
-and checked separately. No historical HDL is run as current behavior. Other
-execution/profile identity repairs and full local/hosted qualification remain
-owned by the [publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
+and checked separately. No historical HDL is run as current behavior. These
+reference repairs have focused qualification; the
+[publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md) separately owns
+complete local and hosted qualification.
 The checked-AHB execution tests for fiber counts, source maps, random/replay,
 plan bytes, scenarios and operation counts share this current bridge reference
 for their gate, qualification and boundary identity checks. Their semantic/plan

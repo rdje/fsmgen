@@ -1,0 +1,151 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.5",
+  "contract": "docs/audits/current-capacity-admission-20261025/contract.json",
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/vm_stat"
+      ],
+      "started_utc": "2026-10-31T22:41:45.623439+00:00",
+      "finished_utc": "2026-10-31T22:41:45.625964+00:00",
+      "elapsed_ns": 2411833,
+      "exit_status": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   234717.\nPages active:                                 459304.\nPages inactive:                               455825.\nPages speculative:                             12402.\nPages throttled:                                   0.\nPages wired down:                             246025.\nPages purgeable:                                4628.\n\"Translation faults\":                   251871101487.\nPages copy-on-write:                     34347017561.\nPages zero filled:                       73503862011.\nPages reactivated:                        6894596344.\nPages purged:                              222099919.\nFile-backed pages:                            324050.\nAnonymous pages:                              603481.\nPages stored in compressor:                   282587.\nPages occupied by compressor:                 130792.\nDecompressions:                           6223767675.\nCompressions:                             7130685119.\nPageins:                                  2518720264.\nPageouts:                                     930142.\nSwapins:                                    62474505.\nSwapouts:                                   85200835.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "started_utc": "2026-10-31T22:41:45.625978+00:00",
+      "finished_utc": "2026-10-31T22:41:45.627787+00:00",
+      "elapsed_ns": 1814958,
+      "exit_status": 0,
+      "stdout": "25769803776\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "kern.memorystatus_vm_pressure_level"
+      ],
+      "started_utc": "2026-10-31T22:41:45.627797+00:00",
+      "finished_utc": "2026-10-31T22:41:45.629415+00:00",
+      "elapsed_ns": 1634375,
+      "exit_status": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/bin/ps",
+        "-p",
+        "74930",
+        "-o",
+        "pid,ppid,lstart,comm"
+      ],
+      "started_utc": "2026-10-31T22:41:45.629433+00:00",
+      "finished_utc": "2026-10-31T22:41:45.631543+00:00",
+      "elapsed_ns": 2138083,
+      "exit_status": 1,
+      "stdout": "  PID  PPID STARTED                      COMM\n",
+      "stderr": ""
+    }
+  ],
+  "capacity": {
+    "page_bytes": 16384,
+    "physical_bytes": 25769803776,
+    "counters": {
+      "Pages active": 459304,
+      "Pages inactive": 455825,
+      "Pages speculative": 12402,
+      "Pages wired down": 246025,
+      "Pages occupied by compressor": 130792,
+      "Pages purgeable": 4628,
+      "File-backed pages": 324050
+    },
+    "used_bytes": 15985377280,
+    "used_pct": 62.03142801920573
+  },
+  "kernel_pressure_level": 1,
+  "independent_saved_counter_parser": {
+    "command": [
+      "/usr/bin/awk",
+      "-v",
+      "t=25769803776",
+      "/page size of/ {for(j=1;j<=NF;j++)if($j==\"size\")ps=$(j+2)} /^Pages active:/{a=$3+0} /^Pages inactive:/{i=$3+0} /^Pages speculative:/{s=$3+0} /^Pages wired down:/{w=$4+0} /^Pages occupied by compressor:/{c=$5+0} /^Pages purgeable:/{p=$3+0} /^File-backed pages:/{e=$3+0} END{printf \"%.12f\\n\",(a+i+s+w+c-p-e)*ps*100/t}"
+    ],
+    "input": "commands[0].stdout",
+    "exit_status": 0,
+    "stdout": "62.031428019206\n",
+    "stderr": "",
+    "scope": "Same raw sample/adopted formula, independently parsed; not an independent Mach sampler."
+  },
+  "ambient_selectors": {
+    "FSMGEN_SOURCE_QUERY_SOURCES": null,
+    "FSMGEN_HOSTED_CORPUS_LIST_ONLY": null,
+    "FSMGEN_HOSTED_CORPUS_SHARD_INDEX": null,
+    "FSMGEN_HOSTED_CORPUS_SHARD_COUNT": null,
+    "FSMGEN_VIAL_SCALE_EXACT": null,
+    "FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME": null
+  },
+  "new_exclusive_slots": {
+    ".artifacts/push-readiness-20261025/local-full-ci-6.state.json": "absent",
+    ".artifacts/push-readiness-20261025/local-full-ci-6.live.log": "absent",
+    "docs/audits/push-readiness-20261025/local-full-ci-6.json": "absent",
+    "docs/audits/push-readiness-20261025/local-full-ci-6.log.gz": "absent",
+    ".artifacts/t296/push-readiness-20261025-full6.json": "absent"
+  },
+  "legacy_journals": [
+    {
+      "path": ".artifacts/push-readiness-20261025/local-full-ci-1.state.json",
+      "state": "interrupted",
+      "outcomes": [],
+      "guard_start_observed": "Sun Oct 25 01:28:47 2026"
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/local-full-ci-2.state.json",
+      "state": "finished",
+      "outcomes": [
+        143
+      ],
+      "guard_start_observed": null
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/local-full-ci-3.state.json",
+      "state": "finished",
+      "outcomes": [
+        137
+      ],
+      "guard_start_observed": null
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/local-full-ci-4.state.json",
+      "state": "finished",
+      "outcomes": [
+        137
+      ],
+      "guard_start_observed": null
+    },
+    {
+      "path": ".artifacts/push-readiness-20261025/local-full-ci-5.state.json",
+      "state": "finished",
+      "outcomes": [
+        143
+      ],
+      "guard_start_observed": null
+    }
+  ],
+  "old_full1_identity_scope": "Known old guard PID is absent or has a different birth; no process is changed. Interrupted/full2-5 journals are not reused or credited as green.",
+  "limits": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "rederive": "Complete raw dated OS streams plus actual distinct new-slot absence and old-journal states.",
+  "falsify": "Independent saved-counter parser agrees; kernel pressure is a separate quantity. Check original full1 birth before inferring absence of that identity; no global process absence or past-cutoff attribution.",
+  "durability": "Tracked bounded intake, closed launch plan, existing recorder with durable state/log, task and Git.",
+  "scope": "Current admission only. No cause or future headroom guarantee; only the unchanged guard decides continued runtime admission."
+}

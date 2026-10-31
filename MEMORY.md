@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.5`
-- next_action: From the clean committed handoff, reconcile original/current exact candidates and unrun opt-ins, establish current admission and unique full6/checkpoint preflight, commit it, then launch full CI before authorized push/hosted verification.
-- in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
-- in_flight_background: None. Fiber/aggregate-operation GREEN0 is consumed and sealed under docs/audits/push-readiness-20261025/.
-- blockers: None requiring input. Full6 preflight/full CI, push and hosted publication remain pending.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
+- next_action: Inspect .artifacts/push-readiness-20261025/local-full-ci-6.state.json. If absent, launch the exact committed full6-launch-plan-20261031 recorder command from clean HEAD; otherwise consume it before any replay. Keep Git state unchanged throughout native execution for T296.
+- in_flight_uncommitted: None after this preflight commit; the full command must stay clean. Final recorder packets appear only after native completion; derive paths with git status --short.
+- in_flight_background: Full6 is declared; derive actual state from its journal. Absent means not launched, running means consume, finished means inspect the retained result. Never replay a nonterminal run.
+- blockers: No input blocker at admission. Complete full CI, authorized push and every exact-SHA hosted/Pages result remain unqualified.
