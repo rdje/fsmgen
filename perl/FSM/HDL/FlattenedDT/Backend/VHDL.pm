@@ -310,11 +310,33 @@ sub _plan_generated_vhdl_identifiers ($sv_hdl) {
         $identifier{$token} = 1;
     }
 
+    # Discover declaration roles without interpreting ranges or defaults. In
+    # particular, a symbolic range must retain its source-aware proof path.
+    # Mask metadata before discovery; keyword-looking prose is not a symbol.
+    my $declarations = $sv_hdl;
+    $declarations =~ s{($lexeme)}{
+        my $token = $1;
+        $token =~ /\A(?:"|\/\/|\/\*)/ ? ($token =~ s/[^\n]/ /gr) : $token;
+    }gex;
+    my ($declared, $generic) = _generated_identifier_roles($declarations);
+    for my $name (sort keys %$declared, keys %$generic) {
+        my $languages = FSM::Support::HDLInstanceIdentifierPolicy
+            ->reserved_target_languages($name);
+        confess _unsupported("declared identifier '$name' is a SystemVerilog keyword")
+            if grep { $_ eq 'SystemVerilog' } @$languages;
+        # A generic's lexical source identity is part of the binding contract;
+        # target renaming cannot make a reserved source root admissible.
+        confess _unsupported("generic source identifier '$name' is reserved in VHDL")
+            if $generic->{$name} && _has_vhdl_basic_identifier_shape($name)
+                && _is_vhdl_reserved_identifier($name);
+    }
+
     my %owner = map { lc($_) => $_ }
         grep { _has_vhdl_basic_identifier_shape($_) } keys %identifier;
     my %replacement;
     for my $original (sort keys %identifier) {
-        next if _has_vhdl_basic_identifier_shape($original);
+        next if _has_vhdl_basic_identifier_shape($original)
+            && !($declared->{$original} && _is_vhdl_reserved_identifier($original));
         my $base = $original;
         $base =~ s/_+/_/g;
         $base =~ s/\A_+|_+\z//g;
@@ -341,6 +363,35 @@ sub _plan_generated_vhdl_identifiers ($sv_hdl) {
         exists($replacement{$token}) ? $replacement{$token} : $token;
     }gex;
     return {text => $sv_hdl, identifier_map => \%replacement};
+}
+
+sub _generated_identifier_roles ($sv_hdl) {
+    my $module = _parse_module($sv_hdl);
+    my %declared = ($module->{name} => 1);
+    my %generic;
+    while ($module->{parameters} =~ /^\s*parameter\s+([A-Za-z_][A-Za-z0-9_]*)\s*=/mg) {
+        $generic{$1} = 1;
+    }
+    for my $line (split /\n/, $module->{ports}) {
+        $declared{$1} = 1
+            if $line =~ /^\s*(?:input|output)\s+.*?\b([A-Za-z_][A-Za-z0-9_]*)\s*,?\s*$/;
+    }
+    while ($module->{body} =~ /^\s*localparam\s+([A-Za-z_][A-Za-z0-9_]*)\s*=/mg) {
+        $declared{$1} = 1;
+    }
+    while ($module->{body} =~ /^\s*(?:reg|wire|bit|logic)\s+(?:signed\s+)?(?:\[[^\]\n]+\]\s*)?([^;\n]+);/mg) {
+        for my $name (split /\s*,\s*/, $1) {
+            $name =~ s/^\s+|\s+$//g;
+            $declared{$name} = 1 if $name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+        }
+    }
+    while ($sv_hdl =~ /\btypedef\s+struct\s+packed\s*\{/g) {
+        my $block = _consume_braced($sv_hdl, pos($sv_hdl) - 1, 'packed struct typedef');
+        my $tail = substr($sv_hdl, $block->{next});
+        $declared{$1} = 1 if $tail =~ /\A\s*([A-Za-z_][A-Za-z0-9_]*)\s*;/;
+        pos($sv_hdl) = $block->{next};
+    }
+    return (\%declared, \%generic);
 }
 
 sub _is_vhdl_basic_identifier ($value) {
@@ -2095,6 +2146,15 @@ sub _unsupported ($message) {
 FSM::HDL::FlattenedDT::Backend::VHDL - Bounded direct generated-SystemVerilog conversion
 
 =head1 PRIVATE DECLARATION PREPARATION
+
+C<_plan_generated_vhdl_identifiers> discovers module, port, storage, constant
+and packed-type declaration names without evaluating ranges or defaults. It
+assigns collision-free VHDL names to declared VHDL keywords, preserving the
+existing malformed-name normalization. References follow the same mapping;
+comments, strings and SystemVerilog grammar tokens remain unchanged. Actual
+SystemVerilog keyword declarations and basic-shaped VHDL-reserved generic
+source names refuse. Generic lexical identities and symbolic width roots are
+not renamed into a wider source profile.
 
 C<_parse_direct_declarations> accepts normalized generated SystemVerilog and a
 paired C<FSM::Backend::VHDL::DirectDeclarationPlan> result. It checks the physical

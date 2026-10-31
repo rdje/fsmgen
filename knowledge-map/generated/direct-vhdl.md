@@ -176,7 +176,7 @@ _Historical direct VHDL unary-reduction token leak in named-drive enables_
 
 ### direct-vhdl-reserved-identifiers
 
-_Direct VHDL currently emits basic-shaped reserved names without keyword admission_
+_Direct VHDL maps declared reserved names and preserves source identities_
 
 - **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-reserved-identifiers.md`](../../docs/knowledge/direct-vhdl-reserved-identifiers.md)

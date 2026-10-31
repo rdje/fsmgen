@@ -255,7 +255,8 @@ does not claim broad expression-parser parity; unrelated nested or
 mismatched-width arithmetic still needs exact future owners.
 The maintained direct aggregate-output fixtures now lower through the direct
 VHDL scaffold as packed vectors: `NESTED` is
-`std_logic_vector(6 downto 0)`, `OUT` is `std_logic_vector(2 downto 0)`, and
+`std_logic_vector(6 downto 0)`, source `OUT` emits `OUT_identifier` as
+`std_logic_vector(2 downto 0)`, and
 `OUT_FRAME` / `OUT_LANES` are 5-bit `std_logic_vector` ports. Full VHDL
 record/array aggregate lowering remains a future exact owner.
 Direct vector output-port next-signal assignments from unsized decimal
@@ -277,18 +278,19 @@ tool validation.
 Current boundary: validation focuses on SystemVerilog using Verilator and
 Yosys. The direct VHDL scaffold is regression-tested through deterministic
 text and CLI routing; general direct-profile GHDL qualification remains open.
-A focused 2026-10-27 diagnosis used the authenticated repository-local GHDL
-6.0.0 LLVM-JIT tool: the native CLI emits a reserved signal name `OUT` from
-`t/corpus/direct_rhs_concat_pack.fsm` and reports success, but GHDL rejects
-that declaration. Replacing only `OUT` with `DATA_PORT` produces an artifact
-that passes analysis. Use valid VHDL names in direct sources pending repair
-`ISF-REDUCTION-DELIVERY.22.2`, scheduled before full qualification. This is
-analysis of those artifacts, with no elaboration or runtime claim. The
-separate portable VIAL fixture retains its own exact tool qualification.
-The same naming defect currently blocks the generated-FSM APB generic-map
-case at state constant `ACCESS`: plain child output emits it, while generic
-namespace preparation rejects it. The existing repair is now required by
-publication qualification.
+Declared names that are VHDL keywords now receive deterministic physical
+names: source `OUT` becomes `OUT_identifier`, and the APB state constant
+`ACCESS` becomes `ACCESS_identifier`. Existing physical names and case-folded
+collisions are reserved before allocating a suffix, such as `OUT_identifier_2`.
+Only declaration identities and their references are renamed; SystemVerilog
+grammar, comments and strings survive. Invalid SystemVerilog keyword
+declarations and reserved generic source names refuse. Symbolic width and
+generic binding identities retain their existing source contracts.
+The authenticated repository-local GHDL 6.0.0 LLVM-JIT tool accepts fresh
+strict-CLI output for `direct_rhs_concat_pack`, `apb_requester`, and its scalar
+generic variant. This proves analysis of those artifacts; elaboration, runtime
+and general direct-profile qualification remain open. The separate portable
+VIAL fixture retains its own exact tool qualification.
 
 ### Warning-Clean External Validation For Every Historical Sample
 
