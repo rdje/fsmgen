@@ -3282,10 +3282,23 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2291/T2278: All tests successful Files=2 Tests=10; source/test syntax OK. Existing source-contract checks preserve actual fixed generation, inline-RHS producer boundaries and precise mutable target refusal; no compiler/runtime executes. Complete predecessor/current/control receipts retain. Regenerated POD, synchronized book/source assets, fresh staged acceptance and every normal final-index doctrine gate the source-only commit. Full6/runtime/publication remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join the current source sum to the original completed backend concatenation event.`
   Acceptance: `After source sums, select and split actual event consumers before implementation. Require the held original completed policy, current canonical row/registry/epoch and unchanged source holder, retaining independent ordered contracts and numeric agreement without inventing target membership. Close with getter-free complete barriers, failure clearing and clean backend reuse. Focused real guard/inline-RHS boundaries, hostile row/source/late-getter and predecessor controls plus POD/book/fact sync qualify this join. Filtered target projection, namespace/declarations and final ledgers stay .3.4.3.3.3.5; VHDL/full .6/publication remain open.`
-  Verification: `pending current source sum predecessor`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4.3.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.4.3.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4.3.1`
+  Status: `done`
+  Goal: `Select the completed concatenation sum consumer and focused signoff boundary.`
+  Acceptance: `Read canonical source-sum, generation-source, inference, completion and actual guard/RHS/prepared contracts. Select a separate accessor over held original events; split implementation with explicit currentness and target boundaries. Preserve existing filtered-map revocation ownership, full verification and publication gates. Commit selection before implementation.`
+  Verification: `At clean3fe9868e3, canonical source sums and original generation/inference holders already exist. Completion exposes only a numeric inference record; no accessor joins its independently prepared sum. Select factorized_concatenation_sum(NAME, ROW) on the installed width owner, deriving on read from the held original generation source and original completed event. Return detached allocation/source-sum records without installing a second cache. Require exact source-contract and selected-width agreement, original installed holders/view/registry/epoch and final getter-free source/row checks after every semantic callback. The canonical source holder currently names systemverilog for the shared Verilog-family kernel; target selection and physical membership stay with .5. Source-only, intrinsic-only and copied/foreign/stale inputs grant no completed sum. Implementation .2 owns actual fixed/mutable guard and inline-RHS applicability, independent ordered sums/rank, late getter/holder/completion changes, failure/reset/reuse and weak lifetime plus an authenticated identical predecessor control. Existing T2289/T2291 are directly affected focused controls; no broad suites or external execution. POD/book/fact synchronization accompanies the implementation. Daily cleanup is committed and designated policy templates remain adopted. No user-facing behavior changes in this selection.`
+  Commit: `ISF-REDUCTION-DELIVERY: select completed concatenation sum join`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.4.3.2`
+  Status: `pending`
+  Goal: `Expose and qualify the original completed concatenation source-sum join.`
+  Acceptance: `Implement the selected factorized_concatenation_sum(NAME, ROW) accessor over the installed width owner only. Derive from its held original completed inference event and paired generation source, using the existing canonical source-sum adapter. Require complete source-contract/selected-width agreement and stable original installed holder/view/registry/epoch; after semantic reads finish getter-free, without refreshing source or minting missing proof. Return detached allocation/source-sum data and install no cache. Qualify actual fixed/mutable guard and inline-RHS boundaries, independent ordered/rank/literal sums, stale/foreign/late-getter/holder/completion changes, failure/reset/reuse, weak ownership and identical predecessor rejection. Run focused new accessor plus T2289/T2291, synchronize POD/book/fact and exact reference authority, complete normal commit gates. Target filtered projection, declarations/namespace/ledgers and unsized literal sizing remain .5; VHDL/full6/publication remain open. No new public syntax/API/report/MCP/corpus capability is claimed.`
+  Verification: `pending selected implementation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.5`
