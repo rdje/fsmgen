@@ -1,0 +1,95 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.1",
+  "contract": "docs/audits/current-capacity-admission-20261025/contract.json",
+  "kind": "Bounded current post-stop counters and exact observed guard-PID presence only; not original at-cutoff attribution.",
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/vm_stat"
+      ],
+      "started_utc": "2026-10-31T21:12:03.197999+00:00",
+      "finished_utc": "2026-10-31T21:12:03.201252+00:00",
+      "elapsed_ns": 2771583,
+      "exit_status": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    58676.\nPages active:                                 297360.\nPages inactive:                               295403.\nPages speculative:                               673.\nPages throttled:                                   0.\nPages wired down:                             245188.\nPages purgeable:                               11075.\n\"Translation faults\":                   251547552257.\nPages copy-on-write:                     34272198298.\nPages zero filled:                       73426695079.\nPages reactivated:                        6892440223.\nPages purged:                              221848467.\nFile-backed pages:                            176671.\nAnonymous pages:                              416765.\nPages stored in compressor:                   834885.\nPages occupied by compressor:                 641765.\nDecompressions:                           6222202782.\nCompressions:                             7128859191.\nPageins:                                  2513517223.\nPageouts:                                     929419.\nSwapins:                                    62187287.\nSwapouts:                                   84908117.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "started_utc": "2026-10-31T21:12:03.201271+00:00",
+      "finished_utc": "2026-10-31T21:12:03.203625+00:00",
+      "elapsed_ns": 2372625,
+      "exit_status": 0,
+      "stdout": "25769803776\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "kern.memorystatus_vm_pressure_level"
+      ],
+      "started_utc": "2026-10-31T21:12:03.203648+00:00",
+      "finished_utc": "2026-10-31T21:12:03.205728+00:00",
+      "elapsed_ns": 2098334,
+      "exit_status": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/bin/ps",
+        "-p",
+        "54431",
+        "-o",
+        "pid,ppid,lstart,rss,comm"
+      ],
+      "started_utc": "2026-10-31T21:12:03.205750+00:00",
+      "finished_utc": "2026-10-31T21:12:03.208379+00:00",
+      "elapsed_ns": 2648917,
+      "exit_status": 1,
+      "stdout": "  PID  PPID STARTED                         RSS COMM\n",
+      "stderr": ""
+    }
+  ],
+  "capacity": {
+    "page_bytes": 16384,
+    "physical_bytes": 25769803776,
+    "counters": {
+      "Pages active": 297360,
+      "Pages inactive": 295403,
+      "Pages speculative": 673,
+      "Pages wired down": 245188,
+      "Pages occupied by compressor": 641765,
+      "Pages purgeable": 11075,
+      "File-backed pages": 176671
+    },
+    "used_bytes": 21178662912,
+    "used_pct": 82.18402862548828
+  },
+  "kernel_pressure_level": 2,
+  "scope": "No global process census, culprit, descendant peak RSS, original pressure or future headroom guarantee. No process or unrelated repository changed.",
+  "limits": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "falsification": {
+    "command": [
+      "/usr/bin/awk",
+      "-v",
+      "t=25769803776",
+      "/page size of/ {for(j=1;j<=NF;j++)if($j==\"size\")ps=$(j+2)} /^Pages active:/{a=$3+0} /^Pages inactive:/{i=$3+0} /^Pages speculative:/{s=$3+0} /^Pages wired down:/{w=$4+0} /^Pages occupied by compressor:/{c=$5+0} /^Pages purgeable:/{p=$3+0} /^File-backed pages:/{e=$3+0} END{printf \"%.12f\\n\",(a+i+s+w+c-p-e)*ps*100/t}"
+    ],
+    "input": "commands[0].stdout",
+    "exit_status": 0,
+    "stdout": "82.184028625488\n",
+    "stderr": "",
+    "same_formula_and_raw_source": true,
+    "agrees_with_python": true,
+    "scope": "Pressure2 is independent from capacity percentage; do not invert memory_pressure free percentages or infer the original trip allocation from this point."
+  }
+}

@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2`
-- next_action: Reproduce T1610/T1611/T1613/T1614/T1615 defaults and repair only proved bridge provenance drift; commit before the remaining scenario/fiber groups and full publication checks.
-- in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
-- in_flight_background: None.
-- blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.2`
+- next_action: Obtain specific shared-capacity coordination under .13 before reapplying the authenticated proposed test bytes and launching a unique guarded GREEN; inspect retained outcomes first.
+- in_flight_uncommitted: None after this diagnostic commit; derive current paths with git status --short. All five tests remain at their committed originals.
+- in_flight_background: None. RED1 and partial GREEN137 consumed; durable receipts under docs/audits/push-readiness-20261025/execution-plan-random-*20261031*.
+- blockers: Shared capacity stopped the proposed-repair programme at host88.3/88. Specific coordination is required by .13 before another expensive replay; full CI, push and hosted publication remain pending.

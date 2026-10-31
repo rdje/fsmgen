@@ -1,0 +1,30 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.2.1",
+  "baseline": "d25c8a23ea1b8268a60bad2d25f7e2930c4f14b2",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t",
+    "t/1611-vial-architecture-scale-execution-plan-limit.t",
+    "t/1613-vial-architecture-scale-execution-random-qualification.t",
+    "t/1614-vial-architecture-scale-execution-random-limit.t",
+    "t/1615-vial-architecture-scale-execution-random-over-limit.t",
+    "t/1602-vial-architecture-scale-bridge-fanout.t"
+  ],
+  "expected_status": 0,
+  "exit_status": 137,
+  "complete": false,
+  "passed_files": [
+    "t/1610-vial-architecture-scale-execution-plan-qualification.t"
+  ],
+  "remaining_native_outcomes": "Not established; no result inferred from prior REDs.",
+  "trigger": "Host occupied capacity88.3 reaches unchanged88 cutoff; no descendant-RSS trigger reported.",
+  "log": "docs/audits/push-readiness-20261025/execution-plan-random-interruption-20261031.log.gz",
+  "original_log_sha256": "91b8231c34d25dc9017f843f72f052d61e8057f790a8d86a6201d83e613f926e",
+  "retained_log_sha256": "91b8231c34d25dc9017f843f72f052d61e8057f790a8d86a6201d83e613f926e",
+  "normalization": "Dynamic repository-root prefix only.",
+  "source_witness": "docs/audits/push-readiness-20261025/execution-plan-random-source-20261031.json.gz",
+  "disposition": "All tests restored to baseline; proposed bytes retained for .17.2.4.2.2 after specific capacity coordination. No full6 or push."
+}
