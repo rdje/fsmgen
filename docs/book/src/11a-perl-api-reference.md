@@ -807,7 +807,11 @@ callback changes, and admits only that row's exact computed annotations. Other
 uncached rows receive no writes. Invalid-name defaults and cached no-write reads
 return before taking a transaction. Foreign rows, stale/missing proof, query errors
 and late cross-row changes cannot refresh or remint; a clean new generation recovers.
-Annotation join, registry replacement and completed collection policy remain separate.
+Bulk, fallback and mixed fallback-then-bulk paths are jointly checked through the
+actual metadata and public normalization exits. Original events and annotations,
+scalar/list/void context, failure cleanup, fresh-generation recovery and weak view
+lifetimes preserve. This pass grants no completed collection policy. Complete
+annotation closure, registry replacement and completed collection remain separate.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -830,6 +834,9 @@ checks. The [single-row fallback regression](../../../t/2285-concatenation-fallb
 and [predecessor/native replay](../../../docs/audits/concat-fallback-live-usage-20261031/replay.py)
 qualify actual query order, independent usage roots, cached reads, hostile callbacks
 and weak lifetimes. These are focused carry checks; completed policy remains pending.
+The [normalization join regression](../../../t/2286-concatenation-normalization-live-usage.t)
+and [native/prerequisite replay](../../../docs/audits/concat-normalization-live-usage-20261031/replay.py)
+retain both actual exits, late cached-callback refusal and original-error cleanup.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
