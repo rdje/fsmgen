@@ -725,6 +725,37 @@ native products and the exact predecessor control are retained in
 `docs/audits/concat-source-widths-20261030/`. This source-only join grants no
 completed backend event, symbolic sum range, generic emission or full qualification.
 
+`ConcatenationSourceWidthSupport->prepare_sum` now takes the same actual source
+inputs and the original independent source `holder`. It revalidates that holder,
+walks the original nested concatenation in order and derives each term from its
+own contract. Repeated signals contribute repeatedly; independent equal-default
+parameters retain distinct names. Explicit literal widths contribute exact terms
+while their original value, width and radix fields remain unchanged. Unknown
+literal widths refuse; target-specific unsized sizing stays with the emission
+integration owner. The adapter shares the prepared kernel's flattened-term bound.
+
+The returned holder contains `sources` (the original revalidated source holder)
+and a `concatenation_source_sum` record. Its exact `width` is a decimal string;
+`terms` retain the ordered signal/literal contracts. Fixed-only sums have no
+symbolic range. Mutable sums use the canonical parameter environment and shared
+prepared-sum renderer, retaining independent source arithmetic and width-one
+operand vector rank. `current_sum` rechecks the whole original result, including
+JSON scalar kinds, and withholds changed, stale or foreign holders. Neither
+operation refreshes an observation or installs backend metadata.
+
+Complete raw barriers and getter coherence include nonoperand declarations and
+all parameter maps, including after environment preparation and target rendering.
+The `t/2291-concatenation-source-sums.t` regression exercises
+actual original Core/factorizer contracts and native guard collection in both
+Verilog-family backends. Its independent emitted-syntax oracle checks source-slot
+widths under distinguishing overrides. The retained
+`docs/audits/concat-source-sums-20261031/replay.py` producer also
+rejects native controls that borrow the first source contract or remove the final
+raw barrier. These focused checks qualify private source sums; completed backend
+event/currentness, target projection, declarations and ledgers remain separate
+joins. Actual mutable guard generation still refuses without target sum proof.
+VHDL and external compiler/override/runtime qualification remain open.
+
 The standalone typed `ExpressionNamer` definition API retains its original Core
 AST and selected numeric width; it is not a source-width provenance protocol.
 For the retained required native guard/RHS profiles, current source preparation
@@ -1062,9 +1093,9 @@ my $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_sum_range
 ```
 
 Run Perl snippets with `perl -Iperl` from the repository root. The
-[sum regression](../../../t/2290-verilog-prepared-sum-range.t) interprets the
+`t/2290-verilog-prepared-sum-range.t` regression interprets the
 actual emitted syntax under distinguishing parameter values. Its retained
-[proof producer](../../../docs/audits/concat-sum-kernel-20261031/replay.py) also
+`docs/audits/concat-sum-kernel-20261031/replay.py` producer also
 checks native controls that substitute a maximum, omit a slot or merge equal
 defaults. This private renderer accepts prepared contracts; current concatenation
 source sums, completed backend events, target declarations and emitted ledgers

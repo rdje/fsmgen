@@ -8,6 +8,9 @@ use JSON::PP ();
 use Scalar::Util qw(refaddr);
 use FSM::ConcatenationSourceObservationSupport;
 use FSM::DirectDeclaredWidthSupport;
+use FSM::ParameterDefaultEnvironmentSupport;
+use FSM::WidthExpressionSupport;
+use FSM::Backend::VerilogFamily::WidthExpressionEmitter;
 
 sub _json { return JSON::PP->new->canonical }
 sub _identity { return sprintf('%x', refaddr($_[0])) }
@@ -146,6 +149,87 @@ sub current {
     return $@ ? undef : $result;
 }
 
+# Walk only the authenticated detached tree, in the source's original order.
+# A repeated signal consumes another independent slot; literals never borrow a
+# neighbouring signal width or the target's unrelated unsized-literal rule.
+sub _sum_terms {
+    my ($tree, $operands, $terms, $cursor) = @_;
+    if ($tree->[0] eq 'concat') {
+        _sum_terms($tree->[$_], $operands, $terms, $cursor) for 1 .. $#$tree;
+        return;
+    }
+    _fail('sum exceeds 32 ordered width terms') if @$terms >= 32;
+    if ($tree->[0] eq 'signal') {
+        my $operand = $operands->[$$cursor++];
+        _fail('sum source slots disagree with the original ordered tree')
+            unless $operand && $operand->{name} eq $tree->[1];
+        push @$terms, {kind => 'signal', %$operand};
+        return;
+    }
+    my $literal = $tree->[1];
+    _fail('sum requires an explicit positive literal width')
+        unless defined($literal->{width}) && !ref($literal->{width})
+            && $literal->{width} =~ /\A[0-9]*[1-9][0-9]*\z/;
+    my $width = $literal->{width};
+    $width =~ s/\A0+//;
+    push @$terms, {kind => 'literal', literal => $literal,
+        width => $width, is_vector => $width eq '1' ? 0 : 1,
+        width_plan => undef};
+}
+
+sub prepare_sum {
+    my ($class, %args) = @_;
+    my $sources = $class->current(%args)
+        // _fail('sum requires the original current independent source holder');
+    my $source = $sources->{record};
+    _fail('sum currently requires a Verilog-family target')
+        unless $source->{target_language} =~ /\A(?:systemverilog|verilog)\z/;
+    my @source_args = (%args, observation => $sources->{observation});
+    my $raw = _raw_source_state(%args);
+    my $module = $args{fsm_module};
+    my $maps = {parameters => $module->parameters, sources => $module->parameter_default_sources,
+        bindings => $module->parameter_default_bindings};
+    my $environment = FSM::ParameterDefaultEnvironmentSupport->prove_binding_observations(%$maps)->{environment};
+    _coherent_getters($raw, @source_args);
+    my (@terms, $cursor);
+    $cursor = 0;
+    _sum_terms($source->{expression_tree}, $source->{operands}, \@terms, \$cursor);
+    _fail('sum has unused original source slots') unless $cursor == @{$source->{operands}};
+    my $evaluator = FSM::WidthExpressionSupport->new;
+    my @values = map {$evaluator->evaluate_constant_integer_scalar($_->{width}, 'Concatenation source sum')} @terms;
+    my $width = sprintf('%s', $evaluator->apply_constant_width_operator(
+        '+', \@values, 'Concatenation source sum')->bstr);
+    my $symbolic = grep {$_->{width_plan} && $_->{width_plan}{profile} eq 'symbolic'} @terms;
+    my $range;
+    if ($symbolic) {
+        _fail('sum requires the original matching parameter environment')
+            unless $environment && _json()->encode($environment->{scope}) eq _json()->encode($source->{source_scope});
+        $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_sum_range(
+            target_language => $source->{target_language}, environment => $environment,
+            required_scope_kind => 'direct_module', context => 'Concatenation source sum',
+            operands => [map {{width => $_->{width},
+                width_contract => $_->{width_plan} ? $_->{width_plan}{width_contract} : undef}} @terms]);
+    }
+    my $record = {kind => 'concatenation_source_sum', target_language => $source->{target_language},
+        profile => $symbolic ? 'symbolic' : 'fixed', source_scope => $source->{source_scope},
+        width => $width, is_vector => 1, terms => \@terms, range_text => $range};
+    _barrier(@source_args); # getter-free closure after every source/environment read
+    return _json()->decode(_json()->encode({sources => $sources, record => $record}));
+}
+
+sub current_sum {
+    my ($class, %args) = @_;
+    my $result = eval {
+        my $holder = $args{holder};
+        return unless ref($holder) eq 'HASH' && !tied(%$holder)
+            && join(',', sort keys %$holder) eq 'record,sources';
+        my $expected = $class->prepare_sum(%args, holder => $holder->{sources});
+        return unless FSM::ConcatenationSourceObservationSupport::_same_record($holder, $expected);
+        return $expected;
+    };
+    return $@ ? undef : $result;
+}
+
 1;
 
 =head1 NAME
@@ -189,6 +273,27 @@ writes without a surviving revision remain outside the raw observer contract.
 Backend event completion, current symbolic sum proof, target emission, override
 execution and full/public qualification remain separate consumers.
 
+C<prepare_sum> consumes that original source C<holder> with the same actual
+inputs and revalidates it; it never captures a replacement observation. Only
+Verilog-family targets qualify. It walks the authenticated nested tree in order,
+preserving each repeated source slot and explicit literal value/width/radix.
+Unknown literal widths refuse rather than borrowing another target sizing rule.
+At most 32 flattened terms qualify. Canonical integer arithmetic produces an
+exact positive decimal-string sum. Fixed-only sums have no symbolic range;
+mutable sums use the canonical parameter environment and shared prepared-sum
+renderer, retaining independent contracts and width-one operand vector rank.
+Complete getter coherence and final raw barriers include nonoperand declarations
+and all parameter maps. Failed/stale reads cannot refresh the original holder.
+
+The detached result has C<sources> (the original revalidated source holder) and
+C<record> with C<kind =E<gt> concatenation_source_sum>, canonical target, profile,
+source scope, exact C<width>, packed C<is_vector>, ordered C<terms> and optional
+C<range_text>. Each term retains its signal contract or original literal fields.
+C<current_sum> checks the complete original result, including scalar JSON kinds,
+and returns undef on divergence. Neither operation installs metadata, retains a
+caller graph or proves a completed backend event, target declaration/namespace,
+emitted expression or ledger. Those joins and external execution remain separate.
+
 =head1 METHODS
 
 =head2 prepare(factorizer => OWNER, signal_name => NAME, fsm_module => MODULE, assignment_analysis => MAP, target_language => LANGUAGE, observation => FRAME)
@@ -200,5 +305,14 @@ canonical direct-width aliases. Unknown literal widths stay unknown.
 
 Revalidate the exact original observation and complete plan without refreshing it.
 Return detached data on agreement, otherwise undef.
+
+=head2 prepare_sum(factorizer => OWNER, signal_name => NAME, fsm_module => MODULE, assignment_analysis => MAP, target_language => LANGUAGE, holder => SOURCES)
+
+Derive an ordered sum from the original current source holder or throw.
+
+=head2 current_sum(factorizer => OWNER, signal_name => NAME, fsm_module => MODULE, assignment_analysis => MAP, target_language => LANGUAGE, holder => SUM)
+
+Revalidate the original complete source sum without recapture; return undef on
+stale, unsupported or changed input.
 
 =cut
