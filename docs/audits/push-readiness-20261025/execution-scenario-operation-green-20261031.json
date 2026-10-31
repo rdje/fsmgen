@@ -1,0 +1,38 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.17.2.4.3",
+  "baseline": "8a88877766613efe700d49f21698c78d11363f53",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1616-vial-architecture-scale-execution-scenario-qualification.t",
+    "t/1617-vial-architecture-scale-execution-scenario-limit.t",
+    "t/1618-vial-architecture-scale-execution-scenario-over-limit.t",
+    "t/1619-vial-architecture-scale-execution-operation-qualification.t",
+    "t/1620-vial-architecture-scale-execution-operation-limit.t",
+    "t/1622-vial-architecture-scale-execution-total-operation-qualification.t"
+  ],
+  "expected_status": 0,
+  "exit_status": 0,
+  "complete": true,
+  "log": "docs/audits/push-readiness-20261025/execution-scenario-operation-green-20261031.log.gz",
+  "original_log_sha256": "1d651b48174b18e98f88486c5fef34f2af3d832d102937421c8edae9660007c8",
+  "retained_log_sha256": "1d651b48174b18e98f88486c5fef34f2af3d832d102937421c8edae9660007c8",
+  "normalization": "Dynamic repository-root prefix only.",
+  "sources": {
+    "t/1616-vial-architecture-scale-execution-scenario-qualification.t": "7ba4eaedbe8d77664f56ddb42a37436d6a6f925140adb2e0927942d99c66d252",
+    "t/1617-vial-architecture-scale-execution-scenario-limit.t": "b9637e804e05500811f3847b63d4eee2ef686e40303a0f8e230a1e9e843b8a4e",
+    "t/1618-vial-architecture-scale-execution-scenario-over-limit.t": "5f8c639c12260e77cd0d57330121530fa097fd97522571a2c7b5f973719fbc69",
+    "t/1619-vial-architecture-scale-execution-operation-qualification.t": "e5fcf20e033d9fbd7ba79f23624897849a826448905b07c66174e5b30233d683",
+    "t/1620-vial-architecture-scale-execution-operation-limit.t": "be3ed9256df12dce0f48fcb372b892e71f4512e154f0e7c4ce1248ff466d0641",
+    "t/1622-vial-architecture-scale-execution-total-operation-qualification.t": "4be773842e03836336a69cf7a77b366e15576a29245193c1b16557b2e8cdfc80"
+  },
+  "helper_sha256": "551877ecfd8880ff83154783f959f35fb9a461fd9d8195e592af6cd3e14102d5",
+  "source_witness": "docs/audits/push-readiness-20261025/execution-scenario-operation-source-20261031.json.gz",
+  "source_witness_sha256": "f9e91418aca70afa8f3d98bf6fcd4d95a88c4e7d05225946c4f44d9ba0af5aec",
+  "rederive": "Current native scenario/per-scenario-operation/aggregate-operation defaults with independent public bridge raw provenance and frozen contract.",
+  "falsify": "Complete original RED has exactly six stale bridge hashes; inverse source conservation leaves all other identities, counts, maps, rejection/staging/mutation assertions exact. Existing unchanged helper adverse controls are qualified in execution-plan-random-retry-20261031.",
+  "durability": "Tracked current tests, authenticated complete original sources, complete dated RED/GREEN streams/statuses and task/Git.",
+  "scope": "Six native defaults only; no opt-in flags, product changes or full/hosted qualification."
+}

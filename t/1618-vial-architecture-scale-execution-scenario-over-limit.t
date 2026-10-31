@@ -11,6 +11,9 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 
@@ -27,7 +30,7 @@ my %expected = (
     semantic_sha256 =>
         '9f71a505ef53f133af9e563a7a71358e71be891d5ba630b0cd12f070d0f0c638',
     bridge_sha256 =>
-        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
+        current_ahb_report_sha256(),
 );
 my $expected_diagnostic = {
     schema_version => 1,

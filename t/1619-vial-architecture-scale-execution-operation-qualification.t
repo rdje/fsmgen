@@ -11,6 +11,9 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 use FSM::VIAL::ArchitectureScaleWorkload;
@@ -38,7 +41,7 @@ my %expected = (
     semantic_sha256 =>
         'd66f865e49ea70186adb5ed55a9b190102f551d41d305e25391f2b16b9e42380',
     bridge_sha256 =>
-        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
+        current_ahb_report_sha256(),
     plan_id =>
         'plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990',
     plan_sha256 =>

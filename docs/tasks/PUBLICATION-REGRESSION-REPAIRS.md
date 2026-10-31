@@ -299,11 +299,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify and repair default scenario/operation qualification and boundary bridge oracles.`
   Acceptance: `After .2 commits clean, read/reproduce T1616/T1617/T1618/T1619/T1620/T1622 defaults. Require exact bridge-only causality before common-reference use. Preserve topology, source identities, semantic/plan hashes, counts/maps/bytes, earliest authority, negative and opt-in controls. Split any nontrivial actual defect into a new owned safe child; focused results/docs and normal commit before .4.`
-  Verification: `Six prior exact-match candidate files; no current defaults or repair yet.`
-  Commit: `pending`
+  Verification: `Complete exact six-file RED from8a8887776 returns1/Files6 Tests27 with exactly six old bridge assertions; every other original assertion passes. All actual hashes equal the independently checked current240db versus olda456. Change only one bridge literal per file and the existing independent-reference import/local library path; inverse transformation conserves every other byte. Exact six-default GREEN returns0/Files6 Tests27 under unchanged88/4096. Frozen topology/source/semantic/plan identities, byte/count/map/earliest-cap/rejection/mutation/staging checks all remain. No opt-in flags exist in this group, no product module changes, and no full/hosted outcome is inferred. Original/current source seals, complete dated native streams/statuses, independent unchanged helper control qualification and distinct re-derivation/falsification/durability legs retain in execution-scenario-operation-*-20261031. The book names exact qualified scenario/per-scenario/aggregate scope; native book test passes, with final build/copied-source/index/claim and normal staged doctrines before commitment. Then .4 owns the remaining four default fiber/aggregate-operation files before .5 full6 preflight.`
+  Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.4`
   Status: `pending`
@@ -325,7 +325,7 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4.3` | `pending` | Reproduce six scenario/operation defaults, repair only proved bridge-reference drift and commit before the fiber group. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4.4` | `pending` | Reproduce four fiber/aggregate-operation defaults, preserving explicit-large guards, before full6 preflight. |
 
 ## Decisions
 
@@ -504,3 +504,9 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 - [x] **ROOT CAUSE (WHY + WHERE)** — The retained complete native RED reports at t/1610-vial-architecture-scale-execution-plan-qualification.t line 239 and each adjacent selected file only historicala456 versus current240db; all other original assertions pass. The first GREEN137 is separately a host-capacity interruption. Exact archived baseline/proposal bytes establish the same source contract for this retry.
 - [x] **ADDRESSED (verified)** — Reapply only the saved independent checked-reference import/local library path and old bridge literal substitution. Exact source hashes and inverse transformation preserve every remaining assertion. The unique retry completes all five native defaults plus current-reference adverse controls under unchanged guards; complete admission/status/TAP and tested source/helper seals retain in execution-plan-random-retry-20261031.
 - [x] **NO REGRESSION** — All tests successful; Files=6, Tests=28. Exact plan/source/semantic identities, byte/count/limit/exhaustion/replay and source-mutation checks remain active. T1602 explicit large branch and complete full/hosted qualification remain unclaimed. Native book test passes; final build/copied-source/KMap/claim and normal staged doctrines qualify this test-only repair.
+
+## Acceptance Checklist — `.17.2.4.3` scenario/operation bridge references
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Complete native RED reports at t/1616-vial-architecture-scale-execution-scenario-qualification.t line 157 and five adjacent selected files only the obsolete bridge hash. All actual hashes equal the independently checked current public AHB report. Every other original assertion passes; source/plan/count/rejection behavior has no observed drift.
+- [x] **ADDRESSED (verified)** — Replace only the six old bridge literals and add the existing checked-reference import/local library path. Exact before/after seals and inverse transformation preserve every other assertion byte. All six native defaults pass under unchanged guards with complete original/current streams/statuses retained in the dated source/RED/GREEN packets.
+- [x] **NO REGRESSION** — All tests successful; Files=6, Tests=27. Exact topology/source/semantic/plan identities, metrics/maps/bytes, earliest authority, refusal/staging and mutation checks remain live. Native book test passes; final build/copied-source/KMap/claim and normal staged doctrines qualify this test-only slice. Remaining fiber defaults and complete local/hosted publication qualification remain open.
