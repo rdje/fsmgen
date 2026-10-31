@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.3`
-- next_action: Carry held concatenation events through exact dependency-array/source publication after owned nested rendering; bind actual new container identities and reject unrelated callback changes.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4`
+- next_action: Carry held concatenation events through complete-view live-usage priming; freeze original holders before global callbacks and admit only the four actual per-row usage annotations.
 - in_flight_uncommitted: None after the normal commit workflow; derive paths with git status --short.
 - in_flight_background: None.
 - blockers: None requiring user input. Remaining feature implementation, owned backend repairs and full/publication qualification remain open.

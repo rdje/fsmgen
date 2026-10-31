@@ -134,7 +134,11 @@ allocator/registry width and width_source writes, withholding it during the
 callback and rechecking complete original source/metadata afterward. Unrelated
 mutations or callback failure cannot refresh it. Typed rendering also carries
 only its actual scalar expression/source writes, binding the actual original
-runtime AST around the renderer. Dependency/live-usage annotations and registry
+runtime AST around the renderer. Dependency publication withholds the event
+across extraction/fallback callbacks, checks the original input before final
+writes, then binds the actual new array, ordered names, source and only the
+narrow rendered_expression_fallback tag. Unknown fallbacks, substituted arrays
+and unrelated changes cannot refresh. Live-usage annotations and registry
 replacement remain unqualified. Abort/reset/reuse clears all
 events. Numeric sum agreement is separate from symbolic range or completed
 collection policy.
@@ -445,6 +449,30 @@ sub _with_concatenation_render ($self, $name, $info, $runtime_ast, $render) {
         $self->{_concatenation_inference_events}{$name} = $holder if $holder;
     }
     return $expression;
+}
+
+sub _take_concatenation_dependency_input ($self, $name, $info) {
+    return unless ref($info) eq 'HASH' && ref($info->{ast}) eq 'FSM::CoreAST::Concatenation';
+    return FSM::ConcatenationInferenceSupport->render_input(
+        width_support => $self, signal_name => $name, signal_info => $info,
+        signal_registry => $self->_current_graph_inference_rows, runtime_ast => $info->{runtime_ast},
+        holder => delete $self->{_concatenation_inference_events}{$name});
+}
+
+sub _publish_concatenation_dependencies ($self, $name, $info, $input, $runtime_ast,
+    $names, $source, $fallback, $publish) {
+    my %args = (width_support => $self, signal_name => $name, signal_info => $info,
+        signal_registry => $self->_current_graph_inference_rows, runtime_ast => $runtime_ast,
+        selected_names => $names, selected_source => $source, selected_fallback => $fallback);
+    my $checkpoint = $input ? FSM::ConcatenationInferenceSupport->dependency_checkpoint(
+        %args, input => $input) : undef;
+    my $array = $publish->();
+    if ($checkpoint) {
+        my $holder = FSM::ConcatenationInferenceSupport->after_dependencies(
+            %args, input => $checkpoint, published_array => $array);
+        $self->{_concatenation_inference_events}{$name} = $holder if $holder;
+    }
+    return $array;
 }
 
 sub _checkpoint_factorized_registry_copies ($self, $all_intermediate_signals, $replace_registry = 0) {

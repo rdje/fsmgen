@@ -9,6 +9,7 @@ use Scalar::Util qw(refaddr);
 use FSM::ConcatenationGenerationSourceSupport;
 use FSM::ConcatenationSourceObservationSupport;
 use FSM::IntermediateWidthAllocationSupport;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub _json { JSON::PP->new->canonical }
 sub _copy { _json()->decode(_json()->encode($_[0])) }
@@ -231,6 +232,97 @@ sub after_render {
     return $@ ? undef : $holder;
 }
 
+# Extraction may publish only the selected narrow fallback tag before the
+# final array/source assignments. Validate that transition before those writes
+# can overwrite evidence of a callback mutation.
+sub dependency_checkpoint {
+    my ($class, %args) = @_;
+    my $checkpoint = eval {
+        my $frame = _observe(%args) or return;
+        return unless ref($args{runtime_ast}) eq 'FSM::CoreAST::Concatenation'
+            && $args{runtime_ast} == $args{signal_info}{runtime_ast};
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        my $input_row = $args{input};
+        for my $key (qw(frame state row data)) {
+            return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+            $input_row = $input_row->{$key};
+        }
+        return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+        my $fallback = $args{selected_fallback};
+        return if ref($fallback) || (defined($fallback) && $fallback ne 'rendered_expression_fallback');
+        my $current_row = $frame->{state}{row}{data};
+        if (defined($fallback)) {
+            return unless exists($current_row->{dependency_fallback_source})
+                && _same($fallback, $current_row->{dependency_fallback_source});
+        } else {
+            return if exists $current_row->{dependency_fallback_source};
+        }
+        my $before = {record => $record, frame => _copy($frame)};
+        my $field = 'dependency_fallback_source';
+        if (exists $input_row->{$field}) {
+            return if ref($input_row->{$field}) || (defined($input_row->{$field})
+                && length($input_row->{$field}) > FSM::CoreExpressionWidthSupport::MAX_NODES());
+            $before->{frame}{state}{row}{data}{$field} = $input_row->{$field};
+        } else {
+            delete $before->{frame}{state}{row}{data}{$field};
+        }
+        return unless _same($args{input}, $before)
+            && _same($args{selected_source}, $input_row->{runtime_ast_source}
+                . (defined($fallback) ? '+' . $fallback : ''));
+        return {record => $record, frame => $frame};
+    };
+    return $@ ? undef : $checkpoint;
+}
+
+sub after_dependencies {
+    my ($class, %args) = @_;
+    my $holder = eval {
+        my $array = $args{published_array};
+        return unless ref($array) eq 'ARRAY' && !tied(@$array)
+            && ref($args{selected_names}) eq 'ARRAY' && !tied(@{$args{selected_names}});
+        my $frame = _observe(%args) or return;
+        return unless ref($args{signal_info}{dependency_signal_names}) eq 'ARRAY'
+            && $args{signal_info}{dependency_signal_names} == $array;
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        my $input_row = $args{input};
+        for my $key (qw(frame state row data)) {
+            return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+            $input_row = $input_row->{$key};
+        }
+        return unless ref($input_row) eq 'HASH' && !tied(%$input_row);
+        my $before = {record => $record, frame => _copy($frame)};
+        my $row = $before->{frame}{state}{row};
+        return unless _same($args{selected_names}, $row->{data}{dependency_signal_names})
+            && _same($args{selected_source}, $row->{data}{dependency_source});
+        for my $name (@{$row->{data}{dependency_signal_names}}) {
+            return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name);
+        }
+        # The real assignment creates one new flat array. Preserve every other
+        # nested identity, and reject aliases or reuse of an original row container.
+        my $token = ['ARRAY', sprintf('%x', refaddr($array))];
+        my $removed = 0;
+        my @containers;
+        for my $container (@{$row->{containers}}) {
+            if (_same($container, $token)) { $removed++ }
+            else { push @containers, $container }
+        }
+        $row->{containers} = \@containers;
+        return unless $removed == 1;
+        for my $field (qw(dependency_signal_names dependency_source)) {
+            if (exists $input_row->{$field}) {
+                return if ref($input_row->{$field}) || (defined($input_row->{$field})
+                    && length($input_row->{$field}) > FSM::CoreExpressionWidthSupport::MAX_NODES());
+                $row->{data}{$field} = $input_row->{$field};
+            } else {
+                delete $row->{data}{$field};
+            }
+        }
+        return unless _same($args{input}, $before);
+        return {record => $record, frame => $frame};
+    };
+    return $@ ? undef : $holder;
+}
+
 1;
 
 =head1 NAME
@@ -257,8 +349,10 @@ already current installed event through their own revision and width/source
 writes. Exact normalizer width publication also carries held events through
 C<publication_checkpoint>. Typed rendering carries the held event through only
 its actual scalar expression/source annotations, binding the exact returned
-runtime AST before and after the renderer. Dependency/live-usage annotations
-and registry replacement remain separate. Completed policy remains separate.
+runtime AST before and after the renderer. Dependency publication carries the
+held event through its exact new array, source and narrow fallback tag, with a
+barrier before the final assignments. Live-usage annotations, registry
+replacement and completed policy remain separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.
@@ -317,7 +411,33 @@ values, complete other metadata/container identities and original sources.
 Missing/stale/foreign input, unrelated or late getter mutations and malformed
 returns withhold. Actual renderer exceptions propagate with no installed event.
 Return only a detached holder; this observer installs nothing. Dependency and
-live-usage metadata, registry replacement, completed policy and symbolic emission
-remain separate.
+live-usage transactions, registry replacement, completed policy and symbolic
+emission remain separate from rendering.
+
+=head2 dependency_checkpoint(..., input => INPUT, runtime_ast => ACTUAL_RETURN, selected_source => SOURCE, selected_fallback => TAG)
+
+After nested rendering, the installed owner removes a held current event before
+runtime recovery, dependency extraction and fallback callbacks. Before the final
+array/source assignments, revalidate that original input and actual returned AST.
+Only removal of the old scalar C<dependency_fallback_source> or assignment of the
+actual selected C<rendered_expression_fallback> tag may have changed. The selected
+source must equal the original runtime source, with that exact suffix when used.
+Other fallback labels retain ordinary resolution but receive no carried event.
+Unrelated metadata, source or identity mutations withhold before publication can
+overwrite them. Missing or stale inputs cannot mint. Return a detached checkpoint
+or undef; install nothing.
+
+=head2 after_dependencies(..., input => CHECKPOINT, selected_names => NAMES, selected_source => SOURCE, published_array => ACTUAL_ARRAY)
+
+After the real array/source assignments, bind the exact newly installed plain
+array and the independently retained ordered selected names. Names must be plain
+identifiers. Only C<dependency_signal_names> and C<dependency_source> may change
+from the checkpoint. Preserve original field absence/values, all other container
+identities, complete original sources, epoch, rows and registry. Copied/substituted
+arrays, aliases, changed values and late getter mutations cannot restore authority.
+Actual callback exceptions propagate with the event already removed. Cached reads
+perform no writes and preserve existing currentness; a clean later retry cannot
+remint a spent event. Return only a detached holder. No live-usage, registry,
+completed policy or symbolic sum/emission authority follows.
 
 =cut

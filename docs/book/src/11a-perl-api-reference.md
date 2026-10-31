@@ -783,9 +783,18 @@ The actual typed renderer now carries the event through only its scalar
 the actual original runtime AST before and after rendering, including the nested
 call from dependency resolution. Cached no-write reads preserve currentness;
 foreign AST returns, source/metadata changes and renderer exceptions cannot
-refresh it. Cleaned/compatibility fallbacks gain no authority. Dependency-array
-and live-usage annotations, registry replacement and completed collection policy
-remain separate implementation steps. Symbolic sums/emission
+refresh it. Cleaned/compatibility rendering fallbacks gain no authority.
+Dependency resolution now withholds a held event after nested rendering and
+before runtime recovery, extraction and fallback callbacks. It checks the
+complete original input before final publication can overwrite callback changes,
+then binds the actual new `dependency_signal_names` array, exact ordered returned
+names and original `dependency_source`. Only the selected
+`rendered_expression_fallback` tag qualifies; other fallback paths retain ordinary
+numeric behavior without event authority. Cached reads preserve the same array;
+missing/stale proof, equal copied arrays, unrelated metadata/source mutations,
+late getters and throwing callbacks cannot refresh or remint. Live-usage
+annotations, registry replacement and completed collection policy remain separate.
+Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
 retain focused currentness, refusal, lifecycle and complete native product evidence.
@@ -797,6 +806,9 @@ qualify only the owned width publication and retain complete native products.
 The [typed-render regression](../../../t/2282-concatenation-render-events.t) and
 [render predecessor/native replay](../../../docs/audits/concat-render-events-20261031/replay.py)
 retain its focused carry/refusal and complete product evidence.
+The [dependency regression](../../../t/2283-concatenation-dependency-events.t) and
+[dependency predecessor/native replay](../../../docs/audits/concat-dependency-events-20261031/replay.py)
+retain exact array/ordered-return, callback refusal and native conservation evidence.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

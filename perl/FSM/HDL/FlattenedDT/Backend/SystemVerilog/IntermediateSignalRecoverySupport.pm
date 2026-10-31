@@ -545,6 +545,12 @@ sub _width_allocation_for_origin ($self, $signal_name, $signal_info, $expression
 
 Normalize the dependency list for one intermediate signal from runtime ASTs or
 the explicit runtime-AST-miss recovery path and cache the result.
+The default width owner withholds a current concatenation event after nested
+rendering and before extraction callbacks. Only its exact published array,
+ordered returned names, original source and narrow rendered-expression fallback
+tag carry authority. A pre-publication barrier rejects unrelated mutations before
+the final assignments can overwrite them; late array substitution and exceptions
+cannot refresh. Cached reads and injected legacy providers retain their contracts.
 
 =cut
 
@@ -564,6 +570,12 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
     my $dependency_source = 'none';
 
     my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $carry_dependencies = $width_support && $width_support->can('_take_concatenation_dependency_input')
+        && $width_support->can('_publish_concatenation_dependencies');
+    my $dependency_input = $carry_dependencies
+        ? $width_support->_take_concatenation_dependency_input($signal_name, $signal_info) : undef;
+    my $selected_fallback;
     my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     if ($runtime_ast && blessed($runtime_ast)) {
         @dependencies = $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($runtime_ast);
@@ -587,6 +599,7 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
             if (@fallback_dependencies) {
                 my $fallback_source = $fallback_signal_info{dependency_fallback_source}
                     || 'rendered_expression_fallback';
+                $selected_fallback = $fallback_source;
                 my %seen_dependencies = map { $_ => 1 } @dependencies;
                 push @dependencies, grep { !$seen_dependencies{$_}++ } @fallback_dependencies;
                 $dependency_source = $dependency_source . '+' . $fallback_source;
@@ -616,9 +629,20 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
     my %seen_dependencies;
     @dependencies = grep { defined($_) && $_ ne '' && !$seen_dependencies{$_}++ } @dependencies;
 
-    if ($signal_info && ref($signal_info) eq 'HASH') {
-        $signal_info->{dependency_signal_names} = [@dependencies];
-        $signal_info->{dependency_source} = $dependency_source;
+    my $publish = sub {
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            my $array = [@dependencies];
+            $signal_info->{dependency_signal_names} = $array;
+            $signal_info->{dependency_source} = $dependency_source;
+            return $array;
+        }
+        return undef;
+    };
+    if ($carry_dependencies) {
+        $width_support->_publish_concatenation_dependencies($signal_name, $signal_info,
+            $dependency_input, $runtime_ast, [@dependencies], $dependency_source, $selected_fallback, $publish);
+    } else {
+        $publish->();
     }
 
     my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
