@@ -902,6 +902,14 @@ sub _record_intermediate_signal_names_from_ast ($self, $ast, $signal_names, $see
 =head2 resolve_intermediate_signal_live_usage
 
 Return cached-or-derived live-usage metadata for one intermediate signal.
+Invalid names retain the empty default; rows with both cached boolean keys
+return without queries or writes. For an uncached actual installed row, the
+default width owner withholds original concatenation events across both
+queries and carries only their exact boolean results and derived state/source
+through the four assignments. Complete-view checks before writes and after
+publication reject cross-row callback changes as well as local divergence.
+Foreign rows, stale/missing proof and exceptions cannot refresh or remint
+events. Legacy injected providers retain ordinary query/write behavior.
 
 =cut
 
@@ -927,18 +935,39 @@ sub resolve_intermediate_signal_live_usage ($self, $signal_name, $signal_info) {
         };
     }
 
+    my $width_owner = $self->{flattened_dt}{backend_sv_intermediate_width_support};
+    my $carry = ref($width_owner) eq 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport';
+    my $rows = $carry ? $width_owner->_current_graph_inference_rows : undef;
+    my $transaction = $carry ? $width_owner->_take_concatenation_live_usage($rows) : undef;
+    # The installed view cannot attest a supplied copy or a different name's
+    # row. Spend held proof even on those paths; ordinary fallback still runs.
+    $transaction = undef unless $rows && ref($signal_info) eq 'HASH'
+        && ref($rows->{$signal_name}) eq 'HASH' && $rows->{$signal_name} == $signal_info;
+
     my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name) ? 1 : 0;
     my $used_in_final_expressions = $self->is_signal_actually_used_in_final_expressions($signal_name) ? 1 : 0;
     my $evidence_state = $referenced_in_substitutions
         ? ($used_in_final_expressions ? 'substitutions_and_final_expressions' : 'substitutions')
         : ($used_in_final_expressions ? 'final_expressions' : 'none');
 
+    # Check before these writes can overwrite hostile callback annotations.
+    $transaction = undef if $transaction
+        && !$width_owner->_check_concatenation_live_usage($rows, $transaction, 1);
     if ($signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{referenced_in_substitutions} = $referenced_in_substitutions;
         $signal_info->{used_in_final_expressions} = $used_in_final_expressions;
         $signal_info->{live_usage_evidence_state} = $evidence_state;
         $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
     }
+
+    $width_owner->_publish_concatenation_live_usage($rows, $transaction, {
+        $signal_name => {
+            referenced_in_substitutions => $referenced_in_substitutions,
+            used_in_final_expressions => $used_in_final_expressions,
+            live_usage_evidence_state => $evidence_state,
+            live_usage_source => 'ast_live_usage_metadata',
+        },
+    }) if $transaction;
 
     fsm_debug("[FactorizationSupport.pm][resolve_intermediate_signal_live_usage()] '$signal_name' live usage => substitutions=$referenced_in_substitutions final_expressions=$used_in_final_expressions ($evidence_state)", 3);
     return {

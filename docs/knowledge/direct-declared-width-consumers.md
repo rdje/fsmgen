@@ -191,4 +191,4 @@ Slice/bit capture defects stay owned; generic proof and external execution remai
 open. Original sources/observations: `docs/audits/expression-shape-selection-20261030/`.
 Replay: `scripts/run_with_ram_guard.sh -- perl docs/audits/concat-guard-capture-20261030/probe.pl`.
 
-Concat provenance: T2276–T2284; `docs/book/src/11a-perl-api-reference.md`.
+Concat provenance: T2276–T2285; `docs/book/src/11a-perl-api-reference.md`.

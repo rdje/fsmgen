@@ -394,8 +394,11 @@ runtime AST before and after the renderer. Dependency publication carries the
 held event through its exact new array, source and narrow fallback tag, with a
 barrier before the final assignments. Complete-view bulk live-usage priming
 withholds every original event before traversal, admits only its exact computed
-annotations, and finishes with a getter-free whole-transaction barrier. Single-row
-fallback, registry replacement and completed policy remain separate.
+annotations, and finishes with a getter-free whole-transaction barrier. The
+single-row fallback shares that transaction across its two actual queries and
+four scalar assignments, admitting only the actual supplied installed row and
+computed results. Invalid-name defaults and cached no-write returns preserve.
+Registry replacement and completed policy remain separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.

@@ -141,8 +141,12 @@ narrow rendered_expression_fallback tag. Unknown fallbacks, substituted arrays
 and unrelated changes cannot refresh. Complete-view bulk live-usage priming
 withholds all original holders before getters/traversal, validates before writes,
 and admits only exact computed annotations after a whole-view getter-free final
-barrier. Cached rows admit no writes. Single-row fallback and registry
-replacement remain unqualified. Abort/reset/reuse clears all
+barrier. The uncached single-row resolver uses that same transaction around
+both actual usage queries, checks the supplied row's installed identity, and
+admits only its exact computed annotations. Invalid names and cached reads
+return without a transaction or writes. Foreign/stale/missing proof, callback
+changes and exceptions cannot refresh or remint. Registry replacement and
+completed collection remain separate. Abort/reset/reuse clears all
 events. Numeric sum agreement is separate from symbolic range or completed
 collection policy.
 

@@ -801,8 +801,13 @@ state/source. Cached rows receive no writes. After all assignments, semantic che
 finish with a getter-free whole-view/source barrier before events restore together.
 An earlier root or later getter cannot bless another changed row; missing/stale proof,
 copied/partial views, unrelated mutations and exceptions cannot refresh or remint.
-Single-row fallback, annotation join, registry replacement and completed collection
-policy remain separate.
+The single-row fallback now shares that transaction across its two actual queries.
+It checks the supplied row's installed identity, validates before writes can hide
+callback changes, and admits only that row's exact computed annotations. Other
+uncached rows receive no writes. Invalid-name defaults and cached no-write reads
+return before taking a transaction. Foreign rows, stale/missing proof, query errors
+and late cross-row changes cannot refresh or remint; a clean new generation recovers.
+Annotation join, registry replacement and completed collection policy remain separate.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -821,7 +826,10 @@ retain exact array/ordered-return, callback refusal and native conservation evid
 The [bulk live-usage regression](../../../t/2284-concatenation-bulk-live-usage.t) and
 [predecessor/native replay](../../../docs/audits/concat-bulk-live-usage-20261031/replay.py)
 retain actual multi-row/root, mixed cache, cross-row callback and native preservation
-checks. These qualify bulk carry only.
+checks. The [single-row fallback regression](../../../t/2285-concatenation-fallback-live-usage.t)
+and [predecessor/native replay](../../../docs/audits/concat-fallback-live-usage-20261031/replay.py)
+qualify actual query order, independent usage roots, cached reads, hostile callbacks
+and weak lifetimes. These are focused carry checks; completed policy remains pending.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate
