@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-31`
+- Last updated: `2026-11-01`
 - Owner: repo-local workflow
 
 ## Goal
@@ -3756,7 +3756,7 @@ do not start broad suites between implementation slices.
   Status: `pending`
   Goal: `Repair direct VHDL reserved-identifier handling and its misleading legacy expectations.`
   Acceptance: `P1 before .6 direct VHDL qualification: after the actual diagnosis, select the smallest policy-consistent fail-closed or declaration-aware target naming repair, preserving legitimate source/backend contracts and SV grammar tokens. Never globally rename language keywords from a token inventory. Update affected legacy controls, native/API diagnostics, book/source/discovery boundaries and meaningful known-bad/valid-name controls. Own required compiler qualification or its exact availability blocker; no full CI or broad naming campaign before required feature implementation. Activate earlier only if required integration checks demonstrate this defect blocks delivery.`
-  Verification: `Confirmed by completed .22.1 native and exact GHDL analysis; original OUT declaration fails while DATA_PORT control passes. Required integration remains .3.2.5.3; repair scheduled before .6.`
+  Verification: `Confirmed by completed .22.1 native and exact GHDL analysis; original OUT declaration fails while DATA_PORT control passes. Required publication integration now reproduces the same defect in T114: reserved generated ACCESS aborts the generic path, while plain APB emits an invalid artifact; its declaration/reference-only control passes exact GHDL analysis. PUBLICATION-REGRESSION-REPAIRS.18.1 retains full6/focused/compiler evidence and commits clean before this canonical leaf activates. This satisfies the existing earlier-activation condition; repair is next before fresh full7/push and .6. Saved private concat frontier .3.4.3.3.3.5.4.2 remains pending.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.23`

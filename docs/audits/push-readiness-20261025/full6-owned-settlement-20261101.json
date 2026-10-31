@@ -1,0 +1,15 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.18.1",
+  "observed_utc": "2026-10-31T23:10:13.081387+00:00",
+  "command": [
+    "/bin/ps",
+    "-p",
+    "50530,50598,50527",
+    "-o",
+    "pid,ppid,lstart,comm"
+  ],
+  "exit_status": 1,
+  "stdout": "  PID  PPID STARTED                      COMM\n",
+  "stderr": "",
+  "scope": "Exact known full6 guard/session-leader/recorder PIDs absent at this point only; no global process-absence or original allocation claim. Authenticated signal and normal guarded cleanup already retained in full6-t114-intake."
+}

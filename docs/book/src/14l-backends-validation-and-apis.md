@@ -285,6 +285,10 @@ that passes analysis. Use valid VHDL names in direct sources pending repair
 `ISF-REDUCTION-DELIVERY.22.2`, scheduled before full qualification. This is
 analysis of those artifacts, with no elaboration or runtime claim. The
 separate portable VIAL fixture retains its own exact tool qualification.
+The same naming defect currently blocks the generated-FSM APB generic-map
+case at state constant `ACCESS`: plain child output emits it, while generic
+namespace preparation rejects it. The existing repair is now required by
+publication qualification.
 
 ### Warning-Clean External Validation For Every Historical Sample
 

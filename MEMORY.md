@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: Inspect .artifacts/push-readiness-20261025/local-full-ci-6.state.json. If absent, launch the exact committed full6-launch-plan-20261031 recorder command from clean HEAD; otherwise consume it before any replay. Keep Git state unchanged throughout native execution for T296.
-- in_flight_uncommitted: None after this preflight commit; the full command must stay clean. Final recorder packets appear only after native completion; derive paths with git status --short.
-- in_flight_background: Full6 is declared; derive actual state from its journal. Absent means not launched, running means consume, finished means inspect the retained result. Never replay a nonterminal run.
-- blockers: No input blocker at admission. Complete full CI, authorized push and every exact-SHA hosted/Pages result remain unqualified.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.22.2`
+- next_action: After the clean PUBLICATION .18.1 intake commit, activate the existing declaration-aware reserved-identifier repair; preserve SV grammar and generic source-scope/namespace guards, restore T114/APB/OUT native analysis, then publication .18.2 integration and fresh full7/push.
+- in_flight_uncommitted: None after the normal intake commit workflow; derive paths with git status --short.
+- in_flight_background: None. Full6 settled143; unchanged T114 RED and exact GHDL original1/control0 analyses are consumed and retained in full6-t114-intake-20261101.
+- blockers: The reserved-target generation defect now satisfies .22.2 earlier activation. No user input needed; complete full CI, push and hosted/Pages publication remain pending. Saved private concat frontier .3.4.3.3.3.5.4.2 remains pending.
