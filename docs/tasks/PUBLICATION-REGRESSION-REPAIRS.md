@@ -244,7 +244,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Goal: `Diagnose and repair backend-foundation input and derived identities.`
   Acceptance: `P1 after .2. Capture exact backend inputs/stage tuples/evaluation/rerun and compare current/historical fixture data as needed. Explain every changed field using current contracts; do not infer backend-input drift from the bridge alone. Preserve exact provider/profile/ownership/metrics/refusal/oracle checks, no native opt-in or pin/submodule changes. Small causal repair(s), public book/docs and normal focused commit.`
   Verification: `Current supported AHB generation is restored by .1's precise scalar-family selector. .2 independently reproduces the historical public backend foundation and attributes every actual input artifact delta, then retains current direct generation and the complete frozen historical evaluation/rerun oracles. Both children commit verified. Remaining execution/profile candidates and full CI/hosted publication stay open under .4/.13/.69.3.`
-  Commit: `pending`
+  Commit: `Child .1:55c92474b; child .2:821671418.`
   Children: `PUBLICATION-REGRESSION-REPAIRS.17.2.3.1, PUBLICATION-REGRESSION-REPAIRS.17.2.3.2`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3.1`
@@ -267,6 +267,42 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Acceptance: `After the common reference and derived-foundation repairs, inventory the19 remaining exact-match execution files, group safe slices before edits and verify each actual default outcome. Adopt current reference only where the same core source/contract is proved; retain all existing semantic/plan identities, counts, limits, source maps, forgery/caller/rerun checks. Document any unrun explicit-large branch rather than enabling unsafe work or claiming coverage. Own any new defect, commit each group, then .13 exclusive full6/current capacity/checkpoint before push.`
   Verification: `Remaining membership is derivable from remaining-identity-scan.json minus planning T1556 and representative T1604/T1629/T1645. Director2026-10-31 selects publication; foundation prerequisites now finish. Derive remaining exact-match candidates from current source and the prior manifest, group safe causal slices and reproduce defaults before each repair; do not launch full6 with known unclassified failures.`
   Commit: `pending`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.1, PUBLICATION-REGRESSION-REPAIRS.17.2.4.2, PUBLICATION-REGRESSION-REPAIRS.17.2.4.3, PUBLICATION-REGRESSION-REPAIRS.17.2.4.4, PUBLICATION-REGRESSION-REPAIRS.17.2.4.5`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.1`
+  Status: `done`
+  Goal: `Qualify and repair the four small execution gate bridge-reference oracles.`
+  Acceptance: `Census exact prior/current candidates first; select T1605 fibers, T1607 source maps, T1608 random/replay and T1609 plan bytes. Read each complete default/opt-in path and reproduce native defaults under unchanged guards. Change only a reproduced stale checked-AHB bridge expectation to the independent current public reference, with exact same frozen HIAL/source contract proved. Preserve every semantic/plan hash, count, byte, limit, map, rerun, caller/source/adverse assertion and disabled large branch. Complete focused original/current results, source identity and existing reference adverse control; book/KMap/Memory/task/normal commit before next group.`
+  Verification: `Exact current/prior census confirms19 pending candidate files plus two intentional historical anchors; membership is not a complete stale-oracle or runtime census. Complete T1605/T1607/T1608/T1609 source/default/opt-in review precedes repair. Native RED1 has exactly five obsolete bridge assertions across four files; semantic/plan/source/count/map/byte/replay/adverse checks pass. Replace only each old bridge literal and add the closed independent current-reference import/local library path. Exact original/current source conservation proves every other byte unchanged. The final four defaults plus T1602 current-reference/changed-role controls pass0/Files5 Tests31. T1607's explicit exact source-map route remains skipped and unclaimed; its default unconstructible higher-level records still run. Source/complete native before-after receipts and prior card/hash retain under execution-small-*-20261031. Re-derivation is actual current public bridge raw-byte provenance plus frozen contract; falsification is the original RED and unchanged changed-role/reference/negative controls; durability is tracked tests, exact code-conservation source and dated receipts. The book describes scoped gate qualification with no new capacity/semantic/production claim; existing canonical KMap/current-reference facts apply unchanged. First hook rejects editing an authenticated stable-partition card; preserve complete log/source, restore its exact original and keep client migration status in task/book. No partition/guard/ceiling or budget changes. Native book/copied-source/claim/staged hook gates precede commit, then .2 continues remaining qualifiers. Full CI/hosted stay open.`
+  Commit: `This work-unit commit.`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2`
+  Status: `active`
+  Goal: `Qualify and repair default plan/random qualification and boundary bridge oracles.`
+  Acceptance: `After .1 commits clean, read/reproduce exact defaults T1610/T1611/T1613/T1614/T1615. Apply the common current reference only for independently proved bridge-only stale assertions. Preserve source/semantic/plan/byte/count/earliest-cap/replay/negative checks and all original opt-in controls; do not enable unsafe large paths. Retain complete results/identity, explicit unrun scope, synced book/live docs and normal commit.`
+  Verification: `Five prior exact-match candidate files; no current defaults or repair yet.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.3`
+  Status: `pending`
+  Goal: `Qualify and repair default scenario/operation qualification and boundary bridge oracles.`
+  Acceptance: `After .2 commits clean, read/reproduce T1616/T1617/T1618/T1619/T1620/T1622 defaults. Require exact bridge-only causality before common-reference use. Preserve topology, source identities, semantic/plan hashes, counts/maps/bytes, earliest authority, negative and opt-in controls. Split any nontrivial actual defect into a new owned safe child; focused results/docs and normal commit before .4.`
+  Verification: `Six prior exact-match candidate files; no current defaults or repair yet.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.4`
+  Status: `pending`
+  Goal: `Qualify and repair default fiber/total-operation boundary bridge oracles.`
+  Acceptance: `After .3 commits clean, read/reproduce T1623/T1624/T1625/T1626 defaults. Keep every compact-source/limit/plan/independence/current-safety/negative contract and explicit-large guard. Only reproduced bridge provenance drift may use the independently checked current reference; own any other cause separately. Retain source/complete results and docs, then normal commit.`
+  Verification: `Four prior exact-match candidate files; no current defaults or repair yet.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.5`
+  Status: `pending`
+  Goal: `Close the bounded exact-candidate migration and prepare clean full publication qualification.`
+  Acceptance: `After all four groups commit, reconcile every prior/current exact-match path and identify intentional historical anchors separately. Prove no unowned original candidate remains; retain all unrun explicit-large scope and do not claim a complete stale-oracle census. Establish current guarded capacity and the unique exclusive full6/checkpoint plan under .13/.69.3, commit complete preflight, then launch full CI from clean committed state. New actual full-suite failures need new task ownership and causal repair, not blanket refresh.`
+  Verification: `Waiting for the bounded groups; no full6 or hosted result exists.`
+  Commit: `pending`
 
 ## Current Frontier
 
@@ -274,7 +310,7 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4` | `active` | Classify and repair remaining execution/profile identity candidates in bounded causal groups before full CI and publication. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4.2` | `active` | Reproduce and repair default plan/random qualification and boundary bridge references. |
 
 ## Decisions
 
@@ -434,3 +470,9 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB gene
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S locates the frozen input hash at8e9553a3b. Its own public historical generation reproduces every old foundation hash. Complete current/historical artifacts differ only by scoped scalar truthiness spelling and decision0111 same-value assertion policy; all metadata and complete remaining text agree under exactly those proved deltas. Full resource/producer identities and failed prerequisite probes retain in the dated cause receipt.
 - [x] **ADDRESSED (verified)** — T1645 checks current complete DUT inputs through an independent public file-generation route and reconstructs the unchanged historical stage/evaluation/rerun oracles with a digest-authenticated historical input witness. All other original semantic/count/negative checks remain. A stale-DUT-as-current control fails the new distinguishing current-input assertions.
 - [x] **NO REGRESSION** — All tests successful; Files=4, Tests=20 in backend-foundation-qualified-20261031 for exact T1645/T1629/T1551/T1211. The stale control returns1, and final tested source hashes preserve. Book/copied-source/KMap/claim and normal staged doctrines qualify this test-only repair; remaining candidates, full CI and hosted results stay open.
+
+## Acceptance Checklist — `.17.2.4.1` small execution bridge gates
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Complete native RED names only five old bridge hashes, including at t/1605-vial-architecture-scale-execution-fibers.t line 225; every observed actual hash matches the independent checked current AHB route. Exact current/prior source census and complete frozen contract establish provenance-only drift, with no semantic/plan/count failure.
+- [x] **ADDRESSED (verified)** — The four test files import the closed checked current reference and replace only their obsolete bridge literal. Exact source conservation leaves every other assertion and opt-in control byte-identical. All four defaults and the current-reference adverse control pass in execution-small-qualified-20261031.
+- [x] **NO REGRESSION** — All tests successful; Files=5, Tests=31. Original semantic/plan identities, counts, bytes/maps, transcript/replay corruption, caller/unfinished-source checks and T1602 changed-role rejection remain active. The explicit exact source-map route is unrun, and no full/hosted result is claimed. Native book/source/KMap/claim and final staged doctrines qualify this slice.
