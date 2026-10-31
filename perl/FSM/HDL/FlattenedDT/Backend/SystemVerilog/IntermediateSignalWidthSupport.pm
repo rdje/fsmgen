@@ -145,8 +145,13 @@ barrier. The uncached single-row resolver uses that same transaction around
 both actual usage queries, checks the supplied row's installed identity, and
 admits only its exact computed annotations. Invalid names and cached reads
 return without a transaction or writes. Foreign/stale/missing proof, callback
-changes and exceptions cannot refresh or remint. Registry replacement and
-completed collection remain separate. Abort/reset/reuse clears all
+changes and exceptions cannot refresh or remint. Actual registry synchronization
+withholds paired source/event holders before graph/copy callbacks, predicts the
+complete existing/merged/name copy, and binds witnessed installed map/row
+identities. Original canonical observations remain unchanged; semantic checks
+finish with a whole-view raw barrier before either proof map is restored.
+Missing/stale/unpaired, substituted/partial copies and late callback changes
+cannot refresh. Completed collection remains separate. Abort/reset/reuse clears all
 events. Numeric sum agreement is separate from symbolic range or completed
 collection policy.
 
@@ -539,6 +544,126 @@ sub _publish_concatenation_live_usage ($self, $rows, $transaction, $selected) {
     }
     my $after = {view => $transaction->{view}, holders => \%holders};
     return unless $self->_check_concatenation_live_usage($rows, $after, 1);
+    $self->{_concatenation_inference_events} = \%holders;
+}
+
+# A raw registry census binds membership and actual installed object identities.
+# Candidate row contents are checked separately against their complete original
+# frames. No semantic getter, caller graph or replacement object is retained.
+sub _concatenation_registry_members ($self) {
+    my $registry = $self->{flattened_dt}{intermediate_signals};
+    return unless ref($registry) eq 'HASH' && !tied(%$registry)
+        && keys(%$registry) <= FSM::CoreExpressionWidthSupport::MAX_NODES();
+    my %members;
+    for my $name (sort keys %$registry) {
+        return if length($name) > FSM::CoreExpressionWidthSupport::MAX_NODES();
+        my $value = $registry->{$name};
+        return if !ref($value) && defined($value)
+            && length($value) > FSM::CoreExpressionWidthSupport::MAX_NODES();
+        $members{$name} = ref($value)
+            ? [ref($value), sprintf('%x', refaddr($value))] : ['', $value];
+    }
+    return \%members;
+}
+
+sub _checkpoint_concatenation_registry_copies ($self, $rows, $replace_registry = 0) {
+    my $members = $self->_concatenation_registry_members;
+    my $registry = $self->{flattened_dt}{intermediate_signals};
+    my $transaction = $self->_take_concatenation_live_usage($rows);
+    my $sources = $self->{_concatenation_source_frames};
+    $self->{_concatenation_source_frames} = {};
+    return unless $transaction && $members
+        && $registry == $self->{flattened_dt}{intermediate_signals}
+        && FSM::ConcatenationInferenceSupport::_same($members, $self->_concatenation_registry_members);
+    my %copies;
+    for my $name (sort keys %{$transaction->{holders}}) {
+        my $holder = $transaction->{holders}{$name};
+        return unless FSM::ConcatenationInferenceSupport::_same(
+            $sources->{$name}, $holder->{frame}{sources});
+        my $existing = $replace_registry ? {} : $registry->{$name};
+        return unless ref($existing) eq 'HASH' && !tied(%$existing);
+        # Predict the actual existing/merged/name assignment before reset.
+        # Nested containers preserve identity; only the row's root is new.
+        my $copy = eval {FSM::ConcatenationInferenceSupport::_row(
+            {%$existing, %{$rows->{$name}}, name => $name}, $rows->{$name}{ast})} or return;
+        $copies{$name} = $copy;
+    }
+    return unless $self->_check_concatenation_live_usage($rows, $transaction);
+    return {transaction => $transaction, copies => \%copies,
+        registry => sprintf('%x', refaddr($registry)), replace => $replace_registry ? 1 : 0,
+        event_map => sprintf('%x', refaddr($self->{_concatenation_inference_events})),
+        source_map => sprintf('%x', refaddr($self->{_concatenation_source_frames})),
+        members => $replace_registry ? {} : $members};
+}
+
+sub _concatenation_registry_withheld ($self, $checkpoint) {
+    for my $pair (['_concatenation_inference_events', 'event_map'],
+        ['_concatenation_source_frames', 'source_map']) {
+        my $map = $self->{$pair->[0]};
+        return unless ref($map) eq 'HASH' && !tied(%$map) && !keys(%$map)
+            && sprintf('%x', refaddr($map)) eq $checkpoint->{$pair->[1]};
+    }
+    return 1;
+}
+
+sub _finish_concatenation_registry_copies ($self, $rows, $checkpoint, $registry_id, $installed_ids) {
+    my $restored = $self->_restore_concatenation_registry_copies($rows, $checkpoint, $registry_id, $installed_ids);
+    unless ($restored) {
+        $self->{_concatenation_source_frames} = {};
+        $self->{_concatenation_inference_events} = {};
+    }
+    return $restored;
+}
+
+sub _restore_concatenation_registry_copies ($self, $rows, $checkpoint, $registry_id, $installed_ids) {
+    return unless $checkpoint && ref($installed_ids) eq 'HASH'
+        && $self->_concatenation_registry_withheld($checkpoint);
+    my $registry = $self->{flattened_dt}{intermediate_signals};
+    return unless ref($registry) eq 'HASH' && defined($registry_id) && !ref($registry_id)
+        && $registry_id eq sprintf('%x', refaddr($registry))
+        && ($checkpoint->{replace} ? $registry_id ne $checkpoint->{registry}
+            : $registry_id eq $checkpoint->{registry});
+    my $transaction = $checkpoint->{transaction};
+    return unless FSM::ConcatenationInferenceSupport::_same(
+        $transaction->{view}, $self->_concatenation_live_usage_view($rows));
+    my %expected_members = %{$checkpoint->{members}};
+    for my $name (sort keys %$rows) {
+        my $identity = $installed_ids->{$name};
+        return unless defined($identity) && !ref($identity);
+        $expected_members{$name} = ['HASH', $identity];
+    }
+    return unless FSM::ConcatenationInferenceSupport::_same(
+        \%expected_members, $self->_concatenation_registry_members);
+    my (%holders, %sources);
+    for my $name (sort keys %{$transaction->{holders}}) {
+        my $holder = FSM::ConcatenationInferenceSupport::_copy($transaction->{holders}{$name});
+        my $source = $holder->{frame}{sources};
+        # Move only the two witnessed registry identities. Original canonical
+        # source observations/contracts and all other bindings remain fixed.
+        for my $binding ($source->{binding}, $holder->{frame}{state}{binding}) {
+            $binding->{registry} = $registry_id;
+            $binding->{registered} = $installed_ids->{$name};
+        }
+        $holder->{frame}{state}{registered} = $checkpoint->{copies}{$name};
+        $sources{$name} = $source;
+        $holders{$name} = $holder;
+        return unless FSM::ConcatenationInferenceSupport->current(
+            width_support => $self, signal_name => $name, signal_info => $rows->{$name},
+            signal_registry => $rows, source_holder => $source, holder => $holder);
+    }
+    # A later semantic getter must not bless an earlier changed candidate.
+    # Keep both installed maps empty until this whole-view raw barrier passes.
+    for my $name (sort keys %holders) {
+        return unless FSM::ConcatenationInferenceSupport->live_usage_current_raw(
+            width_support => $self, signal_name => $name, signal_info => $rows->{$name},
+            signal_registry => $rows, holder => $holders{$name});
+    }
+    return unless $self->_concatenation_registry_withheld($checkpoint)
+        && FSM::ConcatenationInferenceSupport::_same(
+            $transaction->{view}, $self->_concatenation_live_usage_view($rows))
+        && FSM::ConcatenationInferenceSupport::_same(
+            \%expected_members, $self->_concatenation_registry_members);
+    $self->{_concatenation_source_frames} = \%sources;
     $self->{_concatenation_inference_events} = \%holders;
 }
 

@@ -816,8 +816,20 @@ fixed and mutable guards, ordered/repeated sources, nested explicit literals and
 width-one rank. The selected inline RHS profiles expose no concatenation candidate;
 they supply no helper-event authority. Unowned changes during rendering cannot
 borrow later annotations, and original errors clear partial events before clean
-backend reuse. This pass grants no completed collection policy. Registry
-replacement and completed collection remain separate.
+backend reuse. This pass grants no completed collection policy.
+Actual registry synchronization now checkpoints paired original source/intrinsic
+holders before graph and copy callbacks. It predicts the complete existing,
+merged and `name` copy, binds the actual installed map/row identities, and keeps
+the original canonical source observations and contracts. Both installed proof
+maps remain withheld through semantic validation and a final whole-view raw
+barrier. Ordinary merge preserves independent existing metadata; reset drops it
+according to the existing copy contract. Missing/stale/unpaired proof, copied
+views, equal object replacements, partial/extra installs, changed nested metadata,
+proof-map interference and late source/getter mutations cannot refresh. Rejection
+clears partial proof; original callback exceptions and clean backend reuse preserve.
+Optional providers retain the original graph callback's scalar/list/void contexts
+and exact returned values, including the absent-provider branch.
+Completed collection policy remains separate.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -847,6 +859,10 @@ The [annotation closure regression](../../../t/2287-concatenation-annotation-clo
 and [native conservation replay](../../../docs/audits/concat-annotation-closure-20261031/replay.py)
 join the full sequence to these actual guard/RHS boundaries. This is focused
 integration qualification; generic ranges and external execution remain open.
+The [registry carry regression](../../../t/2288-concatenation-registry-carry.t) and
+[exact predecessor/native replay](../../../docs/audits/concat-registry-carry-20261031/replay.py)
+qualify actual registry reset and merge with paired source/event preservation,
+hostile callbacks and weak lifetimes. Source-only frames cannot mint a new event.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

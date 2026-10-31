@@ -62,8 +62,10 @@ sub _raw {
 sub _observe {
     my (%args) = @_;
     my $before = _raw(%args) or return;
-    my $sources = $args{width_support}->concatenation_generation_sources(
-        @args{qw(signal_name signal_info)}) or return;
+    my $sources = exists($args{source_holder})
+        ? FSM::ConcatenationGenerationSourceSupport->current(%args, holder => $args{source_holder})
+        : $args{width_support}->concatenation_generation_sources(@args{qw(signal_name signal_info)});
+    return unless $sources;
     my $after = _raw(%args) or return;
     return unless _same($before, $after);
     return {state => $after, sources => $sources};
@@ -398,7 +400,11 @@ annotations, and finishes with a getter-free whole-transaction barrier. The
 single-row fallback shares that transaction across its two actual queries and
 four scalar assignments, admitting only the actual supplied installed row and
 computed results. Invalid-name defaults and cached no-write returns preserve.
-Registry replacement and completed policy remain separate.
+Actual registry synchronization preserves paired original source/event holders
+through its exact complete existing/merged/name copies and witnessed installed
+registry identities. Both installed proof maps remain withheld across callbacks
+and semantic revalidation, followed by whole-view raw checks. Source observations
+are never recaptured. Completed policy remains separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.
@@ -425,6 +431,10 @@ writes. Return a detached holder; this observer alone attests no branch executio
 
 Return the detached record only while the entire current holder still agrees.
 Malformed or unsupported observations return undef without installing state.
+The installed registry transaction may additionally pass C<source_holder> to
+validate a staged original source frame without publishing it. It must first
+prove the old source/event pair and predict only actual registry identity/copy
+changes; this observer neither performs that transaction nor installs authority.
 
 =head2 publication_checkpoint(..., holder => HOLDER)
 

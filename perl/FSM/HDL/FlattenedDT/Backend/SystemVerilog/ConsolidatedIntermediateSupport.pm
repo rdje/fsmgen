@@ -336,12 +336,22 @@ are graph holders restored in dependency order against those identities and
 complete merged state. Copied views, substituted equal rows, partial installs
 and changed source/constraint state cannot supply a refresh. This preserves
 intrinsic diagnostics, not completed graph policy or target range admission.
+The default concatenation protocol separately withholds paired original source
+and intrinsic holders before these callbacks. It predicts complete candidate
+copies and admits only witnessed installed map/row identities, with original
+canonical source observations and whole-view final raw validation. Neither
+proof map is published on stale, substituted, partial or callback-mutated input;
+completed concatenation policy and symbolic sums remain separate.
 
 =cut
 
 sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $replace_registry = 0) {
     my $ctx = $self->{flattened_dt};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $concat_protocol = $width_support && $width_support->can('_checkpoint_concatenation_registry_copies')
+        && $width_support->can('_finish_concatenation_registry_copies');
+    my $concat_checkpoint = $concat_protocol
+        ? $width_support->_checkpoint_concatenation_registry_copies($all_intermediate_signals, $replace_registry) : undef;
     my $graph_protocol = $width_support && $width_support->can('_checkpoint_graph_registry_copies')
         && $width_support->can('_finish_graph_registry_copies');
     my $graph_checkpoints = $graph_protocol
@@ -351,6 +361,8 @@ sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $re
         ? $width_support->_checkpoint_factorized_registry_copies($all_intermediate_signals, $replace_registry) : {};
     $ctx->{intermediate_signals} = {} if $replace_registry;
     $ctx->{intermediate_signals} //= {};
+    my $registry_id = sprintf('%x', refaddr($ctx->{intermediate_signals}));
+    my %installed_concat_ids;
 
     for my $signal_name (keys %{ $all_intermediate_signals || {} }) {
         my $signal_info = $all_intermediate_signals->{$signal_name} || {};
@@ -365,14 +377,34 @@ sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals, $re
             name => $signal_name,
         };
         $ctx->{intermediate_signals}{$signal_name} = $replacement;
+        $installed_concat_ids{$signal_name} = sprintf('%x', refaddr($replacement))
+            if $concat_checkpoint;
         $installed_graph_ids{$signal_name} = sprintf('%x', refaddr($replacement))
             if exists($graph_checkpoints->{$signal_name});
         $width_support->_finish_factorized_registry_copy(
             $signal_name, $signal_info, $checkpoints->{$signal_name}, $replacement)
             if $checkpoints->{$signal_name};
     }
-    $width_support->_finish_graph_registry_copies($all_intermediate_signals, $graph_checkpoints, \%installed_graph_ids)
-        if $graph_protocol;
+    # This used to be the method's final expression. Preserve its caller
+    # context and exact return, including the false optional-provider branch.
+    my $want = wantarray;
+    my (@result, $result);
+    if (!defined($want)) {
+        $width_support->_finish_graph_registry_copies($all_intermediate_signals, $graph_checkpoints, \%installed_graph_ids)
+            if $graph_protocol;
+    } elsif ($want) {
+        @result = $graph_protocol
+            ? $width_support->_finish_graph_registry_copies($all_intermediate_signals, $graph_checkpoints, \%installed_graph_ids)
+            : $graph_protocol;
+    } else {
+        $result = $graph_protocol
+            ? $width_support->_finish_graph_registry_copies($all_intermediate_signals, $graph_checkpoints, \%installed_graph_ids)
+            : $graph_protocol;
+    }
+    $width_support->_finish_concatenation_registry_copies(
+        $all_intermediate_signals, $concat_checkpoint, $registry_id, \%installed_concat_ids)
+        if $concat_protocol;
+    return $want ? @result : $result;
 }
 
 =head2 prune_sampled_value_intermediate_chains
