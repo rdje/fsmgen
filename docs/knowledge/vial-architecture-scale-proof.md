@@ -9,6 +9,7 @@ answers:
   - does VIAL architecture scale prove whole product big and really big designs?
   - which execution graph scale limits are reachable before earlier caps?
   - what exact workloads prove VIAL backend emission scale?
+  - why do backend foundation input and evaluation hashes change after DUT repairs?
   - where are the VIAL portable backend source byte boundaries?
   - why does native UVM reject the portable backend scale ladder?
   - how are VIAL runtime-stream measurement inputs constructed without tools?
@@ -59,7 +60,7 @@ answers:
   - which immutable VIAL calibration files need current revalidation or explicit versioning?
   - how is the immutable VIAL calibration publication dispositioned?
   - what must happen before VIAL architecture scale regression budgets are promoted?
-date: 2026-09-02
+date: 2026-10-31
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -222,24 +223,17 @@ quarters of that cap: the 15,000 probe used 47,502,039 bytes and left
 ordinary source-to-emission and seals 32,098,531/47,505,049-byte final graphs;
 their changed provenance bytes are measured identities, not probe adjustments.
 
-Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
-`0075` selects checked-AHB backend routes: portable-SV oracle revision 2
-accepts `T=6,318` and rejects `6,319`; portable VHDL/OSVVM v2 selects
-`29,505/29,506` after trace-v2/result-contract refinements; native UVM emits
-only `T=21` and rejects `T=22`. The closed `BackendEmissionAuthority`, repair
-parent `.17.2.6.2`, caller-sealed foundation `.17.2.6.3.1`, four profile
-ladders, and family closure `.17.2.6.3.6` preserve exact inventories, maps,
-checks, content-addressed reruns, atomic rejection, and cleanup. Runtime
-`.17.2.7.1` constructs three profiles/five levels without provider/tool
-execution or runtime/capacity claims. Exact historical counts remain in the
-task evidence and decisions `0075`/`0055`, not duplicated here.
+Backend/reference ladders, source-byte boundaries, balanced-private admission,
+family closure, runtime expectations and exact historical counts route to the
+canonical book and decisions `0075`/`0077`/`0055`. Exact former prose/questions and
+source hash retain in `docs/audits/push-readiness-20261025/backend-foundation-cause-20261031.json.gz`.
 
-Decision `0077` resolves balanced `.17.2.7.2` through a private caller-sealed
-direct-IAL1 revision-2 route while public AHB/revision 1 remains unchanged. Its
-`1+1+126+32+16+1,744+128` equation yields 2,048 bindings; canonical composition,
-portable-SV emission, and the fifteen-runtime/one-balanced partition reject
-hostile evidence and clean staging. Dedicated docs retain exact artifacts/maps;
-provider, runtime, support, performance, capacity, and boundary remain unclaimed.
+Current backend foundation inputs include generated DUT text. Exact own historical
+public generation reproduces the frozen input digest; complete current differences
+are scalar guard spelling and decision `0111` compatible-fan-in assertion removal.
+T1645 now checks current independent public emission and reprojects only the
+bridge/DUT-dependent hashes to its complete historical oracle. A stale-DUT control
+must fail. Current production, provider/runtime and full qualification stay separate.
 
 Completed `.17.3.1` supplies twelve closed stages, correctness-first 250-ms
 sampling, smaller-of timeouts, disjoint artifact census, same-volume atomic

@@ -7,12 +7,15 @@ use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
+use IO::Uncompress::Gunzip qw(gunzip $GunzipError);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::VIAL::ArchitectureScaleBackendEmission;
 use FSM::VIAL::ArchitectureScaleWorkload;
+use FSM::Test::AhbReference qw(current_ahb_report_sha256 current_ahb_backend_inputs);
 
 my $class = 'FSM::VIAL::ArchitectureScaleBackendEmission';
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -31,6 +34,40 @@ my @levels = qw(
     reference_v1 gate_candidate_v1 qualification_candidate_v1
     limit_v1 over_limit_v1
 );
+my $current_bridge_sha256 = current_ahb_report_sha256();
+my $current_backend_inputs = current_ahb_backend_inputs();
+my $current_backend_inputs_sha256 = sha256_hex($json->encode($current_backend_inputs));
+my $historical_compressed = slurp_raw(repo_path('t/data/vial-backend-foundation-historical-inputs.json.gz'));
+my $historical_json;
+gunzip(\$historical_compressed => \$historical_json)
+    or die "Cannot read the sealed historical backend input witness: $GunzipError\n";
+my $historical_backend_inputs = $json->decode($historical_json);
+die "Historical backend input witness changed\n"
+    unless sha256_hex($json->encode($historical_backend_inputs))
+        eq '0b826052e52df3d59d08fb49f4a4ff18a228b7ce8e7282af0e56b2121b9e8452';
+
+sub backend_rerun_identity {
+    my ($stages) = @_;
+    return 'rerun/' . sha256_hex($json->encode({first => $stages, second => $stages}));
+}
+
+sub backend_evaluation_identity {
+    my ($value) = @_;
+    my $projection = clone($value);
+    delete $projection->{evaluation_identity};
+    return 'backend-emission-evaluation/' . sha256_hex($json->encode($projection));
+}
+
+sub historical_backend_projection {
+    my ($value) = @_;
+    my $projection = clone($value);
+    $projection->{stage_identities}{bridge_manifest_sha256} =
+        'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca';
+    $projection->{stage_identities}{backend_inputs_sha256} =
+        sha256_hex($json->encode($historical_backend_inputs));
+    $projection->{rerun_identity} = backend_rerun_identity($projection->{stage_identities});
+    return $projection;
+}
 
 sub candidate {
     my (%override) = @_;
@@ -248,6 +285,8 @@ subtest 'canonical producers yield deterministic caller-sealed ExecutionIR' => s
         'build returns exact canonical ExecutionIR');
     is(ref($built->{backend_inputs}), 'HASH',
         'build retains only canonical backend inputs derived from HIAL');
+    is($json->encode($built->{backend_inputs}), $json->encode($current_backend_inputs),
+        'complete current DUT input bytes and metadata match independent public file generation');
     is($built->{plan}{schema}, 'fsmgen.vial_plan.v1',
         'build returns the target-neutral plan projection');
 
@@ -265,13 +304,20 @@ subtest 'canonical producers yield deterministic caller-sealed ExecutionIR' => s
         qr{\Abackend-emission-evaluation/[0-9a-f]{64}\z},
         'evaluation is content-addressed');
     is($evaluation->{evaluation_identity},
+        backend_evaluation_identity($evaluation),
+        'current foundation identity covers its complete bytes');
+    my $historical = historical_backend_projection($evaluation);
+    is(backend_evaluation_identity($historical),
         'backend-emission-evaluation/e7d9a4e1696edbd9a02c01182637518751315b418ab1886849c7b56907fe24fa',
-        'foundation evaluation identity is frozen');
+        'every other historical foundation field and JSON kind remains frozen');
     like($evaluation->{rerun_identity}, qr{\Arerun/[0-9a-f]{64}\z},
         'independent route tuple has its own identity');
     is($evaluation->{rerun_identity},
+        backend_rerun_identity($evaluation->{stage_identities}),
+        'current canonical rerun covers its complete stage tuple');
+    is($historical->{rerun_identity},
         'rerun/172c041973987cd89b82de60ca0311d850f505a8bf5ebfa172123f52fa2dcbf1',
-        'independent canonical rerun identity is frozen');
+        'only proved bridge and DUT input changes explain the historical rerun');
     for my $stage (qw(
         semantic_ir_sha256 bridge_manifest_sha256 execution_ir_sha256
         backend_inputs_sha256 plan_sha256
@@ -283,11 +329,11 @@ subtest 'canonical producers yield deterministic caller-sealed ExecutionIR' => s
         semantic_ir_sha256 =>
             'a83dbb89ecf5113168db2bd92a80697c0a3bf181771cbc7a0f564a6afd0f8750',
         bridge_manifest_sha256 =>
-            'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
+            $current_bridge_sha256,
         execution_ir_sha256 =>
             '7d54be68bc691e3c05c4c94405f0ad278b9206032f8b9cde5dc3d7bf13714509',
         backend_inputs_sha256 =>
-            '0b826052e52df3d59d08fb49f4a4ff18a228b7ce8e7282af0e56b2121b9e8452',
+            $current_backend_inputs_sha256,
         plan_sha256 =>
             'eaa8cc70fa25a4382921f40112c0f3f50aec4045caccff2e6a8f98cfbc1c0942',
     }, 'all canonical stage identities are frozen together');

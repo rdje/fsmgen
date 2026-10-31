@@ -15,9 +15,11 @@ use FSM::Adapter::IAL2::PPIF;
 use FSM::Adapter::ISF;
 use FSM::HIAL::VIALBridge::Builder;
 use FSM::ProjectDataLocality qw(repository_root);
+use FSM::Pipeline::HDLGenerator;
 
 our @EXPORT_OK = qw(
     checked_ahb_reference current_ahb_report_sha256 reference_contract_sha256
+    current_ahb_backend_inputs
 );
 
 my $json = JSON::PP->new->canonical(1)->utf8(1);
@@ -77,6 +79,38 @@ sub checked_ahb_reference {
 sub current_ahb_report_sha256 {
     die "current_ahb_report_sha256 expects no arguments\n" if @_;
     return checked_ahb_reference()->{report_sha256};
+}
+
+# Independent file-backed generation: this does not call the VIAL PlanBuilder
+# whose complete backend-input graph the foundation test is checking.
+sub current_ahb_backend_inputs {
+    die "current_ahb_backend_inputs expects no arguments\n" if @_;
+    my $source_id = 'ppif/ahb_lite_subordinate.ppif';
+    _read_fixture($source_id); # apply the same regular/local fixture contract
+    my $path = File::Spec->catfile(repository_root(), split m{/}, $source_id);
+    my %inputs;
+    for my $language (qw(systemverilog vhdl)) {
+        my $result = FSM::Pipeline::HDLGenerator->new(
+            debug_level => 0, target_language => $language, quiet => 1, strict_mode => 1,
+        )->generate_hdl_from_file($path);
+        die "Current AHB $language generation lacks its exact module/source\n"
+            unless ref($result) eq 'HASH' && ref($result->{module_info}) eq 'HASH'
+                && ($result->{module_info}{module_name} // '') eq 'ahb_lite_subordinate'
+                && defined($result->{hdl_code}) && !ref($result->{hdl_code});
+        my $text = $result->{hdl_code};
+        $text =~ s{// Date: [^\r\n]*}{// Date: omitted by deterministic VIAL backend}g
+            if $language eq 'systemverilog';
+        $text =~ s/\r\n?/\n/g;
+        $text .= "\n" unless $text =~ /\n\z/;
+        my $name = 'ahb_lite_subordinate';
+        $inputs{$language eq 'systemverilog' ? 'dut_systemverilog' : 'dut_vhdl'} = [{
+            unit_id => "unit/$name", source_id => $source_id,
+            artifact_name => $name . ($language eq 'systemverilog' ? '.sv' : '.vhd'),
+            ($language eq 'systemverilog' ? 'module_name' : 'entity_name') => $name,
+            text => $text, byte_length => bytes::length($text), content_sha256 => sha256_hex($text),
+        }];
+    }
+    return $json->decode($json->encode(\%inputs));
 }
 
 sub reference_contract_sha256 {

@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **144** uniquely owned question entries.
+> **3** facts · **145** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -134,6 +134,7 @@
 - q="why did portable Verilator runtime reachability expose a phase-order defect?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did the first hosted VIAL regression gate fail its real command?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why did the portable SystemVerilog scale oracle move to revision 2?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="why do backend foundation input and evaluation hashes change after DUT repairs?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why does VIAL complete-corpus validation isolate each whole profile operation?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why does VIAL complete-corpus validation separate capture and execution revisions?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why does VIAL keep a cap that a canonical route cannot reach?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
@@ -163,7 +164,7 @@ _VIAL architecture-scale caps are component ceilings with explicit route authori
 
 _VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims_
 
-- **date:** 2026-09-02 · **status:** current
+- **date:** 2026-10-31 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-proof.md`](../../docs/knowledge/vial-architecture-scale-proof.md)
 
 ### vial-architecture-scale-regression-promotion-capture

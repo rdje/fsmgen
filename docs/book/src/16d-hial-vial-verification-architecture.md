@@ -2224,12 +2224,16 @@ frozen. A changed protocol role must break the contract identity.
 The bridge and execution-topology gates share this checked current reference.
 Caller source substitutions, wrong JSON count types and shared mutable oracle
 state are rejected; the existing topology/count/negative checks remain.
-Downstream execution, checking and backend-foundation identity checks are
-being requalified after generated-byte provenance changed. Their remaining
-historical bridge and derived-identity mismatches are tracked in the
-[publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
-Required SPECFORGE feature implementation has priority; the remaining caller
-repairs resume when needed for its validation and publication.
+The checking and backend foundation tests now verify current byte identities
+against independent public generation and reconstruct their complete historical
+oracles. Backend inputs include actual DUT text: scalar guard spelling and the
+compatible same-value fan-in policy changed those bytes. The historical input
+witness reproduces the original hashes exactly; the current DUT is generated
+and checked separately. No historical HDL is run as current behavior. Other
+execution/profile identity repairs and full local/hosted qualification remain
+owned by the [publication task](../../tasks/PUBLICATION-REGRESSION-REPAIRS.md).
+The director-requested book publication currently has priority over the saved
+required SPECFORGE implementation frontier.
 Every accepted candidate records exactly the `IAL1 -> IAL0`
 review route, while the AHB reference records `IAL2 -> IAL1 -> IAL0`.
 

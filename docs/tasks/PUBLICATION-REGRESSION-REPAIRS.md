@@ -240,10 +240,10 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and repair backend-foundation input and derived identities.`
   Acceptance: `P1 after .2. Capture exact backend inputs/stage tuples/evaluation/rerun and compare current/historical fixture data as needed. Explain every changed field using current contracts; do not infer backend-input drift from the bridge alone. Preserve exact provider/profile/ownership/metrics/refusal/oracle checks, no native opt-in or pin/submodule changes. Small causal repair(s), public book/docs and normal focused commit.`
-  Verification: `T1645 actual RED1: evaluationef2f5a versus e7d9a4, rerune3457e versus172c04; stage dictionary first reports backend_inputs2bfa10 versus0b8260. Historical complete output is retained. Current director-requested publication reproduction on2026-10-31 after5dd05ab72 instead fails earlier: the actual PlanBuilder HIAL source returns Direct literal emission requires current completed source intent, so no backend input graph/evaluation exists. This falsifies an identity-only current diagnosis. Own supported AHB generation as a prerequisite under this leaf, reproduce through public PPIF/IAL0 interfaces and inspect the bounded actual selected AST before selecting the narrow repair. Preserve the original current RED/probe, do not refresh absent identities or weaken proof. Backend tuple diagnosis resumes only after that production regression is resolved.`
+  Verification: `Current supported AHB generation is restored by .1's precise scalar-family selector. .2 independently reproduces the historical public backend foundation and attributes every actual input artifact delta, then retains current direct generation and the complete frozen historical evaluation/rerun oracles. Both children commit verified. Remaining execution/profile candidates and full CI/hosted publication stay open under .4/.13/.69.3.`
   Commit: `pending`
   Children: `PUBLICATION-REGRESSION-REPAIRS.17.2.3.1, PUBLICATION-REGRESSION-REPAIRS.17.2.3.2`
 
@@ -255,27 +255,26 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Resume backend input and derived identity diagnosis after current AHB generation is restored.`
   Acceptance: `After .1 commits clean, rerun original T1645, capture actual backend inputs and exact foundation tuples, independently reconstruct old input/evaluation/rerun hashes from only proven provenance deltas, retain every other frozen contract/negative check and qualify the smallest test repair. No unexplained digest refresh or production/provider/pin changes.`
-  Verification: `Production prerequisite .1 restores HIAL generation. Current T1645 again reaches exactly the bridge/backend-input/evaluation/rerun historical identity comparison; complete graph/projection diagnosis now resumes after the .1 commit.`
-  Commit: `pending`
+  Verification: `After55c92474b restores AHB, actual current graph/evaluation again reach only known identities. git log -S locates their frozen input at8e9553a3b. A same-volume archive of only this project's public code/fixtures/resources reproduces exact old backend input0b8260, evaluatione7d9a4 and rerun172c04. All406 original archived resource files are byte-verified against their own Git blobs; no historical implementation is modified, no other repo/submodule is read internally or written, and no external HDL tool runs. Missing root README, historical grammar/plugin resources and a later-only foundation method are preserved as failed probe prerequisites before complete historical public evaluate succeeds. Full artifact/metadata comparison isolates current changes to scalar ahb_phase_pending_q truthiness spelling and decision0111 compatible-fan-in assertion removal; precise signal/operator normalization plus only same-value-assertion-line removal makes both complete HDLs equal, with no broad whitespace normalization. The authenticated old DUT input fixture retains the original digest. T1645 now compares full current inputs to independent file-backed PPIF generation, independently derives current tuple/evaluation IDs, then substitutes only proved bridge/DUT-dependent hashes to match every other complete historical field and JSON kind. All original counts/metrics/caller/refusal/staging/cleanup checks remain. The final T1645/T1629/T1551/T1211 focused gate returns0/Files4 Tests20. A stale-DUT-as-current oracle control returns1 at distinguishing input/stage assertions; current bridge and production guards remain live. One initial focused invocation guessed a nonexistent T1211 path; retain its2 and corrected exact file command. Original/current/historical products, full diffs, four prerequisite attempts, resource/test hashes and separate verification legs retain in backend-foundation-cause-20261031.json.gz and dated complete receipts. KMap preserves every question and prior source/hash while routing duplicate ladder prose to canonical docs at nonpositive byte growth. Production modules/capabilities remain unchanged. Book/source/index/claim and mandatory normal staged gates precede commit; remaining19 execution/profile candidates, full CI and exact-SHA hosted publication remain open.`
+  Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4`
-  Status: `deferred`
-  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
+  Status: `active`
   Goal: `Classify and migrate the remaining execution reference checks in small verified groups.`
   Acceptance: `After the common reference and derived-foundation repairs, inventory the19 remaining exact-match execution files, group safe slices before edits and verify each actual default outcome. Adopt current reference only where the same core source/contract is proved; retain all existing semantic/plan identities, counts, limits, source maps, forgery/caller/rerun checks. Document any unrun explicit-large branch rather than enabling unsafe work or claiming coverage. Own any new defect, commit each group, then .13 exclusive full6/current capacity/checkpoint before push.`
-  Verification: `Remaining membership is derivable from remaining-identity-scan.json minus planning T1556 and representative T1604/T1629/T1645. No remaining-file repair/runtime census yet.`
+  Verification: `Remaining membership is derivable from remaining-identity-scan.json minus planning T1556 and representative T1604/T1629/T1645. Director2026-10-31 selects publication; foundation prerequisites now finish. Derive remaining exact-match candidates from current source and the prior manifest, group safe causal slices and reproduce defaults before each repair; do not launch full6 with known unclassified failures.`
   Commit: `pending`
 
 ## Current Frontier
 
-Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book after the restored I2C path. .17.2.2 now owns the next demonstrated checking-foundation blocker, followed by backend/remaining bounded candidate repairs and exclusive full CI. Required implementation remains saved under ISF-REDUCTION-DELIVERY; resume it only after requested publication qualification.
+Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. I2C/AHB generation and checking/backend foundation prerequisites qualify in their own commits. .17.2.4 now owns remaining candidate classification and bounded repairs before exclusive full CI. Required implementation remains saved under ISF-REDUCTION-DELIVERY; resume it only after requested publication qualification.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.3` | `active` | Director-requested publication: diagnose backend-foundation input/derived identities after the checked foundation repair. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.4` | `active` | Classify and repair remaining execution/profile identity candidates in bounded causal groups before full CI and publication. |
 
 ## Decisions
 
@@ -429,3 +428,9 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book after the res
 - [x] **ROOT CAUSE (WHY + WHERE)** — Public --check --json and current T1645 return a literal intent refusal before backend input generation. Bounded native AHB observations locate typed comparisons/logical-not below bitwise roots. The selector recursed through their operands even though shared Core inference gives a scalar result independent of literal widths. The exact old-selector control reproduces that requirement error with all source/emission guards live.
 - [x] **ADDRESSED (verified)** — Typed scalar operators now terminate only literal-family selection. T2297 verifies actual scalar/data declarations and separately emitted literal children; missing or changed true data intent still fails. Public strict AHB check succeeds. Complete focused/probe/control streams and tested/final executable identity proof retain under ahb-selector-proof-20261031.
 - [x] **NO REGRESSION** — All tests successful; Files=4, Tests=16 for T2297/T2296/T1309/T2268. The old-selector control returns4, public AHB check returns0, and T1645 reaches only the separately owned historical identities rather than missing production input. POD/book/copied-source/Knowledge Map and final staged doctrines qualify this slice; full CI and hosted qualification remain open.
+
+## Acceptance Checklist — `.17.2.3.2` backend foundation provenance
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S locates the frozen input hash at8e9553a3b. Its own public historical generation reproduces every old foundation hash. Complete current/historical artifacts differ only by scoped scalar truthiness spelling and decision0111 same-value assertion policy; all metadata and complete remaining text agree under exactly those proved deltas. Full resource/producer identities and failed prerequisite probes retain in the dated cause receipt.
+- [x] **ADDRESSED (verified)** — T1645 checks current complete DUT inputs through an independent public file-generation route and reconstructs the unchanged historical stage/evaluation/rerun oracles with a digest-authenticated historical input witness. All other original semantic/count/negative checks remain. A stale-DUT-as-current control fails the new distinguishing current-input assertions.
+- [x] **NO REGRESSION** — All tests successful; Files=4, Tests=20 in backend-foundation-qualified-20261031 for exact T1645/T1629/T1551/T1211. The stale control returns1, and final tested source hashes preserve. Book/copied-source/KMap/claim and normal staged doctrines qualify this test-only repair; remaining candidates, full CI and hosted results stay open.
