@@ -233,16 +233,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.2`
-  Status: `deferred`
-  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
+  Status: `done`
   Goal: `Diagnose and repair checking-foundation derived identities.`
   Acceptance: `P1 after .1. Capture full current stage/evaluation/rerun tuples through actual own public/test integration, derive exact identity recipes and reconstruct the old expected identities by only independently proved provenance changes. If reconstruction fails, compare the actual historical public fixture before choosing a fix. Preserve model/checking semantics, exact metrics and all adversarial cases. No blind digest refresh; meaningful frozen contract/current-byte checks and normal focused commit.`
-  Verification: `T1629 actual RED1: bridge240db instead ofa456, checking-evaluation6cf729 instead of9b6746, rerun138bb8 instead ofceefc4. Other current assertions pass; identity causes remain to be established.`
-  Commit: `pending`
+  Verification: `Current guarded T1629 reproduces exactly the stale bridge/evaluation/rerun failures. The dated projection producer independently hashes the full current tuple/report and joins the current bridge to the checked public PPIF/ISF/Builder reference; replacing only the bridge and its dependent rerun/evaluation fields reconstructs both exact historical hashes. Every other evaluation field and JSON kind therefore retains the old oracle. T1629 now checks current byte-derived identities, the current independently checked bridge, the complete historical projection and an altered semantic-metric adverse case; no production code or frozen expected value changes. Existing construction/report/caller/staging/cleanup and metric/count/nonclaim checks remain. Final T1629/T1602 focused gate returns0/Files2 Tests12; complete source/projection/first failures and corrected invocation are retained under push-readiness-20261025/checking-foundation-*-20261031. The first green command included a nonexistent guessed second path and returned2 despite T1629 passing; preserve it and qualify the actual existing T1602 path. Re-derivation is exact independent tuple/report hashing plus current public bridge; falsification is the preserved old full evaluation and changed metric; durability is the tracked focused tests/producer/receipts. The book explicitly labels old hashes as historical and explains current derivation. KMap keeps every answer question and exact former card source/hash while routing duplicate random/family run prose to canonical book/task at nonpositive card byte growth. Normal book/POD/copied-source/derived metadata/staged hook qualification precedes commit. Full CI/hosted and backend/remaining candidate repairs stay open.`
+  Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3`
-  Status: `deferred`
-  Blocked by: `Director-required SPECFORGE implementation priority; reactivate only for a demonstrated required-validation blocker or when required features enter publication qualification.`
+  Status: `active`
   Goal: `Diagnose and repair backend-foundation input and derived identities.`
   Acceptance: `P1 after .2. Capture exact backend inputs/stage tuples/evaluation/rerun and compare current/historical fixture data as needed. Explain every changed field using current contracts; do not infer backend-input drift from the bridge alone. Preserve exact provider/profile/ownership/metrics/refusal/oracle checks, no native opt-in or pin/submodule changes. Small causal repair(s), public book/docs and normal focused commit.`
   Verification: `T1645 actual RED1: evaluationef2f5a versus e7d9a4, rerune3457e versus172c04; stage dictionary first reports backend_inputs2bfa10 versus0b8260. Complete output is retained. No input/tuple repair selected.`
@@ -258,11 +256,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-Director priority 2026-10-25: required SPECFORGE .7/.8/.10/.12 block the downstream project. After .17.2.1 commits clean, resume ISF-REDUCTION-DELIVERY.2.3.2.4.2; then remaining required aggregate ports, durations and named timers follow checked dependencies. Remaining publication repairs stay owned and resume only for demonstrated required validation/publication.
+Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book after the restored I2C path. .17.2.2 now owns the next demonstrated checking-foundation blocker, followed by backend/remaining bounded candidate repairs and exclusive full CI. Required implementation remains saved under ISF-REDUCTION-DELIVERY; resume it only after requested publication qualification.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.2` | `deferred` | Required SPECFORGE feature work controls selection; resume this owned repair only for demonstrated required validation/publication. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.17.2.3` | `active` | Director-requested publication: diagnose backend-foundation input/derived identities after the checked foundation repair. |
 
 ## Decisions
 
@@ -404,3 +402,9 @@ Director priority 2026-10-25: required SPECFORGE .7/.8/.10/.12 block the downstr
 - [x] **ROOT CAUSE (WHY + WHERE)** — Preserved actual default RED reports at t/1604-vial-architecture-scale-execution-topology.t line 175: current240db differs from historicala456, solely the exact generated-byte provenance evolution qualified by .16. Duplicate frozen raw-bridge constants require one checked current reference while retaining the frozen contract and raw metadata. First refactor integration also reports undeclared %report at T1602 lines176/177; the exact wrong source/refusal is retained and those pointer arrows are corrected.
 - [x] **ADDRESSED (verified)** — Test-only AhbReference uses fixed owned public PPIF/ISF/Builder input, validates raw provenance values/JSON types and every-other-field contract, rejects substituted source/digest arguments and returns fresh data. T1602/T1604 share it, retain literal contract/count/stage/negative checks, and reject altered role, mutated caller state and a genuine numeric-string count. All three syntax checks and final integration return0. Latest director instruction is preserved: this unit commits clean, then required .7/.8/.10/.12 blockers resume under decision0121; no more independent CI cleanup first.
 - [x] **NO REGRESSION** — Final focused All tests successful, Files=4, Tests=18, with original default-large skip retained. Final native book/POD/current-source/index/KMap checks pass; knowledge-map: OK. No production module/fixture or product contract changes. Derived checking/backend/remaining-caller gaps remain owned and deferred for required validation/publication. Normal staged/commit gates complete the handoff.
+
+## Acceptance Checklist — `.17.2.2` checking foundation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current T1629 fails only bridge and dependent evaluation/rerun identities. The actual git log -S anchor and dated projection producer locate the frozen baseline and prove that only the independently checked changed bridge hash reconstructs both historical identities. Complete native RED, full projected reports and exact producer hashes retain under checking-foundation-cause-20261031.json.gz.
+- [x] **ADDRESSED (verified)** — T1629 now checks current exact byte-derived identities and the independently checked public bridge, then reconstructs the complete historical foundation against unchanged frozen hashes. An altered model metric fails the historical digest; all other original checks remain. Corrected focused T1629/T1602 returns0 with complete preserved output.
+- [x] **NO REGRESSION** — All tests successful; Files=2, Tests=12 in checking-foundation-qualified-20261031. Current bridge reference freezes all non-provenance fields, and original metrics, negative/caller, staging and cleanup tests remain. Native book/POD/copied-source/KMap and final staged doctrines qualify this test-only repair; full CI and hosted publication remain unrun.

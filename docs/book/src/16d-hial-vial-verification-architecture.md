@@ -4085,7 +4085,7 @@ no operations, while the lower serialized-plan projection still rejects its
 route boundary before decision, ExecutionIR, or report materialization;
 accepted terminal bytes and replay semantics remain unchanged.
 
-The frozen foundation route uses the checked AHB VIAL content as a deliberately
+At the original frozen baseline, the foundation uses checked AHB VIAL as a deliberately
 non-axis-evaluated source witness. Its workload identity is
 `workload/7a125500c716e333ac8849ca5594849dc52e34380f0ba0ec416a2e12975247c7`;
 its SemanticIR, bridge, ExecutionIR, and plan digests are respectively
@@ -4103,11 +4103,21 @@ transaction reconstruction, and an LSB-first coverage vector capped at 1,000,000
 entries/125,000 bytes with independent byte equality. It claims qualification-only status
 and denies capability, support, performance, capacity, backend, runtime, and owned-level authority.
 
-Independent complete-route reruns reproduce every stage digest; the foundation keeps its
+Independent complete-route reruns reproduce every current stage digest. The historical foundation had its
 `rerun/ceefc4f30…` identity and each generated level has its own content address. Canonical
 regeneration rejects construction/evaluation mutation. Success and consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
 Focused `t/1635` freezes exactly 32 selected shapes and eight rejected references, byte-equal gate reports, hostile-caller rejection, nonclaims, and cleanup. Guarded default `t/1629`-`t/1635` passes at Files=7/Tests=36 in 166 seconds; the complete exact `t/1630`-`t/1634` matrix passes at Files=5/Tests=28 in 561 seconds under the 4,096-MiB RAM guard.
+Current generated IAL0 provenance changes the bridge content address and therefore
+the foundation's rerun and evaluation identities. The foundation regression now
+uses the independently checked current AHB bridge, then projects only that bridge
+hash and its dependent identities back to the historical baseline. The complete
+historical evaluation still matches its frozen hash; every semantic field, JSON
+kind, plan, metric, diagnostic and nonclaim remains covered. A changed metric
+fails that projection. The old hashes above are historical evidence, and the
+current identity is derived from current bytes. Publication/full-suite and other
+scale-family qualification remain separately owned.
+
 Provider-free runtime-stream construction is complete through `FSM::VIAL::ArchitectureScaleRuntimeStream`. It owns exactly fifteen qualification shapes: portable SystemVerilog, portable VHDL, and qualified OSVVM, each at the reference, gate-candidate, qualification-candidate, limit, and over-limit level. `construct` admits only the frozen checked-AHB HIAL/VIAL source pair and derives the qualified tool selector from the catalog, so callers cannot supply a replacement tool profile; for example, construct `backend_profile => 'sv_portable_verilator'`, `level => 'gate_candidate_v1'`, and the checked HIAL/VIAL texts, then pass that construction as the sole field to `evaluate`. Evaluation rebuilds ordinary SemanticIR, bridge manifest, ExecutionIR, backend inputs, and plan twice through the completed backend-emission foundation and content-addresses the equal projections. The returned report is construction evidence, not a runtime result: `construct`, `semantic`, `bridge`, and `plan` are complete, while `emit`, `compile`, `run`, `trace_validate`, and `result_produce` are `not_run_measurement_required`. Its backend handoff freezes five canonical stage digests, the checked two-scenario/21-operation/four-fiber plan, exact backend schema and structural authority, and the digest of two backend-input artifacts; it emits no backend artifact, opens no OSVVM provider, and starts no external process. The trace expectation retains `checked_ahb_reference_v1`, the common 10,000 gate, the portable-only 15,000 qualification override, the independently retained 100,000 VHDL/OSVVM qualifications, and 8,000,002/8,000,003-record plus 67,108,864/67,108,865-byte limit/over-limit specifications with earliest-cap authority. Compile/run expectations name Verilator 5.046 or GHDL 6.0.0 LLVM-JIT, OSVVM 2026.05 where applicable, exact command authorities, 120-second analyze/compile, 60-second VHDL elaboration, 30-second run, 8-MiB compile transcript, and 64-MiB run/trace/result envelopes. The unmaterialized normalized result must use `fsmgen.verification_result_manifest.v1` and pass its semantic oracle. Canonical regeneration rejects changed constructions, reports, and support claims; repository-derived staging removes its exact tree after success and consumer failure. Focused `t/1651` covers all fifteen provider-free shapes.
 
 Decision `0083` audits that provider-free expectation before portable runtime measurement. Qualified public probes show that the common 100,000-record candidate cannot fit the portable Runner's 64-MiB output envelope, while the complete public artifact graph adds a separate 64-MiB authority. Implemented `FSM::VIAL::ArchitectureScalePortableRuntimeMaterialization` now owns exact tracked reset-sampling sources at 10,000 gate and 15,000 qualification records. It verifies source bytes, permits only the selected reset/timeout/window/terminal-expectation deltas, rebuilds ordinary SemanticIR/bridge/ExecutionIR/plan/emission twice, and projects every record family before tool execution. Exact guarded public reruns produce 19-artifact graphs of 32,098,531 and 47,505,049 bytes; the latter remains 2,826,599 bytes below the 50,331,648-byte three-quarter admission ceiling. Reference remains correctness-only, nominal record limit/excess remain byte-preflight dominated and unexecuted, 20,000/25,000/100,000 retain their exact earlier dominance classifications, and VHDL/OSVVM remain at their separately owned 100,000 candidate. The same decision selects a private content-addressed Verilator lifecycle shared by the public Runner and process-isolated measurement stages; that lifecycle is the next implementation boundary. [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md) documents the tracked sources, record equation and family table, final graph headroom, state chain, timeout/process containment, reverify workflow, and nonclaims.

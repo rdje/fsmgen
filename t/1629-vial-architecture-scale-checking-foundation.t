@@ -10,9 +10,11 @@ use JSON::PP ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::VIAL::ArchitectureScaleCheckingState;
 use FSM::VIAL::ArchitectureScaleWorkload;
+use FSM::Test::AhbReference qw(current_ahb_report_sha256);
 
 my $class = 'FSM::VIAL::ArchitectureScaleCheckingState';
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -38,6 +40,34 @@ my %expected = (
         '1a3b97f40ae03a82e10aa553072adf73c2d16bf266730a14e2bdc57649d3b307',
     serialized_plan_bytes => 44_467,
 );
+my $current_bridge_sha256 = current_ahb_report_sha256();
+
+# Preserve the complete historical foundation oracle, projecting only the
+# independently checked generated-source provenance and its dependent hashes.
+sub foundation_rerun_identity {
+    my ($value) = @_;
+    return 'rerun/' . sha256_hex($json->encode({
+        workload_identity => $value->{workload_identity},
+        stage_identities => $value->{stage_identities},
+    }));
+}
+
+sub foundation_evaluation_identity {
+    my ($value) = @_;
+    my $projection = clone($value);
+    $projection->{evaluation_identity} = undef;
+    delete $projection->{contract_discrepancies}
+        unless @{$projection->{contract_discrepancies}};
+    return 'checking-evaluation/' . sha256_hex($json->encode($projection));
+}
+
+sub historical_foundation_projection {
+    my ($value) = @_;
+    my $projection = clone($value);
+    $projection->{stage_identities}{bridge_manifest_sha256} = $expected{bridge_manifest_sha256};
+    $projection->{rerun_identity} = foundation_rerun_identity($projection);
+    return $projection;
+}
 
 sub candidate {
     my (%overrides) = @_;
@@ -211,18 +241,28 @@ subtest 'canonical producers yield deterministic SemanticIR, bridge, and Executi
     like($evaluation->{evaluation_identity},
         qr{\Achecking-evaluation/[0-9a-f]{64}\z},
         'evaluation is content-addressed');
-    is($evaluation->{evaluation_identity}, $expected{evaluation_identity},
-        'foundation evaluation identity is exact');
+    is($evaluation->{evaluation_identity}, foundation_evaluation_identity($evaluation),
+        'current foundation evaluation identity covers its exact bytes');
     like($evaluation->{rerun_identity}, qr{\Arerun/[0-9a-f]{64}\z},
         'rerun stage tuple has its own deterministic identity');
-    is($evaluation->{rerun_identity}, $expected{rerun_identity},
-        'foundation rerun identity is exact');
+    is($evaluation->{rerun_identity}, foundation_rerun_identity($evaluation),
+        'current foundation rerun identity covers its exact stage tuple');
+    my $historical = historical_foundation_projection($evaluation);
+    is($historical->{rerun_identity}, $expected{rerun_identity},
+        'only bridge provenance explains the historical rerun difference');
+    is(foundation_evaluation_identity($historical), $expected{evaluation_identity},
+        'every other historical foundation field and JSON kind stays frozen');
+    my $changed_metric = clone($historical);
+    ++$changed_metric->{metrics}{model_instances};
+    isnt(foundation_evaluation_identity($changed_metric), $expected{evaluation_identity},
+        'historical projection cannot hide a changed semantic metric');
     for my $stage (qw(
         semantic_ir_sha256 bridge_manifest_sha256 execution_ir_sha256 plan_sha256
     )) {
         like($evaluation->{stage_identities}{$stage}, qr/\A[0-9a-f]{64}\z/,
             "$stage is an exact canonical digest");
-        is($evaluation->{stage_identities}{$stage}, $expected{$stage},
+        is($evaluation->{stage_identities}{$stage},
+            $stage eq 'bridge_manifest_sha256' ? $current_bridge_sha256 : $expected{$stage},
             "$stage matches the frozen foundation identity");
     }
     is($evaluation->{metrics}{model_instances}, 2,

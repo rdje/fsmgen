@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-checking`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **13** uniquely owned question entries.
+> **1** facts · **14** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -17,6 +17,7 @@
 - q="what is the VIAL checking-state coverpoint source boundary?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="what is the VIAL checking-state random occurrence plan boundary?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="which VIAL checking-state scale levels are reachable?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
+- q="why do checking foundation evaluation and rerun hashes change with generated source provenance?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="why does checking-state scale not use the portable SystemVerilog backend as its oracle?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 
 ## Facts
@@ -25,5 +26,5 @@
 
 _VIAL checking-state scale uses packed semantic oracles at each reachable level_
 
-- **date:** 2026-08-23 · **status:** current
+- **date:** 2026-10-31 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-checking-state-scale-reachability.md`](../../docs/knowledge/vial-checking-state-scale-reachability.md)
