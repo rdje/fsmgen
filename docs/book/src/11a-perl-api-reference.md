@@ -1035,6 +1035,42 @@ This is a prepared rendering kernel. The separate source adapter below joins
 literal observations to original generic contracts; separate emission ledgers now
 consume that intent; final declaration agreement remains independently proved.
 
+The separate `WidthExpressionEmitter->lower_sum_range` composes the same prepared
+operand contracts by ordered addition. Every repeated slot contributes; a fixed
+width is an exact summand. Independent parameters retain their names even when
+their defaults agree. Each operand still passes canonical lookup, scope and
+arithmetic checks and must match its own observed width. Fixed-only sums fold
+with exact integer arithmetic. A single width-one operand remains a packed vector.
+The sum uses the same bounded input and rendered-text limits as the maximum.
+
+For example, this private prepared-kernel call retains `W + 3 + X + W`:
+
+```perl
+use FSM::Backend::VerilogFamily::WidthExpressionEmitter;
+my $scope = {kind => 'direct_module', owner => 'sum_example'};
+my $environment = {scope => $scope, declaration_order => [qw(W X)],
+    parameters => {map {$_ => {value_payload => {kind => 'scalar', payload => '1'}}} qw(W X)}};
+my $term = sub {
+    my ($name) = @_;
+    return {width => 1, width_contract => {scope => $scope,
+        expression => ['param', $name], references => [{kind => 'parameter', token => $name}]}};
+};
+my $range = FSM::Backend::VerilogFamily::WidthExpressionEmitter->lower_sum_range(
+    environment => $environment, target_language => 'systemverilog',
+    operands => [$term->('W'), {width => 3}, $term->('X'), $term->('W')]);
+# $range is '[((((W + 3) + X) + W) - 1):0] '
+```
+
+Run Perl snippets with `perl -Iperl` from the repository root. The
+[sum regression](../../../t/2290-verilog-prepared-sum-range.t) interprets the
+actual emitted syntax under distinguishing parameter values. Its retained
+[proof producer](../../../docs/audits/concat-sum-kernel-20261031/replay.py) also
+checks native controls that substitute a maximum, omit a slot or merge equal
+defaults. This private renderer accepts prepared contracts; current concatenation
+source sums, completed backend events, target declarations and emitted ledgers
+still require their separate joins. Generic concatenation emission and external
+compiler/override/runtime qualification remain open.
+
 `SourceLiteralWidthSupport->prepare_range` now joins the actual numeric frame to
 canonical direct module preparation and the proved original parameter environment.
 Use the `prepare_inference` arguments plus a Verilog-family `target_language`.

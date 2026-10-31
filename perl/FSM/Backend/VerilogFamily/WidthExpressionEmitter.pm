@@ -68,16 +68,15 @@ sub _lower_expression (%args) {
     return ($text, $value, $symbolic);
 }
 
-# Independent width contracts cannot be collapsed using their selected defaults:
-# an external override can make any mutable term the largest. This is a target
-# composition over prepared contracts, not a new source-expression operator.
-sub lower_maximum_range ($class, %args) {
-    my $context = $args{context} // 'Prepared maximum width';
+# Validate each independent contract before composition. Equal selected defaults
+# never establish a relationship between operands or supply symbolic authority.
+sub _prepared_terms (%args) {
+    my $context = $args{context};
     my $operands = $args{operands};
     confess "$context requires between one and 32 width operands\n"
         unless ref($operands) eq 'ARRAY' && @$operands && @$operands <= 32;
     my $budget = {nodes => 4096, bytes => 131072, active => {}, context => $context};
-    _maximum_input($budget, [$operands, $args{environment}], 0);
+    _prepared_input($budget, [$operands, $args{environment}], 0);
     my @terms;
     for my $operand (@$operands) {
         confess "$context requires positive decimal widths and optional prepared contracts\n"
@@ -95,6 +94,26 @@ sub lower_maximum_range ($class, %args) {
             unless $value->bcmp($width) == 0;
         push @terms, {text => $text, value => $value, symbolic => $symbolic};
     }
+    return @terms;
+}
+
+sub lower_sum_range ($class, %args) {
+    my $context = $args{context} // 'Prepared sum width';
+    my @terms = _prepared_terms(%args, context => $context);
+    my $value = FSM::WidthExpressionSupport->new->apply_constant_width_operator(
+        '+', [map {$_->{value}} @terms], $context);
+    my $symbolic = grep {$_->{symbolic}} @terms;
+    my $text = shift(@terms)->{text};
+    $text = "($text + $_->{text})" for @terms;
+    $text = $value->bstr unless $symbolic;
+    my $range = "[($text - 1):0] ";
+    confess "$context exceeds bounded rendered width text\n" if bytes::length($range) > 32768;
+    return $range;
+}
+
+sub lower_maximum_range ($class, %args) {
+    my $context = $args{context} // 'Prepared maximum width';
+    my @terms = _prepared_terms(%args, context => $context);
     # Pairwise reduction bounds repeated conditional text quadratically instead
     # of duplicating the entire preceding maximum at each additional operand.
     while (@terms > 1) {
@@ -117,7 +136,7 @@ sub lower_maximum_range ($class, %args) {
     return $range;
 }
 
-sub _maximum_input ($state, $node, $depth) {
+sub _prepared_input ($state, $node, $depth) {
     my $context = $state->{context};
     confess "$context exceeds its bounded prepared width inputs\n"
         if $depth > 32 || --$state->{nodes} < 0;
@@ -134,11 +153,11 @@ sub _maximum_input ($state, $node, $depth) {
     confess "$context has cyclic prepared width inputs\n" if $state->{active}{$identity};
     local $state->{active}{$identity} = 1;
     if (ref($node) eq 'ARRAY') {
-        _maximum_input($state, $_, $depth + 1) for @$node;
+        _prepared_input($state, $_, $depth + 1) for @$node;
     } else {
         for my $key (sort keys %$node) {
-            _maximum_input($state, $key, $depth + 1);
-            _maximum_input($state, $node->{$key}, $depth + 1);
+            _prepared_input($state, $key, $depth + 1);
+            _prepared_input($state, $node->{$key}, $depth + 1);
         }
     }
 }
@@ -228,10 +247,18 @@ fixed floor. Mutable branches always remain in the target conditional maximum,
 even at default one or when their defaults agree. Fixed-only subtrees fold.
 The result is always a packed range, including a one-bit maximum.
 
+C<lower_sum_range> takes the same arguments and independently checked operands.
+It composes an ordered left-fold addition, preserving repeated slots and each
+independent mutable contract regardless of its selected default. Fixed operands
+are exact summands rather than floors; fixed-only sums fold through the canonical
+integer arithmetic. A single operand still returns a packed range at width one.
+It neither selects literal sizing nor proves current source/allocation identity.
+
 The complete operand/environment input is limited to 4,096 occurrences,
 32 traversal levels, 4,096 bytes per scalar and 131,072 scalar bytes in total.
 Cycles and non-plain containers refuse. Balanced pairwise conditional composition
-limits duplication; rendered range text is capped at 32,768 bytes. Exceeding a
+limits maximum duplication; sums render each ordered operand once. Rendered range
+text is capped at 32,768 bytes. Exceeding a
 bound refuses without a default-sized fallback. No new source arithmetic
 operator, text parsing or parameter-dependency reconstruction is introduced.
 This method renders supplied prepared contracts; it does not attest actual
