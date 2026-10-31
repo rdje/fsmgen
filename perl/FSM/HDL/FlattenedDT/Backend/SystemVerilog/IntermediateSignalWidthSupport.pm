@@ -138,7 +138,10 @@ runtime AST around the renderer. Dependency publication withholds the event
 across extraction/fallback callbacks, checks the original input before final
 writes, then binds the actual new array, ordered names, source and only the
 narrow rendered_expression_fallback tag. Unknown fallbacks, substituted arrays
-and unrelated changes cannot refresh. Live-usage annotations and registry
+and unrelated changes cannot refresh. Complete-view bulk live-usage priming
+withholds all original holders before getters/traversal, validates before writes,
+and admits only exact computed annotations after a whole-view getter-free final
+barrier. Cached rows admit no writes. Single-row fallback and registry
 replacement remain unqualified. Abort/reset/reuse clears all
 events. Numeric sum agreement is separate from symbolic range or completed
 collection policy.
@@ -473,6 +476,66 @@ sub _publish_concatenation_dependencies ($self, $name, $info, $input, $runtime_a
         $self->{_concatenation_inference_events}{$name} = $holder if $holder;
     }
     return $array;
+}
+
+sub _concatenation_live_usage_view ($self, $rows) {
+    my $installed = $self->_current_graph_inference_rows;
+    return unless ref($rows) eq 'HASH' && !tied(%$rows) && $installed && $installed == $rows
+        && keys(%$rows) <= FSM::CoreExpressionWidthSupport::MAX_NODES();
+    my %view;
+    for my $name (sort keys %$rows) {
+        return unless ref($rows->{$name}) eq 'HASH' && !tied(%{$rows->{$name}});
+        $view{$name} = sprintf('%x', refaddr($rows->{$name}));
+    }
+    return \%view;
+}
+
+sub _check_concatenation_live_usage ($self, $rows, $transaction, $semantic = 0) {
+    return unless $transaction;
+    my $view = $self->_concatenation_live_usage_view($rows) or return;
+    return unless FSM::ConcatenationInferenceSupport::_same($transaction->{view}, $view);
+    for my $name (sort keys %{$transaction->{holders}}) {
+        my %args = (width_support => $self, signal_name => $name, signal_info => $rows->{$name},
+            signal_registry => $rows, holder => $transaction->{holders}{$name});
+        return unless $semantic
+            ? FSM::ConcatenationInferenceSupport->current(%args)
+            : FSM::ConcatenationInferenceSupport->live_usage_current_raw(%args);
+    }
+    # The semantic pass can cross getters; always finish with a getter-free
+    # complete pass, including membership, before any publication is allowed.
+    return $self->_check_concatenation_live_usage($rows, $transaction) if $semantic;
+    return 1;
+}
+
+sub _take_concatenation_live_usage ($self, $rows) {
+    # Remove every installed event before the first validation getter, even
+    # when a foreign or partial supplied view cannot qualify for restoration.
+    my $holders = $self->{_concatenation_inference_events};
+    $self->{_concatenation_inference_events} = {};
+    return unless ref($holders) eq 'HASH' && keys %$holders;
+    my $view = $self->_concatenation_live_usage_view($rows) or return;
+    my $transaction = {view => $view, holders => $holders};
+    return unless $self->_check_concatenation_live_usage($rows, $transaction, 1);
+    return $transaction;
+}
+
+sub _publish_concatenation_live_usage ($self, $rows, $transaction, $selected) {
+    return unless $transaction && $selected;
+    my %holders;
+    for my $name (sort keys %{$transaction->{holders}}) {
+        my $input = $transaction->{holders}{$name};
+        if (exists $selected->{$name}) {
+            my $holder = FSM::ConcatenationInferenceSupport->after_live_usage(
+                width_support => $self, signal_name => $name, signal_info => $rows->{$name},
+                signal_registry => $rows, input => $input, selected => $selected->{$name}) or return;
+            $holders{$name} = $holder;
+        } else {
+            $holders{$name} = $input; # Cached rows have no permitted writes.
+        }
+    }
+    my $after = {view => $transaction->{view}, holders => \%holders};
+    return unless $self->_check_concatenation_live_usage($rows, $after, 1);
+    $self->{_concatenation_inference_events} = \%holders;
 }
 
 sub _checkpoint_factorized_registry_copies ($self, $all_intermediate_signals, $replace_registry = 0) {

@@ -792,8 +792,17 @@ names and original `dependency_source`. Only the selected
 `rendered_expression_fallback` tag qualifies; other fallback paths retain ordinary
 numeric behavior without event authority. Cached reads preserve the same array;
 missing/stale proof, equal copied arrays, unrelated metadata/source mutations,
-late getters and throwing callbacks cannot refresh or remint. Live-usage
-annotations, registry replacement and completed collection policy remain separate.
+late getters and throwing callbacks cannot refresh or remint.
+Complete-view bulk live-usage priming now removes all original event holders before
+any getter or traversal callback, binds exact installed membership and row identities,
+and checks the whole original transaction before annotation writes can hide changes.
+It admits only the actual computed substitution/final-use booleans and derived
+state/source. Cached rows receive no writes. After all assignments, semantic checks
+finish with a getter-free whole-view/source barrier before events restore together.
+An earlier root or later getter cannot bless another changed row; missing/stale proof,
+copied/partial views, unrelated mutations and exceptions cannot refresh or remint.
+Single-row fallback, annotation join, registry replacement and completed collection
+policy remain separate.
 Symbolic sums/emission
 and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
@@ -809,6 +818,10 @@ retain its focused carry/refusal and complete product evidence.
 The [dependency regression](../../../t/2283-concatenation-dependency-events.t) and
 [dependency predecessor/native replay](../../../docs/audits/concat-dependency-events-20261031/replay.py)
 retain exact array/ordered-return, callback refusal and native conservation evidence.
+The [bulk live-usage regression](../../../t/2284-concatenation-bulk-live-usage.t) and
+[predecessor/native replay](../../../docs/audits/concat-bulk-live-usage-20261031/replay.py)
+retain actual multi-row/root, mixed cache, cross-row callback and native preservation
+checks. These qualify bulk carry only.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
 runtime widths, stored named definitions and runtime/substituted intermediate

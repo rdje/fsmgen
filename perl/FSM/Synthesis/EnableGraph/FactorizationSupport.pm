@@ -703,6 +703,14 @@ the prepared backend AST roots, then cache the two booleans on every supplied
 intermediate-signal record.  This is the bounded bulk counterpart to the
 single-signal fallback queries below: callers with a consolidated registry
 must prime once instead of rescanning every AST for every signal.
+The installed default width owner privately carries only original current
+concatenation events through these exact writes. It removes all holders before
+getters or traversal, binds the actual complete view, checks before writes can
+overwrite callback changes, and validates the whole transaction after all writes
+before restoring events. Cached rows receive no writes. Foreign/partial views,
+stale/missing proof, unrelated changes and exceptions cannot refresh authority.
+Injected width providers retain the existing summary and row-write contract.
+Single-row fallback and completed allocation policy remain separate.
 
 =cut
 
@@ -713,6 +721,10 @@ sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
         referenced_in_substitutions => 0,
         used_in_final_expressions => 0,
     } unless $all_intermediate_signals && ref($all_intermediate_signals) eq 'HASH';
+
+    my $width_owner = $ctx->{backend_sv_intermediate_width_support};
+    my $carry = ref($width_owner) eq 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport';
+    my $transaction = $carry ? $width_owner->_take_concatenation_live_usage($all_intermediate_signals) : undef;
 
     my (%referenced_in_substitutions, %used_in_final_expressions);
     my (%seen_substitution_roots, %seen_final_roots);
@@ -818,6 +830,12 @@ sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
         }
     }
 
+    # Validate the original complete transaction before these assignments can
+    # overwrite hostile callback metadata. Retain actual computed values apart
+    # from the mutable rows for final publication.
+    $transaction = undef if $transaction
+        && !$width_owner->_check_concatenation_live_usage($all_intermediate_signals, $transaction, 1);
+    my %selected;
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
         next unless $signal_info && ref($signal_info) eq 'HASH';
@@ -830,11 +848,18 @@ sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
             ? ($used ? 'substitutions_and_final_expressions' : 'substitutions')
             : ($used ? 'final_expressions' : 'none');
 
+        $selected{$signal_name} = {
+            referenced_in_substitutions => $referenced, used_in_final_expressions => $used,
+            live_usage_evidence_state => $evidence_state, live_usage_source => 'ast_live_usage_metadata',
+        } if $transaction && exists $transaction->{holders}{$signal_name};
         $signal_info->{referenced_in_substitutions} = $referenced;
         $signal_info->{used_in_final_expressions} = $used;
         $signal_info->{live_usage_evidence_state} = $evidence_state;
         $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
     }
+
+    $width_owner->_publish_concatenation_live_usage($all_intermediate_signals, $transaction, \%selected)
+        if $transaction;
 
     return {
         signal_count => scalar(keys %$all_intermediate_signals),

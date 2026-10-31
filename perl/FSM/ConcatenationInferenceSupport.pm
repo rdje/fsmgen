@@ -323,6 +323,47 @@ sub after_dependencies {
     return $@ ? undef : $holder;
 }
 
+# A batch's last barrier must not call semantic getters: a getter for a later
+# row could otherwise change an earlier row after it was checked. Revalidate
+# the original raw source observation as well as all row/owner identities.
+sub live_usage_current_raw {
+    my ($class, %args) = @_;
+    my $result = eval {
+        my $holder = $args{holder};
+        return unless ref($holder) eq 'HASH' && ref($holder->{frame}) eq 'HASH';
+        my $state = _raw(%args) or return;
+        return unless _same($holder->{frame}{state}, $state);
+        my $observation = $holder->{frame}{sources}{sources}{observation};
+        return unless FSM::ConcatenationSourceObservationSupport->current(
+            FSM::ConcatenationGenerationSourceSupport::_source_args(%args), holder => $observation);
+        return 1;
+    };
+    return $@ ? undef : $result;
+}
+
+sub after_live_usage {
+    my ($class, %args) = @_;
+    my $holder = eval {
+        my $frame = _observe(%args) or return;
+        my $record = _record($frame, $args{signal_info}{width}) or return;
+        my $input = $args{input};
+        return unless ref($input) eq 'HASH' && ref($input->{frame}) eq 'HASH';
+        my $old = $input->{frame}{state}{row}{data};
+        return unless ref($old) eq 'HASH' && !tied(%$old);
+        my $before = {record => $record, frame => _copy($frame)};
+        my $data = $before->{frame}{state}{row}{data};
+        for my $field (qw(referenced_in_substitutions used_in_final_expressions
+            live_usage_evidence_state live_usage_source)) {
+            return unless _same($args{selected}{$field}, $data->{$field});
+            if (exists $old->{$field}) { $data->{$field} = $old->{$field} }
+            else { delete $data->{$field} }
+        }
+        return unless _same($input, $before);
+        return {record => $record, frame => $frame};
+    };
+    return $@ ? undef : $holder;
+}
+
 1;
 
 =head1 NAME
@@ -351,8 +392,10 @@ C<publication_checkpoint>. Typed rendering carries the held event through only
 its actual scalar expression/source annotations, binding the exact returned
 runtime AST before and after the renderer. Dependency publication carries the
 held event through its exact new array, source and narrow fallback tag, with a
-barrier before the final assignments. Live-usage annotations, registry
-replacement and completed policy remain separate.
+barrier before the final assignments. Complete-view bulk live-usage priming
+withholds every original event before traversal, admits only its exact computed
+annotations, and finishes with a getter-free whole-transaction barrier. Single-row
+fallback, registry replacement and completed policy remain separate.
 Abort/reset/new generations clear installed events. Plain holders retain no
 caller graph. The original raw observation's restored-scalar-write limitation
 still applies.
@@ -439,5 +482,27 @@ Actual callback exceptions propagate with the event already removed. Cached read
 perform no writes and preserve existing currentness; a clean later retry cannot
 remint a spent event. Return only a detached holder. No live-usage, registry,
 completed policy or symbolic sum/emission authority follows.
+
+=head2 live_usage_current_raw(..., holder => HOLDER)
+
+Revalidate complete original row/allocator/registry state and the original raw
+source observation without semantic getters. The installed bulk transaction
+uses this after its semantic passes to detect a later getter changing an earlier
+row. Return true or undef; install nothing and infer no new source contract.
+
+=head2 after_live_usage(..., input => HOLDER, selected => ANNOTATIONS)
+
+Validate the held input through only the actual merged row's
+C<referenced_in_substitutions>, C<used_in_final_expressions>,
+C<live_usage_evidence_state> and C<live_usage_source> assignments. Compare each
+with the independently retained value computed by bulk priming. Preserve old
+field absence, other metadata, nested identities and original sources. Return a
+detached holder or undef. The installed owner freezes/removes all holders before
+any getter or traversal, binds exact complete view membership and row identities,
+checks the whole input before writes can hide callback mutations, then checks all
+resulting holders before atomic restoration. Cached rows admit no writes.
+Missing/stale/foreign/partial views, callback or late getter changes and failures
+cannot refresh or remint an event. Plain transactions retain no view or caller
+graph. Single-row fallback and completed policy remain separately qualified.
 
 =cut
