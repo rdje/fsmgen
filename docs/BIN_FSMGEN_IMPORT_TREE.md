@@ -19,7 +19,9 @@ addition. Repeated reads preserve only held events; registry carry/completion an
 symbolic sums remain separate. The width owner also directly imports
 `ConcatenationSourceWidthSupport` for its derived completed-event sum accessor:
 original paired source/event holders, exact numeric agreement and final raw
-currentness are required. Target projection/emission remains separate. These
+currentness are required. Held events also carry across bounded stable aliased
+resolver subsets; numeric inputs and canonical proof remain distinct. Physical
+target plans/emission remain separate. These
 scoped dependency updates renew no closure census.
 
 ExpressionBuilder imports `FSM::CoreExpressionWidthSupport` for the shared

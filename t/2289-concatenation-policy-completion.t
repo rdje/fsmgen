@@ -167,12 +167,12 @@ subtest 'actual successful collection exposes original detached policy with boun
                 }
                 is(refaddr($owner->_current_graph_inference_rows), refaddr($p->{block}{all_intermediate_signals}),
                     'retained actual block preserves original weak map lifetime');
-                is(scalar @{$p->{observed}{resolver_revocations} || []}, 2,
-                    'later declaration resolver revokes both events at the separate target integration boundary');
-                for my $revocation (@{$p->{observed}{resolver_revocations}}) {
-                    is($revocation->{caller}, 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport',
-                        'actual declaration consumer owns later resolver call');
-                    isnt($revocation->{supplied_view}, $revocation->{canonical_view}, 'actual filtered and canonical map identities differ');
+                is(scalar @{$p->{observed}{resolver_revocations} || []}, 0,
+                    'actual filtered declaration resolver preserves both original events');
+                for my $name (keys %{$after->{policies}}) {
+                    is_deeply(scalar($owner->factorized_concatenation_width_allocation($name,
+                        $p->{block}{all_intermediate_signals}{$name})), $after->{policies}{$name},
+                        'original completed numeric policy remains current after actual declaration rendering');
                 }
                 delete $p->{block};
                 ok(!defined($p->{weak_view}), 'retained rows and detached policies cannot retain original map');

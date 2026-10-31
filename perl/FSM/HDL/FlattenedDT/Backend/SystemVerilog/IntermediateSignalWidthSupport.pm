@@ -897,6 +897,27 @@ sub new ($class, %args) {
     }, $class;
 }
 
+# A filtered resolver map is only a view of actual canonical rows. Its own
+# identity and complete membership must survive the call; it grants neither
+# fresh inference nor physical target membership. No row getters run here.
+sub _concatenation_resolver_projection ($self, $name, $row, $provided) {
+    my $canonical = $self->_current_graph_inference_rows or return;
+    return unless ref($provided) eq 'HASH' && !tied(%$provided)
+        && !tied(%$canonical) && $provided != $canonical
+        && FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($name)
+        && ref($row) eq 'HASH' && ($canonical->{$name} // 0) == $row
+        && keys(%$provided) <= FSM::CoreExpressionWidthSupport::MAX_NODES()
+        && ($provided->{$name} // 0) == $row;
+    my @members;
+    for my $member (sort keys %$provided) {
+        return unless FSM::Support::HDLInstanceIdentifierPolicy->is_simple_identifier($member)
+            && ref($provided->{$member}) eq 'HASH'
+            && ($canonical->{$member} // 0) == $provided->{$member};
+        push @members, [$member, sprintf('%x', refaddr($provided->{$member}))];
+    }
+    return {map => sprintf('%x', refaddr($provided)), members => \@members};
+}
+
 =head2 resolve_intermediate_signal_width
 
 Normalize one intermediate signal width from native signal metadata, runtime
@@ -904,6 +925,13 @@ AST inference, or cached width fallback.
 The recursion guard covers only active calls. Repeated sibling references to the
 same computed child are ordinary cache/re-inference reads and preserve current
 allocation proof; an actual active cycle still takes the conservative fallback.
+An already held original concatenation event may also survive a bounded plain
+subset map whose members alias the actual canonical rows. Numeric resolution
+still consumes the supplied map. The event remains withheld until complete
+projection identity/membership and canonical raw source/row checks pass after
+all semantic callbacks. Foreign/copied rows, late projection changes and missing
+proof cannot refresh or mint an event. This does not attest prepared-block
+producer origin, target namespace membership or symbolic emission.
 
 =cut
 
@@ -911,15 +939,29 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
 
+    # Freeze the supplied view before any existing allocation getter. A later
+    # callback may not redefine the projection this call originally received.
+    my $concat_projection_map = $self->{_width_inference_epoch}
+        && ref($self->{_concatenation_inference_events}) eq 'HASH'
+        ? $self->{_concatenation_inference_events} : undef;
+    my $concat_initial_event = $concat_projection_map ? $concat_projection_map->{$signal_name} : undef;
+    my $concat_projection = ref($concat_initial_event) eq 'HASH'
+        ? $self->_concatenation_resolver_projection($signal_name, $signal_info, $signal_registry) : undef;
+    my $concat_projection_rows = $concat_projection ? $self->_current_graph_inference_rows : undef;
     my $held = $self->{_width_inference_epoch}
         ? $self->_take_current_factorized_inference($signal_name, $signal_info) : undef;
     my $graph_held = $self->{_width_inference_epoch}
         ? $self->_take_current_graph_inference($signal_name, $signal_info) : undef;
-    my $concat_held;
+    my ($concat_held, $concat_projection_event);
     if ($self->{_width_inference_epoch}) {
         my $record = $self->concatenation_inference_event($signal_name, $signal_info);
         my $holder = delete $self->{_concatenation_inference_events}{$signal_name};
         $concat_held = JSON::PP->new->decode(JSON::PP->new->encode($holder)) if $record;
+        if ($concat_projection && (!$concat_held || !ref($concat_initial_event)
+            || ($holder // 0) != $concat_initial_event)) {
+            $concat_projection = undef;
+            $concat_projection_rows = undef;
+        }
     }
     ++$self->{_width_inference_revisions}{$signal_name} if $self->{_width_inference_epoch};
     my ($input_frame, $graph_input, $graph_ready, $intrinsic_inference);
@@ -938,7 +980,7 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     # Bind original sources and row state before native metadata or recovery.
     # A repeat may carry only held authority, with this exact owned increment.
     my %concat_args = (width_support => $self, signal_name => $signal_name,
-        signal_info => $signal_info, signal_registry => $signal_registry);
+        signal_info => $signal_info, signal_registry => $concat_projection_rows // $signal_registry);
     my $concat_input = FSM::ConcatenationInferenceSupport->prepare_input(%concat_args);
     my $concat_ready;
     if ($concat_held) {
@@ -1009,7 +1051,8 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
         my $event = FSM::ConcatenationInferenceSupport->after_write(
             %concat_args, input => $concat_ready || $concat_held->{frame},
             selected_width => $resolved_width, selected_source => $width_source);
-        $self->{_concatenation_inference_events}{$signal_name} = $event if $event;
+        if ($concat_projection) { $concat_projection_event = $event }
+        else { $self->{_concatenation_inference_events}{$signal_name} = $event if $event }
     }
 
     $self->_record_factorized_inference($signal_name, $signal_info, $resolved_width, $width_source, $input_frame)
@@ -1029,6 +1072,19 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
             $row->{width_source} = $width_source;
         }
         $self->_restore_factorized_inference($signal_name, $signal_info, $held, $expected);
+    }
+
+    # A filtered call cannot publish before the later allocation callbacks have
+    # finished. Keep canonical proof unchanged and compare the complete supplied
+    # projection again without getters before restoring only this held event.
+    if ($concat_projection_event
+        && ($self->{_concatenation_inference_events} // 0) == $concat_projection_map
+        && !exists($concat_projection_map->{$signal_name})
+        && FSM::ConcatenationInferenceSupport::_same(
+            $self->_concatenation_resolver_projection($signal_name, $signal_info, $signal_registry), $concat_projection)
+        && FSM::ConcatenationInferenceSupport->live_usage_current_raw(
+            %concat_args, holder => $concat_projection_event)) {
+        $concat_projection_map->{$signal_name} = $concat_projection_event;
     }
 
     fsm_debug("[IntermediateSignalWidthSupport.pm][resolve_intermediate_signal_width()] Resolved width $resolved_width for '$signal_name' via $width_source", 3);

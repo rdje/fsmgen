@@ -780,9 +780,8 @@ and independently interpreted range arithmetic under distinguishing overrides.
 It also checks actual inline-RHS applicability and hostile late mutations.
 `docs/audits/concat-completed-sums-20261031/replay.py` retains the identical
 predecessor test and controls removing the final raw barrier or numeric agreement.
-This qualifies the private completed join. The existing filtered-map revocation
-at declaration rendering remains owned by target integration; mutable guards
-still refuse without target sum proof. Target namespaces, declarations,
+This qualifies the private completed join. Stable filtered resolver carry is
+qualified separately below; mutable guards still refuse without target sum proof. Target namespaces, declarations,
 expressions and final emitted ledgers, VHDL, external execution and full
 publication qualification remain open. Public source/report/API/MCP/corpus
 capabilities do not expand in this slice.
@@ -902,12 +901,29 @@ and retained rows alone do not. Failure, reset, new generations and source/row
 changes withhold policy; a clean backend generation can recover.
 The selected inline RHS profiles have no helper candidates. Mutable guards
 reach completed numeric collection but still refuse the unproved symbolic sum
-at declaration time. Ordinary fixed declaration rendering currently passes a
-filtered map to the resolver and revokes concat proof there; that later target
-carry belongs to the sum/emission integration task. This getter supplies current
-collection policy, not persistent authority through unqualified target writes.
-Symbolic sums/emission
-and full qualification remain pending. The [event regression](../../../t/2280-concatenation-inference-events.t)
+at declaration time. Fixed declaration rendering passes a distinct filtered map
+to the resolver. Held original events now survive a bounded plain subset whose
+members alias the actual canonical rows. The supplied map identity and complete
+key/member identities are frozen before allocation getters and checked after
+all semantic callbacks; numeric resolution still consumes the supplied map.
+Only proof revalidation uses the original canonical map. The candidate event
+stays withheld until a final getter-free projection and canonical source/row
+barrier succeeds. Missing proof, copied/foreign rows, changed subset membership,
+late source/registry/proof-map changes and native metadata cannot mint or refresh
+it. Non-map or oversized projections refuse carry without relaxing the ordinary
+numeric path. A distinct plain map of actual rows may qualify; that property
+does not attest prepared-block producer origin or physical target membership.
+
+`t/2293-concatenation-filtered-projections.t` follows actual fixed declaration
+calls in both Verilog-family backends, early and late callback changes, absent
+proof, native metadata, canonical weak lifetime and clean backend reuse.
+`docs/audits/concat-filtered-projections-20261031/replay.py` reproduces the
+predecessor's actual event loss and rejects controls that omit the final
+projection comparison or refresh its entry snapshot after getters. Complete
+native caller/HDL/declaration/refusal products preserve with Date-only
+normalization. The getter supplies current collection policy through these
+qualified resolver writes; symbolic target plans, declarations and final
+emitted ledgers, unknown literal sizing and full qualification remain open. The [event regression](../../../t/2280-concatenation-inference-events.t)
 and [native/predecessor replay](../../../docs/audits/concat-inference-events-20261031/replay.py)
 retain focused currentness, refusal, lifecycle and complete native product evidence.
 The [returned-AST control](../../../docs/audits/concat-inference-runtime-20261031/replay.py)
@@ -942,7 +958,8 @@ hostile callbacks and weak lifetimes. Source-only frames cannot mint a new event
 The [completion regression](../../../t/2289-concatenation-policy-completion.t) and
 [predecessor/native replay](../../../docs/audits/concat-policy-completion-20261031/replay.py)
 check actual completion/prepared ownership, stale/removed proof, late cross-row
-callbacks, failure/reset/reuse, detached returns and the later target revocation.
+callbacks, failure/reset/reuse and detached returns. The dated original replay
+retains the historical filtered-map revocation; T2293 qualifies its current repair.
 An isolated missing-final-barrier control must fail the late-callback check.
 
 Numeric shift transfer is repaired in the shared Core width walk, named Core and
