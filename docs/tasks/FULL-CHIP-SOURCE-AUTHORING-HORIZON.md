@@ -6,7 +6,7 @@
 - Status: `proposed`
 - Roadmap lane: `R14 / long-term full-chip source authoring`
 - Created: `2026-10-25`
-- Last updated: `2026-10-26`
+- Last updated: `2026-10-31`
 - Owner: repo-local workflow
 
 ## Goal
@@ -64,7 +64,7 @@ efficient Lispish/S-expression form without useless verbosity.
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON`
   Status: `proposed`
   Goal: `Deliver complete digital-chip source authoring through both IAL1 and IAL2, with initial VIAL verification.`
-  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10, FULL-CHIP-SOURCE-AUTHORING-HORIZON.11, FULL-CHIP-SOURCE-AUTHORING-HORIZON.12, FULL-CHIP-SOURCE-AUTHORING-HORIZON.13`
+  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10, FULL-CHIP-SOURCE-AUTHORING-HORIZON.11, FULL-CHIP-SOURCE-AUTHORING-HORIZON.12, FULL-CHIP-SOURCE-AUTHORING-HORIZON.13, FULL-CHIP-SOURCE-AUTHORING-HORIZON.14`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1`
   Status: `done`
@@ -156,6 +156,14 @@ efficient Lispish/S-expression form without useless verbosity.
   Acceptance: `Resolve the P1 ambiguity between the universal lowering requirement and decision0032's one-source/two-private-IR architecture. The director delegates the choice to the engineer. Select one coherent VIAL language with composable high-level and detailed verification constructs, typed semantic meaning, explicit DUT binding/execution planning and qualified target source. Keep HIAL's numbered source ladder and universal semantic/source-preservation obligations in both domains. Synchronize book/roadmap/horizon and clear the pending Memory flag; no compiler redesign, new runtime/profile or implementation-priority pivot.`
   Verification: `The director answers the pending choice by explicitly delegating the state-of-the-art/signoff/production-quality design decision to the engineer. Chosen: one public VIAL S-expression language, private checked SemanticIR and ExecutionIR, a versioned HIAL bridge and explicit target verification lowering, consistent with existing decision0032. High-level and detailed verification concerns compose within that language. HIAL retains IAL2-to-IAL1-to-IAL0-to-HDL. Both domains require complete legal target routes, semantic/source preservation, independent oracles and profile-specific qualification. The earlier ambiguity was conflating compiler lowering rigor with a requirement for numbered public VIAL languages; the book now teaches the settled choice and its rationale. Official MLIR conversion, Accellera UVM reuse and OSVVM package documentation inform reference principles, not a certification or new dependency. Universal state-of-the-art, comparative performance, new backend coverage and whole-chip production signoff are not asserted. All original full-chip, expressive-language and API/MCP goals remain. The implementation pointer stays ISF-REDUCTION-DELIVERY.2.3.3.3.2.2.2; the separate pending-choice flag is cleared. Book rendering/links, task integrity and mandatory doctrines gate this documentation decision.`
   Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.13: confirm one-language VIAL lowering`
+
+
+- ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.14`
+  Status: `done`
+  Goal: `Preserve the director's reusable IAL1/IAL2 building-block discussion and engineering recommendations without an implementation pivot.`
+  Acceptance: `Record the director's hypothesis that components authored at IAL1/IAL2 should be reusable at those levels throughout module/subsystem/system/chip hierarchy, with connection ergonomics central. Distinguish existing bounded IAL1 libraries from the proposed broader ecosystem. Capture recursive component export, semantic interface/configuration/clock/reset contracts, explicit adapters, associated VIAL evidence, discoverability/version identity and a representative composition pilot as engineering recommendations awaiting future selection. Existing deferred .2/.3/.4 own requirements and decomposition after their prerequisites; preserve active implementation Memory and required SPECFORGE priority. This is discussion, with no new syntax, capability or settled architecture claim. Run documentation checks and normal commit doctrines.`
+  Verification: `The director explicitly raises reusable intent-level components and connection ergonomics as a DBIQNP hypothesis. The discussion record preserves that proposal, distinguishes the documented bounded IAL1 library/import/use/FIFO foundation, and records engineering recommendations with future selection owned by deferred .2/.3/.4. Recursive exports, semantic connection contracts, visible adapters, VIAL/evidence packaging, common discovery/version identity and a representative reuse pilot remain recommendations rather than adopted syntax or present capabilities. The proposed root and active implementation Memory are unchanged; no compiler, grammar, source, product capability, roadmap execution or mdBook behavior changes. Documentation diff/source-view freshness checks and every normal mandatory final-index doctrine gate this discussion-only commit.`
+  Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.14: record reusable intent component discussion`
 
 ## Acceptance Checklist (enforced)
 
@@ -309,6 +317,60 @@ SPECFORGE delivery remains the implementation priority.
 - [x] **ROOT CAUSE (WHY + WHERE)** — scripts/decision_records.py read 0032 and git log -S 'Select one public, reviewable' -- docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md authenticate the existing one-source/two-private-IR selection. The discussion's universal ladder wording left public VIAL topology ambiguous; the director now explicitly delegates the engineering decision.
 - [x] **ADDRESSED (verified)** — One public VIAL language with explicit checked compiler stages is selected for the full-chip direction. Book, roadmap and proposed horizon explain the same preservation guarantees as HIAL, composable authoring and scoped production-acceptance criteria. The pending clarification flag is cleared, and the active code frontier stays unchanged.
 - [x] **NO REGRESSION** — No source grammar, compiler behavior, public schema, dependency or backend/profile support changes. Book build/source/link checks, task integrity and scripts/check_doctrines.sh with knowledge-map: OK plus normal hooks gate the documentation decision. No new full-chip, runtime, comparative-performance or signoff qualification is claimed.
+
+## Reusable component discussion — 2026-10-31 [DBIQNP]
+
+The director proposes that complete-chip authoring needs components built at
+IAL1/IAL2 and reusable at those same intent levels. The desired building-block
+library spans submodules, modules, subsystems, systems and chips; connecting the
+blocks easily is central. The director requests an engineering view and marks
+the discussion DBIQNP. This records the hypothesis without activating work.
+
+The existing bounded foundation is documented in
+`docs/book/src/13f-composition.md` (Reusable ISF Libraries) and
+`docs/book/src/13-intent-scheduling.md` (current limitations): exported IAL1 actors,
+imports/use, instance-local parameters, explicit bindings and a fixed-shape FIFO
+example. Those sources retain the exact shipped and deferred boundaries. This
+discussion does not establish arbitrary recursive IAL1/IAL2 reuse as shipped.
+
+Engineering recommendations for future requirements selection:
+
+- Make a composed component exportable through a public contract and reusable
+  again as a building block. Preserve intent and source identity through the
+  existing lowering ladder. IAL1 can own detailed behavior; IAL2 can select and
+  assemble architectural components with inspectable IAL1 refinement.
+- Organize reusable definitions by useful roles: storage and flow-control
+  primitives; computation; protocol/interface adapters; common services such as
+  register banks, interrupts, timers and DMA; and composed subsystems. Select
+  actual members from real designs rather than inventing a universal catalog.
+- Define connection compatibility beyond names and bit widths: types, protocol
+  roles, clock/reset domains, transfer acceptance and ownership, backpressure,
+  latency, ordering, reset behavior and legal configuration relationships.
+  Expose these contracts consistently to source authors and API/MCP clients.
+- Let authors connect meaningful endpoints and bundles with concise source.
+  Infer only what the contracts determine unambiguously; report incompatible or
+  ambiguous joins at the source. Buffering, arbitration, width/protocol conversion
+  and clock-domain crossing need explicit or inspectable adaptation, because they
+  can change observable behavior. Familiar connector names alone prove nothing.
+- Package each component with its public interface, legal configurations,
+  version/dependency identity, documentation, VIAL models/checks and scoped
+  qualification evidence. Component checks are reusable inputs to integration
+  verification; they do not by themselves prove the assembled system correct.
+- Use one canonical component contract across authoring levels, lowering,
+  verification and API/MCP discovery. Avoid unrelated IAL1/IAL2 definitions that
+  can diverge while claiming to represent the same component.
+- When the horizon is activated, select a representative subsystem and the
+  smallest library needed to compose it, then export and reuse that subsystem.
+  Assess source clarity, explicit glue/adapters, preserved semantics and VIAL
+  integration evidence. This is a proposed acceptance exercise, with no pilot
+  selected, execution performed or quantitative benefit claimed here.
+
+The proposed engineering emphasis is the composition contract and recursive
+reuse, alongside the library contents. Existing deferred `.2`, `.3` and `.4`
+own future evaluation and decomposition under their prerequisite gates. These
+recommendations remain discussion input; the director has not selected a
+component schema, syntax, package format, catalog membership or implementation
+activity. Decision0121 and the exact frontier in `MEMORY.md` remain unchanged.
 
 ## Blockers
 
