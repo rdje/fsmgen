@@ -3166,10 +3166,39 @@ do not start broad suites between implementation slices.
   - [x] **NO REGRESSION** — Guarded T2283/T2282: All tests successful, Files=2, Tests=11; all changed source/test syntax OK. Complete native caller/HDL/declaration/refusal products agree with Date-only normalization and unchanged other production hashes. Generated POD/source checks, guarded mdBook/native copied assets, staged acceptance and all mandatory final-index doctrines qualify this dependency-only slice. Full6/runtime/publication remain deferred.
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry held concatenation events through complete-view live-usage priming and owned fallback flags.`
   Acceptance: `Freeze every eligible current event before any global priming callback. Admit only the four actual boolean/state/source assignments against original frames and exact actual per-row computed values; later row checkpoints cannot recapture mutations caused by earlier roots. Qualify cached no-write and resolver fallback separately where required. Failure/stale/foreign/partial views cannot refresh. Focused actual multi-row/getter/refusal/reuse/native checks and POD/book/fact sync precede annotation closure.`
-  Verification: `Dependency carry is focused-qualified at sibling .3. Select complete-view priming and the resolver fallback writer before implementation; freeze every original holder before global callbacks rather than taking fresh per-row authority afterward.`
+  Verification: `Dependency carry is committed and focused-qualified at sibling .3. Actual bulk priming and single-row fallback are separate transactions below; original events must be held before either callback family. No live-usage carry or completed authority is implemented by this decomposition.`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.1, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.2, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.3, ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.1`
+  Status: `done`
+  Goal: `Select complete-view priming, single-row fallback and their annotation join before implementation.`
+  Acceptance: `After dependency carry commits cleanly, read the actual priming/fallback write sites and callback ordering. Split distinct transactions, preserve ordinary cached/invalid-input/summary/provider contracts, and leave precise focused successors. No source/test/artifact/config change or new live-usage authority.`
+  Verification: `At clean53833e024, FactorizationSupport::prime_intermediate_signal_live_usage traverses factorizer ast_expressions, assignment rhs_groups enables, state/dt enables, lhs conditions and actual/parsed RHS roots before its final row loop. The loop skips rows already owning both boolean keys; otherwise it writes referenced_in_substitutions, used_in_final_expressions, live_usage_evidence_state and live_usage_source from local computed sets. resolve_intermediate_signal_live_usage has a separate invalid-name default, cached no-write return and two-callback fallback before the same four assignments. Normalization calls bulk priming then each resolver. Select original whole-view holder freeze/removal before any global traversal, exact before-write and final batch validation, then separately select fallback/cached behavior and join. Per-row proof capture after earlier roots is forbidden; actual computed values cannot be inferred from later mutated row metadata. Existing canonical API/POD owns public method meanings; this is private transaction preparation, so behavior/book contracts remain unchanged. Startup/read-only inspection and normal final-index doctrines qualify only decomposition. Decision0116 selects a clean context-refresh checkpoint after the implemented dependency unit and this prepared whole-view boundary: preserve precise .4.2 in committed Memory, consume all jobs and clear the message before ending. Required delivery remains active under0121; no full6, publication or live-usage implementation claim.`
+  Commit: `ISF-REDUCTION-DELIVERY: split concatenation live usage transactions`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.2`
+  Status: `pending`
+  Goal: `Carry original concatenation events through actual complete-view live-usage priming.`
+  Acceptance: `Freeze/remove every eligible original installed holder before any priming root callback, binding the exact installed complete view. Validate original currentness across all traversal callbacks and before owned writes can overwrite hostile metadata. Carry only the four actual per-row computed annotations, preserving skipped cached rows and existing summary/context/provider behavior. Recheck the whole transaction after all writes so an earlier/later row or getter cannot refresh another event. Missing/stale/copied/foreign/partial views, unrelated source/row/container/revision changes and throwing callbacks cannot refresh or remint. Holders/rows must not retain the weak view. Focused actual multi-row, cached/mixed/hostile/refusal/reuse checks, native conservation and POD/book/fact sync qualify only bulk carry; fallback, annotation join, registry, completed policy and symbolic emission remain separate.`
+  Verification: `pending original whole-view callback barrier implementation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.3`
+  Status: `pending`
+  Goal: `Carry held concatenation events through the actual single-row live-usage resolver fallback.`
+  Acceptance: `After bulk carry, preserve invalid-name defaults and cached no-write reads. For uncached actual rows, remove/check original held proof before either live-usage query; admit only their exact local boolean results and derived state/source at the four assignments. Check before publication overwrites callback mutations and after owned writes. Foreign/stale/missing proof, unrelated metadata/source changes, exceptions and clean later retries cannot refresh or remint. Preserve native numeric/caller products and weak lifetimes; focused real fallback/cached/hostile/recovery checks plus POD/book/fact sync precede live-usage join. No registry/completed policy or symbolic emission.`
+  Verification: `pending bulk priming carry`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.4.4`
+  Status: `pending`
+  Goal: `Join the owned bulk and fallback live-usage transitions through actual normalization.`
+  Acceptance: `After both live-usage writers qualify, check held current events at actual normalization exit, with successful completed collection still withheld. Preserve actual computed usage, skipped caches, original source/row/allocator/initial-registry identities and complete native products. Failure/reuse and multi-row callback changes must not leave refreshed authority. Focused actual normalization, refusal/recovery and POD/book/fact checks hand off to annotation closure .3.3.5; registry replacement, completed policy, sum/range/emission, VHDL and full6/publication stay separate.`
+  Verification: `pending live-usage transaction predecessors`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3.4.3.3.3.3.4.3.3.5`
