@@ -26,6 +26,8 @@ efficient Lispish/S-expression form without useless verbosity.
 - No synthesis, physical implementation, fabrication or backend signoff engine.
 - No requirement that authors handwrite RTL to fill permanent IAL feature gaps.
 - No promise of identical syntax at both intent layers or an unmeasured speedup.
+- No separate IAL0 reusable-component catalog or authoring/use API under this
+  library initiative; component authoring and reuse are scoped to IAL1/IAL2.
 
 ## Acceptance Criteria
 
@@ -64,7 +66,7 @@ efficient Lispish/S-expression form without useless verbosity.
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON`
   Status: `proposed`
   Goal: `Deliver complete digital-chip source authoring through both IAL1 and IAL2, with initial VIAL verification.`
-  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10, FULL-CHIP-SOURCE-AUTHORING-HORIZON.11, FULL-CHIP-SOURCE-AUTHORING-HORIZON.12, FULL-CHIP-SOURCE-AUTHORING-HORIZON.13, FULL-CHIP-SOURCE-AUTHORING-HORIZON.14`
+  Children: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1, FULL-CHIP-SOURCE-AUTHORING-HORIZON.2, FULL-CHIP-SOURCE-AUTHORING-HORIZON.3, FULL-CHIP-SOURCE-AUTHORING-HORIZON.4, FULL-CHIP-SOURCE-AUTHORING-HORIZON.5, FULL-CHIP-SOURCE-AUTHORING-HORIZON.6, FULL-CHIP-SOURCE-AUTHORING-HORIZON.7, FULL-CHIP-SOURCE-AUTHORING-HORIZON.8, FULL-CHIP-SOURCE-AUTHORING-HORIZON.9, FULL-CHIP-SOURCE-AUTHORING-HORIZON.10, FULL-CHIP-SOURCE-AUTHORING-HORIZON.11, FULL-CHIP-SOURCE-AUTHORING-HORIZON.12, FULL-CHIP-SOURCE-AUTHORING-HORIZON.13, FULL-CHIP-SOURCE-AUTHORING-HORIZON.14, FULL-CHIP-SOURCE-AUTHORING-HORIZON.15`
 
 - ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.1`
   Status: `done`
@@ -164,6 +166,20 @@ efficient Lispish/S-expression form without useless verbosity.
   Acceptance: `Record the director's hypothesis that components authored at IAL1/IAL2 should be reusable at those levels throughout module/subsystem/system/chip hierarchy, with connection ergonomics central. Distinguish existing bounded IAL1 libraries from the proposed broader ecosystem. Capture recursive component export, semantic interface/configuration/clock/reset contracts, explicit adapters, associated VIAL evidence, discoverability/version identity and a representative composition pilot as engineering recommendations awaiting future selection. Existing deferred .2/.3/.4 own requirements and decomposition after their prerequisites; preserve active implementation Memory and required SPECFORGE priority. This is discussion, with no new syntax, capability or settled architecture claim. Run documentation checks and normal commit doctrines.`
   Verification: `The director explicitly raises reusable intent-level components and connection ergonomics as a DBIQNP hypothesis. The discussion record preserves that proposal, distinguishes the documented bounded IAL1 library/import/use/FIFO foundation, and records engineering recommendations with future selection owned by deferred .2/.3/.4. Recursive exports, semantic connection contracts, visible adapters, VIAL/evidence packaging, common discovery/version identity and a representative reuse pilot remain recommendations rather than adopted syntax or present capabilities. The proposed root and active implementation Memory are unchanged; no compiler, grammar, source, product capability, roadmap execution or mdBook behavior changes. Documentation diff/source-view freshness checks and every normal mandatory final-index doctrine gate this discussion-only commit.`
   Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.14: record reusable intent component discussion`
+
+
+- ID: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.15`
+  Status: `done`
+  Goal: `Confirm that the reusable component library initiative is scoped to IAL1/IAL2 and excludes a separate IAL0 component-library surface.`
+  Acceptance: `Record the director's explicit exclusion and engineering agreement. Scope component definition/export/import/use to IAL1/IAL2; retain the complete IAL2-to-IAL1-to-IAL0-to-HDL lowering ladder and reviewable generated .fsm artifacts. Distinguish library initiative scope from existing direct IAL0 authoring/composition support. Synchronize the proposed horizon and book without inventing syntax, implementing a feature or changing the active required-delivery pointer. Verify docs/source-view freshness and normal mandatory commit doctrines.`
+  Verification: `The director explicitly excludes IAL0 from this reusable component initiative. The engineer agrees, and the proposed horizon plus book introduction now scope component authoring and reuse to IAL1/IAL2. The required complete lowering ladder still includes explicit IAL0 and generated .fsm review artifacts. Existing direct IAL0 authoring/composition retain their contracts. The horizon remains proposed and the active implementation Memory is byte-identical. Documentation/source-view freshness, book rendering, exact maintained-reference authority and every normal mandatory final-index doctrine gate this scope-only commit; no implementation or current capability change.`
+  Commit: `FULL-CHIP-SOURCE-AUTHORING-HORIZON.15: scope component libraries to IAL1 and IAL2`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Reusable component discussion' identifies f06365eb0 as the original IAL1/IAL2 reuse discussion, which did not explicitly exclude a separate IAL0 library. The director now selects that boundary. The first normal hook requires fresh acceptance because the maintained-book aggregate authority is configured implementation metadata; preserve its full rejection in docs/audits/component-library-layer-scope-20261031.json.gz.
+  - [x] **ADDRESSED (verified)** — Proposed horizon and book introduction explicitly scope reusable definitions/imports/use to IAL1/IAL2, preserve the complete lowering path through IAL0 and its generated .fsm review artifacts, and retain existing direct IAL0 contracts. Memory is byte-identical to the committed active frontier. No source syntax, compiler behavior or supported capability changes.
+  - [x] **NO REGRESSION** — mdbook build docs/book succeeds; complete native copied-source freshness passes. The first normal hook passes knowledge-map: OK and all other doctrines before rejecting the missing fresh boxes. Fresh staged acceptance and every complete normal final-index doctrine gate the retry; no broad CI or runtime qualification is claimed.
+
 
 ## Acceptance Checklist (enforced)
 
@@ -371,6 +387,19 @@ own future evaluation and decomposition under their prerequisite gates. These
 recommendations remain discussion input; the director has not selected a
 component schema, syntax, package format, catalog membership or implementation
 activity. Decision0121 and the exact frontier in `MEMORY.md` remain unchanged.
+
+### Library scope clarification — IAL0 excluded
+
+The director explicitly excludes IAL0 (`.fsm`) from this reusable component
+initiative and asks for engineering confirmation. Confirm and agree: reusable
+component definitions, exports, imports and use belong at IAL1/IAL2. IAL0 remains
+the explicit cycle-accurate lowering/review layer on the required
+IAL2 -> IAL1 -> IAL0 -> HDL path. Generated `.fsm` artifacts remain inspectable;
+the initiative does not require authors to create or maintain an additional
+IAL0 component library. Existing direct IAL0 authoring and composition keep their
+documented contracts. This selects the proposed library's layer boundary, while
+the broader recommendations above still await future requirements selection.
+No syntax, compiler behavior, existing support or execution priority changes.
 
 ## Blockers
 

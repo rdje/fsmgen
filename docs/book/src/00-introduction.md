@@ -18,6 +18,12 @@ natural, and detailed control readable, with no useless verbosity. Source and
 API/MCP operations must preserve the same hardware meaning. These are feature
 acceptance requirements for the full-chip goal, not claims of current completeness.
 
+The proposed reusable component library is scoped to authoring and reuse at
+IAL1/IAL2. It excludes a separate IAL0 (`.fsm`) component-library surface. IAL0
+remains the explicit cycle-accurate lowering and review layer, including generated
+`.fsm` artifacts; existing direct IAL0 authoring and composition retain their
+documented contracts.
+
 HIAL's complete lowering goal is **IAL2 -> IAL1 -> IAL0 -> SystemVerilog/VHDL**.
 Every adjacent step must preserve specified meaning and source provenance;
 expansion into several lower-level constructs is valid. VIAL must provide the
