@@ -1,7 +1,7 @@
 # Knowledge Map: `ahb-hburst`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **4** uniquely owned question entries.
+> **1** facts · **5** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,12 +9,13 @@
 - q="how was the AHB dynamic wait WIDTHEXPAND warning resolved?" · facts=[ahb-hburst-seq-verify-hdl-widthexpand](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)
 - q="is --verify-hdl a clean gate for the AHB HBURST SEQ family now?" · facts=[ahb-hburst-seq-verify-hdl-widthexpand](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)
 - q="what happened to the Verilator WIDTHEXPAND warnings on ahb_lite_subordinate_byte_lane_hburst_seq?" · facts=[ahb-hburst-seq-verify-hdl-widthexpand](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)
+- q="why does an AHB arithmetic mask require missing literal intent?" · facts=[ahb-hburst-seq-verify-hdl-widthexpand](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)
 
 ## Facts
 
 ### ahb-hburst-seq-verify-hdl-widthexpand
 
-_AHB HBURST SEQ wait warning fixed; current source-intent gate fails_
+_AHB HBURST SEQ source gate repaired; full qualification pending_
 
-- **date:** 2026-11-01 · **status:** current
+- **date:** 2026-11-02 · **status:** current
 - **source and verification:** [`docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md`](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)

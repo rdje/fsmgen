@@ -1127,17 +1127,17 @@ final agreement uses a separate consumer. `t/2261-target-source-literal-width.t`
 covers the completed Parser/facade sources, explicit and independent floors,
 raw kinds, repeated edges and mutation barriers without HDL execution.
 
-The literal requirement selector follows typed operators whose literals can
-contribute to the helper's data-width maximum. Comparison and logical-negation
-operands terminate that search: their scalar results do not inherit input or
-literal widths. This restores AHB guards such as `(| (== HTRANS 2'b10)
-(== HTRANS 2'b11))` through the existing scalar-width path. Every physical child
-helper is still selected independently, so a data-literal helper inside a logical
-parent retains its original proof requirement. An installed holder always
-requires proof, and removing a holder from a true data-literal expression cannot
-select numeric fallback. `t/2297-scalar-literal-guard-emission.t` checks scalar
-widths, nested children, mutable scalar behavior and still-required data proof;
-the retained old-selector control reproduces the false positive.
+The literal requirement selector follows typed data-width operators. Comparison
+and logical-negation operands stop the search: scalar results inherit no operand
+or literal widths. AHB guards such as `(| (== HTRANS 2'b10) (== HTRANS 2'b11))`
+retain their scalar path. Arithmetic masks such as `(& (+ A 1) 32'h3)` retain
+ordinary width handling in either operand order; bitwise-only capture cannot
+publish arithmetic source intent. Every physical child is selected independently.
+An installed holder or row published as `source_literal_intent` still requires
+proof after holder removal or an operator change; true data-literal expressions
+cannot select numeric fallback. `t/2297-scalar-literal-guard-emission.t` checks
+scalar widths, children, mutable scalar behavior, arithmetic masks and required
+proof; retained old-selector controls reproduce both false selection and escape.
 
 Fixed inline logical shifts within literal-containing bitwise expressions now
 preserve data widths through the same original-source and emitted-target proof.

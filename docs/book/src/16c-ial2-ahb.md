@@ -368,12 +368,10 @@ preserved, and inactive read lanes are zero-filled.
 
 ## Guided PPIF Byte-Lane HBURST SEQ Subordinate
 
-Current regression: the full publication gate observes strict check, semantic
-export and HDL generation refusing supported HBURST `SEQ` subordinate and
-interconnect sources with `Direct literal emission requires current completed
-source intent`. Repair is owned by `PUBLICATION-REGRESSION-REPAIRS.23`.
-The declared protocol contract below remains the target; this failure does not
-reclassify the sources as unsupported. Ordinary byte-lane `SEQ` checks pass.
+The arithmetic-mask width selector repair restores the shipped subordinate's
+strict check. Focused literal, shift and proof-refusal checks pass; complete
+HBURST subordinate/interconnect semantic and HDL qualification remains pending
+in `PUBLICATION-REGRESSION-REPAIRS.26`. The protocol contract below is unchanged.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:

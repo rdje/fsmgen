@@ -614,6 +614,10 @@ sub requires_emission {
     my ($class, $signal, $rows) = @_;
     return 0 unless blessed($signal) && $signal->isa('FSM::CoreAST::Signal');
     return 1 if exists $signal->{_source_literal_width_allocation};
+    my $row = ref($rows) eq 'HASH' ? $rows->{$signal->{name}} : undef;
+    # Numeric publication already consumed literal intent. Removing its holder
+    # or changing the expression family cannot turn that result into fallback.
+    return 1 if ref($row) eq 'HASH' && ($row->{width_source} // '') eq 'source_literal_intent';
     return 0 unless $signal->{attributes}{is_intermediate}
         || (ref($rows) eq 'HASH' && ref($rows->{$signal->{name}}) eq 'HASH'
             && ($rows->{$signal->{name}}{source} // '') eq 'fsmgen_parsing');
@@ -622,7 +626,8 @@ sub requires_emission {
         && ($ast->{operator} // '') =~ /\A[&|^]\z/
         && ref($ast->{operands}) eq 'ARRAY' && @{$ast->{operands}} >= 2;
     my $remaining = FSM::CoreExpressionWidthSupport::MAX_NODES();
-    return _contains_literal($ast, {}, \$remaining, 0, $rows);
+    my $required = _contains_literal($ast, {}, \$remaining, 0, $rows);
+    return defined($required) && $required ? 1 : 0;
 }
 
 sub _contains_literal {
@@ -648,10 +653,20 @@ sub _contains_literal {
                 && ($rows->{$signal->{name}}{source} // '') eq 'fsmgen_parsing'))
             ? _contains_literal($signal->{driving_ast}, $active, $remaining, $depth + 1, $rows) : 0;
     }
+    # Arithmetic-containing trees have their own ordinary width path; the
+    # bitwise literal capture cannot publish intent for those operators.
+    # Inspect both operands even after finding a literal, so reversing a mask
+    # and its arithmetic operand cannot change family selection. Undef carries
+    # an ineligible data family through all enclosing bitwise operators.
+    my $eligible = !($node->isa('FSM::CoreAST::BinaryOp')
+        && ($node->{operator} // '') !~ /\A(?:[&|^]|<<|>>)\z/);
+    my $literal = 0;
     for my $operand (@{ref($node->{operands}) eq 'ARRAY' ? $node->{operands} : []}) {
-        return 1 if _contains_literal($operand, $active, $remaining, $depth + 1, $rows);
+        my $child = _contains_literal($operand, $active, $remaining, $depth + 1, $rows);
+        $eligible = 0 unless defined $child;
+        $literal = 1 if defined($child) && $child;
     }
-    return 0;
+    return $eligible ? $literal : undef;
 }
 
 sub _required_names {
@@ -773,9 +788,12 @@ containing a data-width literal requires proof, including through generated chil
 references. Typed comparisons and logical negation terminate this requirement
 walk: their scalar result does not inherit operand or literal widths. The walk
 still examines every physical generated helper independently, so scalar parents
-cannot hide an emitted data-literal child. Existing inline-shift policies and
-holder-presence priority remain unchanged. This is family selection, not new
-source admission or proof from a numeric width.
+cannot hide an emitted data-literal child. Arithmetic-containing data trees,
+such as C<(& (+ A 1) 32'h3)> in either operand order, retain their ordinary
+width path: bitwise-only capture cannot publish that source family. An installed
+holder or a row already published as C<source_literal_intent> still requires
+proof after holder removal or an operator change. Existing inline-shift policies
+remain unchanged. This is family selection, not source admission or numeric proof.
 This selector grants no width or ancestry authority. Removing a holder does not
 authorize numeric fallback; malformed required intent fails its subsequent proof.
 

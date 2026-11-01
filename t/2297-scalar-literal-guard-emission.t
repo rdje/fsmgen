@@ -118,4 +118,61 @@ subtest 'scalar-only mutable and standalone behavior retains its existing family
     is(scalar(@$standalone_helpers), 0, 'standalone comparison remains inline without a literal helper');
 };
 
+subtest 'inline arithmetic masks retain their ordinary width family' => sub {
+    for my $expression ('(& (+ A 1) 32\'h00000003)', '(& 32\'h00000003 (+ A 1))') {
+        for my $verilog (0, 1) {
+            my ($module, $helpers) = fixture($expression);
+            is(scalar(@$helpers), 1, 'mask retains its actual single physical helper');
+            my $helper = $helpers->[0];
+            ok(!$helper->source_literal_width_allocation,
+                'arithmetic-containing source has no bitwise-only literal allocation');
+            ok(!$class->requires_emission($helper),
+                'an uncaptured arithmetic mask does not require bitwise-only intent');
+            my ($hdl, $error, $capture) = generate($module, verilog => $verilog);
+            is($error, undef, 'ordinary arithmetic-mask generation succeeds') or diag($error);
+            next if $error;
+            is($capture->snapshot->{target_declarations}{$helper->name}{width}, 32,
+                'actual declaration retains the independently explicit mask width');
+            like($hdl, qr/^  wire \[31:0\] \Q@{[$helper->name]}\E;$/m,
+                'physical HDL keeps the complete mask width');
+            like($hdl, qr/^  assign \Q@{[$helper->name]}\E = .*\bA\b.*$/m,
+                'ordinary assignment retains the original data operand');
+            like($hdl, qr/^  assign \Q@{[$helper->name]}\E = .*\+.*$/m,
+                'ordinary assignment retains the increment');
+        }
+    }
+};
+
+subtest 'installed and published literal intent cannot escape by becoming arithmetic' => sub {
+    my ($installed, $installed_helpers) = fixture("(| A 1'b1)");
+    my $installed_helper = $installed_helpers->[0];
+    ok($installed_helper->source_literal_width_allocation, 'literal source starts with installed intent');
+    $installed_helper->{driving_ast}{operator} = '+';
+    ok($class->requires_emission($installed_helper), 'installed intent remains mandatory after an operator change');
+    refused($installed);
+
+    my ($module, $helpers) = fixture("(| A 1'b1)");
+    my $helper = $helpers->[0];
+    my $stage = 'FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport';
+    my $prepare = $stage->can('prepare_consolidated_intermediate_block');
+    my $fired = 0;
+    {
+        no strict 'refs'; no warnings 'redefine';
+        local *{"${stage}::prepare_consolidated_intermediate_block"} = sub {
+            my $block = $prepare->(@_);
+            my $rows = $block->{filtered_signals};
+            is($rows->{$helper->name}{width_source}, 'source_literal_intent',
+                'intervention follows actual literal numeric publication');
+            delete $helper->{_source_literal_width_allocation};
+            $helper->{driving_ast}{operator} = '+';
+            ok($class->requires_emission($helper, $rows),
+                'published literal intent remains mandatory after holder removal and an operator change');
+            ++$fired;
+            return $block;
+        };
+        refused($module);
+    }
+    is($fired, 1, 'the actual emitter boundary intervention ran once');
+};
+
 done_testing();

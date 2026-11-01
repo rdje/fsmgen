@@ -569,19 +569,19 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.22: scope transaction width documentation to its parameter owner`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.23`
-  Status: `active`
+  Status: `done`
   Goal: `Repair supported AHB HBURST SEQ completed-source-intent refusal.`
   Acceptance: `P1 before fresh full CI/push. Preserve T1490-T1493, every source/positive/negative/report/HDL assertion, all literal/currentness/late-mutation guards and declared AHB support. Diagnose actual first failure at the proper producer/consumer boundary; no blind test refresh, capsule freezing, stale proof acceptance or unsupported-profile relabeling. Split unsafe scope before implementation.`
-  Verification: `Full10 actual T1490 line148 fails; outdir diagnostic names SourceLiteralWidthSupport::capture_generation_fence line712.1491/1492 complete nonpasses;1493 has observed diagnostics only. Current literal capture/prepare withholds; exact reason/origin unclassified. Original full sources and native output retain in full10-intake.`
+  Verification: `Arithmetic-containing mask was falsely selected for bitwise-only intent. .23.1 repairs family selection and preserves mandatory installed/published proof. T2297/T2268/T2296 and exact strict public path pass; full AHB semantic/HDL/corpus qualification remains .26/.13. Original public tests/inputs and proof fences remain unchanged.`
   Children: `PUBLICATION-REGRESSION-REPAIRS.23.1`
-  Commit: `child slices`
+  Commit: `child .23.1`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.23.1`
-  Status: `active`
+  Status: `done`
   Goal: `Trace and causally repair the first supported HBURST source refusal.`
   Acceptance: `After outcome commits clean, query canonical currentness/source-width contracts, read actual capture/prepare/required-selection/caller paths, relevant tests/history/book and reproduce the exact public source with distinguishing controls. Identify the specific source object/shape/state and failing predicate before changes. Fix only that mechanism while preserving complete source intent and final guards; add meaningful RED/GREEN/currentness/mutation regression at the actual boundary. Focused failing public path plus directly affected checks/book; commit before widening qualification. If scope grows, create bounded children first.`
-  Verification: `Pending clean outcome commitment. No production repair or causal attribution yet.`
-  Commit: `pending`
+  Verification: `Fresh exact strict check RED1 then GREEN0. Diagnostic identifies uncaptured arithmetic-mask intermediate292; selector now scans all operands and rejects that data family without granting proof. Published source_literal_intent remains mandatory despite holder removal/opcode change. Actual native T2297/T2268/T2296 pass Files3 Tests15; both mask orders/targets and real post-publication mutation qualify. Intake/RED/focused/source retain originals, diagnostic and inverse checks. Full paths remain .26/.13.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.23.1: preserve ordinary arithmetic masks and published literal guards`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.24`
   Status: `pending`
@@ -613,14 +613,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-Full10 settles after actual supported AHB HBURST SEQ generation failures.
-.23.1 owns the first causal repair; .24 owns request15 receiver intake,
+Full10 remains nonpassing; .23.1 closes its first causal repair with focused checks.
+.24 owns request15 receiver intake,
 .25 the stale response wording, .27 due cleanup and .26 fresh full11 readiness.
 Publication and saved required feature delivery remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.23.1` | `active` | Trace actual completed-source-intent refusal after clean outcome commit. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.24` | `pending` | Commit request15 receiver ownership and current public intake. |
 
 ## Decisions
 
@@ -629,7 +629,7 @@ Publication and saved required feature delivery remain unqualified.
 
 ## Blockers
 
-- P1 supported HBURST/SEQ completed-source-intent refusal, owned by .23.
+- Fresh complete HBURST/SEQ semantic/HDL/full qualification remains .26/.13.
 - .24/.25/.27 precede .26 fresh qualification; no user input is needed.
 - Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
 
@@ -637,10 +637,10 @@ Publication and saved required feature delivery remain unqualified.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact superseded task/history and every curtailed completed summary retain in full10-intake-20261101.
+Exact prior task/history retain in hburst-selector-source-20261102.
 
-## Acceptance Checklist — full10 first-failure outcome
+## Acceptance Checklist — arithmetic-mask family and published intent
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Full10 fails at t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t line 148; actual generation reports Direct literal emission requires current completed source intent. Guard locus SourceLiteralWidthSupport::capture_generation_fence line712 withholds capture/prepare. Root cause remains unclassified under .23.1.
-- [x] **ADDRESSED (verified)** — Retain complete native output/status143, exact first failure, current sources/prior task/history and all pending incoming work. Only live birth/argv/hash-authenticated guard receives TERM; existing managed-session cleanup plus independent old PID/birth and group absence settle it. .23-.27 own repair/intake/response/cleanup/readiness. No production fix is claimed.
-- [x] **NO REGRESSION** — knowledge-map: OK on the updated bounded gate-status card; native book/source and normal doctrines qualify outcome commitment only. Actual full10 reports complete protocol tests and repaired T1445 plus APB/ordinary AHB successes, but1490-1492 fail and1493 is partial. No later Perl/VIAL/final-book/full/push/hosted/Pages credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh --check --json exits1; bounded preload identifies an uncaptured arithmetic mask. SourceLiteralWidthAllocationSupport::_core_tree excludes arithmetic; SourceLiteralWidthSupport::requires_emission nevertheless demanded literal proof. Actual T2297 RED also demonstrates published-holder removal/opcode change escaping the old guard. Full sources, diagnostic and original RED are retained.
+- [x] **ADDRESSED (verified)** — Inspect all operand families independent of order; unsupported arithmetic stays on its existing width path. Installed holders and actual rows already published as source_literal_intent remain mandatory. Both target languages retain explicit mask width/data/increment. Real publication-boundary mutation refuses HDL and completed capture. No source allocation, numeric width proof, generation fence or original test body changes.
+- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=15 for full T2297/T2268/T2296. Exact supported HBURST strict check exits0, success true, diagnostics empty and original support identity. Re-derivation: native focused/public commands; falsification: original selector RED and real installed/published mutation refusals; durability: source/receipt digests, unchanged original tests and committed regressions. Native book/source and normal doctrines qualify the commit. Remaining AHB semantic/HDL/full/push/hosted qualification stays .26/.13.
