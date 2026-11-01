@@ -1,0 +1,16 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.22",
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--oneline",
+    "-S",
+    "parent/direct handoffs",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "exit_status": 0,
+  "stdout": "8e71ff6d3 PUBLICATION-REGRESSION-REPAIRS.20.9: align auxiliary example and scoped-width guidance\n",
+  "stderr": ""
+}

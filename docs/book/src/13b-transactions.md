@@ -363,8 +363,8 @@ ports. An actor alias of `W=8` remains distinct from a child-local `W=4`, even
 when both declarations appear in the same generated module. Private metadata
 keeps these lexical environments separate. Scheduled carriers preserve the
 selected scoped parameter or alias and eligible HDL ranges keep that name;
-parser/report width fields retain selected defaults. Parent handoffs remain
-numeric. This does not provide configuration forwarding or library shape
+parser/report width fields retain selected defaults. Parent handoffs for the
+generated child's own parameter defaults use selected numeric widths. This does not provide configuration forwarding or library shape
 specialization.
 
 Reusable library and ATL child modules also retain a private instance scope

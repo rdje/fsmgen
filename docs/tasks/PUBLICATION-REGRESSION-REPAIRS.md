@@ -555,22 +555,23 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.22`
-  Status: `pending`
+  Status: `done`
   Goal: `Clarify direct own-transaction versus actor-backed width wording.`
-  Acceptance: `P1 after clean .21.1 repair and before full10. Saved full9 pending-doc-scope/draft in full9-intake identifies matrix/13b broad parent/direct selected-size wording. Review actual T1336 actor-backed direct roots and T1368 own-transaction numeric lowering/current source witnesses. Narrow those sentences to their owning scopes; preserve actor/child named ranges, selected parent defaults, all examples and forwarding/runtime boundaries. Prose only, focused affected book audit/native build/source checks and normal commit; no compiler change or unnecessary broad replay.`
-  Verification: `Draft remains ignored/unapplied during full9; full9-intake retains complete finding/replacements/source hashes. No book correction is claimed yet.`
-  Commit: `pending`
+  Acceptance: `After .21.1, scope 13b/matrix selected numeric widths to child-local parent handoffs and direct own-TX_PARAM consumers. Preserve actor/child named carriers, examples and separately owned forwarding/library/runtime defects. Exact original contract/draft survives in book-width-scope-source/full9-intake.`
+  Verification: `Actual complete full9 T1336/T1368 successes join byte-identical current test sources: actor-backed direct formals retain named DATA_W; child-local roots retain their own aliases, parent handoffs use defaults, direct own-TX_PARAM widths scalarize. Three prose replacements preserve every fence and reusable/ATL defect paragraph byte-exact. T1305 passes Files=1, Tests=285. Source/history/native book/copied-source and normal doctrine gates qualify prose only. .21.2 admits fresh full10; no full/push/hosted credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.22: scope transaction width documentation to its parameter owner`
 
 ## Current Frontier
 
 Requested IAL0/IAL1/IAL2 publication remains active. Full9 is settled and partial;
 complete protocol tests and original full8 repairs pass. .21.1 repairs the
-order-dependent T1445 schema oracle with focused checks. .22 wording precedes full10.
+order-dependent T1445 schema oracle with focused checks; .22 wording is corrected.
+.21.2 now owns fresh clean full10 admission before .13 qualification/push.
 Saved private feature implementation remains pending until publication completes.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.22` | `pending` | Clarify direct own-transaction versus actor-backed width scopes. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.21.2` | `pending` | Prepare fresh full10 admission and once-only clean launch. |
 
 ## Decisions
 
@@ -579,7 +580,7 @@ Saved private feature implementation remains pending until publication completes
 
 ## Blockers
 
-- Scoped book wording and fresh full10 remain owned by .22/.21.2.
+- Fresh full10 remains owned by .21.2 before .13 publication qualification.
   Full local qualification, authorized push and exact-SHA hosted/Pages proof
   stay active under .13. No user input or live job remains. Earlier memory/native
   cause gaps stay separate; recorded full9 stop is assertion-driven.
@@ -588,10 +589,10 @@ Saved private feature implementation remains pending until publication completes
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact superseded source/checklist retains in mcp-schema-declaration-intake-20261101.
+Exact prior source and checklist retain in book-width-scope-source-20261101.
 
-## Acceptance Checklist — explicit required vocabulary
+## Acceptance Checklist — transaction width scope
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh controlled RED fails at t/1445-semantic-introspection-mcp-schema-snapshots.t line 200: removing family from the declared required list leaves the first repaired projection unchanged while producer records still emit it. mcp-schema-declaration-intake retains exact RED source and prior task/history.
-- [x] **ADDRESSED (verified)** — Add only the explicit sorted required-key list to projection/fixture and the localized declaration-removal control. Required and optional vocabularies now both pin their public declarations directly; all prior emitted-key/missing-key/envelope/value/kind/order/adverse checks remain. No production or book behavior changes.
-- [x] **NO REGRESSION** — All tests successful; Files=1, Tests=5 in mcp-schema-declaration-focused-20261101. Earlier adjacent MCP/catalog receipts remain scoped to unchanged source files. Native book/source and normal gates qualify this follow-up; full10/push/hosted remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S parent/direct handoffs identifies8e71ff6d as the broad matrix sentence origin. Actual complete full9 T1336 named actor-backed direct HDL ranges contradict that wording; T1368 independently distinguishes numeric direct own-TX_PARAM and generated-child parent handoffs. Exact unchanged source/native joins and prior prose retain.
+- [x] **ADDRESSED (verified)** — Three prose replacements name the parameter owner. All examples and the separate reusable/ATL constructor defect paragraph remain byte-identical. Actor/child named carriers, parser/report selected values and open forwarding/library/runtime boundaries remain distinct. No source/test/compiler behavior change.
+- [x] **NO REGRESSION** — All tests successful; Files=1, Tests=285 in book-width-scope-focused-20261101. Native book/copied-source and normal doctrine checks qualify the prose; earlier full9 native143 stays nonpassing and full10/push/hosted/Pages stay pending.
