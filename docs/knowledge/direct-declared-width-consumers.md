@@ -23,7 +23,8 @@ answers:
   - "what owns graph proof rows?"
   - "why does I2C generation refuse inline shifts with literals?"
   - "why do AHB comparison guards falsely require literal data width intent?"
-date: 2026-10-31
+  - "why does ISF wait shift fail complete current selected targets?"
+date: 2026-11-01
 status: current
 tags: [widths, parameters, lowering, declarations]
 evidence: >-
@@ -151,12 +152,10 @@ Mutable paths, unsupported scalar/type/target profiles, symbol-bearing parameter
 payloads and static payloads hiding mutable dependencies refuse. Defaults preserve;
 plans retain no Signal/environment owner.
 
-DirectDeclaredWidthSupport source/target joins and the narrower
-prepare_target_namespace contract (T2266) are canonical in
-`docs/book/src/11a-perl-api-reference.md` and its generated POD reference for
-`perl/FSM/DirectDeclaredWidthSupport.pm`. The complete source/lookup, physical
-mapping, numeric/type/state and detachment rules remain there; the namespace
-result grants no semantic or currentness authority. Full validation preserves.
+DirectDeclaredWidthSupport's joins/prepare_target_namespace (T2266) are
+canonical in the API/book and linked POD. Source/lookup, physical mapping,
+numeric/type/state and detachment validate there; namespace alone grants no
+semantic/currentness authority.
 
 Opt-in VerilogFamily::DeclarationCapture records actual parameter order, ports,
 state/storage/enable/intermediate declarations and allocated typedef names at
@@ -166,18 +165,15 @@ snapshots. Reset, failed/incomplete/duplicate transactions withhold old/partial
 results; no HDL parsing or second pass supplies them. Ordinary/captured artifacts
 match authenticated predecessor owners under Date-only comparison.
 
-Verilog-family ports consume proved ranges, actual selected roots/arithmetic and
-width1 vector rank. The collector installs per generation. Complete target proof
-and exact emitted-plan comparison refuse late same-default ancestry changes;
-combined/stale/namespace and symbolic system-width profiles refuse before success.
-Fixed/type/legacy and static VHDL defaults preserve. Strict check/SV/Verilog pass
-the width1 fixture; the port audit retains its prior VHDL refusal. Source-owned
-storage shares these plans, with explicit internal roles/arithmetic/width1 rank.
-Final emitted-storage comparison rejects late same-default identity changes.
-Signed/state/type/fixed rows preserve. Computed shapes/full override/runtime remain
-successors. Whole backend retention belongs to .25/flattened-backend-owner-cycle;
-isolated target plans retain neither caller target records nor never-installed
-physical Core copies.
+Verilog-family ports/storage use proved roots/arithmetic and width1 vector
+rank, installing the collector each generation. Complete target/emitted-plan
+proof refuses late same-default ancestry, stale/combined/namespace and symbolic
+system widths. Fixed/type/signed/state/legacy products and static VHDL defaults
+preserve. Strict check/SV/Verilog pass width1; the port audit retains its dated
+VHDL refusal. Explicit internal storage shares the contract. General computed
+shapes/full override/runtime remain successors. Backend retention: .25 and
+flattened-backend-owner-cycle; isolated plans retain neither caller target
+records nor never-installed physical Core copies.
 
 Current namespace replay:
 
@@ -199,3 +195,8 @@ Replay T2297 with the retained old-selector adverse control; current contracts
 remain in `docs/book/src/11a-perl-api-reference.md` and its linked POD.
 
 Concat contracts: `docs/book/src/11a-perl-api-reference.md`; writer ownership: `docs/tasks/ISF-REDUCTION-DELIVERY.md`.
+
+T1244 wait/shift declared bit, an SV keyword. Literal selection succeeds;
+namespace proof refuses. Two source-name substitutions to serial_bit restore
+native generation and installed Verilator lint; inverse keyword artifact fails.
+Intake/repair: PUBLICATION-REGRESSION-REPAIRS.19. Full/runtime stay open.

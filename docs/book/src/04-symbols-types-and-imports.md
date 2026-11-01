@@ -503,10 +503,11 @@ propagation, generated specialization and external override/runtime proof remain
 separate obligations; this fixture does not promote the full generic profile.
 
 Port/storage emission has focused checks and native generation evidence.
-Computed helper shapes and complete external override/runtime qualification
-remain pending. The source-aware VHDL range integration is also
-pending: symbolic direct ports currently refuse in that converter before a new
-artifact is returned; an existing destination remains unchanged.
+Broader computed helper shapes and complete external override/runtime
+qualification remain pending. Source-aware VHDL now accepts the bounded
+symbolic port/storage profile described in the API reference. Unsupported
+shapes still refuse before an artifact is returned; an existing destination
+remains unchanged.
 
 The target-plan ownership check exposed an independent backend retention defect:
 ordinary numeric generation keeps a context/helper back-reference cycle and its
@@ -708,11 +709,11 @@ PAD : std_logic_vector(7 downto 0) := "10100101"
 This qualifies VHDL default relationships. Direct Verilog-family ports
 and source-owned storage now preserve captured symbolic ranges and default-one vector
 rank; computed shapes remain successors. A distinct equal literal width creates
-no relationship. Direct VHDL symbolic ports and complete external
-override/runtime qualification remain pending. The standalone SystemVerilog-text converter
+no relationship. Direct VHDL has a bounded source-aware symbolic port profile;
+complete external override/runtime qualification remains pending. The standalone SystemVerilog-text converter
 keeps its existing static/integer-expression profile because it has no Core
-source bindings. See the direct-backend chapter for the separately owned
-reserved-identifier emission defect.
+source bindings. See the direct-backend chapter for declared-keyword physical
+naming and the exact compiler qualification boundary.
 
 The complete [imported-default fixture](../../../t/data/ial0-imported-default-bindings.fsm)
 exercises qualified constants, enum members and a nested aggregate leaf:

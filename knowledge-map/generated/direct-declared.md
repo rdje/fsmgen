@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-declared`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **21** uniquely owned question entries.
+> **1** facts · **22** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -23,6 +23,7 @@
 - q="why do AHB comparison guards falsely require literal data width intent?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why do bit and concatenation guards reference undeclared condition?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why does I2C generation refuse inline shifts with literals?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
+- q="why does ISF wait shift fail complete current selected targets?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why does a static slice guard test the whole signal?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why must explicit auxiliary width declarations be preserved before copying parent bindings?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
 - q="why must late sizing preserve distinct next/q copy origins?" · facts=[direct-declared-width-consumers](../../docs/knowledge/direct-declared-width-consumers.md)
@@ -33,5 +34,5 @@
 
 _Direct declared ranges retain source trees but numeric declaration plans need captured lookup identities_
 
-- **date:** 2026-10-31 · **status:** current
+- **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-declared-width-consumers.md`](../../docs/knowledge/direct-declared-width-consumers.md)
