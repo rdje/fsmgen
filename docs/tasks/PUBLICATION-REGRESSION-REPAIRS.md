@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / regression qualification`
 - Created: `2026-10-25`
-- Last updated: `2026-11-01`
+- Last updated: `2026-11-02`
 - Owner: repo-local workflow
 
 ## Goal
@@ -605,22 +605,22 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.27`
-  Status: `pending`
+  Status: `done`
   Goal: `Perform due cleanup after frozen full10 settles.`
   Acceptance: `P1 before .26. Last cleanup2026-10-31T15:02:31.201454+00:00 becomes due during immutable full10; its pending queue preserves that observation. Use installed authenticated same-volume collector/reviewer and exclusive dated slot, retain all candidates absent exact safe authority, verify independent membership/hostile controls, overwrite latest-only record and sync book reader. Normal commit, no foreign repositories/Git metadata/symlink deletion, current evidence loss or inferred reclamation.`
-  Verification: `Due observation retains in full10-pending-intakes; no cleanup during frozen CI or new removal claim.`
-  Commit: `pending`
+  Verification: `Fresh exclusive 20261102 wrapper authenticates installed collector against native8647e2524; actual interval exceeds24h. Same-volume regular log/bin and root/Rust metadata agree with independent rg membership; every candidate retained, removed empty. Saved missing-member/unsafe-path/Boolean-size/invented-removal controls pass. Complete census/prior/source/receipt retains; latest-only record and same-size book reader advance. No content/reclamation/future-absence or workload replay claim.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.27: record due safe artifact census`
 
 ## Current Frontier
 
 Full10 remains nonpassing; .23.1 closes its first causal repair with focused checks.
 .24 commits request15 receiver intake; .25 corrects scoped width wording.
-.27 owns due cleanup before .26 fresh full11 readiness.
+.27 commits due cleanup; .26 owns fresh full11 readiness.
 Publication and saved required feature delivery remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.27` | `pending` | Run authenticated due artifact cleanup before full11 admission. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.26` | `pending` | Join current repair receipts and admit exclusive unchanged full11. |
 
 ## Decisions
 
@@ -630,17 +630,17 @@ Publication and saved required feature delivery remain unqualified.
 ## Blockers
 
 - Fresh complete HBURST/SEQ semantic/HDL/full qualification remains .26/.13.
-- .27 precedes .26 fresh qualification; no user input is needed.
+- Fresh .26 admission/full qualification remains; no user input is needed.
 - Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history retain in response-width-scope-source-20261102.
+Exact prior task/history: artifact-census-20261102 admission/closure source.
 
-## Acceptance Checklist — downstream scoped width wording
+## Acceptance Checklist — due safe artifact census
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The response conflates numeric public widths with scoped carriers/eligible ranges. Complete full10 T1336/T1368 native rows and unchanged source oracles contradict the blanket claim. git log -S confirms this is older prose, not a new producer result; canonical isf-bound-module-carriers and book13b already distinguish the scopes.
-- [x] **ADDRESSED (verified)** — Correct only response/card representation claims and make the old override observation historical. Book names forwarding/library/override/runtime nonclaims. All examples, constructor-defect paragraph, request15 scope and still-open grouped delivery remain exact. No compiler/test/schema/capability change or new override claim.
-- [x] **NO REGRESSION** — knowledge-map: OK is required for the retained questions/current scope. Actual historical complete native successes join current test hashes; source/fence and open-boundary conservation are checked. Re-derivation: native source/oracle joins; falsification: actor-named versus own-TX numeric expectations; durability: retained before/after text/hashes/canonical routes. Native book/source and normal doctrines qualify prose only; full qualification remains .26/.13.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup identifies registration495e394d1c; latest prior record update is3fe9868e30. Actual native prior bytes and captured UTC pass the installed unchanged daily-admission assertion. Age or suffix alone gives no disposal authority.
+- [x] **ADDRESSED (verified)** — New exclusive wrapper binds current installed collector/reviewer to native8647e2524 and owner .27. Actual same-volume census agrees with independent rg membership and root/Rust locations. Saved hostile member/path/Boolean/removal controls reject. All candidates retain; latest-only record and same-size book reader update. No collector policy, resource limit or disposal authority change.
+- [x] **NO REGRESSION** — Saved collector/reviewer controls pass; knowledge-map: OK is required for canonical navigation, with native book/source and normal final-index doctrines. Re-derivation: actual dated filesystem census. Falsification: independent rg plus saved hostile controls. Durability: authenticated wrapper/complete receipt/prior record/task/book/Git. No reclamation/content/future absence or original workload/HDL execution claim. .26 admits fresh full11 next.

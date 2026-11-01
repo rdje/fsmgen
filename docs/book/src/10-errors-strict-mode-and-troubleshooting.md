@@ -583,7 +583,7 @@ Read the latest dated census and its membership/primitive-kind controls without
 walking the filesystem again or deleting candidates:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261031/census.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261102/census.py
 ```
 
 Private cache-test copies may also be disposed of after their complete

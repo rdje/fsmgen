@@ -1,0 +1,14 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.27",
+  "correction": "closure-source book_change.only_change.old accidentally contains the reused task-node offset. This exact byte-derived comparison supersedes only that metadata field. All captured source hashes and actual inverse equality remain unchanged.",
+  "path": "docs/book/src/10-errors-strict-mode-and-troubleshooting.md",
+  "only_change": {
+    "old": "docs/audits/artifact-census-20261031/census.py",
+    "new": "docs/audits/artifact-census-20261102/census.py"
+  },
+  "before_sha256": "4cff75bb89db6e471b23267c66e17b7696b223416e9a32bca724366bb25c1ef9",
+  "after_sha256": "43392b2ea1e245e532d1bb7dd119fb34a5b9b210369b1f326ed8ff1cc72dd6fb",
+  "inverse_byte_equal": true,
+  "bytes_delta": 0,
+  "lines_delta": 0
+}
