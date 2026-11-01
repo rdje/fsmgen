@@ -10,7 +10,10 @@ answers:
   - "why does read-only actor storage status appear as an HDL input?"
   - "why do generated transaction children duplicate or export actor storage?"
   - "why did the SPECFORGE handoff gate fail?"
-date: 2026-10-21
+  - "where is SPECFORGE request15 owned?"
+  - "does ISF support minimum holds or no-later/no-earlier event order?"
+  - "can bounded-eventually express reset hold duration?"
+date: 2026-11-02
 status: current
 tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp, storage, register-access]
 evidence: t/1904-isf-generated-child-storage-reads.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md; t/1903-isf-internal-storage-ownership.t; docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
@@ -68,3 +71,13 @@ Audits retain caller bytes/hashes, native reports, output-role controls and an i
 HDL width oracle. Replay needs a fresh repository-relative same-volume destination each time;
 it captures current outcomes without signing off changed behavior. Caller-wide counts remain
 unmeasured; controls do not qualify the whole corpus, future features or four-state knownness.
+
+Request15: `ISF-MINIMUM-HOLD-EVENT-ORDER` owns R1-R4 minimum complete-cycle
+holds, inclusive event order, clock/edge/polarity/provenance, scheduling/SV
+and precise refusals; R5 assumption/assertion role is optional. Implementation
+follows prior required delivery/publication and SEM .33.6 actor placement.
+Fresh exact bounded-eventually control accepts/generates; hold and both orders
+refuse unsupported operators. Generation proves no hold behavior. RST_I is also
+reset: .2 owns non-vacuous sampling/repeated events; no eventual-truth, invented
+anchor or synthetic host substitutes. Exact sources/results/HDL:
+`docs/audits/push-readiness-20261025/request15-receiver-intake-20261102.json.gz`.

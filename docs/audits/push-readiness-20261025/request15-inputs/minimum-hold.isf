@@ -1,0 +1,11 @@
+(actor wishbone_probe
+  (clock CLK_I)
+  (reset (RST_I sync active_high))
+  (interface
+    (input RST_I (width 1))
+    (output CYC_O (width 1))
+    (output STB_O (width 1)))
+  (transaction reset_hold
+    (on start)
+    (assert (hold RST_I (at-least 1)) "reset_minimum_one_cycle")
+    (complete done)))

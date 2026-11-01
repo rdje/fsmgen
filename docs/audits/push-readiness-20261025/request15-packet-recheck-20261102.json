@@ -1,0 +1,8 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.24",
+  "packet": "docs/audits/push-readiness-20261025/incoming-request15-20261101.json.gz",
+  "decoded_file_count": 90,
+  "decoded_bytes": 1282756,
+  "all_individual_lengths_sha256_match": true,
+  "scope": "Read retained exact packet only. No foreign repository reads, writes or replay; provider result/corpus quantities remain third-party."
+}

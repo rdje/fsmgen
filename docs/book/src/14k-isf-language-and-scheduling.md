@@ -938,6 +938,11 @@ Verilog output stays assertion-free. Remaining backlog: runtime-signal or
 expression windows, package constants inside window expressions, global `always`
 implication forms, min/max windows, dynamic bounds, same-cycle-only checks,
 nested monitors, expression operands, and multiple outstanding obligations.
+SPECFORGE request `.15` also owns minimum complete-cycle holds and inclusive
+`no-later-than`/`no-earlier-than` event ordering under
+`ISF-MINIMUM-HOLD-EVENT-ORDER`; these forms are not implemented. A bounded-eventually
+monitor cannot substitute for duration or order. Contract selection must preserve
+clock/edge/polarity/provenance and observe reset holds without vacuous suppression.
 
 The file-backed `isf/stream_stage_contract.isf` fixture covers the ready/valid
 stage plus bounded-eventually monitor path through scheduled `.fsm` structure,

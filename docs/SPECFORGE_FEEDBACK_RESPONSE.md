@@ -109,6 +109,36 @@ comb/ff conversion is preserved. Generic-width/grouped delivery remains pending.
 **SPECFORGE `.46.c` remains blocked.**
 Requests `.7`/`.8`/`.9`/`.10` retain the boundaries below.
 
+## 2026-11-02: Request .15 received; minimum holds and event order pending
+
+`FSMGEN-REQUESTS.15` is accepted for scheduled implementation under
+`ISF-MINIMUM-HOLD-EVENT-ORDER`. Fresh local strict checks accept the supplied
+bounded-eventually control and reject `hold`, `no-later-than` and
+`no-earlier-than` as unsupported operators. The control generates pending/age/fail
+state and its SystemVerilog assertion. These results reproduce the documented
+boundary; the requested feature is not implemented or published.
+
+Required R1-R4 cover a level held for N complete cycles, inclusive event order,
+exact assertion/negation/polarity/rose/fell/clock identity, ordinary scheduling,
+SystemVerilog verification, provenance and targeted refusals. Same-edge order
+must be allowed. No eventual-truth substitute, invented start-of-run anchor,
+rearm-failure monitor or synthetic transaction can stand in for these forms.
+Optional R5 assumption/assertion role selection is separately owned.
+
+Contract selection must resolve repeated events and reset observation before
+implementation. In the supplied hold case RST_I is also the actor reset:
+blanket reset suppression could make the hold vacuous. Independent sufficient
+hold, short-pulse and reset-edge controls are required. The accepted control
+proves generation only; it proves neither hold semantics nor non-vacuity.
+
+The exact signed-off packet, local inputs and fresh native receipts are retained
+under `docs/audits/push-readiness-20261025/` (incoming-request15 and request15-*).
+Provider pin/upstream/corpus observations remain attributed to SPECFORGE.
+Intake is complete; implementation follows existing required-request/publication
+priorities under decision0121 and coordinates actor-level placement with SEM
+`.33.6`. Dynamic timers, runtime windows and outstanding queues remain separate.
+No SPECFORGE repository, integration record or pin has been changed.
+
 ## High-Level Response
 
 ### SPECFORGE request handoff — 2026-10-21

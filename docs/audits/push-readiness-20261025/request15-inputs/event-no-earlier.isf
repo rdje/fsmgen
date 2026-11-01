@@ -1,0 +1,11 @@
+(actor wishbone_probe
+  (clock CLK_I)
+  (reset (RST_I sync active_high))
+  (interface
+    (input RST_I (width 1))
+    (output CYC_O (width 1))
+    (output STB_O (width 1)))
+  (transaction cycle_strobe_release
+    (on start)
+    (assert (no-earlier-than (fell CYC_O) (fell STB_O)) "cyc_not_before_stb_release")
+    (complete done)))
