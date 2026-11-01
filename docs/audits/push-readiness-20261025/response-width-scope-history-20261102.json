@@ -1,0 +1,36 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.25",
+  "observations": [
+    {
+      "command": [
+        "git",
+        "log",
+        "-1",
+        "--format=%H %s",
+        "-S",
+        "carriers/public reports remain fixed",
+        "--",
+        "docs/SPECFORGE_FEEDBACK_RESPONSE.md"
+      ],
+      "exit_status": 0,
+      "stdout": "0456d31a1dc5bf0cea5d1c239fe89f7a647e34ec ISF-REDUCTION-DELIVERY.2.3.2.4.1: retain generated width sources and scopes\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "-1",
+        "--format=%H %s",
+        "-S",
+        "Current actor width references resolve to the default before",
+        "--",
+        "docs/SPECFORGE_FEEDBACK_RESPONSE.md"
+      ],
+      "exit_status": 0,
+      "stdout": "5be6a3c086ae626ebb2b3acec572876fd33e9344 SEMANTIC-INTROSPECTION-MCP-FRONTIER.33.1: answer SPECFORGE feature requests and strict-port question\n",
+      "stderr": ""
+    }
+  ],
+  "scope": "Targeted provenance for the two superseded response claims. No full history audit or new producer/runtime observation."
+}

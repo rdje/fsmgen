@@ -43,9 +43,10 @@ date header. `_parse_interface` ignored malformed shapes and lacked final unknow
 `.33.2` repairs this defect through the shared parser/native/API/MCP boundary: T1898 rejects
 unsupported/malformed options in default and strict modes, preserving valid metadata.
 
-Generic widths differ from earlier derived widths (`.32.3`): overriding HDL to 64 left default-32
-WDATA at 32, while separately generating default-64 gave 64. Width dependencies were resolved before
-emission. `.33.3` owns preservation; parameter legality and optional interfaces depend on it.
+Generic widths differ from derived widths (`.32.3`). At a7bf398ac, erased width
+dependencies kept WDATA at 32 under a 64-bit override; regeneration at 64 gave 64.
+Actor/child scoped carriers and eligible SV now preserve names; parser/reports stay numeric.
+T1336/T1368 distinguish these scopes; `.33.3` owns forwarding/library/override/runtime and legality/optional-port dependencies.
 
 The positive-width undriven AWMECID and literal control lost their output role; a driven control
 kept it. The FSM retained width but no role/drive marker, so unused-signal inference omitted it.

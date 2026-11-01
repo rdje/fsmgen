@@ -142,9 +142,9 @@ The records preserve dependencies and their separate environments. Widths
 backed by actor parameters retain scoped references in scheduled `+size` entries
 and eligible SystemVerilog ranges; parser and public report widths retain the
 selected numeric defaults. Generated-child local width aliases also retain their
-own scoped carriers and eligible ranges; generated-top/domain configuration
-forwarding has a separate qualification boundary. Broader library shape
-specialization and runtime qualification remain separate work.
+own scoped carriers and eligible ranges. These scoped guarantees do not qualify
+generated-top/domain configuration forwarding, library shape specialization,
+external overrides or runtime behavior.
 
 A current reusable-actor defect remains owned for immediate repair: library and
 resolved ATL child constructors currently enter raw module lowering before child

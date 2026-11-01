@@ -591,11 +591,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.24: own SPECFORGE minimum holds and event ordering`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.25`
-  Status: `pending`
+  Status: `done`
   Goal: `Correct stale width representation wording in the downstream response.`
   Acceptance: `P1 after .24/before full11. Current SPECFORGE_FEEDBACK_RESPONSE opening request12 and older generic-width paragraphs conflate numeric parser/report defaults with scoped carriers/eligible named HDL ranges. Review canonical carrier card and actual T1336/T1368 source/native witnesses; correct only those current representation claims and identify historical override observations as historical. Preserve open generated-top/library/override/runtime and grouped-request boundaries. Prose-only focused doc/book/normal commit; no broad verification or compiler change.`
-  Verification: `Full exact response bytes/hash and both loci retain in incoming-request15/full10-pending-intakes. Related specforge-feature-intake-and-strict-port-question card repeats the pre-preservation all-widths-numeric claim; .25 also owns narrowing it against current carrier contracts. No correction is claimed yet.`
-  Commit: `pending`
+  Verification: `Response and related card distinguish scoped carriers/eligible SV from numeric parser/report defaults, direct own-TX defaults and child-local parent handoffs. Old default32/override64 observation is explicitly historical. Complete full10 T1336/T1368 success rows join byte-identical current test sources; canonical carrier/book scope agrees. Request15, grouped/open forwarding/library/override/runtime and constructor-defect text remain. Prose-only source/evidence/book gates; no fresh override/full credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.25: align downstream width claims with scoped carriers`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.26`
   Status: `pending`
@@ -614,13 +614,13 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 ## Current Frontier
 
 Full10 remains nonpassing; .23.1 closes its first causal repair with focused checks.
-.24 commits request15 receiver intake. .25 owns stale response wording,
-.27 due cleanup and .26 fresh full11 readiness.
+.24 commits request15 receiver intake; .25 corrects scoped width wording.
+.27 owns due cleanup before .26 fresh full11 readiness.
 Publication and saved required feature delivery remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.25` | `pending` | Correct scoped width representation in response and related card. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.27` | `pending` | Run authenticated due artifact cleanup before full11 admission. |
 
 ## Decisions
 
@@ -630,17 +630,17 @@ Publication and saved required feature delivery remain unqualified.
 ## Blockers
 
 - Fresh complete HBURST/SEQ semantic/HDL/full qualification remains .26/.13.
-- .25/.27 precede .26 fresh qualification; no user input is needed.
+- .27 precedes .26 fresh qualification; no user input is needed.
 - Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history: ea1a0a346 and request15-receiver-ownership-source-20261102.
+Exact prior task/history retain in response-width-scope-source-20261102.
 
-## Acceptance Checklist — request15 receiver intake
+## Acceptance Checklist — downstream scoped width wording
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Current --check --json reproduces unsupported hold/no-later-than/no-earlier-than while bounded-eventually accepts. Canonical property grammar falls through to the ordinary expression builder; documented monitor semantics cover eventual truth, not hold/order. This is a feature request, not a reproduced compiler defect.
-- [x] **ADDRESSED (verified)** — Exact packet/hash-matched actors, required R1-R4, optional R5 and every excluded scope have receiver ownership. Actual native statuses0/1/1/1 plus generation0 retain complete products/monitor/assertion. Receiver .2 owns self-reset non-vacuity and repeated-event contract before implementation; prior required delivery/publication order remains. Completed summary compaction preserves every node/status/child except this intake completion, with exact prior source retained.
-- [x] **NO REGRESSION** — knowledge-map: OK is required on the new receiver card; native book/source and normal doctrines qualify intake only. Existing positive control accepts and retains its reset-disabled clocked assertion; exact negative forms refuse without generated output. Re-derivation is current native products; falsification is distinct positive/negative input outcomes; durability is immutable packet/sources/receipts and receiver tasks. No HDL runtime, new temporal feature, corpus/API/MCP expansion or full/publication credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — The response conflates numeric public widths with scoped carriers/eligible ranges. Complete full10 T1336/T1368 native rows and unchanged source oracles contradict the blanket claim. git log -S confirms this is older prose, not a new producer result; canonical isf-bound-module-carriers and book13b already distinguish the scopes.
+- [x] **ADDRESSED (verified)** — Correct only response/card representation claims and make the old override observation historical. Book names forwarding/library/override/runtime nonclaims. All examples, constructor-defect paragraph, request15 scope and still-open grouped delivery remain exact. No compiler/test/schema/capability change or new override claim.
+- [x] **NO REGRESSION** — knowledge-map: OK is required for the retained questions/current scope. Actual historical complete native successes join current test hashes; source/fence and open-boundary conservation are checked. Re-derivation: native source/oracle joins; falsification: actor-named versus own-TX numeric expectations; durability: retained before/after text/hashes/canonical routes. Native book/source and normal doctrines qualify prose only; full qualification remains .26/.13.

@@ -92,8 +92,10 @@ birth identities are not retained by this fixed runtime capture.
 Parameter-dependent grouped behavior (R2/R3), publication and SPECFORGE
 integration remain pending. No default-width unroll substitutes for generic
 behavior. Generated child declarations now retain private source and lexical
-environment associations; their carriers/public reports remain fixed at resolved
-defaults. Reusable/domain propagation and generic HDL remain pending.
+environment associations. Scheduled carriers and eligible SystemVerilog ranges
+retain scoped parameter/alias names; parser/public width reports keep resolved
+defaults. Generated-top/domain configuration forwarding, library specialization,
+external override and runtime qualification remain pending.
 The direct literal-width prerequisite now closes emitted declaration/assignment
 ledgers with complete physical-target proof and late-mutation refusal. Sized and
 unsized mutable final declaration agreement now has focused native evidence,
@@ -1497,15 +1499,22 @@ MCP parity, book examples and appropriate independent HDL evidence.
 | `sf-isf-known-value-predicate` | Add verification-only knownness, with separate direct-unknown/grouped forms and independent four-state qualification. Knownness means absence of X/Z, not every protocol-specific notion of a valid value. | `.33.7` |
 | `sf-isf-transaction-phase-groups` | Check phase/member/role/provenance facts and expose them as metadata without drive values, order or HDL behavior. Declaration-only transactions have a separate contract/implementation child. | `.33.8` |
 
-The generic-width request is **not a duplicate** of the earlier derived-width
-request (`.32.3`). Current actor width references resolve to the default before
-emission; the module still declares the parameter. The generic foundation must
-preserve that dependency before a derived width can truthfully claim to follow
-an HDL or use-site override. Current width-dependent HDL remains fixed at the
-resolved default until the relevant implementation is qualified.
-An independent HDL instantiation with `DATA_WIDTH=64` still observes a
-32-bit `WDATA` for the default-32 source; the separately generated default-64
-control observes 64 bits. The audit retains both compile/runtime receipts.
+The generic-width request and earlier derived-width request (`.32.3`) retain
+separate owners. Actor-backed roots now retain scoped parameter names in
+scheduled carriers and eligible SystemVerilog ranges; parser/public report
+widths keep numeric defaults. Generated-child local roots retain their own
+aliases. Parent handoffs for those child-local defaults and direct transaction
+ports using their own transaction parameters use selected numeric widths.
+Configuration forwarding, library specialization, broader generic HDL,
+external override and runtime qualification remain open under `.33.3` and the
+required width-delivery tree.
+
+Historical intake at `a7bf398ac` observed an independent HDL instantiation with
+`DATA_WIDTH=64` keeping 32-bit `WDATA` for the default-32 source, while the
+separately generated default-64 control had 64 bits. The audit retains those
+compile/runtime receipts; this is not a new override test or a claim about the
+current scoped-range subset. Current source/native scope witnesses are T1336,
+T1368 and the [book width guide](book/src/13b-transactions.md).
 
 The earlier phase-membership guidance remains valid: do not manufacture a
 drive value or body order from membership alone. `.33.8` now owns the requested
