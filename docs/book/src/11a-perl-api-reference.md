@@ -87,6 +87,8 @@ fields stay unchanged; the index retains no Core graph and caches no validation
 pass. Focused currentness, transport and lifetime checks pass. The original
 large PPIF generation remains a tracked performance blocker; these focused
 savings do not establish end-to-end completion.
+Repeated bare references still register source writes and revalidate their
+dependent allocations; that remaining cost is under repair.
 
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing
