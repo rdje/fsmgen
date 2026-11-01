@@ -1,0 +1,33 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "freeze_revision": "1b94aef617edca87df7ec4a3bf63f9d4400f7a01",
+  "pending": [
+    {
+      "input": ".artifacts/push-readiness-20261025/full10-incoming-request15-20261101.json.gz",
+      "sha256": "6b8efbff6c63dc253b24a83d0f5808fdcbf52b9ebd9b1210de96a47faea595a5",
+      "next_action": "After native outcome commits, create/commit receiver task tree for FSMGEN-REQUESTS.15, book/feedback request status and separate stale width-response repair ownership before resuming ordered work."
+    },
+    {
+      "input": ".artifacts/push-readiness-20261025/full10-request15-contract-risk-20261101.json",
+      "sha256": "8d8e17810d2570a99d377fdc101fc828b0b2065409438998111e226464716d90",
+      "next_action": "Receiver contract-selection slice .2 must select non-vacuous reset observation, complete-cycle sampling and applicable property/actor reset semantics before source implementation. Independent held-long-enough/short-pulse/reset-edge failures must distinguish the intended check from blanket reset disabling, without inventing a transaction or changing the existing monitor. Keep assertion/assumption interpretation explicit; R5 remains separately owned."
+    }
+  ],
+  "maintenance_due": {
+    "owner_until_native_settlement": "PUBLICATION-REGRESSION-REPAIRS.13",
+    "activity_owner": "PUBLICATION-REGRESSION-REPAIRS.9",
+    "last_cleanup_utc": "2026-10-31T15:02:31.201454+00:00",
+    "due_observed_utc": "2026-11-01T15:10:33.691476+00:00",
+    "next_action": "After full10 settles and its outcome commits, activate the owning cleanup leaf, read its installed collector/authority, run same-volume safe census/cleanup, overwrite latest-only record and commit before publication. No cleanup or record refresh is claimed during the immutable full run."
+  },
+  "feedback_width_followup_scope": {
+    "owner_until_native_settlement": "PUBLICATION-REGRESSION-REPAIRS.13",
+    "source": "docs/SPECFORGE_FEEDBACK_RESPONSE.md",
+    "loci": [
+      "Request12 opening status: generated-child carriers/public reports described together as fixed at selected defaults.",
+      "Older generic-width feature explanation: all actor width references described as resolved before emission."
+    ],
+    "required_correction": "After native outcome commits, own a focused documentation leaf. Distinguish qualified scoped carriers/eligible named HDL ranges from numeric parser/public reports and unqualified generated-top/override/library/runtime behavior. Preserve exact historical intake evidence and incomplete SPECFORGE delivery status.",
+    "evidence": "Full original feedback text/SHA retains in full10-incoming-request15-20261101.json.gz; current isf-bound-module-carriers/T1336/T1368 and full10 native successes establish the representation distinction."
+  }
+}

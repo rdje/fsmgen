@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -168,11 +168,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
-  Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
-  Acceptance: `P1 complete local/hosted publication owner. Preserve all original capacity/cause gaps; post-stop samples never reconstruct cutoff pressure. Stop only authenticated own jobs, retain first nonpass before causal repair, and keep host88/descendant4096, unfiltered coverage and fresh checkpoints. Full9 now settles143 after a real T1445 schema assertion, without a recorded RAM trip. After .21.1 repair and .22 book scope clarification, .21.2 declares exclusive full10 admission/journal/checkpoint; launch once from clean committed source. Require complete Perl/VIAL/native-book0 before authorized normal push and all expected exact-SHA hosted/Pages success. macOS relevance follows publication.`
-  Verification: `Full1-9 remain retained nonpasses. Full9 sourcee957 reports every originally observed full8 failing path and complete T1436/T1437/T1438 ok, then first new T1445 schema snapshot failure. .21.1 owns cause/repair, .22 recorded scope clarification and .21.2 fresh full10. Collection complete:true does not qualify native143. No later Perl/VIAL/final book/full/push/hosted credit. No user coordination needed: this stop is a known assertion failure, not an observed capacity cutoff.`
-  Outcome: `Full9 first diagnostic at T1445 line45 differs at examples.catalog_entry_keys[3]: actual expected_hdl_pattern_count versus fixture expected_instance_count. Native143 follows TERM only to birth/args/hash-authenticated guard32635; existing trap settles managed group32704. Independent old PID/birth and group absence holds. Full receipt/log, source/history and pending doc draft retain in full9-intake/owned-settlement. Original full8 details remain in e957 history. Commit this outcome before new source changes.`
-  Commit: `Current-admission intakeb6fde609; full5 outcome: this work-unit commit.`
+  Goal: `Complete qualified local/hosted publication without losing first outcomes.`
+  Acceptance: `Preserve original cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push and every exact-SHA hosted/Pages success; macOS relevance follows. Current .23 repair, .24 incoming request ownership, .25 response wording, .27 due cleanup precede .26 fresh full11 admission/once-only launch.`
+  Verification: `Full1-10 remain retained nonpasses. Full10 clean1b94 reports complete long T1436/T1437/T1438 and repaired T1445, APB1470-1472 and ordinary AHB through1489 ok. First new T1490 supported HBURST SEQ strict/check/semantic/outdir refuses current completed source intent;1491/1492 also fail and1493 is partially observed. No recorded RAM trip. .23 owns causal source repair; no test/profile weakening. No later/full/push credit.`
+  Outcome: `Authenticated guard70373 receives TERM; existing cleanup settles managed group70444. Recorder finishes native143; independent old PID/birth and group absence holds. Full native output/current sources/history/progress and incoming request15/risk/cleanup queue retain in full10-intake/owned-settlement and incoming-request15. Commit outcome before source changes.`
+  Commit: `Full10 outcome: this work-unit commit; earlier details remain in1b94 source/history.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
   Status: `done`
@@ -227,17 +227,19 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.1`
   Status: `done`
-  Goal: `Provide one checked current AHB reference for tests and repair the small topology gate.`
-  Acceptance: `After .5 commits, use .16 exact whole-report proof to extract a purpose-specific test-only current reference from the explicit public PPIF/ISF/Builder route, with repository-derived fixed fixture paths. Validate current generated-byte provenance and frozen every-other-field contract; expose an immutable digest/current reference without changing product code. Reuse it in T1602 and T1604, preserving all literal contract/count/negative checks and the changed-role adverse control. Reject unknown invocation/source substitution and avoid shared mutable cached reports. Focused tests/book/docs and normal commit before further callers.`
-  Verification: `Shared test-only AhbReference builds the fixed PPIF/ISF/public Builder route from repository-owned regular same-volume data, validates exact raw provenance values and JSON wire types, and freezes all other report fields. It rejects caller source/digest arguments, builds fresh reports and preserves the protocol-role adverse control. T1602 and T1604 share it; every existing topology/count/semantic/plan/source/negative assertion remains. First integration compiles helper0 and passes three files, but T1602 aborts255 at lines176/177 because extraction missed two scalar-pointer arrows. Complete first test source/recovery/log is retained; no credit is borrowed. Corrected integration passes; final stricter JSON provenance guard rejects a genuine numeric-string count before normalization. Three explicit syntax checks and final focused four-file gate return0/Files4 Tests18. Native book/POD/current-source/index/KMap are verified before normal staged/commit. Production modules/fixtures remain unchanged. Director now explicitly reasserts that .7/.8/.10/.12 are very-high-priority SPECFORGE blockers: finish only this in-flight verified unit, commit clean, then immediately resume required ISF-REDUCTION-DELIVERY.2.3.2.4.2 under decision0121. Remaining independent CI/caller work is deferred until it is needed for required validation/publication; no additional CI-cleanup slice precedes feature implementation.`
+  Goal: `Provide the checked current AHB reference and preserve topology oracles.`
+  Acceptance: `Completed public PPIF/ISF/Builder reference; exact provenance/kind/frozen contract and altered-role controls. Preserve source/caller behavior. Full original contract remains in1b94/full10-intake.`
+  Verification: `T1602/T1604/reference focused Files4 Tests18 and book/source/normal gates passed. Immutable fresh reference rejects wrong source/digest and altered kinds; source epoch and initial extraction/gate refusals retain. No complete native/full credit.`
   Commit: `This work-unit commit.`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.2`
   Status: `done`
-  Goal: `Diagnose and repair checking-foundation derived identities.`
-  Acceptance: `P1 after .1. Capture full current stage/evaluation/rerun tuples through actual own public/test integration, derive exact identity recipes and reconstruct the old expected identities by only independently proved provenance changes. If reconstruction fails, compare the actual historical public fixture before choosing a fix. Preserve model/checking semantics, exact metrics and all adversarial cases. No blind digest refresh; meaningful frozen contract/current-byte checks and normal focused commit.`
-  Verification: `Current guarded T1629 reproduces exactly the stale bridge/evaluation/rerun failures. The dated projection producer independently hashes the full current tuple/report and joins the current bridge to the checked public PPIF/ISF/Builder reference; replacing only the bridge and its dependent rerun/evaluation fields reconstructs both exact historical hashes. Every other evaluation field and JSON kind therefore retains the old oracle. T1629 now checks current byte-derived identities, the current independently checked bridge, the complete historical projection and an altered semantic-metric adverse case; no production code or frozen expected value changes. Existing construction/report/caller/staging/cleanup and metric/count/nonclaim checks remain. Final T1629/T1602 focused gate returns0/Files2 Tests12; complete source/projection/first failures and corrected invocation are retained under push-readiness-20261025/checking-foundation-*-20261031. The first green command included a nonexistent guessed second path and returned2 despite T1629 passing; preserve it and qualify the actual existing T1602 path. Re-derivation is exact independent tuple/report hashing plus current public bridge; falsification is the preserved old full evaluation and changed metric; durability is the tracked focused tests/producer/receipts. The book explicitly labels old hashes as historical and explains current derivation. KMap keeps every answer question and exact former card source/hash while routing duplicate random/family run prose to canonical book/task at nonpositive card byte growth. Normal book/POD/copied-source/derived metadata/staged hook qualification precedes commit. Full CI/hosted and backend/remaining candidate repairs stay open.`
+  Goal: `Repair checking-foundation derived provenance identities.`
+  Acceptance: `Reconstruct old identities by independently proved bridge provenance only; preserve every other field/kind/metric and adverse control. Exact original remains in1b94/full10-intake.`
+  Verification: `Actual RED then tuple/report hash reconstruction and altered-metric control qualify T1629/T1602 Files2 Tests12. Full reports/source/historical oracle and first guessed-path refusal retain in checking-foundation evidence. No producer/semantic/full change.`
   Commit: `This work-unit commit.`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3`
   Status: `done`
@@ -256,10 +258,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.3.2`
   Status: `done`
-  Goal: `Resume backend input and derived identity diagnosis after current AHB generation is restored.`
-  Acceptance: `After .1 commits clean, rerun original T1645, capture actual backend inputs and exact foundation tuples, independently reconstruct old input/evaluation/rerun hashes from only proven provenance deltas, retain every other frozen contract/negative check and qualify the smallest test repair. No unexplained digest refresh or production/provider/pin changes.`
-  Verification: `After55c92474b restores AHB, actual current graph/evaluation again reach only known identities. git log -S locates their frozen input at8e9553a3b. A same-volume archive of only this project's public code/fixtures/resources reproduces exact old backend input0b8260, evaluatione7d9a4 and rerun172c04. All406 original archived resource files are byte-verified against their own Git blobs; no historical implementation is modified, no other repo/submodule is read internally or written, and no external HDL tool runs. Missing root README, historical grammar/plugin resources and a later-only foundation method are preserved as failed probe prerequisites before complete historical public evaluate succeeds. Full artifact/metadata comparison isolates current changes to scalar ahb_phase_pending_q truthiness spelling and decision0111 compatible-fan-in assertion removal; precise signal/operator normalization plus only same-value-assertion-line removal makes both complete HDLs equal, with no broad whitespace normalization. The authenticated old DUT input fixture retains the original digest. T1645 now compares full current inputs to independent file-backed PPIF generation, independently derives current tuple/evaluation IDs, then substitutes only proved bridge/DUT-dependent hashes to match every other complete historical field and JSON kind. All original counts/metrics/caller/refusal/staging/cleanup checks remain. The final T1645/T1629/T1551/T1211 focused gate returns0/Files4 Tests20. A stale-DUT-as-current oracle control returns1 at distinguishing input/stage assertions; current bridge and production guards remain live. One initial focused invocation guessed a nonexistent T1211 path; retain its2 and corrected exact file command. Original/current/historical products, full diffs, four prerequisite attempts, resource/test hashes and separate verification legs retain in backend-foundation-cause-20261031.json.gz and dated complete receipts. KMap preserves every question and prior source/hash while routing duplicate ladder prose to canonical docs at nonpositive byte growth. Production modules/capabilities remain unchanged. Book/source/index/claim and mandatory normal staged gates precede commit; remaining19 execution/profile candidates, full CI and exact-SHA hosted publication remain open.`
+  Goal: `Reconcile backend-foundation provenance without changing semantics.`
+  Acceptance: `Preserve original complete report/metrics/profile/refusals and derive all changed input/dependent identity fields through actual public source. Exact original remains in1b94/full10-intake.`
+  Verification: `821671418 closes the independently reconstructed historical public backend foundation and current direct witness. Full original source/products/first failures/adverse controls retain. External/native and full qualification remain separate.`
   Commit: `This work-unit commit.`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4`
   Status: `done`
@@ -314,10 +317,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.4.5`
   Status: `done`
-  Goal: `Close the bounded exact-candidate migration and prepare clean full publication qualification.`
-  Acceptance: `After all four groups commit, reconcile every prior/current exact-match path and identify intentional historical anchors separately. Prove no unowned original candidate remains; retain all unrun explicit-large scope and do not claim a complete stale-oracle census. Establish current guarded capacity and the unique exclusive full6/checkpoint plan under .13/.69.3, commit complete preflight, then launch full CI from clean committed state. New actual full-suite failures need new task ownership and causal repair, not blanket refresh.`
-  Verification: `All original23 candidates join successful tracked focused receipts and current source hashes. Repeating exactly the four-literal census leaves only intentional historical witnesses in T1629/T1645; no unowned original path remains. This is bounded candidate closure, not a complete stale-oracle census. T1602 bridge-scale qualifiers/boundaries, T1607 exact source-map route and T1626 exact total-operation excess opt-ins remain unqualified. Current raw OS admission62.03142801920573/pressure1 is independently parsed from the same saved counters; no old cutoff cause or future guarantee is inferred. New local-full-ci-6 state/log/receipt and T296 full6 checkpoint slots are absent and exclusive; legacy full1 interrupted/full2-5 non-success states are retained without replay or green credit. Public full --dry-run0 prints whole unfiltered Perl, complete guarded VIAL lifecycle and mdBook stages. Source-derived push expectations contain exactly three workflows and every required job, with actual definitions/hashes retained. full6-candidate-closure/admission/launch-plan/preflight-dry-run-20261031 retain complete recipes/results and distinct evidence legs. The preflight commits before launch; exact clean HEAD is derived/stored by the recorder, and no tracked/untracked changes may occur during native execution because T296 requires an unchanged clean fingerprint. Source/guard/checkpoint policies and native opt-ins remain unchanged. Book separates focused from complete qualification; native book/source/index/claim and normal staged doctrines gate this metadata commitment, then .13 launches/consumes full6 before authorized push and every exact-SHA hosted/Pages outcome. First normal hook refuses the newly appended SEM .69.3 status at4202/4096 bytes; preserve the complete first refusal/staged diff and shorten only that new cross-reference, keeping all substantive history and detailed .5/launch data. No bound or policy changes.`
+  Goal: `Close the complete owned execution-default repair set.`
+  Acceptance: `Conserve every original candidate through actual final-path receipts/current sources; retain historical anchors and unrun large branches. Exact original remains in1b94/full10-intake.`
+  Verification: `All remaining default candidates join actual passing focused receipts; no control-path or large/native credit. Source/receipt/identity conservation and historical semantic oracles retain. Fresh full native/hosted qualification remains .13.`
   Commit: `This work-unit commit.`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.18`
   Status: `done`
@@ -470,24 +474,27 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.2`
   Status: `done`
-  Goal: `Qualify actor parameter dependencies across aggregate defaults.`
-  Acceptance: `T1346: preserve every original parser/IR/report/default assertion and original source. Assert exact mixed mutable-aggregate CLI refusal. Separately author an immutable counterpart, independently compare selected values/kinds, and retain canonical scalar source relations and positive HDL/default checks. Follow T2110/T30 profile; no producer freezing or guard bypass. Focused test/book and commit.`
-  Verification: `Committed637fa828c. Complete T1346 Files1 Tests2 PASS. Original source/IR/report/negative cases retain; param DATA_W carrier and exact mutable aggregate refusal qualify. Authored immutable counterpart preserves complete selected values/JSON kinds and scalar DATA_W=BASE_W HDL alias. actor-dependent-default retains full source/inverse/native/first-gate proof; book distinguishes provenance from admission. Exact detailed source remains in current HEAD and transaction-local-widths-doc-history.`
+  Goal: `Preserve actor aggregate default source and static positive counterpart.`
+  Acceptance: `Keep full original source/IR/report/adverse cases. Original mutable aggregate refuses HDL; separately authored static counterpart must preserve selected values/kinds and source relationships. Exact original remains in1b94/full10-intake.`
+  Verification: `T1346 Files1 Tests2 passes, with exact original aggregate refusal/no partial HDL and independent static counterpart/canonical selected-parameter equality. DATA_W=BASE_W positive HDL alias remains. Actor-dependent-default source/focused packets retain all sources and first size-gate refusal.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.2: qualify actor aggregate default profile`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.3`
   Status: `done`
-  Goal: `Qualify actor-backed transaction defaults at the aggregate boundary.`
-  Acceptance: `Completed actor-backed child default source/refusal/static-counterpart conservation and positive HDL contract; full exact original contract remains in940b3de54 and full9-preflight-history.`
-  Verification: `Committed940b3de54. Complete T1347 Files1 Tests2 PASS. Original source/IR/report/negative cases retain; scoped captures/static declarations, exact aggregate refusal/no partial HDL and authored immutable counterpart qualify. Complete selected authored/shared-capture JSON kinds, explicit inventories and scalar/static HDL checks pass. transaction-actor-default evidence and exact940b/full9 history retain all details; no full/runtime credit.`
+  Goal: `Preserve actor-backed child transaction defaults.`
+  Acceptance: `Retain original source, IR/reports/bindings and negatives; distinguish allocated scalar capture from aggregate-only capture. Exact original remains in1b94/full10-intake.`
+  Verification: `T1347 Files1 Tests2 passes. Original mutable aggregate refuses/no output; independently authored static LANES retains all authored values/kinds and explicitly removes only aggregate-only capture2. Scalar WIDTH/LIMIT/MODE and original positives preserve. Full transaction-actor-default packets retain.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.3: qualify actor-backed transaction defaults`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.4`
   Status: `done`
-  Goal: `Qualify transaction-local parameter default dependencies.`
-  Acceptance: `Completed transaction-local scalar aliases, original mutable aggregate refusal and immutable counterpart/value-kind/HDL conservation. Full exact contract remains in1445d1c67 and full9-preflight-history.`
-  Verification: `Complete actual T1348 Files1 Tests2 PASS. Original source/IR/report/default/negative cases retain; corrected carrier reflects local aliases, actor capture and immutable enum support. Exact original BASE aggregate refusal emits no partial HDL. Independently authored immutable aggregate has complete selected-parameter/JSON-kind equality; HDL preserves WIDTH=BASE, COPY_MODE=MODE and LIMIT capture. transaction-local-default source/native evidence retains. Book and normal gates qualify before .5; no production/full/runtime credit.`
+  Goal: `Preserve transaction-local defaults and the mutable-aggregate refusal.`
+  Acceptance: `Keep original source/IR/reports/negatives. Independent static LANES must retain complete selected parameter kinds and immediate alias behavior. Exact original remains in1b94/full10-intake.`
+  Verification: `T1348 Files1 Tests2 passes: original BASE/WIDTH aggregate refusal/no output, static counterpart equality, original alias/enum/capture positives and refs remain. Full transaction-local-default source/focused packets retain. No producer/runtime/full promotion.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.4: qualify transaction-local aggregate defaults`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.5`
   Status: `done`
@@ -561,18 +568,59 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Actual complete full9 T1336/T1368 successes join byte-identical current test sources: actor-backed direct formals retain named DATA_W; child-local roots retain their own aliases, parent handoffs use defaults, direct own-TX_PARAM widths scalarize. Three prose replacements preserve every fence and reusable/ATL defect paragraph byte-exact. T1305 passes Files=1, Tests=285. Source/history/native book/copied-source and normal doctrine gates qualify prose only. .21.2 admits fresh full10; no full/push/hosted credit.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.22: scope transaction width documentation to its parameter owner`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.23`
+  Status: `active`
+  Goal: `Repair supported AHB HBURST SEQ completed-source-intent refusal.`
+  Acceptance: `P1 before fresh full CI/push. Preserve T1490-T1493, every source/positive/negative/report/HDL assertion, all literal/currentness/late-mutation guards and declared AHB support. Diagnose actual first failure at the proper producer/consumer boundary; no blind test refresh, capsule freezing, stale proof acceptance or unsupported-profile relabeling. Split unsafe scope before implementation.`
+  Verification: `Full10 actual T1490 line148 fails; outdir diagnostic names SourceLiteralWidthSupport::capture_generation_fence line712.1491/1492 complete nonpasses;1493 has observed diagnostics only. Current literal capture/prepare withholds; exact reason/origin unclassified. Original full sources and native output retain in full10-intake.`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.23.1`
+  Commit: `child slices`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.23.1`
+  Status: `active`
+  Goal: `Trace and causally repair the first supported HBURST source refusal.`
+  Acceptance: `After outcome commits clean, query canonical currentness/source-width contracts, read actual capture/prepare/required-selection/caller paths, relevant tests/history/book and reproduce the exact public source with distinguishing controls. Identify the specific source object/shape/state and failing predicate before changes. Fix only that mechanism while preserving complete source intent and final guards; add meaningful RED/GREEN/currentness/mutation regression at the actual boundary. Focused failing public path plus directly affected checks/book; commit before widening qualification. If scope grows, create bounded children first.`
+  Verification: `Pending clean outcome commitment. No production repair or causal attribution yet.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.24`
+  Status: `pending`
+  Goal: `Commit receiver ownership for SPECFORGE FSMGEN-REQUESTS.15.`
+  Acceptance: `P1 after current repair and before full11. incoming-request15 retains all90 files/1282756 bytes with exact decoded/hash verification, clean foreign912f5938 source and read-only same-volume provenance. Create bounded ISF-MINIMUM-HOLD-EVENT-ORDER tree before any implementation; preserve R1 minimum complete-cycle hold, R2 inclusive physical/logical event order, R3 clock/reset/provenance projection and R4 refusals; optional R5 separate. Small own current positive/refusal intake, book/feedback/KMap and commit. Preserve existing required SPECFORGE/publication order and coordinate actor-level SEM .33.6. Record self-reset non-vacuity risk and tests. No foreign script/repository/pin mutation; no feature support claim.`
+  Verification: `Provider signoff/request/readme/sources/expected contract read; copied packet and risk note retain. Provider pin54ac/upstreamf149 results remain third-party until own current intake. Implementation not started.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.25`
+  Status: `pending`
+  Goal: `Correct stale width representation wording in the downstream response.`
+  Acceptance: `P1 after .24/before full11. Current SPECFORGE_FEEDBACK_RESPONSE opening request12 and older generic-width paragraphs conflate numeric parser/report defaults with scoped carriers/eligible named HDL ranges. Review canonical carrier card and actual T1336/T1368 source/native witnesses; correct only those current representation claims and identify historical override observations as historical. Preserve open generated-top/library/override/runtime and grouped-request boundaries. Prose-only focused doc/book/normal commit; no broad verification or compiler change.`
+  Verification: `Full exact response bytes/hash and both loci retain in incoming-request15/full10-pending-intakes. No correction is claimed yet.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.26`
+  Status: `pending`
+  Goal: `Prepare fresh full11 after all owned publication repairs/intakes.`
+  Acceptance: `After .23-.25 and .27 commit, conserve actual current-source/final-path passing receipts and declared refusal boundaries. Fresh capacity/kernel pressure, unchanged guards/unfiltered programme/workflows and unique full11 journal/checkpoint; clean committed handoff before .13 once-only launch. Complete native0 precedes normal authorized push/all exact-SHA hosted/Pages success. No spent checkpoint or partial-full credit.`
+  Verification: `Pending; full10 is controlled native143/nonpassing after actual source-generation failures.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.27`
+  Status: `pending`
+  Goal: `Perform due cleanup after frozen full10 settles.`
+  Acceptance: `P1 before .26. Last cleanup2026-10-31T15:02:31.201454+00:00 becomes due during immutable full10; its pending queue preserves that observation. Use installed authenticated same-volume collector/reviewer and exclusive dated slot, retain all candidates absent exact safe authority, verify independent membership/hostile controls, overwrite latest-only record and sync book reader. Normal commit, no foreign repositories/Git metadata/symlink deletion, current evidence loss or inferred reclamation.`
+  Verification: `Due observation retains in full10-pending-intakes; no cleanup during frozen CI or new removal claim.`
+  Commit: `pending`
+
 ## Current Frontier
 
-Requested IAL0/IAL1/IAL2 publication remains active. Full9 is settled and partial;
-complete protocol tests and original full8 repairs pass. .21.1 repairs the
-order-dependent T1445 schema oracle with focused checks; .22 wording is corrected.
-.21.2 preflight admits fresh exclusive full10; .13 owns its first actual result
-before normal push and exact-SHA hosted/Pages qualification.
-Saved private feature implementation remains pending until publication completes.
+Full10 settles after actual supported AHB HBURST SEQ generation failures.
+.23.1 owns the first causal repair; .24 owns request15 receiver intake,
+.25 the stale response wording, .27 due cleanup and .26 fresh full11 readiness.
+Publication and saved required feature delivery remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch once/consume fresh full10, then normal push and exact-SHA hosted/Pages. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.23.1` | `active` | Trace actual completed-source-intent refusal after clean outcome commit. |
 
 ## Decisions
 
@@ -581,19 +629,18 @@ Saved private feature implementation remains pending until publication completes
 
 ## Blockers
 
-- Full10 outcome and publication qualification remain active under .13.
-  Full local qualification, authorized push and exact-SHA hosted/Pages proof
-  stay active under .13. No user input or live job remains. Earlier memory/native
-  cause gaps stay separate; recorded full9 stop is assertion-driven.
+- P1 supported HBURST/SEQ completed-source-intent refusal, owned by .23.
+- .24/.25/.27 precede .26 fresh qualification; no user input is needed.
+- Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/checklist and manifest retain in full10-preflight-history-20261101.
+Exact superseded task/history and every curtailed completed summary retain in full10-intake-20261101.
 
-## Acceptance Checklist — full10 admission
+## Acceptance Checklist — full10 first-failure outcome
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Full9 failed at t/1445-semantic-introspection-mcp-schema-snapshots.t line 45. Current causal schema repair/explicit declaration controls and scoped book correction now join their exact final sources/actual passing receipts. Prior full9 status143 and unseen later-stage gaps remain explicit.
-- [x] **ADDRESSED (verified)** — full9-repair-closure conserves every old observed failure path/current source plus final MCP/book witnesses. Fresh capacity/kernel pressure, unchanged programme/guards/workflow inventory and five absent exclusive full10 slots are declared. Clean preflight commitment precedes once-only launch under .13; no stage result is inferred.
-- [x] **NO REGRESSION** — knowledge-map: OK on unchanged current facts/index. Exact old source/focused/native joins and final MCP/book receipts hold; native book/source and normal doctrines qualify readiness only. Full10/normal push/all exact-SHA hosted/Pages remain required and unqualified.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full10 fails at t/1490-ial2-ahb-subordinate-byte-lane-hburst-seq.t line 148; actual generation reports Direct literal emission requires current completed source intent. Guard locus SourceLiteralWidthSupport::capture_generation_fence line712 withholds capture/prepare. Root cause remains unclassified under .23.1.
+- [x] **ADDRESSED (verified)** — Retain complete native output/status143, exact first failure, current sources/prior task/history and all pending incoming work. Only live birth/argv/hash-authenticated guard receives TERM; existing managed-session cleanup plus independent old PID/birth and group absence settle it. .23-.27 own repair/intake/response/cleanup/readiness. No production fix is claimed.
+- [x] **NO REGRESSION** — knowledge-map: OK on the updated bounded gate-status card; native book/source and normal doctrines qualify outcome commitment only. Actual full10 reports complete protocol tests and repaired T1445 plus APB/ordinary AHB successes, but1490-1492 fail and1493 is partial. No later Perl/VIAL/final-book/full/push/hosted/Pages credit.

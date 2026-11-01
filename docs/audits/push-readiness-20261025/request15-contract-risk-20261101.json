@@ -1,0 +1,17 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.13",
+  "request_owner": "FSMGEN-REQUESTS.15",
+  "receiver_tree": "ISF-MINIMUM-HOLD-EVENT-ORDER",
+  "observed_utc": "2026-11-01T15:16:48.257696+00:00",
+  "classification": "Future contract-selection risk, not a reproduced defect in the currently unshipped hold feature.",
+  "source_evidence": {
+    "retained_packet": "full10-incoming-request15-20261101.json.gz",
+    "input_path": "sources/fsmgen-input/minimum-hold.isf",
+    "input_sha256": "3efca1faeed1c13eeacbb606dac9bbeee458236b1dd76f5d11abaf2757130265",
+    "current_monitor_document": "docs/book/src/14k-isf-language-and-scheduling.md",
+    "current_monitor_document_sha256": "e730753874172b703409f98bda4ca763803df9d9d3f9152729bbf5c694ae1804"
+  },
+  "risk": "The requested hold target RST_I is also the actor reset. Reusing a blanket actor-reset disable/clear policy could suppress the reset-duration property and produce vacuous success. Existing bounded-eventually control proves generation only, not the requested hold semantics.",
+  "owned_resolution": "Receiver contract-selection slice .2 must select non-vacuous reset observation, complete-cycle sampling and applicable property/actor reset semantics before source implementation. Independent held-long-enough/short-pulse/reset-edge failures must distinguish the intended check from blanket reset disabling, without inventing a transaction or changing the existing monitor. Keep assertion/assumption interpretation explicit; R5 remains separately owned.",
+  "schedule": "Commit alongside receiver intake/task ownership after full10 native settlement. Preserve current publication and required SPECFORGE order; no source change while frozen."
+}

@@ -14,7 +14,7 @@
 
 ### ahb-hburst-seq-verify-hdl-widthexpand
 
-_AHB HBURST SEQ subordinate wait counters are clean under --verify-hdl_
+_AHB HBURST SEQ wait warning fixed; current source-intent gate fails_
 
-- **date:** 2026-07-23 · **status:** current
+- **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md`](../../docs/knowledge/ahb-hburst-seq-verify-hdl-widthexpand.md)
