@@ -483,14 +483,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.3: qualify actor-backed transaction defaults`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify transaction-local parameter default dependencies.`
   Acceptance: `T1348: retain original earlier-transaction-param source/metadata/report/default assertions and exact mutable-aggregate refusal. Independently authored immutable counterpart must conserve selected values/kinds, immediate scalar aliases and positive HDL/default semantics. No cache-based production literalization/profile widening. Focused actual file/book and normal commit.`
-  Verification: `Pending; original full8/source/control evidence retains. No final-path credit yet.`
-  Commit: `pending`
+  Verification: `Complete actual T1348 Files1 Tests2 PASS. Original source/IR/report/default/negative cases retain; corrected carrier reflects local aliases, actor capture and immutable enum support. Exact original BASE aggregate refusal emits no partial HDL. Independently authored immutable aggregate has complete selected-parameter/JSON-kind equality; HDL preserves WIDTH=BASE, COPY_MODE=MODE and LIMIT capture. transaction-local-default source/native evidence retains. Book and normal gates qualify before .5; no production/full/runtime credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.4: qualify transaction-local aggregate defaults`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Close default-profile documentation against final-path receipts.`
   Acceptance: `After .1-.4 commit, join five actual T1345-T1349 receipts/source epochs without replaying passed files unnecessarily. Correct book13 Design Principles, transaction/default and canonical downstream wording: parser/report/default provenance, scalar source relationships and immutable aggregate HDL admission differ. Preserve unsupported mutable examples explicitly, qualify new runnable counterparts, keep existing source/IR meanings and no broader runtime/override claim. Focused book/source checks and normal commitment before .20.7.`
   Verification: `Pending; original full8/source/control evidence retains. No final-path credit yet.`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.6.4` | `active` | After clean actor-backed repair, qualify transaction-local defaults. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.6.5` | `active` | Join completed default receipts and close canonical book/spec wording. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — generated child actor-backed defaults
+## Acceptance Checklist — transaction-local default profile
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1347-isf-transaction-param-actor-static-defaults.t line 63 shows allocated captures/static support instead of literalized child source. Its original CLI refuses mutable isf_width_capture_2 aggregate provenance; selected IR/report defaults remain valid.
-- [x] **ADDRESSED (verified)** — Original source, IR/report and all negative cases retain. Correct the carrier expectation, assert exact original refusal/no partial HDL, and independently author the immutable counterpart. Complete selected authored/default/shared-capture JSON kinds agree; both capture inventories, aggregate-only zero and reference provenance qualify. Positive HDL keeps WIDTH capture and static constant/enum values.
-- [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for complete actual T1347. Native CLI positive artifact/stderr assertions retain on the supported counterpart. transaction-actor-default source/native evidence and book distinguish selected reports from source/HDL admission. No production, broader aggregate/override/runtime/full credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1348-isf-transaction-param-transaction-params.t line 65 shows scoped actor capture/static support instead of literalized child defaults. Its original CLI refuses mutable BASE aggregate provenance; original IR/report/default metadata remains valid.
+- [x] **ADDRESSED (verified)** — Preserve original source, selected IR/report and all negative cases. Correct only the stale carrier expectation; assert exact original refusal/no partial HDL, independently author immutable aggregate and compare the complete selected parameter product with JSON kinds. Positive HDL keeps WIDTH=BASE, COPY_MODE=MODE and the LIMIT actor capture.
+- [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for the complete actual T1348. Original positive CLI success/stderr/artifact assertions retain on the supported counterpart. transaction-local-default source/native receipts retain; book distinguishes parsed mutable provenance from immutable aggregate HDL admission. No production/profile widening or broader override/runtime/full claim.

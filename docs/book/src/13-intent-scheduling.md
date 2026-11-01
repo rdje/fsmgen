@@ -1019,8 +1019,14 @@ The ISF-specific current limitations are:
   and immutable static aliases through the bound module carrier described above.
   Earlier transaction parameter dependency tokens, enum-backed transaction
   defaults and qualified package constants retain their selected declarations,
-  imports and embedded package roots. Generated-top bindings still use their
-  current static/default path; configuration forwarding remains pending. Forward/self/cyclic/non-scalar transaction-parameter
+  imports and embedded package roots. These source/default carriers do not
+  admit mutable aggregate HDL: with `(BASE 8)` and `(WIDTH BASE)`,
+  `(LANES (BASE WIDTH LIMIT_C mode.IDLE))` retains both local references and
+  refuses packed aggregate generation. A separately authored
+  `(LANES (8 8 LIMIT_C mode.IDLE))` has the same selected defaults and can
+  generate while scalar `WIDTH` and `COPY_MODE` aliases remain named.
+  Generated-top bindings still use their current static/default path;
+  configuration forwarding remains pending. Forward/self/cyclic/non-scalar transaction-parameter
   dependencies, runtime signals, unknown symbols, non-scalar actor parameters,
   unqualified package constants, aggregate package constants, package
   member/item paths, and arbitrary expressions fail closed.
