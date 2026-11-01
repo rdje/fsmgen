@@ -533,26 +533,26 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.21`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve the first full9 MCP schema mismatch before fresh qualification.`
   Acceptance: `P1 before publication. Preserve original full9/current schema source and classify intended catalog-field evolution versus producer regression through canonical schema/catalog contracts and exact public envelopes. Never blindly refresh or weaken the full snapshot, source kinds, tool/resource envelopes, keys or malformed/refusal controls. Commit focused causal repair, close .22 wording, then declare clean exclusive full10 before .13 once-only launch/push/hosted qualification.`
-  Verification: `Full9 e957 actual T1445 line45 first divergence is examples.catalog_entry_keys expected_hdl_pattern_count versus fixture expected_instance_count. Native143 controlled settlement and complete earlier protocol successes retain; cause remains unclassified. full9-intake/native/owned-settlement evidence survives. No source repair or later/full credit yet.`
+  Verification: `Full9 remains native143/nonpassing. .21.1 repairs the first-record optional-schema oracle and explicit required vocabulary with actual focused RED/GREEN controls; .22 corrects width prose. .21.2 joins exact final sources/receipts and admits clean exclusive full10. .13 owns actual full local/push/hosted/Pages outcomes.`
   Children: `PUBLICATION-REGRESSION-REPAIRS.21.1, PUBLICATION-REGRESSION-REPAIRS.21.2`
   Commit: `child slices`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.21.1`
   Status: `done`
   Goal: `Repair order-dependent MCP full-example schema expectations.`
-  Acceptance: `Classify every full9 snapshot difference against public catalog contracts/history. Preserve every original envelope/key/control and full values/JSON kinds; normalize only declared optional key presence, check all returned records, and commit focused schema/book verification before .22. Follow-up also pins declared required-key vocabulary explicitly and controls removal while producer records remain unchanged.`
-  Verification: `Exactly one projected path differed: f9b50f197 added the first composition match with optional expected_hdl_pattern_count and without optional expected_module_name. No producer defect/change. Full snapshot pins required/optional vocabulary separately; any record missing required or carrying unknown keys remains distinguishable. Real variants in both orders retain complete values/JSON kinds and independently authored leading-record truth. New controls reproduce original later-record blindness, then actual T1445/T1444/T1455/T314 pass Files4 Tests16. Original sources/full diff/history/RED and focused receipts retain in mcp-schema-intake/focused/source. Book/card explain scope. Declaration-removal RED then final T1445 Files1 Tests5 PASS closes the follow-up blind spot; all prior members/controls remain. Full10/push remain unqualified; .22 next.`
-  Commit: `PUBLICATION-REGRESSION-REPAIRS.21.1: freeze required catalog declarations explicitly`
+  Acceptance: `Preserve all envelopes/values/JSON kinds/negative cases; distinguish declared required/optional vocabularies and inspect every returned record. Exact original contract/history retains in4811ce1a/full10-preflight-history.`
+  Verification: `Only original projected examples.catalog_entry_keys differed after f9b50f197 changed the first match. No producer change. Full T1445/T1444/T1455/T314 pass Files4 Tests16; explicit declaration-removal follow-up T1445 Files1 Tests5 passes after genuine RED. Both real orders, optional absence, every required removal/unknown insertion and authored leading-record values/kinds retain. mcp-schema intake/source/RED/focused and declaration follow-up retain full witnesses. Book/card current; full10/push remain unqualified.`
+  Commit: `cc81a6ab initial repair;1cc3402d explicit required vocabulary.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.21.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare fresh full10 after MCP repair and book scope clarification.`
   Acceptance: `After .21.1 and .22 commit, join current actual-path focused receipts/source epochs and preserved refusal boundaries. Declare fresh capacity/kernel pressure, unchanged guards/unfiltered command/workflows, unique full10 live journal/checkpoint and clean committed Memory handoff. .13 launches once, consumes first actual result, commits outcome and follows authorized normal push plus all exact-SHA hosted/Pages qualification. No old checkpoint, filtered source set, guard relaxation or partial-native pass credit.`
-  Verification: `Pending; full9 native143 remains nonpassing. Earlier complete protocol-file successes remain scoped evidence only.`
-  Commit: `pending`
+  Verification: `full9-repair-closure joins23 old actual-path focused/native successes to unchanged current sources and three final MCP/book receipts to exact source witnesses. Fresh full10 admission69.9534098307pct/normal pressure leaves five unique slots absent; command/guard/recorder/workflow hashes and complete required-job inventory unchanged. Preflight only; .13 launches once from the clean committed revision and consumes first full outcome before push. Full9 remains native143/nonpassing.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.21.2: admit fresh full10 after schema and book repairs`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.22`
   Status: `done`
@@ -566,12 +566,13 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 Requested IAL0/IAL1/IAL2 publication remains active. Full9 is settled and partial;
 complete protocol tests and original full8 repairs pass. .21.1 repairs the
 order-dependent T1445 schema oracle with focused checks; .22 wording is corrected.
-.21.2 now owns fresh clean full10 admission before .13 qualification/push.
+.21.2 preflight admits fresh exclusive full10; .13 owns its first actual result
+before normal push and exact-SHA hosted/Pages qualification.
 Saved private feature implementation remains pending until publication completes.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.21.2` | `pending` | Prepare fresh full10 admission and once-only clean launch. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch once/consume fresh full10, then normal push and exact-SHA hosted/Pages. |
 
 ## Decisions
 
@@ -580,7 +581,7 @@ Saved private feature implementation remains pending until publication completes
 
 ## Blockers
 
-- Fresh full10 remains owned by .21.2 before .13 publication qualification.
+- Full10 outcome and publication qualification remain active under .13.
   Full local qualification, authorized push and exact-SHA hosted/Pages proof
   stay active under .13. No user input or live job remains. Earlier memory/native
   cause gaps stay separate; recorded full9 stop is assertion-driven.
@@ -589,10 +590,10 @@ Saved private feature implementation remains pending until publication completes
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior source and checklist retain in book-width-scope-source-20261101.
+Exact prior task/checklist and manifest retain in full10-preflight-history-20261101.
 
-## Acceptance Checklist — transaction width scope
+## Acceptance Checklist — full10 admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S parent/direct handoffs identifies8e71ff6d as the broad matrix sentence origin. Actual complete full9 T1336 named actor-backed direct HDL ranges contradict that wording; T1368 independently distinguishes numeric direct own-TX_PARAM and generated-child parent handoffs. Exact unchanged source/native joins and prior prose retain.
-- [x] **ADDRESSED (verified)** — Three prose replacements name the parameter owner. All examples and the separate reusable/ATL constructor defect paragraph remain byte-identical. Actor/child named carriers, parser/report selected values and open forwarding/library/runtime boundaries remain distinct. No source/test/compiler behavior change.
-- [x] **NO REGRESSION** — All tests successful; Files=1, Tests=285 in book-width-scope-focused-20261101. Native book/copied-source and normal doctrine checks qualify the prose; earlier full9 native143 stays nonpassing and full10/push/hosted/Pages stay pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full9 failed at t/1445-semantic-introspection-mcp-schema-snapshots.t line 45. Current causal schema repair/explicit declaration controls and scoped book correction now join their exact final sources/actual passing receipts. Prior full9 status143 and unseen later-stage gaps remain explicit.
+- [x] **ADDRESSED (verified)** — full9-repair-closure conserves every old observed failure path/current source plus final MCP/book witnesses. Fresh capacity/kernel pressure, unchanged programme/guards/workflow inventory and five absent exclusive full10 slots are declared. Clean preflight commitment precedes once-only launch under .13; no stage result is inferred.
+- [x] **NO REGRESSION** — knowledge-map: OK on unchanged current facts/index. Exact old source/focused/native joins and final MCP/book receipts hold; native book/source and normal doctrines qualify readiness only. Full10/normal push/all exact-SHA hosted/Pages remain required and unqualified.
