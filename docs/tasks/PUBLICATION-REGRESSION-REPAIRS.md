@@ -400,7 +400,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Acceptance: `From clean .1, qualify the exact original quiet public PPIF --verify-hdl command under unchanged88/4096 using an exclusive source/tool/input-bound journal. Retain first failures and authenticated own-job settlement. Require actual exit0/nonempty verified HDL before closing parent .20.2; refine the causal repair if needed. Preserve complete carrier/report semantic comparisons and explicit output/runtime/toolchain/distribution gaps. Commit each outcome before the next experiment. No broader/full retry until the known repair set closes.`
   Verification: `Original clean443fff2a70b3 confirmation settles124 at180 seconds without HDL; RAM guard does not trip, all known jobs/groups absent. .1 retains that first native outcome; .2 retains separate30-second current stacks. .3 now owns a genuine idempotent bare-scalar-read counterexample and scoped repair, preserving actual mutation/currentness semantics. No larger limit, blind retry or end-to-end/full/runtime/hosted success. Parent .20.2 remains open.`
   Commit: `pending`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1, PUBLICATION-REGRESSION-REPAIRS.20.2.2.2, PUBLICATION-REGRESSION-REPAIRS.20.2.2.3`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1, PUBLICATION-REGRESSION-REPAIRS.20.2.2.2, PUBLICATION-REGRESSION-REPAIRS.20.2.2.3, PUBLICATION-REGRESSION-REPAIRS.20.2.2.4`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1`
   Status: `done`
@@ -418,10 +418,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Avoid redundant bare scalar registration without caching policy validity.`
   Acceptance: `P1 next after clean .2. Reproduce actual scalar-parser reads of a shared source under captured dependent trees, counting Core proof reads and checking complete semantics/currentness. Introduce no-op reuse only for a provably identical plain scalar registration on native manager/Signal data; changed/absent output flags, new names, annotations, foreign/subclass/tied shapes and actual setters keep existing writes/validation. Preserve usage, registry identity, external matching-write revocation, source/holder mutations and final currentness. Do not cache validity, weaken barriers, skip real writes or broaden generic profiles. Require fixed genuine RED/GREEN/resource and adverse controls; book/facts/POD sync and focused affected cohort, then normal commit before another exclusive original native confirmation.`
-  Verification: `Selected from bounded native stacks/source reads; counterexample/intervention not yet implemented.`
+  Verification: `Actual fixed T2301 first RED has321 width reads and changed journals for three same-value scalar reads, with all other semantic/currentness/real-write/adverse cases passing. Native no-op reuse now preserves complete journals, policy records, usage and physical source. Only exact untied native shapes, identical JSON flag kind/value and initialized usage qualify. Original registration/currentness/write/barrier bodies recover byte-exactly. First focused cohort exposes unchanged T2238 matching-write hook bypass; retaining native register/usage/lookup CV identities restores actual overridden dispatch. Final unchanged cohort All tests successful Files10 Tests50. All first native/source epochs and exact inverse/test identity proofs retain in allocation-scalar-read artifacts. Book/facts/POD/source/index/claim and mandatory normal hooks gate commitment. Original native PPIF/HDL remains unqualified under .4; no timing distribution/full/hosted credit. Fresh exclusive plan keeps180 seconds and88/4096, with clean committed launch required.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.3: reuse unchanged bare scalar references`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4`
+  Status: `active`
+  Goal: `Confirm the original public PPIF after committed scalar no-op reuse.`
+  Acceptance: `After .3 normal commitment/empty brief/clean Git, authenticate allocation-scalar-native-plan-20261101 source/input/tool hashes and unused slots. Launch its exact native quiet --verify-hdl programme once under unchanged180-second/88/4096 limits; consume an existing journal instead of replay. Require actual0, nonempty HDL and completed verification. Compare complete public carriers/reports and HDL semantic conservation against retained predecessor, with explicit incomplete pre-fix current output, distribution/runtime/toolchain gaps. Preserve first failures/owned settlement and refine if necessary; no blind retry, larger limit or broad/full run before remaining .20 contract/book slices close. Commit the outcome immediately.`
+  Verification: `Prepared exclusive clean-source plan; no new original fixture run has launched.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.3`
@@ -498,7 +505,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2.2.3` | `active` | After clean stack intake, reproduce and repair redundant scalar registration. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4` | `active` | After clean scalar repair, run or resume the exclusive original public confirmation. |
 
 ## Decisions
 
@@ -518,8 +525,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — residual scalar-read cost intake
+## Acceptance Checklist — no-op bare scalar reuse
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Retained --emit-schedule-json/carrier evidence binds the unchanged public workload. Current native stacks repeatedly route full tree captures through ExpressionBuilder.pm scalar parsing and same-value SignalManager registration. The separate30-second observation does not prove a repair; .3 owns the genuine counterexample and intervention.
-- [x] **ADDRESSED (verified)** — Complete samples/outcome/instrument/source epochs and independent120-row census retain. All known jobs/groups are absent. Exact prior task/acceptance survives completed-node summary curation; no limits change. Next owner explicitly preserves actual writes, source/holder/registry revocation and final currentness.
-- [x] **NO REGRESSION** — knowledge-map: OK. Native book/copied-source and task checks gate commitment. No production/test byte changes or original HDL/full/runtime/hosted success.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Genuine unchanged pre-edit T2301 diagnostic at t/2301-idempotent-scalar-reference.t line 78 reports321 width reads for three identical bare scalar references; line81 reports changed snapshots. Actual scalar registration writes the same output flag and revises every dependent allocation. All semantic/real-write/adverse cases already pass.
+- [x] **ADDRESSED (verified)** — Same fixed test now passes with native plain no-op reuse; complete journals/policies/usage/source identity conserve. Differing flag kinds, markers, annotations, new/unknown/subclass/tied data retain registration. First T2238 hook-bypass failure is preserved and repaired through native registration-method identity, with the original adversarial test unchanged. Exact inverse proofs recover both original production files outside declared helper/selection/method-identity additions.
+- [x] **NO REGRESSION** — All tests successful Files=10, Tests=50 across affected source holders, transition/lifetime/publication and mutation controls. Original large PPIF/native HDL still needs .4 confirmation; distribution/runtime/full/hosted remain pending. Book/POD/source/index/claim and normal doctrine gates qualify this focused implementation only.

@@ -13,6 +13,20 @@ use FSM::Debug;
 use FSM::Package::ScalarWidthSupport;
 use FSM::ParameterValueSupport;
 
+my %NATIVE_REGISTRATION_METHODS = (
+    register_signal => \&register_signal,
+    initialize_signal_usage => \&initialize_signal_usage,
+    get_signal => \&get_signal,
+);
+
+sub _has_native_registration_methods($self) {
+    for my $name (keys %NATIVE_REGISTRATION_METHODS) {
+        my $method = UNIVERSAL::can($self, $name);
+        return unless $method && refaddr($method) == refaddr($NATIVE_REGISTRATION_METHODS{$name});
+    }
+    return 1;
+}
+
 sub new($class, %args) {
     return bless {
         debug => $args{debug} // 0,

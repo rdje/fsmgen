@@ -84,11 +84,17 @@ weak holder keys and a snapshot seal. Potential dependencies still receive the
 complete registry, live-state, revision and transition checks. Unknown or copied
 holders and changed snapshots use the full path. Holder JSON shapes and Signal
 fields stay unchanged; the index retains no Core graph and caches no validation
-pass. Focused currentness, transport and lifetime checks pass. The original
-large PPIF generation remains a tracked performance blocker; these focused
+pass. Focused currentness, transport and lifetime checks pass.
+
+Bare unannotated scalar reads also reuse a native registered Signal when its
+requested output flag (including JSON scalar kind) and initialized usage are
+unchanged. This avoids a redundant registration and allocation revision write.
+New names, flag changes, output markers, annotations, overridden registration
+methods, subclasses and tied storage keep the ordinary registration path.
+Reuse proves no policy currentness: final live checks still reject external
+writes, changed holders and foreign registry objects. The original large PPIF
+remains subject to a separate clean-source generation/HDL confirmation; focused
 savings do not establish end-to-end completion.
-Repeated bare references still register source writes and revalidate their
-dependent allocations; that remaining cost is under repair.
 
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing

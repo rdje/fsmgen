@@ -289,6 +289,39 @@ sub _register_unannotated_reference($self, $name) {
     });
 }
 
+sub _unchanged_scalar_reference($self, $name, $output_flag) {
+    my $manager = $self->{signal_manager};
+    return unless ref($manager) eq 'FSM::Adapter::FSMGenFull::SignalManager'
+        && !tied(%$manager) && $manager->_has_native_registration_methods;
+    for my $key (qw(signal_registry signal_usage)) {
+        return unless exists($manager->{$key}) && !tied($manager->{$key})
+            && ref($manager->{$key}) eq 'HASH' && !tied(%{$manager->{$key}});
+    }
+    my $registry = $manager->{signal_registry};
+    return unless exists($registry->{$name}) && !tied($registry->{$name});
+    my $signal = $registry->{$name};
+    return unless ref($signal) eq 'FSM::CoreAST::Signal' && !tied(%$signal);
+    return if grep {tied($signal->{$_})} keys %$signal;
+    return unless exists($signal->{name}) && !tied($signal->{name})
+        && defined($signal->{name}) && !ref($signal->{name}) && $signal->{name} eq $name;
+    return unless exists($signal->{attributes}) && !tied($signal->{attributes})
+        && ref($signal->{attributes}) eq 'HASH' && !tied(%{$signal->{attributes}});
+    my $attributes = $signal->{attributes};
+    return if grep {tied($attributes->{$_})} keys %$attributes;
+    return unless exists($attributes->{is_output}) && !tied($attributes->{is_output})
+        && defined($attributes->{is_output}) && !ref($attributes->{is_output});
+    my $json = JSON::PP->new->allow_nonref;
+    return unless eval {$json->encode($attributes->{is_output}) eq $json->encode($output_flag)};
+    my $usage = $manager->{signal_usage};
+    return unless exists($usage->{$name}) && !tied($usage->{$name})
+        && ref($usage->{$name}) eq 'HASH' && !tied(%{$usage->{$name}});
+    # width => undef and the identical unmarked flag change no source or
+    # usage field. Avoid that redundant registration, including its revision
+    # write. This proves no policy validity: final live checks still reject
+    # external writes, changed holders and foreign registry objects.
+    return $signal;
+}
+
 sub _set_analyzed_signal_role($self, $signal, $role) {
     return $self->_allocation_transition($signal, 'signal_role', $role, sub {
         $signal->set_attribute('signal_role', $role);
@@ -922,14 +955,19 @@ sub parse_scalar_expression($self, $scalar, %options) {
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
         
         my $signal_name = $base_name;
-        my $signal = !$member_name && !$slice && !$width_annotation
-            ? $self->_allocation_transition($self->{signal_manager}->get_signal($signal_name),
-                'is_output', defined($output_marker), sub {
+        my $signal;
+        if (!$member_name && !$slice && !$width_annotation) {
+            my $output_flag = defined $output_marker;
+            $signal = $self->_unchanged_scalar_reference($signal_name, $output_flag) unless $output_flag;
+            $signal //= $self->_allocation_transition($self->{signal_manager}->get_signal($signal_name),
+                'is_output', $output_flag, sub {
                     $self->{signal_manager}->register_signal($signal_name,
-                        width => undef, is_output => defined($output_marker));
-                })
-            : $self->{signal_manager}->register_signal($signal_name,
+                        width => undef, is_output => $output_flag);
+                });
+        } else {
+            $signal = $self->{signal_manager}->register_signal($signal_name,
                 width => $width, is_output => defined($output_marker));
+        }
         
         if ($slice) {
             if ($slice =~ /\[(\d+):(\d+)\]/) {
