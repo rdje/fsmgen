@@ -375,7 +375,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.1`
   Status: `done`
   Goal: `Retain full8 outcome, causal intake and precise repair ownership.`
-  Acceptance: `P1 now, before implementation. Retain complete available settled143 output, authenticated owned-job absence, actual failing-file inventory and all original diagnostic/control epochs. Preserve baseline snapshot/grammar refusal, successful native comparison, complete generated IAL1/IAL0 and report equality, sampled stacks and explicit causal/output gaps. Fix stale current-frontier/blocker projections and root child ownership. Use existing same-tree exact-history rollover if needed, preserving every live node and all old facts without any limit increase. Commit intake before .2.`
+  Acceptance: `Completed intake contract: preserve settled full8/source/control/first-refusal evidence and exact historical facts, correct parsed ownership/frontiers and commit before causal repairs. Full original acceptance remains byte-exact in e86/443 source and rollover witnesses; no complete-suite credit.`
   Verification: `Complete available full8 settles143;471 reported file passes,23 failing files and93 assertion markers remain partial. Every failure has a .20 owner. full8-intake-20261101 artifacts retain all original inputs/probes/first refusals, source epochs, matched public carriers/reports and authenticated owned-job absence. Its saved-only reader and distinguishing corruptions pass; native book/source/KMap and normal doctrines pass at e86d3ff07. All original detailed verification/recovery routes remain byte-exact in the e86 task source and allocation-dependencies-history-rollover-source-20261101.json.gz. Current parsed .19/.20 ownership is corrected; .20.11 owns the later checker guard. No full/hosted/runtime or repaired public-fixture claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.1: retain full8 failures and allocation-cost intake`
 
@@ -390,16 +390,32 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.1`
   Status: `done`
   Goal: `Preselect parser allocation dependencies without caching validity.`
-  Acceptance: `Implement only weak snapshot-bound negative dependency selection from actual successful binary/tree/literal captures. Preserve detached holder shapes, complete physical nested participants, no new Signal fields/owners, full currentness for every potential dependency and fallback for unknown/copied/changed holders. Keep the same T2300 source before/after; related transport, external matching writes and foreign registry controls must remain meaningful. Run directly affected holder/transition/lifetime tests, sync POD/book/facts and commit normally. No elapsed-speed, complete original-fixture, full CI or broader generic support claim; .2 owns the clean public native confirmation.`
-  Verification: `Fixed genuine T2300 RED has only four resource failures,51/34 protected reads on unrelated references; the same test passes after weak snapshot-bound negative dependency selection. Potential members retain complete live currentness; copied/changed snapshots, external matching writes, foreign registry objects and nested children remain protected. Whole-file inverse substitutions recover every original validation/write/barrier byte. Directly affected holder/lifecycle/transition/publication checks pass Files9 Tests45; helper syntax, POD freshness and native book checks pass. Original before/first-green/final sources and all distinct evidence legs retain in allocation-dependencies artifacts. Card questions/routes persist with nonpositive bytes. The exclusive public native plan is prepared, unrun. Original PPIF/HDL, timing distribution, whole toolchain/runtime/full qualification remain pending under .20.2.2/.13. Both normal-hook containment refusals and exact staged task/registry sources retain; same-tree historical rollover and current summaries preserve all old facts without any limit/state/milestone change. Final book/index/claim and normal hook gate commitment.`
+  Acceptance: `Completed implementation contract: weak snapshot-bound negative membership only; complete currentness and unchanged original validation/write/barrier behavior for possible dependencies. Fixed RED/GREEN counterexample, related/copy/foreign/nested/lifetime controls and book/facts qualify this focused slice only. Exact original acceptance remains in443 source/history; native qualification stays separate.`
+  Verification: `Committed443fff2a70b3. Same genuine T2300 resource RED passes after negative-only weak snapshot selection; full live currentness remains for potential dependencies. Original validation/write/barrier bytes recover exactly by inverse substitution. Directly affected lifecycle/transition/publication cohort passes Files9 Tests45, plus syntax/POD/book freshness. All first sources/refusals and distinct evidence legs retain in allocation-dependencies artifacts and exact443 task/history. Card questions/routes retain with nonpositive bytes; limits/state/milestones unchanged. Original public confirmation remains separately owned, never inferred from focused checks.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.1: skip unrelated allocation captures`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2`
   Status: `active`
   Goal: `Qualify the exact original public PPIF generation after the committed cost repair.`
-  Acceptance: `After clean .1, declare an exclusive recoverable journal and bounded native programme for the exact original PPIF/quiet --verify-hdl command under unchanged88/4096. Bind actual committed source and tool/input/clock/process outcomes, retain first failures and settle only authenticated own jobs if a declared deadline fires. Compare complete generated IAL1/IAL0/report products and selected semantic conservation, with explicit missing full-output/runtime/toolchain/distribution legs. An actual success with HDL verification is required to close .2; refine the causal repair if it still cannot complete. Keep completed .1 committed while this result is pending. Then commit integration and proceed to .20.3, without a broad/full retry until the known set closes.`
-  Verification: `Selected next after clean .1 commitment. allocation-public-native-plan-20261101 declares one exclusive source-hash-bound180-second native observation, unchanged88/4096 and recoverable journal. Consume existing journal if present; launch once only when absent. Original public fixture, output and timing remain pending; old partial/native baseline observations supply no repaired pass.`
+  Acceptance: `From clean .1, qualify the exact original quiet public PPIF --verify-hdl command under unchanged88/4096 using an exclusive source/tool/input-bound journal. Retain first failures and authenticated own-job settlement. Require actual exit0/nonempty verified HDL before closing parent .20.2; refine the causal repair if needed. Preserve complete carrier/report semantic comparisons and explicit output/runtime/toolchain/distribution gaps. Commit each outcome before the next experiment. No broader/full retry until the known repair set closes.`
+  Verification: `Original clean443fff2a70b3 confirmation settles124 at its declared180-second deadline; no HDL exists. Unchanged RAM guard does not trip. All known jobs/groups are independently absent. .1 retains the first native outcome; .2 owns bounded residual-cost diagnosis. No larger limit, blind retry or end-to-end/full/runtime/hosted success. Parent .20.2 remains open.`
   Commit: `pending`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1, PUBLICATION-REGRESSION-REPAIRS.20.2.2.2`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1`
+  Status: `done`
+  Goal: `Retain first post-repair native timeout and own its residual cost.`
+  Acceptance: `Record the declared original public confirmation faithfully, authenticate owned settlement, retain unchanged guards/source/input/tools and qualify no absent output. Commit this nonpass and a bounded diagnostic handoff before further experiments.`
+  Verification: `allocation-public-native-20261101 records exact443fff2a70b3 source and exit124 after180 seconds; quiet log has no HDL verification success. allocation-public-timeout-settlement-20261101 independently proves all six known jobs and both owned groups absent, with output absent. Collection completeness is not success. Exact prior task/history and current native plan retain; limits stay fixed. .2 owns one separate bounded sampling programme, never the original stack or elapsed distribution.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1: retain bounded public generation timeout`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.2`
+  Status: `active`
+  Goal: `Locate residual native allocation cost after negative dependency selection.`
+  Acceptance: `P1 next from clean .1. Reuse the authenticated prior deferred-signal observer in a new exclusive repository-local directory, bound to current source/fixture/instrument hashes. Sample one separate native CLI for30 seconds under unchanged88/4096, with16MiB stream caps and authenticated own-group settlement. Retain complete samples, first errors and source locations. Samples guide causal inspection only; no native timing/distribution/full-output credit. Select the smallest genuine counterexample and a separately owned repair before code changes; no blind long retry or higher limits.`
+  Verification: `allocation-residual-plan-20261101 declares one clean-source exclusive30-second observer derived byte-exactly from the retained prior instrument. Native confirmation remains124; no new sample run has launched.`
+  Commit: `pending`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.3`
   Status: `pending`
@@ -475,7 +491,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2.2` | `active` | After clean .1, run or resume the exclusive bounded original public PPIF confirmation. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2.2.2` | `active` | After clean timeout intake, run or resume the exclusive residual-cost sampler. |
 
 ## Decisions
 
@@ -493,11 +509,10 @@ Saved private feature implementation remains pending until publication completes
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact predecessor, historical acceptance and prior manifest remain in the
-rollover witness; current nodes and fresh implementation acceptance stay live.
+Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — allocation dependency selection implementation
+## Acceptance Checklist — native timeout intake and bounded handoff
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Genuine pre-edit native diagnostics at t/2300-allocation-transition-dependencies.t line 94 and line161 show51 and34 protected width reads for an unrelated reference. Every setup/currentness/copy/foreign assertion passes. Parser transition loops validate all captured allocations before checking membership, reproducing the sampled full8 source path.
-- [x] **ADDRESSED (verified)** — Same fixed T2300 source passes with weak snapshot-bound physical participant selection from successful constructors. All potential dependencies retain full live validation; unknown/copy/changed snapshots fall back. Related transport, stale matching writes, same-name foreign objects, nested children, journal/policy JSON and ownership controls pass. Exact whole-file inverses prove all original validation/write/barrier bytes remain, with only declared imports, constructor membership publication and conservative loop selection added.
-- [x] **NO REGRESSION** — All tests successful Files=9, Tests=45 across directly affected current-holder, lifecycle, transition and nested-publication cases; new module syntax OK. POD generation/freshness and native mdBook test pass. Source/book/index/claim and mandatory normal hooks gate commit. Original large public PPIF confirmation and complete local/hosted qualification are pending under .20.2.2/.13; the exclusive clean launch plan grants no native pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact public native generation from443fff2a70b3 settles124 without HDL. Retained --emit-schedule-json and complete carrier comparisons establish the unchanged public input. Residual cost location remains unknown; this slice owns its bounded diagnosis, not a causal fix.
+- [x] **ADDRESSED (verified)** — Original log/journal/source plan and independent known-job/group absence retain. New observer derives from the saved instrument with only directory/owner/scope substitutions; its exclusive clean-source plan is unrun. No guard or producer change; book/pointers state the continuing blocker.
+- [x] **NO REGRESSION** — knowledge-map: OK. Native book build/copied-source freshness and task integrity pass. Exact historical source/acceptance retains; limits remain fixed. No native/full/hosted pass or timing distribution claim.

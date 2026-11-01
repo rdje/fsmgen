@@ -46,4 +46,4 @@ SourceBitwiseTreePolicySupport bounds closed ordered tree/origin/max. Explicit C
 Parser source_tree_events: fresh trees; only exact reference/role/metadata refresh. Parser/facade/backend/selected targets bind current policy; binary events stay two-slot; negated n-ary wraps that helper in scalar logical !. Direct widths: frozen leaves T2243; leaf intent T2244; recursive Core tree/binary edges/repeats/bounds/child/raw fences T2245; independent child targets/currentness T2246; computed binary T2247; ranges/guards/generation fence T2248. Full .6 pending.
 T2269 joins the former unsized Core1/SV32 refusal to literal source/final declaration proof; Core widths preserve.
 
-PUBLICATION-REGRESSION-REPAIRS.20.2.1: weak snapshot index skips nonmembers; potential members still fully validate. T2300 passes; .20.2.2 native PPIF confirmation pending.
+PUBLICATION-REGRESSION-REPAIRS.20.2: weak index skips nonmembers; members fully validate. T2300 passes; original PPIF times out124. Residual cost stays owned.

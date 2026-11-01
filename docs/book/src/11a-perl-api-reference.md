@@ -84,8 +84,9 @@ weak holder keys and a snapshot seal. Potential dependencies still receive the
 complete registry, live-state, revision and transition checks. Unknown or copied
 holders and changed snapshots use the full path. Holder JSON shapes and Signal
 fields stay unchanged; the index retains no Core graph and caches no validation
-pass. Focused currentness, transport and lifetime checks pass; confirmation of
-the original large PPIF generation remains pending.
+pass. Focused currentness, transport and lifetime checks pass. The original
+large PPIF generation remains a tracked performance blocker; these focused
+savings do not establish end-to-end completion.
 
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing

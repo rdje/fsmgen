@@ -1,0 +1,85 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.2.1",
+  "observed_utc": "2026-11-01T04:35:53.352374+00:00",
+  "revision": "443fff2a70b34e105d4e8076a9e4ca7ec97f879f",
+  "native_record": "docs/audits/push-readiness-20261025/allocation-public-native-20261101.json",
+  "native_record_sha256": "aade9005f94029c9a493a5d89fcc44794fba5109fdbf93390b6fe0f6796a9307",
+  "journal": {
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3",
+    "revision": "443fff2a70b34e105d4e8076a9e4ca7ec97f879f",
+    "live_log": ".artifacts/push-readiness-20261025/allocation-public-native-20261101.live.log",
+    "commands": [
+      {
+        "command": [
+          "/usr/bin/time",
+          "-p",
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=5s",
+          "--verbose",
+          "180s",
+          "./bin/fsmgen",
+          "--quiet",
+          "--verify-hdl",
+          "--output",
+          ".artifacts/push-readiness-20261025/allocation-public-native-20261101/axi0.sv",
+          "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif"
+        ],
+        "exit_status": 124
+      }
+    ],
+    "state": "finished",
+    "result": "docs/audits/push-readiness-20261025/allocation-public-native-20261101.json"
+  },
+  "known_processes": [
+    {
+      "pid": 32593,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pid": 32596,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pid": 32664,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pid": 32673,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pid": 32674,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pid": 32675,
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "group_census_command": [
+    "ps",
+    "-ax",
+    "-o",
+    "pid=,ppid=,pgid=,lstart=,comm="
+  ],
+  "owned_groups": [
+    32664,
+    32674
+  ],
+  "group_residue": [],
+  "output_absent": true,
+  "scope": "Declared 180-second GNU timeout settles124; not host guard. All known original jobs/groups absent; no output/HDL/full/runtime/hosted credit. Further diagnosis required, not a larger limit or blind retry."
+}

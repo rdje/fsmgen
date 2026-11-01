@@ -1,0 +1,50 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.2.2",
+  "prepare_owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.2.1",
+  "source_revision": "Derive clean runtime HEAD after timeout intake commits; authenticate qualified files first.",
+  "qualified_sources": [
+    {
+      "path": "docs/audits/push-readiness-20261025/allocation_residual_observe_20261101.py",
+      "sha256": "a8bb42c127dee3fe6bccb3e1cf552bf1440ca005b2118550e3af3c7a32c7c3d0"
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/allocation_residual_sampler_20261101.pm",
+      "sha256": "ca0a572bbcdcbad317509e096395bcba324009f925e476201769a405f997e818"
+    },
+    {
+      "path": "perl/FSM/AllocationTransitionDependencies.pm",
+      "sha256": "1edc7a4216fefd1c196fff15bc5b720be28eff8e4d3aa902c698674c485a0e1e"
+    },
+    {
+      "path": "perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm",
+      "sha256": "b9f54c7c12a4c8cf564c730bcc2dcf168b0df13f23c9e2eaa916a6e997300910"
+    },
+    {
+      "path": "scripts/run_with_ram_guard.sh",
+      "sha256": "aee4974f740a5dceb1084abb7360ba0811022921702bb05008a5405abe538204"
+    }
+  ],
+  "fixture": {
+    "path": "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif",
+    "sha256": "8db9b529153f6dc4b0771b06628c830ecf63b25e2efbd4d369d34c0b93f08834"
+  },
+  "source_dir": ".artifacts/push-readiness-20261025/allocation-residual-sampling-20261101",
+  "module_install_name": "CurrentStackSampler.pm",
+  "module_source": "docs/audits/push-readiness-20261025/allocation_residual_sampler_20261101.pm",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/push-readiness-20261025/allocation_residual_observe_20261101.py"
+  ],
+  "exclusive_slots": [
+    "outcome.json",
+    "stacks.jsonl",
+    "stdout.log",
+    "stderr.log",
+    "observed.sv"
+  ],
+  "guard": "Unchanged88/4096; sample every250000 microseconds,30-second deadline,16MiB stream caps, authenticated own group only.",
+  "scope": "Separate instrumented stack observation only; original native timeout124 remains a nonpass. No compiler source override or native timing/output/full claim."
+}
