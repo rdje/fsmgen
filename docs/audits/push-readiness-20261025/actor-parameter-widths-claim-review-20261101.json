@@ -1,0 +1,50 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.4",
+  "candidate": {
+    "candidate_id": "published-7cef34e3d6809d4a6ccab6d5",
+    "classification": "actionable_review_debt",
+    "excerpt": "`(wdata (param DATA_W))`; its parser width remains the selected default 32,",
+    "line": 606,
+    "migration_owner": "CLAIM-VERIFICATION-ADOPTION.5",
+    "path": "docs/book/src/13a-actor-interface.md",
+    "producer_paths": [],
+    "producer_status": "missing",
+    "reason": "numeric_prose_requires_review",
+    "record_type": "published_candidate",
+    "schema_version": 1,
+    "source_line_sha256": "9c78ff021b8564f5ebd7d7120cfce897cf9c15451d31556ae33b627b3260f41c",
+    "tokens": [],
+    "untracked_paths": [],
+    "verification_legs": {
+      "durability": "missing",
+      "falsify": "missing",
+      "rederive": "missing"
+    },
+    "watcher_paths": [],
+    "watcher_status": "missing"
+  },
+  "review": {
+    "candidate_id": "published-7cef34e3d6809d4a6ccab6d5",
+    "disposition": "reviewed_incidental",
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+    "reason": "The number is DATA_W's explicit default in the adjacent syntax example. This line describes the parser's selected configuration; scoped carrier/HDL behavior is qualified separately by T1333-T1337 and the actor-parameter-widths source/inverse proof.",
+    "reason_code": "syntax_or_example_value",
+    "record_type": "disposition",
+    "schema_version": 1
+  },
+  "final_dispositions_sha256": "d417f12a7f6ed1208f5ae4175b86f829d57aded169791d3f7ad056a354444eb5",
+  "scope": "Review only the replacement paragraph's explicit authored example default. All other disposition records stay byte-identical. Old source/disposition and intermediate open-census outcome remain retained; full fresh census/join required next.",
+  "initial_review": {
+    "candidate_id": "published-7cef34e3d6809d4a6ccab6d5",
+    "disposition": "reviewed_incidental",
+    "owner_path": "docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md",
+    "owner_task": "PUBLICATION-REGRESSION-REPAIRS.20.4",
+    "reason": "The number is DATA_W's explicit default in the adjacent syntax example. This line describes the parser's selected configuration; scoped carrier/HDL behavior is qualified separately by T1333-T1337 and the actor-parameter-widths source/inverse proof.",
+    "reason_code": "syntax_or_example_value",
+    "record_type": "disposition",
+    "schema_version": 1
+  },
+  "initial_owner_refusal": "claim-dispositions: owner_task does not match candidate group general_book",
+  "group_contract": "The unchanged general_book group requires CLAIM-VERIFICATION-ADOPTION.5.3 as semantic record owner; active maintenance is owned by PUBLICATION-REGRESSION-REPAIRS.20.4. No group/classification/limit change."
+}

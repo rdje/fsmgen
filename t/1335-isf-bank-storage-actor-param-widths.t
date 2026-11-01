@@ -14,7 +14,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter bank widths lower like literal widths' => sub {
+subtest 'actor scalar parameter bank widths retain scoped parameter declarations' => sub {
     my $source = <<'ISF';
 (actor parameter_bank_storage_widths
   (clock clk)
@@ -44,7 +44,7 @@ ISF
     my $fsm = $lowered->{files}{'parameter_bank_storage_widths.fsm'};
 
     like($fsm, qr/\(\+params\s+\(DATA_W 7\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 7\)[\s\S]*\(data_1 7\)/, 'scheduled .fsm uses resolved bank widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(param DATA_W\)\)[\s\S]*\(data_1 \(param DATA_W\)\)/, 'scheduled .fsm retains actor parameter bank widths');
     like($fsm, qr/\(<- \(data_0 wdata\) <\(== idx 0\)\)/, 'store uses resolved scalarized bank entry');
     like($fsm, qr/\(<- \(rdata> data_0\) <\(== idx 0\)\)/, 'load uses resolved scalarized bank entry');
 
@@ -53,8 +53,8 @@ ISF
     assert_actor_storage($report, 'data_1', 7);
     assert_bank_accesses($report);
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_0\b/, 'HDL data_0 width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[6:0\]\s+data_1\b/, 'HDL data_1 width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[\(DATA_W - 1\):0\]\s+data_0\b/, 'HDL data_0 range retains DATA_W');
+    assert_fsm_reaches_hdl($fsm, 'parameter_bank_storage_widths', qr/\breg\s+\[\(DATA_W - 1\):0\]\s+data_1\b/, 'HDL data_1 range retains DATA_W');
 };
 
 subtest 'enum-resolved actor scalar parameter bank width lowers' => sub {
@@ -78,7 +78,7 @@ ISF
     is(storage_width($actor, 'data'), 6, 'enum-resolved actor parameter becomes a positive bank width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_bank_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses enum-resolved bank width');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(param DATA_W\)\)[\s\S]*\(data_1 \(param DATA_W\)\)/, 'scheduled .fsm retains enum-backed bank parameter width');
 };
 
 subtest 'unsupported actor parameter bank width sources fail closed' => sub {

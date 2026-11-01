@@ -601,19 +601,22 @@ See [Transactions](13b-transactions.md) for per-await semantics.
 Port widths become `.fsm` `+size` declarations. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
 
-A parameter-sized width currently uses the parameter's resolved default.
-For example, `wdata` above is fixed at 32 bits in the scheduled carrier;
-changing an emitted HDL parameter does not resize it. Source parsing preserves
-authored symbolic width associations separately from resolved defaults. Private
-module IR now binds actor ports and storage elements to those declarations and
-keeps actor and transaction parameter environments separate. Transaction scopes
-also retain original parameter-default tokens privately, including actor-backed
-defaults whose executable form is currently literalized. Canonical resolution
-also retains private literal/list/reference bindings within each lexical scope;
-carriers and public width reports still use the resolved numbers. Equal numeric
-widths do not establish a shared dependency. Named scalar types keep their
-separate type references. Generic width propagation and library shape
-specialization remain pending.
+Parameter-backed widths retain their scoped declaration in the scheduled
+carrier. For example, `wdata` above has `+size` entry
+`(wdata (param DATA_W))`; its parser width remains the selected default 32,
+while eligible SystemVerilog declarations use `[(DATA_W - 1):0]`. Existing
+numeric width fields in reports continue to describe the selected environment.
+The same distinction applies to actor scalar storage, scalarized bank entry
+widths and actor-parameter-backed transaction ports. An enum-backed parameter
+still supplies a mutable parameter root. Bank depth remains a source-time
+scalarization decision; preserving an element-width range does not make the
+number of entries generic.
+
+Actor and transaction parameter environments remain separate, including source
+default and alias bindings beside their selected numeric caches. Equal default
+widths do not establish a shared dependency. Named scalar types keep their own
+type references. Broader override propagation, library shape specialization and
+complete runtime qualification remain separate boundaries.
 
 Declared inputs remain public even when no transaction or rule reads them.
 The scheduled FSM carries their roles in `+interface`; `+size` carries their

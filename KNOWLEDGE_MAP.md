@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1296** facts · **7175** unique questions · **7352** answer occurrences · **206** topic shards.
+> **1296** facts · **7176** unique questions · **7353** answer occurrences · **206** topic shards.
 
 Query first:
 
@@ -121,7 +121,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-atl` | 5 | 23 | [`isf-atl.md`](knowledge-map/generated/isf-atl.md) |
 | `isf-authored` | 1 | 10 | [`isf-authored.md`](knowledge-map/generated/isf-authored.md) |
 | `isf-bit` | 1 | 4 | [`isf-bit.md`](knowledge-map/generated/isf-bit.md) |
-| `isf-bound` | 1 | 2 | [`isf-bound.md`](knowledge-map/generated/isf-bound.md) |
+| `isf-bound` | 1 | 3 | [`isf-bound.md`](knowledge-map/generated/isf-bound.md) |
 | `isf-bounded` | 1 | 4 | [`isf-bounded.md`](knowledge-map/generated/isf-bounded.md) |
 | `isf-composed` | 1 | 3 | [`isf-composed.md`](knowledge-map/generated/isf-composed.md) |
 | `isf-conditional` | 1 | 9 | [`isf-conditional.md`](knowledge-map/generated/isf-conditional.md) |

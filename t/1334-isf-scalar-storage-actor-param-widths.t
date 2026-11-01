@@ -14,7 +14,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter storage widths lower like literal widths' => sub {
+subtest 'actor scalar parameter storage widths retain scoped parameter declarations' => sub {
     my $source = <<'ISF';
 (actor parameter_scalar_storage_widths
   (clock clk)
@@ -44,7 +44,7 @@ ISF
     my $fsm = $lowered->{files}{'parameter_scalar_storage_widths.fsm'};
 
     like($fsm, qr/\(\+params\s+\(STATE_W 5\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(counter 5\)[\s\S]*\(shadow 5\)/, 'scheduled .fsm uses resolved storage widths');
+    like($fsm, qr/\(\+size[\s\S]*\(counter \(param STATE_W\)\)[\s\S]*\(shadow \(param STATE_W\)\)/, 'scheduled .fsm retains actor parameter storage widths');
     like($fsm, qr/\(<- \(counter \(\+ counter 1\)\)\)/, 'scheduled .fsm preserves counter update');
     like($fsm, qr/\(<- \(shadow counter\)\)/, 'scheduled .fsm preserves shadow update');
 
@@ -52,8 +52,8 @@ ISF
     assert_actor_storage($report, 'counter', 5);
     assert_actor_storage($report, 'shadow', 5);
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+counter\b/, 'HDL counter width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[4:0\]\s+shadow\b/, 'HDL shadow width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[\(STATE_W - 1\):0\]\s+counter\b/, 'HDL counter range retains STATE_W');
+    assert_fsm_reaches_hdl($fsm, 'parameter_scalar_storage_widths', qr/\breg\s+\[\(STATE_W - 1\):0\]\s+shadow\b/, 'HDL shadow range retains STATE_W');
 };
 
 subtest 'enum-resolved actor scalar parameter storage width lowers' => sub {
@@ -78,7 +78,7 @@ ISF
     is(storage_width($actor, 'counter'), 6, 'enum-resolved actor parameter becomes a positive storage width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_storage_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(counter 6\)/, 'scheduled .fsm uses enum-resolved storage parameter width');
+    like($fsm, qr/\(\+size[\s\S]*\(counter \(param STATE_W\)\)/, 'scheduled .fsm retains enum-backed storage parameter width');
 };
 
 subtest 'unsupported actor parameter storage width sources fail closed' => sub {

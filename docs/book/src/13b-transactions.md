@@ -138,10 +138,12 @@ For example, `inherited` below resolves the actor's alias to eight bits, while
     (on start) (complete done)))
 ```
 
-The private records preserve both dependencies and their separate environments.
-Scheduled carriers and public width reports still contain resolved defaults.
-This does not implement generic HDL or library shape specialization; generated
-transaction and domain provenance retain separate qualification work.
+The records preserve dependencies and their separate environments. Widths
+backed by actor parameters retain scoped references in scheduled `+size` entries
+and eligible SystemVerilog ranges; parser and public report widths retain the
+selected numeric defaults. Transaction-local aliases and generated child/domain
+forwarding have their own qualification boundaries. Broader library shape
+specialization and runtime qualification remain separate work.
 
 A current reusable-actor defect remains owned for immediate repair: library and
 resolved ATL child constructors currently enter raw module lowering before child

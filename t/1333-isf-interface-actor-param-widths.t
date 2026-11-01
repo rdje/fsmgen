@@ -14,7 +14,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
 
-subtest 'actor scalar parameter interface widths lower like literal widths' => sub {
+subtest 'actor scalar parameter interface widths retain scoped parameter declarations' => sub {
     my $source = <<'ISF';
 (actor parameter_interface_widths
   (clock clk)
@@ -38,15 +38,15 @@ ISF
     my $fsm = $lowered->{files}{'parameter_interface_widths.fsm'};
 
     like($fsm, qr/\(\+params\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor parameter declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(data_in 8\)[\s\S]*\(data_out 8\)/, 'scheduled .fsm uses resolved interface widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_in \(param DATA_W\)\)[\s\S]*\(data_out \(param DATA_W\)\)/, 'scheduled .fsm retains actor parameter interface widths');
     like($fsm, qr/\(<- \(data_out> data_in\)\)/, 'scheduled .fsm preserves data movement');
 
     my $report = decode_json($scheduler->report($actor));
     is($report->{inputs}, 2, 'schedule report input count is unchanged');
     is($report->{outputs}, 1, 'schedule report output count is unchanged');
 
-    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\binput\s+wire\s+\[7:0\]\s+data_in\b/, 'HDL input width is resolved');
-    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\boutput\s+reg\s+\[7:0\]\s+data_out\b/, 'HDL output width is resolved');
+    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\binput\s+wire\s+\[\(DATA_W - 1\):0\]\s+data_in\b/, 'HDL input range retains DATA_W');
+    assert_fsm_reaches_hdl($fsm, 'parameter_interface_widths', qr/\boutput\s+reg\s+\[\(DATA_W - 1\):0\]\s+data_out\b/, 'HDL output range retains DATA_W');
 };
 
 subtest 'enum-resolved actor scalar parameter interface width lowers' => sub {
@@ -68,7 +68,7 @@ ISF
     is(port_width($actor->{interface}{outputs}, 'data_out'), 4, 'enum-resolved actor parameter becomes a positive width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_parameter_interface_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_out 4\)/, 'scheduled .fsm uses enum-resolved parameter width');
+    like($fsm, qr/\(\+size[\s\S]*\(data_out \(param DATA_W\)\)/, 'scheduled .fsm retains enum-backed parameter width');
 };
 
 subtest 'unsupported actor parameter interface width sources fail closed' => sub {

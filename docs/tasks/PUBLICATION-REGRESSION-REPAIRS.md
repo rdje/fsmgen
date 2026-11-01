@@ -82,8 +82,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.7`
   Status: `done`
   Goal: `Observe the next required binding-contract intakes and preserve explicit historical query dispositions.`
-  Acceptance: `After .2 commits clean, use the Knowledge Map and actual public CLI fixture inspection genuinely needed for .3 binding diagnosis, with bounded process/UTC/monotonic/trace/stream/settlement evidence. Authenticate any reused helper and invoke only its selected capture function for new needed inputs; never run old native diagnostic mains, original spent sources or invalid startup controls. Preserve the existing sixty-second query bounds and RAM88/4096. Before new audit code/source, record exact inputs, literal expected semantic/route scope and saved-reader verification/control requirements. Retain complete actual products and first failures; saved replay defaults must not relaunch queries. Name the precise original execution-service/host lifecycle/stop/partial-stream authority available or unavailable; a new success cannot attribute the spent intervals. Update SEM .93 and ISF-REDUCTION .16 with current before-publication observation/disposition while retaining original failures and causal gaps. Verify literal binding/route predicates, source/program/trace/settlement identity and meaningful adverse saved-record controls, native book/source and staged/normal gates, then commit before .3 code repair. This satisfies existing qualification requirements, without a new historical startup investigation, host-policy/auth change or feature/corpus/API/MCP expansion.`
-  Verification: `Both genuinely required current intakes completed with integer0, no timeout, complete normalized stdout/stderr, actual wrapper/producer traces and absent owned sessions/groups under fixed60 and RAM88/4096. Before capture, contract.json declares the literal Knowledge Map route and exact Git-derived T1388 conditional-do source with the complete authored transaction_port_bindings row from canonical T1243 meanings. No old source/diagnostic main or startup control was replayed. observe.py preserves the actual programme, input/revision/hash, clocks/owned PID/session, products and trace; default saved checks do not launch queries. verify.py proves complete finite case closure and exact original fixture selection; genuine omitted/extra/covaried-fixture and wrong status/type/clock/recipe/settlement/covaried-product controls refuse. authority-disposition.json pins original failures, retains the missing defaults schedule slot and invalid diagnostic-parent outcome, and identifies original provider telemetry unavailable through current exec/session APIs without claiming global host-log absence. Original causes stay open in SEM .93/ISF-REDUCTION .16; their before-publication observed-query and explicit-disposition portion is met. normal-query-intake-focused.json retains saved/current Knowledge Map/locality checks, all status0. Book explains the separate claims and saved-only replay. Native book/POD/source/index and complete staged/normal gates are required before commit. No producer/API/DSL/corpus/MCP behavior change, historical causal repair, raw-root/full-environment or latency-distribution claim.`
+  Acceptance: `Completed genuinely required binding/Knowledge Map query intake under predeclared exact inputs, literal predicates, bounded60-second/88/4096 programme, clocks/traces/streams and authenticated owned settlement. No spent-source/main/startup replay or inferred historical host cause. Saved-only finite-case/adverse checks, authority disposition and book/normal gates qualify the intake. Full original contract remains in2b6dc1a4 task/history.`
+  Verification: `Both current intakes finish integer0 without timeout, with complete streams/traces and absent own groups. contract.json binds the literal Knowledge Map route and Git-derived T1388 source/T1243 binding row; observe.py/verify.py retain exact programme/input/source/clocks and finite-case omitted/extra/covaried/status/type/recipe/settlement controls. normal-query-intake-focused statuses are0. authority-disposition.json retains original failures, missing defaults-schedule slot and invalid diagnostic parent; original provider telemetry is unavailable through current exec/session APIs, without claiming global log absence. SEM .93/ISF-REDUCTION .16 original causes stay open; before-publication observation/disposition is met. No historical cause, raw-root/full-environment or latency-distribution claim. Exact original details/routes remain in2b6dc1a4 source/history.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.7: qualify normal publication query observations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8`
@@ -439,31 +439,31 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.3: align composition supported-header expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.4`
-  Status: `active`
+  Status: `done`
   Goal: `Retain actor-parameter widths in legacy carrier and HDL checks.`
   Acceptance: `Update T1333 through T1337 positive width assertions to canonical scoped parameter expressions and eligible HDL ranges. Preserve every source fixture, selected numeric parser/report assertion, dataflow and adverse control. Bank depth stays source-time scalarized; fixed-width depth-only controls remain unchanged. Diagnostic ignored-path controls are not final-path qualification. Sync actor/transaction guidance and commit focused checks.`
-  Verification: `Selected next after .3 commitment. Review current scoped parameter carriers versus numeric parser/report defaults and existing ignored exact controls before actual T1333-T1337 edits; bank depth remains scalarized.`
-  Commit: `pending`
+  Verification: `Actual T1333-T1337 focused final-path check passes All tests successful Files5 Tests17. Explicit carrier roots use param DATA_W/STATE_W and eligible SystemVerilog ranges; numeric parser/report defaults, original dataflow/adverse cases and every depth-only/scalarized shape check remain unchanged. Original/control/source epochs and line-scoped whole-file inverse proofs retain in actor-parameter-widths artifacts; only positive assertions/labels change. Book13a/13b/matrix correct prior default-frozen claims, preserving code fences and library/override/runtime boundaries. Existing module-carrier card adds the exact actor-width query/focused route with zero byte growth and all old facts/questions/routes retained. Same-tree completed narrative/acceptance curation preserves exact older source under fixed limits. Removed default-frozen32 claim disposition retains exactly; its replacement explicit example default has a fresh incidental review and complete current census/join. Native book/source/KMap and normal gates qualify commitment before .5.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.4: retain actor parameter width expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain immutable actor-constant width sources.`
   Acceptance: `Update only stale carrier assertions in T1338 through T1342 to immutable constant expressions. Keep fixed HDL ranges, all original constant/source/parser/report/dataflow/negative checks and scalarized depths. Never promote constants to mutable parameters. Sync book boundaries; run actual focused files and commit.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Verification: `Selected next after .4 commitment. Review T1338-T1342 and retained exact controls; static actor constants use immutable scalar expressions in source, retain fixed HDL ranges and numeric reports/depths, and never become mutable params.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6`
   Status: `pending`
   Goal: `Align parameter-default integration with canonical aggregate profiles.`
   Acceptance: `T1345 through T1349 retain authored scalar/default source and current carrier relations. For T1346/T1347/T1348 preserve every original parser/IR/report/default assertion, assert the exact mixed mutable-aggregate refusal, and qualify a separately authored immutable equivalent with independent selected-value/kind conservation for positive HDL checks, following accepted T2110/T30 and R14.3.2.4.2. Preserve generated captures, local aliases, constants and enum meanings. Do not erase old cases, freeze production provenance, weaken guards or claim new aggregate support. Sync canonical downstream/book and commit.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Verification: `Pending. Also review book13 Design Principles: blanket literal-child-default source wording must be reconciled with the canonical scalar/default and mutable-aggregate boundaries alongside T1345-T1349; ignored controls supply no final qualification.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.7`
   Status: `pending`
   Goal: `Retain imported immutable width expressions.`
   Acceptance: `Update only stale scheduled-source assertions in T1353/T1354/T1355/T1357 to exact imported constant expressions. Keep all fixtures/imports, selected numeric parser/reports, fixed HDL, bank/dataflow and refusal controls. Distinguish mutable actor params whose defaults use constants. Sync downstream/book, actual focused tests and normal commit.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Verification: `Pending. Also correct book13 Design Principles where package-backed scheduled widths are described as literal integers; parser/report/fixed HDL defaults stay separate. T1353-T1357 and ignored controls remain to qualify actual paths.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.8`
@@ -505,7 +505,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.4` | `active` | After clean header repair, align actor-parameter carrier/HDL width assertions. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.5` | `active` | After clean parameter-width repair, retain immutable actor-constant source widths. |
 
 ## Decisions
 
@@ -525,8 +525,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — composition supported-header expectations
+## Acceptance Checklist — actor parameter width expectations
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/129-composition-unsupported-child-diagnostics.t line 40 contains +params; stale expected lists omit it. Parser.pm295 and canonical scope/book agree, with producer bytes unchanged from the failing run.
-- [x] **ADDRESSED (verified)** — Only nine literal/regex supported-list tokens add +params in canonical order. Whole-file inverse recovery preserves every fixture, DTO/reason/context/boundary and unrelated assertion. Book keeps header admission separate from lowering-profile acceptance.
-- [x] **NO REGRESSION** — All tests successful Files=2, Tests=146 in complete T129/T131. Native book/source/KMap and normal doctrine gates qualify this focused contract repair; full CI/hosted remains deferred until the remaining known set closes.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 native failure at t/1333-isf-interface-actor-param-widths.t line 41 expects numeric carrier widths despite retained parameter roots. Canonical module-carrier/direct-range contracts and exact original/control products distinguish source provenance from selected numeric caches.
+- [x] **ADDRESSED (verified)** — Positive carrier/eligible SystemVerilog ranges now name DATA_W/STATE_W, including enum-backed parameter cases. Line-scoped inverses preserve all fixtures, numeric parser/report, dataflow/refusal and depth-only controls. Book/card distinguish these surfaces without broadening library, override, dynamic-depth or runtime support.
+- [x] **NO REGRESSION** — All tests successful Files=5, Tests=17 in complete T1333-T1337. Existing code fences and Knowledge Map facts/questions/routes retain under fixed limits; native book/source/KMap and normal gates qualify this focused slice. Remaining known repairs precede complete full CI and hosted publication.

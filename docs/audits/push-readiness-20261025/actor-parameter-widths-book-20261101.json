@@ -1,0 +1,36 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.4",
+  "source_revision": "2b6dc1a4babeb9932194aec89a1692f435cb5fd9",
+  "parts": [
+    {
+      "path": "docs/book/src/13a-actor-interface.md",
+      "before_sha256": "3bd25ed7a807c1682f51e6eb1db9fe17d6ec36aefcc580485da2bbacf5a4db04",
+      "after_sha256": "e2108f56d5a9c26622e99dc7835580864c1d50cd2bc3e9b7f60ab67a4aadc750",
+      "code_fences_byte_equal": true
+    },
+    {
+      "path": "docs/book/src/13b-transactions.md",
+      "before_sha256": "5e2b9d009d3385f31f9c5e1b6753f00d79aa8ee923739b40fe946e7d0699861a",
+      "after_sha256": "b9249a9ec3c3430ad2bd2436969f9eddff5498d9d89d69526c438e3b48723fc1",
+      "code_fences_byte_equal": true
+    },
+    {
+      "path": "docs/book/src/13k-isf-feature-support-matrix.md",
+      "before_sha256": "75f63d9fd67a1d5a822a795ab224af275d935e05e73a14fae0c375c1bdfde1ec",
+      "after_sha256": "584688a72bf27f9a42e454af05cad879a2a0c0ef3f01975ee9ab9e5c1e75da2e",
+      "code_fences_byte_equal": true
+    }
+  ],
+  "aggregate_baseline": {
+    "bytes_total": 4385979,
+    "lines_total": 77809,
+    "files": 65
+  },
+  "aggregate_delta": {
+    "bytes_total": 221,
+    "lines_total": 5,
+    "files": 0
+  },
+  "scope": "Only affected actor parameter explanations; original complete code examples remain byte-exact. Mutable actor roots differ from numeric caches and static bank entry counts; no broader override/runtime/library claim.",
+  "matrix_compaction": "Only new profile explanations shortened after normal hook; all prior examples/unique row contracts remain."
+}
