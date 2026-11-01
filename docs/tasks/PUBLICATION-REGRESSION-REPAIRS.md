@@ -543,9 +543,9 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.21.1`
   Status: `done`
   Goal: `Repair order-dependent MCP full-example schema expectations.`
-  Acceptance: `Classify every full9 snapshot difference against public catalog contracts/history. Preserve every original envelope/key/control and full values/JSON kinds; normalize only declared optional key presence, check all returned records, and commit focused schema/book verification before .22.`
-  Verification: `Exactly one projected path differed: f9b50f197 added the first composition match with optional expected_hdl_pattern_count and without optional expected_module_name. No producer defect/change. Full snapshot pins required/optional vocabulary separately; any record missing required or carrying unknown keys remains distinguishable. Real variants in both orders retain complete values/JSON kinds and independently authored leading-record truth. New controls reproduce original later-record blindness, then actual T1445/T1444/T1455/T314 pass Files4 Tests16. Original sources/full diff/history/RED and focused receipts retain in mcp-schema-intake/focused/source. Book/card explain scope. Full10/push remain unqualified; .22 next.`
-  Commit: `PUBLICATION-REGRESSION-REPAIRS.21.1: check full example schemas independently of record order`
+  Acceptance: `Classify every full9 snapshot difference against public catalog contracts/history. Preserve every original envelope/key/control and full values/JSON kinds; normalize only declared optional key presence, check all returned records, and commit focused schema/book verification before .22. Follow-up also pins declared required-key vocabulary explicitly and controls removal while producer records remain unchanged.`
+  Verification: `Exactly one projected path differed: f9b50f197 added the first composition match with optional expected_hdl_pattern_count and without optional expected_module_name. No producer defect/change. Full snapshot pins required/optional vocabulary separately; any record missing required or carrying unknown keys remains distinguishable. Real variants in both orders retain complete values/JSON kinds and independently authored leading-record truth. New controls reproduce original later-record blindness, then actual T1445/T1444/T1455/T314 pass Files4 Tests16. Original sources/full diff/history/RED and focused receipts retain in mcp-schema-intake/focused/source. Book/card explain scope. Declaration-removal RED then final T1445 Files1 Tests5 PASS closes the follow-up blind spot; all prior members/controls remain. Full10/push remain unqualified; .22 next.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.21.1: freeze required catalog declarations explicitly`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.21.2`
   Status: `pending`
@@ -588,10 +588,10 @@ Saved private feature implementation remains pending until publication completes
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior source and historical acceptance remain in mcp-schema-intake-20261101.
+Exact superseded source/checklist retains in mcp-schema-declaration-intake-20261101.
 
-## Acceptance Checklist — MCP full-example schema
+## Acceptance Checklist — explicit required vocabulary
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Full9 fails at t/1445-semantic-introspection-mcp-schema-snapshots.t line 45. Complete diff has only examples.catalog_entry_keys: f9b50f197 changes the leading match, not the already-published optional vocabulary. Original first-record projection also ignores malformed later records; fresh RED controls reproduce that failure.
-- [x] **ADDRESSED (verified)** — Pin required/optional vocabularies separately and inspect all returned records. Every original envelope/other snapshot member and original test body remains. Both real orders, absent declared optionals, every required-key removal/unknown insertion at every selected position and complete authored values/JSON kinds qualify. Producer bytes remain unchanged; intake/source witnesses retain originals and full diff.
-- [x] **NO REGRESSION** — All tests successful; Files=4, Tests=16 in mcp-schema-focused-20261101. Full T1445, adjacent query/envelope and public catalog contract pass. Book/source/card and normal doctrine checks qualify the commit; full9 remains nonpassing and full10/push/hosted/Pages remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh controlled RED fails at t/1445-semantic-introspection-mcp-schema-snapshots.t line 200: removing family from the declared required list leaves the first repaired projection unchanged while producer records still emit it. mcp-schema-declaration-intake retains exact RED source and prior task/history.
+- [x] **ADDRESSED (verified)** — Add only the explicit sorted required-key list to projection/fixture and the localized declaration-removal control. Required and optional vocabularies now both pin their public declarations directly; all prior emitted-key/missing-key/envelope/value/kind/order/adverse checks remain. No production or book behavior changes.
+- [x] **NO REGRESSION** — All tests successful; Files=1, Tests=5 in mcp-schema-declaration-focused-20261101. Earlier adjacent MCP/catalog receipts remain scoped to unchanged source files. Native book/source and normal gates qualify this follow-up; full10/push/hosted remain pending.

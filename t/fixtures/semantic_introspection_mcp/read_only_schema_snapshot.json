@@ -335,6 +335,17 @@
                "private_nonclaims",
                "search_path_relpaths"
             ],
+            "catalog_entry_required_keys" : [
+               "classification",
+               "coverage",
+               "family",
+               "has_expected_error_pattern",
+               "has_expected_hint_pattern",
+               "id",
+               "relpath",
+               "source_kind",
+               "strict_supported"
+            ],
             "embedded_support_summary_sample_count" : 0,
             "limit" : 2,
             "payload_keys" : [

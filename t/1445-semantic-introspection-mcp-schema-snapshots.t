@@ -191,6 +191,17 @@ subtest 'full example schema admits declared optional fields without depending o
             }
         }
     }
+    {
+        # A contract edit must change the snapshot even if the producer still
+        # happens to emit the old required field in every selected record.
+        my @required = grep { $_ ne 'family' } @{support_accounting_catalog_entry_required_keys()};
+        no warnings 'redefine';
+        local *support_accounting_catalog_entry_required_keys = sub { [@required] };
+        isnt($json->encode(build_schema_snapshot($adapter)),
+            $json->encode(decode_json(slurp(File::Spec->catfile($repo_root, 't', 'fixtures',
+                'semantic_introspection_mcp', 'read_only_schema_snapshot.json')))),
+            'removing a declared required key changes the snapshot despite unchanged producer records');
+    }
     is($json->encode($manifest), $before, 'schema variant calls leave the complete manifest unchanged');
 };
 
@@ -477,6 +488,7 @@ sub project_examples_payload {
         limit => $payload->{limit},
         returned_count => $payload->{returned_count},
         catalog_entry_keys => [sort keys %keys],
+        catalog_entry_required_keys => [sort @{support_accounting_catalog_entry_required_keys()}],
         catalog_entry_optional_keys => [sort keys %optional],
         catalog_entry_missing_required_keys => \@missing,
         embedded_support_summary_sample_count => scalar @{$payload->{support_summary}{sample_catalog_entries}},
