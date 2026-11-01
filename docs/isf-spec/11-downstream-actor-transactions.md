@@ -770,13 +770,19 @@ Rules:
   declared actor constants, actor-local scalar parameter defaults, earlier
   scalar transaction parameter defaults, local or package-qualified enum
   member references, or qualified imported package scalar constants. Actor
-  constants and actor scalar parameter defaults in generated child transaction
-  defaults are resolved to literal generated child `.fsm` `+params`,
-  generated-composition child summaries, and default instance bindings;
-  transaction-parameter dependencies, enum references, and qualified
-  package-constant references preserve authored tokens in those review
-  surfaces because they are child-local or carried by generated child package
-  imports and embedded package roots.
+  constants remain named in generated child `.fsm` defaults; actor scalar
+  parameters use allocated captures, earlier transaction parameter aliases stay
+  child-local, and enum defaults use immutable support declarations. Qualified
+  package references retain their imports and embedded roots. Numeric selected
+  defaults in the lowering IR and generated-composition child summaries/default
+  instance bindings are separate review products: actor statics resolve there,
+  while child-local aliases and enum/package review tokens remain visible.
+  Neither product grants mutable aggregate HDL support. An aggregate containing
+  an actor capture or local scalar parameter reference keeps that provenance
+  and receives the current packed-aggregate refusal. Independently authored
+  immutable leaves can have identical selected defaults and generate HDL;
+  supported scalar aliases still keep their immediate named relationships.
+  The compiler does not freeze mutable aggregate defaults to selected caches.
   Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member

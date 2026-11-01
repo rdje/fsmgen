@@ -453,10 +453,10 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.5: retain immutable actor constant width expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6`
-  Status: `active`
+  Status: `done`
   Goal: `Align parameter-default integration with canonical aggregate profiles.`
   Acceptance: `T1345 through T1349 retain authored scalar/default source and current carrier relations. For T1346/T1347/T1348 preserve every original parser/IR/report/default assertion, assert the exact mixed mutable-aggregate refusal, and qualify a separately authored immutable equivalent with independent selected-value/kind conservation for positive HDL checks, following accepted T2110/T30 and R14.3.2.4.2. Preserve generated captures, local aliases, constants and enum meanings. Do not erase old cases, freeze production provenance, weaken guards or claim new aggregate support. Sync canonical downstream/book and commit.`
-  Verification: `Split before implementation: .1 handles simple scalar/default width expectations; .2-.4 retain each original mutable-aggregate refusal plus independently authored immutable equivalent and selected-value/kind controls; .5 closes documentation. Book13 Design Principles and canonical downstream default wording stay owned here. No production guard relaxation or broader/full verification between slices.`
+  Verification: `Joined actual T1345-T1349 passing receipts to unchanged final test sources via full-source witness hashes; no test replay. Current book and canonical downstream now distinguish selected IR/report values from scoped child aliases/captures/static support and immutable aggregate HDL admission. Original mutable cases and authored static counterparts remain explicit. default-profile-doc-closure retains join/source evidence. No wider runtime/override/full/hosted credit.`
   Commit: `child slices`
   Children: `PUBLICATION-REGRESSION-REPAIRS.20.6.1, PUBLICATION-REGRESSION-REPAIRS.20.6.2, PUBLICATION-REGRESSION-REPAIRS.20.6.3, PUBLICATION-REGRESSION-REPAIRS.20.6.4, PUBLICATION-REGRESSION-REPAIRS.20.6.5`
 
@@ -490,14 +490,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.4: qualify transaction-local aggregate defaults`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.5`
-  Status: `active`
+  Status: `done`
   Goal: `Close default-profile documentation against final-path receipts.`
   Acceptance: `After .1-.4 commit, join five actual T1345-T1349 receipts/source epochs without replaying passed files unnecessarily. Correct book13 Design Principles, transaction/default and canonical downstream wording: parser/report/default provenance, scalar source relationships and immutable aggregate HDL admission differ. Preserve unsupported mutable examples explicitly, qualify new runnable counterparts, keep existing source/IR meanings and no broader runtime/override claim. Focused book/source checks and normal commitment before .20.7.`
-  Verification: `Pending; original full8/source/control evidence retains. No final-path credit yet.`
-  Commit: `pending`
+  Verification: `Joined actual T1345-T1349 passing receipts to unchanged final test sources via full-source witness hashes; no test replay. Current book and canonical downstream now distinguish selected IR/report values from scoped child aliases/captures/static support and immutable aggregate HDL admission. Original mutable cases and authored static counterparts remain explicit. default-profile-doc-closure retains join/source evidence. No wider runtime/override/full/hosted credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.5: align default-profile reference wording`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.7`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain imported immutable width expressions.`
   Acceptance: `Update only stale scheduled-source assertions in T1353/T1354/T1355/T1357 to exact imported constant expressions. Keep all fixtures/imports, selected numeric parser/reports, fixed HDL, bank/dataflow and refusal controls. Distinguish mutable actor params whose defaults use constants. Sync downstream/book, actual focused tests and normal commit.`
   Verification: `Pending. Also correct book13 Design Principles where package-backed scheduled widths are described as literal integers; parser/report/fixed HDL defaults stay separate. T1353-T1357 and ignored controls remain to qualify actual paths.`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.6.5` | `active` | Join completed default receipts and close canonical book/spec wording. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.7` | `active` | Retain immutable imported-width source expressions. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — transaction-local default profile
+## Acceptance Checklist — default reference closure
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1348-isf-transaction-param-transaction-params.t line 65 shows scoped actor capture/static support instead of literalized child defaults. Its original CLI refuses mutable BASE aggregate provenance; original IR/report/default metadata remains valid.
-- [x] **ADDRESSED (verified)** — Preserve original source, selected IR/report and all negative cases. Correct only the stale carrier expectation; assert exact original refusal/no partial HDL, independently author immutable aggregate and compare the complete selected parameter product with JSON kinds. Positive HDL keeps WIDTH=BASE, COPY_MODE=MODE and the LIMIT actor capture.
-- [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for the complete actual T1348. Original positive CLI success/stderr/artifact assertions retain on the supported counterpart. transaction-local-default source/native receipts retain; book distinguishes parsed mutable provenance from immutable aggregate HDL admission. No production/profile widening or broader override/runtime/full claim.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1347-isf-transaction-param-actor-static-defaults.t line 63 contradicts literalized-child source wording. Current passing receipts preserve selected IR/report defaults and scoped captures.
+- [x] **ADDRESSED (verified)** — default-profile-doc-closure joins native receipts to exact current test source witnesses; book/spec distinguish selected reports, scoped carriers and immutable aggregate HDL admission. Fresh boxes also cover changed doctrine authority/census paths.
+- [x] **NO REGRESSION** — Saved actual native receipts report All tests successful Files=1, Tests=2 for T1346/T1347/T1348 and Files=2, Tests=4 for T1345/T1349. Logs/source hashes agree; no test replay or full/runtime/hosted credit.

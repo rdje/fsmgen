@@ -1019,7 +1019,10 @@ The ISF-specific current limitations are:
   and immutable static aliases through the bound module carrier described above.
   Earlier transaction parameter dependency tokens, enum-backed transaction
   defaults and qualified package constants retain their selected declarations,
-  imports and embedded package roots. These source/default carriers do not
+  imports and embedded package roots. Generated-composition summaries and
+  default instance bindings still resolve actor static values while retaining
+  child-local aliases and enum/package review tokens; those report values do
+  not substitute for the scoped child source. These source/default carriers do not
   admit mutable aggregate HDL: with `(BASE 8)` and `(WIDTH BASE)`,
   `(LANES (BASE WIDTH LIMIT_C mode.IDLE))` retains both local references and
   refuses packed aggregate generation. A separately authored
