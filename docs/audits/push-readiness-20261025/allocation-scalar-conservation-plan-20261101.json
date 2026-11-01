@@ -1,0 +1,46 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.2.4",
+  "revision": "6b1632c4ecb6569f00d6aeba599eeee67567b79d",
+  "fixture": {
+    "path": "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif",
+    "sha256": "8db9b529153f6dc4b0771b06628c830ecf63b25e2efbd4d369d34c0b93f08834"
+  },
+  "public_probe": {
+    "text": "use strict;\nuse warnings;\nuse JSON::PP ();\nuse FSM::Adapter::IAL2::PPIF;\nmy $path = shift @ARGV;\nopen my $fh, '<', $path or die \"Cannot read selected fixture: $!\";\nlocal $/; my $source = <$fh>; close $fh;\nmy $result = FSM::Adapter::IAL2::PPIF->new()->parse_source($source, $path);\nprint JSON::PP->new->canonical->pretty->encode({generated_ial1 => $result->{generated_ial1}, generated_ial0 => $result->{generated_ial0}});\n",
+    "sha256": "2a38e05a1fd9ec4963da5c94d697e6ba97e0d7bfb517e09ca2be824037d0b747",
+    "path": ".artifacts/push-readiness-20261025/allocation-scalar-conservation-20261101/public-generated-carriers.pl"
+  },
+  "programmes": [
+    {
+      "label": "carriers",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=5s",
+        "--verbose",
+        "60s",
+        "/usr/bin/perl",
+        "-Iperl",
+        ".artifacts/push-readiness-20261025/allocation-scalar-conservation-20261101/public-generated-carriers.pl",
+        "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif"
+      ]
+    },
+    {
+      "label": "schedule",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=5s",
+        "--verbose",
+        "60s",
+        "./bin/fsmgen",
+        "--emit-schedule-json",
+        "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif"
+      ]
+    }
+  ],
+  "streams": "Exclusive ignored per-label stdout.json/stderr.log; retain native statuses and complete JSON primitive kinds; exact repository prefix normalization only.",
+  "guards": "Unchanged88/4096 outer guard and per-command60-second timeout/5-second own-group TERM grace. Any nonzero is retained and stops collection. No generation/HDL rerun.",
+  "hdl_oracle": "Compare full retained predecessor HDL/current HDL. Only the unique fourth-line generation Date may differ; all other bytes must agree. ScaffoldEmitter.pm source names actual localtime header mechanism. No field/value deletion for complete carriers/reports.",
+  "gaps": "Whole toolchain closure, matched timing distribution, original incomplete pre-fix current HDL and runtime/full/hosted qualification remain absent."
+}

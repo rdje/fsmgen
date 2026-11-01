@@ -380,10 +380,10 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.1: retain full8 failures and allocation-cost intake`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair unrelated-allocation validation cost without weakening currentness.`
   Acceptance: `P1 first causal repair. In actual parser transition paths, select potentially affected events before expensive full validation. Any cache may accelerate negative membership selection only; retain complete live validation for every candidate, source/holder/registry replacement, object lifetime, matching-write revocation, literal child provenance and role/metadata/width/AST controls. Require a genuine before/current resource-cost counterexample, semantic conservation and focused canonical allocation tests. Qualify the exact original public fixture with native HDL verification; update book/POD/facts and commit. No guard bypass, larger limits, reduced cases or generic-profile expansion.`
-  Verification: `Focused dependency-selection implementation .1 passes the unchanged resource counterexample and directly affected holder/transition/lifetime cases. .2 owns the exclusive clean original PPIF/HDL confirmation; no completed repaired native result or full qualification exists yet. All previous diagnostic detail retains in the source/receipts under these children and the exact first-hook task snapshot.`
+  Verification: `Focused negative selection .1 and no-op scalar reuse .2.3 pass fixed genuine resource/currentness/adverse cases. Exact original PPIF now completes native --verify-hdl from6b1632c4ecb6, status0, real64.40, nonempty HDL. Complete carrier/report JSON is unchanged; predecessor HDL differs only in its generation Date. .2.4 retains full source/output/first failures, saved-only corruption controls and known-job settlement. This closes the cost counterexample only; matched timing distribution, whole toolchain/runtime and full/hosted qualification remain absent under .13. Contract/book slices .3-.9 now precede full9.`
   Commit: `child slices`
   Children: `PUBLICATION-REGRESSION-REPAIRS.20.2.1, PUBLICATION-REGRESSION-REPAIRS.20.2.2`
 
@@ -395,10 +395,10 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.1: skip unrelated allocation captures`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the exact original public PPIF generation after the committed cost repair.`
-  Acceptance: `From clean .1, qualify the exact original quiet public PPIF --verify-hdl command under unchanged88/4096 using an exclusive source/tool/input-bound journal. Retain first failures and authenticated own-job settlement. Require actual exit0/nonempty verified HDL before closing parent .20.2; refine the causal repair if needed. Preserve complete carrier/report semantic comparisons and explicit output/runtime/toolchain/distribution gaps. Commit each outcome before the next experiment. No broader/full retry until the known repair set closes.`
-  Verification: `Original clean443fff2a70b3 confirmation settles124 at180 seconds without HDL; RAM guard does not trip, all known jobs/groups absent. .1 retains that first native outcome; .2 retains separate30-second current stacks. .3 now owns a genuine idempotent bare-scalar-read counterexample and scoped repair, preserving actual mutation/currentness semantics. No larger limit, blind retry or end-to-end/full/runtime/hosted success. Parent .20.2 remains open.`
+  Acceptance: `Complete original public quiet --verify-hdl qualification after committed causal repairs, preserving first nonpasses and unchanged guards. Actual0/nonempty HDL, complete carrier/report and output conservation are mandatory; retain distribution/toolchain/runtime/full gaps. Exact prior contract remains in6b1632c4 source/history.`
+  Verification: `First native timeout124 and separate bounded stacks remain exact under .1/.2. Scoped scalar reuse .3 preserves real writes/currentness/overridden dispatch and passes10 focused files/50 outer cases. .4 completes original native generation0 under unchanged180-second/88/4096, plus complete carrier/report and date-only HDL comparison. Known jobs/groups are absent. This public counterexample closes; complete local/hosted qualification remains .13.`
   Commit: `pending`
   Children: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.1, PUBLICATION-REGRESSION-REPAIRS.20.2.2.2, PUBLICATION-REGRESSION-REPAIRS.20.2.2.3, PUBLICATION-REGRESSION-REPAIRS.20.2.2.4`
 
@@ -420,22 +420,22 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.3`
   Status: `done`
   Goal: `Avoid redundant bare scalar registration without caching policy validity.`
-  Acceptance: `P1 next after clean .2. Reproduce actual scalar-parser reads of a shared source under captured dependent trees, counting Core proof reads and checking complete semantics/currentness. Introduce no-op reuse only for a provably identical plain scalar registration on native manager/Signal data; changed/absent output flags, new names, annotations, foreign/subclass/tied shapes and actual setters keep existing writes/validation. Preserve usage, registry identity, external matching-write revocation, source/holder mutations and final currentness. Do not cache validity, weaken barriers, skip real writes or broaden generic profiles. Require fixed genuine RED/GREEN/resource and adverse controls; book/facts/POD sync and focused affected cohort, then normal commit before another exclusive original native confirmation.`
-  Verification: `Actual fixed T2301 first RED has321 width reads and changed journals for three same-value scalar reads, with all other semantic/currentness/real-write/adverse cases passing. Native no-op reuse now preserves complete journals, policy records, usage and physical source. Only exact untied native shapes, identical JSON flag kind/value and initialized usage qualify. Original registration/currentness/write/barrier bodies recover byte-exactly. First focused cohort exposes unchanged T2238 matching-write hook bypass; retaining native register/usage/lookup CV identities restores actual overridden dispatch. Final unchanged cohort All tests successful Files10 Tests50. All first native/source epochs and exact inverse/test identity proofs retain in allocation-scalar-read artifacts. Book/facts/POD/source/index/claim and mandatory normal hooks gate commitment. Original native PPIF/HDL remains unqualified under .4; no timing distribution/full/hosted credit. Fresh exclusive plan keeps180 seconds and88/4096, with clean committed launch required.`
+  Acceptance: `Completed narrow native no-op reuse contract; actual writes, all unknown/subclass/tied/overridden paths and final source/holder/registry currentness retain. Fixed real scalar-parser RED/GREEN/resource and adverse controls, exact source inverses, book/facts/POD and normal commitment qualify this slice. Full original contract remains in6b1632c4 task/history.`
+  Verification: `Committed6b1632c4ecb6. Fixed T2301 removes321 proof reads for three identical bare reads while preserving complete journals/policies/usage/physical source. First T2238 hook-bypass failure retains; native registration-method identity restores unchanged adverse dispatch. Final All tests successful Files10 Tests50. Original registration/currentness/write/barrier bodies recover byte-exactly. All source/probe/refusal epochs, scalar-kind/data-shape controls and normal doctrine results remain in allocation-scalar-read artifacts and exact6b task/history. Native qualification is separately owned by .4.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.3: reuse unchanged bare scalar references`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Confirm the original public PPIF after committed scalar no-op reuse.`
   Acceptance: `After .3 normal commitment/empty brief/clean Git, authenticate allocation-scalar-native-plan-20261101 source/input/tool hashes and unused slots. Launch its exact native quiet --verify-hdl programme once under unchanged180-second/88/4096 limits; consume an existing journal instead of replay. Require actual0, nonempty HDL and completed verification. Compare complete public carriers/reports and HDL semantic conservation against retained predecessor, with explicit incomplete pre-fix current output, distribution/runtime/toolchain gaps. Preserve first failures/owned settlement and refine if necessary; no blind retry, larger limit or broad/full run before remaining .20 contract/book slices close. Commit the outcome immediately.`
-  Verification: `Prepared exclusive clean-source plan; no new original fixture run has launched.`
-  Commit: `pending`
+  Verification: `Original exact native command from clean6b1632c4ecb6 exits0 with --verify-hdl, real64.40 and1144185-byte HDL; unchanged88/4096 never trips. Complete public IAL1/IAL0 and schedule JSON commands exit0 and canonically equal retained predecessor/current values, including scalar kinds. All HDL bytes equal predecessor except its unique fourth-line // Date generated by ScaffoldEmitter localtime. allocation-scalar-conservation packet retains whole outputs/source/plans/streams and independent known-group absence. Saved-only reader passes and rejects native boolean status, changed HDL body with refreshed hash and changed JSON numeric kind. No original pre-fix current HDL, matched timing distribution, whole loaded-toolchain, hardware runtime/full/hosted credit. Native book/source/KMap and normal gates qualify outcome commitment before .20.3.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4: qualify original public allocation generation`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Align composition child-header diagnostics with admitted parameters.`
   Acceptance: `After .2 commits, update only stale supported-header lists in T129/T131 to include admitted +params. Preserve complete failure DTOs, blocked reasons, valid/invalid headers and every other assertion. Confirm Parser.pm and COMPOSITION_SCOPE contract, focused tests, related book and normal commit.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Verification: `Selected next after original native cost outcome commits. Inspect exact current Parser.pm/COMPOSITION_SCOPE and T129/T131 before editing only stale supported-header tokens; existing ignored controls remain diagnostic only.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.4`
@@ -505,7 +505,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4` | `active` | After clean scalar repair, run or resume the exclusive original public confirmation. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.3` | `active` | After clean native outcome, align admitted +params diagnostic expectations. |
 
 ## Decisions
 
@@ -514,8 +514,8 @@ Saved private feature implementation remains pending until publication completes
 
 ## Blockers
 
-- P1 allocation-validation cost and observed contract/book failures block full
-  qualification. .20 owns causal repairs; .13 retains complete local CI, push
+- P1 observed contract/book failures block full qualification. Allocation
+  cost counterexample is closed by .20.2; .20 owns remaining repairs; .13 retains complete local CI, push
   and hosted/Pages. No user input or live job remains. Prior APB and keyword
   blockers are repaired; original resource/native attribution gaps stay owned.
 
@@ -525,8 +525,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — no-op bare scalar reuse
+## Acceptance Checklist — original public allocation qualification
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Genuine unchanged pre-edit T2301 diagnostic at t/2301-idempotent-scalar-reference.t line 78 reports321 width reads for three identical bare scalar references; line81 reports changed snapshots. Actual scalar registration writes the same output flag and revises every dependent allocation. All semantic/real-write/adverse cases already pass.
-- [x] **ADDRESSED (verified)** — Same fixed test now passes with native plain no-op reuse; complete journals/policies/usage/source identity conserve. Differing flag kinds, markers, annotations, new/unknown/subclass/tied data retain registration. First T2238 hook-bypass failure is preserved and repaired through native registration-method identity, with the original adversarial test unchanged. Exact inverse proofs recover both original production files outside declared helper/selection/method-identity additions.
-- [x] **NO REGRESSION** — All tests successful Files=10, Tests=50 across affected source holders, transition/lifetime/publication and mutation controls. Original large PPIF/native HDL still needs .4 confirmation; distribution/runtime/full/hosted remain pending. Book/POD/source/index/claim and normal doctrine gates qualify this focused implementation only.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual original native generation now exits0 after the two committed cost interventions. Current --emit-schedule-json and complete carrier observations equal retained input products. The only HDL difference is the unique generation Date, explained by ScaffoldEmitter localtime source; no other output drift is accepted.
+- [x] **ADDRESSED (verified)** — Full native recorder/source/log, original HDL and complete public streams retain in allocation-scalar-conservation evidence. Independent known-group absence and saved-only source/output reader pass; corrupted native boolean status, HDL body with refreshed hash and JSON scalar kind are rejected. First timeout/failures stay retained; all resource limits stay fixed.
+- [x] **NO REGRESSION** — knowledge-map: OK. Complete carrier/report equality and date-only full HDL comparison pass. Native book/source/task checks and normal doctrines gate commitment. No whole-suite/runtime/hosted or timing-distribution credit; .20.3-.9 remain ahead of fresh full9.

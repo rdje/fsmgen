@@ -1,7 +1,7 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **18** uniquely owned question entries.
+> **1** facts · **19** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,7 @@
 - q="where are arithmetic intermediate helpers allocated?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="which scalar intermediates allow generic VHDL?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why can Core typed literals change value during guard capture?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="why can generated HDL differ only in its Date header?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why can runtime AST guard text lose comparison grouping?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why did Core bitwise guard operations become logical?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why did a high-bit-only vector guard fail?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
@@ -28,7 +29,7 @@
 
 ### sv-intermediate-truthiness-width
 
-_Scalar reduction origins and render-time intermediate widths_
+_Scalar origins and intermediate widths_
 
 - **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/sv-intermediate-truthiness-width.md`](../../docs/knowledge/sv-intermediate-truthiness-width.md)

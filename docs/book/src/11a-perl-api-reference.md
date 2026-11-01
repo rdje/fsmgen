@@ -92,9 +92,12 @@ unchanged. This avoids a redundant registration and allocation revision write.
 New names, flag changes, output markers, annotations, overridden registration
 methods, subclasses and tied storage keep the ordinary registration path.
 Reuse proves no policy currentness: final live checks still reject external
-writes, changed holders and foreign registry objects. The original large PPIF
-remains subject to a separate clean-source generation/HDL confirmation; focused
-savings do not establish end-to-end completion.
+writes, changed holders and foreign registry objects. The original AXI
+queue-depth-three queue-head response-demultiplexing fixture now completes
+clean-source generation with HDL verification. Its complete IAL1/IAL0 products
+and schedule report remain unchanged; the HDL matches the retained predecessor
+apart from its generation-date comment. This qualifies that public fixture;
+complete suite and hardware-runtime qualification remain separate.
 
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing
