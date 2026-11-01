@@ -3070,7 +3070,11 @@ Compact support-summary and diagnostic samples retain `id`, `relpath`, `family`,
 Samples follow catalog order; identify entries by `id` and handle both field
 variants. Reading catalog metadata does not execute a fresh check. The full
 support-accounting resource and `fsmgen_find_examples.catalog_entries` have a
-larger entry contract. The examples query's embedded support summary has no
+larger entry contract: use the support-accounting contract's
+`catalog_entry_required_keys` and `catalog_entry_optional_keys`. Optional fields
+depend on the record; the first result does not define the schema. Snapshot
+checks pin both key lists and detect missing required or unexpected keys in
+every returned record. The examples query's embedded support summary has no
 catalog samples; its top-level entries carry the full records. The
 [sample field reference](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CATALOG_SAMPLE_RESULTS)
 explains each compact field and its interpretation.

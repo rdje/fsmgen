@@ -314,11 +314,6 @@
             "catalog_entry_keys" : [
                "classification",
                "coverage",
-               "expected_child_modules",
-               "expected_instance_count",
-               "expected_lane",
-               "expected_module_name",
-               "expected_top_name",
                "family",
                "has_expected_error_pattern",
                "has_expected_hint_pattern",
@@ -326,6 +321,19 @@
                "relpath",
                "source_kind",
                "strict_supported"
+            ],
+            "catalog_entry_missing_required_keys" : [],
+            "catalog_entry_optional_keys" : [
+               "diagnostic_code",
+               "expected_child_modules",
+               "expected_hdl_pattern_count",
+               "expected_instance_count",
+               "expected_lane",
+               "expected_module_name",
+               "expected_top_name",
+               "private_capabilities",
+               "private_nonclaims",
+               "search_path_relpaths"
             ],
             "embedded_support_summary_sample_count" : 0,
             "limit" : 2,

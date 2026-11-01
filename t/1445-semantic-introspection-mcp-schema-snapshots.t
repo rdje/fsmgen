@@ -12,7 +12,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
-use FSM::Support::SupportAccountingContract qw(support_accounting_catalog_entry_optional_keys);
+use FSM::Support::SupportAccountingContract qw(
+    support_accounting_catalog_entry_optional_keys
+    support_accounting_catalog_entry_required_keys
+);
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
@@ -119,6 +122,76 @@ subtest 'support sample schema accepts both real optional-field variants in eith
         }
     }
     is($json->encode($manifest), $before, 'variant calls leave the original complete manifest unchanged');
+};
+
+subtest 'full example schema admits declared optional fields without depending on record order' => sub {
+    my $manifest = build_capability_manifest();
+    my $entries = $manifest->{support_accounting}{catalog_entries};
+    my %by_id = map { $_->{id} => $_ } @$entries;
+    my @selected = @by_id{qw(feature.composition_scalar_rtl_parameters
+        contract.composition_top_parameters_lowering_pending intent.isf_apb_requester)};
+    ok(!scalar(grep { !defined $_ } @selected), 'real catalog supplies all distinct optional-field variants')
+        or return;
+    my $json = JSON::PP->new->canonical;
+    my $before = $json->encode($manifest);
+    my $expected = decode_json(slurp(File::Spec->catfile($repo_root, 't', 'fixtures',
+        'semantic_introspection_mcp', 'read_only_schema_snapshot.json')))
+        ->{tool_envelopes}{examples}{decoded_payload};
+    $expected = {%$expected, query => '', limit => 3, returned_count => 3};
+
+    # Independently authored public record: in addition to the schema, guard
+    # the newly leading example's complete values and numeric/Boolean kinds.
+    is($json->encode($selected[0]), $json->encode({
+        id => 'feature.composition_scalar_rtl_parameters',
+        relpath => 't/corpus/composition_scalar_rtl_parameters.fsm',
+        family => 'language_feature_fixture', classification => 'supported_smoke',
+        coverage => 'composition_top_pipeline_cli', source_kind => 'composition',
+        strict_supported => JSON::PP::true, expected_top_name => 'composition_scalar_rtl_parameters',
+        expected_lane => 'C3', expected_instance_count => 1, expected_child_modules => [],
+        expected_hdl_pattern_count => 4, has_expected_error_pattern => JSON::PP::false,
+        has_expected_hint_pattern => JSON::PP::false,
+    }), 'new leading composition record retains its full authored public values and JSON kinds');
+
+    for my $first (\@selected, [reverse @selected]) {
+        my %selected_ids = map { $_->{id} => 1 } @$first;
+        my @ordered = (@$first, grep { !$selected_ids{$_->{id}} } @$entries);
+        is(scalar(@ordered), scalar(@$entries), 'variant order preserves complete catalog membership');
+        my $variant = {%$manifest, support_accounting => {
+            %{$manifest->{support_accounting}}, catalog_entries => \@ordered,
+        }};
+        my $client = FSM::Support::SemanticIntrospectionMCPAdapter->new(
+            repo_root => $repo_root, workspace_root => $repo_root, manifest_builder => sub { $variant });
+        my $response = $client->call_tool('fsmgen_find_examples', {limit => 3});
+        my $payload = $response->{structuredContent};
+        is($json->encode($payload->{catalog_entries}), $json->encode($first),
+            'every selected full record survives with exact values, order and JSON kinds');
+        is($json->encode(decode_json($response->{content}[0]{text})), $json->encode($payload),
+            'complete examples text and structured payloads agree');
+        is_deeply(project_examples_payload($payload), $expected,
+            'full catalog schema is independent of the leading optional-field variant');
+        my $valid_json = $json->encode(project_examples_payload($payload));
+
+        for my $index (0 .. $#$first) {
+            for my $key (@{support_accounting_catalog_entry_required_keys()}, 'unpublished_field') {
+                my $bad = decode_json($json->encode($payload));
+                if ($key eq 'unpublished_field') {
+                    $bad->{catalog_entries}[$index]{$key} = 'counterfeit';
+                } else {
+                    delete $bad->{catalog_entries}[$index]{$key};
+                }
+                isnt($json->encode(project_examples_payload($bad)), $valid_json,
+                    "record $index changed required/unknown key $key remains distinguishable");
+            }
+            for my $key (@{support_accounting_catalog_entry_optional_keys()}) {
+                next unless exists $first->[$index]{$key};
+                my $variant_payload = decode_json($json->encode($payload));
+                delete $variant_payload->{catalog_entries}[$index]{$key};
+                is_deeply(project_examples_payload($variant_payload), $expected,
+                    "record $index permits absent declared optional key $key");
+            }
+        }
+    }
+    is($json->encode($manifest), $before, 'schema variant calls leave the complete manifest unchanged');
 };
 
 subtest 'diagnostic discovery and bounded samples retain their public contract' => sub {
@@ -384,12 +457,28 @@ sub project_support_summary_payload {
 sub project_examples_payload {
     my ($payload) = @_;
 
+    # Full records may have different declared optional fields. Pin their
+    # vocabulary separately, preserving unknown keys and missing required keys
+    # in every result position rather than treating the first record as schema.
+    my %optional = map { $_ => 1 } @{support_accounting_catalog_entry_optional_keys()};
+    my %keys;
+    my @missing;
+    for my $index (0 .. $#{$payload->{catalog_entries}}) {
+        my $entry = $payload->{catalog_entries}[$index];
+        $keys{$_} = 1 for grep { !$optional{$_} } keys %$entry;
+        my @absent = sort grep { !exists $entry->{$_} }
+            @{support_accounting_catalog_entry_required_keys()};
+        push @missing, {index => $index, keys => \@absent} if @absent;
+    }
+
     return {
         payload_keys => sorted_keys($payload),
         query => $payload->{query},
         limit => $payload->{limit},
         returned_count => $payload->{returned_count},
-        catalog_entry_keys => sorted_keys($payload->{catalog_entries}[0] || {}),
+        catalog_entry_keys => [sort keys %keys],
+        catalog_entry_optional_keys => [sort keys %optional],
+        catalog_entry_missing_required_keys => \@missing,
         embedded_support_summary_sample_count => scalar @{$payload->{support_summary}{sample_catalog_entries}},
     };
 }

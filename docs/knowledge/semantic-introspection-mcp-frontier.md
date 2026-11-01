@@ -96,33 +96,34 @@ reverify: >-
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. History: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
 
 Guide: `docs/book/src/11-extensions-and-embedding.md`; schema: `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
-`SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest; `SemanticIntrospectionMCPAdapter`/`bin/fsmgen-mcp`: adapter. Semantic API first.
-Book 2026-10-24: producer/shells, enriched routes, diagnostics.
-No private Perl AST/scheduler/lowering/generator hash API.
-Families/names/applicability: `./bin/fsmgen --capability-manifest`,
-`tools/list`. Catalog discovery never scans workspace; results retain relative
-identity/public provenance.
+Manifest: `SemanticIntrospectionContract`/`SemanticIntrospectionSection`;
+adapter: `SemanticIntrospectionMCPAdapter`/`bin/fsmgen-mcp`. Semantic API first;
+no private AST/scheduler/lowering/generator hash API. Book 2026-10-24 covers
+producer/shells, enriched routes, diagnostics. Families/names/applicability:
+`./bin/fsmgen --capability-manifest`, `tools/list`. Catalog discovery never scans
+workspace; relative identities/public provenance remain.
 
-2026-10-23 controls in `docs/tasks/PERL-POD-API-REFERENCE.md`, prefix `.6.1.2.2`:
-.1 check/semantic/schedule: every supplied source_id/source_path is nonempty;
-source_path wins. .4.3 diagnostic limit_examples: omitted/zero/negative => 10;
-support-summary zero => no samples; positives cap at 100, even large integers
-(API/newline controls). .3 capability payloads: object/integer;
-manifest_schema_version integer; all/contracts/examples direct objects.
+2026-10-23 `docs/tasks/PERL-POD-API-REFERENCE.md` `.6.1.2.2` controls:
+.1 check/semantic/schedule source_id/source_path: nonempty, source_path wins.
+.4.3 diagnostic limit_examples: omitted/zero/negative => 10; support-summary
+zero => no samples; positives cap at 100, including large integers (API/newline).
+.3 capability payloads: object/integer; manifest_schema_version integer;
+all/contracts/examples direct objects.
 .4 kinds/copies; .5.2 loaded-code/record suffixes/authored locations;
 .5.3 case fixed; .5.4 zero preserved. .6 examples.documentation is the manifest documentation object.
+T1445 pins SupportAccountingContract required/optional catalog keys; all
+records detect missing required/unknown keys. Optional presence/order
+does not define schema.
 
-One-shot JSON-RPC/newline stdio use UTF-8 JSON with
-MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
-versions do not widen that profile. `--workspace-root` is the source authority;
-client roots are not consumed. Tools return text JSON and `structuredContent`, compact output schemas,
-`readOnlyHint: true` and `openWorldHint: false`.
-Resource lists are static, cursorless. Prompts, completions,
-subscriptions, logging, sampling, elicitation, progress/cancellation sessions,
-Streamable HTTP and service mode remain unshipped. Batch/non-object envelopes
-are invalid. JSON-RPC errors have code/message and no error.data.
-Write/generation, arbitrary shell/network/filesystem access, mutation and
-commit/push tools remain separately owned future work.
+One-shot/newline stdio: UTF-8 JSON-RPC, MCP `2025-06-18`, no Content-Length.
+Unsupported versions cannot widen it. `--workspace-root` is authoritative;
+client roots are unused. Tools: text JSON/`structuredContent`, compact output
+schemas, `readOnlyHint: true`, `openWorldHint: false`. Resources: static/cursorless.
+Unshipped: prompts, completions, subscriptions, logging, sampling, elicitation,
+progress/cancellation sessions, Streamable HTTP, service mode. Batch/non-object
+envelopes are invalid; errors carry code/message, no error.data. Write/generation,
+arbitrary shell/network/filesystem access, mutation and commit/push tools remain
+separately owned future work.
 
 2026-09-24 audit (earlier profile tests missed these limits):
 
@@ -176,10 +177,9 @@ Full-run ASCII wire encoding amplified memory; UTF-8 removes it,
 preserving full values. T1886 guards both CLI modes, Unicode identity and
 report/type equality.
 
-Current-feature selection/pilot:
-`docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.
-ISF storage fields and passive observations require schedule reports;
-normalized hardware alone does not retain that source-only metadata.
+Feature selection/pilot: `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.
+ISF storage fields/passive observations need schedule reports; normalized
+hardware alone omits that source-only metadata.
 
 Class-only matching in `perl/FSM/HDL/ASTFactorization.pm` lost structural identity.
 Repair retains concat operands, literal class/value/width/radix, signal slices
