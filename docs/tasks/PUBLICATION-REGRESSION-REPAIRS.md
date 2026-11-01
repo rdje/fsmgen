@@ -170,8 +170,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `active`
   Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
   Acceptance: `P1 complete qualification/publication owner. Original capacity cutoffs and causal gaps remain in dated child evidence; post-stop measurements do not reconstruct cutoff pressure. Use dated current OS capacity/kernel pressure and executable-only RSS admission under unchanged host88/descendant4096. Stop only authenticated own jobs; no unrelated process/cache deletion, relaxed guard, narrowed source set, reused checkpoint or stale run. Preserve/commit each first nonpass before selecting a causal repair. If actual shared capacity cuts off again, commit the result and seek specific coordination before another expensive retry. After .20 causal slices commit, .20.10 declares exclusive full9 admission/journal/checkpoint; launch once from clean committed inputs. Require all unfiltered Perl/VIAL/book stages, authorized normal push and every expected exact-SHA hosted/Pages result. macOS relevance follows publication. Full prior acceptance is retained in the exact e86 source/rollover witness.`
-  Verification: `Full1-8 are nonpasses; all original logs/source epochs/attribution gaps remain retained. Full6/7 causal repairs close under .18/.19. Full8 settles143 on generation cost after assertion failures, without a RAM cutoff. .20.1 owns retained intake, .20.2 cost and .20.3-.9 precise contract/book repairs. Commit focused final-path checks per child, then .20.10 admission and exclusive full9. Collection completeness never supplies pass credit. Keep .13 active through complete local and exact-SHA hosted/Pages qualification. No user input is needed for current repairs.`
-  Outcome: `Full8 reports471 file passes,23 failing files and93 assertion markers; T1436/later outcomes are absent. Exact public IAL1/IAL0/reports agree with authenticated predecessor; current original generation remains unfinished. Sampling locates unrelated allocation rescans. Only authenticated guard31594 settles owned group31662; all known PIDs/groups are absent. Exact result143 retains. No complete suite/runtime/push/hosted credit. Original full detail remains in e86 source and full8 intake.`
+  Verification: `Full1-8 remain retained nonpasses. .20.2 qualifies original generation cost repair; .20.3-.9 close observed contract/book failures with actual focused receipts and source conservation. .20.10 joins every observed file/current source, fresh admission and exclusive full9 journal/checkpoint. After clean preflight launch full9 once; consume its journal instead of replay. Require complete local0 before normal authorized push and all exact-SHA hosted/Pages success. No user input needed; macOS relevance follows publication.`
+  Outcome: `Full8 reports471 file passes,23 failing files and93 assertion markers; T1436/later outcomes are absent. Exact public IAL1/IAL0/reports agree with authenticated predecessor; full8 original generation was unfinished (qualified after .20.2). Sampling locates unrelated allocation rescans. Only authenticated guard31594 settles owned group31662; all known PIDs/groups are absent. Exact result143 retains. No complete suite/runtime/push/hosted credit. Original full detail remains in e86 source and full8 intake.`
   Commit: `Current-admission intakeb6fde609; full5 outcome: this work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
@@ -478,21 +478,21 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.3`
   Status: `done`
   Goal: `Qualify actor-backed transaction defaults at the aggregate boundary.`
-  Acceptance: `T1347 actor-static transaction defaults: retain original metadata/aliases/defaults and exact mutable-aggregate refusal. Independently authored immutable counterpart must conserve selected values/kinds and qualify positive HDL. Preserve allocated capture, actor constant/parameter and enum meanings. Use accepted T2110/T30 pattern, focused actual file/book and normal commit.`
-  Verification: `Complete T1347 Files1 Tests2 PASS. Original source/IR/report/negative cases retain; carrier uses scoped captures/static declarations. Exact mutable aggregate refusal/no partial HDL plus independently authored immutable counterpart, complete selected authored/default/shared-capture JSON-kind equality, explicit capture inventories and positive scalar/static HDL checks pass. transaction-actor-default source/focused receipts retain. Book distinguishes selected values from generated provenance. Normal gates qualify before .4; no production/full/runtime credit.`
+  Acceptance: `Completed actor-backed child default source/refusal/static-counterpart conservation and positive HDL contract; full exact original contract remains in940b3de54 and full9-preflight-history.`
+  Verification: `Committed940b3de54. Complete T1347 Files1 Tests2 PASS. Original source/IR/report/negative cases retain; scoped captures/static declarations, exact aggregate refusal/no partial HDL and authored immutable counterpart qualify. Complete selected authored/shared-capture JSON kinds, explicit inventories and scalar/static HDL checks pass. transaction-actor-default evidence and exact940b/full9 history retain all details; no full/runtime credit.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.3: qualify actor-backed transaction defaults`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.4`
   Status: `done`
   Goal: `Qualify transaction-local parameter default dependencies.`
-  Acceptance: `T1348: retain original earlier-transaction-param source/metadata/report/default assertions and exact mutable-aggregate refusal. Independently authored immutable counterpart must conserve selected values/kinds, immediate scalar aliases and positive HDL/default semantics. No cache-based production literalization/profile widening. Focused actual file/book and normal commit.`
+  Acceptance: `Completed transaction-local scalar aliases, original mutable aggregate refusal and immutable counterpart/value-kind/HDL conservation. Full exact contract remains in1445d1c67 and full9-preflight-history.`
   Verification: `Complete actual T1348 Files1 Tests2 PASS. Original source/IR/report/default/negative cases retain; corrected carrier reflects local aliases, actor capture and immutable enum support. Exact original BASE aggregate refusal emits no partial HDL. Independently authored immutable aggregate has complete selected-parameter/JSON-kind equality; HDL preserves WIDTH=BASE, COPY_MODE=MODE and LIMIT capture. transaction-local-default source/native evidence retains. Book and normal gates qualify before .5; no production/full/runtime credit.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.4: qualify transaction-local aggregate defaults`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.5`
   Status: `done`
   Goal: `Close default-profile documentation against final-path receipts.`
-  Acceptance: `After .1-.4 commit, join five actual T1345-T1349 receipts/source epochs without replaying passed files unnecessarily. Correct book13 Design Principles, transaction/default and canonical downstream wording: parser/report/default provenance, scalar source relationships and immutable aggregate HDL admission differ. Preserve unsupported mutable examples explicitly, qualify new runnable counterparts, keep existing source/IR meanings and no broader runtime/override claim. Focused book/source checks and normal commitment before .20.7.`
+  Acceptance: `Completed saved-receipt/current-source join and canonical book/spec default-profile closure without test replay or wider runtime/override claims. Full exact contract remains in e96393ffd and full9-preflight-history.`
   Verification: `Joined actual T1345-T1349 passing receipts to unchanged final test sources via full-source witness hashes; no test replay. Current book and canonical downstream now distinguish selected IR/report values from scoped child aliases/captures/static support and immutable aggregate HDL admission. Original mutable cases and authored static counterparts remain explicit. default-profile-doc-closure retains join/source evidence. No wider runtime/override/full/hosted credit.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.5: align default-profile reference wording`
 
@@ -500,7 +500,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `done`
   Goal: `Retain imported immutable width expressions.`
   Acceptance: `Update only stale scheduled-source assertions in T1353/T1354/T1355/T1357 to exact imported constant expressions. Keep all fixtures/imports, selected numeric parser/reports, fixed HDL, bank/dataflow and refusal controls. Distinguish mutable actor params whose defaults use constants. Sync downstream/book, actual focused tests and normal commit.`
-  Verification: `Actual T1353/T1354/T1355/T1357 Files4 Tests8 PASS. Four carrier regexes/labels retain qualified static expressions. Full source witnesses preserve all fixtures, numeric parser/reports, fixed HDL, imports, bank/dataflow and adverse controls. package-widths source/focused/doc-history retains; book/spec correct numeric-source claims and preserve depth scalarization. Normal gates qualify before .8; no production/full/runtime credit.`
+  Verification: `Committed source/current receipt join covers actual T1353/T1354/T1355/T1357 Files4 Tests8 PASS. Four carrier regexes/labels retain qualified immutable expressions; all other fixture/parser/report/HDL/import/dataflow/adverse bytes preserve. package-widths evidence and current/full9 history retain full details; book/spec and normal gates passed. No production/full/runtime credit.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.7: retain imported immutable width expressions`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.8`
@@ -518,11 +518,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.9: align auxiliary example and scoped-width guidance`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.10`
-  Status: `active`
+  Status: `done`
   Goal: `Close known full8 repairs and prepare a fresh qualification.`
   Acceptance: `After every owned causal slice commits, join the exact full8 observed-failure inventory to final-path successful receipts/current sources and preserved refusal boundaries. No complete suite credit from diagnostic controls. Declare fresh current capacity admission, unchanged command/guards/workflows, unique full9 journal/checkpoint and committed clean Memory handoff before .13 launches once. Full local pass precedes authorized normal push and all exact-SHA hosted/Pages outcomes.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
-  Commit: `pending`
+  Verification: `full8-repair-closure exactly joins the retained observed-file set to passing final-path receipts/current source witnesses; ignored controls supply no pass credit. Cost production matches6b native-success source; saved reader passes/distinguishes three corruptions. Fresh full9 admission measures68.0367787679pct/normal pressure under unchanged88/4096; exclusive slots absent. full9 plan preserves full command/workflows/complete required jobs. Native book/source/claim/normal gates qualify clean preflight only; launch .13 once and consume first outcome before push.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.10: close observed repairs and admit full9`
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.11`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.10` | `active` | Join all observed repairs and commit fresh full9 admission. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume exclusive full9 after clean preflight; then authorized push and hosted proof. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — book auxiliary/profile repair
+## Acceptance Checklist — full9 admission and repair closure
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1377-book-fsm-example-generation-audit.t line 115 identifies book04 block2. Native original check exits1 with the exact combined mutable next_data refusal; private requirement retention cannot justify numeric fallback.
-- [x] **ADDRESSED (verified)** — Original W/X source remains byte-exact as explicitly unsupported text. Separately authored aux_shared is runnable. Book04/13a/13b/matrix correct stale source/range claims, preserve separate reusable-formal defect text and shrink the matrix under unchanged limits. Full source/refusal/history evidence retains.
-- [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for complete unchanged T1377: all21 standalone fixtures generate. Exact original expected status1/refusal and no-output product retain separately. Native book/source/claim and normal gates qualify this focused slice; full local/hosted/runtime remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1377-book-fsm-example-generation-audit.t line 115 belongs to the retained observed failure set. Original full8 ended143; focused source/contract fixes never qualify unseen later/full-suite outcomes.
+- [x] **ADDRESSED (verified)** — full8-repair-closure joins exact observed-file inventory, actual passing native receipt paths/log hashes and current source witnesses. Qualified cost source remains unchanged. Fresh full9 admission passes with normal kernel pressure; unique journal/checkpoint/receipt slots are absent. CI/guard/recorder/workflow hashes and complete required-job inventories remain exact.
+- [x] **NO REGRESSION** — Saved actual focused logs report All tests successful; every observed file joins one unchanged final-path source witness. Saved cost reader passes and rejects three corruptions. Native book/source/claim and normal gates qualify preflight only. No full9 execution, full-suite/hosted/Pages/runtime credit yet.
