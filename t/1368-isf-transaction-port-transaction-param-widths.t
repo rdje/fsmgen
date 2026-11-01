@@ -70,8 +70,10 @@ ISF
     like($parent_fsm, qr/\(c0_tag 4\)/, 'parent handoff storage uses resolved transaction parameter tag width');
     like($parent_fsm, qr/\(c0_data 8\)/, 'parent handoff storage uses resolved transaction parameter output width');
     like($parent_fsm, qr/\(c0_tag_data 4\)/, 'parent handoff storage uses resolved transaction parameter tag output width');
-    like($child_fsm, qr/\(\+size[\s\S]*\(addr 8\)[\s\S]*\(tag 4\)[\s\S]*\(data 8\)[\s\S]*\(tag_data 4\)/,
-        'generated child .fsm uses resolved transaction parameter transaction port widths');
+    like($child_fsm, qr/\(\+size[\s\S]*\(addr \(param DERIVED_W\)\)[\s\S]*\(tag \(param TAG_W\)\)[\s\S]*\(data \(param DATA_W\)\)[\s\S]*\(tag_data \(param TAG_W\)\)/,
+        'generated child .fsm retains local transaction parameter width roots');
+    like($child_fsm, qr/\(DERIVED_W DATA_W\)/,
+        'generated child preserves the immediate local width alias');
 
     my $report = decode_json($scheduler->report($actor));
     is_deeply(
@@ -80,14 +82,14 @@ ISF
         'schedule report binding widths use resolved transaction parameter transaction port widths',
     );
 
-    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\binput\s+wire\s+\[7:0\]\s+addr\b/,
-        'HDL addr width is resolved');
-    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\binput\s+wire\s+\[3:0\]\s+tag\b/,
-        'HDL tag width is resolved');
-    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\breg\s+\[7:0\]\s+data\b/,
-        'HDL data width is resolved');
-    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\breg\s+\[3:0\]\s+tag_data\b/,
-        'HDL tag_data width is resolved');
+    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\binput\s+wire\s+\[\(DERIVED_W - 1\):0\]\s+addr\b/,
+        'HDL addr range retains its selected local parameter');
+    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\binput\s+wire\s+\[\(TAG_W - 1\):0\]\s+tag\b/,
+        'HDL tag range retains its selected local parameter');
+    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\breg\s+\[\(DATA_W - 1\):0\]\s+data\b/,
+        'HDL data range retains its selected local parameter');
+    assert_fsm_reaches_hdl($child_fsm, 'child', qr/\breg\s+\[\(TAG_W - 1\):0\]\s+tag_data\b/,
+        'HDL tag_data range retains its selected local parameter');
 };
 
 subtest 'direct transaction parameters are valid transaction port widths' => sub {

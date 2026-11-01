@@ -99,6 +99,13 @@ behavior.
   Generated child and direct/non-generated transaction-local port widths may
   also use same-transaction scalar parameter defaults that resolve to positive
   integers.
+  Generated child `+size` and eligible HDL ranges retain the selected local
+  parameter or immediate alias, such as `(param DERIVED_W)` with
+  `(DERIVED_W DATA_W)`, even when an actor constant has the same name as the
+  child parameter. Parent handoffs and binding reports keep selected numeric
+  widths. Direct transaction parameters remain local lowering inputs: their
+  private port storage uses numeric widths without child parameter placeholders.
+  This does not establish generated-top configuration forwarding.
   Static transaction wait counts may use same-transaction scalar parameter
   defaults or qualified imported package scalar constants when they resolve to
   non-negative integers; scheduled `.fsm` fixed wait states and

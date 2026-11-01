@@ -714,10 +714,13 @@ Rules:
   also use same-transaction scalar parameter defaults. The accepted
   `TX_PARAM` source resolves before actor constants and actor parameters, may
   derive from an earlier scalar transaction parameter default, and must
-  resolve to a positive integer before parser handoff. The resolved width then
-  flows through scheduled `.fsm` port `+size` declarations, generated parent
-  handoff storage where applicable, `transaction_port_bindings[]` report
-  widths, and HDL port/register ranges.
+  resolve to a positive integer before parser handoff. Generated child `.fsm`
+  port `+size` retains the selected local `(param NAME)` root, including
+  immediate aliases, and eligible HDL port/register ranges retain that name.
+  Parent handoff storage and `transaction_port_bindings[]` reports still use
+  selected numeric widths; generated-top configuration forwarding remains
+  pending. Direct/non-generated transaction parameters are local lowering
+  inputs: private port storage stays numeric without child parameter placeholders.
   Cross-transaction parameter names, aggregate/list transaction parameters,
   zero-valued transaction parameters, forward/self/cyclic transaction-parameter
   defaults, runtime signals, and expressions fail closed in this slice.

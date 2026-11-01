@@ -472,7 +472,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `done`
   Goal: `Qualify actor parameter dependencies across aggregate defaults.`
   Acceptance: `T1346: preserve every original parser/IR/report/default assertion and original source. Assert exact mixed mutable-aggregate CLI refusal. Separately author an immutable counterpart, independently compare selected values/kinds, and retain canonical scalar source relations and positive HDL/default checks. Follow T2110/T30 profile; no producer freezing or guard bypass. Focused test/book and commit.`
-  Verification: `Complete actual T1346 passes All tests successful Files1 Tests2. Original authored source and full parser/IR/report/negative cases remain byte-exact except the necessary param DATA_W carrier expectation. Original CLI receives exact mutable DATA_W aggregate refusal and emits no partial HDL. Independently authored literal aggregate source has complete public selected-parameter JSON/kind equality; original ordered refs remain and static refs are empty. Positive CLI keeps old success/stderr/artifact assertions and actual DATA_W=BASE_W scalar alias. Declared inverse recovers the whole prior test; no production/profile change. actor-dependent-default sources/native proof retain; book distinguishes parser metadata/refusal from immutable HDL. Final source/book/KMap/claim and normal gates qualify commitment before .3.`
+  Verification: `Committed637fa828c. Complete T1346 Files1 Tests2 PASS. Original source/IR/report/negative cases retain; param DATA_W carrier and exact mutable aggregate refusal qualify. Authored immutable counterpart preserves complete selected values/JSON kinds and scalar DATA_W=BASE_W HDL alias. actor-dependent-default retains full source/inverse/native/first-gate proof; book distinguishes provenance from admission. Exact detailed source remains in current HEAD and transaction-local-widths-doc-history.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.2: qualify actor aggregate default profile`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.3`
@@ -504,14 +504,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.7: retain imported immutable width expressions`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.8`
-  Status: `active`
+  Status: `done`
   Goal: `Retain child-local transaction width and alias identity.`
   Acceptance: `T1368 preserves child DATA_W8 and immediate DERIVED_W against distinct actor constant DATA_W5. Update only positive child carrier/eligible HDL range assertions; retain numeric parent handoffs, parser/reports, local/direct scopes, source fixtures and every adverse control. Run actual test, sync transaction guidance and commit.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
-  Commit: `pending`
+  Verification: `Complete actual T1368 Files1 Tests4 PASS. Local child width roots and DERIVED_W=DATA_W alias remain distinct from actor DATA_W5. Full witnesses preserve numeric parent handoffs/reports, direct/unrelated and all adverse controls. transaction-local-widths source/focused/doc-history retains. Book/spec correct child source/range versus parent/direct wording. Normal gates qualify before .9; no production/forwarding/full/runtime credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.8: retain child-local transaction width aliases`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.9`
-  Status: `pending`
+  Status: `active`
   Goal: `Correct auxiliary-width book example and remaining profile statements.`
   Acceptance: `T1377 book04 block2 must stop claiming independent mutable X/W requirements still generate numeric HDL. Retain that metadata counterexample as explicitly unsupported, with exact refusal, and add the separately authored runnable single-source aux_shared counterpart. Review affected book13a/13b/matrix and canonical downstream statements against current carriers versus numeric reports; preserve actual reusable-formal and broader external/runtime/library boundaries. Keep every positive lisp block generation-clean and commit focused book checks.`
   Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.8` | `active` | Retain transaction-local width roots and aliases. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.9` | `active` | Correct the auxiliary-width book example and remaining profile prose. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — imported immutable widths
+## Acceptance Checklist — transaction-local width roots
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1353-isf-interface-package-constant-widths.t line 58 expects a numeric source width. Current scoped carrier contract retains imported immutable expressions; parser/report/fixed HDL products remain unchanged.
-- [x] **ADDRESSED (verified)** — Only four positive scheduled-width regexes and their labels change. Complete source/control witnesses preserve all fixtures, package roots/imports, numeric parser/reports, fixed HDL, banks/dataflow and negative controls. Book/spec distinguish source expressions from selected widths and scalarized depths.
-- [x] **NO REGRESSION** — All tests successful Files=4, Tests=8 for complete actual T1353/T1354/T1355/T1357. package-widths source/native/doc-history evidence retains. Normal source/book/claim and doctrine gates qualify commitment; no generic/override/runtime/full/hosted credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1368-isf-transaction-port-transaction-param-widths.t line 73 expects numeric child widths. Actual scoped carriers retain local DATA_W/TAG_W/DERIVED_W roots and immediate alias, distinct from actor DATA_W5.
+- [x] **ADDRESSED (verified)** — Only positive child carrier/eligible HDL range expectations and labels change, with one immediate-alias assertion. Full source/control witnesses preserve every original fixture, numeric parent handoff/report, direct/unrelated scope and adverse control. Book/spec distinguish named child ranges from selected parent/direct widths.
+- [x] **NO REGRESSION** — All tests successful Files=1, Tests=4 for complete actual T1368. transaction-local-widths source/native/doc-history evidence retains. Normal source/book/claim and doctrine gates qualify commitment; no generated-top forwarding, broader runtime/full/hosted credit.
