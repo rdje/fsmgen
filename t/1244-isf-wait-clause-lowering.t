@@ -855,7 +855,7 @@ subtest 'top-level runtime scalar waits can zero-bypass pending samples into ind
     (input start)
     (input cycles (width 4))
     (input din (width 8))
-    (input bit)
+    (input serial_bit)
     (output reg_out (width 8))
     (output done))
   (drive (outp val)
@@ -864,7 +864,7 @@ subtest 'top-level runtime scalar waits can zero-bypass pending samples into ind
     (on start)
     (sample din as hold)
     (wait cycles)
-    (shift_left reg_out bit (width 8))
+    (shift_left reg_out serial_bit (width 8))
     (drive outp hold)
     (complete done)))
 ISF
@@ -883,13 +883,13 @@ ISF
     my $shift = state_block($fsm, 'main_shift_2');
     unlike($shift, qr/\(<= \(hold din\)\)/,
         'original shift state does not double-sample after a positive wait');
-    like($shift, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) bit\)\)\)/,
+    like($shift, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) serial_bit\)\)\)/,
         'original shift behavior is unchanged');
 
     my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
     like($zero_clone, qr/\(<= \(hold din\)\)/,
         'zero-count shift clone materializes the pending sample');
-    like($zero_clone, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) bit\)\)\)/,
+    like($zero_clone, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) serial_bit\)\)\)/,
         'zero-count shift clone performs the independent shift');
     like($zero_clone, qr/\(-> main_drive_3\)/,
         'zero-count shift clone advances like the original shift state');

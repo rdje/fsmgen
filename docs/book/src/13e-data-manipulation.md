@@ -800,6 +800,9 @@ The form is exact: `(shift_left reg bit)` or
 `(shift_left reg bit (width N))`, with scalar `reg`, scalar `bit`, and a
 positive integer width when the option is present.
 
+Here `reg` and `bit` are operand placeholders. Declare HDL-compatible signal
+names such as `shift_reg` and `serial_bit` in actual sources.
+
 **Lowering**: `(<- (reg (| (<< reg 1) bit)))`, or `reg>` when `reg` is a
 declared output port.
 
