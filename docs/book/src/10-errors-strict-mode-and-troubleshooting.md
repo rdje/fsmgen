@@ -633,6 +633,9 @@ Before resuming a full run, join observed failures to passing focused receipts
 and current source bytes. Use a clean committed state, an exclusive journal and
 a fresh corpus checkpoint. Consume an existing journal before starting another
 run. Preserve interrupted output and retain both cutoffs for the retry.
+When a full run exposes a new failure, retain its first diagnostic and actual
+status before causal repair. Settle only authenticated owned jobs; an early
+stop leaves all unseen later stages unqualified.
 A host-capacity cutoff can occur before any assertion fails. It does not identify
 which process allocated the memory or establish kernel memory pressure; check
 current host capacity and scoped process evidence before choosing a retry.

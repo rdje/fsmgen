@@ -6,15 +6,14 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: After clean preflight commitment and empty brief, inspect the exclusive full9
-  journal; launch full9-launch-plan-20261101 recorder once only if unused. Keep Git source clean
-  during complete unfiltered Perl/VIAL/book run. Consume first native result, commit outcome,
-  then normal authorized push and every exact-SHA hosted job/Pages result. No partial-pass credit.
-- in_flight_uncommitted: Derive with git status --short; commit complete preflight before launch.
-  Recorder writes final tracked receipts only after the full child settles.
-- in_flight_background: Derive .artifacts/push-readiness-20261025/local-full-ci-9.state.json.
-  If running, consume that exact job/log; never replay an existing journal.
-- blockers: Full local qualification and authorized push/exact-SHA hosted/Pages proof remain.
-  Fresh admission is valid for launch only; unchanged guards remain active. No user input needed.
-  Saved ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4.2 stays pending; macOS relevance follows publication.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.21.1`
+- next_action: After clean full9 outcome commitment, read complete T1445, its full projection
+  helper/fixture/generator and canonical MCP schema/catalog facts. Classify every difference
+  before repair; preserve full snapshots, JSON kinds and negative cases. Focused actual schema
+  checks/book and commit, then .22 wording and .21.2 fresh full10 admission before .13/push.
+- in_flight_uncommitted: Derive with git status --short; finish full9 native/settlement/intake
+  outcome commitment before MCP or book-scope source edits.
+- in_flight_background: None. Full9 recorder finished native143; owned session independently absent.
+- blockers: P1 T1445 schema divergence and saved .22 wording remain; full local/push/hosted proof
+  stays pending under .13. No user input needed and no current capacity-cutoff attribution.
+  Saved ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4.2 waits; macOS relevance follows publication.

@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -169,30 +169,30 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
-  Acceptance: `P1 complete qualification/publication owner. Original capacity cutoffs and causal gaps remain in dated child evidence; post-stop measurements do not reconstruct cutoff pressure. Use dated current OS capacity/kernel pressure and executable-only RSS admission under unchanged host88/descendant4096. Stop only authenticated own jobs; no unrelated process/cache deletion, relaxed guard, narrowed source set, reused checkpoint or stale run. Preserve/commit each first nonpass before selecting a causal repair. If actual shared capacity cuts off again, commit the result and seek specific coordination before another expensive retry. After .20 causal slices commit, .20.10 declares exclusive full9 admission/journal/checkpoint; launch once from clean committed inputs. Require all unfiltered Perl/VIAL/book stages, authorized normal push and every expected exact-SHA hosted/Pages result. macOS relevance follows publication. Full prior acceptance is retained in the exact e86 source/rollover witness.`
-  Verification: `Full1-8 remain retained nonpasses. .20.2 qualifies original generation cost repair; .20.3-.9 close observed contract/book failures with actual focused receipts and source conservation. .20.10 joins every observed file/current source, fresh admission and exclusive full9 journal/checkpoint. After clean preflight launch full9 once; consume its journal instead of replay. Require complete local0 before normal authorized push and all exact-SHA hosted/Pages success. No user input needed; macOS relevance follows publication.`
-  Outcome: `Full8 reports471 file passes,23 failing files and93 assertion markers; T1436/later outcomes are absent. Exact public IAL1/IAL0/reports agree with authenticated predecessor; full8 original generation was unfinished (qualified after .20.2). Sampling locates unrelated allocation rescans. Only authenticated guard31594 settles owned group31662; all known PIDs/groups are absent. Exact result143 retains. No complete suite/runtime/push/hosted credit. Original full detail remains in e86 source and full8 intake.`
+  Acceptance: `P1 complete local/hosted publication owner. Preserve all original capacity/cause gaps; post-stop samples never reconstruct cutoff pressure. Stop only authenticated own jobs, retain first nonpass before causal repair, and keep host88/descendant4096, unfiltered coverage and fresh checkpoints. Full9 now settles143 after a real T1445 schema assertion, without a recorded RAM trip. After .21.1 repair and .22 book scope clarification, .21.2 declares exclusive full10 admission/journal/checkpoint; launch once from clean committed source. Require complete Perl/VIAL/native-book0 before authorized normal push and all expected exact-SHA hosted/Pages success. macOS relevance follows publication.`
+  Verification: `Full1-9 remain retained nonpasses. Full9 sourcee957 reports every originally observed full8 failing path and complete T1436/T1437/T1438 ok, then first new T1445 schema snapshot failure. .21.1 owns cause/repair, .22 recorded scope clarification and .21.2 fresh full10. Collection complete:true does not qualify native143. No later Perl/VIAL/final book/full/push/hosted credit. No user coordination needed: this stop is a known assertion failure, not an observed capacity cutoff.`
+  Outcome: `Full9 first diagnostic at T1445 line45 differs at examples.catalog_entry_keys[3]: actual expected_hdl_pattern_count versus fixture expected_instance_count. Native143 follows TERM only to birth/args/hash-authenticated guard32635; existing trap settles managed group32704. Independent old PID/birth and group absence holds. Full receipt/log, source/history and pending doc draft retain in full9-intake/owned-settlement. Original full8 details remain in e957 history. Commit this outcome before new source changes.`
   Commit: `Current-admission intakeb6fde609; full5 outcome: this work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
   Status: `done`
   Goal: `Repair the stale historical AHB metadata-invariance oracle without weakening behavior checks.`
-  Acceptance: `P1 next after settled full5 outcome commits. Reproduce t/1475-ial2-ahb-subordinate.t:69 mismatch; exact current output minus only +interface equals the frozen July hash. Preserve intended interface ownership and all existing protocol/report/reset/output assertions. Replace the frozen cross-history checksum with a same-revision public parse/lower comparison differing only in verification-bridge metadata; prove metadata is actually removed and the base behavior remains. Add an independent behavior-changing adverse control so a vacuous equality cannot pass. Review bridge contract and AHB book; focused T1475/bridge/interface checks, native book/current references and ordinary gates. Then return to .13 for complete fresh full CI and exact-SHA hosted qualification. Do not attribute this test drift to Lispish, resources or native startup.`
-  Verification: `Exact interface-only historical-byte diagnosis is retained. T1475 now removes exactly the generated bridge block, verifies annotation absence in source/parsed actor, compares complete current file maps, retains interface ownership and all prior behavior assertions, and requires a changed ready-reset control to change emitted bytes/reset metadata. Initial adjacent four-file check passes T1475/T1903/T1983 but exposes four T1551 historical-byte failures, owned immediately by .15; that failed gate is preserved, never called green. Exact updated fact reverify then returns0 with All tests successful Files3 Tests17, CLI strict/schedule checks and contract references. Native book/POD/current-source/index/KMap all return0. Production Perl/grammar bytes remain equal to committed3b3bd672; .14 changes the test, current card and book only. ahb1475-repair-proof.json declares re-derivation, adverse falsification, durability and missing full/adjacent qualification. First staged gate refuses the expanded TASK_TREE index row894 against unchanged862 allowance; compact the row and retain canonical task detail before unique staged-2. Original gate failure stays retained.`
+  Acceptance: `Completed AHB bridge metadata-invariance repair with same-revision annotation/no-annotation source comparison, preserved protocol/report/reset/ownership checks and independent changed-reset control. Full original contract remains in e957 task/full9-intake history.`
+  Verification: `T1475 proves actual bridge removal and complete current file-map invariance with source immutability; changed ready-reset alters expected output. Initial adjacent failure exposes T1551 and is retained; exact later reverify Files3 Tests17 passes. ahb1475-repair-proof retains full diagnosis, source/recipes and missing full/adjacent scope. Production/grammar unchanged. Book/card/index and normal gates passed after preserving the first index-row-cap refusal. Full detailed source/evidence remains in e957/full9-intake history.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.15`
   Status: `done`
   Goal: `Diagnose and repair the adjacent bridge determinism/behavior historical byte expectations.`
-  Acceptance: `P1 immediately after .14 commits, before another expensive full run. Adjacent capture ahb1475-repair-focused returns1: T1551 lines300/301/305/312 reject generated IAL0 length/checksum and direct SV/VHDL checksums. The AHB IAL0 mismatch has the exact already diagnosed interface-only cause; direct HDL drift remains unclassified. Reproduce via prove -Iperl t/1551-hial-vial-bridge-manifest.t, trace each expected/current byte difference through canonical contract/history/public APIs, and repair stale expectations only when intended changes are proved. Preserve real deterministic/immutable/behavior-invariance coverage with independent positive/adverse controls; never blindly refresh checksums or weaken production behavior. Sync bridge/AHB book and current facts as needed, focused checks and ordinary commit, then return to .13 fresh guarded full CI, authorized push and exact-SHA hosted qualification.`
-  Verification: `Original four failures remain retained. Exact own-Git public historical generator witnesses reproduce the July SV95db checksum and actual Augusta6c VHDLab668 checksum; the unchanged input FSM is identical. Complete current SV differs only by compatible_fanin assertion removals authorized by decision0111/69ae18454; complete current VHDL differs only by the typed size_q inequality assignment repaired by965b541d3. Initial snapshot marker/descriptor refusals are retained without result credit. July original test passes its earliera82 VHDL hash, correcting the initial wrong baseline assumption; no context-sensitive old defect is inferred. T1551 now compares annotation/no-annotation current file maps, source immutability and before/after-bridge SV/VHDL, retaining current selector/typed-comparison checks. Changed storage reset must alter both HDLs with independent expected reset literals. Syntax and focused T1551/T1475/T1211 pass Files3 Tests12. Exact canonical field then passes T1551 but exposes T1602 report identity failure, immediately owned by .16; original field remains red and unweakened. Final native book/POD/current-source/index/KMap commands all return0, and the card preserves all prior questions/scale facts within existing limits while naming its red full reverify. Complete recipes/source commitments/outputs/diffs and separate evidence legs are in docs/audits/bridge-byte-stability-20261025/diagnosis.json. Production modules/grammar/seed remain unchanged; normal staged/commit gates qualify the slice.`
+  Acceptance: `Completed causal T1551 old byte-oracle repair while preserving deterministic/immutable/behavior checks and positive/adverse controls. Full original contract and first failures remain in e957 task/full9-intake history.`
+  Verification: `Exact own-Git public witnesses reproduce July SV95db and actual Augusta6c VHDLab668; same input stays identical. Current SV differs only by decision0111/69ae assertion removals, VHDL only965b typed size_q inequality. Initial wrong a82 baseline/refusals retain. T1551 now compares current annotation/no-annotation maps and before/after-bridge HDLs, source immutability and changed-reset literals. T1551/T1475/T1211 Files3 Tests12 pass; canonical reverify exposes T1602, owned .16. bridge-byte-stability diagnosis retains complete historical/current products, recipes and separate evidence legs. Production/grammar/seed unchanged; book/card/POD/index/normal gates passed. Exact full detail remains in e957/full9-intake.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.16`
   Status: `done`
   Goal: `Diagnose and repair the architecture-scale frozen AHB report identity check.`
-  Acceptance: `P1 immediately after .15 commits, before .13 fresh full CI. Exact canonical bridge reverify runs T1551 successfully, then T1602 line162 rejects report checksum240db972 againsta4565d40. Preserve its complete first failure/status. Reproduce public bridge-fanout reference generation, compare exact report fields/identities/provenance to the selected historical baseline, and classify intended evolution versus real producer regression before repair. Preserve profile limits, all gate axes, reference semantics, no IAL2 bypass and meaningful positive/adverse controls. Keep the canonical card honest about its current red full reverify. Focused checks/book/docs/normal commit, then complete fresh qualification; no blind checksum refresh, hashcheck omission or claimed current full success.`
-  Verification: `Original canonical reverify failure remains retained. Public reference evaluation and an observational pass-through capture both original Builder calls; current report hash equals240db972. Exact own-Git97dda historical public replay reproducesa4565d40. Complete typed JSON comparison finds exactly four changed fields: generated-IAL0 source/artifact SHA and source byte/line counts. The generated FSM has the established intended +interface addition; every other report field is unchanged. Independent Python canonical encoding equals the original Perl bytes, and masking only those four values yields complete byte-equal historical/current contract64946a80. T1602 now independently assembles the explicit public AHB route, requires whole current report/manifest parity, validates raw generated source provenance, freezes every remaining contract field and rejects an altered protocol role. All prior anchor/forgery/profile/axes/limits/bypass checks remain; default large qualification opt-in stays skipped and is not credited. Syntax and focused T1602/T1551 pass Files2 Tests12. The exact full declared canonical reverify now returns0, including its subsequent decision/source references. Final native book/POD/current-source/index/KMap all return0. Current card retains all prior questions/scale facts and names the four derived fields within unchanged collection limits. Complete recipes/source/archive commitments/raw gzip reports/FSMs/field differences and separate evidence legs are in docs/audits/bridge-reference-identity-20261025/diagnosis.json. Production modules/grammar/seed remain unchanged; normal staged/commit gates qualify this slice before .13 fresh full6/checkpoint.`
+  Acceptance: `Completed T1602 report-identity causal repair with complete typed source/report/provenance comparison and preserved axes/profile/limits/forgery/bypass checks. Full original contract and first failure remain in e957/full9-intake history.`
+  Verification: `Public evaluation/captured original Builder calls reproduce current240db972 and historical97dda a4565d40. Exactly four generated-source provenance fields differ through intended +interface; independent Python/Perl canonical bytes agree, remaining contract64946a80 exact. T1602 independently assembles public AHB route, validates raw provenance, freezes all other fields and rejects changed protocol role. Focused T1602/T1551 Files2 Tests12 and exact full canonical reverify pass; default large opt-in stays uncredited. bridge-reference-identity diagnosis retains complete sources/recipes/reports/diffs/three evidence legs. Production/grammar/seed unchanged; book/card/POD/index/normal gates passed. Exact full detail remains in e957/full9-intake.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17`
@@ -533,16 +533,45 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.21`
+  Status: `active`
+  Goal: `Resolve the first full9 MCP schema mismatch before fresh qualification.`
+  Acceptance: `P1 before publication. Preserve original full9/current schema source and classify intended catalog-field evolution versus producer regression through canonical schema/catalog contracts and exact public envelopes. Never blindly refresh or weaken the full snapshot, source kinds, tool/resource envelopes, keys or malformed/refusal controls. Commit focused causal repair, close .22 wording, then declare clean exclusive full10 before .13 once-only launch/push/hosted qualification.`
+  Verification: `Full9 e957 actual T1445 line45 first divergence is examples.catalog_entry_keys expected_hdl_pattern_count versus fixture expected_instance_count. Native143 controlled settlement and complete earlier protocol successes retain; cause remains unclassified. full9-intake/native/owned-settlement evidence survives. No source repair or later/full credit yet.`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.21.1, PUBLICATION-REGRESSION-REPAIRS.21.2`
+  Commit: `child slices`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.21.1`
+  Status: `active`
+  Goal: `Diagnose and repair the MCP example-catalog schema snapshot divergence.`
+  Acceptance: `Read complete T1445, exact projection/fixture generator, public example/catalog/schema producers, relevant Knowledge Map/decisions and book before changes. Derive every differing field and its origin/history. Repair stale fixture only if intended schema change is proved; otherwise fix producer at the proper boundary. Preserve complete projection, JSON kinds, every original envelope/key/negative case and meaningful independent controls. Focused actual snapshot/adjacent schema checks, book/live docs and normal commit before .22.`
+  Verification: `Selected next only after full9 outcome intake commits clean. Original diagnostic/current test and native programme retain at full9-intake; no classification or fix is claimed.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.21.2`
+  Status: `pending`
+  Goal: `Prepare fresh full10 after MCP repair and book scope clarification.`
+  Acceptance: `After .21.1 and .22 commit, join current actual-path focused receipts/source epochs and preserved refusal boundaries. Declare fresh capacity/kernel pressure, unchanged guards/unfiltered command/workflows, unique full10 live journal/checkpoint and clean committed Memory handoff. .13 launches once, consumes first actual result, commits outcome and follows authorized normal push plus all exact-SHA hosted/Pages qualification. No old checkpoint, filtered source set, guard relaxation or partial-native pass credit.`
+  Verification: `Pending; full9 native143 remains nonpassing. Earlier complete protocol-file successes remain scoped evidence only.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.22`
+  Status: `pending`
+  Goal: `Clarify direct own-transaction versus actor-backed width wording.`
+  Acceptance: `P1 after clean .21.1 repair and before full10. Saved full9 pending-doc-scope/draft in full9-intake identifies matrix/13b broad parent/direct selected-size wording. Review actual T1336 actor-backed direct roots and T1368 own-transaction numeric lowering/current source witnesses. Narrow those sentences to their owning scopes; preserve actor/child named ranges, selected parent defaults, all examples and forwarding/runtime boundaries. Prose only, focused affected book audit/native build/source checks and normal commit; no compiler change or unnecessary broad replay.`
+  Verification: `Draft remains ignored/unapplied during full9; full9-intake retains complete finding/replacements/source hashes. No book correction is claimed yet.`
+  Commit: `pending`
+
 ## Current Frontier
 
-Requested IAL0/IAL1/IAL2 book publication remains active. Full8 is settled and
-partial; .20.1 retains its outcome. Next repair the P1 allocation-validation
-cost before the precise assertion/book slices and a new complete qualification.
+Requested IAL0/IAL1/IAL2 publication remains active. Full9 is settled and partial;
+complete protocol tests and original full8 repairs pass, but T1445 exposes a new
+MCP schema mismatch. .21.1 owns cause/repair before .22 wording and fresh full10.
 Saved private feature implementation remains pending until publication completes.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume exclusive full9 after clean preflight; then authorized push and hosted proof. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.21.1` | `active` | Diagnose exact T1445 catalog-schema divergence after clean outcome commit. |
 
 ## Decisions
 
@@ -551,10 +580,10 @@ Saved private feature implementation remains pending until publication completes
 
 ## Blockers
 
-- P1 observed contract/book failures block full qualification. Allocation
-  cost counterexample is closed by .20.2; .20 owns remaining repairs; .13 retains complete local CI, push
-  and hosted/Pages. No user input or live job remains. Prior APB and keyword
-  blockers are repaired; original resource/native attribution gaps stay owned.
+- P1 T1445 schema divergence and scoped book wording remain owned by .21/.22.
+  Full local qualification, authorized push and exact-SHA hosted/Pages proof
+  stay active under .13. No user input or live job remains. Earlier memory/native
+  cause gaps stay separate; recorded full9 stop is assertion-driven.
 
 ## Version-Retrievable Historical Views
 
@@ -562,8 +591,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — full9 admission and repair closure
+## Acceptance Checklist — full9 first-failure outcome
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1377-book-fsm-example-generation-audit.t line 115 belongs to the retained observed failure set. Original full8 ended143; focused source/contract fixes never qualify unseen later/full-suite outcomes.
-- [x] **ADDRESSED (verified)** — full8-repair-closure joins exact observed-file inventory, actual passing native receipt paths/log hashes and current source witnesses. Qualified cost source remains unchanged. Fresh full9 admission passes with normal kernel pressure; unique journal/checkpoint/receipt slots are absent. CI/guard/recorder/workflow hashes and complete required-job inventories remain exact.
-- [x] **NO REGRESSION** — Saved actual focused logs report All tests successful; every observed file joins one unchanged final-path source witness. Saved cost reader passes and rejects three corruptions. Native book/source/claim and normal gates qualify preflight only. No full9 execution, full-suite/hosted/Pages/runtime credit yet.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native full9 fails at t/1445-semantic-introspection-mcp-schema-snapshots.t line 45: actual examples.catalog_entry_keys contains expected_hdl_pattern_count where the fixture expects expected_instance_count. Intentional catalog evolution versus producer regression remains unclassified and owned by .21.1.
+- [x] **ADDRESSED (verified)** — Retain full native output/status143, exact first diagnostic/current source and prior task/history. Authenticated guard TERM uses existing owned-session cleanup; independent old PID/birth and managed-group absence holds. .21 owns causal repair/fresh full10 and .22 the saved book scope clarification. No source/fixture repair is claimed yet.
+- [x] **NO REGRESSION** — knowledge-map: OK on unchanged current fact/index sources. Full9 actually reports T1436/T1437/T1438 and every originally observed full8 failing path ok. No compiler/test behavior changes in this intake. Current native143 is nonpassing; later Perl/VIAL/final book/full/hosted/Pages remain unqualified. Normal book/source/claim/doctrine gates qualify outcome commitment only.
