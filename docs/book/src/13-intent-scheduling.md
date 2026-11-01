@@ -62,7 +62,15 @@ behavior.
   `actor_params[]`; scalar defaults and aggregate/list default leaves may use
   declared actor constants, earlier scalar actor parameter defaults, enum
   members, or qualified imported package scalar constants, and they are not
-  runtime payload wires. Generated child transaction
+  runtime payload wires. Scalar aliases retain their immediate parameter names
+  through the supported HDL path. Parsed aggregate defaults may retain earlier
+  scalar parameter references, but the current direct HDL profile refuses
+  mutable aggregate relationships. For `(BASE_W 8)`, `(DATA_W BASE_W)` and
+  `(LANE0 1)`, `(LANES (DATA_W LANE0 BASE_W))` retains its authored metadata and
+  selected values but refuses HDL. A separately authored `(LANES (8 1 8))`
+  has the same selected defaults and can generate; the scalar `DATA_W` alias
+  remains named. The compiler does not freeze the original mutable aggregate.
+  Generated child transaction
   parameter defaults may use declared actor constants, actor-local scalar
   parameter defaults, earlier scalar transaction parameter defaults, or enum
   members, or qualified imported package scalar constants in scalar positions
