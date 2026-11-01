@@ -80,7 +80,7 @@ ISF
     is_deeply(storage_signal_widths($actor, 'data'), [6, 6], 'bank signal widths compose with constant depth');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'constant_bank_width_and_depth.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses composed constant width and depth');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(\+ DATA_W 0\)\)[\s\S]*\(data_1 \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains immutable width and scalarized depth');
 };
 
 subtest 'enum-resolved actor constant bank depth lowers' => sub {

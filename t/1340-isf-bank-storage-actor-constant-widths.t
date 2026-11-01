@@ -44,7 +44,7 @@ ISF
     my $fsm = $lowered->{files}{'constant_bank_storage_widths.fsm'};
 
     like($fsm, qr/\(\+constants\s+\(DATA_W 7\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 7\)[\s\S]*\(data_1 7\)/, 'scheduled .fsm uses resolved bank widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(\+ DATA_W 0\)\)[\s\S]*\(data_1 \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains immutable actor constant bank widths');
     like($fsm, qr/\(<- \(data_0 wdata\) <\(== idx 0\)\)/, 'store uses resolved scalarized bank entry');
     like($fsm, qr/\(<- \(rdata> data_0\) <\(== idx 0\)\)/, 'load uses resolved scalarized bank entry');
 
@@ -78,7 +78,7 @@ ISF
     is(storage_width($actor, 'data'), 6, 'enum-resolved actor constant becomes a positive bank width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_bank_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 6\)[\s\S]*\(data_1 6\)/, 'scheduled .fsm uses enum-resolved bank width');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(\+ DATA_W 0\)\)[\s\S]*\(data_1 \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains enum-backed actor constant bank width');
 };
 
 subtest 'unsupported actor constant bank width sources fail closed' => sub {

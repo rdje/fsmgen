@@ -618,6 +618,12 @@ widths do not establish a shared dependency. Named scalar types keep their own
 type references. Broader override propagation, library shape specialization and
 complete runtime qualification remain separate boundaries.
 
+Immutable actor constants retain a static carrier expression such as
+`(+ DATA_W 0)`. The arithmetic form keeps constant lookup explicit in width
+context. Eligible SystemVerilog folds it to a fixed numeric width. Parser and
+report values stay numeric; constant-backed bank depths still determine the
+source-time scalarized entry count.
+
 Declared inputs remain public even when no transaction or rule reads them.
 The scheduled FSM carries their roles in `+interface`; `+size` carries their
 widths. This applies to ordinary actors, a named single domain, and each

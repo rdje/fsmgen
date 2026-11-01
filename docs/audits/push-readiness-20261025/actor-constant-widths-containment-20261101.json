@@ -1,0 +1,12 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.5",
+  "prior_exact_source": "docs/audits/push-readiness-20261025/actor-constant-widths-history-20261101.json.gz",
+  "additional_completed_summaries": [
+    "PUBLICATION-REGRESSION-REPAIRS.8.2",
+    "PUBLICATION-REGRESSION-REPAIRS.19",
+    "PUBLICATION-REGRESSION-REPAIRS.20.1",
+    "PUBLICATION-REGRESSION-REPAIRS.20.2.2.1"
+  ],
+  "after_task_sha256": "94654cde6851344a570313e81c2b117c75eea1421416cf0525a0ad2a09cbb32b",
+  "scope": "All original words/facts remain in authenticated complete c8 source in the history witness. Only bounded completed-node summaries change; all current nodes, children, evidence routes and original limits remain. Planned default work has five explicit leaves."
+}

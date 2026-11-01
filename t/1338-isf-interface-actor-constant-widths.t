@@ -38,7 +38,7 @@ ISF
     my $fsm = $lowered->{files}{'constant_interface_widths.fsm'};
 
     like($fsm, qr/\(\+constants\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(data_in 8\)[\s\S]*\(data_out 8\)/, 'scheduled .fsm uses resolved interface widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_in \(\+ DATA_W 0\)\)[\s\S]*\(data_out \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains immutable actor constant interface widths');
     like($fsm, qr/\(<- \(data_out> data_in\)\)/, 'scheduled .fsm preserves data movement');
 
     my $report = decode_json($scheduler->report($actor));
@@ -68,7 +68,7 @@ ISF
     is(port_width($actor->{interface}{outputs}, 'data_out'), 4, 'enum-resolved actor constant becomes a positive width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_interface_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(data_out 4\)/, 'scheduled .fsm uses enum-resolved constant width');
+    like($fsm, qr/\(\+size[\s\S]*\(data_out \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains enum-backed actor constant width');
 };
 
 subtest 'unsupported actor constant interface width sources fail closed' => sub {

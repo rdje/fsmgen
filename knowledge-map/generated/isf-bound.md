@@ -13,7 +13,7 @@
 
 ### isf-bound-module-carriers
 
-_ISF module carriers render scoped width and default plans_
+_ISF scoped width/default module carriers_
 
 - **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-bound-module-carriers.md`](../../docs/knowledge/isf-bound-module-carriers.md)

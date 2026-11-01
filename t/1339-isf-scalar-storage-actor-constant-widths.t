@@ -44,7 +44,7 @@ ISF
     my $fsm = $lowered->{files}{'constant_scalar_storage_widths.fsm'};
 
     like($fsm, qr/\(\+constants\s+\(STATE_W 5\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(counter 5\)[\s\S]*\(shadow 5\)/, 'scheduled .fsm uses resolved storage widths');
+    like($fsm, qr/\(\+size[\s\S]*\(counter \(\+ STATE_W 0\)\)[\s\S]*\(shadow \(\+ STATE_W 0\)\)/, 'scheduled .fsm retains immutable actor constant storage widths');
     like($fsm, qr/\(<- \(counter \(\+ counter 1\)\)\)/, 'scheduled .fsm preserves counter update');
     like($fsm, qr/\(<- \(shadow counter\)\)/, 'scheduled .fsm preserves shadow update');
 
@@ -78,7 +78,7 @@ ISF
     is(storage_width($actor, 'counter'), 6, 'enum-resolved actor constant becomes a positive storage width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_storage_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(counter 6\)/, 'scheduled .fsm uses enum-resolved storage constant width');
+    like($fsm, qr/\(\+size[\s\S]*\(counter \(\+ STATE_W 0\)\)/, 'scheduled .fsm retains enum-backed actor constant storage width');
 };
 
 subtest 'unsupported actor constant scalar storage width sources fail closed' => sub {

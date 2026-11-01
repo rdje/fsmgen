@@ -50,7 +50,7 @@ ISF
     my $fsm = $lowered->{files}{'constant_transaction_port_widths.fsm'};
 
     like($fsm, qr/\(\+constants\s+\(DATA_W 8\)\s+\)/s, 'scheduled .fsm preserves actor constant declaration');
-    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr 8\)[\s\S]*\(isf_port_child_data 8\)/, 'scheduled .fsm uses resolved transaction port widths');
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr \(\+ DATA_W 0\)\)[\s\S]*\(isf_port_child_data \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains immutable actor constant transaction widths');
     like($fsm, qr/\(= \(isf_port_child_addr req_addr\)\)/, 'do binding drives resolved input port');
     like($fsm, qr/\(= \(resp> isf_port_child_data\) <child_done\)/, 'do binding reads resolved output port');
 
@@ -93,7 +93,7 @@ ISF
     is(transaction_port_width($actor, 'child', 'inputs', 'data'), 6, 'enum-resolved actor constant becomes a positive transaction port width');
 
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'enum_constant_transaction_port_width.fsm'};
-    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_data 6\)/, 'scheduled .fsm uses enum-resolved transaction port width');
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_data \(\+ DATA_W 0\)\)/, 'scheduled .fsm retains enum-backed actor constant transaction width');
 };
 
 subtest 'unsupported actor constant transaction port width sources fail closed' => sub {
