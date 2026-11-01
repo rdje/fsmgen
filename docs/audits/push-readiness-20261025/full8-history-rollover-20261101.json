@@ -1,0 +1,25 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.1",
+  "source_witness": "docs/audits/push-readiness-20261025/full8-history-rollover-source-20261101.json.gz",
+  "source_witness_sha256": "cc6b6ce28e3c1bc97af623436d8f8222b4de3fc0cc6b4f086c59f4aac4019318",
+  "manifest": "docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl",
+  "source_identity": {
+    "source_revision": "f149d74ce6f0be4cb2d1730dc7310bed4e3abeae",
+    "source_path": "docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md",
+    "source_sha256": "4d2d1a6e53ade5f14571ea5631e1a8cfeed8fa12f9cd81ddd7c1557be91b0b1e",
+    "source_lines": 425,
+    "source_bytes": 115096
+  },
+  "historical_suffix": {
+    "history_sha256": "bb5bcba5a7f6e3476dc210cb56ac420d458f44620d404950721bdd0287b444a9",
+    "history_lines": 43,
+    "history_bytes": 8553,
+    "history_sections": 7
+  },
+  "live_prefix_exactly_unchanged": true,
+  "unretained_residue_bytes": 0,
+  "before_bytes": 123508,
+  "after_bytes": 115333,
+  "prior_manifest_source": "f149d74ce6f0be4cb2d1730dc7310bed4e3abeae:docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl",
+  "policy_scope": "Own-tree exact-history suffix rollover only; all live nodes including newly owned .20 stay byte-identical across the rollover. Prior historical manifest and complete prior task retain for the exact chain; no budget/policy/ceiling/milestone increase. Fresh intake acceptance will append after this pointer."
+}

@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -170,8 +170,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `active`
   Goal: `Resolve current host-capacity admission for a complete local full-CI run.`
   Acceptance: `P1 immediately after settled full4 outcome commits clean, before any full5 or push. Full4 from26c0282b4 exits137 at host occupied capacity88.1 against88 while T1436 remains active;494 earlier files pass, with no T1436/full-suite/VIAL/book/checkpoint outcome. Reproduce from the retained exact command/log; no test assertion or producer fault is inferred. Query canonical memory cards, then retain bounded dated current OS-counter/kernel-pressure and executable-only process-RSS observations under an explicit current-admission contract. Current post-stop measurements cannot reconstruct original at-cutoff allocation or pressure. Establish a genuinely changed safe current path under unchanged88/4096 limits; separate scoped product reproduction from unrelated host load. Terminate only independently authenticated own jobs, never unrelated processes; no cache deletion, guard relaxation, source-filter narrowing, stale native/main replay or unsupported causal repair. If capacity requires access/authority unavailable to this project, preserve the owned blocker and ask for that specific input only after committing the outcome/diagnosis. Any real small product defect needs its own causal repair and meaningful controls; no fix is selected from a host aggregate. Declare a new exclusive journal/checkpoint only after disposition, then fresh full CI, authorized push and exact-SHA hosted qualification; macOS relevance remains post-push.`
-  Verification: `Earlier capacity interruptions remain in local-full-ci-1 through5 and current-capacity-admission-20261025, without full-pass or original-cutoff causal credit. Director2026-10-31 authorizes retry under unchanged88/4096. Bounded original reference candidates close under .17 after native focused defaults; explicit-large opt-ins stay unqualified. Fresh full6 settles143 on actual T114/APB reserved-target failure, not a RAM trip; .18 records intake and canonical naming/state-hold/scaffold repairs. Clean .18.2 preflight now declares unique local-full-ci-7/checkpoint with current raw VM/pressure1 admission, independent saved-counter parsing, absent new slots and unchanged exact command/guard/instrument. Source-derived expected workflow/job inventory retains through exact current workflow hash equality. Launch only after committed clean HEAD; keep tracked/untracked Git state unchanged until the child exits and recorder seals results. Consume the unique journal after interruption, never blindly replay or reuse checkpoint slots. Maintain .13 active until every unfiltered Perl/VIAL/book stage actually succeeds; collection completeness is not success. If shared capacity interrupts again, preserve/commit the outcome and seek specific coordination before another expensive retry. After a complete pass perform the authorized normal push and all exact-SHA hosted/Pages qualification, then macOS relevance review. Full7 from fea64d5 later settles143 after reproduced T1244 reserved-bit fixture refusal, not a capacity trip. .19 now closes its exact intake and four-token portable-fixture repair with complete T1244 pass. .19.2 declares fresh current admission and unique full8/checkpoint; launch once only after its clean commitment. No user input is needed.`
-  Outcome: `Full6 from1ec88efcb is deliberately settled143 after T114 abort255/no-plan on generated ACCESS during generic namespace preparation. The complete available output retains259 independently parsed reported passing files through T1227 and95 T114 assertions; no complete suite/VIAL/book/T296 or hosted success. No guard cutoff is recorded. Authenticated guard-only SIGTERM, cleanup and exact known-PID absence retain; no unrelated process is touched. .18.1 reproduces and proves invalid plain APB output against the exact GHDL artifact control. Existing ISF-REDUCTION-DELIVERY.22.2 now meets its earlier-activation condition. Consume its focused repair/integration, then declare new exclusive full7/checkpoint without reusing full6 slots or credits. Original at-cutoff/native causes remain open.`
+  Verification: `Capacity interruptions and original attribution gaps retain their dated owners/evidence; unchanged88/4096 remains mandatory. Full6/full7 causal repairs close under .18/.19. Full8 from cleanf149d74ce now settles143 on an owned generation-cost defect after native assertion failures, with no guard cutoff/full-pass credit. .20.1 retains exact source epochs, complete available output, all original diagnostic/control attempts, matched public generated IAL1/IAL0/report products, bounded sampled parser stacks and authenticated owned-job absence. .20.2 repairs full unrelated-allocation validation before membership selection without weakening currentness; .20.3-.9 repair the observed assertion/book contracts. All need separate focused final-path checks and normal commits. .20.10 then declares fresh admission/exclusive full9 journal/checkpoint; launch once only from committed clean state. No source filtering, larger limits, checkpoint reuse or stale native/history replay. Keep .13 active until every unfiltered Perl/VIAL/book stage actually succeeds; collection completeness is not success. Then authorized normal push and every expected exact-SHA hosted/Pages result, followed by macOS relevance. If actual shared capacity cuts off again, preserve/commit the outcome and seek specific coordination before another expensive retry. No user input is needed for the current causal repairs.`
+  Outcome: `Complete available full8 stream reports471 passing files,23 failing files and93 native assertion markers; T1436 and all later required outcomes are missing. The original same-fixture current generator remains unfinished after over an hour; an authenticated predecessor completes with HDL verification in29.879802166949958 seconds. Complete generated IAL1/IAL0 components and public reports agree. Bounded sampling/source inspection locate unrelated allocation rescans; causal intervention/current output equivalence remain pending. Only authenticated guard31594 receives SIGTERM, and its existing trap settles owned group31662; every known PID/group is absent. Native result143 and recorder result/log remain exact. No complete Perl/VIAL/book/T296, runtime, push or hosted success is inferred. .20 owns intake and causal repairs before another complete qualification.`
   Commit: `Current-admission intakeb6fde609; full5 outcome: this work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
@@ -341,23 +341,6 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Canonical naming72d343b, state-hold230b685 and complete scaffold6c69fc2 are clean committed repairs. Complete T114/generic/declaration and source/hold adverse controls retain their exact successful receipts; full T1420 passes64 outer subtests with all original fixtures preserved. Current T2154 independently passes after the state-hold repair in full7-dry-run receipt; full dry-run prints every required local stage and exits0. Fresh full7-admission raw counters yield63.92955780029297 percent, kernel pressure1; separate saved-counter awk parsing agrees under unchanged88/4096 guards. This is current admission, not future headroom or original-cutoff attribution. All new full7 journal/log/checkpoint/result slots are absent. full7-launch-plan retains exact current recorder/CI/guard and workflow hashes plus all source-derived required hosted jobs; previous full6 record is not a pass. Commit this immutable preflight before clean full7 under .13, with no tracked/untracked edits during the command because T296 rechecks cleanliness each batch. Native book/source and normal integrity gates qualify preflight only; complete local full, push, hosted/Pages remain pending. No filter, opt-in, guard or workflow change.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.18.2: integrate VHDL repairs for fresh full7`
 
-## Current Frontier
-
-Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. All original candidate repairs have focused qualification and bounded closure. Full6 finds the reserved-name APB blocker; .18.1 closes intake before canonical ISF-REDUCTION-DELIVERY.22.2 repair, then .13 fresh full7 and authorized push/hosted qualification. Required implementation stays saved under ISF-REDUCTION-DELIVERY until publication qualification completes.
-
-| Order | Leaf | Status | Why next |
-| --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.18.2` | `pending` | Canonical ISF-REDUCTION-DELIVERY.22.2 repairs the proved blocker after this clean intake; integrate it before fresh full7/push. |
-
-## Decisions
-
-- `2026-10-25`: Separate each causal regression repair; existing production contracts determine assertions. SEM .69.3 owns publication ordering; macOS history does not impose a renewed blanket hold.
-- `2026-10-25`: Full2 was an administratively interrupted failing census, with no T1436 or complete-suite outcome. Qualifying full3 must set FSMGEN_T296_CHECKPOINT before launch.
-
-## Blockers
-
-- Reproduced APB reserved-name generation defect blocks full qualification. Canonical ISF-REDUCTION-DELIVERY.22.2 is ready after the clean .18.1 intake. No input blocker; full7, push and hosted/Pages qualification remain pending. Original resource-attribution gaps remain open under .13.
-
 - ID: `PUBLICATION-REGRESSION-REPAIRS.19`
   Status: `done`
   Goal: `Resolve the dynamic wait/shift literal selected-target refusal exposed by full7.`
@@ -380,46 +363,127 @@ Director2026-10-31 requests publication of the IAL0/IAL1/IAL2 book. All original
   Verification: `Only four tokens change in the positive independent-shift subtest: authored input/operand bit become serial_bit, with the two corresponding lowered-source assertions. Complete inverse and outside-subtest byte equality preserve every other fixture/assertion, including negative cases and transaction_waits metadata. The exact repaired ISF source equals the native/linted legal-name control from .1. No producer, selector, target guard, width, wait/sample/shift/zero-count semantics or compiler flags change. Complete guarded T1244 passes All tests successful, Files=1 Tests=39, reaching all previously unexecuted cases. t1244-keyword-repair-evidence retains full original/current source, four-token proof and unchanged producer identities; original native/namespace and inverse keyword/compiler controls remain in .1. Book clarifies that reg/bit are operand metavariables rather than portable declared names. Fresh full8-admission captures61.64404551188151 percent, pressure1 and independently parsed counters under unchanged88/4096; all five unused journal/log/checkpoint/result slots are absent. The first cloned helper retains mixed old slot names and correctly refuses before admission/launch; its source/status retain, followed by corrected fresh collection. full8-launch-plan preserves exact guard/CI/recorder/workflow hashes and all required jobs; it binds the qualified test SHA and requires this committed clean HEAD before one launch. Native book/source/index and mandatory normal hook gate the repaired handoff. Complete full8, normal push and exact-SHA hosted/Pages remain pending under .13/.69.3; no dynamic runtime claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.19.2: use a portable wait-shift input name`
 
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20`
+  Status: `active`
+  Goal: `Resolve full8 source-contract failures and the proved same-input generation cost.`
+  Acceptance: `Own every observed full8 failure and the bounded cost diagnosis; causal repair first, then focused contract slices with one normal commit each. Full8 remains partial/non-pass; .13 owns the next complete qualification and publication.`
+  Verification: `Full8 has settled143; no owned job remains. Detailed retained intake is .1; no implementation repair is claimed yet.`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.20.1, PUBLICATION-REGRESSION-REPAIRS.20.2, PUBLICATION-REGRESSION-REPAIRS.20.3, PUBLICATION-REGRESSION-REPAIRS.20.4, PUBLICATION-REGRESSION-REPAIRS.20.5, PUBLICATION-REGRESSION-REPAIRS.20.6, PUBLICATION-REGRESSION-REPAIRS.20.7, PUBLICATION-REGRESSION-REPAIRS.20.8, PUBLICATION-REGRESSION-REPAIRS.20.9, PUBLICATION-REGRESSION-REPAIRS.20.10, PUBLICATION-REGRESSION-REPAIRS.20.11`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.1`
+  Status: `done`
+  Goal: `Retain full8 outcome, causal intake and precise repair ownership.`
+  Acceptance: `P1 now, before implementation. Retain complete available settled143 output, authenticated owned-job absence, actual failing-file inventory and all original diagnostic/control epochs. Preserve baseline snapshot/grammar refusal, successful native comparison, complete generated IAL1/IAL0 and report equality, sampled stacks and explicit causal/output gaps. Fix stale current-frontier/blocker projections and root child ownership. Use existing same-tree exact-history rollover if needed, preserving every live node and all old facts without any limit increase. Commit intake before .2.`
+  Verification: `Full8 settles143 with complete available output and no full-suite credit. Independently indexed native output has471 reported passing files,23 failing files and93 assertion markers; every observed file has a specific .20 repair owner. All known original jobs/groups are absent after authenticated guard-only settlement. full8-intake-20261101.json.gz preserves source epochs, original fixtures, control drafts/refusals, native streams and explicit gaps; saved-only full8_intake_20261101.py --self-test passes and rejects three distinguishing corruptions. Seventeen ignored-path diagnostic controls pass after exact positive-regex changes only, conserving all original fixtures/other assertions; these are not final-path repairs. Authenticated predecessor CLI/loaded origins plus matching complete generated IAL1/IAL0/report products isolate downstream cost. Separate30-second stack sampling/source inspection identifies validation before membership checks; actual causal intervention/current HDL equivalence remain pending under .2. Missing grammar and the failed inverse builder/missing-source followup are retained without credit. Current projections/root .19 ownership are corrected. The first integrity check finds .19/.20 outside the parsed Task Tree section; move their complete blocks into it, preserve the rejected source and own the missing guard under post-publication .11. Existing exact-history rollover retains the wholef149 task, prior manifest and historical acceptance suffix with unchanged live prefix/zero loss; ceilings stay fixed. Same-card compaction is nonpositive and retains every prior question/evidence/reverify route. SEM .69.3 chronology is exactly archived while its live field states current ordering. Saved reader and native book test pass; knowledge-map: OK. Native build/copied-source verification and mandatory normal hooks gate commitment. The collector first rejects an incorrect command-array shape before running children; its input/source/error remain retained, then the corrected command-object collection passes.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.1: retain full8 failures and allocation-cost intake`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.2`
+  Status: `pending`
+  Goal: `Repair unrelated-allocation validation cost without weakening currentness.`
+  Acceptance: `P1 first causal repair. In actual parser transition paths, select potentially affected events before expensive full validation. Any cache may accelerate negative membership selection only; retain complete live validation for every candidate, source/holder/registry replacement, object lifetime, matching-write revocation, literal child provenance and role/metadata/width/AST controls. Require a genuine before/current resource-cost counterexample, semantic conservation and focused canonical allocation tests. Qualify the exact original public fixture with native HDL verification; update book/POD/facts and commit. No guard bypass, larger limits, reduced cases or generic-profile expansion.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.3`
+  Status: `pending`
+  Goal: `Align composition child-header diagnostics with admitted parameters.`
+  Acceptance: `After .2 commits, update only stale supported-header lists in T129/T131 to include admitted +params. Preserve complete failure DTOs, blocked reasons, valid/invalid headers and every other assertion. Confirm Parser.pm and COMPOSITION_SCOPE contract, focused tests, related book and normal commit.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.4`
+  Status: `pending`
+  Goal: `Retain actor-parameter widths in legacy carrier and HDL checks.`
+  Acceptance: `Update T1333 through T1337 positive width assertions to canonical scoped parameter expressions and eligible HDL ranges. Preserve every source fixture, selected numeric parser/report assertion, dataflow and adverse control. Bank depth stays source-time scalarized; fixed-width depth-only controls remain unchanged. Diagnostic ignored-path controls are not final-path qualification. Sync actor/transaction guidance and commit focused checks.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.5`
+  Status: `pending`
+  Goal: `Retain immutable actor-constant width sources.`
+  Acceptance: `Update only stale carrier assertions in T1338 through T1342 to immutable constant expressions. Keep fixed HDL ranges, all original constant/source/parser/report/dataflow/negative checks and scalarized depths. Never promote constants to mutable parameters. Sync book boundaries; run actual focused files and commit.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.6`
+  Status: `pending`
+  Goal: `Align parameter-default integration with canonical aggregate profiles.`
+  Acceptance: `T1345 through T1349 retain authored scalar/default source and current carrier relations. For T1346/T1347/T1348 preserve every original parser/IR/report/default assertion, assert the exact mixed mutable-aggregate refusal, and qualify a separately authored immutable equivalent with independent selected-value/kind conservation for positive HDL checks, following accepted T2110/T30 and R14.3.2.4.2. Preserve generated captures, local aliases, constants and enum meanings. Do not erase old cases, freeze production provenance, weaken guards or claim new aggregate support. Sync canonical downstream/book and commit.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.7`
+  Status: `pending`
+  Goal: `Retain imported immutable width expressions.`
+  Acceptance: `Update only stale scheduled-source assertions in T1353/T1354/T1355/T1357 to exact imported constant expressions. Keep all fixtures/imports, selected numeric parser/reports, fixed HDL, bank/dataflow and refusal controls. Distinguish mutable actor params whose defaults use constants. Sync downstream/book, actual focused tests and normal commit.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.8`
+  Status: `pending`
+  Goal: `Retain child-local transaction width and alias identity.`
+  Acceptance: `T1368 preserves child DATA_W8 and immediate DERIVED_W against distinct actor constant DATA_W5. Update only positive child carrier/eligible HDL range assertions; retain numeric parent handoffs, parser/reports, local/direct scopes, source fixtures and every adverse control. Run actual test, sync transaction guidance and commit.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.9`
+  Status: `pending`
+  Goal: `Correct auxiliary-width book example and remaining profile statements.`
+  Acceptance: `T1377 book04 block2 must stop claiming independent mutable X/W requirements still generate numeric HDL. Retain that metadata counterexample as explicitly unsupported, with exact refusal, and add the separately authored runnable single-source aux_shared counterpart. Review affected book13a/13b/matrix and canonical downstream statements against current carriers versus numeric reports; preserve actual reusable-formal and broader external/runtime/library boundaries. Keep every positive lisp block generation-clean and commit focused book checks.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.10`
+  Status: `pending`
+  Goal: `Close known full8 repairs and prepare a fresh qualification.`
+  Acceptance: `After every owned causal slice commits, join the exact full8 observed-failure inventory to final-path successful receipts/current sources and preserved refusal boundaries. No complete suite credit from diagnostic controls. Declare fresh current capacity admission, unchanged command/guards/workflows, unique full9 journal/checkpoint and committed clean Memory handoff before .13 launches once. Full local pass precedes authorized normal push and all exact-SHA hosted/Pages outcomes.`
+  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Commit: `pending`
+
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.20.11`
+  Status: `pending`
+  Goal: `Reject accidental task nodes outside the parsed Task Tree section.`
+  Acceptance: `P2 after hosted publication, macOS relevance and ordered workflow repairs, before private/POD return. Actual full8-intake-render-20261101 integrity output proves .19/.20 blocks outside Task Tree are invisible to direct-child validation; f149 previously contains .19 outside the section while its root omits that edge. .20.1 moves all actual nodes into the parsed section now. Own a separate checker/fixture repair that rejects misplaced raw node blocks while preserving fenced examples and explicitly historical views. Review only relevant parser/contracts and genuine fixtures, retain original false-accept and corrected-rejection controls, and verify focused integrity checks/book before commitment. No broad audit or publication delay from this later guard task.`
+  Verification: `Original rejected task/source/checker and the exact byte-preserving move retain in full8-task-section-refusal-20261101.json.gz. Current ownership is corrected under .20.1; the checker guard remains unimplemented.`
+  Commit: `pending`
+
+
+## Current Frontier
+
+Requested IAL0/IAL1/IAL2 book publication remains active. Full8 is settled and
+partial; .20.1 retains its outcome. Next repair the P1 allocation-validation
+cost before the precise assertion/book slices and a new complete qualification.
+Saved private feature implementation remains pending until publication completes.
+
+| Order | Leaf | Status | Why next |
+| --- | --- | --- | --- |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.2` | `pending` | Activate after clean .20.1 intake; repair unrelated-allocation validation without relaxing currentness. |
+
+## Decisions
+
+- `2026-10-25`: Separate each causal regression repair; existing production contracts determine assertions. SEM .69.3 owns publication ordering; macOS history does not impose a renewed blanket hold.
+- `2026-10-25`: Full2 was an administratively interrupted failing census, with no T1436 or complete-suite outcome. Qualifying full3 must set FSMGEN_T296_CHECKPOINT before launch.
+
+## Blockers
+
+- P1 allocation-validation cost and observed contract/book failures block full
+  qualification. .20 owns causal repairs; .13 retains complete local CI, push
+  and hosted/Pages. No user input or live job remains. Prior APB and keyword
+  blockers are repaired; original resource/native attribution gaps stay owned.
+
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-The exact predecessor and its former blocker/acceptance suffix are authenticated
-by the task-tree integrity gate. Current node fields and fresh acceptance below
-remain live; this historical view supplies no current frontier or new pass.
+The integrity gate authenticates the complete predecessor and its historical
+acceptance suffix. Every live node remains here; the retained prior manifest
+and earlier source remain exactly recoverable through the rollover proof.
 
-## Acceptance Checklist — `.17.2.4.4` fiber/aggregate-operation bridge references
+## Acceptance Checklist — full8 intake and causal repair ownership
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Complete native RED reports at t/1623-vial-architecture-scale-execution-fiber-qualification.t line 116 and the three adjacent selected files exactly eight obsolete bridge assertions. Every actual hash equals the independently checked current AHB report; all other original default assertions pass. No current producer/count/cap drift is observed.
-- [x] **ADDRESSED (verified)** — Replace only four bridge constants and add the existing checked-reference import/local library path. Exact original/current source identities and inverse transformation preserve every other byte, including the native opt-in guard. All four defaults pass under unchanged88/4096; complete original/current streams/statuses and source witness retain. The mandatory threshold refusal is preserved; the existing history protocol now authenticates complete predecessor/suffix while retaining the exact live node graph and fresh current evidence, reducing aggregate task pressure without a limit change.
-- [x] **NO REGRESSION** — All tests successful; Files=4, Tests=26. Compact recipes, plan/source/semantic identities, counts/maps/bytes, orthogonal fiber axes, earliest authority, preflight/refusal/mutation and cleanup checks remain live. T1626 explicit exact excess proof and complete full/hosted qualification remain unclaimed. Native book test/build/copied-source checks pass. Exact historical-source retrieval, byte-identical live graph/current evidence and zero loss qualify the same-tree rollover; KMap/claim and normal staged doctrines gate the combined completed slice.
-
-## Acceptance Checklist — `.17.2.4.5` complete-qualification preflight
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Retained native RED reports at t/1623-vial-architecture-scale-execution-fiber-qualification.t line 116 and the other owned candidate files identify stale bridge expectations before an expensive full replay. Every original path now has a focused successful disposition; T1629/T1645 deliberately retain historical witnesses. T296 requires a clean exact revision before each completed checkpoint batch, so the full launch needs a committed immutable input state and fresh exclusive journal/checkpoint.
-- [x] **ADDRESSED (verified)** — full6-candidate-closure joins the complete original set to green receipts/current sources and rejects missing or unexpected paths. full6-admission retains current raw counters, independent saved-counter parsing, distinct old-run identity and absent new slots. full6-launch-plan retains exact unchanged command/guard/instrument identities and source-derived required workflows/jobs. Public dry-run0 prints every required native stage; no full run has yet launched or passed.
-- [x] **NO REGRESSION** — Product/test sources are byte-identical to the qualified committed baseline. Native book/source/index checks, knowledge-map: OK, claim and normal staged doctrines gate this preflight. No opt-in is enabled, no checkpoint reused, and no limit or assertion changes. Full Perl/VIAL/book and every exact-SHA hosted/Pages outcome remain explicitly pending under .13.
-
-## Acceptance Checklist — `.18.1` full6/T114 intake
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual full/focused output aborts at t/114-composition-target-support-diagnostics.t line 1465 because DirectParameterEmitter receives reserved ACCESS. The normalizer skips basic-shaped names; actual plain generation emits that invalid constant. Exact history identifies generic namespace activationb2601fe4 and the prior normalizera0e7149d; the already-owned .22.2 defect now demonstrably blocks required integration.
-- [x] **ADDRESSED (verified)** — Preserve complete available full6/focused output, exact input/code/producer identities and authenticated guard-only settlement. The exact GHDL tool rejects the actual plain APB artifact and accepts the control changing only its three ACCESS declaration/reference tokens. No fixture/production change or guard weakening; .22.2 owns implementation after this clean commitment and .18.2 owns publication integration.
-- [x] **NO REGRESSION** — Product/test sources are byte-identical to the full6 revision; the T114 RED remains explicitly owned. Independent parsers agree on259 reported passing files without suite credit. Current card facts/questions/reverify and original source survive nonpositive compaction. Native book/source/index checks, knowledge-map: OK and final normal staged doctrines qualify this intake only; complete full CI, push and hosted publication remain pending.
-
-## Acceptance Checklist — `.18.2` repaired integration/full7 preflight
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full/focused T114 fails at t/114-composition-target-support-diagnostics.t line 1465; original T1420 then exposes the separately owned no-transition and stale-name/profile boundaries. Canonical .22.2/.27/.22.2.2 now retain their verified causal repairs and original streams. T296 requires an immutable clean launch revision and exclusive checkpoint.
-- [x] **ADDRESSED (verified)** — Actual full scaffold and direct generic integration pass; fresh raw/independently parsed capacity admission, absent new slots and exact current workflow/instrument identity establish the full7 launch protocol. The unfiltered full dry-run exits0 and names every required stage. No full execution has passed yet.
-- [x] **NO REGRESSION** — All tests successful in the fresh T2154 check; committed T1420 Files=1, Tests=64 and canonical naming/state-hold controls retain their scoped credit. Source/test/guard/workflow bytes stay at the qualified committed baseline. Native book/source and mandatory normal hooks gate preflight; local-full/hosted/Pages outcomes remain pending.
-
-## Acceptance Checklist — `.19.1` full7/T1244 keyword intake
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual final target namespace refuses at perl/FSM/DirectDeclaredWidthSupport.pm line 547: declared bit is reserved in SystemVerilog. The literal holder/selection succeed; only final namespace admission fails. git log -S identifies fixture0bc6ad7a, guardd4544d15 and ledgerce02b1cb.
-- [x] **ADDRESSED (verified)** — Original native source refuses; exactly two portable-name source substitutions generate with inverse-complete lowered-FSM equality. Installed Verilator lint passes that artifact and fails its inverse keyword-name control. Full7 settlement and all original/observer failures remain retained. .19.2 owns the precise fixture-only correction; no producer or guard repair is selected.
-- [x] **NO REGRESSION** — Product/test sources are byte-identical to full7 fea64d5. Partial316 file passes remain partial; source controls/compiler lint do not prove a full suite. Current card questions/canonical routes survive nonpositive compaction; native book/source checks and knowledge-map: OK plus the normal hook qualify documentation/integrity only.
-
-## Acceptance Checklist — `.19.2` portable wait/shift fixture and full8 handoff
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original T1244 aborts at perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/SourceLiteralWidthSupport.pm line 743; actual namespace diagnosis at perl/FSM/DirectDeclaredWidthSupport.pm line 547 proves the positive fixture declared reserved bit. Original/control source, literal selection and installed compiler evidence survive in .19.1.
-- [x] **ADDRESSED (verified)** — Exactly four authored/expected name tokens change to serial_bit; the entire remaining test and every producer/guard byte preserve. The source equals the linted native control and complete T1244 now passes. Book placeholder clarification and fresh independently parsed admission/exclusive full8 plan make the clean next action concrete; the spent-slot helper refusal remains uncredited.
-- [x] **NO REGRESSION** — All tests successful. Files=1, Tests=39 for complete T1244, including zero-count sample/shift and all later malformed-wait controls. No production, test filtering, guard or workflow change. Native book/source and normal hooks gate the commit; full8/push/hosted/Pages/runtime remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original native output at t/1333-isf-interface-actor-param-widths.t line 41 exposes a stale numeric-carrier assertion; the complete available full8 stream independently identifies every observed failing file. Same-fixture predecessor/current public IAL1/IAL0/report products agree. Separate sampled stacks and ExpressionBuilder.pm line200 show expensive allocation validation before membership filtering; causal intervention and completed current HDL remain missing, owned under .20.2. Native stopped143 is not a full pass.
+- [x] **ADDRESSED (verified)** — full8-intake-20261101.json.gz, exact source archives and saved-only reader retain original/control programmes, first refusals, streams, source identities, explicit gaps and authenticated owned-job settlement. Every observed failure has a specific .20 leaf. Seventeen ignored-path controls preserve all original source/other assertions; they are diagnostic only. Current frontier/blocker/root-child projections are corrected. The first integrity rejection is preserved; .19/.20 are moved into the parsed Task Tree section with their fields unchanged, and .20.11 owns the later misplaced-node guard. Exact-history and SEM preservation proofs retain all prior words and unchanged live rollover prefix; same-card growth is nonpositive with original questions/routes retained.
+- [x] **NO REGRESSION** — Saved reader passes and rejects three distinct corruptions, including a changed carrier with refreshed member hash. Native mdBook test passes and knowledge-map: OK; no production/test/guard/workflow byte changes or complete-suite credit. Native build/copied-source freshness, final claim/index checks and the authoritative normal hook gate commitment. All original full/probe first outcomes remain retained; no owned background job remains.

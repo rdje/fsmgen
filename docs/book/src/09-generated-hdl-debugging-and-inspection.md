@@ -372,6 +372,17 @@ that later checks were not run; success still requires the complete registry.
 The default mode continues through failures for full CI diagnostics. Each
 invocation validates current inputs; there is no persistent pass cache.
 
+A deliberately stopped regression run remains incomplete. The dated full8
+publication intake retains its failed revision, complete available output,
+original assertions and isolated diagnostic controls. Matching generated IAL1,
+IAL0 and schedule reports locates its observed cost difference downstream;
+completed current HDL equivalence and a full pass remain unproved. This reader
+checks saved evidence without launching a query, compiler or regression run:
+
+```bash
+python3 -B docs/audits/push-readiness-20261025/full8_intake_20261101.py --self-test
+```
+
 Before diagnosing something that may already be known, query the map with the
 words you would naturally ask:
 

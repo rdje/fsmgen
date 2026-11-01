@@ -1,7 +1,7 @@
 # Knowledge Map: `sv-intermediate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **17** uniquely owned question entries.
+> **1** facts · **18** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -21,6 +21,7 @@
 - q="why do arithmetic helpers lack generic ranges?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why do source-owned n-ary bitwise helpers remain numeric?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why does an unsized literal in a source bitwise helper refuse generation?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
+- q="why does large PPIF generation repeatedly revalidate unrelated source trees?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 - q="why should multi-bit intermediates not render as bare negation?" · facts=[sv-intermediate-truthiness-width](../../docs/knowledge/sv-intermediate-truthiness-width.md)
 
 ## Facts
@@ -29,5 +30,5 @@
 
 _Scalar reduction origins and render-time intermediate widths_
 
-- **date:** 2026-10-29 · **status:** current
+- **date:** 2026-11-01 · **status:** current
 - **source and verification:** [`docs/knowledge/sv-intermediate-truthiness-width.md`](../../docs/knowledge/sv-intermediate-truthiness-width.md)

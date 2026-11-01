@@ -6,8 +6,8 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: After clean .19.2 commitment, inspect the exclusive local-full-ci-8 journal. If absent, launch the exact full8-launch-plan recorder command once; if present, consume its state/live log without replay. After an actual full pass, commit the outcome and perform authorized normal push plus every exact-SHA hosted/Pages qualification.
-- in_flight_uncommitted: Derive with git status --short; after launch keep all tracked/untracked state unchanged until the full command exits.
-- in_flight_background: Conditional after clean handoff: .artifacts/push-readiness-20261025/local-full-ci-8.state.json and .live.log own recorder/guard birth, command, status and recovery. Every previous full-run result remains a non-pass.
-- blockers: No user input needed for the admitted unchanged88/4096 run. Complete full CI, push and hosted/Pages publication remain pending. Saved private feature frontier ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4.2 remains pending; macOS relevance review follows hosted qualification.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.20.2`
+- next_action: After clean .20.1 intake commitment, activate .20.2 and reproduce/repair allocation-transition validation of unrelated events. Preserve complete currentness for every potential dependency; qualify focused canonical allocation cases and the exact public PPIF generation before normal commitment. Then .20.3-.9 contract/book slices and .20.10 fresh full9 preflight under .13.
+- in_flight_uncommitted: Derive with git status --short; finish .20.1 native build/source/index/claim checks and authoritative normal commit before any .20.2 source edit.
+- in_flight_background: None. Full8 is settled; inspect its committed result/log and full8-intake-20261101 artifacts, never replay its journal/checkpoint.
+- blockers: Publication needs causal allocation-cost and observed contract/book repairs, a complete fresh local full pass, authorized push and every exact-SHA hosted/Pages success. No user input needed. Saved ISF-REDUCTION-DELIVERY.3.4.3.3.3.5.4.2 remains pending; macOS relevance follows hosted qualification.

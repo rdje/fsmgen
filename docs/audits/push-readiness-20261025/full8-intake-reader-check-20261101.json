@@ -1,0 +1,17 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.1",
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/push-readiness-20261025/full8_intake_20261101.py",
+    "--self-test"
+  ],
+  "exit_status": 0,
+  "exit_status_provenance": "Direct exec tool completion returned integer0; original combined stdout/stderr was redirected to the retained log. No timing or full-suite claim.",
+  "log": "docs/audits/push-readiness-20261025/full8-intake-reader-check-20261101.log.gz",
+  "retained_log_sha256": "293540d566d687901f5832e80eec18c852649993424802ba9eb8d3fbbf07f8da",
+  "source_sha256": "8a5b7f8136b3d3a040ae50c5d412a884228cec57efe7d64685d7e7184f55e9c7",
+  "packet": "docs/audits/push-readiness-20261025/full8-intake-20261101.json.gz",
+  "packet_sha256": "bf82e9d8b290d261b61030b81af3e3552a02219adf88ac3dcfc42b39c094b1d1",
+  "scope": "Saved-only reader and three distinguishing corruptions; no producer/native query/compiler/CI rerun."
+}
