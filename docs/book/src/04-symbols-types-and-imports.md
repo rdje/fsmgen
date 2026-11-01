@@ -146,7 +146,8 @@ replaying general lookup, evaluation or target formatting. Expression capture
 uses the canonical walk and declared-only parameter selector. Ordinary parser
 calls, source getters and numeric values stay unchanged. Successful full source
 parsing now publishes eligible private primary and auxiliary bindings from the
-recorded actual requirements. Symbolic HDL activation remains pending.
+recorded actual requirements. The direct HDL consumers below use qualified
+bindings; capture alone does not emit a range.
 
 Core Signals now provide private `declared_width_binding` storage for explicitly
 supplied compiler records. The envelope adds the actual declaration signal and
@@ -200,15 +201,31 @@ contributions to the legacy maximum remain separate; only identical complete
 snapshots are deduplicated. Unrecorded contributions explicitly lack an authored
 expression and cannot supply an inferred parameter relationship.
 
-For example, this source retains the independent `X` requirement alongside the
-generated `W` requirement on `next_data`, while keeping its existing numeric HDL:
+This unsupported illustration retains the independent `X` requirement beside
+the generated `W` requirement on `next_data`:
 
-```lisp
+```text
 (?fsm:aux_origin
  (+params (W 8) (X 16))
  (+size (data (param W)) (next_data (param X)))
  (idle (<-= (data 0))))
 ```
+
+Current direct HDL generation refuses it: `Direct module 'next_data' has a
+combined mutable width shape pending specialization`. Retaining both source
+requirements does not invent one symbolic range or permit numeric fallback.
+For a standalone generatable example, give the auxiliary the same captured
+origin as its parent by omitting the independent declaration:
+
+```lisp
+(?fsm:aux_shared
+ (+params (W 8))
+ (+size (data (param W)))
+ (idle (<-= (data 0))))
+```
+
+Here `next_data` inherits the original `W` relationship. This is a separately
+authored source; it does not preserve the independent `X` constraint above.
 
 The same retention applies to `data_r` produced by `<=-` or `<=+`, including an
 auxiliary declared before its parent is sized. This closes the private retention
@@ -227,9 +244,8 @@ Independent auxiliary constraints and repeated independent primary declarations
 remain separate, even with equal defaults, and do not publish a single binding.
 Fresh source retries capture the current lexical declarations rather than
 importing prior parses' origins. A larger inherited numeric floor stays opaque
-and withholds a single binding. Explicit scoped late sizing and symbolic ranges
-remain subsequent compiler work; combined-shape rendering remains separately
-qualified.
+and withholds a single binding. Scoped late sizing and direct range consumers are described below; independent
+combined-shape rendering remains unqualified.
 
 The scoped late-sizing contract audit also exercises overlapping auxiliary names:
 `next_data_r` can be the next output of `data_r` and the registered output of
@@ -321,8 +337,8 @@ named-type ordering asymmetry is retained: assignment-created auxiliaries omit
 the parent's Core type metadata, while legacy late sizing copies it. Their
 numeric widths and private type requirements agree in the reproduced case.
 Task `ISF-REDUCTION-DELIVERY.24` owns impact analysis and a deliberate consistency
-repair before full qualification. Symbolic ranges and combined shapes remain
-separate compiler work.
+repair before full qualification. Direct range consumers below use qualified
+bindings; independent combined shapes remain unsupported.
 
 The private Verilog-family `WidthExpressionEmitter` now shares prepared range
 rendering between explicit direct-module and composition-top scope. Its existing
@@ -332,9 +348,8 @@ actual names, ordered lookups, static folding and explicit arithmetic folds
 retain their meaning, including vector rank at a one-bit default. Numeric width
 caches cannot replace a captured range. Unknown scopes, foreign targets,
 type conflicts, missing/extra lookups and invalid arithmetic refuse. Caller
-records remain detached from returned text. This extraction keeps current
-composition output and leaves direct capture-to-plan preparation and direct
-range emission as subsequent work.
+records remain detached from returned text. The shared kernel underlies direct
+capture-to-plan preparation and the direct range consumers below.
 
 The parallel private VHDL `WidthExpressionEmitter` now accepts the same explicit
 source scopes behind its narrower composition wrapper. It preserves portable

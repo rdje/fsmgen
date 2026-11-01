@@ -112,14 +112,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `done`
   Goal: `Commit the exact focused memory study contract and correct superseded live publication wording.`
   Acceptance: `Completed exact unfiltered T1437 study preflight from clean6c07ae16d, preserving full3 source/input identities, original137 and causal gaps under fixed88/4096. Declare /usr/bin/time -l prove programme, exclusive live journal and passive owned-RSS/host/clock observations before launch. No native opt-in or old-main replay. Correct superseded publication hold from exact authorization history. Full original contract remains in c8d93bc3 task/history.`
-  Verification: `plan.json binds unchanged test/generator/frontend/HDL/guard/capture inputs to full3 source88a0834fdf. Profiler true smoke qualifies reporting only, never T1437. t1437-preflight retains source/plan/KMap/book/POD checks. git log -S finds old hold at0af0842ab1224b208cff8adf1c7cfc62989b52a5, superseded by director54ac5589bc7a18e7e33d676d4f3acf29103b9732. Hosted row/book state local-full/push/exact-SHA hosted before separate macOS review. No memory cause/fix, focused/full-suite or push success is inferred; exact old evidence/recovery routes remain in c8 source/history.`
+  Verification: `Committed exact unfiltered T1437 preflight from6c07ae16d with source hashes/exclusive journal under88/4096; profiler smoke proves reporting only. git log -S authenticates superseded old publication hold and director54ac5589bc7a replacement. Hosted qualification precedes macOS review. No memory-cause/fix/test/full credit. t1437-preflight and exact c8/current history retain complete original evidence and causal gaps.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.8.1: qualify focused memory study contract`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8.2`
   Status: `done`
   Goal: `Observe the complete unchanged T1437 focused run under fixed memory guards.`
   Acceptance: `Completed declared exclusive t1437-focused-1 programme after clean .8.1, preserving full first TAP/resource output and passive owned-process/host clocks under88/4096, without native opt-in, source/case changes or original allocation attribution. Declared read-only lsof FD metadata distinguishes open inputs/stdio, never stack location; no signal/sampling profiler. Full original contract/source and all first outcomes remain in c8d93bc3 task/history.`
-  Verification: `Clean3bfccc35a unchanged complete test finishes integer0, All tests successful Files1 Tests115, contiguous outer cases, no guard trip. Retain739037-byte output, programme/source and16 passive observations plus read-only FD metadata. Original full3 status137/allocation/kernel-pressure gaps remain; no leak repair/full-suite credit. t1437-outcome-focused checks saved/source/owned settlement and KMap/locality. FD intake exposes current Lispish provider coupling, not execution location; director .12 requires independent provider and obsolete-code retirement before applicable .11 review. Same-card compaction preserves questions/metadata/facts/routes under unchanged budgets; first file-cap/container refusals and two no-write oversized drafts remain retained. Exact complete old evidence/rationale/recovery routes remain in c8 task/history.`
+  Verification: `Committed unchanged T1437 actual0, Files1 Tests115,739037-byte output and16 passive observations; no guard trip. First137 attribution/kernel-pressure gaps retain. Owned settlement and saved checks qualify focused observation only. FD metadata identifies provider coupling, not stack location; director .12 orders independent provider/obsolete retirement. First size/container refusals and same-card source-preserving curation retain. All detailed evidence/routes remain in c8/current task/history.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.8.2: retain complete focused memory observation`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.8.3`
@@ -427,7 +427,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4`
   Status: `done`
   Goal: `Confirm the original public PPIF after committed scalar no-op reuse.`
-  Acceptance: `After .3 normal commitment/empty brief/clean Git, authenticate allocation-scalar-native-plan-20261101 source/input/tool hashes and unused slots. Launch its exact native quiet --verify-hdl programme once under unchanged180-second/88/4096 limits; consume an existing journal instead of replay. Require actual0, nonempty HDL and completed verification. Compare complete public carriers/reports and HDL semantic conservation against retained predecessor, with explicit incomplete pre-fix current output, distribution/runtime/toolchain gaps. Preserve first failures/owned settlement and refine if necessary; no blind retry, larger limit or broad/full run before remaining .20 contract/book slices close. Commit the outcome immediately.`
+  Acceptance: `Completed clean committed scalar-reuse original PPIF native qualification under unchanged180/88/4096, plus complete carrier/report/HDL conservation and owned settlement. Preserve all causal/timing/toolchain/runtime gaps. Exact full contract remains in book-auxiliary-profile-history and prior committed task source.`
   Verification: `Clean6b1632c4ecb6 original --verify-hdl exits0, real64.40,1144185-byte HDL under unchanged180/88/4096. Complete carrier/report JSON equality preserves kinds; HDL differs only at the unique ScaffoldEmitter localtime Date. allocation-scalar-conservation retains all outputs/source/plans/streams and known-group absence. Saved reader rejects three distinguishing corruptions. Pre-fix current HDL, timing distribution, whole loaded-toolchain/runtime/full/hosted remain absent. Exact detailed source/evidence remain in1a389cdb task/history.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4: qualify original public allocation generation`
 
@@ -511,14 +511,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.8: retain child-local transaction width aliases`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.9`
-  Status: `active`
+  Status: `done`
   Goal: `Correct auxiliary-width book example and remaining profile statements.`
   Acceptance: `T1377 book04 block2 must stop claiming independent mutable X/W requirements still generate numeric HDL. Retain that metadata counterexample as explicitly unsupported, with exact refusal, and add the separately authored runnable single-source aux_shared counterpart. Review affected book13a/13b/matrix and canonical downstream statements against current carriers versus numeric reports; preserve actual reusable-formal and broader external/runtime/library boundaries. Keep every positive lisp block generation-clean and commit focused book checks.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
-  Commit: `pending`
+  Verification: `Complete unchanged T1377 Files1 Tests2 PASS with21 standalone fixtures. Native original aux_origin separately exits1 with exact combined mutable next_data refusal/no emitted output. W/X input remains byte-exact as unsupported text; separate aux_shared qualifies. Book04/13a/13b/matrix correct stale scope/default/range claims; separate reusable-formal defect remains byte-exact and matrix shrinks. book-auxiliary source/original/focused/history evidence retains. Normal book/source/claim gates qualify before .10; no full/runtime/hosted credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.9: align auxiliary example and scoped-width guidance`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.10`
-  Status: `pending`
+  Status: `active`
   Goal: `Close known full8 repairs and prepare a fresh qualification.`
   Acceptance: `After every owned causal slice commits, join the exact full8 observed-failure inventory to final-path successful receipts/current sources and preserved refusal boundaries. No complete suite credit from diagnostic controls. Declare fresh current capacity admission, unchanged command/guards/workflows, unique full9 journal/checkpoint and committed clean Memory handoff before .13 launches once. Full local pass precedes authorized normal push and all exact-SHA hosted/Pages outcomes.`
   Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.9` | `active` | Correct the auxiliary-width book example and remaining profile prose. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.10` | `active` | Join all observed repairs and commit fresh full9 admission. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — transaction-local width roots
+## Acceptance Checklist — book auxiliary/profile repair
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1368-isf-transaction-port-transaction-param-widths.t line 73 expects numeric child widths. Actual scoped carriers retain local DATA_W/TAG_W/DERIVED_W roots and immediate alias, distinct from actor DATA_W5.
-- [x] **ADDRESSED (verified)** — Only positive child carrier/eligible HDL range expectations and labels change, with one immediate-alias assertion. Full source/control witnesses preserve every original fixture, numeric parent handoff/report, direct/unrelated scope and adverse control. Book/spec distinguish named child ranges from selected parent/direct widths.
-- [x] **NO REGRESSION** — All tests successful Files=1, Tests=4 for complete actual T1368. transaction-local-widths source/native/doc-history evidence retains. Normal source/book/claim and doctrine gates qualify commitment; no generated-top forwarding, broader runtime/full/hosted credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1377-book-fsm-example-generation-audit.t line 115 identifies book04 block2. Native original check exits1 with the exact combined mutable next_data refusal; private requirement retention cannot justify numeric fallback.
+- [x] **ADDRESSED (verified)** — Original W/X source remains byte-exact as explicitly unsupported text. Separately authored aux_shared is runnable. Book04/13a/13b/matrix correct stale source/range claims, preserve separate reusable-formal defect text and shrink the matrix under unchanged limits. Full source/refusal/history evidence retains.
+- [x] **NO REGRESSION** — All tests successful Files=1, Tests=2 for complete unchanged T1377: all21 standalone fixtures generate. Exact original expected status1/refusal and no-output product retain separately. Native book/source/claim and normal gates qualify this focused slice; full local/hosted/runtime remain pending.

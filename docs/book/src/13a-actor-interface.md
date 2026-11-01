@@ -727,9 +727,12 @@ the interface block itself is a singleton actor clause.
 
 An interface `(width ...)` may be a positive integer literal, an actor-local
 scalar parameter default, or a declared actor constant that resolves to a
-positive integer. The parser returns the resolved integer width, scheduled
-`.fsm` `+size` uses that integer, and `+params` or `+constants` still preserves
-the authored declaration for review. Unknown symbolic width names, runtime
+positive integer. Qualified imported package scalar constants are also accepted.
+The parser returns the selected integer width; scheduled `.fsm` `+size` keeps
+`(param NAME)` for a parameter root or a static scalar expression for a constant.
+Eligible SystemVerilog ranges retain parameter names, while immutable widths
+fold to fixed ranges. `+params`, `+constants` and package imports preserve their
+declarations for review. Unknown symbolic width names, runtime
 interface signals, zero-valued or non-scalar actor parameters, zero-valued
 actor constants, and arbitrary expressions fail closed.
 
@@ -851,8 +854,9 @@ After hardware reset, starting the transaction copies the authored status
 reset value to `value`. The module has no `status` port. Ordinary writes to
 other storage still use the existing register assignment path.
 
-The shipped actor-owned storage forms are fixed-width internal scalar
-variables and fixed-depth banks. The preferred scalar spelling is
+The shipped actor-owned storage forms are internal scalar variables and
+scalarized banks with source-time depths. Parameter width roots retain scoped
+carriers and eligible HDL ranges; immutable widths generate fixed ranges. The preferred scalar spelling is
 `(var name (width N|PARAM|CONST))`; `(variable ...)` is the verbose alias.
 When `PARAM` is used for scalar storage width, bank width, or bank depth, it
 must name an actor-local scalar parameter default that resolves to a positive

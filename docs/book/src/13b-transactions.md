@@ -141,8 +141,9 @@ For example, `inherited` below resolves the actor's alias to eight bits, while
 The records preserve dependencies and their separate environments. Widths
 backed by actor parameters retain scoped references in scheduled `+size` entries
 and eligible SystemVerilog ranges; parser and public report widths retain the
-selected numeric defaults. Transaction-local aliases and generated child/domain
-forwarding have their own qualification boundaries. Broader library shape
+selected numeric defaults. Generated-child local width aliases also retain their
+own scoped carriers and eligible ranges; generated-top/domain configuration
+forwarding has a separate qualification boundary. Broader library shape
 specialization and runtime qualification remain separate work.
 
 A current reusable-actor defect remains owned for immediate repair: library and
@@ -360,9 +361,11 @@ Generated-child width provenance now follows the final selected ports: explicit
 formals, inherited inputs that remain in the interface, and actor-storage read
 ports. An actor alias of `W=8` remains distinct from a child-local `W=4`, even
 when both declarations appear in the same generated module. Private metadata
-keeps these lexical environments separate; scheduled carriers and public reports
-still describe their fixed resolved defaults. This does not provide generic
-HDL resizing or library shape specialization.
+keeps these lexical environments separate. Scheduled carriers preserve the
+selected scoped parameter or alias and eligible HDL ranges keep that name;
+parser/report width fields retain selected defaults. Parent handoffs remain
+numeric. This does not provide configuration forwarding or library shape
+specialization.
 
 Reusable library and ATL child modules also retain a private instance scope
 beside source defaults. For `(params (WIDTH LIMIT))`, the original `LIMIT`
