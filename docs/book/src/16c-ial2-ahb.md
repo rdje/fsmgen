@@ -369,9 +369,9 @@ preserved, and inactive read lanes are zero-filled.
 ## Guided PPIF Byte-Lane HBURST SEQ Subordinate
 
 The arithmetic-mask width selector repair restores the shipped subordinate's
-strict check. Focused literal, shift and proof-refusal checks pass; complete
-HBURST subordinate/interconnect semantic and HDL qualification remains pending
-in `PUBLICATION-REGRESSION-REPAIRS.26`. The protocol contract below is unchanged.
+strict check. Focused literal, shift and proof-refusal checks pass. Complete
+HBURST subordinate/interconnect semantic, HDL and full publication qualification
+remains pending under `PUBLICATION-REGRESSION-REPAIRS.13`; the contract is unchanged.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:

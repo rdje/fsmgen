@@ -23,6 +23,6 @@ Full10: T1490-1492 fail;1493 partial. Selector demanded bitwise-only proof
 for uncaptured arithmetic `(& (+ addr_q 1) 32'h3)`. Nov2 `.23.1` fixes
 both orders; installed/published literal intent still requires proof after
 holder/opcode edits. T2297/2268/2296 and public strict check pass; other
-semantic/HDL/full paths await `.26/.13`. Source/RED/focused receipts:
+semantic/HDL/full paths await `.13`. Source/RED/focused receipts:
 `docs/audits/push-readiness-20261025/` full10-intake/hburst-selector-*.
 Book11a retains guards. Support remains unchanged.

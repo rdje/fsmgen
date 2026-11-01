@@ -598,11 +598,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.25: align downstream width claims with scoped carriers`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.26`
-  Status: `pending`
+  Status: `done`
   Goal: `Prepare fresh full11 after all owned publication repairs/intakes.`
   Acceptance: `After .23-.25 and .27 commit, conserve actual current-source/final-path passing receipts and declared refusal boundaries. Fresh capacity/kernel pressure, unchanged guards/unfiltered programme/workflows and unique full11 journal/checkpoint; clean committed handoff before .13 once-only launch. Complete native0 precedes normal authorized push/all exact-SHA hosted/Pages success. No spent checkpoint or partial-full credit.`
-  Verification: `Pending; full10 is controlled native143/nonpassing after actual source-generation failures.`
-  Commit: `pending`
+  Verification: `Full10-repair-closure conserves23 prior source/focused joins and556 actual full10 pass paths; nine current repair/intake/doc/census receipts preserve expected refusals and all later/full gaps. Fresh admission73.54952494303386pct/pressure1 leaves five exclusive full11 slots absent; CI/guard/recorder/workflow hashes and required160 jobs unchanged. Initial instrument wrongly demanded a full10 T314 row; refusal and corrected focused-only distinction retain, with owned audit-file guard recovery. Readiness only: .13 once-only clean launch must consume complete native0 before normal push/all exact-SHA hosted/Pages.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.26: admit fresh full11 after owned publication repairs`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.27`
   Status: `done`
@@ -615,12 +615,13 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 Full10 remains nonpassing; .23.1 closes its first causal repair with focused checks.
 .24 commits request15 receiver intake; .25 corrects scoped width wording.
-.27 commits due cleanup; .26 owns fresh full11 readiness.
+.27 commits due cleanup; .26 admits fresh full11. .13 owns the first actual
+full result before normal push and exact-SHA hosted/Pages qualification.
 Publication and saved required feature delivery remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.26` | `pending` | Join current repair receipts and admit exclusive unchanged full11. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch once/consume exclusive full11; require complete native0 before push/hosted. |
 
 ## Decisions
 
@@ -630,17 +631,17 @@ Publication and saved required feature delivery remain unqualified.
 ## Blockers
 
 - Fresh complete HBURST/SEQ semantic/HDL/full qualification remains .26/.13.
-- Fresh .26 admission/full qualification remains; no user input is needed.
+- .13 owns actual full11/local/push/hosted qualification; no user input is needed.
 - Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history: artifact-census-20261102 admission/closure source.
+Exact prior task/history and final readiness instruments: full11-preflight-source-20261102.
 
-## Acceptance Checklist — due safe artifact census
+## Acceptance Checklist — full11 readiness
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S Latest artifact cleanup identifies registration495e394d1c; latest prior record update is3fe9868e30. Actual native prior bytes and captured UTC pass the installed unchanged daily-admission assertion. Age or suffix alone gives no disposal authority.
-- [x] **ADDRESSED (verified)** — New exclusive wrapper binds current installed collector/reviewer to native8647e2524 and owner .27. Actual same-volume census agrees with independent rg membership and root/Rust locations. Saved hostile member/path/Boolean/removal controls reject. All candidates retain; latest-only record and same-size book reader update. No collector policy, resource limit or disposal authority change.
-- [x] **NO REGRESSION** — Saved collector/reviewer controls pass; knowledge-map: OK is required for canonical navigation, with native book/source and normal final-index doctrines. Re-derivation: actual dated filesystem census. Falsification: independent rg plus saved hostile controls. Durability: authenticated wrapper/complete receipt/prior record/task/book/Git. No reclamation/content/future absence or original workload/HDL execution claim. .26 admits fresh full11 next.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Full10 public --check --json refused uncaptured arithmetic masks; .23.1 selector repair now has exact native strict-check GREEN and real published-intent refusal controls. Complete T1490-T1493/later-stage outcomes remain unqualified. Initial readiness instrument wrongly demanded a full10 T314 row and refused; the corrected join labels that evidence focused-only.
+- [x] **ADDRESSED (verified)** — Source/receipt joins conserve prior actual failures, final repair sources and all owned .24/.25/.27 closures. Fresh capacity/pressure, unchanged unfiltered CI/guard/recorder/workflow inventory and five unused full11 slots are declared. Commit clean before .13 once-only launch; source stays immutable while required native stages run. No old checkpoint, filter, resource change or partial-full credit.
+- [x] **NO REGRESSION** — knowledge-map: OK is required for unchanged question routes/current qualification ownership. Actual focused RED/GREEN/refusals and complete historical native successes retain exact source/log joins; native book/source and normal doctrines qualify readiness only. Re-derive sources/receipts/current capacity; falsify missing native membership/changed sources and prior adverse controls; durable immutable evidence and conditional clean resume pointer. Full11/all exact-SHA hosted/Pages success remains required and unmeasured.
