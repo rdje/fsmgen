@@ -432,17 +432,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.2.2.4: qualify original public allocation generation`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.3`
-  Status: `active`
+  Status: `done`
   Goal: `Align composition child-header diagnostics with admitted parameters.`
   Acceptance: `After .2 commits, update only stale supported-header lists in T129/T131 to include admitted +params. Preserve complete failure DTOs, blocked reasons, valid/invalid headers and every other assertion. Confirm Parser.pm and COMPOSITION_SCOPE contract, focused tests, related book and normal commit.`
-  Verification: `Selected next after original native cost outcome commits. Inspect exact current Parser.pm/COMPOSITION_SCOPE and T129/T131 before editing only stale supported-header tokens; existing ignored controls remain diagnostic only.`
-  Commit: `pending`
+  Verification: `Original full8 T129 diagnostic at line40 includes admitted +params; current Parser.pm/FailureReportBuilder bytes match that run, and canonical scope/book already describe top parameter admission. Only2 T129 and7 T131 supported-list literal/regex tokens add +params in canonical order. Exact whole-file inverses preserve all fixtures, complete DTO/context/reason/blocked-boundary and other assertions. Actual final-path focused check passes All tests successful Files2 Tests146 under unchanged guards. composition-headers-repair/focused evidence retains original/current sources, producer identity and native result; ignored controls supply no credit. Book explains supported-header hints without broadening lowering profiles. Native book/source/KMap and normal gates qualify commitment before .4.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.3: align composition supported-header expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain actor-parameter widths in legacy carrier and HDL checks.`
   Acceptance: `Update T1333 through T1337 positive width assertions to canonical scoped parameter expressions and eligible HDL ranges. Preserve every source fixture, selected numeric parser/report assertion, dataflow and adverse control. Bank depth stays source-time scalarized; fixed-width depth-only controls remain unchanged. Diagnostic ignored-path controls are not final-path qualification. Sync actor/transaction guidance and commit focused checks.`
-  Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
+  Verification: `Selected next after .3 commitment. Review current scoped parameter carriers versus numeric parser/report defaults and existing ignored exact controls before actual T1333-T1337 edits; bank depth remains scalarized.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.5`
@@ -505,7 +505,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.3` | `active` | After clean native outcome, align admitted +params diagnostic expectations. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.4` | `active` | After clean header repair, align actor-parameter carrier/HDL width assertions. |
 
 ## Decisions
 
@@ -525,8 +525,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — original public allocation qualification
+## Acceptance Checklist — composition supported-header expectations
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual original native generation now exits0 after the two committed cost interventions. Current --emit-schedule-json and complete carrier observations equal retained input products. The only HDL difference is the unique generation Date, explained by ScaffoldEmitter localtime source; no other output drift is accepted.
-- [x] **ADDRESSED (verified)** — Full native recorder/source/log, original HDL and complete public streams retain in allocation-scalar-conservation evidence. Independent known-group absence and saved-only source/output reader pass; corrupted native boolean status, HDL body with refreshed hash and JSON scalar kind are rejected. First timeout/failures stay retained; all resource limits stay fixed.
-- [x] **NO REGRESSION** — knowledge-map: OK. Complete carrier/report equality and date-only full HDL comparison pass. Native book/source/task checks and normal doctrines gate commitment. No whole-suite/runtime/hosted or timing-distribution credit; .20.3-.9 remain ahead of fresh full9.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/129-composition-unsupported-child-diagnostics.t line 40 contains +params; stale expected lists omit it. Parser.pm295 and canonical scope/book agree, with producer bytes unchanged from the failing run.
+- [x] **ADDRESSED (verified)** — Only nine literal/regex supported-list tokens add +params in canonical order. Whole-file inverse recovery preserves every fixture, DTO/reason/context/boundary and unrelated assertion. Book keeps header admission separate from lowering-profile acceptance.
+- [x] **NO REGRESSION** — All tests successful Files=2, Tests=146 in complete T129/T131. Native book/source/KMap and normal doctrine gates qualify this focused contract repair; full CI/hosted remains deferred until the remaining known set closes.

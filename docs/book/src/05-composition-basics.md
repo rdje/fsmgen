@@ -15,6 +15,9 @@ Current child kinds are:
 Other child headers such as `?bogus:child` are rejected as unsupported child
 kinds; FSMGen does not reinterpret unknown composition children as raw HDL or
 legacy extension hooks.
+The supported-header hint includes top declaration blocks such as `+params`.
+A supported header can still refuse a particular declaration or lowering
+profile; the parameter boundaries below continue to apply.
 
 The parser now accepts top `+params` declarations and resolves their defaults
 after package imports. Scalar fixed-interface RTL sources now preserve their
