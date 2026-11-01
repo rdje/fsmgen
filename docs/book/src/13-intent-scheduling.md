@@ -74,10 +74,14 @@ behavior.
   parameter defaults may use declared actor constants, actor-local scalar
   parameter defaults, earlier scalar transaction parameter defaults, or enum
   members, or qualified imported package scalar constants in scalar positions
-  and scalar aggregate/list leaves; actor constants and actor scalar parameter
-  defaults are published as literal child defaults while child-local
-  transaction dependency tokens, enum tokens, and qualified package-constant
-  tokens remain authored review tokens. Generated
+  and scalar aggregate/list leaves. Child `.fsm` defaults retain scoped
+  references: actor parameters use allocated captures, actor constants remain
+  named, and enum values use immutable support declarations. Selected IR and
+  generated-composition report defaults still show their static values. For
+  actor `(LANE1 0)`, child `(LANES (LANE0 LANE1 LIMIT_C))` retains a mutable
+  capture and refuses packed aggregate HDL. Independently authored
+  `(LANES (LANE0 0 LIMIT_C))` has the same selected child defaults and can
+  generate; a separate scalar `(WIDTH BASE_W)` keeps its actor capture. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
   may use actor-local constants, actor-local scalar parameter defaults,
   enum members, and qualified imported package scalar constants, which
