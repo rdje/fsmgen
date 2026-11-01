@@ -8,6 +8,7 @@ no warnings 'experimental::signatures';
 use Carp qw(confess);
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
+use FSM::AllocationTransitionDependencies;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub whole_signal_name ($class, $operand) {
@@ -112,7 +113,7 @@ sub _capture ($signal) {
     return unless blessed($ast) && $ast->isa('FSM::CoreAST::BinaryOp');
     my $operator = $ast->operator;
     return unless defined($operator) && !ref($operator) && $operator =~ /\A[&|^]\z/;
-    my (@names, @sources, @references);
+    my (@names, @sources, @references, @objects);
     for my $operand ($ast->left, $ast->right) {
         return unless blessed($operand) && UNIVERSAL::isa($operand, 'FSM::CoreAST::SignalRef');
         return unless __PACKAGE__->whole_signal_name($operand);
@@ -122,6 +123,7 @@ sub _capture ($signal) {
         push @names, $source->name;
         push @sources, $descriptor;
         push @references, sprintf('%x', refaddr($operand));
+        push @objects, $source;
     }
     return if $names[0] eq $names[1] && $sources[0]{object_identity} ne $sources[1]{object_identity};
     my $maximum = _maximum($sources[0]{width}, $sources[1]{width});
@@ -132,7 +134,8 @@ sub _capture ($signal) {
         operand_reference_identities => \@references, operands => \@sources,
         roles => {map {$_ => $signal->get_attribute($_)}
             qw(is_intermediate is_output is_aux_output width_declared signal_role)}});
-    return {operator => $operator, source_names => \@names, width => $maximum, state => $state};
+    return {operator => $operator, source_names => \@names, width => $maximum,
+        objects => [$signal, @objects], state => $state};
 }
 
 sub _matches ($record, $capture) {
@@ -155,7 +158,8 @@ sub prepare_core ($class, %args) {
         $_->_track_intermediate_width_allocation
             for ($signal, $signal->driving_ast->left->signal, $signal->driving_ast->right->signal);
     }
-    return {record => $record, state => $capture->{state}};
+    return FSM::AllocationTransitionDependencies->remember(
+        holder => {record => $record, state => $capture->{state}}, objects => $capture->{objects});
 }
 
 sub current_core ($class, %args) {

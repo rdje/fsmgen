@@ -1,0 +1,97 @@
+{
+  "prepared_by": "PUBLICATION-REGRESSION-REPAIRS.20.2.1",
+  "execution_owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.2",
+  "source_revision_join": "Derive the clean committed HEAD immediately after .1 normal commitment; recorder must capture that exact HEAD, and every qualified source hash below must still match. Do not reuse this journal or another source revision silently.",
+  "programme": [
+    [
+      "/usr/bin/time",
+      "-p",
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "--verbose",
+      "180s",
+      "./bin/fsmgen",
+      "--quiet",
+      "--verify-hdl",
+      "--output",
+      ".artifacts/push-readiness-20261025/allocation-public-native-20261101/axi0.sv",
+      "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif"
+    ]
+  ],
+  "recorder": [
+    "python3",
+    "-B",
+    "docs/audits/push-readiness-20261025/capture_live.py",
+    "allocation-public-native-20261101",
+    "[[\"/usr/bin/time\",\"-p\",\"timeout\",\"--signal=TERM\",\"--kill-after=5s\",\"--verbose\",\"180s\",\"./bin/fsmgen\",\"--quiet\",\"--verify-hdl\",\"--output\",\".artifacts/push-readiness-20261025/allocation-public-native-20261101/axi0.sv\",\"ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif\"]]"
+  ],
+  "journal": ".artifacts/push-readiness-20261025/allocation-public-native-20261101.state.json",
+  "exclusive_slots": [
+    ".artifacts/push-readiness-20261025/allocation-public-native-20261101.state.json",
+    ".artifacts/push-readiness-20261025/allocation-public-native-20261101.live.log",
+    "docs/audits/push-readiness-20261025/allocation-public-native-20261101.json",
+    "docs/audits/push-readiness-20261025/allocation-public-native-20261101.log.gz",
+    ".artifacts/push-readiness-20261025/allocation-public-native-20261101/axi0.sv"
+  ],
+  "output_parent": ".artifacts/push-readiness-20261025/allocation-public-native-20261101",
+  "fixture": {
+    "path": "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif",
+    "sha256": "8db9b529153f6dc4b0771b06628c830ecf63b25e2efbd4d369d34c0b93f08834"
+  },
+  "qualified_sources": [
+    {
+      "path": "perl/FSM/AllocationTransitionDependencies.pm",
+      "sha256": "1edc7a4216fefd1c196fff15bc5b720be28eff8e4d3aa902c698674c485a0e1e"
+    },
+    {
+      "path": "perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm",
+      "sha256": "b9f54c7c12a4c8cf564c730bcc2dcf168b0df13f23c9e2eaa916a6e997300910"
+    },
+    {
+      "path": "perl/FSM/IntermediateWidthAllocationSupport.pm",
+      "sha256": "31ff55e4a100977b84a8f1d0c8b5a011e5da1a18f16db99051a141dcfdc94dda"
+    },
+    {
+      "path": "perl/FSM/SourceBitwiseTreeWidthSupport.pm",
+      "sha256": "8ad2f22afd5946ec0975d14ad96bf3484eb9232119ad3d78523b65b02c89a448"
+    },
+    {
+      "path": "perl/FSM/SourceLiteralWidthAllocationSupport.pm",
+      "sha256": "2ae9fb67ea7b727b3f8ae5961effe53bb9c05c0b7e0abcdcc77d153a33981cf0"
+    },
+    {
+      "path": "t/2300-allocation-transition-dependencies.t",
+      "sha256": "9eee3c6d42525921239435dc080156a4a373592520f61d8d9be983f900ce27b0"
+    },
+    {
+      "path": "scripts/run_with_ram_guard.sh",
+      "sha256": "aee4974f740a5dceb1084abb7360ba0811022921702bb05008a5405abe538204"
+    },
+    {
+      "path": "docs/audits/push-readiness-20261025/capture_live.py",
+      "sha256": "41faf90828676ff3bd1df8c7fd1c60e81baf68d8e76774dc50090f3e247a3f7e"
+    }
+  ],
+  "external_read_only_tools": [
+    {
+      "command_name": "timeout",
+      "resolved_external_path": "/opt/homebrew/Cellar/coreutils/9.11/bin/gtimeout",
+      "sha256": "c0e18ce60dfb789571ab31139bf1c193dbcf1946f534738e5f367adb55966c16",
+      "bytes": 76760,
+      "read_only_dependency": "Installed OS/toolchain executable required for an independently bounded native observation; no generated data or cache is written here."
+    },
+    {
+      "command_name": "/usr/bin/time",
+      "resolved_external_path": "/usr/bin/time",
+      "sha256": "6fe69a2da5af0a6e965785f8fbb03901c5bb8eef7f308f70620d4458ed28cce7",
+      "bytes": 216880,
+      "read_only_dependency": "Installed OS/toolchain executable required for an independently bounded native observation; no generated data or cache is written here."
+    }
+  ],
+  "timeout_version": "timeout (GNU coreutils) 9.11\nCopyright (C) 2026 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by Padraig Brady.\n",
+  "resource_contract": "Unchanged host88 percent /descendant RSS4096MiB RAM guard; GNU timeout owns only its spawned command group. Declared180-second deadline and5-second TERM-to-KILL grace do not confer pass credit.",
+  "success_contract": "Require native exit0, complete available log, generated nonempty HDL and actual --verify-hdl completion. Collection completeness,124 timeout,137 guard/kill or any other nonzero is not success. Preserve the first outcome and owned-job settlement, refine causal work if necessary.",
+  "timing_scope": "One current /usr/bin/time -p observation only. The predecessor uses a separately declared monotonic observer; matched distribution, whole toolchain closure and completed pre-fix current HDL comparison remain absent. No speed percentage or full qualification is inferred.",
+  "handoff": "After .1 commits clean and brief is empty, verify source/tool hashes and unused slots, create only the ignored output directory, then launch once. If journal exists, consume it; never replay blindly."
+}

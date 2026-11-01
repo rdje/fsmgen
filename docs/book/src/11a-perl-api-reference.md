@@ -77,6 +77,16 @@ N-ary, literal, sliced, signed, named and unknown shapes remain outside this
 binary whole-reference profile. The factorizer and actual target-event joins below qualify the same bounded
 profile; other generic range relationships remain separate work.
 
+Source-transition [dependency selection](perl-api/FSM/AllocationTransitionDependencies.html)
+now avoids traversing known unrelated binary, source-tree and literal allocations.
+Successful constructors index their complete physical Signal participants with
+weak holder keys and a snapshot seal. Potential dependencies still receive the
+complete registry, live-state, revision and transition checks. Unknown or copied
+holders and changed snapshots use the full path. Holder JSON shapes and Signal
+fields stay unchanged; the index retains no Core graph and caches no validation
+pass. Focused currentness, transport and lifetime checks pass; confirmation of
+the original large PPIF generation remains pending.
+
 The factorizer now retains plain-data births for actual unresolved binary
 whole-reference candidates, anchored to its owner, row and AST identities. Existing
 candidate row keys preserve. A later cached width remains independent; birth

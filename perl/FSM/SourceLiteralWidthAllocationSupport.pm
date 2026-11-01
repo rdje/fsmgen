@@ -8,6 +8,7 @@ use Digest::SHA qw(sha256_hex);
 use Encode qw(encode FB_CROAK);
 use JSON::PP ();
 use Scalar::Util qw(blessed refaddr);
+use FSM::AllocationTransitionDependencies;
 use FSM::CoreExpressionWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::SourceBitwiseTreeWidthSupport;
@@ -294,7 +295,8 @@ sub prepare_core {
     my $after = eval {_capture($args{signal}, $args{children})};
     confess "Source literal allocation requires unchanged tracked source state\n"
         unless $after && _tracked($after) && $capture->{state} eq $after->{state};
-    return {record => $record, state => $after->{state}};
+    return FSM::AllocationTransitionDependencies->remember(
+        holder => {record => $record, state => $after->{state}}, objects => $after->{objects});
 }
 
 sub current_core {
@@ -348,7 +350,7 @@ sub complete_core {
         my $current = _capture($args{signal}, {phase => 'completed'}) or return;
         return unless _tracked($current) && _matches($record, $current)
             && $current->{state} eq $expected->{state} && _json()->encode($holder) eq $raw;
-        $expected;
+        FSM::AllocationTransitionDependencies->remember(holder => $expected, objects => $current->{objects});
     };
     return $@ ? undef : $completed;
 }
@@ -476,7 +478,8 @@ sub advance_core {
         return unless _advance_child_edges($state, $capture, $before, $after);
         return unless _tracked($capture) && _matches($record, $capture)
             && $capture->{state} eq _json()->encode($state);
-        {record => $record, state => $capture->{state}};
+        FSM::AllocationTransitionDependencies->remember(
+            holder => {record => $record, state => $capture->{state}}, objects => $capture->{objects});
     };
     return $@ ? undef : $advanced;
 }

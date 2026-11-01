@@ -25,7 +25,7 @@ status: current
 tags: [systemverilog, hdl, ast, width, intermediate-signal, codegen]
 evidence: >-
   perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/SourceBitwiseTreeWidthSupport.pm; docs/audits/source-bitwise-event-publisher-20261029.json.gz;
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-9]*.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2300*.t t/221[5-9]*.t t/219[0124567]*.t t/208-*.t t/2208*.t t/2210*.t t/223[356789]*.t t/224[0-9]*.t
 ---
 
 Original card/proofs: `docs/audits/width-card-evidence-20261028.json.gz`, `original_cards[card path]`; authenticate UTF-8 `source` against `sha256` before reading.
@@ -46,4 +46,4 @@ SourceBitwiseTreePolicySupport bounds closed ordered tree/origin/max. Explicit C
 Parser source_tree_events: fresh trees; only exact reference/role/metadata refresh. Parser/facade/backend/selected targets bind current policy; binary events stay two-slot; negated n-ary wraps that helper in scalar logical !. Direct widths: frozen leaves T2243; leaf intent T2244; recursive Core tree/binary edges/repeats/bounds/child/raw fences T2245; independent child targets/currentness T2246; computed binary T2247; ranges/guards/generation fence T2248. Full .6 pending.
 T2269 joins the former unsized Core1/SV32 refusal to literal source/final declaration proof; Core widths preserve.
 
-P1 cost: PUBLICATION-REGRESSION-REPAIRS.20.2 owns unrelated tree rescans; its intake retains matched IAL1/IAL0/reports and sampled stacks. Causal intervention/current HDL are pending.
+PUBLICATION-REGRESSION-REPAIRS.20.2.1: weak snapshot index skips nonmembers; potential members still fully validate. T2300 passes; .20.2.2 native PPIF confirmation pending.

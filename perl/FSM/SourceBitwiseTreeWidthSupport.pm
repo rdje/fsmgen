@@ -8,6 +8,7 @@ use Hash::Util::FieldHash qw(fieldhash);
 use JSON::PP ();
 use Math::BigInt;
 use Scalar::Util qw(blessed refaddr);
+use FSM::AllocationTransitionDependencies;
 use FSM::IntermediateWidthAllocationSupport;
 use FSM::IntermediateWidthGraphPolicySupport ();
 use FSM::SourceBitwiseTreePolicySupport;
@@ -135,7 +136,8 @@ sub prepare_core {
     }
     confess "Source bitwise tree allocation requires tracked result and leaf revisions\n"
         unless _tracked($capture);
-    return {record => $record, state => $capture->{state}};
+    return FSM::AllocationTransitionDependencies->remember(
+        holder => {record => $record, state => $capture->{state}}, objects => $capture->{objects});
 }
 
 sub current_core {

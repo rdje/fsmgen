@@ -1,0 +1,28 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.20.2.1",
+  "source_witness": "docs/audits/push-readiness-20261025/allocation-dependencies-history-rollover-source-20261101.json.gz",
+  "source_witness_sha256": "95e7dd5f05ce6d18916eef4c43ff2241a5abcf80247f7ca91b2842328050ff69",
+  "manifest": "docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl",
+  "source_identity": {
+    "record_type": "acceptance_history",
+    "schema_version": 1,
+    "history_id": "through_e86d3ff07bf7",
+    "source_revision": "e86d3ff07bf762ecf8ea77e7afa2967272d33793",
+    "source_path": "docs/tasks/PUBLICATION-REGRESSION-REPAIRS.md",
+    "source_sha256": "00ea0f53a13f6534e98adba760094337de4891c0540daf4b2734780ebc13adbf",
+    "source_lines": 489,
+    "source_bytes": 120094,
+    "start_heading": "Version-Retrievable Historical Views",
+    "history_sha256": "73da2e19d65cd9fd1f56fbb74a4b42d5665c5a05757147635234483a3da2d942",
+    "history_lines": 13,
+    "history_bytes": 2288,
+    "history_sections": 2,
+    "live_heading": "Version-Retrievable Historical Views",
+    "retention_contract": "fsmgen_required_history"
+  },
+  "live_prefix_and_fresh_acceptance_exactly_unchanged": true,
+  "unretained_residue_bytes": 0,
+  "before_bytes": 126299,
+  "after_bytes": 124314,
+  "scope": "Existing same-tree history protocol after mandatory hook ceiling refusal. Every existing limit/state/milestone remains fixed. Later current-node summaries may route original historical wording to this complete source and the first-refusal source."
+}

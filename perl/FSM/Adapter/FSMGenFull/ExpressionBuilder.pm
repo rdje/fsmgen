@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use Scalar::Util qw(blessed refaddr);
 use JSON::PP ();
+use FSM::AllocationTransitionDependencies;
 use FSM::CoreAST;
 use FSM::CoreExpressionWidthSupport;
 use FSM::IntermediateWidthAllocationSupport;
@@ -171,6 +172,8 @@ sub _literal_allocation_transition($self, $signal, $attribute, $value, $write, $
     my $children = $self->_source_literal_birth_children;
     my @current;
     for my $event (@$events) {
+        next unless FSM::AllocationTransitionDependencies->may_affect(
+            holder => $event->{holder}, signal => $signal);
         my $result = $self->{signal_manager}->get_signal($event->{signal_name});
         my $capture = $self->_source_literal_allocation_registry_matches($result, $children) or next;
         next unless grep {refaddr($_) == refaddr($signal)} @{$capture->{objects}};
@@ -204,6 +207,8 @@ sub _source_tree_allocation_transition($self, $signal, $attribute, $value, $writ
     my $identity = sprintf('%x', refaddr($signal));
     my @current;
     for my $event (@$events) {
+        next unless FSM::AllocationTransitionDependencies->may_affect(
+            holder => $event->{holder}, signal => $signal);
         my $result = $self->{signal_manager}->get_signal($event->{signal_name});
         next unless $self->_source_tree_allocation_registry_matches($result);
         my $record = FSM::SourceBitwiseTreeWidthSupport->current_core(signal => $result, holder => $event->{holder});
@@ -245,6 +250,8 @@ sub _binary_allocation_transition($self, $signal, $attribute, $value, $write) {
     my $identity = sprintf('%x', refaddr($signal));
     my @current;
     for my $event (@$events) {
+        next unless FSM::AllocationTransitionDependencies->may_affect(
+            holder => $event->{holder}, signal => $signal);
         my $result = $self->{signal_manager}->get_signal($event->{signal_name});
         next unless $self->_allocation_registry_matches($result);
         my $record = FSM::IntermediateWidthAllocationSupport->current_core(signal => $result, holder => $event->{holder});
