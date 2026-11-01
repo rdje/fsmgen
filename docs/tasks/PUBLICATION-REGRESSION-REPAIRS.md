@@ -448,8 +448,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.5`
   Status: `done`
   Goal: `Retain immutable actor-constant width sources.`
-  Acceptance: `Update only stale carrier assertions in T1338 through T1342 to immutable constant expressions. Keep fixed HDL ranges, all original constant/source/parser/report/dataflow/negative checks and scalarized depths. Never promote constants to mutable parameters. Sync book boundaries; run actual focused files and commit.`
-  Verification: `Actual final-path T1338-T1342 pass All tests successful Files5 Tests17. Only nine positive carrier assertions/labels now retain immutable + DATA_W/STATE_W0 expressions; all fixed HDL, original fixtures, numeric parser/reports, dataflow/refusal and literal depth-only cases remain byte-exact. Complete source/hunks/inverse proofs and first/control epochs retain. Book13a explains static source context/fixed HDL and source-time depth; existing code fences stay unchanged. Existing module-carrier card funds current constant reverify cases with a shorter equivalent title, retaining every old question/fact/route at nonpositive bytes. Same-tree history curation funds bounded .6 children under fixed limits. Native book/source/KMap and normal gates qualify commitment before .6.1.`
+  Acceptance: `Completed immutable actor-constant carrier checks; preserve fixed HDL, numeric reports, all fixtures/negative/dataflow and scalarized depths. Complete original contract remains in f881130a task/history.`
+  Verification: `Committedf881130aa. Complete T1338-T1342 pass Files5 Tests17. Nine carrier assertions/labels retain static + DATA_W/STATE_W0 expressions; exact inverses preserve all other bytes, including every HDL assertion. Book/card preserve static context and prior examples/facts/routes within fixed budgets. All original/control/source/gate outcomes remain in actor-constant-widths evidence and exact f881 task/history. No broader generic/depth/override/runtime/full qualification.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.5: retain immutable actor constant width expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6`
@@ -462,17 +462,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.1`
-  Status: `active`
+  Status: `done`
   Goal: `Retain scalar actor default-source width carriers.`
   Acceptance: `t/1345-isf-actor-param-actor-constants.t and t/1349-isf-actor-param-package-constants.t only: use retained exact controls to preserve actor parameter roots whose defaults use actor/package constants. Keep every fixture/default/parser/report/HDL/refusal assertion. Correct only stale positive carrier expectations and labels; focused two-file check, relevant book and normal commit before mixed-aggregate slices.`
-  Verification: `Pending; original full8/source/control evidence retains. No final-path credit yet.`
-  Commit: `pending`
+  Verification: `Actual T1345-isf-actor-param-actor-constants and T1349-isf-actor-param-package-constants pass All tests successful Files2 Tests4. Only two positive carrier regexes/labels change to param DATA_W; every original source/default/IR/report/import/CLI/HDL/refusal assertion remains byte-exact by full inverses. Book distinguishes immutable default source from parameter width identity. scalar-default-widths artifacts retain original/current source and native receipt. Book/source/KMap/current claims and normal gates qualify commitment before .2; no wider aggregate/full/runtime credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.1: retain constant-backed parameter width roots`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actor parameter dependencies across aggregate defaults.`
   Acceptance: `T1346: preserve every original parser/IR/report/default assertion and original source. Assert exact mixed mutable-aggregate CLI refusal. Separately author an immutable counterpart, independently compare selected values/kinds, and retain canonical scalar source relations and positive HDL/default checks. Follow T2110/T30 profile; no producer freezing or guard bypass. Focused test/book and commit.`
-  Verification: `Pending; original full8/source/control evidence retains. No final-path credit yet.`
+  Verification: `Selected next after .1 commits. Read complete T1346 and accepted T2110/T30/direct-aggregate profile before changes. Preserve all original source assertions, assert exact mixed mutable refusal, independently author immutable counterpart and compare complete selected parameter values/JSON kinds before positive HDL.`
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6.3`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.6.1` | `active` | After clean constant-width repair, align scalar default-backed carrier widths. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.6.2` | `active` | After clean scalar-default repair, qualify actor parameter aggregate boundary. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — immutable actor constant widths
+## Acceptance Checklist — scalar constant-backed parameter widths
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 native failure at t/1338-isf-interface-actor-constant-widths.t line 41 expects a numeric carrier despite retained immutable constant expression. Canonical module-carrier/static-range contracts and complete original/control products distinguish this static source from mutable params.
-- [x] **ADDRESSED (verified)** — Nine positive carrier assertions/labels retain static + DATA_W/STATE_W0 expressions. Whole-file inverses preserve all fixtures, numeric caches/reports, fixed HDL assertions, bank depth, dataflow and adverse cases. Book/card retain static context without inventing generic constant/depth behavior.
-- [x] **NO REGRESSION** — All tests successful Files=5, Tests=17 in complete T1338-T1342. Existing code fences and bounded facts/routes preserve; book/source/KMap and normal gates qualify commitment. Remaining default/import/local/book slices precede full CI and hosted publication.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1345-isf-actor-param-actor-constants.t line 66 expects numeric carrier widths. Retained complete products and module-carrier contract show mutable DATA_W roots despite immutable actor/package defaults.
+- [x] **ADDRESSED (verified)** — Only two positive carrier regexes/labels now retain param DATA_W. Whole-file inverses preserve all fixtures/default/IR/report/import/CLI/HDL/refusal cases. Book separates default-source provenance from width-source identity.
+- [x] **NO REGRESSION** — All tests successful Files=2, Tests=4 in complete actual T1345/T1349 ISF files. Source/book/KMap/claim and normal gates qualify this focused slice; mutable aggregate/full/runtime qualification remains separate.

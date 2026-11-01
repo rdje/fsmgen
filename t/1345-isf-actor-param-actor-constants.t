@@ -63,8 +63,8 @@ ISF
         'scheduled .fsm preserves authored actor constants');
     like($fsm, qr/\(\+params\s+\(DATA_W DEFAULT_WIDTH\)\s+\(LANES \(LANE0 LANE1\)\)\s+\)/s,
         'scheduled .fsm preserves authored actor-constant parameter defaults');
-    like($fsm, qr/\(\+size[\s\S]*\(data_in 8\)[\s\S]*\(data_out 8\)/,
-        'scheduled .fsm uses resolved parameter widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_in \(param DATA_W\)\)[\s\S]*\(data_out \(param DATA_W\)\)/,
+        'scheduled .fsm retains parameter widths with actor-constant defaults');
     is_deeply(
         decode_json($scheduler->report($actor))->{actor_params},
         [

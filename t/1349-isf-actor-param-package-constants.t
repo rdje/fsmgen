@@ -77,8 +77,8 @@ ISF
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
     like($fsm, qr/\(\+params\s+\(DATA_W shared\.DEFAULT_WIDTH\)\s+\(LANES \(shared\.LANE0 shared\.LANE1\)\)\s+\)/s,
         'scheduled .fsm preserves authored package-constant parameter defaults');
-    like($fsm, qr/\(\+size[\s\S]*\(data_in 8\)[\s\S]*\(data_out 8\)/,
-        'scheduled .fsm uses resolved package-constant-backed parameter widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_in \(param DATA_W\)\)[\s\S]*\(data_out \(param DATA_W\)\)/,
+        'scheduled .fsm retains parameter widths with package-constant defaults');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+constants[\s\S]*\(DEFAULT_WIDTH 4'd8\)[\s\S]*\(LANE0 1\)[\s\S]*\(LANE1 0\)/,
         'scheduled .fsm embeds imported package constant root');
     is_deeply(

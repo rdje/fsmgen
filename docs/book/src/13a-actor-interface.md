@@ -623,6 +623,10 @@ Immutable actor constants retain a static carrier expression such as
 context. Eligible SystemVerilog folds it to a fixed numeric width. Parser and
 report values stay numeric; constant-backed bank depths still determine the
 source-time scalarized entry count.
+A parameter whose default uses an actor or package constant still keeps its
+parameter width root. The static carrier form applies when the width names the
+constant directly; default-source provenance and width-source provenance remain
+separate.
 
 Declared inputs remain public even when no transaction or rule reads them.
 The scheduled FSM carries their roles in `+interface`; `+size` carries their
