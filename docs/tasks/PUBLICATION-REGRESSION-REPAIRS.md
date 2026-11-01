@@ -455,8 +455,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.6`
   Status: `done`
   Goal: `Align parameter-default integration with canonical aggregate profiles.`
-  Acceptance: `T1345 through T1349 retain authored scalar/default source and current carrier relations. For T1346/T1347/T1348 preserve every original parser/IR/report/default assertion, assert the exact mixed mutable-aggregate refusal, and qualify a separately authored immutable equivalent with independent selected-value/kind conservation for positive HDL checks, following accepted T2110/T30 and R14.3.2.4.2. Preserve generated captures, local aliases, constants and enum meanings. Do not erase old cases, freeze production provenance, weaken guards or claim new aggregate support. Sync canonical downstream/book and commit.`
-  Verification: `Joined actual T1345-T1349 passing receipts to unchanged final test sources via full-source witness hashes; no test replay. Current book and canonical downstream now distinguish selected IR/report values from scoped child aliases/captures/static support and immutable aggregate HDL admission. Original mutable cases and authored static counterparts remain explicit. default-profile-doc-closure retains join/source evidence. No wider runtime/override/full/hosted credit.`
+  Acceptance: `Completed T1345-T1349 default-profile contracts with original metadata/refusals, independently authored immutable counterparts and complete selected-value/kind checks. Exact original contract remains in e96393ffd and package-widths-doc-history witness.`
+  Verification: `Children .1-.5 commit focused native tests and source conservation plus canonical book/spec closure. default-profile-doc-closure joins receipts to current sources without replay. No wider runtime/override/full/hosted credit. Exact detailed evidence remains in e96393ffd task/history.`
   Commit: `child slices`
   Children: `PUBLICATION-REGRESSION-REPAIRS.20.6.1, PUBLICATION-REGRESSION-REPAIRS.20.6.2, PUBLICATION-REGRESSION-REPAIRS.20.6.3, PUBLICATION-REGRESSION-REPAIRS.20.6.4, PUBLICATION-REGRESSION-REPAIRS.20.6.5`
 
@@ -497,14 +497,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.20.6.5: align default-profile reference wording`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.7`
-  Status: `active`
+  Status: `done`
   Goal: `Retain imported immutable width expressions.`
   Acceptance: `Update only stale scheduled-source assertions in T1353/T1354/T1355/T1357 to exact imported constant expressions. Keep all fixtures/imports, selected numeric parser/reports, fixed HDL, bank/dataflow and refusal controls. Distinguish mutable actor params whose defaults use constants. Sync downstream/book, actual focused tests and normal commit.`
-  Verification: `Pending. Also correct book13 Design Principles where package-backed scheduled widths are described as literal integers; parser/report/fixed HDL defaults stay separate. T1353-T1357 and ignored controls remain to qualify actual paths.`
-  Commit: `pending`
+  Verification: `Actual T1353/T1354/T1355/T1357 Files4 Tests8 PASS. Four carrier regexes/labels retain qualified static expressions. Full source witnesses preserve all fixtures, numeric parser/reports, fixed HDL, imports, bank/dataflow and adverse controls. package-widths source/focused/doc-history retains; book/spec correct numeric-source claims and preserve depth scalarization. Normal gates qualify before .8; no production/full/runtime credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.20.7: retain imported immutable width expressions`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.20.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain child-local transaction width and alias identity.`
   Acceptance: `T1368 preserves child DATA_W8 and immediate DERIVED_W against distinct actor constant DATA_W5. Update only positive child carrier/eligible HDL range assertions; retain numeric parent handoffs, parser/reports, local/direct scopes, source fixtures and every adverse control. Run actual test, sync transaction guidance and commit.`
   Verification: `Pending; ignored diagnostic controls supply no final-path or complete-suite credit.`
@@ -542,7 +542,7 @@ Saved private feature implementation remains pending until publication completes
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.7` | `active` | Retain immutable imported-width source expressions. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.20.8` | `active` | Retain transaction-local width roots and aliases. |
 
 ## Decisions
 
@@ -562,8 +562,8 @@ Saved private feature implementation remains pending until publication completes
 
 Exact prior source and historical acceptance remain in the rollover witness.
 
-## Acceptance Checklist — default reference closure
+## Acceptance Checklist — imported immutable widths
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Retained full8 diagnostic at t/1347-isf-transaction-param-actor-static-defaults.t line 63 contradicts literalized-child source wording. Current passing receipts preserve selected IR/report defaults and scoped captures.
-- [x] **ADDRESSED (verified)** — default-profile-doc-closure joins native receipts to exact current test source witnesses; book/spec distinguish selected reports, scoped carriers and immutable aggregate HDL admission. Fresh boxes also cover changed doctrine authority/census paths.
-- [x] **NO REGRESSION** — Saved actual native receipts report All tests successful Files=1, Tests=2 for T1346/T1347/T1348 and Files=2, Tests=4 for T1345/T1349. Logs/source hashes agree; no test replay or full/runtime/hosted credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original full8 diagnostic at t/1353-isf-interface-package-constant-widths.t line 58 expects a numeric source width. Current scoped carrier contract retains imported immutable expressions; parser/report/fixed HDL products remain unchanged.
+- [x] **ADDRESSED (verified)** — Only four positive scheduled-width regexes and their labels change. Complete source/control witnesses preserve all fixtures, package roots/imports, numeric parser/reports, fixed HDL, banks/dataflow and negative controls. Book/spec distinguish source expressions from selected widths and scalarized depths.
+- [x] **NO REGRESSION** — All tests successful Files=4, Tests=8 for complete actual T1353/T1354/T1355/T1357. package-widths source/native/doc-history evidence retains. Normal source/book/claim and doctrine gates qualify commitment; no generic/override/runtime/full/hosted credit.

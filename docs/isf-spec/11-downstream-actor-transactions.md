@@ -667,27 +667,27 @@ Rules:
   Actor top-level interface port widths may use qualified imported package
   scalar constants when the package is imported, the named package
   `+constants` entry exists, and the constant resolves to a positive integer
-  scalar. Package-constant-backed interface widths publish as resolved integer
-  public port widths, scheduled `.fsm` `+size` entries, schedule-report
-  evidence, and HDL port ranges. Unqualified package constants, aggregate
+  scalar. Parser handoff and existing reports publish selected integer widths;
+  scheduled `.fsm` `+size` retains immutable `(+ shared.DEFAULT_WIDTH 0)`
+  expressions with imports/embedded roots, while HDL uses fixed port ranges. Unqualified package constants, aggregate
   package constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, runtime
   signals, and expressions fail closed.
   Actor-owned scalar storage widths may also use qualified imported package
   scalar constants under the same imported-package and positive-integer scalar
   requirements. Package-constant-backed scalar storage widths publish as
-  resolved integer parser-handoff storage widths, scheduled `.fsm` `+size`
-  entries, `inferred_storage[].width` report evidence, width evidence, and HDL
-  register ranges. Unqualified package constants, aggregate package constants,
+  resolved integer parser-handoff storage widths, `inferred_storage[].width`
+  and width evidence, and fixed HDL register ranges. Scheduled `.fsm` `+size`
+  retains the qualified immutable constant expression. Unqualified package constants, aggregate package constants,
   package constant member/item paths, ambiguous local-enum/package-constant
   spellings, zero-valued constants, runtime signals, and expressions fail
   closed.
   Actor-owned bank storage widths may use qualified imported package scalar
   constants under the same imported-package and positive-integer scalar
-  requirements. Package-constant-backed bank widths publish as resolved
-  integer parser-handoff bank widths, scheduled `.fsm` scalarized `+size`
-  entries, `inferred_storage[].width`, `bank_accesses[].width`, width
-  evidence, and HDL register ranges. Unqualified package constants, aggregate
+  requirements. Parser handoff, `inferred_storage[].width`,
+  `bank_accesses[].width` and width evidence retain selected integer bank
+  widths; HDL uses fixed register ranges. Scalarized `.fsm` `+size` entries
+  retain the qualified immutable constant expression. Unqualified package constants, aggregate
   package constants, package constant member/item paths, ambiguous
   local-enum/package-constant spellings, zero-valued constants, runtime
   signals, and expressions fail closed.
@@ -704,9 +704,9 @@ Rules:
   Transaction-local port widths may use qualified imported package scalar
   constants under the same imported-package and positive-integer scalar
   requirements. Package-constant-backed transaction port widths publish as
-  resolved integer parser-handoff port widths, scheduled `.fsm` `+size`
-  entries for activation handoff storage, `transaction_port_bindings[]`
-  report widths, and HDL register ranges. Unknown or unqualified package
+  resolved integer parser-handoff port widths, `transaction_port_bindings[]`
+  report widths, and fixed HDL register ranges. Scheduled `.fsm` `+size` for
+  activation handoff storage retains the qualified immutable constant expression. Unknown or unqualified package
   constants, aggregate package constants, package constant member/item paths,
   ambiguous local-enum/package-constant spellings, zero-valued constants,
   runtime signals, and expressions fail closed.

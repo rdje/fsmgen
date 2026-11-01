@@ -55,8 +55,8 @@ ISF
     my $scheduler = FSM::Scheduler::ISF->new();
     my $fsm = $scheduler->lower($actor)->{files}{'package_constant_bank_storage_width.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(\+size[\s\S]*\(data_0 8\)[\s\S]*\(data_1 8\)/,
-        'scheduled .fsm uses resolved package-constant bank widths');
+    like($fsm, qr/\(\+size[\s\S]*\(data_0 \(\+ shared\.DEFAULT_WIDTH 0\)\)[\s\S]*\(data_1 \(\+ shared\.DEFAULT_WIDTH 0\)\)/,
+        'scheduled .fsm retains immutable package-constant bank width expressions');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+constants[\s\S]*\(DEFAULT_WIDTH 4'd8\)/,
         'scheduled .fsm embeds imported package root');
     like($fsm, qr/\(<- \(data_0 wdata\) <\(== idx 0\)\)/, 'store uses resolved scalarized bank entry');

@@ -56,8 +56,8 @@ ISF
     my $scheduler = FSM::Scheduler::ISF->new();
     my $fsm = $scheduler->lower($actor)->{files}{'package_constant_scalar_storage_width.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(\+size[\s\S]*\(counter 8\)[\s\S]*\(shadow 1\)/,
-        'scheduled .fsm uses resolved package-constant scalar storage widths');
+    like($fsm, qr/\(\+size[\s\S]*\(counter \(\+ shared\.DEFAULT_WIDTH 0\)\)[\s\S]*\(shadow \(\+ shared\.SIDE_WIDTH 0\)\)/,
+        'scheduled .fsm retains immutable package-constant scalar storage width expressions');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+constants[\s\S]*\(DEFAULT_WIDTH 4'd8\)[\s\S]*\(SIDE_WIDTH 1\)/,
         'scheduled .fsm embeds imported package root');
 

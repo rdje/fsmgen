@@ -86,22 +86,16 @@ behavior.
   may use actor-local constants, actor-local scalar parameter defaults,
   enum members, and qualified imported package scalar constants, which
   resolve to literal generated-top bindings.
-  Actor top-level interface widths may also use qualified imported package
-  scalar constants when they resolve to positive integers; parser handoff,
-  scheduled `.fsm`, reports, and HDL publish the resolved integer width.
-  Actor-owned scalar storage widths may use the same qualified package scalar
-  constant form when it resolves to a positive integer; parser handoff,
-  scheduled `.fsm`, `inferred_storage[]`, width evidence, and HDL publish the
-  resolved integer width. Actor-owned bank widths may use the same qualified
-  package scalar constant form; parser handoff, scalarized scheduled `.fsm`
-  `+size`, `inferred_storage[]`, `bank_accesses[]`, width evidence, and HDL
-  publish the resolved integer width. Actor-owned bank depths may use the same
-  qualified package scalar constant form; parser handoff, scalarized
-  scheduled `.fsm` `+size`, `inferred_storage[]`, `bank_accesses[]` depth and
-  scalar-entry evidence, and HDL publish the resolved integer depth.
-  Transaction-local port widths may use the same qualified package scalar
-  constant form; parser handoff, scheduled `.fsm` activation handoff storage,
-  `transaction_port_bindings[]`, and HDL publish the resolved integer width.
+  Qualified imported package scalar constants that resolve to positive integers
+  may size actor interface ports, scalar storage, bank entries and transaction
+  port handoff storage. Parser handoff and existing width reports retain the
+  selected integer; eligible HDL uses fixed ranges. Scheduled `.fsm` `+size`
+  retains the immutable source expression, for example
+  `(+ shared.DEFAULT_WIDTH 0)`, with package imports and embedded roots.
+  This differs from an actor parameter whose default references that constant:
+  the parameter width retains `(param NAME)`. Bank depths remain source-time
+  counts, with scalar-entry families and report depth evidence resolved before
+  emission.
   Generated child and direct/non-generated transaction-local port widths may
   also use same-transaction scalar parameter defaults that resolve to positive
   integers.

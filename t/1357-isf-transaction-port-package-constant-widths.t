@@ -63,8 +63,8 @@ ISF
     my $scheduler = FSM::Scheduler::ISF->new();
     my $fsm = $scheduler->lower($actor)->{files}{'package_constant_transaction_port_width.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr 8\)[\s\S]*\(isf_port_child_data 8\)/,
-        'scheduled .fsm uses resolved package-constant transaction port widths');
+    like($fsm, qr/\(\+size[\s\S]*\(isf_port_child_addr \(\+ shared\.DEFAULT_WIDTH 0\)\)[\s\S]*\(isf_port_child_data \(\+ shared\.DEFAULT_WIDTH 0\)\)/,
+        'scheduled .fsm retains immutable package-constant transaction port width expressions');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+constants[\s\S]*\(DEFAULT_WIDTH 4'd8\)/,
         'scheduled .fsm embeds imported package root');
     like($fsm, qr/\(= \(isf_port_child_addr req_addr\)\)/, 'do binding drives resolved input port');
