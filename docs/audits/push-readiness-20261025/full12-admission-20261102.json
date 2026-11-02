@@ -1,0 +1,88 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.28",
+  "source_revision": "e6e4eff1604ad2954a007d23f3e18b0bba98078b",
+  "contract": "docs/audits/current-capacity-admission-20261025/contract.json",
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/vm_stat"
+      ],
+      "started_utc": "2026-11-02T08:07:45.251214+00:00",
+      "elapsed_ns": 2679167,
+      "exit_status": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     5114.\nPages active:                                 268728.\nPages inactive:                               264726.\nPages speculative:                              2656.\nPages throttled:                                   0.\nPages wired down:                             272908.\nPages purgeable:                                  26.\n\"Translation faults\":                   258314471866.\nPages copy-on-write:                     35395827703.\nPages zero filled:                       76477559500.\nPages reactivated:                        6966037927.\nPages purged:                              224870790.\nFile-backed pages:                            185590.\nAnonymous pages:                              350520.\nPages stored in compressor:                  1356367.\nPages occupied by compressor:                 724932.\nDecompressions:                           6280665950.\nCompressions:                             7200651111.\nPageins:                                  2662341258.\nPageouts:                                     949413.\nSwapins:                                    62937598.\nSwapouts:                                   86074789.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "started_utc": "2026-11-02T08:07:45.254032+00:00",
+      "elapsed_ns": 2313625,
+      "exit_status": 0,
+      "stdout": "25769803776\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/sbin/sysctl",
+        "-n",
+        "kern.memorystatus_vm_pressure_level"
+      ],
+      "started_utc": "2026-11-02T08:07:45.256368+00:00",
+      "elapsed_ns": 2045125,
+      "exit_status": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    }
+  ],
+  "capacity": {
+    "page_bytes": 16384,
+    "physical_bytes": 25769803776,
+    "counters": {
+      "Pages active": 268728,
+      "Pages inactive": 264726,
+      "Pages speculative": 2656,
+      "Pages wired down": 272908,
+      "Pages occupied by compressor": 724932,
+      "Pages purgeable": 26,
+      "File-backed pages": 185590
+    },
+    "used_bytes": 22091104256,
+    "used_pct": 85.72476704915364
+  },
+  "kernel_pressure_level": 2,
+  "independent_saved_counter_parser": {
+    "command": [
+      "/usr/bin/awk",
+      "-v",
+      "t=25769803776",
+      "/page size of/ {for(j=1;j<=NF;j++)if($j==\"size\")ps=$(j+2)} /^Pages active:/{a=$3+0} /^Pages inactive:/{i=$3+0} /^Pages speculative:/{s=$3+0} /^Pages wired down:/{w=$4+0} /^Pages occupied by compressor:/{c=$5+0} /^Pages purgeable:/{p=$3+0} /^File-backed pages:/{e=$3+0} END{printf \"%.12f\\n\",(a+i+s+w+c-p-e)*ps*100/t}"
+    ],
+    "input": "commands[0].stdout",
+    "exit_status": 0,
+    "stdout": "85.724767049154\n",
+    "stderr": "",
+    "scope": "Independent parser of the same adopted formula/raw VM sample; not another Mach sampler."
+  },
+  "new_exclusive_slots": [
+    ".artifacts/push-readiness-20261025/local-full-ci-12.state.json",
+    ".artifacts/push-readiness-20261025/local-full-ci-12.live.log",
+    ".artifacts/t296/push-readiness-20261025-full12.json",
+    "docs/audits/push-readiness-20261025/local-full-ci-12.json",
+    "docs/audits/push-readiness-20261025/local-full-ci-12.log.gz"
+  ],
+  "ambient_fsmgen_selectors": {},
+  "limits": {
+    "host_pct": 88,
+    "descendant_mib": 4096
+  },
+  "admitted": false,
+  "scope": "Current admission only, no future headroom guarantee or original-cutoff attribution. No process termination/cache deletion/guard change.",
+  "producer": {
+    "source": "from pathlib import Path\nimport json,subprocess,re,time,datetime,hashlib,os\nroot=Path.cwd();base=Path('docs/audits/push-readiness-20261025');old=json.loads((base/'full6-admission-20261031.json').read_text());rows=[]\nfor cmd in [['/usr/bin/vm_stat'],['/usr/sbin/sysctl','-n','hw.memsize'],['/usr/sbin/sysctl','-n','kern.memorystatus_vm_pressure_level']]:\n start=datetime.datetime.now(datetime.timezone.utc).isoformat();t=time.monotonic_ns();r=subprocess.run(cmd,capture_output=True,text=True,timeout=15);rows.append({'command':cmd,'started_utc':start,'elapsed_ns':time.monotonic_ns()-t,'exit_status':r.returncode,'stdout':r.stdout,'stderr':r.stderr});assert r.returncode==0\nvm=rows[0]['stdout'];total=int(rows[1]['stdout']);pressure=int(rows[2]['stdout']);page=int(re.search(r'page size of (\\d+)',vm)[1]);names=['Pages active','Pages inactive','Pages speculative','Pages wired down','Pages occupied by compressor','Pages purgeable','File-backed pages'];counts={name:int(re.search(r'^'+re.escape(name)+r':\\s+(\\d+)',vm,re.M)[1]) for name in names};used=(sum(counts[x] for x in names[:5])-sum(counts[x] for x in names[5:]))*page;pct=used*100/total\ncmd=old['independent_saved_counter_parser']['command'].copy();cmd[2]='t='+str(total);r=subprocess.run(cmd,input=vm,capture_output=True,text=True,timeout=15);assert r.returncode==0 and abs(float(r.stdout.strip())-pct)<1e-9\nslots=['.artifacts/push-readiness-20261025/local-full-ci-12.state.json','.artifacts/push-readiness-20261025/local-full-ci-12.live.log','.artifacts/t296/push-readiness-20261025-full12.json',str(base/'local-full-ci-12.json'),str(base/'local-full-ci-12.log.gz')];assert all(not Path(x).exists() and not Path(x).is_symlink() for x in slots)\nselectors={k:v for k,v in os.environ.items() if k.startswith('FSMGEN_')};assert not any(k in selectors for k in ['FSMGEN_T296_CHECKPOINT','FSMGEN_SOURCE_QUERY_ALL','FSMGEN_VIAL_SCALE_EXACT','FSMGEN_T296_SHARD_INDEX','FSMGEN_T296_SHARD_COUNT'])\npacket={'owner':'PUBLICATION-REGRESSION-REPAIRS.28','source_revision':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'contract':old['contract'],'commands':rows,'capacity':{'page_bytes':page,'physical_bytes':total,'counters':counts,'used_bytes':used,'used_pct':pct},'kernel_pressure_level':pressure,'independent_saved_counter_parser':{'command':cmd,'input':'commands[0].stdout','exit_status':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'scope':'Independent parser of the same adopted formula/raw VM sample; not another Mach sampler.'},'new_exclusive_slots':slots,'ambient_fsmgen_selectors':selectors,'limits':{'host_pct':88,'descendant_mib':4096},'admitted':pct<88 and pressure==1,'scope':'Current admission only, no future headroom guarantee or original-cutoff attribution. No process termination/cache deletion/guard change.','producer':{'source':Path(__file__).read_text(),'sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}}\npath=base/'full12-admission-20261102.json';assert not path.exists();path.write_text(json.dumps(packet,indent=2)+'\\n');assert packet['admitted'];print(json.dumps({'capacity_pct':pct,'pressure':pressure,'slots_absent':len(slots)}))\n",
+    "sha256": "8c98e8d1c70a073150792bde667db8b44ca2b5c6b5bf7115d66b0ea30fc3f211"
+  }
+}

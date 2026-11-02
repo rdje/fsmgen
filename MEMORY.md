@@ -7,13 +7,12 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.28`
-- next_action: After full11 outcome commits clean, refresh capacity/pressure with independent
-  counter parsing. Director resume authorizes continuation under unchanged guards; no future
-  headroom is guaranteed. If admitted, join current receipts and declare exclusive full12
-  journal/checkpoint/unchanged programme; commit readiness before .13 once-only launch/push/hosted.
-- in_flight_uncommitted: Derive with git status --short; commit full11 outcome before .28.
-- in_flight_background: None. Full11 native137/recorder exit1 consumed; old identities and
-  recorder absent, former owned session empty. Never replay spent full11 slots.
-- blockers: Full11 host cutoff89.1/88 during1472 leaves complete local/push/hosted unqualified.
-  .28 refreshes admission after director resume; source cause is unassigned. Request15 and
-  saved required width delivery retain their publication/dependency order.
+- next_action: Await director signal that other projects are paused, then take a fresh unique
+  capacity/pressure admission under unchanged limits. Never reuse the declined receipt.
+  If admitted, join current sources/receipts and commit exclusive full12 readiness before
+  .13 once-only launch; complete local success precedes normal push/all exact-SHA hosted/Pages.
+- in_flight_uncommitted: Derive with git status --short.
+- in_flight_background: None. Full11 is settled; full12 has not launched.
+- blockers: Fresh full12 admission declines on warning pressure; await changed safe capacity.
+  Other projects' pause is not yet confirmed. Full11/full publication remain unqualified;
+  request15 and saved required width delivery retain their publication/dependency order.

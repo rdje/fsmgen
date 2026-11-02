@@ -373,7 +373,9 @@ strict check. Focused literal, shift and proof-refusal checks pass. Complete
 HBURST subordinate/interconnect semantic, HDL and full publication qualification
 remains pending under `PUBLICATION-REGRESSION-REPAIRS.13`; the contract is unchanged.
 The latest full gate stopped at its host-memory cutoff during APB composition
-checks, before reaching this HBURST family. A fresh complete gate remains required.
+checks, before reaching this HBURST family. A fresh admission then declined
+while kernel memory pressure was at warning level. The next complete gate
+awaits a safe capacity window; focused checks do not qualify publication.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:
