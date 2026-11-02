@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -169,10 +169,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
-  Acceptance: `Preserve original cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push and every exact-SHA hosted/Pages success; macOS relevance follows. Current .23 repair, .24 incoming request ownership, .25 response wording, .27 due cleanup precede .26 fresh full11 admission/once-only launch.`
-  Verification: `Full1-10 remain retained nonpasses. Full10 clean1b94 reports complete long T1436/T1437/T1438 and repaired T1445, APB1470-1472 and ordinary AHB through1489 ok. First new T1490 supported HBURST SEQ strict/check/semantic/outdir refuses current completed source intent;1491/1492 also fail and1493 is partially observed. No recorded RAM trip. .23 owns causal source repair; no test/profile weakening. No later/full/push credit.`
-  Outcome: `Authenticated guard70373 receives TERM; existing cleanup settles managed group70444. Recorder finishes native143; independent old PID/birth and group absence holds. Full native output/current sources/history/progress and incoming request15/risk/cleanup queue retain in full10-intake/owned-settlement and incoming-request15. Commit outcome before source changes.`
-  Commit: `Full10 outcome: this work-unit commit; earlier details remain in1b94 source/history.`
+  Acceptance: `Preserve cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push and all exact-SHA hosted/Pages success; macOS relevance follows. After full11 host cutoff, commit complete outcome before .28 fresh capacity/full12 readiness and once-only launch. Never replay spent slots or use partial passes as full credit.`
+  Verification: `Full1-11 remain nonpasses. Full11 cleanbf583367 reports536 complete passing paths, including both1438 files, long1436/1437 and repaired1445 plus APB1470/1471. Host cutoff89.1/88 terminates137 during1472, which is partial. No test-failure diagnostics are observed; no later AHB/HBURST/Perl/VIAL/final-book/full/push credit. At-cutoff allocation/pressure and culprit remain unknown.`
+  Outcome: `Existing guard settles owned session58530; recorder native137 is consumed. Independent old PID/birth identities and recorder are absent; separate session census is empty. Post-stop capacity78.20930480957031pct/pressure1 is not at-cutoff attribution or future headroom. Full native/source/history/settlement remain in full11-outcome-intake. Director resume selects fresh .28 admission after this commitment, without changing guards or unrelated jobs.`
+  Commit: `Full11 outcome: this work-unit commit; earlier outcomes remain in exact source/history.`
+
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
   Status: `done`
@@ -356,8 +357,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.19.1`
   Status: `done`
   Goal: `Preserve full7 and reproduce the actual dynamic wait/shift selected-target refusal.`
-  Acceptance: `Before implementation, retain full7 original/native failure, unchanged source/producer identities and authenticated guard settlement. Reproduce T1244 alone under unchanged88/4096; inspect canonical knowledge/actual source, interfaces and relevant book. Use bounded same-volume diagnostics to identify the failing selected intermediate and exact mismatch without relaunching a full suite or altering production guards. Preserve first diagnostic failures, cause and missing proof, schedule .2 precisely, update live/book boundaries and commit the intake clean before repair.`
-  Verification: `Isolated original T1244 reproduces final selection refusal. Actual installed holder and prepare_selection succeed for intermediate_or_bit_4 (reg_out << 1 | bit); prepare_target_namespace specifically rejects bit as a SystemVerilog keyword at DirectDeclaredWidthSupport.pm line547. Two-token serial_bit source control generates; its complete lowered FSM inverts byte-exact, preserving state/sample/shift/zero-bypass behavior. Installed Verilator5.050 lint accepts the actual control artifact; inverse keyword-name artifact fails. No compiler runtime/full toolchain-closure claim. The first observer incorrectly expects both names to fail and exits25; preserve it uncredited, then qualified observer succeeds. Git pickaxe identifies source fixture0bc6ad7a, target keyword guardd4544d15 and final ledgerce02b1cb. No production/test change. Authenticated full7 guard-only settlement143 and exact known-process absence retain; independent parsers agree on316 reported passing files with no whole-suite/VIAL/book/checkpoint credit. full7-t1244-intake-20261101.json.gz retains complete original test/producers, public source/report/lowered/typed AST/error products, scripts, tool/version/lint and native receipts. Re-derive: actual target namespace and source/native/lint. Falsify: legal-name source and inverse-FSM/keyword-lint controls. Durability: receipt/card/book/task/Git. Compact current card preserves all questions and canonical routes with nonpositive growth. Adjacent book wording incorrectly still withheld now-supported symbolic VHDL ports and described the repaired reserved-name defect; route it to the bounded current profile and exact qualification instead. Native book/source/discovery and mandatory normal hook gate intake; .2 migrates only the positive fixture and matching assertions before fresh full8.`
+  Acceptance: `Retain settled full7 and reproduce unchanged T1244 before repair; distinguish literal selection from target namespace through exact source/native/lint controls. Full original contract/source remains in bf583367 and full11-outcome-intake.`
+  Verification: `Original holder/selection succeeds; namespace rejects authored bit as an SV keyword. Two-token serial_bit control generates and inverse FSM is exact; installed Verilator5.050 accepts it and rejects inverse keyword artifact. Full7 native143 has316 complete passing paths and authenticated settlement; no full/runtime credit. First mistaken observer exits25 and remains uncredited. full7-t1244-intake retains full original/native/source/typed/tool/control/history and proof legs. .19.2 fixes only the positive fixture; producers/guards unchanged.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.19.1: isolate wait fixture reserved keyword refusal`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.19.2`
@@ -611,17 +612,23 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `Fresh exclusive 20261102 wrapper authenticates installed collector against native8647e2524; actual interval exceeds24h. Same-volume regular log/bin and root/Rust metadata agree with independent rg membership; every candidate retained, removed empty. Saved missing-member/unsafe-path/Boolean-size/invented-removal controls pass. Complete census/prior/source/receipt retains; latest-only record and same-size book reader advance. No content/reclamation/future-absence or workload replay claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.27: record due safe artifact census`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.28`
+  Status: `pending`
+  Goal: `Refresh capacity and admit fresh full12 after the director resume.`
+  Acceptance: `After full11 outcome commits clean, inspect finished journal/receipt/settlement and prior source/repair joins. Director resume authorizes continuation, not higher limits or guaranteed headroom. Fresh raw capacity/kernel pressure plus independent adopted-formula parser must admit unchanged88/4096. If not admitted, retain the actual blocker; never kill unrelated jobs or blindly replay. Join current source/receipts and explicit late-path gaps, declare unique full12 journal/log/checkpoint/results and unchanged CI/recorder/workflows. Commit readiness before .13 once-only full Perl/VIAL/book; complete0 precedes normal push/all exact-SHA hosted/Pages. No reused checkpoint, filter or software-cause attribution without evidence.`
+  Verification: `Pending fresh admission/readiness. Full11 remains native137;536 complete file passes do not qualify the full gate. User resume2026-11-02 is retained in full11-outcome-intake.`
+  Commit: `pending`
+
 ## Current Frontier
 
-Full10 remains nonpassing; .23.1 closes its first causal repair with focused checks.
-.24 commits request15 receiver intake; .25 corrects scoped width wording.
-.27 commits due cleanup; .26 admits fresh full11. .13 owns the first actual
-full result before normal push and exact-SHA hosted/Pages qualification.
-Publication and saved required feature delivery remain unqualified.
+Full11 is resource-interrupted137, with no observed test failure and536 complete
+passing paths. APB1472 and all later/native/full stages remain unqualified.
+Director resume selects .28 fresh capacity/full12 readiness after outcome commitment;
+.13 retains actual complete local/push/hosted/Pages qualification.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch once/consume exclusive full11; require complete native0 before push/hosted. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.28` | `pending` | Refresh capacity and declare exclusive unchanged full12 after clean outcome. |
 
 ## Decisions
 
@@ -630,18 +637,18 @@ Publication and saved required feature delivery remain unqualified.
 
 ## Blockers
 
-- Fresh complete HBURST/SEQ semantic/HDL/full qualification remains .26/.13.
-- .13 owns actual full11/local/push/hosted qualification; no user input is needed.
-- Full local, normal push and exact-SHA hosted/Pages outcomes remain .13.
+- Full11 stopped at host capacity89.1pct against88; no compiler cause is attributed.
+- .28 refreshes admission after director resume; no further user input is assumed.
+- Complete local/push/hosted/Pages and affected HBURST full paths remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and final readiness instruments: full11-preflight-source-20261102.
+Exact prior task/history and curtailed completed narrative retain in full11-outcome-intake-20261102.
 
-## Acceptance Checklist — full11 readiness
+## Acceptance Checklist — full11 resource outcome
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Full10 public --check --json refused uncaptured arithmetic masks; .23.1 selector repair now has exact native strict-check GREEN and real published-intent refusal controls. Complete T1490-T1493/later-stage outcomes remain unqualified. Initial readiness instrument wrongly demanded a full10 T314 row and refused; the corrected join labels that evidence focused-only.
-- [x] **ADDRESSED (verified)** — Source/receipt joins conserve prior actual failures, final repair sources and all owned .24/.25/.27 closures. Fresh capacity/pressure, unchanged unfiltered CI/guard/recorder/workflow inventory and five unused full11 slots are declared. Commit clean before .13 once-only launch; source stays immutable while required native stages run. No old checkpoint, filter, resource change or partial-full credit.
-- [x] **NO REGRESSION** — knowledge-map: OK is required for unchanged question routes/current qualification ownership. Actual focused RED/GREEN/refusals and complete historical native successes retain exact source/log joins; native book/source and normal doctrines qualify readiness only. Re-derive sources/receipts/current capacity; falsify missing native membership/changed sources and prior adverse controls; durable immutable evidence and conditional clean resume pointer. Full11/all exact-SHA hosted/Pages success remains required and unmeasured.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Complete native output records host memory89.1pct reaching88 and status137 during APB composition; no test-failure diagnostic is observed. git log -S host memory identifies the guarded termination implementation at b1d8a81bc2; scripts/run_with_ram_guard.sh line313 invokes owned-session termination. Per-process allocation/pressure at cutoff is missing, so no compiler or external culprit is claimed.
+- [x] **ADDRESSED (verified)** — Preserve complete native status/log/source and536 independently reconciled passing paths. Existing guard cleanup plus independent old PID/birth/recorder absence and empty former session settle the job; no extra signal or unrelated action occurs. Exact old task/history retained before completed summary curation. .28 owns fresh admission/readiness after director resume; all full11 slots stay spent.
+- [x] **NO REGRESSION** — knowledge-map: OK is required for unchanged canonical facts; native book/source and normal doctrines qualify outcome commitment only. Exact current native successes include long protocol/MCP and APB1470/1471;1472/later stages have no outcome. Re-derive native/log/source/post-stop counters; falsify independent path/counter parsers and identity/session checks; durable immutable receipt/intake/task/book/Git. Full local/push/hosted/Pages remain unqualified.

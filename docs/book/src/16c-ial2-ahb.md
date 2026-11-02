@@ -372,6 +372,8 @@ The arithmetic-mask width selector repair restores the shipped subordinate's
 strict check. Focused literal, shift and proof-refusal checks pass. Complete
 HBURST subordinate/interconnect semantic, HDL and full publication qualification
 remains pending under `PUBLICATION-REGRESSION-REPAIRS.13`; the contract is unchanged.
+The latest full gate stopped at its host-memory cutoff during APB composition
+checks, before reaching this HBURST family. A fresh complete gate remains required.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:
