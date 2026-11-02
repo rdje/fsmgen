@@ -169,7 +169,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
-  Acceptance: `Preserve cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push and all exact-SHA hosted/Pages success; macOS relevance follows. After full11 host cutoff, commit complete outcome before .28 fresh capacity/full12 readiness and once-only launch. Never replay spent slots or use partial passes as full credit.`
+  Acceptance: `Preserve cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push and all exact-SHA hosted/Pages success; macOS relevance follows. After committed full11 outcome and admitted .28 readiness, launch fresh full12 once from clean source. Never replay spent slots or use partial passes as full credit.`
   Verification: `Full1-11 remain nonpasses. Full11 cleanbf583367 reports536 complete passing paths, including both1438 files, long1436/1437 and repaired1445 plus APB1470/1471. Host cutoff89.1/88 terminates137 during1472, which is partial. No test-failure diagnostics are observed; no later AHB/HBURST/Perl/VIAL/final-book/full/push credit. At-cutoff allocation/pressure and culprit remain unknown.`
   Outcome: `Existing guard settles owned session58530; recorder native137 is consumed. Independent old PID/birth identities and recorder are absent; separate session census is empty. Post-stop capacity78.20930480957031pct/pressure1 is not at-cutoff attribution or future headroom. Full native/source/history/settlement remain in full11-outcome-intake. Director resume selects fresh .28 admission after this commitment, without changing guards or unrelated jobs.`
   Commit: `Full11 outcome: this work-unit commit; earlier outcomes remain in exact source/history.`
@@ -613,24 +613,23 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.27: record due safe artifact census`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.28`
-  Status: `blocked`
+  Status: `done`
   Goal: `Refresh capacity and admit fresh full12 after the director resume.`
   Acceptance: `After full11 outcome commits clean, inspect finished journal/receipt/settlement and prior source/repair joins. Director resume authorizes continuation, not higher limits or guaranteed headroom. Fresh raw capacity/kernel pressure plus independent adopted-formula parser must admit unchanged88/4096. If not admitted, retain the actual blocker; never kill unrelated jobs or blindly replay. Join current source/receipts and explicit late-path gaps, declare unique full12 journal/log/checkpoint/results and unchanged CI/recorder/workflows. Commit readiness before .13 once-only full Perl/VIAL/book; complete0 precedes normal push/all exact-SHA hosted/Pages. No reused checkpoint, filter or software-cause attribution without evidence.`
-  Verification: `Fresh full12-admission-20261102 retains raw capacity85.72476704915364pct and pressure2, with independent same-counter AWK agreement. Below-host-cutoff alone is insufficient: unchanged admission requires normal pressure. No full12 job/checkpoint starts; all five native slots remain absent. Director will ask other projects to pause; that statement is not evidence they have stopped. Preserve this refusal; a changed window needs a fresh unique admission receipt before readiness.`
-  Blocked by: `Normal-pressure capacity admission; await director signal that other projects are paused, then measure afresh under unchanged limits. No unrelated jobs may be controlled here.`
-  Commit: `Admission refusal retained by this work-unit commit; readiness remains incomplete.`
+  Verification: `After the director reports three other projects paused, fresh admission63.57549031575521pct/pressure1 passes unchanged88/4096; independent raw-counter parsing agrees. All five full12 native slots remain absent. Current closure preserves prior source/focused joins and536 independently extracted full11 passes on exact unchanged test bytes, with partial1472/later stages unqualified. CI/guard/recorder/workflow hashes and required-job inventory match the prior source-derived plan. Commit readiness before .13 once-only launch; no future headroom or full-success promise.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.28: admit fresh full12 after capacity coordination`
 
 ## Current Frontier
 
 Full11 is resource-interrupted137, with no observed test failure and536 complete
 passing paths. APB1472 and all later/native/full stages remain unqualified.
-Fresh .28 admission declines on warning pressure; no full12 job has started.
-Await the director capacity window, then measure afresh before full12 readiness.
-.13 retains complete local/push/hosted/Pages qualification.
+.28 admits fresh normal-pressure full12 readiness after capacity coordination.
+.13 launches once from committed clean source and consumes the complete native result
+before normal push and all exact-SHA hosted/Pages qualification.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.28` | `blocked` | Await capacity window, then obtain fresh safe full12 admission/readiness. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume exclusive full12; complete local success precedes push/hosted. |
 
 ## Decisions
 
@@ -640,18 +639,18 @@ Await the director capacity window, then measure afresh before full12 readiness.
 ## Blockers
 
 - Full11 stopped at host capacity89.1pct against88; no compiler cause is attributed.
-- .28 fresh admission declines on warning pressure. Await the director capacity signal;
-  a new raw admission must qualify before full12 readiness or launch.
+- .28 fresh admission passes after capacity coordination; .13 owns actual full12.
+  No user input is needed; current admission never guarantees future headroom.
 - Complete local/push/hosted/Pages and affected HBURST full paths remain .13.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history retain in full12-admission-blocker-source-20261102.
+Exact prior task/history and final readiness instrument: full12-preflight-source-20261102.
 
-## Acceptance Checklist — declined capacity admission
+## Acceptance Checklist — full12 readiness
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S pressure==1 identifies bf583367 admission with the existing normal-pressure condition. Fresh native vm_stat/sysctl report below-cutoff capacity but warning pressure, so the unchanged conjunction declines. The producer retains the receipt before its expected final assertion refusal. No compiler, test failure or allocator cause is inferred.
-- [x] **ADDRESSED (verified)** — Retain immutable refusal/raw counters/instrument and independent AWK reproduction, with unused native full12 slots. Set .28 blocked, preserve all other node statuses/children and exact old task/history; await the director capacity window and require a new unique admission before readiness. The request to pause other projects does not certify their state.
-- [x] **NO REGRESSION** — knowledge-map: OK and native book/source checks qualify these status documents only. Source/tests/CI/guards/workflows are unchanged. Re-derive saved counters and admission predicate; falsify via independent AWK and absent native slots; durability is receipt/source archive/task/book/Git. No current headroom, complete full12, push, hosted or Pages success is claimed.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S pressure==1 identifies the existing normal-pressure admission in bf583367. The saved first full12 admission declines on warning pressure; after the director reports pausing three other projects, new native counters and independent same-counter AWK pass the unchanged predicate. Full11 host cutoff remains unassigned to an allocator; its partial APB result is not a software failure or complete pass.
+- [x] **ADDRESSED (verified)** — Exact current source/focused receipts and all complete full11 passing paths are joined; settlement/finished state, fresh admission, five unused native slots and unchanged full programme/workflows are retained. Readiness commits before .13 once-only full12. No source filter, checkpoint reuse, guard change, unrelated process control or unseen-stage credit.
+- [x] **NO REGRESSION** — knowledge-map: OK plus native book/source and normal doctrines qualify readiness documents only. Current test/production bytes match their prior native/focused witnesses; full12 must still run every required stage. Re-derive counters/sources/receipts; falsify via independent path/counter extraction, Git source equality and prior genuine RED/refusal controls; durability is immutable closure/admission/plan/source and committed resume pointer. Full local/push/hosted/Pages success remains pending.
