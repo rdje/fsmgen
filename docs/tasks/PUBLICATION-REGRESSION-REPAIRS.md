@@ -650,11 +650,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.30: align phase-control golden with declared ports`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.31`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete the due daily artifact census and safe cleanup after source-freeze settlement.`
   Acceptance: `After .29.1/.30 commit clean, adopt the current repository-local cleanup collector and same-volume conventions. Preserve active evidence and ambiguously shared data; delete only exactly proven disposable project artifacts. Retain native census/independent controls, overwrite docs/ARTIFACT_CLEANUP.md with latest date/one-line summary, sync relevant reader/book/live records and commit before .32. No cross-repository writes or unproven deletion.`
-  Verification: `Latest committed cleanup2026-11-01T23:33:29.580422+00:00 became due during full12. Runtime due record retained in full12-outcome-intake; no cleanup/deletion was performed during the clean-source gate.`
-  Commit: `pending`
+  Verification: `Fresh 20261103 wrapper authenticates installed collector against native908cb224f; prior-record interval exceeds24h. All8574 regular same-volume log/bin candidates agree with independent rg membership and remain retained, removed empty. Root/Rust location metadata and saved missing-member/unsafe-path/Boolean-size/invented-removal controls pass. Complete native/census/prior/source retain in artifact-census-20261103. Latest-only record advances; same-size book reader changes only date, so no zero-delta reference authority is refreshed. No content/reclamation/future-absence or workload replay claim. Normal focused docs/reader/commit gates precede .32.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.31: record due safe artifact census`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.32`
   Status: `pending`
@@ -666,22 +666,21 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.33`
   Status: `done`
   Goal: `Remove project-absolute producer path metadata from publication source packets.`
-  Acceptance: `P1 before .30/fresh publication: full12-outcome-source retains an absolute project-owned instrument.path because Python resolves __file__. Inspect structured path metadata in the relevant recent publication packets/producers, preserve exact originals and source identities, normalize only proven project-root path fields to repository-relative values and prevent recurrence in current snapshot helpers. Do not rewrite original source/native payloads or OS/toolchain dependencies. Verify complete field conservation, relocation-safe retrieval and negative controls; sync docs/task and commit separately.`
-  Verification: `Five producer path fields across the finite full11/full12 source packets normalize to literal relative addresses; all other JSON fields and embedded producer source identities are exact. Complete original compressed bytes retain in audit-source-paths-intake. Original reader RED1 becomes GREEN0 with invalid-address controls and same-volume relocated source/hash readback. Current five template helpers independently return relative metadata from actual absolute __file__ inputs; no spent programme executes. Proof/current helper sources preserve the repairs for fresh-session reuse. Book/fact/task and normal gates qualify metadata only; native CI/production inputs unchanged.`
+  Acceptance: `Normalize only proven project-owned producer path metadata, preserve exact original packet/source/native identities, and prevent recurrence in snapshot templates. Verify relative retrieval, relocation and adverse controls; no spent programme replay. Full original/source remains in 908cb224f and this census admission-source.`
+  Verification: `Five finite full11/full12 path fields normalize; every other JSON/source/hash/native field is exact and original compressed bytes remain in audit-source-paths-intake. Native RED1 becomes GREEN0 with invalid paths and relocated source/hash readback. Five corrected helpers handle actual absolute __file__ without replaying programmes. Proof retains current templates for .32. Book/fact/task/normal gates pass; no production/CI/guard/native-outcome change.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.33: make audit producer addresses portable`
 
 ## Current Frontier
 
-.29.1 diagnostic/current-fixture and .30 phase-control repairs pass focused
-checks; .33 portable audit metadata is qualified. The omitted original full12
-Git launch cause remains .29.2, first at macOS relevance after qualified push/
-director resume or immediately on recurrence. .31 due maintenance and .32 fresh
-full13 readiness precede .13 complete native/push/hosted/Pages and the pause.
+Current diagnostic/phase repairs and due artifact maintenance are focused-qualified.
+.32 joins the exact sources/receipts, refreshes capacity and declares exclusive
+full13 readiness before .13 once-only full native/push/hosted/Pages and pause.
+The omitted original Git launch cause remains .29.2 at macOS relevance after
+qualified push/director resume, or immediately on any actual recurrence.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.31` | `pending` | Complete due safe artifact maintenance. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness using corrected snapshot helpers. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness using corrected snapshot helpers. |
 
 ## Decisions
 
@@ -690,7 +689,7 @@ full13 readiness precede .13 complete native/push/hosted/Pages and the pause.
 
 ## Blockers
 
-- Due maintenance/readiness and complete fresh qualification precede publication.
+- Fresh readiness and complete native/push/hosted/Pages qualification remain pending.
 - .29.2 owns missing historical launch cause; any actual recurrence blocks further qualification.
 - Full12 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor the conditional pause afterward.
@@ -699,10 +698,10 @@ full13 readiness precede .13 complete native/push/hosted/Pages and the pause.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history/cards and original phase sources retain in phase-control-intake-20261103.
+Exact prior task/history and curated completed narrative retain in artifact-census-20261103/admission-source.
 
-## Acceptance Checklist — current phase-control source golden
+## Acceptance Checklist — due read-only artifact census
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S explicit_interface_ports identifies a7bf398ac3 parent input preservation; 876b2c1d1d adds outputs to that LoweringIR carrier. The existing emitter writes the exact interface block. Current native RED/current public output and unchanged July fixture/test show the old checksum omits that six-line/74-byte block; removing only it restores the old checksum exactly.
-- [x] **ADDRESSED (verified)** — Refresh only the current line/byte/hash golden and labels. Exact inverse restores every original test byte; fixtures, SourceHIR packages, parser/scheduler/emitter and public scope stay unchanged. Current contract/cards/book use the native snapshot; the original promotion audit is explicitly dated, with complete old source retained. All equality, malformed-input, provenance, ordered-variant and private-surface controls remain.
-- [x] **NO REGRESSION** — All tests successful; Files=4, Tests=25 in phase-control-focused-20261103, plus independent public generated-IAL0 strict-check0. Re-derive current output/metrics and source/history; falsify exact original-checksum inverse and unchanged fixtures/test controls; durability is complete native/source/intake/proof and committed book/fact/task/Git. Native book/KMap/staged/normal gates qualify this focused slice only; complete full local/push/hosted remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Latest cleanup becomes due during frozen full12. git log -S Dated read-only artifact census identifies installed collector387d0458; native908cb224f bytes authenticate it before execution. The wrapper changes only the dated boundary/owner/output identity; raw collector scope, guards, review and adverse controls remain unchanged.
+- [x] **ADDRESSED (verified)** — Native collection and saved replay return0, with8574 independently matched regular same-volume log/bin paths and removed empty. Preserve all candidates absent exact disposal authority. Save complete source/prior/census/receipt, overwrite only latest date/summary and advance the same-size book reader. Exact originals precede completed .33 narrative curation; no foreign repository, symlink, Git metadata or current evidence is removed.
+- [x] **NO REGRESSION** — knowledge-map: OK plus native saved-reader/book/copied-source/staged/normal gates qualify the dated maintenance slice. Re-derive native metadata/interval/identities; falsify independent rg membership and missing-member/unsafe-path/Boolean-size/invented-removal controls; durability is complete saved census/source/receipt and committed task/book/latest record. Zero book aggregate delta preserves existing authority; no full-CI, reclamation, content or future-absence credit.
