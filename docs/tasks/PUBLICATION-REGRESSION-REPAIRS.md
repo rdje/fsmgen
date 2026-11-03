@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -47,8 +47,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.2`
   Status: `done`
   Goal: `Repair quiet strict-outdir fixture stdout expectations.`
-  Acceptance: `After .1 commits, T1330 quiet fixtures must expect empty stdout while retaining success/stderr/complete file-domain assertions. Keep one existing nonquiet generation case as a positive Wrote control. Follow decision0117 quiet semantics and8e5dd7f34623f8b0dd792628d31a80ff6e36daf9; run T1330 and T2088 plus applicable book/gates. Do not change producer quiet behavior.`
-  Verification: `Exact T1330 bytes equal the retained bff84006b full2 source, binding its empty-stdout failures to the current file. Decision0117 and8e5dd7f identify the intentional quiet-output predicate. One existing outdir case now omits quiet and retains its generated-top Wrote positive check; remaining quiet cases assert empty stdout, with every success/stderr/complete file-domain and machine-report assertion preserved. Guarded T1330/T2088 report All tests successful, Files=2 Tests=69, with complete output/status in quiet-fixture-focused.json/log.gz. Native mdBook/POD/current built source/index pass in quiet-fixture-book.json; ATL guidance now explains the existing flag behavior. quiet-expectations.json retains exact source hashes/assertion domain and distinct re-derivation/falsification/durability legs; the book authority records the exact narrow delta with no ceiling change. No producer/API/source grammar or support change. Staged/normal doctrine gates are required before commit. Next .7 observes genuinely required .3 contract intakes under the already-existing SEM .93/ISF-REDUCTION .16 before-publication conditions; no original timeout causality is inferred.`
+  Acceptance: `Completed decision0117 quiet-output fixture alignment; preserve success/stderr/file-domain assertions and existing nonquiet Wrote control. Exact original source/contract remains in full14-outcome-intake and quiet-expectations.`
+  Verification: `Exact original T1330 equals retained bff/full2 source; decision0117 and8e5dd7f identify quiet predicate. T1330/T2088 pass Files2 Tests69 with complete native/source receipts; public book/POD/source/index and normal gates pass. No producer/API/grammar/support change. Complete original .7 dependency ordering and byte/claim proof remain version-retrievable; publication stays .13.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.2: align quiet fixture stdout expectations`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.3`
@@ -169,10 +169,10 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
-  Acceptance: `Preserve first outcomes and cause gaps; signal authenticated own jobs only. Keep88/4096, unfiltered programme and fresh checkpoints. .34 diagnoses current launch failure, .35 repairs monitor indentation, .36 admits next readiness. Complete native Perl/VIAL/book0 precedes authorized normal push/all exact-SHA hosted/Pages, then director pause before macOS/width/other roadmap work. No spent replay or partial-pass credit.`
-  Verification: `Full1-13 remain nonpasses. Native a2a34208b full13 passes494 complete files through T1435, then T1436 has actual Verilator pre-exec setpgid EPERM and two failed subtest assertions. T1436 is incomplete; no complete Perl/T296/VIAL/final-book/full/push/hosted/Pages success. Earlier full12 passes594; current T1545/T1548 focused repair proofs remain separately scoped. Original omitted Git error cause is still unqualified.`
-  Outcome: `Authenticated guard74653 receives SIGTERM after confirmed failure; its existing trap settles session74721. Native143/recorder1 consumed;44 old PID/birth identities, recorder and former session independently gone. Complete native/source/runtime and missed-indented-diagnostic samples retain in full13-outcome-intake. Administrative failure stop, not memory cutoff. .34/.35 own current defects before .36 fresh readiness. Conditional pause and discussion-only waves remain unchanged.`
-  Commit: `Full13 outcome: this work-unit commit; exact prior outcomes remain in retained source/history.`
+  Acceptance: `Preserve first outcomes and missing scope; signal authenticated own jobs only. Director Nov3 supersedes exhaustive local pre-push requirement: .37 implements explicit critical downstream gate plus changed-code checks. Complete selected gate/book/normal commit precedes authorized normal push and all exact-SHA hosted/Pages, then director pause before macOS/width/other work. Keep88/4096; long/full suites remain available and hosted coverage intact.`
+  Verification: `Full14 native5503c8728 passes534 complete files through T147, including current T1436/T1437/T1438 and T1469; T1470 remains incomplete. No failure diagnostic before director-directed administrative stop. Native143/recorder1 consumed; eight recorded identities and former session independently absent. No full Perl/T296/VIAL/final-book or push/hosted success. Prior outcomes and original omitted Git cause remain separately scoped.`
+  Outcome: `Complete first full14 log/status, runtime history, authenticated guard54745 SIGTERM and session54813 settlement retain in full14-outcome-intake. Exhaustive serial scenario families made local publication impractical; .37 owns smaller main/critical downstream-visible selection and explicit deferred coverage. User retains long tests and post-push full hosted qualification; no blind full15 retry.`
+  Commit: `Full14 director-stop outcome: this work-unit commit; original source/history retained.`
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
@@ -673,8 +673,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.34`
   Status: `done`
   Goal: `Resolve native HDL-launch process-group admission EPERM.`
-  Acceptance: `Resolve the reproduced current launch race with focused native and public controls. Keep parent setup, mandatory child success/group admission, schemas/bounds/cleanup. Exact original contract/source remains in group-admission and this preflight intake.`
-  Verification: `Native concurrent RED350 has parent0/childEPERM with intended same-session group; child-only/serialized controls finish10000 iterations each, bounded scope only. Corrected ordering RED and final three files22 tests/exact HDL Verilator+Yosys pass. EOF serialization preserves strict refusal and cleanup. First oracle/path/staged-token corrections are retained. Book/card/normal gates pass at1dd3061b9; historical causes and full publication remain open.`
+  Acceptance: `Completed native group-creation race diagnosis and EOF ordering; preserve strict successful-call and actual-group admission, cleanup/deadline/caps/API. Exact original source/contracts and all first outcomes remain in group-admission proof and full14 intake.`
+  Verification: `Native C attempt350 captures parent success and child EPERM; child-only and serialized counterfactuals each complete10000. T2302 RED isolates overlap; ordered GREEN plus T313/T1545 passes Files3 Tests22 and actual saved HDL validates with normal Verilator/Yosys. Final source-bound repeats, all first path/assertion/gate refusals and proof gaps retain. Normal docs/staged/hook pass1dd3061b9. Full14 now passes current T1436–T1438, not complete suite.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.34: serialize parent and child group setup`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.35`
@@ -687,20 +687,27 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.36`
   Status: `done`
   Goal: `Qualify fresh full14 readiness after current launch and monitor repairs.`
-  Acceptance: `After .34/.35 commit clean, join exact native/focused sources and settlement, refresh raw capacity/pressure with independent parser under unchanged88/4096, declare unused full14 slots/checkpoint and unchanged full programme/workflows. Commit before .13 once-only native run; complete0 precedes authorized push/all exact-SHA hosted/Pages and director pause. No blind retry, filters, opt-ins or spent replay.`
-  Verification: `Fresh57.78484344482422pct/pressure1 and independent saved-counter parser admit unchanged88/4096; five full14 slots absent. Exact source/proof/focused joins include changed shared supervisor/new T2302 and repaired classifier/template. Prior494 passing paths stay historical; full14 reruns all defaults. CI/guard/recorder/workflows and160 required jobs match source. Commit readiness before .13 once-only launch; no full/hosted success or future-headroom promise.`
+  Acceptance: `Completed current-source repair/settlement join, fresh normal-pressure admission under88/4096 and exclusive full14 plan before once-only clean launch. Exact original scope/source remains in preflight and full14 intake. Director Nov3 later replaces exhaustive local publication requirement; full coverage remains hosted/manual.`
+  Verification: `Fresh57.78484344482422pct/pressure1 independently parsed; five slots absent. Shared supervisor/T2302 and classifier/template match focused proofs; CI/guard/workflows and160 required jobs exact. Normal native doc/staged/hook pass5503c8728. Full14 outcome is owned by .13; admission never promised future headroom or full success.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.36: qualify exclusive full14 readiness`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.37`
+  Status: `pending`
+  Goal: `Make the pre-push gate practical while protecting critical downstream behavior.`
+  Acceptance: `Director Nov3: keep all long tests, replace exhaustive local publication hold with an explicit curated pre-push tier. Review roadmap/public CLI and IAL0/1/2 lowering/output/report contracts, representative protocol boundary/runtime checks, VIAL essentials and current repair regressions. Run one measured selected gate plus book and normal commit integrity. Publish exact selected/deferred scope; no full-coverage claim. Keep full mode and every hosted matrix unchanged; .13 pushes and consumes all exact-SHA results/Pages, then pause.`
+  Verification: `Pending implementation and actual duration/result. Existing quick tier is a starting point; it lacks an explicit critical downstream pre-push contract. Exhaustive local full14 spent over six hours and reached534 complete files; no failure before user-directed cancellation. Exact runtime/source evidence retained in full14-outcome-intake. Select bounded representative paths rather than deleting scenarios or weakening assertions.`
+  Commit: `pending`
 
 ## Current Frontier
 
-.36 joins committed repairs and fresh capacity for exclusive full14 readiness.
-.13 launches once from clean committed source, adopts the corrected classifier
-and consumes complete native success before push/all exact-SHA hosted/Pages.
-Then honor director pause; older prefixes/causes remain historically scoped.
+Director Nov3 replaces exhaustive local pre-push with critical downstream selection.
+Full14 is settled and preserved; .37 implements/measures the explicit selected gate.
+.13 retains normal push, every exact-SHA hosted result/Pages and director pause.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume full14; complete native0 precedes push/hosted/Pages. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.37` | `pending` | Implement and qualify practical critical pre-push selection. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Selected gate precedes push/all hosted/Pages and pause. |
 
 ## Decisions
 
@@ -709,18 +716,18 @@ Then honor director pause; older prefixes/causes remain historically scoped.
 
 ## Blockers
 
-- Fresh readiness passes; complete native/push/hosted/Pages qualification remains.
-- Full13 is settled; no background result or user permission is outstanding.
-- Complete local/push/hosted/Pages remain .13; honor director pause afterward.
+- No background result or user permission outstanding; full14 is settled.
+- Selected local gate and full hosted/Pages qualification remain .37/.13.
+- Long suites remain available; no complete local full pass is claimed.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and completed repair narrative retain in full14-preflight-intake.
+Exact prior task/history and completed narrative retain in full14-outcome-intake.
 
-## Acceptance Checklist — exclusive full14 readiness
+## Acceptance Checklist — full14 director-directed outcome
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _child_group_admission_error joins the shared admission contract; full13's actual pre-exec failure and missed indented body now have committed native race/ordering and saved-classifier RED/GREEN proofs. Shared supervisor changed, so old native prefixes cannot qualify current runtime; full14 must execute every default stage.
-- [x] **ADDRESSED (verified)** — Join exact current repair sources/focused receipts and settled native outcome, raw capacity/pressure with independent parser, five unused full14 slots and unchanged88/4096/CI/workflows. Preserve corrected observer template/helper and explicit actual-HEAD adoption. Commit readiness before .13 once-only unfiltered Perl/VIAL/book; no filters, opt-ins, replay or historical-cause inference.
-- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify readiness. Re-derive source/counter/receipt joins; falsify exact changed-input set, independent parsers and genuine retained RED/refusal controls; durability is immutable closure/admission/plan/source and committed pointer. Full native/push/all exact-SHA hosted/Pages remain pending; pause follows their qualification.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'run_step "Perl regression suite"' -- bin/ci-regression identifies unsharded full execution. Native history shows long AXI/APB families, over six hours and534 passes without failure diagnostics. Director requires critical selection under .37. Final book-authority constants also require their regenerated inventory in the same index.
+- [x] **ADDRESSED (verified)** — Retain native143/recorder1, independent complete-path extraction, incomplete T1470 and full runtime/source/director intake. Authenticate guard54745 before SIGTERM; eight PID/birth identities, recorder and session54813 absent. Results consumed. Stage the four generated claim-control values with fresh owning boxes; preserve first isolated-amend refusal. Keep long/full hosted tests and pause order.
+- [x] **NO REGRESSION** — knowledge-map: OK and native book/copied-source/staged checks pass. Original normal hook passed; final amended index must pass again with generated inventory included. Re-derive log/source/constants; falsify by independent path extraction, absent failures and identity/session census; durability is complete intake, correction receipt and committed owner/book. Preserve nodes/statuses/nonroot children. No complete-suite, selected-gate or publication success.

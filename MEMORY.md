@@ -6,15 +6,14 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.13`
-- next_action: Read full14-launch-plan-20261103 and inspect exclusive journal/checkpoint.
-  Launch once from clean committed source only if all slots absent; otherwise observe/
-  consume existing result. Adopt corrected observer using its recorded inverse/actual-HEAD
-  contract. Complete native0 precedes normal push/all exact-SHA hosted/Pages and pause.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.37`
+- next_action: Implement and measure explicit critical downstream pre-push selection.
+  Director Nov3 replaces exhaustive local full requirement; keep all long tests and full
+  hosted coverage. Run selected gate/book plus changed-code regressions, normal commit,
+  then .13 authorized normal push/all exact-SHA hosted/Pages and pause.
 - in_flight_uncommitted: Derive with git status --short.
-- in_flight_background: Derive .artifacts/push-readiness-20261025/local-full-ci-14.state.json;
-  live log shares basename. Full13 is settled; never replay spent native slots.
-- blockers: No user input needed; fresh admission never promises future headroom.
-  Shared-supervisor change makes old prefixes historical; full14 reruns all defaults.
-  Keep88/4096. After qualified push/hosted/Pages and clean handoff, honor director pause
-  before macOS/width/other roadmap work. Boundary waves remain discussion only.
+- in_flight_background: None; full14 native143/recorder1 and observer consumed, jobs gone.
+- blockers: No user input needed. Never replay spent full14 or claim complete-suite pass.
+  Keep88/4096 and mandatory commit integrity; full matrices stay hosted/manual.
+  After qualified push/hosted/Pages and clean handoff, honor director pause before
+  macOS/width/other roadmap work; boundary waves remain discussion only.
