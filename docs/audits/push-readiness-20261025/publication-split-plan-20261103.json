@@ -1,0 +1,254 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.40",
+  "source_revision": "5c61e1aa4711a998128e03b0b98dcd7cf3dcf211",
+  "remote_base": "54ac1c22d5314943027494f4c270f9c612e62704",
+  "upload_ref": "refs/heads/publication-upload-20261103-5c61e1aa",
+  "pieces": [
+    {
+      "piece": 1,
+      "first_commit_index": 1,
+      "last_commit_index": 176,
+      "base": "54ac1c22d5314943027494f4c270f9c612e62704",
+      "tip": "4447ca7a01f04695fd1c5664a2ec40e8ac93d218",
+      "raw_payload_bytes": 800803546,
+      "objects": 4358,
+      "object_ids_sha256": "d6705a84146bdd288d5620eb5cd78c540a2b6198fbac3c6280c7df22795adc47"
+    },
+    {
+      "piece": 2,
+      "first_commit_index": 177,
+      "last_commit_index": 340,
+      "base": "4447ca7a01f04695fd1c5664a2ec40e8ac93d218",
+      "tip": "aebe0037554eb9995c1d4fa67f4ec53f98364520",
+      "raw_payload_bytes": 800316705,
+      "objects": 5196,
+      "object_ids_sha256": "cb5ee6e18261a2baf2eade809d8fe1f104ec66acb0143e2d176c0832cbff0577"
+    },
+    {
+      "piece": 3,
+      "first_commit_index": 341,
+      "last_commit_index": 383,
+      "base": "aebe0037554eb9995c1d4fa67f4ec53f98364520",
+      "tip": "518d99d288b6b1cf4fd2f8f38518d684d37740a6",
+      "raw_payload_bytes": 779639751,
+      "objects": 3026,
+      "object_ids_sha256": "70135df996eed96d9a3be54fed678fd6c39b5960c37d9584051d3d4ed40fd2a1"
+    },
+    {
+      "piece": 4,
+      "first_commit_index": 384,
+      "last_commit_index": 430,
+      "base": "518d99d288b6b1cf4fd2f8f38518d684d37740a6",
+      "tip": "edb671c716b987414f81cb367605b9aa54841f10",
+      "raw_payload_bytes": 791896599,
+      "objects": 4759,
+      "object_ids_sha256": "a473a9e3d8951ac381dbbcf6c70c4c081b9a325f8b95fd7a6e807ab15e7ced2d"
+    },
+    {
+      "piece": 5,
+      "first_commit_index": 431,
+      "last_commit_index": 484,
+      "base": "edb671c716b987414f81cb367605b9aa54841f10",
+      "tip": "bddc62876343529bc5a02de4265381070ed42081",
+      "raw_payload_bytes": 780998669,
+      "objects": 2566,
+      "object_ids_sha256": "6a1380cfd84e3d3b0f3c9e442c2ab48c36ca74d5c35aceb1c1a381fb66161134"
+    },
+    {
+      "piece": 6,
+      "first_commit_index": 485,
+      "last_commit_index": 542,
+      "base": "bddc62876343529bc5a02de4265381070ed42081",
+      "tip": "88d440175d9b3dc7591c31e1e524623b5e5ae50e",
+      "raw_payload_bytes": 800290166,
+      "objects": 3224,
+      "object_ids_sha256": "a77f54ef44bff60dbeb2fa8abf3859c087e4a9e8ceea40099bc1128a8057c702"
+    },
+    {
+      "piece": 7,
+      "first_commit_index": 543,
+      "last_commit_index": 610,
+      "base": "88d440175d9b3dc7591c31e1e524623b5e5ae50e",
+      "tip": "993b9bf4a2e6d7f50380fc9c8922ec8dff345109",
+      "raw_payload_bytes": 788997619,
+      "objects": 3233,
+      "object_ids_sha256": "3e55245a2d3a9d1eda9acf4883f49fe6711df84bd0577fb3edebdf636105fc50"
+    },
+    {
+      "piece": 8,
+      "first_commit_index": 611,
+      "last_commit_index": 634,
+      "base": "993b9bf4a2e6d7f50380fc9c8922ec8dff345109",
+      "tip": "83ad8b9385fc6f7149d735eb28586134117f1c41",
+      "raw_payload_bytes": 784747441,
+      "objects": 1619,
+      "object_ids_sha256": "f3c9c856e6d043b55257c6c443779edede7efdfeaf731f0700b4fd757c125a5a"
+    },
+    {
+      "piece": 9,
+      "first_commit_index": 635,
+      "last_commit_index": 646,
+      "base": "83ad8b9385fc6f7149d735eb28586134117f1c41",
+      "tip": "e01b37176743a535a9d22b133f4426d568d6db09",
+      "raw_payload_bytes": 766867384,
+      "objects": 1857,
+      "object_ids_sha256": "eeb841fd8764ec428e43bbe8be79c4cb2963cddea5e4ca87a2b314c3a719879a"
+    },
+    {
+      "piece": 10,
+      "first_commit_index": 647,
+      "last_commit_index": 660,
+      "base": "e01b37176743a535a9d22b133f4426d568d6db09",
+      "tip": "dd0fc87459387b9befe772f8d2c7a855ef08f3f1",
+      "raw_payload_bytes": 764938640,
+      "objects": 1961,
+      "object_ids_sha256": "0b1e98750826e8c8424f78c23a65ea308767751090024ff513f4ec59cd4ec9b5"
+    },
+    {
+      "piece": 11,
+      "first_commit_index": 661,
+      "last_commit_index": 667,
+      "base": "dd0fc87459387b9befe772f8d2c7a855ef08f3f1",
+      "tip": "de401bf0ac73901d7608a23ccf24c33a0d2b2129",
+      "raw_payload_bytes": 784914555,
+      "objects": 1543,
+      "object_ids_sha256": "f5af68988005d3b3117f3e5aa46965277f1b4608a173e18dcc500a6fefe27735"
+    },
+    {
+      "piece": 12,
+      "first_commit_index": 668,
+      "last_commit_index": 668,
+      "base": "de401bf0ac73901d7608a23ccf24c33a0d2b2129",
+      "tip": "192c9dae1f788fb13a0b10c1d1eb952875b03dd6",
+      "raw_payload_bytes": 1199809512,
+      "objects": 326,
+      "object_ids_sha256": "b2f82527922c74674eb798ad3caef7501269deb2ab873ec9c2a4bce2b42f3bb7"
+    },
+    {
+      "piece": 13,
+      "first_commit_index": 669,
+      "last_commit_index": 672,
+      "base": "192c9dae1f788fb13a0b10c1d1eb952875b03dd6",
+      "tip": "e1dcea81d217fb4d881daa1fa321fc60daea117e",
+      "raw_payload_bytes": 737238964,
+      "objects": 665,
+      "object_ids_sha256": "c841b56a14cdfc3248c97140413c16c51670bbe8717de71bdb29d4ba729c607d"
+    },
+    {
+      "piece": 14,
+      "first_commit_index": 673,
+      "last_commit_index": 676,
+      "base": "e1dcea81d217fb4d881daa1fa321fc60daea117e",
+      "tip": "1a40a1da89216f4761ef73e67cefb029c78e8f94",
+      "raw_payload_bytes": 601255653,
+      "objects": 231,
+      "object_ids_sha256": "89e78e5bbab048867588192e35ac75c49ceac6e2cce55dd8149f53490cf68003"
+    },
+    {
+      "piece": 15,
+      "first_commit_index": 677,
+      "last_commit_index": 690,
+      "base": "1a40a1da89216f4761ef73e67cefb029c78e8f94",
+      "tip": "9c34775378ca325bb4e66bccb8502ee37f1a49a9",
+      "raw_payload_bytes": 798306291,
+      "objects": 499,
+      "object_ids_sha256": "ab036d3de2392c5e32a1d14200ff8830e5d51e929095f8e0e0dd4a29444eee9b"
+    },
+    {
+      "piece": 16,
+      "first_commit_index": 691,
+      "last_commit_index": 702,
+      "base": "9c34775378ca325bb4e66bccb8502ee37f1a49a9",
+      "tip": "732b7d6ba0175fe2d9c83ea104c9261fa8b8e01b",
+      "raw_payload_bytes": 631361796,
+      "objects": 316,
+      "object_ids_sha256": "8df8509d418dae3fb12d7cf9a3920e6b57e01ccaf1713158b45e14ea45c9bcdb"
+    },
+    {
+      "piece": 17,
+      "first_commit_index": 703,
+      "last_commit_index": 721,
+      "base": "732b7d6ba0175fe2d9c83ea104c9261fa8b8e01b",
+      "tip": "35babe8780796394b1e726d9210e80c99eebb738",
+      "raw_payload_bytes": 804093351,
+      "objects": 589,
+      "object_ids_sha256": "fb285e539eaf5f5de0be3a5f7c84521916af092215350f670dbd4925f70252c5"
+    },
+    {
+      "piece": 18,
+      "first_commit_index": 722,
+      "last_commit_index": 759,
+      "base": "35babe8780796394b1e726d9210e80c99eebb738",
+      "tip": "7e588f8d84df65aee3afc0344f000f2aee672ecc",
+      "raw_payload_bytes": 795195634,
+      "objects": 1122,
+      "object_ids_sha256": "4cc4e62ffab5dfb0560f8c97ee8eaab0885d39270a3fbf21e5be981f01ae8206"
+    },
+    {
+      "piece": 19,
+      "first_commit_index": 760,
+      "last_commit_index": 778,
+      "base": "7e588f8d84df65aee3afc0344f000f2aee672ecc",
+      "tip": "479c3ed4cfbf403e77651b0d31613fdf7c070fe3",
+      "raw_payload_bytes": 782085802,
+      "objects": 542,
+      "object_ids_sha256": "8bcc5bb4c4ee738b52d45a9846720cc24e37517e885a8526f99cdc2f07c5be14"
+    },
+    {
+      "piece": 20,
+      "first_commit_index": 779,
+      "last_commit_index": 795,
+      "base": "479c3ed4cfbf403e77651b0d31613fdf7c070fe3",
+      "tip": "0e6c3199b0cb0f60a178028ec6acdb63321e07d3",
+      "raw_payload_bytes": 701505407,
+      "objects": 404,
+      "object_ids_sha256": "63c779b442bcfb2aac251b399961b63d2b25da118ebefdc56c02c5c19202f70c"
+    },
+    {
+      "piece": 21,
+      "first_commit_index": 796,
+      "last_commit_index": 918,
+      "base": "0e6c3199b0cb0f60a178028ec6acdb63321e07d3",
+      "tip": "5ccc32d9d42dceb83f2a348204a79e60a95007f7",
+      "raw_payload_bytes": 801625018,
+      "objects": 4373,
+      "object_ids_sha256": "6ff6cce36af4a4a5002d1b74f1e59e38438971d6c9f3f94d9ad1c9ef11fd9eed"
+    },
+    {
+      "piece": 22,
+      "first_commit_index": 919,
+      "last_commit_index": 1085,
+      "base": "5ccc32d9d42dceb83f2a348204a79e60a95007f7",
+      "tip": "a66b4e9e90d4b768afb78549bd33eb1b6ea4a954",
+      "raw_payload_bytes": 800906771,
+      "objects": 4976,
+      "object_ids_sha256": "cf1ecac51f71bd440a425e023467f92e7c27d83ff7b5bcbbd638d254a380fd33"
+    },
+    {
+      "piece": 23,
+      "first_commit_index": 1086,
+      "last_commit_index": 1259,
+      "base": "a66b4e9e90d4b768afb78549bd33eb1b6ea4a954",
+      "tip": "4256f34318f9bcf57b8bff98520cbd9445314840",
+      "raw_payload_bytes": 805269583,
+      "objects": 4717,
+      "object_ids_sha256": "6c5f2987a948e28257ab44ceef9549839672dae1d595d2288a52d79fb86b86fa"
+    },
+    {
+      "piece": 24,
+      "first_commit_index": 1260,
+      "last_commit_index": 1270,
+      "base": "4256f34318f9bcf57b8bff98520cbd9445314840",
+      "tip": "5c61e1aa4711a998128e03b0b98dcd7cf3dcf211",
+      "raw_payload_bytes": 51963145,
+      "objects": 449,
+      "object_ids_sha256": "77e22171e863a9206ed679e2027779af24616e5473936f92d373eccabb2e8480"
+    }
+  ],
+  "raw_piece_limit": 805306368,
+  "census": "docs/audits/push-readiness-20261025/publication-split-object-census-20261103.json.gz",
+  "final_tip": "Derive HEAD after readiness commits clean; require unchanged qualified runtime manifest and bound its readiness-only object tail.",
+  "cadence": 500,
+  "authority": "Director authorizes pieces and delegates temporary-ref method; only configured main completion resets cadence.",
+  "state": "ready_for_commit"
+}

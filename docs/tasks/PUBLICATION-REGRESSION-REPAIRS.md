@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37, PUBLICATION-REGRESSION-REPAIRS.38, PUBLICATION-REGRESSION-REPAIRS.39`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37, PUBLICATION-REGRESSION-REPAIRS.38, PUBLICATION-REGRESSION-REPAIRS.39, PUBLICATION-REGRESSION-REPAIRS.40`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -169,17 +169,17 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
-  Acceptance: `Director Nov3 replaces exhaustive local hold with .37 critical downstream gate and changed-code checks. P1 .38 repairs actual APB external-lint refusal before publication. Then selected gate/book/normal commit precedes authorized normal push and every exact-SHA hosted/Pages result; pause before macOS/width/other work. Keep88/4096, long/manual/full hosted coverage and honest first outcomes.`
+  Acceptance: `Critical local gate passes. User authorizes bounded transfer .40 after2GiB rejection and confirms cadence500. Final main requires exact local/upstream/remote SHA plus every expected hosted/Pages result, then pause before macOS/width/other work. Preserve first outcomes, full hosted scenarios and88/4096.`
   Verification: `Full14 native5503c8728 passes534 complete files through T147, including current T1436/T1437/T1438 and T1469; T1470 remains incomplete. No failure diagnostic before director-directed administrative stop. Native143/recorder1 consumed; eight recorded identities and former session independently absent. No full Perl/T296/VIAL/final-book or push/hosted success. Prior outcomes and original omitted Git cause remain separately scoped.`
-  Outcome: `Complete first full14 log/status, runtime history, authenticated guard54745 SIGTERM and session54813 settlement retain in full14-outcome-intake. Exhaustive serial scenario families made local publication impractical; .37 owns smaller main/critical downstream-visible selection and explicit deferred coverage. User retains long tests and post-push full hosted qualification; no blind full15 retry.`
+  Outcome: `5c61e1aa push1: GitHub rejects2.00GiB pack; remote remains54ac1c22. Actual critical gate153.631755s/22files/219tests and focused/native/book pass. .40 owns bounded transfer; .13 final hosted/Pages. Prior full14 administrative outcome remains immutable; no full-local/hosted pass claimed.`
   Commit: `Full14 director-stop outcome: this work-unit commit; original source/history retained.`
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.14`
   Status: `done`
   Goal: `Repair the stale historical AHB metadata-invariance oracle without weakening behavior checks.`
-  Acceptance: `Completed AHB bridge metadata-invariance repair with same-revision annotation/no-annotation source comparison, preserved protocol/report/reset/ownership checks and independent changed-reset control. Full original contract remains in e957 task/full9-intake history.`
-  Verification: `T1475 proves actual bridge removal and complete current file-map invariance with source immutability; changed ready-reset alters expected output. Initial adjacent failure exposes T1551 and is retained; exact later reverify Files3 Tests17 passes. ahb1475-repair-proof retains full diagnosis, source/recipes and missing full/adjacent scope. Production/grammar unchanged. Book/card/index and normal gates passed after preserving the first index-row-cap refusal. Full detailed source/evidence remains in e957/full9-intake history.`
+  Acceptance: `Completed same-revision bridge annotation invariance, preserving protocol/report/reset/ownership and changed-reset control. Full original remains in publication-split intake/e957/full9.`
+  Verification: `T1475 proves bridge removal, full map/source invariance; changed reset alters output. First T1551 failure retains; corrected Files3 Tests17 and docs/normal gates pass. Full diagnosis/recipes/gaps remain in ahb1475-repair-proof. No producer/API/full claim.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.15`
@@ -694,8 +694,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.37`
   Status: `done`
   Goal: `Make the pre-push gate practical while protecting critical downstream behavior.`
-  Acceptance: `Completed explicit critical pre-push tier plus focused-change responsibility, preserving full/default/hosted scenarios. Exact contract/source and first outcomes retain in critical-prepush intake/proof. Selection is representative, never complete-suite qualification. .38 owns the additional real APB external-lint failure before push.`
-  Verification: `Selected native gate0 in149.7412805s: All tests successful, Files21 Tests215, APB public strict JSON check0 and book0. Two legacy AXI files retain Darwin skips; actual GHDL reset oracles execute for FSM/ISF, independently visible in focused receipt. T313/T1545 Files2 Tests18 pass. Initial unsupported-mode RED, first APB-flag failure/skips, source/timing and stale navigation-claim refusal retain. Full branch/lifecycle/hosted functions and every workflow unchanged. Normal doc/staged/hook checks gate commit; no full/hosted or hardware-independent timing claim.`
+  Acceptance: `Completed explicit critical tier plus focused-change responsibility; full/default/hosted scenarios preserve. Complete source/first outcomes remain in critical-prepush intakes/proof and publication-split intake.`
+  Verification: `Native selected gate0/149.7412805s, Files21 Tests215, APB JSON/book0; Darwin AXI skips and actual GHDL FSM/ISF oracles explicit. T313/T1545 Files2 Tests18 pass. All first RED/flag/metadata refusals retain; full branch/functions/workflows unchanged. Normal gates pass3654dbc11. Extra APB lint is repaired by .38; no exhaustive/hosted/universal-time claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.37: select critical downstream pre-push checks`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.38`
@@ -712,15 +712,22 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Verification: `T208 raw AST2'sb11 renders2'b11; IntegerLiteralSupport consumes s but omits it from returned parts. Public-source/runtime impact unqualified. Exact first RED retained; .38 preserves this existing spelling and excludes signed payloads from extension.`
   Commit: `pending`
 
+- ID: `PUBLICATION-REGRESSION-REPAIRS.40`
+  Status: `active`
+  Goal: `Complete bounded publication history transfer.`
+  Acceptance: `Preserve2GiB refusal and qualify bounded normal ancestor transfers through unique owned upload ref, then qualified main/all hosted/Pages and owned-ref cleanup. Commit readiness before mutation; preserve history/guards/submodules. User delegates method and keeps500 cadence; staging does not reset main count. Full original scope/source remains in publication-split intakes.`
+  Verification: `Ready: fixed incoming range has52549 candidate objects/18154976331 raw bytes,1270 first-parent commits, no blob above100MiB.24 direct-range pieces obey768MiB budget except one1199809512-byte single commit below1536MiB safety ceiling. Each chosen prefix has exactly three main-only workflows. Remote main54ac1c22 and unused upload ref verified. First global-subtraction assumption fails by40184-byte already-reachable blob; native diagnostic/direct-range repair and complete first streams retain. Syntax/runtime binding pass; wire/main/hosted pending.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.40: qualify bounded history-transfer readiness`
+
 ## Current Frontier
 
-.38 repairs public APB external validation; strengthened critical gate passes.
-.13 now owns authorized normal push, every exact-SHA hosted result/Pages, then pause.
-Full/manual suites stay available; no exhaustive local retry. .39 is P2 after resume.
+.40 owns bounded transfer after actual single-pack rejection; .13 final hosted/Pages/pause.
+Critical local checks pass; full suites stay hosted/manual. Cadence stays500.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Commit clean, push/all hosted/Pages, then director pause. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.40` | `active` | Census/commit bounded plan, upload pieces and qualified main. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Consume final hosted/Pages and pause. |
 
 ## Decisions
 
@@ -729,18 +736,18 @@ Full/manual suites stay available; no exhaustive local retry. .39 is P2 after re
 
 ## Blockers
 
-- No local selected-gate blocker or background result remains after .38 commits.
-- .13 still requires actual transport/all exact-SHA hosted/Pages qualification.
-- Preserve director pause and P2 .39; no full-local or signed-marker closure claim.
+- Single-pack GitHub size refusal; .40 owns authorized bounded transfer.
+- No local critical/access blocker or background job; main unchanged.
+- Final hosted/Pages pending. Preserve500 cadence and director pause.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history, source and first outcomes retain in apb-comparison intakes/proof.
+Exact original task/history and all first outcomes retain in publication-split intakes.
 
-## Acceptance Checklist — critical comparison-width repair
+## Acceptance Checklist — bounded publication transfer readiness
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _render_binary_op' identifies c81a6fd21 and the shared ASTSupport renderer. Actual APB lint refuses two four-bit-counter/one-bit-literal comparisons. Native call trace shows runtime SignalRef lacks module membership/width; declaration planning already uses its real assignment analysis. First unit fixture lacked an actual registered signal; preserve that refusal and corrected source-backed witness.
-- [x] **ADDRESSED (verified)** — Explicitly zero-extend only narrower unsigned sized integer literals beside fixed named signals/static slices, using the same prepared assignment-width authority when necessary. Preserve AST/declarations, symbolic/unknown/signed/wider/unsized/XZ/arithmetic behavior and warning flags. Add renderer and real APB compiler checks to critical pre-push; retain every long/full hosted/manual scenario. P2 .39 owns preexisting signed-marker meaning.
-- [x] **NO REGRESSION** — All tests successful, Files=22, Tests=219; renderer/grouping/symbolic Files=3, Tests=12 and native GHDL count/comparison Files=2, Tests=9. Re-derive bound source/index/log/status/duration; falsify by original native lint/width-miss trace, independent truth/oracles and exact HDL inverse outside Date/two literals; durability is full first/current receipts/input/source/proof and committed book/card/task. Docs/staged/normal hook required; no exhaustive or hosted/Pages success.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git push rejects pack at2.00GiB, leaving main54ac1c22 unchanged. git log -S '500 accumulated local' confirms0c8dd4b824 policy; director keeps500. Fixed-range object headers explain oversized backlog. Initial planner's global subtraction differs from direct range by an already-reachable40184-byte blob; native diagnostic proves it, so each actual range is budgeted independently.
+- [x] **ADDRESSED (verified)** — Commit24 bounded ancestor pieces with complete object/header/trigger evidence and owned-ref worker source. Main-only filters avoid intermediate publication; unused ref/main admission is native. Preserve all history and500 cadence, code qualification/guards/submodule boundaries. First refusal/failed census and correction retain; no force, deletion of shared data or speculative full-local rerun. Final readiness-only tail must be measured after commit.
+- [x] **NO REGRESSION** — All tests successful, Files=22, Tests=219 remains bound to identical runtime index; native syntax/census/remote admission pass. Re-derive headers/ancestry/direct ranges; falsify with original server refusal, actual set mismatch and independent prefix/source/remote checks; durability is complete receipts/census/plan/source and committed pointer. Normal docs/staged/hook required. Actual piece/main/all hosted/Pages outcomes remain pending; staging alone is not publication success.
