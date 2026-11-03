@@ -1118,6 +1118,7 @@ subtest 'pre-push selects critical downstream checks without exhaustive families
         t/1091-isf-parser-apb-requester.t
         t/1094-isf-scheduler-module-header.t
         t/1112-isf-public-interface-contract.t
+        t/208-enable-graph-ast-support.t
         t/1183-ci-regression-tier-selection.t
         t/1435-axi-ial2-valid-ready-generator.t
         t/1473-ial2-ahb-requester.t
@@ -1135,6 +1136,8 @@ subtest 'pre-push selects critical downstream checks without exhaustive families
     like($result->{stdout}, qr/Perl critical downstream suite/, 'selected scope is explicit');
     like($result->{stdout}, qr/--strict\s+--check\s+--json\s+ppif\/apb_completer\.ppif/,
         'APB target also reaches the public strict CLI');
+    like($result->{stdout}, qr/--strict\s+--verify-hdl\s+ppif\/apb_completer\.ppif/,
+        'APB target reaches real external HDL validation');
     like($result->{stdout}, qr/==> mdBook build/, 'normal pre-push includes the book');
     unlike($result->{stdout}, qr/VIAL regression-promotion|t\/(?:143[678]|147[012]|296|301|303|1884)-/,
         'exhaustive protocol, corpus and scale families stay outside pre-push');

@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37, PUBLICATION-REGRESSION-REPAIRS.38`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37, PUBLICATION-REGRESSION-REPAIRS.38, PUBLICATION-REGRESSION-REPAIRS.39`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -154,8 +154,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.12.2`
   Status: `done`
   Goal: `Implement robust Lispish parser lookup independent of PPlugin.`
-  Acceptance: `Completed explicit module-origin specs/Lispish.spec provider, independent of PPlugin/recursive discovery, with factory-local compiled root. Preserve grammar/syntax/AST/diagnostic/file/scalar/CWD contracts and actual FSM/ISF/PPIF/PathSearch controls. Original complete contract/evidence remain byte-exact in b097 task/history. General legacy retirement remains .12.3.`
-  Verification: `parser-provider-red-2 actual import refusal turns green with complete AST/wire-kind/API/CWD/resource/syntax/root-stability controls. Original guard-only refusal remains separately retained. Grammar unchanged; LinkedSpec legacy dispatch becomes lazy and PathSearch drops unused Global import. Four adjacent files pass. Changed-source T1437 passes all115 outer cases with fixed guards; parser-provider-capacity-outcome/recovery retain complete recipes, initial dirty-to-exact-source qualification, detached first-gate gap and fresh gate. Source2f62e76db/current-factaf9977aa remain distinct. Book/POD/KMap and normal gates pass. Full CI/hosted/history cause and .12.3 remain separate.`
+  Acceptance: `Completed explicit module-origin Lispish provider, independent of PPlugin/discovery, with factory-local root. Preserve grammar/AST/diagnostic/file/scalar/CWD contracts and public FSM/ISF/PPIF/PathSearch controls. Exact original remains in apb-comparison-width intake/b097 history.`
+  Verification: `Native provider RED/GREEN and AST/API/CWD/resource/root-stability controls pass. Grammar unchanged; legacy dispatch lazy and unused Global import removed. Four adjacent tests and current T1437 all115 cases pass with unchanged guards. Exact first capacity/recovery/gate gaps and source2f62e76db versus factaf9977aa retain. Docs/normal gates pass; full/hosted/history cause and retirement .12.3 stay separate.`
   Currency: `Saved-intake reverify alone does not qualify changed provider. Existing pipeline-card field adds guarded current T2106 while retaining saved reader/scheduler routes; parser-provider-currency passes exact field/KMap checks. Original full questions/facts/recovery narrative retain in b097 source/history; limits unchanged.`
   Commit: `Source2f62e76db; current-factaf9977aa; capacity outcome: this work-unit commit.`
 
@@ -222,8 +222,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.5`
   Status: `done`
   Goal: `Preserve the actual representative default failure census and own bounded successors.`
-  Acceptance: `Retain exact source/command/status/complete output for default T1604/T1629/T1645 without large/native flags. Separate known stale raw-bridge provenance from unclassified derived checking/backend differences. Name missing causal legs and scheduled owners, update book/Memory and commit before repair code.`
-  Verification: `All three commands return1; complete:true is collection only. Topology fails only old bridge SHA in three axes; checking also fails its evaluation/rerun IDs; backend also fails its stage dictionary/evaluation/rerun IDs. No unrelated producer fault, semantic change, resource/native issue or full-suite success is inferred. .17.2.1-.4 own next repairs/remaining19 defaults; no blind update is selected. Intake proof/source seal and full logs survive under push-readiness-20261025. Current canonical bridge/core .16 checks remain green in their own scope. First staged gate rejects the zero-numbered draft intake node as malformed; rename it to positive .17.2.5 under the existing task grammar and retain the refusal before unique staged-2. No product/checker policy is changed.`
+  Acceptance: `Completed T1604/T1629/T1645 default intake with full commands/status/streams and source identity. Preserve missing semantic/runtime scope; .1-.4 own repairs. Original source/contract remains in apb-comparison-width intake.`
+  Verification: `All three return1; collection is not success. Bridge SHA and derived checking/backend IDs need diagnosis under .1-.4. Scan/first outcomes/seal retain. Zero-numbered node refusal corrected to .17.2.5; no product/checker/full-suite change.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2.1`
@@ -699,22 +699,28 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.37: select critical downstream pre-push checks`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.38`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair public APB target external validation and retain it in the critical gate.`
-  Acceptance: `P1 before this push: reproduce the exact public APB completer --verify-hdl refusal; use canonical width/emitter contracts to diagnose four-bit counter versus one-bit comparison literals. Repair the established cause while preserving comparison meaning, signedness, declared widths and existing assertions; do not suppress warnings or weaken external validation. Run smallest causal/adjacent checks and one representative public HDL validation, add that check to pre-push, update book/current fact and commit. Then .13 runs selected critical gate and authorized push/all hosted/Pages, pauses. No exhaustive local retry.`
-  Verification: `critical-prepush-changed-focus retains actual --quiet --strict --verify-hdl ppif/apb_completer.ppif exit1. Verilator5.050 reports WIDTHEXPAND at generated lines209/336: four-bit apb_complete_wait_2_cnt compared to one-bit1. Generation and strict JSON check pass. No functional hardware failure or exact producer cause claimed yet. The selected gate passes but omitted external synthesis/lint; own this gap and actual downstream refusal here before publication.`
+  Acceptance: `Completed fixed-signal unsigned comparison extension without AST/declaration/schema or warning-policy changes. Use actual assignment-width authority for targets absent from module membership. Exact source/contracts/first failures remain in apb-comparison intakes/proof. Retain real APB external validation in critical pre-push; full scenarios stay hosted/manual.`
+  Verification: `Public APB --verify-hdl0; exact generated HDL differs only by Date and two1-to4-bit literal renderings, with inverse equality. T208/grouping/symbolic Files3 Tests12 and GHDL count/comparison Files2 Tests9 pass. Native critical gate0 in153.631755s: Files22 Tests219, APB JSON/external HDL and book0. First fixture/metadata refusals and actual width-miss trace retain. AST literal values/widths preserve; wider/signed/unknown/unsized/arithmetic controls unchanged. P2 .39 owns separately unqualified signed markers. Current normal docs/staged/hook gate commit; no full-suite/hosted or universal timing claim.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.38: preserve fixed comparison widths in critical HDL checks`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.39`
+  Status: `pending`
+  Goal: `Qualify signed sized-literal normalization through public source.`
+  Acceptance: `P2 after director resumes and existing publication/macOS/required-request order: establish public admission and signed semantics, then repair or enforce supported boundary with focused adverse/runtime proof and book. No current priority pivot.`
+  Verification: `T208 raw AST2'sb11 renders2'b11; IntegerLiteralSupport consumes s but omits it from returned parts. Public-source/runtime impact unqualified. Exact first RED retained; .38 preserves this existing spelling and excludes signed payloads from extension.`
   Commit: `pending`
 
 ## Current Frontier
 
-.37 implements the measured critical gate; all long/full hosted tests remain.
-.38 owns the real public APB external-lint failure found by a targeted extra check.
-After its causal fix, .13 runs the selected gate, pushes/all hosted/Pages, then pauses.
+.38 repairs public APB external validation; strengthened critical gate passes.
+.13 now owns authorized normal push, every exact-SHA hosted result/Pages, then pause.
+Full/manual suites stay available; no exhaustive local retry. .39 is P2 after resume.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.38` | `pending` | Repair actual APB target width-lint refusal before publication. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Selected gate, authorized push/all hosted/Pages and pause. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Commit clean, push/all hosted/Pages, then director pause. |
 
 ## Decisions
 
@@ -723,18 +729,18 @@ After its causal fix, .13 runs the selected gate, pushes/all hosted/Pages, then 
 
 ## Blockers
 
-- APB target external validation fails two width warnings; P1 .38 owns repair.
-- No background result or user permission outstanding. No exhaustive local retry.
-- Selected gate passes; publication/full hosted qualification remain .13 after .38.
+- No local selected-gate blocker or background result remains after .38 commits.
+- .13 still requires actual transport/all exact-SHA hosted/Pages qualification.
+- Preserve director pause and P2 .39; no full-local or signed-marker closure claim.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact original task/history and all first gate outcomes retain in critical-prepush intakes.
+Exact prior task/history, source and first outcomes retain in apb-comparison intakes/proof.
 
-## Acceptance Checklist — critical downstream gate
+## Acceptance Checklist — critical comparison-width repair
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'run_step "Perl regression suite"' -- bin/ci-regression identifies unsharded full execution. Full14's six-hour prefix and director instruction require critical selection. Actual selection RED proves no pre-push mode; first native attempt proves required APB --json and existing Darwin AXI skips. Real extra APB lint failure is P1 .38, never waived.
-- [x] **ADDRESSED (verified)** — Add explicit closed tier, discoverable list/dry-run, required tools and native GHDL reset fallback preserving Darwin guard. Native gate0 includes21 files/215 tests, APB JSON check and book; focused T313/T1545 and visible GHDL oracles pass. Retain first failures, timing, exact source and distinct deferred scope. Full branch/lifecycle/functions/workflows unchanged; no long test removed.
-- [x] **NO REGRESSION** — All tests successful, Files=21, Tests=215; focused Files=2, Tests=18 plus actual GHDL FSM/ISF reset oracles. Re-derive source/manifest/log/duration; falsify via genuine unsupported-mode RED, first integration failures, exact full-path conservation and independent native oracles; durability is complete receipts/input/proof and committed owner/book/card. Docs/staged/normal hook still required. P1 APB width repair and full hosted/Pages remain pending; no exhaustive or general timing guarantee.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _render_binary_op' identifies c81a6fd21 and the shared ASTSupport renderer. Actual APB lint refuses two four-bit-counter/one-bit-literal comparisons. Native call trace shows runtime SignalRef lacks module membership/width; declaration planning already uses its real assignment analysis. First unit fixture lacked an actual registered signal; preserve that refusal and corrected source-backed witness.
+- [x] **ADDRESSED (verified)** — Explicitly zero-extend only narrower unsigned sized integer literals beside fixed named signals/static slices, using the same prepared assignment-width authority when necessary. Preserve AST/declarations, symbolic/unknown/signed/wider/unsized/XZ/arithmetic behavior and warning flags. Add renderer and real APB compiler checks to critical pre-push; retain every long/full hosted/manual scenario. P2 .39 owns preexisting signed-marker meaning.
+- [x] **NO REGRESSION** — All tests successful, Files=22, Tests=219; renderer/grouping/symbolic Files=3, Tests=12 and native GHDL count/comparison Files=2, Tests=9. Re-derive bound source/index/log/status/duration; falsify by original native lint/width-miss trace, independent truth/oracles and exact HDL inverse outside Date/two literals; durability is full first/current receipts/input/source/proof and committed book/card/task. Docs/staged/normal hook required; no exhaustive or hosted/Pages success.

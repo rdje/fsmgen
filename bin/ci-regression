@@ -44,6 +44,7 @@ QUICK_TESTS=(
 # Changed behavior also needs its own focused checks before the publication gate.
 PRE_PUSH_TESTS=(
   "${QUICK_TESTS[@]}"
+  t/208-enable-graph-ast-support.t
   t/1183-ci-regression-tier-selection.t
   t/1435-axi-ial2-valid-ready-generator.t
   t/1473-ial2-ahb-requester.t
@@ -115,6 +116,7 @@ list_modes() {
   printf '  %s\n' "${PRE_PUSH_TESTS[@]}"
   printf 'pre-push public CLI:\n'
   printf '  ./bin/fsmgen --quiet --strict --check --json ppif/apb_completer.ppif\n'
+  printf '  ./bin/fsmgen --quiet --strict --verify-hdl ppif/apb_completer.ppif\n'
 }
 
 require_tool() {
@@ -518,6 +520,8 @@ case "$MODE" in
     run_step "Perl critical downstream suite" prove -I perl "${PRE_PUSH_TESTS[@]}"
     run_step "APB target public strict CLI" \
       ./bin/fsmgen --quiet --strict --check --json ppif/apb_completer.ppif
+    run_step "APB target external HDL validation" \
+      ./bin/fsmgen --quiet --strict --verify-hdl ppif/apb_completer.ppif
     ;;
   quick|smoke)
     require_test_files "${QUICK_TESTS[@]}"

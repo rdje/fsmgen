@@ -524,7 +524,8 @@ Before pushing, run focused checks for changed behavior and the critical gate:
 ```
 
 `pre-push` selects IAL0/IAL1 compilation, IAL2 generation and public CLI reports,
-AHB requester/target contracts, APB completion outputs and strict target admission,
+AHB requester/target contracts, APB completion outputs, strict target admission
+and external target HDL lint/synthesis,
 AXI write/read handshake checks, VIAL public source/planning artifacts,
 semantic-query oracles, native reset behavior and subprocess containment.
 Verilator/Yosys must be installed. Darwin keeps its existing legacy Verilator
@@ -534,6 +535,13 @@ project-local provider or `FSMGEN_RESET_GHDL`. `--list` shows the exact tests;
 `pre-push --dry-run` shows the commands. These checks protect representative
 downstream behavior; full protocol combinations, corpus sweeps and architecture-
 scale qualification remain in hosted CI and explicit `full` runs.
+
+The APB target check includes this public command. Fixed-width comparisons make
+unsigned literal extension explicit, preserving values without suppressing lint:
+
+```bash
+./bin/fsmgen --quiet --strict --verify-hdl ppif/apb_completer.ppif
+```
 
 Add focused `prove` checks for the code you changed; the curated tier does not
 choose them automatically or prove exhaustive coverage. The normal pre-push gate

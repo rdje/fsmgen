@@ -486,6 +486,64 @@ subtest 'symbolic literals retain their width and radix through backend renderin
     }
 };
 
+subtest 'fixed signal comparisons extend narrower unsigned literals without changing values' => sub {
+    my $module = parse_fsm_module('comparison_width', <<'FSM');
+(?fsm:comparison_width
+  (+system (clock clk) (sreset rstn))
+  (+size (CNT 4) (OUT 1))
+  (idle (<CNT (OUT <= 1)))
+)
+FSM
+    my $support = prepare_flattened_backend($module)->{enable_graph_ast_support};
+    ok($module->signals->{CNT}, 'public source creates the actual declared counter signal') or return;
+    my $counter = sub { FSM::CoreAST::SignalRef->new($module->signals->{CNT}) };
+    my %truth = (
+        '==' => sub { $_[0] == $_[1] }, '!=' => sub { $_[0] != $_[1] },
+        '<' => sub { $_[0] < $_[1] }, '>' => sub { $_[0] > $_[1] },
+        '<=' => sub { $_[0] <= $_[1] }, '>=' => sub { $_[0] >= $_[1] },
+    );
+    for my $op (sort keys %truth) {
+        for my $reverse (0, 1) {
+            my $signal = $counter->();
+            my $literal = FSM::CoreAST::Literal->new('1', width => 1, radix => 'binary');
+            my $ast = FSM::AST::BinaryOp->new($op,
+                $reverse ? ($literal, $signal) : ($signal, $literal));
+            my $text = $support->ast_to_systemverilog($ast);
+            is($text, $reverse ? "4'b1 $op CNT" : "CNT $op 4'b1",
+                'fixed-width comparison has no implicit literal expansion');
+            is($literal->width, 1, 'rendering preserves original literal width');
+            is($literal->value, '1', 'rendering preserves original literal value');
+            for my $value (0 .. 15) {
+                my $expression = $text;
+                $expression =~ s/\bCNT\b/$value/g;
+                $expression =~ s/\b\d+'b([01]+)/oct("0b$1")/ge;
+                die 'non-closed comparison oracle' unless $expression =~ /\A[0-9\s<>=!]+\z/;
+                my $actual = eval $expression;
+                die $@ if $@;
+                my @operands = $reverse ? (1, $value) : ($value, 1);
+                is(0 + !!$actual, 0 + !!$truth{$op}->(@operands),
+                    'rendered comparison preserves unsigned truth over the complete counter range');
+            }
+        }
+    }
+    for my $case (
+        ["8'hFF", "CNT > 8'hFF"],
+        ["1'bx", "CNT > 1'bx"],
+        ['1', 'CNT > 1'],
+        ["2'sb11", "CNT > 2'b11"],
+    ) {
+        is($support->ast_to_systemverilog(FSM::AST::BinaryOp->new('>',
+            $counter->(), FSM::AST::Literal->new($case->[0]))),
+            $case->[1], 'wider, unknown, unsized and legacy signed rendering remain unchanged');
+    }
+    is($support->ast_to_systemverilog(FSM::AST::BinaryOp->new('+',
+        $counter->(), FSM::AST::Literal->new("1'b1"))),
+        "CNT + 1'b1", 'arithmetic remains outside comparison normalization');
+    is($support->ast_to_systemverilog(FSM::AST::BinaryOp->new('>',
+        FSM::AST::SignalRef->new('UNKNOWN'), FSM::AST::Literal->new("1'b1"))),
+        "UNKNOWN > 1'b1", 'unknown operand widths do not invent context');
+};
+
 done_testing();
 
 sub parse_fsm_module {

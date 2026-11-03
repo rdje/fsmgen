@@ -1174,6 +1174,13 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
     my $right_sv = $self->_ast_to_systemverilog_internal($right, $my_precedence);
     my $op_symbol = $self->_choose_operator_symbol($operator, $left, $right);
 
+    if ($op_symbol =~ /\A(?:==|!=|<|>|<=|>=)\z/) {
+        my $left_sized = $self->_comparison_literal_at_signal_width($right, $left, $left_sv);
+        my $right_sized = $self->_comparison_literal_at_signal_width($left, $right, $right_sv);
+        $left_sv = $left_sized if defined $left_sized;
+        $right_sv = $right_sized if defined $right_sized;
+    }
+
     if (($op_symbol eq '|' || $op_symbol eq '&')
         && $self->_bitwise_child_needs_grouping($left))
     {
@@ -1205,6 +1212,42 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
 
     return "($expr)" if $self->_needs_parentheses($my_precedence, $parent_precedence);
     return $expr;
+}
+
+=head2 _comparison_literal_at_signal_width
+
+Make existing unsigned sized-literal zero-extension explicit beside a fixed
+named signal. Prepared assignment analysis supplies the same numeric width used
+by declaration planning when an assigned signal is absent from module membership.
+Symbolic ranges, unknown widths and signed/unsized/X/Z literals retain their
+existing rendering. This changes no AST node or declaration-width contract.
+
+=cut
+
+sub _comparison_literal_at_signal_width ($self, $signal, $literal, $text) {
+    return undef unless blessed($signal)
+        && ($signal->isa('FSM::AST::SignalRef') || $signal->isa('FSM::CoreAST::SignalRef'));
+    return undef unless $self->_is_literal_operand($literal);
+    my $raw = eval { $literal->value };
+    return undef if defined($raw) && !ref($raw) && $raw =~ /'s/i;
+    return undef unless $text =~ /\A[1-9][0-9]*'[bdh][0-9a-f_]+\z/i;
+    my $width = $self->_expression_width($signal);
+    if (!defined($width) && $signal->isa('FSM::AST::SignalRef')) {
+        my $ctx = $self->{flattened_dt};
+        my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($signal);
+        return undef if $self->_signal_has_symbolic_range($name);
+        my $analysis = $ctx->{assignment_analysis}{$name};
+        $width = $ctx->{enable_graph_assignment_support}->get_lhs_width_from_analysis($analysis)
+            if $analysis;
+    }
+    my $parts = FSM::Package::IntegerLiteralSupport->literal_parts_from_scalar($text);
+    return undef unless defined($width) && $parts && $width > $parts->{width};
+
+    # A sized unsigned operand already zero-extends in a comparison. Make that
+    # extension explicit for lint, preserving the AST and fixed-width proof.
+    return FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_parts(
+        %$parts, width => $width,
+    );
 }
 
 sub _render_truthiness_comparison ($self, $operator, $left, $right) {
