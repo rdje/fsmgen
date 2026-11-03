@@ -678,11 +678,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.34: serialize parent and child group setup`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.35`
-  Status: `pending`
+  Status: `done`
   Goal: `Recognize indented native test failures in progress monitoring.`
   Acceptance: `P1 before next native launch: fix only the proven indentation gap, retain original observer/actual missed samples, and use native failed-body, clean-pass and unrelated-text controls. Preserve exact run/journal/source/process authentication, complete-pass extraction and raw telemetry; focused evidence and normal commit.`
-  Verification: `Full13 append-only sample reports false while its tail contains indented # Failed test diagnostics. Manual tail inspection catches failure; complete native status remains faithfully retained.`
-  Commit: `pending`
+  Verification: `Saved native classifier RED sees only the outer failure, missing both indented bodies. New anchored whitespace-aware helper detects all3 native lines, the original missed sample, four positive formats and seven clean/unrelated controls. Actual observer selected-expression bridge changes false to true on that sample, preserves clean false and every other observer byte. No journal/process/counter/native programme replay. Current source/template/first evidence retain in native-failure records; book/card/staged/normal gates precede .36.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.35: detect indented native failure diagnostics`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.36`
   Status: `pending`
@@ -693,15 +693,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-.34 serializes the reproduced native group-creation race with focused proof.
-.35 fixes missed indented diagnostics before .36 exclusive full14 readiness.
-.13 retains full native/push/hosted/Pages qualification and director pause.
-Original full12 fixture-Git and older native causes remain unqualified.
+Committed launch repair and saved-native diagnostic controls qualify .36 readiness.
+Join exact changed supervisor/tests and focused evidence; old native prefixes remain
+historical because the shared supervisor changed. Refresh capacity and declare
+exclusive full14 before .13 complete native/push/hosted/Pages and director pause.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.35` | `pending` | Correct monitor indentation before another full launch. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.36` | `pending` | Qualify fresh full14 readiness after committed repairs. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.36` | `pending` | Admit exclusive full14 using the corrected classifier/template. |
 
 ## Decisions
 
@@ -710,7 +709,7 @@ Original full12 fixture-Git and older native causes remain unqualified.
 
 ## Blockers
 
-- Current launch repair is focused-qualified; .35 owns the missed monitor diagnostic.
+- Focused repairs pass; fresh readiness and complete publication qualification remain.
 - Full13 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor director pause afterward.
 
@@ -718,10 +717,10 @@ Original full12 fixture-Git and older native causes remain unqualified.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and completed .26 narrative retain in group-admission-docs-intake-20261103.
+Exact prior task/history and observer retain in native-failure intake/source records.
 
-## Acceptance Checklist — ordered native group admission
+## Acceptance Checklist — indented native failure diagnostics
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _child_group_admission_error identifies a055d3a2 child provenance; current _start_supervision also issues parent setpgid. Native concurrent calls reproduce child EPERM despite parent success and the intended same-session group. Child-only/serialized counterfactuals pass their bounded domain. Corrected T2302 RED independently exposes overlap. No kernel trace or omitted historical Git cause is invented.
-- [x] **ADDRESSED (verified)** — EOF orders parent best-effort setup before the child's one mandatory native call and group query. Preserve strict failure, control cap/schema/exit126, fixed deadlines/output bounds, cleanup and public interfaces. Final-source syntax, T2302/T313/T1545 Files3 Tests22 and the exact saved HDL's native Verilator/Yosys validation pass. Preserve all first attempts, C sources and final-programme source binding; sync book/card/task.
-- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=22. prove passes actual native session-leader refusal despite correct group, false-success membership rejection, pre-group timeout/positive-PID cleanup and caller-group preservation; existing HDL/fixture policies pass. Re-derive native source/result/group joins; falsify genuine concurrent RED, ordered control and real refusals; durability is complete first receipts/intakes/source and normal commitment. Knowledge-map/book/staged gates qualify docs. Full14/native/hosted/Pages remain pending; original historical causes stay open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual native diagnostic at t/1436-ial2-ppif-parser-cli.t line 5755 is indented. The old observer allows leading whitespace only for not ok, so its retained intermediate sample reports false despite both failed-body lines. Saved-log RED returns only the later outer line; no workload replay is needed.
+- [x] **ADDRESSED (verified)** — Use one anchored whitespace-aware classifier, retaining complete original lines. Native GREEN detects all3 lines and the missed sample; independent positive/clean controls pass. The exact observer bridge evaluates only its selected expression: original false becomes true, clean stays false, all other source bytes restore exactly. Preserve original source/RED and snapshot current helper/template for .36 adoption.
+- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify documents. Re-derive original native hash/body and missed sample; falsify actual old-classifier RED, independent diagnostic formats, clean prefix and unrelated text; durability is complete receipts/source/intakes and committed helper/book/card. No spent full13 journal, PID/counter programme, native regression, push or hosted replay. .36 must account for the changed shared supervisor before full14.

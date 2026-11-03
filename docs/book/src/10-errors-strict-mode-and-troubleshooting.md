@@ -650,10 +650,12 @@ from observed failures in those runs.
 
 Audit source snapshots use repository-relative producer addresses. The scoped
 reader checks those addresses, source hashes and readback from a relocated copy;
-original source text and native outcomes remain preserved:
+original source text and native outcomes remain preserved. The saved-log control
+also detects indented test-failure diagnostics:
 
 ```bash
 python3 -B docs/audits/push-readiness-20261025/verify_audit_source_paths.py
+python3 -B docs/audits/push-readiness-20261025/native_failure_diagnostics.py
 ```
 
 T1545 emits failed fixture Git supervisor results as canonical JSON after
