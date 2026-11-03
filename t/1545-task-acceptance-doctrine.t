@@ -176,6 +176,55 @@ subtest 'unstaged worktree evidence cannot satisfy the staged index' => sub {
     like($output, qr/box-scoped root_cause signature/, 'failure reflects the staged snapshot');
 };
 
+subtest 'failed fixture Git diagnostics retain the complete supervisor result' => sub {
+    my $repo = make_fixture_repo();
+    my $real_git = \&run_fixture_git;
+    my $real_setpgid = \&POSIX::setpgid;
+    my (@diagnostics, $result, $error);
+    {
+        no warnings 'redefine';
+        local *main::diag = sub { push @diagnostics, @_; return 1; };
+        local *main::run_fixture_git = sub {
+            $result = $real_git->(@_);
+            return $result;
+        };
+        local *FSM::Support::ProcessSupervisor::setpgid = sub {
+            # Keep the parent from creating the group before the child can
+            # become a native session leader. The real child setpgid then
+            # refuses with EPERM; no Git command is executed or retried.
+            return 0 if $_[0] != 0;
+            my $session = POSIX::setsid();
+            die "native session control failed\n"
+                unless defined($session) && $session == $$;
+            return $real_setpgid->(@_);
+        };
+        eval {
+            command_ok(['git', '-C', $repo, 'add', '.'], 'stage fixture baseline');
+            1;
+        } or $error = $@;
+    }
+    like($error // '', qr/stage fixture baseline failed \(exec_error\)/,
+        'original stage failure and status remain visible');
+    is($result->{stage}, 'fixture_git', 'failure belongs to the actual Git stage');
+    is($result->{status}, 'exec_error', 'native child cannot reach exec');
+    like($result->{exec_error} // '', qr/operation=setpgid result=undef errno=/,
+        'native containment refusal supplies its own error detail');
+    is($result->{stdout}, '', 'pre-exec refusal has no Git stdout');
+    is($result->{stderr}, '', 'pre-exec refusal has no Git stderr');
+
+    my @encoded = grep { /^fixture Git result: / } @diagnostics;
+    is(scalar(@encoded), 1, 'one complete failed Git diagnostic is emitted') or return;
+    $encoded[0] =~ s/\Afixture Git result: //;
+    my $record = eval { JSON::PP->new->decode($encoded[0]) };
+    ok(ref($record) eq 'HASH', 'diagnostic is recoverable canonical JSON') or return;
+    is_deeply($record, $result, 'diagnostic preserves the complete actual result');
+    ok($record->{cleanup}{leader_reaped} && $record->{cleanup}{group_gone},
+        'native failed control retains completed cleanup evidence');
+    my ($pid) = $record->{exec_error} =~ /pid=([0-9]+)/;
+    ok(defined($pid), 'native failure identifies its actual child') or return;
+    ok(!kill(0, $pid), 'failed native child is independently absent');
+};
+
 subtest 'failed checker diagnostics retain the complete supervisor result' => sub {
     my $repo = make_fixture_repo();
     for my $streams (0, 1) {
@@ -348,6 +397,7 @@ sub command_ok {
             && $command->[0] eq 'git' && $command->[1] eq '-C';
     my $result = run_fixture_git($command->[2], [@{$command}[3 .. $#$command]]);
     if (!$result->{ok}) {
+        diag('fixture Git result: ' . JSON::PP->new->ascii->canonical->encode($result));
         die "$label failed ($result->{status}): "
             . $result->{stdout} . $result->{stderr};
     }

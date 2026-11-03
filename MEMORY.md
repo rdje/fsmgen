@@ -6,14 +6,14 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.29`
-- next_action: Diagnose and repair the actual T1545 fixture baseline exec_error from the
-  full12 outcome/intake. Commit its focused verified repair, then .30 phase-control mismatch,
-  .31 due artifact maintenance and .32 exclusive full13 readiness. .13 requires complete
-  native Perl/VIAL/book, normal push/all exact-SHA hosted/Pages, then the director pause.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.33`
+- next_action: Repair confirmed project-absolute audit producer path metadata under .33,
+  preserving exact original packets. Then .30 phase-control cause/repair, .31 due maintenance
+  and .32 fresh full13 readiness each commit with focused checks. .13 requires complete
+  native Perl/VIAL/book and normal push/all exact-SHA hosted/Pages, then the director pause.
 - in_flight_uncommitted: Derive with git status --short.
-- in_flight_background: None. Full12 native143/recorder1 consumed after confirmed failures;
-  old identities/recorder absent and former owned session empty. Never replay spent slots.
-- blockers: Actual T1545/T1548 failures need causal repairs; no user input is required.
-  Complete local/push/hosted/Pages remain pending. Boundary waves remain discussion only;
-  pause after the qualified push before macOS, required-width or another roadmap task.
+- in_flight_background: None; full12 is settled. Never replay spent journal/checkpoint slots.
+- blockers: Phase-control/current full qualification remain; no user input required.
+  .29.2 owns the omitted historical Git launch cause and activates on any new recurrence,
+  otherwise at macOS relevance after qualified push/director resume. Boundary waves stay
+  discussion only; pause before macOS, required-width or another roadmap task.

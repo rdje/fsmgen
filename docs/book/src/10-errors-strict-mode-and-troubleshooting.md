@@ -648,6 +648,16 @@ revision and results must be checked. Follow the task’s stated order for an
 open historical platform investigation, keeping its causal status separate
 from observed failures in those runs.
 
+T1545 emits failed fixture Git supervisor results as canonical JSON after
+`fixture Git result: `. It preserves launch errors, separate streams, status,
+timings, bounds and cleanup even when Git emits nothing. Failed checker results
+use `fixture checker result: `. A passing rerun cannot establish the cause of
+an earlier launch failure whose detailed result was discarded.
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1545-task-acceptance-doctrine.t
+```
+
 Earlier guard versions discarded stdin when launching their background child.
 A program supplied on stdin could consequently exit zero without executing.
 The regression retains that exact committed version as an independent failure
