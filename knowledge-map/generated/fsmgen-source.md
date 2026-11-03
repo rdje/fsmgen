@@ -1,7 +1,7 @@
 # Knowledge Map: `fsmgen-source`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **7** facts · **38** uniquely owned question entries.
+> **7** facts · **39** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -42,6 +42,7 @@
 - q="which SourceHIR packages exist?" · facts=[fsmgen-source-hir-valid-ready-implementation](../../docs/knowledge/fsmgen-source-hir-valid-ready-implementation.md)
 - q="which package renders SourceHIR to ISF?" · facts=[fsmgen-source-hir-phase-control-implementation](../../docs/knowledge/fsmgen-source-hir-phase-control-implementation.md)
 - q="who owns a future public SourceHIR builder?" · facts=[fsmgen-source-hir-two-route-promotion-audit](../../docs/knowledge/fsmgen-source-hir-two-route-promotion-audit.md)
+- q="why did T1548 phase-control IAL0 checksum change?" · facts=[fsmgen-source-hir-phase-control-implementation](../../docs/knowledge/fsmgen-source-hir-phase-control-implementation.md)
 - q="why does SourceHIR remain private?" · facts=[fsmgen-source-hir-post-prototype-audit](../../docs/knowledge/fsmgen-source-hir-post-prototype-audit.md)
 
 ## Facts
@@ -57,14 +58,14 @@ _SourceHIR selected as a private pre-IAL semantic boundary_
 
 _SourceHIR v2 selects a private semantic concrete-control route to canonical IAL1_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-11-03 · **status:** current
 - **source and verification:** [`docs/knowledge/fsmgen-source-hir-concrete-control-v2-contract.md`](../../docs/knowledge/fsmgen-source-hir-concrete-control-v2-contract.md)
 
 ### fsmgen-source-hir-phase-control-implementation
 
 _Private SourceHIR concrete-control route to canonical IAL1 implemented_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-11-03 · **status:** current
 - **source and verification:** [`docs/knowledge/fsmgen-source-hir-phase-control-implementation.md`](../../docs/knowledge/fsmgen-source-hir-phase-control-implementation.md)
 
 ### fsmgen-source-hir-post-prototype-audit

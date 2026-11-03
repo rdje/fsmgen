@@ -478,11 +478,11 @@ subtest 'canonical text reparses and preserves exact IAL0 and schedule' => sub {
     is_deeply($generated->{files}, $baseline->{files}, 'generated and hand-written paths produce equal IAL0 files');
 
     my $fsm = $generated->{files}{'phase_test.fsm'};
-    is(scalar(split /\n/, $fsm), 45, 'generated IAL0 has forty-five logical lines');
-    is(length($fsm), 484, 'generated IAL0 has 484 bytes');
+    is(scalar(split /\n/, $fsm), 51, 'generated IAL0 has fifty-one logical lines');
+    is(length($fsm), 558, 'generated IAL0 has 558 bytes');
     is(
         sha256_hex($fsm),
-        '8b82ddb329a6b625d0ec271d9611b35140414a2c84e775c1615e442cdfa65047',
+        '92c497ecb22354ed661af4d2873b31fab44605179b838e3825b04d564af6fe83',
         'generated IAL0 has the selected SHA-256',
     );
 

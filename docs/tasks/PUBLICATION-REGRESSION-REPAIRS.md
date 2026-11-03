@@ -601,8 +601,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.26`
   Status: `done`
   Goal: `Prepare fresh full11 after all owned publication repairs/intakes.`
-  Acceptance: `After .23-.25 and .27 commit, conserve actual current-source/final-path passing receipts and declared refusal boundaries. Fresh capacity/kernel pressure, unchanged guards/unfiltered programme/workflows and unique full11 journal/checkpoint; clean committed handoff before .13 once-only launch. Complete native0 precedes normal authorized push/all exact-SHA hosted/Pages success. No spent checkpoint or partial-full credit.`
-  Verification: `Full10-repair-closure conserves23 prior source/focused joins and556 actual full10 pass paths; nine current repair/intake/doc/census receipts preserve expected refusals and all later/full gaps. Fresh admission73.54952494303386pct/pressure1 leaves five exclusive full11 slots absent; CI/guard/recorder/workflow hashes and required160 jobs unchanged. Initial instrument wrongly demanded a full10 T314 row; refusal and corrected focused-only distinction retain, with owned audit-file guard recovery. Readiness only: .13 once-only clean launch must consume complete native0 before normal push/all exact-SHA hosted/Pages.`
+  Acceptance: `After .23-.25/.27, conserve current-source focused results/refusals; require fresh capacity/pressure, unchanged guards/programme/workflows and unused full11 slots. Commit before .13; complete native0 before normal push/all exact-SHA hosted/Pages. No checkpoint reuse or partial credit.`
+  Verification: `Readiness only:23 source/focused joins,556 full10 passes and nine current receipts retain refusals/later/full gaps. Admission73.54952494303386pct/pressure1; five unused slots; CI/guard/recorder/workflows/160 jobs unchanged. Wrong full10 T314-row demand, focused-only correction and owned-audit guard recovery are preserved. .13 owns once-only clean launch and complete0 before push/hosted; full original/source remains in 678ee1b4b and phase-control-intake.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.26: admit fresh full11 after owned publication repairs`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.27`
@@ -643,11 +643,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.30`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose and repair the native T1548 phase-control IAL0 golden mismatch.`
   Acceptance: `P1 publication blocker after .29: reproduce prove -Iperl t/1548-source-hir-phase-control.t. Read SourceHIR renderer, public ISF scheduling contract, fixture, relevant book and introducing history. Native actual51lines/558bytes/hash92c497ec differs from expected45/484/hash8b82ddb3 while generated/manual actors, files and reports match. Establish intended source delta before changing any oracle or producer; preserve exact output equality, independent semantic/state-order and changed-input controls. Focused checks/book/live docs/normal commit precede maintenance and fresh qualification.`
-  Verification: `Full12 retains three failed metric/hash assertions in canonical-text parity, one failed outer subtest and exit1. No stale-snapshot or compiler-cause conclusion yet; full native/test source is in full12-outcome-intake.`
-  Commit: `pending`
+  Verification: `Original T1548 and phase fixture still equal8876adb0b. Public scheduler/strict-check output is51lines/558bytes/hash92c497ec; removing only the exact six-line/74-byte authored input/output interface restores the old45/484/hash8b82ddb3. Parent input a7bf398ac3/output876b2c1d1d history and current LoweringIR/emitter establish intent. Only three golden values/labels change; exact inverse restores every old test byte and all fixtures/producer/private-package hashes stay unchanged. Canonical four-file HIR/phase checks pass0/Files4 Tests25. Live contract/cards/book reflect current bytes; July promotion audit stays explicitly dated. Native/source/proof and normal gates qualify this focused repair only; full publication remains .13. First hook's focused-doc line excess is funded in phase-control-containment.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.30: align phase-control golden with declared ports`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.31`
   Status: `pending`
@@ -659,7 +659,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.32`
   Status: `pending`
   Goal: `Admit exclusive full13 readiness after the causal full12 repairs and due maintenance.`
-  Acceptance: `After .29.1/.33/.30/.31 commit clean, join actual native/focused repairs and exact current production/test/programme/workflow hashes. Refresh raw capacity/pressure and independent adopted-formula parser under unchanged88/4096. Declare unused full13 journal/log/results/T296 checkpoint, preserve full12 settlement and all missing stages, commit readiness before .13 once-only unfiltered Perl/VIAL/book. Complete0 precedes authorized normal push/all exact-SHA hosted/Pages, then director pause. No spent-slot reuse, filters, opt-ins or future-headroom promise.`
+  Acceptance: `After .29.1/.33/.30/.31 commit clean, adopt corrected .33 snapshot helpers and join actual native/focused repairs and exact current production/test/programme/workflow hashes. Refresh raw capacity/pressure and independent adopted-formula parser under unchanged88/4096. Declare unused full13 journal/log/results/T296 checkpoint, preserve full12 settlement and all missing stages, commit readiness before .13 once-only unfiltered Perl/VIAL/book. Complete0 precedes authorized normal push/all exact-SHA hosted/Pages, then director pause. No spent-slot reuse, filters, opt-ins or future-headroom promise.`
   Verification: `Pending causal repairs/maintenance and fresh source/capacity qualification. Full12 administrative143 after actual test failures is not full success.`
   Commit: `pending`
 
@@ -672,18 +672,16 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-.29.1 restores complete Git failure diagnostics and current focused fixture
-qualification; the omitted original full12 launch cause remains .29.2, scheduled
-first at macOS relevance after qualified push/director resume or immediately on
-recurrence. .33 closes the audit path metadata repair. Next: .30 phase-control repair,
-.31 due maintenance and .32 fresh full13
-readiness precede .13 complete native/push/hosted/Pages and the director pause.
+.29.1 diagnostic/current-fixture and .30 phase-control repairs pass focused
+checks; .33 portable audit metadata is qualified. The omitted original full12
+Git launch cause remains .29.2, first at macOS relevance after qualified push/
+director resume or immediately on recurrence. .31 due maintenance and .32 fresh
+full13 readiness precede .13 complete native/push/hosted/Pages and the pause.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.30` | `pending` | Establish intended phase-control output before repairing its mismatch. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.31` | `pending` | Complete due safe artifact maintenance. |
-| 3 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.31` | `pending` | Complete due safe artifact maintenance. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness using corrected snapshot helpers. |
 
 ## Decisions
 
@@ -692,7 +690,7 @@ readiness precede .13 complete native/push/hosted/Pages and the director pause.
 
 ## Blockers
 
-- .30 phase-control repair and complete fresh qualification precede publication.
+- Due maintenance/readiness and complete fresh qualification precede publication.
 - .29.2 owns missing historical launch cause; any actual recurrence blocks further qualification.
 - Full12 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor the conditional pause afterward.
@@ -701,10 +699,10 @@ readiness precede .13 complete native/push/hosted/Pages and the director pause.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history/cards and packet bytes retain in audit-source-paths-intake-20261103.
+Exact prior task/history/cards and original phase sources retain in phase-control-intake-20261103.
 
-## Acceptance Checklist — portable audit source metadata
+## Acceptance Checklist — current phase-control source golden
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual saved instrument.path metadata contains the checkout root or its placeholder because producers stringify Python __file__ without relativizing it. git log -S full12-outcome-intake identifies 6da362e27/4256f3431 ownership; exact original packets and producer helpers retain in the intake. The finite native reader rejects the original address before any mutation.
-- [x] **ADDRESSED (verified)** — Normalize only the declared producer path field in each affected packet; all other JSON/source/hash/native fields remain exact and original compressed bytes are retained. Correct current helper functions/expressions and exercise actual absolute inputs without replaying spent programmes. Reader GREEN, invalid-address refusals, independent expected paths and relocated source/hash readback qualify portability.
-- [x] **NO REGRESSION** — knowledge-map: OK and native book/copied-source/staged/normal gates qualify this metadata slice only. Re-derive original/current fields, packet/source hashes and helper returns; falsify via original reader RED, exact field-excluded JSON equality, sibling-root refusals and relocated readback; durability is complete intake/proof/source/native receipts plus book/fact/task/Git. Production, compiler, CI, guard and native outcome bytes are unchanged; full local/push/hosted remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S explicit_interface_ports identifies a7bf398ac3 parent input preservation; 876b2c1d1d adds outputs to that LoweringIR carrier. The existing emitter writes the exact interface block. Current native RED/current public output and unchanged July fixture/test show the old checksum omits that six-line/74-byte block; removing only it restores the old checksum exactly.
+- [x] **ADDRESSED (verified)** — Refresh only the current line/byte/hash golden and labels. Exact inverse restores every original test byte; fixtures, SourceHIR packages, parser/scheduler/emitter and public scope stay unchanged. Current contract/cards/book use the native snapshot; the original promotion audit is explicitly dated, with complete old source retained. All equality, malformed-input, provenance, ordered-variant and private-surface controls remain.
+- [x] **NO REGRESSION** — All tests successful; Files=4, Tests=25 in phase-control-focused-20261103, plus independent public generated-IAL0 strict-check0. Re-derive current output/metrics and source/history; falsify exact original-checksum inverse and unchanged fixtures/test controls; durability is complete native/source/intake/proof and committed book/fact/task/Git. Native book/KMap/staged/normal gates qualify this focused slice only; complete full local/push/hosted remain pending.

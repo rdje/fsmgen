@@ -41,9 +41,11 @@ producer, one schema, and only the IAL2 route do not justify a public contract.
 The design leaf selects version 2 as a semantic concrete-control subset:
 clock/reset, ordered typed ports, one parameter-to-output named drive, and one
 linear trigger/phase/completion transaction. It reproduces the existing
-17-line/395-byte `isf/phase_test.isf`, re-enter the shipped ISF adapter and
-scheduler, and preserve the one-file 45-line/484-byte IAL0 result. It stores no
-raw ISF form, arbitrary expression, or parser AST. The private implementation
+17-line/395-byte `isf/phase_test.isf`, re-enters the shipped ISF adapter and
+scheduler, and preserves the current one-file 51-line/558-byte IAL0 result.
+That snapshot retains `start`, `done`, and `rdata` in an explicit `+interface`
+block; removing only that block recovers the original downstream checksum.
+It stores no raw ISF form, arbitrary expression, or parser AST. The private implementation
 now reproduces the exact ISF and IAL0 bytes, re-enters the existing adapter and
 scheduler with equal typed actor/schedule results, and adds no public surface.
 The two-route audit retains SourceHIR privately: coherent IAL2 and IAL1 proofs

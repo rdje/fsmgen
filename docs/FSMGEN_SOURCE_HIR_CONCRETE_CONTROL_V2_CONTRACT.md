@@ -376,13 +376,16 @@ Focused t1548 does:
 6. prove equal `phase_test.fsm` text and equal schedule reports; and
 7. preserve the existing one-file IAL0 result.
 
-The current lowering oracle is:
+The current lowering oracle (2026-11-03, `PUBLICATION-REGRESSION-REPAIRS.30`) is:
 
 - one file named `phase_test.fsm`;
-- 45 lines;
-- 484 bytes; and
+- 51 lines;
+- 558 bytes; and
 - SHA-256
-  `8b82ddb329a6b625d0ec271d9611b35140414a2c84e775c1615e442cdfa65047`.
+  `92c497ecb22354ed661af4d2873b31fab44605179b838e3825b04d564af6fe83`.
+
+`+interface` retains authored `start`/`done`/`rdata` roles. Removing its six lines/74 bytes restores the July checksum from `8876adb0b`.
+All other state/drive bytes, canonical ISF, SourceHIR shape and private scope remain unchanged.
 
 Schedule invariants include actor `phase_test`, clock `clk`, async active-low
 `rst_n`, three ports, five states, one transaction `t`, ordered states
@@ -410,7 +413,7 @@ It covers:
 - exact 17-line/395-byte/source-hash golden output;
 - source-map shape and generated-line/root-fallback remapping with stack-path
   sanitization;
-- equal existing-parser actor, schedule report, and exact 45-line/484-byte
+- equal existing-parser actor, schedule report, and exact 51-line/558-byte
   IAL0 output; and
 - absence of CLI, public report, capability, language-surface, and support-
   accounting exposure.
@@ -450,11 +453,7 @@ promotion and retained the validated two-route seam privately under decision
 
 ## Implementation evidence
 
-`FSM::IR::SourceHIR` now dispatches immutable access by root kind;
-`FSM::IR::SourceHIRBuilder` validates/builds the complete closed version-2
-shape; and `FSM::IR::SourceHIRISFRenderer` emits canonical ISF plus a private
-source map and diagnostic remapper. T1548 proves exact fixture and IAL0 hashes,
-equal typed actors/schedules, ordered variants, malformed-input rejection,
-provenance, deterministic rendering, truthful no-position root fallback, and
-absence from public surfaces. T1547, t1179, and t1312 preserve version 1 and the
-existing phase path. Repository-local test scratch is removed after use.
+`FSM::IR::SourceHIR` dispatches immutable root access; `FSM::IR::SourceHIRBuilder` validates/builds the closed v2 shape.
+`FSM::IR::SourceHIRISFRenderer` emits canonical ISF, private source maps and remapping. T1548 proves exact source/IAL0 hashes,
+equal actors/schedules, ordered variants, malformed-input refusal, provenance, determinism, honest no-position root fallback and no public surface.
+T1547/T1179/T1312 preserve v1 and the existing phase path; repository-local scratch is removed after use.

@@ -31,6 +31,9 @@ tree.
 
 ## Two-route evidence
 
+The table records the initial 2026-07-30 proof; authored-port preservation later changed IAL0 declarations without changing canonical ISF or the private disposition.
+Current concrete-control bytes: `docs/FSMGEN_SOURCE_HIR_CONCRETE_CONTROL_V2_CONTRACT.md` and T1548.
+
 | Route | Private semantic root | Canonical handoff | Exact oracle | Focused proof |
 | --- | --- | --- | --- | --- |
 | protocol/platform intent | schema 1 `protocol_platform_intent` / valid-ready | PPIF/IAL2, then existing IAL2 → IAL1 → IAL0 | 14 lines, 428 bytes, SHA-256 `6cbc68152c9e1658a341994bc2ccdd83bdb94b26aedd20d4180c996b5124f7ac` | t1547, 9 top-level tests |
