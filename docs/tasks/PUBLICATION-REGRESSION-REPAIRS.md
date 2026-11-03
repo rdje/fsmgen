@@ -170,7 +170,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
   Acceptance: `Preserve cause gaps; signal only authenticated own jobs. Keep88/4096, unfiltered programme and fresh checkpoints. Complete native Perl/VIAL/book0 precedes authorized normal push/all exact-SHA hosted/Pages success. Then honor the director pause before macOS or the next roadmap task. .29.1 fixes diagnostic loss/current fixture qualification, .30 repairs phase-control, .31 handles due cleanup, .32 admits fresh full13 after committed repairs; never replay spent slots or use partial passes as full credit.`
-  Verification: `Full1-12 remain nonpasses. Clean7e1abc866 full12 has594 independently reconciled passing paths through T1556, including long1436/1437, both1438, repaired1445, APB1472 and AHB/HBURST1490-1493/paired-BUSY aliases. T1545 baseline exec_error and T1548 IAL0 line/byte/hash mismatch are actual failures; causes remain unassigned pending .29/.30. No complete Perl/T296/VIAL/final-book/full/push/hosted/Pages success.`
+  Verification: `Full1-12 remain nonpasses. Clean7e1abc866 full12 has594 independently reconciled passing paths through T1556, including long1436/1437, both1438, repaired1445, APB1472 and AHB/HBURST1490-1493/paired-BUSY aliases. T1545 complete-error retention/current fixture and T1548 declared-port golden now pass focused checks. Original omitted exec_error cause remains .29.2; recurrence activates it immediately. No complete Perl/T296/VIAL/final-book/full/push/hosted/Pages success.`
   Outcome: `After exact native failing summaries and guard PID/birth/source authentication, SIGTERM targets only guard35304; its existing trap settles session35376. Native143/recorder1 consumed; independent old identity/recorder absence and empty former session confirmed. Administrative failure stop, not host cutoff. Complete native/source/history/progress, first monitor/control corrections and all followups retain in full12-outcome-intake. Early overwritten sample durability gap remains explicit. Discussion-only cycle-accurate boundary-wave proposal creates no implementation or priority change. Due cleanup and conditional pause are owned; no user input needed.`
   Commit: `Full12 outcome: this work-unit commit; earlier outcomes remain in exact source/history.`
 
@@ -652,16 +652,16 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.31`
   Status: `done`
   Goal: `Complete the due daily artifact census and safe cleanup after source-freeze settlement.`
-  Acceptance: `After .29.1/.30 commit clean, adopt the current repository-local cleanup collector and same-volume conventions. Preserve active evidence and ambiguously shared data; delete only exactly proven disposable project artifacts. Retain native census/independent controls, overwrite docs/ARTIFACT_CLEANUP.md with latest date/one-line summary, sync relevant reader/book/live records and commit before .32. No cross-repository writes or unproven deletion.`
-  Verification: `Fresh 20261103 wrapper authenticates installed collector against native908cb224f; prior-record interval exceeds24h. All8574 regular same-volume log/bin candidates agree with independent rg membership and remain retained, removed empty. Root/Rust location metadata and saved missing-member/unsafe-path/Boolean-size/invented-removal controls pass. Complete native/census/prior/source retain in artifact-census-20261103. Latest-only record advances; same-size book reader changes only date, so no zero-delta reference authority is refreshed. No content/reclamation/future-absence or workload replay claim. Normal focused docs/reader/commit gates precede .32.`
+  Acceptance: `Run the authenticated same-volume collector after source-freeze settlement; retain evidence, delete only exactly disposable owned data, update latest-only record/book and commit before .32. Original admission-source preserves full scope.`
+  Verification: `Installed collector matches native908cb224f;8574 regular log/bin candidates agree with independent rg and all remain retained. Saved root/Rust metadata and four adverse controls pass. Latest record/book reader advance with zero aggregate delta and unchanged authority. First unsupported KM invocation is retained; corrected reader/KM/book/staged/normal gates pass in a05a2f4ed. No deletion/content/reclamation/future-absence claim.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.31: record due safe artifact census`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.32`
-  Status: `pending`
+  Status: `done`
   Goal: `Admit exclusive full13 readiness after the causal full12 repairs and due maintenance.`
   Acceptance: `After .29.1/.33/.30/.31 commit clean, adopt corrected .33 snapshot helpers and join actual native/focused repairs and exact current production/test/programme/workflow hashes. Refresh raw capacity/pressure and independent adopted-formula parser under unchanged88/4096. Declare unused full13 journal/log/results/T296 checkpoint, preserve full12 settlement and all missing stages, commit readiness before .13 once-only unfiltered Perl/VIAL/book. Complete0 precedes authorized normal push/all exact-SHA hosted/Pages, then director pause. No spent-slot reuse, filters, opt-ins or future-headroom promise.`
-  Verification: `Pending causal repairs/maintenance and fresh source/capacity qualification. Full12 administrative143 after actual test failures is not full success.`
-  Commit: `pending`
+  Verification: `Fresh admission61.024792989095054pct/normal pressure1 passes unchanged88/4096; independent raw-counter AWK agrees. Five full13 slots absent. Complete594 full12 passing paths match current source bytes; only T1545/T1548 changed within programme inputs and match genuine focused proofs. Production/CI/guard/recorder/workflows remain exact, required job inventory unchanged. Due maintenance is committed. Corrected relative snapshot helper adopted. Commit readiness before .13 once-only launch; no full/hosted/Pages or historical-cause credit.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.32: qualify exclusive full13 readiness`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.33`
   Status: `done`
@@ -672,15 +672,14 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-Current diagnostic/phase repairs and due artifact maintenance are focused-qualified.
-.32 joins the exact sources/receipts, refreshes capacity and declares exclusive
-full13 readiness before .13 once-only full native/push/hosted/Pages and pause.
-The omitted original Git launch cause remains .29.2 at macOS relevance after
-qualified push/director resume, or immediately on any actual recurrence.
+.32 source/capacity readiness qualifies exclusive full13 under unchanged guards.
+.13 launches once from clean committed source; consume complete native result
+before authorized normal push/all exact-SHA hosted/Pages, then director pause.
+.29.2 owns the omitted historical Git launch cause; activate on any recurrence.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness using corrected snapshot helpers. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume full13; complete native success precedes push/hosted/Pages. |
 
 ## Decisions
 
@@ -689,7 +688,7 @@ qualified push/director resume, or immediately on any actual recurrence.
 
 ## Blockers
 
-- Fresh readiness and complete native/push/hosted/Pages qualification remain pending.
+- Complete native/push/hosted/Pages qualification remains pending; fresh readiness passes.
 - .29.2 owns missing historical launch cause; any actual recurrence blocks further qualification.
 - Full12 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor the conditional pause afterward.
@@ -698,10 +697,10 @@ qualified push/director resume, or immediately on any actual recurrence.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and curated completed narrative retain in artifact-census-20261103/admission-source.
+Exact prior task/history and completed .31 narrative retain in full13-preflight-source-20261103.
 
-## Acceptance Checklist — due read-only artifact census
+## Acceptance Checklist — exclusive full13 readiness
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Latest cleanup becomes due during frozen full12. git log -S Dated read-only artifact census identifies installed collector387d0458; native908cb224f bytes authenticate it before execution. The wrapper changes only the dated boundary/owner/output identity; raw collector scope, guards, review and adverse controls remain unchanged.
-- [x] **ADDRESSED (verified)** — Native collection and saved replay return0, with8574 independently matched regular same-volume log/bin paths and removed empty. Preserve all candidates absent exact disposal authority. Save complete source/prior/census/receipt, overwrite only latest date/summary and advance the same-size book reader. Exact originals precede completed .33 narrative curation; no foreign repository, symlink, Git metadata or current evidence is removed.
-- [x] **NO REGRESSION** — knowledge-map: OK plus native saved-reader/book/copied-source/staged/normal gates qualify the dated maintenance slice. Re-derive native metadata/interval/identities; falsify independent rg membership and missing-member/unsafe-path/Boolean-size/invented-removal controls; durability is complete saved census/source/receipt and committed task/book/latest record. Zero book aggregate delta preserves existing authority; no full-CI, reclamation, content or future-absence credit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S pressure==1 identifies bf583367 normal-pressure admission. Full12 actual failures are retained; T1548 lacks the intentional parent port block in its old golden, while T1545 omitted the full supervisor error. Genuine focused RED/GREEN controls qualify current repairs, not the missing historical Git cause.
+- [x] **ADDRESSED (verified)** — Current sources,594 complete native paths, genuine focused receipts and settled full12 join immutable closure. Fresh raw VM/pressure and independent saved-counter parser admit unchanged88/4096; five unused full13 slots and complete programme/workflow job inventory qualify readiness only. Adopt corrected relative snapshot helper; preserve exact original task before completed narrative curation. Commit before once-only launch.
+- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify readiness documents. Re-derive exact source/counter/receipt joins; falsify independent path/counter extraction, Git diffs and retained genuine RED/refusal controls; durability is closure/admission/plan/source and committed pointer. No suite overlap double count, filters, opt-ins, replay, guard change or full-success claim. Recurring T1545 activates .29.2 before retry; pause follows qualified push/hosted/Pages.
