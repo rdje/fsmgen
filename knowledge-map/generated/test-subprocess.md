@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **166** uniquely owned question entries.
+> **1** facts · **167** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -131,6 +131,7 @@
 - q="which ownership model is selected for nested supervision?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="which remaining acquisition close reports are qualified?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="who may call the low-level test process supervisor?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="why are parent and child setpgid calls ordered?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why can Python invocation and native executable paths differ on macOS?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why can T1595 stall before measuring host memory?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why can altered census read bytes leave release successful?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -178,5 +179,5 @@
 
 _Test subprocesses share one mechanism behind sealed policy adapters_
 
-- **date:** 2026-10-16 · **status:** current
+- **date:** 2026-11-03 · **status:** current
 - **source and verification:** [`docs/knowledge/test-subprocess-policy-adapters.md`](../../docs/knowledge/test-subprocess-policy-adapters.md)

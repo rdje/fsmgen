@@ -353,7 +353,7 @@ process group; timeout, overflow, handoff failure, or a surviving descendant tri
 check.
 
 Before executing the command, the child checks both the process-group call's return value and its actual group identity. A failed call or a child outside its intended group
-returns `exec_error` without executing the command. The parent's parallel group-creation attempt does not replace this child check. After KILL, leader reaping uses nonblocking
+returns `exec_error` without executing the command. An EOF barrier orders parent setup before the child's call. After KILL, leader reaping uses nonblocking
 polling within the existing cleanup grace. If the leader or group remains, the result retains incomplete cleanup evidence; sending a signal alone never proves that the process
 has disappeared.
 

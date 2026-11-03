@@ -169,24 +169,20 @@ answers:
   - where is the first actual compiler receipt retained?
   - how does a shared service retain its endpoint through close?
   - how are GHDL and Verilator lint bounded?
-date: 2026-10-16
+  - why are parent and child setpgid calls ordered?
+date: 2026-11-03
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1865-process-request-execution.t t/1864-process-closed-execution-outcome.t
-  t/1863-process-execution-lifetime.t t/1862-process-native-execution-report.t t/1861-process-nested-execution-admission.t
-  t/1860-process-native-custody.t t/1859-process-root-execution.t t/1858-process-aggregate-owners.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/186[0-5]-process-*.t
+  t/1859-process-root-execution.t t/1858-process-aggregate-owners.t
   t/1857-process-reserved-execution-admission.t t/1856-process-service-execution-report.t t/1855-process-service-execution-admission.t
   t/1852-process-gated-accept.t t/1851-process-request-association.t t/1850-process-aggregate-context.t
   t/1839-process-coordinator-lifecycle.t t/1842-process-coordinator-accepted-peers.t t/1827-process-reserved-job.t
-  t/2069-hdl-behavior-runtime.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+  t/2069-hdl-behavior-runtime.t t/2302-process-group-admission-order.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
 History: `b9f98e2fc5c49ad7b3ffc672fc6a5f159fc08033:docs/knowledge/test-subprocess-policy-adapters.md` retains outcome/effect/lifetime contracts. Coordinator release_request queues the ready child once after full ACCEPT and fresh Service admission. Partial publication/input defers without consuming intent or leaving ready; final E checks remain fresh. Pre-mask winners survive later refusals. Queue failures retain first job/peer causes before signals or unavailable cleanup; native confirmation/uncertainty survives lost E returns. T1865 qualifies binary invocation, exec context/mask, sockets, parent loss and exact cleanup. Ordinary adapters remain unchanged. Streaming, fair composition, routing, original producers, Linux and browser qualification remain open.
 
-The earlier guarded-stdin empty-success observation is now repaired and
-qualified under `.51.3.3.2.4`; see
-[the current RAM-guard contract](agent-runtime-ram-guard.md). Historical empty
-captures remain rejected evidence; this launcher repair does not qualify native
-startup or compiler receipt work.
+Guarded-stdin empty-success is fixed/qualified under `.51.3.3.2.4`: [RAM guard](agent-runtime-ram-guard.md). Old empty captures stay rejected; that launcher repair qualifies no native startup/compiler receipts.
 
-`FSM::Test::HDLBehaviorRuntime` seals GHDL/storage-name lint: fixed profiles,
-60-second/one-MiB stages, `.artifacts/tmp` admission. T2069 checks API/tool,
-native failure and cleanup; real callers qualify HDL semantics separately.
+`FSM::Test::HDLBehaviorRuntime`: fixed GHDL/storage-name lint profiles,60-second/one-MiB stages,`.artifacts/tmp` admission. T2069 checks API/tool/native failure/cleanup; callers qualify HDL semantics.
+
+An EOF barrier orders parent/child group setup. Child syscall success and its PID group remain mandatory; T2302 checks order, native refusal and bounded cleanup. Older launch causes remain unproved.

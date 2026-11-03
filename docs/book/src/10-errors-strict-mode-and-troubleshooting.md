@@ -663,7 +663,7 @@ use `fixture checker result: `. A passing rerun cannot establish the cause of
 an earlier launch failure whose detailed result was discarded.
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl t/1545-task-acceptance-doctrine.t
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1545-task-acceptance-doctrine.t t/2302-process-group-admission-order.t
 ```
 
 Earlier guard versions discarded stdin when launching their background child.

@@ -355,6 +355,7 @@ sub _start_supervision {
     my ($stdout_reader, $stdout_writer);
     my ($stderr_reader, $stderr_writer);
     my ($control_reader, $control_writer);
+    my ($group_reader, $group_writer);
     return _failed_supervision_start($request, "cannot create stdin pipe: $!", undef)
         unless pipe($stdin_reader, $stdin_writer);
     unless (pipe($stdout_reader, $stdout_writer)) {
@@ -395,6 +396,16 @@ sub _start_supervision {
             undef,
         );
     }
+    unless (pipe($group_reader, $group_writer)) {
+        my $error = "$!";
+        _close_handles(
+            $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
+            $stderr_reader, $stderr_writer, $control_reader, $control_writer,
+        );
+        return _failed_supervision_start(
+            $request, "cannot create group-setup pipe: $error", undef,
+        );
+    }
 
     my $started = clock_gettime(CLOCK_MONOTONIC);
     my ($birth_sec, $birth_usec) = gettimeofday();
@@ -403,6 +414,7 @@ sub _start_supervision {
         _close_handles(
             $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
             $stderr_reader, $stderr_writer, $control_reader, $control_writer,
+            $group_reader, $group_writer,
         );
         return _failed_supervision_start(
             $request, "cannot fork supervised process: $!", $started,
@@ -413,9 +425,24 @@ sub _start_supervision {
         close $stdout_reader;
         close $stderr_reader;
         close $control_reader;
+        close $group_writer;
+        # EOF orders the parent's best-effort setup before the child's own
+        # admission. Concurrent group creation can return EPERM on Darwin.
+        my ($ready, $unused);
+        do {
+            $ready = sysread($group_reader, $unused, 1);
+        } while (!defined($ready) && $! == EINTR);
+        my $group_wait_error = !defined($ready) ? "$!" : 'unexpected data';
+        close $group_reader;
+        unless (defined($ready) && $ready == 0) {
+            _write_child_control(
+                $control_writer, "group-setup handoff failed: $group_wait_error",
+            );
+            _exit(126);
+        }
         # POSIX failures normally return undef instead of throwing. The child
-        # must verify containment itself before exec; the parent's matching
-        # setpgid call is only a race-closing attempt, not admission evidence.
+        # still verifies containment itself before exec; the parent's setup
+        # is not admission evidence.
         my $group_error = _child_group_admission_error();
         if (defined $group_error) {
             _write_child_control($control_writer, $group_error);
@@ -455,9 +482,10 @@ sub _start_supervision {
 
     _close_handles(
         $stdin_reader, $stdout_writer, $stderr_writer, $control_writer,
-        $stdin_writer,
+        $stdin_writer, $group_reader,
     );
     eval { setpgid($pid, $pid); 1 };
+    close $group_writer;
     my $state = {
         %$request,
         phase => 'capture', pid => $pid, started => $started,

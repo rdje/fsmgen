@@ -601,8 +601,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.26`
   Status: `done`
   Goal: `Prepare fresh full11 after all owned publication repairs/intakes.`
-  Acceptance: `After .23-.25/.27, conserve current-source focused results/refusals; require fresh capacity/pressure, unchanged guards/programme/workflows and unused full11 slots. Commit before .13; complete native0 before normal push/all exact-SHA hosted/Pages. No checkpoint reuse or partial credit.`
-  Verification: `Readiness only:23 source/focused joins,556 full10 passes and nine current receipts retain refusals/later/full gaps. Admission73.54952494303386pct/pressure1; five unused slots; CI/guard/recorder/workflows/160 jobs unchanged. Wrong full10 T314-row demand, focused-only correction and owned-audit guard recovery are preserved. .13 owns once-only clean launch and complete0 before push/hosted; full original/source remains in 678ee1b4b and phase-control-intake.`
+  Acceptance: `Qualify full11 source/receipt/capacity/programme and unused slots after .23-.25/.27. Commit readiness before .13; no replay or partial credit. Exact original scope remains in full13/group-admission intakes.`
+  Verification: `Readiness joins23 source/focused records,556 full10 passes and nine current receipts with late/full gaps. Admission73.54952494303386pct/pressure1, five unused slots and unchanged160 hosted jobs qualify preflight only. Wrong T314 demand and audit-guard recovery remain retained; .13 owns later native outcomes.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.26: admit fresh full11 after owned publication repairs`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.27`
@@ -671,11 +671,11 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.33: make audit producer addresses portable`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.34`
-  Status: `pending`
+  Status: `done`
   Goal: `Resolve native HDL-launch process-group admission EPERM.`
   Acceptance: `P1 publication blocker. Preserve actual T1436 setpgid EPERM before Verilator exec; inspect shared supervisor/kernel contract and relevant history. Reproduce the smallest native cause with complete group/session/error identity; repair only proven behavior with genuine failure, membership and cleanup controls. Keep fail-closed admission, deadlines, output bounds and88/4096. Focused checks/book/live docs/normal commit precede fresh qualification; no blind retry or historical Git-cause inference.`
-  Verification: `Full13 actual child28740 returns undef/errno1 at setpgid; HDL lint did not execute. Original native/source/runtime retain in full13-outcome-intake. Cause unassigned.`
-  Commit: `pending`
+  Verification: `Native concurrency reproduces EPERM at350: parent0, child-1/errno1, child group equals its PID in the same nonleader session. Child-only and EOF-serialized controls complete10000 iterations each without rejection, bounded observations only. Corrected T2302 RED fails only overlap; final syntax/three files22 tests/exact retained HDL Verilator+Yosys pass0. EOF preserves parent setup and mandatory child successful call/group check, schemas/bounds/cleanup. First POSIX string-oracle and wrong T313 path failures remain retained. Book/card/source and normal gates qualify current repair only; historical causes/full14/push stay open.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.34: serialize parent and child group setup`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.35`
   Status: `pending`
@@ -693,16 +693,15 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 
 ## Current Frontier
 
-Full13 confirms a T1436 pre-exec process-group admission failure and settles143.
-.34 owns causal repair, .35 the missed indented diagnostic, .36 fresh readiness.
-.13 retains complete native/push/hosted/Pages qualification and director pause.
-Original full12 fixture-Git cause remains unqualified; current similarity is no proof.
+.34 serializes the reproduced native group-creation race with focused proof.
+.35 fixes missed indented diagnostics before .36 exclusive full14 readiness.
+.13 retains full native/push/hosted/Pages qualification and director pause.
+Original full12 fixture-Git and older native causes remain unqualified.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.34` | `pending` | Diagnose and repair the actual native containment failure. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.35` | `pending` | Correct monitor indentation before another full launch. |
-| 3 | `PUBLICATION-REGRESSION-REPAIRS.36` | `pending` | Qualify exclusive fresh full14 readiness after repairs. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.35` | `pending` | Correct monitor indentation before another full launch. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.36` | `pending` | Qualify fresh full14 readiness after committed repairs. |
 
 ## Decisions
 
@@ -711,7 +710,7 @@ Original full12 fixture-Git cause remains unqualified; current similarity is no 
 
 ## Blockers
 
-- Actual native launch failure and missed monitor diagnostic are owned by .34/.35.
+- Current launch repair is focused-qualified; .35 owns the missed monitor diagnostic.
 - Full13 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor director pause afterward.
 
@@ -719,10 +718,10 @@ Original full12 fixture-Git cause remains unqualified; current similarity is no 
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and completed narrative retain in full13-outcome-intake-20261103.
+Exact prior task/history and completed .26 narrative retain in group-admission-docs-intake-20261103.
 
-## Acceptance Checklist — full13 native outcome ownership
+## Acceptance Checklist — ordered native group admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Native failed T1436 HDL launch reports setpgid undef/errno1 before Verilator exec; current source preserves child admission and parent race-closing calls. Cause remains .34. Exact retained sample proves the monitor misses indented Failed test text; .35 owns that defect. No historical Git-cause inference.
-- [x] **ADDRESSED (verified)** — Retain complete first native status/log,494 independently matched complete passing paths, incomplete failing T1436, raw samples/identities, authenticated own guard stop and independent settlement. Native143/recorder1 and all missing stages stay explicit. Schedule causal/monitor repairs then exclusive readiness before next unfiltered full run; no blind retry or resource-limit change.
-- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify outcome ownership only. Re-derive native/source/status; falsify via independent pass extraction, exact failed body and PID/birth/session settlement; durability is complete intake/native evidence and committed frontier/book. Preserve all existing nodes/children/statuses and source before completed-leaf curation. No complete-suite, HDL, push, hosted or Pages success.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _child_group_admission_error identifies a055d3a2 child provenance; current _start_supervision also issues parent setpgid. Native concurrent calls reproduce child EPERM despite parent success and the intended same-session group. Child-only/serialized counterfactuals pass their bounded domain. Corrected T2302 RED independently exposes overlap. No kernel trace or omitted historical Git cause is invented.
+- [x] **ADDRESSED (verified)** — EOF orders parent best-effort setup before the child's one mandatory native call and group query. Preserve strict failure, control cap/schema/exit126, fixed deadlines/output bounds, cleanup and public interfaces. Final-source syntax, T2302/T313/T1545 Files3 Tests22 and the exact saved HDL's native Verilator/Yosys validation pass. Preserve all first attempts, C sources and final-programme source binding; sync book/card/task.
+- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=22. prove passes actual native session-leader refusal despite correct group, false-success membership rejection, pre-group timeout/positive-PID cleanup and caller-group preservation; existing HDL/fixture policies pass. Re-derive native source/result/group joins; falsify genuine concurrent RED, ordered control and real refusals; durability is complete first receipts/intakes/source and normal commitment. Knowledge-map/book/staged gates qualify docs. Full14/native/hosted/Pages remain pending; original historical causes stay open.

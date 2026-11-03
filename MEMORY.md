@@ -6,14 +6,14 @@ Read `README.md` and `MEMORY_ARCHITECTURE.md`; decisions: `docs/decisions/`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.34`
-- next_action: Read full13-outcome-intake-20261103 and shared ProcessSupervisor admission
-  contract/history; reproduce the actual native setpgid EPERM with complete group/session
-  identity, then repair only its established cause and commit focused proof/book. .35 fixes
-  monitor indentation before .36 exclusive full14 readiness and .13 publication.
+- active_work_unit: `PUBLICATION-REGRESSION-REPAIRS.35`
+- next_action: Read full13-outcome-intake and the missed indented diagnostic sample.
+  Repair only the observer classifier, retain exact original/native/clean/adverse controls,
+  qualify its source/journal/process joins and commit. Then .36 fresh exclusive full14
+  readiness before .13 complete native/push/all exact-SHA hosted/Pages qualification.
 - in_flight_uncommitted: Derive with git status --short.
-- in_flight_background: None; full13 native143/recorder1 is consumed and owned jobs settled.
-- blockers: Current native launch cause is unassigned; no user input needed. Never replay
-  spent full13 slots or assign the omitted full12 Git error retrospectively. Keep88/4096.
-  After qualified push/all exact-SHA hosted/Pages and clean handoff, honor director pause
-  before macOS/width/other roadmap work; boundary waves remain discussion only.
+- in_flight_background: None; full13 native143/recorder1 consumed and owned jobs settled.
+- blockers: No user input needed; do not replay spent full13 slots or assign original
+  omitted Git/older native causes retrospectively. Keep88/4096 and unfiltered programme.
+  After qualified push/hosted/Pages and clean handoff, honor director pause before
+  macOS/width/other roadmap work. Boundary waves remain discussion only.
