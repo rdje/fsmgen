@@ -11,12 +11,13 @@ answers:
   - "does one GitHub regression failure cancel the other shards?"
   - "how does FSMGEN prevent a six-hour hosted regression timeout?"
   - "does local ci-regression use hosted sharding?"
+  - "what belongs in the local pre-push gate?"
   - "how does hosted CI install and checksum mdBook without actions-mdbook?"
-date: 2026-09-24
+date: 2026-11-03
 status: current
 tags: [ci, github-actions, perl, regression, sharding, timeout, mdbook, supply-chain, continuity]
 evidence: .github/workflows/regression.yml; .github/workflows/pages.yml; .github/workflows/README.md; scripts/install_hosted_mdbook.sh; bin/ci-regression; t/1183-ci-regression-tier-selection.t; t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t; docs/decisions/0063-hosted-regression-uses-closed-non-cancelling-partitions.md; docs/decisions/0088-provider-backed-hosted-tests-use-explicit-dedicated-coordinates.md; docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md; docs/book/src/10-errors-strict-mode-and-troubleshooting.md
-reverify: prove -Iperl t/1183-ci-regression-tier-selection.t && bash -n scripts/install_hosted_mdbook.sh && ./bin/ci-regression full --no-book --hosted-file-shard 0/16 --dry-run && ./bin/ci-regression full --no-book --hosted-dedicated-shard 0/5 --dry-run && ./bin/ci-regression full --no-book --hosted-corpus-shard 1884:0/16 --dry-run && ./bin/ci-regression full --no-book --hosted-dynamic-shard 0/68 --dry-run && rg -n 'fail-fast|timeout-minutes|hosted-file-shard|hosted-dedicated-shard|hosted-corpus-shard|hosted-dynamic-shard|install_hosted_mdbook' .github/workflows/regression.yml .github/workflows/pages.yml bin/ci-regression
+reverify: prove -Iperl t/1183-ci-regression-tier-selection.t && bash -n scripts/install_hosted_mdbook.sh && ./bin/ci-regression pre-push --dry-run && rg -n 'fail-fast|timeout-minutes|hosted-file-shard|hosted-dedicated-shard|hosted-corpus-shard|hosted-dynamic-shard|install_hosted_mdbook' .github/workflows/regression.yml .github/workflows/pages.yml bin/ci-regression
 ---
 
 Hosted Perl partitions into 16 ordinary, five dedicated, 64 corpus and 68
@@ -35,8 +36,11 @@ Full/local and hosted T1884 force all-source queries and reject ambient narrowin
 T1885 keeps bounded semantic/refusal controls in ordinary regression.
 
 Runs `31367105225` and `31494487181` measured outliers and corpus timeouts.
-Local `./bin/ci-regression` stays unsharded with the book; hosted zero-based
-shards require `--no-book` because a separate job owns it.
+Local `pre-push` checks public compilation/reports/protocols/VIAL and book;
+add focused changed-code checks. Darwin requires GHDL reset behavior;
+legacy AXI Verilator timing stays deferred/guarded.
+Exhaustive combinations stay hosted or explicit `full` (the unsharded default).
+Hosted zero-based shards require `--no-book`; a separate job owns it.
 
 Both book owners call `scripts/install_hosted_mdbook.sh`. It accepts Linux
 x86-64, downloads official mdBook 0.5.4 under `.artifacts`, requires 4,822,940

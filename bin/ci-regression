@@ -40,6 +40,25 @@ QUICK_TESTS=(
   t/1112-isf-public-interface-contract.t
 )
 
+# Closed, reviewed downstream checks; exhaustive scenario families stay in full.
+# Changed behavior also needs its own focused checks before the publication gate.
+PRE_PUSH_TESTS=(
+  "${QUICK_TESTS[@]}"
+  t/1183-ci-regression-tier-selection.t
+  t/1435-axi-ial2-valid-ready-generator.t
+  t/1473-ial2-ahb-requester.t
+  t/1475-ial2-ahb-subordinate.t
+  t/1500-ial2-axi-w-driver.t
+  t/1505-ial2-axi-r-beat-acceptor.t
+  t/1548-source-hir-phase-control.t
+  t/1555-vial-public-source-tooling.t
+  t/1556-vial-public-planning-artifacts.t
+  t/1867-isf-apb-completion-outputs.t
+  t/1885-semantic-source-query-oracles.t
+  t/1892-explicit-reset-hdl-behavior.t
+  t/2302-process-group-admission-order.t
+)
+
 shopt -s nullglob
 ISF_TESTS=(t/109[1-9]-isf*.t t/11[0-9][0-9]-isf*.t t/12[0-9][0-9]-isf*.t t/13[0-9][0-9]-isf*.t)
 shopt -u nullglob
@@ -48,9 +67,13 @@ unset IFS
 
 usage() {
   cat <<'USAGE'
-Usage: ./bin/ci-regression [quick|smoke|isf|vial-gate|full] [options]
+Usage: ./bin/ci-regression [pre-push|quick|smoke|isf|vial-gate|full] [options]
 
 Modes:
+  pre-push
+         Critical downstream compilation, public contracts, protocol timing,
+         VIAL tooling and containment checks, an APB target CLI check, and book.
+         Run focused checks for changed behavior too; full coverage stays in CI.
   quick  Curated smoke set for fast turnaround across direct FSM,
          composition classification, one composition child path, ISF parse,
          ISF schedule, and the ISF public contract.
@@ -71,7 +94,7 @@ Options:
                                 transaction-ID focused test.
   --hosted-corpus-shard T:I/N   Run entry shard I of N from supported-corpus
                                 test T, where T is 296, 301, 303, or 1884.
-  --list                        Print the concrete quick and ISF test lists.
+  --list                        Print the concrete quick, ISF and pre-push lists.
   --help                        Show this help text.
 
 Hosted shard options are full-mode CI plumbing. They are zero-based, mutually
@@ -88,6 +111,10 @@ list_modes() {
   printf '  %s\n' "${ISF_TESTS[@]}"
   printf 'selected important step:\n'
   printf '  vial-gate\n'
+  printf 'pre-push tests:\n'
+  printf '  %s\n' "${PRE_PUSH_TESTS[@]}"
+  printf 'pre-push public CLI:\n'
+  printf '  ./bin/fsmgen --quiet --strict --check --json ppif/apb_completer.ppif\n'
 }
 
 require_tool() {
@@ -333,7 +360,7 @@ run_hosted_corpus_shard() {
 
 while (($#)); do
   case "$1" in
-    quick|smoke|isf|vial-gate|full)
+    quick|smoke|isf|vial-gate|full|pre-push)
       MODE="$1"
       ;;
     --no-book)
@@ -456,6 +483,23 @@ if [[ "$MODE" == full ]] && { (( hosted_shard_family_count == 0 )) || [[ "$HOSTE
 fi
 
 if (( ! DRY_RUN )); then
+  if [[ "$MODE" == "pre-push" ]]; then
+    for native_tool in verilator yosys; do
+      require_tool "$native_tool"
+    done
+    # Darwin's legacy Verilator guard stays intact. Require the existing GHDL
+    # reset witness instead of accepting a gate with no native timing coverage.
+    if [[ "$(uname -s)" == Darwin ]] \
+        && [[ "${FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME:-}" != 1 ]]; then
+      if [[ -z "${FSMGEN_RESET_GHDL:-}" ]] && ! command -v ghdl >/dev/null 2>&1; then
+        reset_provider='.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl'
+        if [[ -x "$reset_provider" ]]; then
+          export FSMGEN_RESET_GHDL="$reset_provider"
+        fi
+      fi
+      require_tool "${FSMGEN_RESET_GHDL:-ghdl}"
+    fi
+  fi
   if [[ "$MODE" != "vial-gate" ]]; then
     require_tool prove
   fi
@@ -469,6 +513,12 @@ if (( ! DRY_RUN )); then
 fi
 
 case "$MODE" in
+  pre-push)
+    require_test_files "${PRE_PUSH_TESTS[@]}"
+    run_step "Perl critical downstream suite" prove -I perl "${PRE_PUSH_TESTS[@]}"
+    run_step "APB target public strict CLI" \
+      ./bin/fsmgen --quiet --strict --check --json ppif/apb_completer.ppif
+    ;;
   quick|smoke)
     require_test_files "${QUICK_TESTS[@]}"
     run_step "Perl quick smoke suite" prove -I perl "${QUICK_TESTS[@]}"

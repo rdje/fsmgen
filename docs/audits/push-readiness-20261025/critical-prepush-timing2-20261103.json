@@ -1,0 +1,9 @@
+{
+  "owner": "PUBLICATION-REGRESSION-REPAIRS.37",
+  "started_utc": "2026-11-03T13:19:28.801764+00:00",
+  "finished_utc": "2026-11-03T13:21:58.557238+00:00",
+  "elapsed_seconds": 149.7412805003114,
+  "recorder_exit_status": 0,
+  "runtime_index_manifest_unchanged": true,
+  "scope": "Elapsed native selected gate plus recorder/guard overhead; not a hardware-independent bound or full-suite result."
+}

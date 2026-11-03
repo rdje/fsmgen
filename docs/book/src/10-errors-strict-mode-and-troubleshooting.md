@@ -512,28 +512,36 @@ with local context instead of being interpreted opportunistically.
 
 ## Regression Guidance
 
-Before landing behavior changes, run the local regression suite:
+Before pushing, run focused checks for changed behavior and the critical gate:
 
 ```bash
+./bin/ci-regression pre-push
 ./bin/ci-regression quick
 ./bin/ci-regression smoke
 ./bin/ci-regression isf
 ./bin/ci-regression vial-gate
-./bin/ci-regression
+./bin/ci-regression full
 ```
 
-Use `quick` for a small smoke set when you need fast feedback on basic direct
-`.fsm`, composition, and ISF functionality. `smoke` is an alias for the same
-tier. Use `isf` for the current ISF-focused 109x, 11xx, 12xx, and 13xx
-numbered bands. Use `vial-gate` only for the selected authenticated architecture-
-scale gate. With no mode argument, `./bin/ci-regression` runs the full Perl suite,
-then that VIAL gate, and remains the unsharded pre-push gate.
+`pre-push` selects IAL0/IAL1 compilation, IAL2 generation and public CLI reports,
+AHB requester/target contracts, APB completion outputs and strict target admission,
+AXI write/read handshake checks, VIAL public source/planning artifacts,
+semantic-query oracles, native reset behavior and subprocess containment.
+Verilator/Yosys must be installed. Darwin keeps its existing legacy Verilator
+qualification guard: AXI simulation stays deferred there, while GHDL executes
+the reset oracle. The gate requires GHDL on that path, accepting the existing
+project-local provider or `FSMGEN_RESET_GHDL`. `--list` shows the exact tests;
+`pre-push --dry-run` shows the commands. These checks protect representative
+downstream behavior; full protocol combinations, corpus sweeps and architecture-
+scale qualification remain in hosted CI and explicit `full` runs.
 
-For focused work, run the nearby targeted `prove` suites first, then the
-smallest `ci-regression` tier that covers the changed surface. The gate builds
-the mdBook by default, so generated docs and runtime behavior stay under the
-same local quality check. Use `--list` to inspect the concrete quick/ISF test
-sets and `--no-book` only for a deliberately code-only turnaround check.
+Add focused `prove` checks for the code you changed; the curated tier does not
+choose them automatically or prove exhaustive coverage. The normal pre-push gate
+builds this book. `--no-book` is only a partial code check. `quick`/`smoke` retain
+the smaller IAL0/composition/ISF tier; `isf` covers its existing numbered bands.
+`vial-gate` runs the full authenticated scale lifecycle. `full` (also the default
+when no mode is supplied) runs every Perl test, that lifecycle and the book;
+it is available for explicit qualification and is not a local push prerequisite.
 
 GitHub Actions is active under `.github/workflows/`. The hosted regression
 workflow runs the same `./bin/ci-regression` entrypoint on pushes to `main`,
@@ -547,8 +555,8 @@ build, and one unsharded VIAL regression-promotion gate succeed. Exactly the
 dedicated `t/1598`, `t/1648`, and `t/1650`
 coordinates materialize exact OSVVM 2026.05 beneath their isolated repository-
 local caches; only `t/1436` receives its pinned HDL tools. Hosted shards do not
-inherit the local VIAL gate lifecycle. The ordinary local `./bin/ci-regression`
-command remains unsharded and includes both that lifecycle and the book build.
+inherit the local VIAL gate lifecycle. The explicit local `full` command remains
+unsharded with that lifecycle and the book build.
 The separate hosted gate pins Ubuntu 24.04 and Perl 5.32, rejects ambient
 Verilator or the fixed GHDL coordinates, materializes exact OSVVM 2026.05,
 calls `./bin/ci-regression vial-gate --no-book`, and independently authenticates

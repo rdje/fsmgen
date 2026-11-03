@@ -205,8 +205,7 @@ Validation entrypoints:
 
 ```bash
 scripts/check_doctrines.sh
-./bin/ci-regression quick
-./bin/ci-regression
+./bin/ci-regression pre-push
 prove -Iperl t/248-regression-corpus-accounting.t
 mdbook build docs/book
 ```
@@ -214,7 +213,7 @@ mdbook build docs/book
 Run broad or potentially heavy commands through the repository RAM guard:
 
 ```bash
-scripts/run_with_ram_guard.sh -- ./bin/ci-regression
+scripts/run_with_ram_guard.sh -- ./bin/ci-regression pre-push
 scripts/run_with_ram_guard.sh -- prove -Iperl t/248-regression-corpus-accounting.t
 ```
 

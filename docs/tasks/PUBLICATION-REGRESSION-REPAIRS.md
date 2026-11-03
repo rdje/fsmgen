@@ -35,7 +35,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS`
   Status: `active`
   Goal: `Resolve current publication regressions and owned workflow follow-ups.`
-  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37`
+  Children: `PUBLICATION-REGRESSION-REPAIRS.1, PUBLICATION-REGRESSION-REPAIRS.2, PUBLICATION-REGRESSION-REPAIRS.3, PUBLICATION-REGRESSION-REPAIRS.4, PUBLICATION-REGRESSION-REPAIRS.5, PUBLICATION-REGRESSION-REPAIRS.6, PUBLICATION-REGRESSION-REPAIRS.7, PUBLICATION-REGRESSION-REPAIRS.8, PUBLICATION-REGRESSION-REPAIRS.9, PUBLICATION-REGRESSION-REPAIRS.10, PUBLICATION-REGRESSION-REPAIRS.11, PUBLICATION-REGRESSION-REPAIRS.12, PUBLICATION-REGRESSION-REPAIRS.13, PUBLICATION-REGRESSION-REPAIRS.14, PUBLICATION-REGRESSION-REPAIRS.15, PUBLICATION-REGRESSION-REPAIRS.16, PUBLICATION-REGRESSION-REPAIRS.17, PUBLICATION-REGRESSION-REPAIRS.18, PUBLICATION-REGRESSION-REPAIRS.19, PUBLICATION-REGRESSION-REPAIRS.20, PUBLICATION-REGRESSION-REPAIRS.21, PUBLICATION-REGRESSION-REPAIRS.22, PUBLICATION-REGRESSION-REPAIRS.23, PUBLICATION-REGRESSION-REPAIRS.24, PUBLICATION-REGRESSION-REPAIRS.25, PUBLICATION-REGRESSION-REPAIRS.26, PUBLICATION-REGRESSION-REPAIRS.27, PUBLICATION-REGRESSION-REPAIRS.28, PUBLICATION-REGRESSION-REPAIRS.29, PUBLICATION-REGRESSION-REPAIRS.30, PUBLICATION-REGRESSION-REPAIRS.31, PUBLICATION-REGRESSION-REPAIRS.32, PUBLICATION-REGRESSION-REPAIRS.33, PUBLICATION-REGRESSION-REPAIRS.34, PUBLICATION-REGRESSION-REPAIRS.35, PUBLICATION-REGRESSION-REPAIRS.36, PUBLICATION-REGRESSION-REPAIRS.37, PUBLICATION-REGRESSION-REPAIRS.38`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.1`
   Status: `done`
@@ -169,7 +169,7 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.13`
   Status: `active`
   Goal: `Complete qualified local/hosted publication without losing first outcomes.`
-  Acceptance: `Preserve first outcomes and missing scope; signal authenticated own jobs only. Director Nov3 supersedes exhaustive local pre-push requirement: .37 implements explicit critical downstream gate plus changed-code checks. Complete selected gate/book/normal commit precedes authorized normal push and all exact-SHA hosted/Pages, then director pause before macOS/width/other work. Keep88/4096; long/full suites remain available and hosted coverage intact.`
+  Acceptance: `Director Nov3 replaces exhaustive local hold with .37 critical downstream gate and changed-code checks. P1 .38 repairs actual APB external-lint refusal before publication. Then selected gate/book/normal commit precedes authorized normal push and every exact-SHA hosted/Pages result; pause before macOS/width/other work. Keep88/4096, long/manual/full hosted coverage and honest first outcomes.`
   Verification: `Full14 native5503c8728 passes534 complete files through T147, including current T1436/T1437/T1438 and T1469; T1470 remains incomplete. No failure diagnostic before director-directed administrative stop. Native143/recorder1 consumed; eight recorded identities and former session independently absent. No full Perl/T296/VIAL/final-book or push/hosted success. Prior outcomes and original omitted Git cause remain separately scoped.`
   Outcome: `Complete first full14 log/status, runtime history, authenticated guard54745 SIGTERM and session54813 settlement retain in full14-outcome-intake. Exhaustive serial scenario families made local publication impractical; .37 owns smaller main/critical downstream-visible selection and explicit deferred coverage. User retains long tests and post-push full hosted qualification; no blind full15 retry.`
   Commit: `Full14 director-stop outcome: this work-unit commit; original source/history retained.`
@@ -207,8 +207,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.1`
   Status: `done`
   Goal: `Repair the public planning review-artifact historical byte oracle.`
-  Acceptance: `First bounded slice: reproduce T1556 default public planning path, compare returned generated review artifacts against an independent current public PPIF generation, preserve exact artifact graph/manifest/determinism/immutability/path/cleanup assertions and meaningful adverse controls. The old 3d8 generated-FSM hash has an established exact interface-only cause, but require this actual public result before repair. Sync public planning book/current fact when applicable, focused checks and ordinary commit before moving to downstream scale identities.`
-  Verification: `vial1556-planning-red returns expected1/Files1 Tests6 at line82: actual generated review SHA6f58 differs from historical3d8, the established intended interface-only source change. Only that source-byte oracle changes: compare the exact planner artifact against a fresh public PPIF generation from the same source. The literal IAL1 hash, complete graph, raw digest/byte inventory, three review routes, defensive mutations, repeated determinism, malformed requests and filesystem publication/cleanup checks remain. Syntax and T1556/T1555 return0 with All tests successful Files2 Tests11. All five native book/POD/current-source/index/KMap commands return0. Production modules/grammar/fixtures are unchanged; current public planning book explains raw review bytes/metadata. Exact initial scan, original RED/current GREEN recipes/logs and separate evidence legs are retained. No downstream scale/full CI or hosted qualification is credited.`
+  Acceptance: `Completed planning review-artifact comparison against fresh public PPIF generation; preserve full graph, raw inventory, determinism, immutability, paths and adverse controls. Exact original source/contract remains in critical-prepush intakes and vial1556 planning evidence.`
+  Verification: `Actual old-hash RED replaced only review-source byte oracle, using independent same-source public generation. Literal IAL1 hash, graph/three routes, defensive mutations, repeated determinism, malformed invocation and atomic filesystem/cleanup checks remain. T1556/T1555 pass Files2 Tests11; book/POD/source/index/KMap and normal gates pass. No producer/grammar/native/full claim; every original detailed proof leg remains retained.`
   Commit: `This work-unit commit.`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.17.2`
@@ -680,8 +680,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.35`
   Status: `done`
   Goal: `Recognize indented native test failures in progress monitoring.`
-  Acceptance: `Repair proven indentation gap using actual missed native samples and clean/adverse controls. Preserve source/journal/process authentication and telemetry. Exact original contract/source remains in native-failure and this preflight intake.`
-  Verification: `Native RED sees only outer line; helper GREEN detects all3 lines, missed sample, four positive and seven clean controls. Selected observer expression fixes false to true, clean stays false; all other bytes restore exactly. No spent programme replay. Source/receipt/book/card/staged/normal gates pass at c913dc92f; .36 adopts corrected template.`
+  Acceptance: `Completed indented/clean diagnostic repair with authentication and telemetry preserved. Full contract/source remains in native-failure proof and critical-prepush intakes.`
+  Verification: `Actual RED misses body; GREEN sees3 lines/missed sample and four positive/seven clean controls. Expression inverse preserves other bytes. No spent replay. Normal gates pass c913dc92f; .36 adopts template.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.35: detect indented native failure diagnostics`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.36`
@@ -692,22 +692,29 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `PUBLICATION-REGRESSION-REPAIRS.36: qualify exclusive full14 readiness`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.37`
-  Status: `pending`
+  Status: `done`
   Goal: `Make the pre-push gate practical while protecting critical downstream behavior.`
-  Acceptance: `Director Nov3: keep all long tests, replace exhaustive local publication hold with an explicit curated pre-push tier. Review roadmap/public CLI and IAL0/1/2 lowering/output/report contracts, representative protocol boundary/runtime checks, VIAL essentials and current repair regressions. Run one measured selected gate plus book and normal commit integrity. Publish exact selected/deferred scope; no full-coverage claim. Keep full mode and every hosted matrix unchanged; .13 pushes and consumes all exact-SHA results/Pages, then pause.`
-  Verification: `Pending implementation and actual duration/result. Existing quick tier is a starting point; it lacks an explicit critical downstream pre-push contract. Exhaustive local full14 spent over six hours and reached534 complete files; no failure before user-directed cancellation. Exact runtime/source evidence retained in full14-outcome-intake. Select bounded representative paths rather than deleting scenarios or weakening assertions.`
+  Acceptance: `Completed explicit critical pre-push tier plus focused-change responsibility, preserving full/default/hosted scenarios. Exact contract/source and first outcomes retain in critical-prepush intake/proof. Selection is representative, never complete-suite qualification. .38 owns the additional real APB external-lint failure before push.`
+  Verification: `Selected native gate0 in149.7412805s: All tests successful, Files21 Tests215, APB public strict JSON check0 and book0. Two legacy AXI files retain Darwin skips; actual GHDL reset oracles execute for FSM/ISF, independently visible in focused receipt. T313/T1545 Files2 Tests18 pass. Initial unsupported-mode RED, first APB-flag failure/skips, source/timing and stale navigation-claim refusal retain. Full branch/lifecycle/hosted functions and every workflow unchanged. Normal doc/staged/hook checks gate commit; no full/hosted or hardware-independent timing claim.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.37: select critical downstream pre-push checks`
+
+- ID: `PUBLICATION-REGRESSION-REPAIRS.38`
+  Status: `pending`
+  Goal: `Repair public APB target external validation and retain it in the critical gate.`
+  Acceptance: `P1 before this push: reproduce the exact public APB completer --verify-hdl refusal; use canonical width/emitter contracts to diagnose four-bit counter versus one-bit comparison literals. Repair the established cause while preserving comparison meaning, signedness, declared widths and existing assertions; do not suppress warnings or weaken external validation. Run smallest causal/adjacent checks and one representative public HDL validation, add that check to pre-push, update book/current fact and commit. Then .13 runs selected critical gate and authorized push/all hosted/Pages, pauses. No exhaustive local retry.`
+  Verification: `critical-prepush-changed-focus retains actual --quiet --strict --verify-hdl ppif/apb_completer.ppif exit1. Verilator5.050 reports WIDTHEXPAND at generated lines209/336: four-bit apb_complete_wait_2_cnt compared to one-bit1. Generation and strict JSON check pass. No functional hardware failure or exact producer cause claimed yet. The selected gate passes but omitted external synthesis/lint; own this gap and actual downstream refusal here before publication.`
   Commit: `pending`
 
 ## Current Frontier
 
-Director Nov3 replaces exhaustive local pre-push with critical downstream selection.
-Full14 is settled and preserved; .37 implements/measures the explicit selected gate.
-.13 retains normal push, every exact-SHA hosted result/Pages and director pause.
+.37 implements the measured critical gate; all long/full hosted tests remain.
+.38 owns the real public APB external-lint failure found by a targeted extra check.
+After its causal fix, .13 runs the selected gate, pushes/all hosted/Pages, then pauses.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.37` | `pending` | Implement and qualify practical critical pre-push selection. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Selected gate precedes push/all hosted/Pages and pause. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.38` | `pending` | Repair actual APB target width-lint refusal before publication. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Selected gate, authorized push/all hosted/Pages and pause. |
 
 ## Decisions
 
@@ -716,18 +723,18 @@ Full14 is settled and preserved; .37 implements/measures the explicit selected g
 
 ## Blockers
 
-- No background result or user permission outstanding; full14 is settled.
-- Selected local gate and full hosted/Pages qualification remain .37/.13.
-- Long suites remain available; no complete local full pass is claimed.
+- APB target external validation fails two width warnings; P1 .38 owns repair.
+- No background result or user permission outstanding. No exhaustive local retry.
+- Selected gate passes; publication/full hosted qualification remain .13 after .38.
 
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and completed narrative retain in full14-outcome-intake.
+Exact original task/history and all first gate outcomes retain in critical-prepush intakes.
 
-## Acceptance Checklist — full14 director-directed outcome
+## Acceptance Checklist — critical downstream gate
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'run_step "Perl regression suite"' -- bin/ci-regression identifies unsharded full execution. Native history shows long AXI/APB families, over six hours and534 passes without failure diagnostics. Director requires critical selection under .37. Final book-authority constants also require their regenerated inventory in the same index.
-- [x] **ADDRESSED (verified)** — Retain native143/recorder1, independent complete-path extraction, incomplete T1470 and full runtime/source/director intake. Authenticate guard54745 before SIGTERM; eight PID/birth identities, recorder and session54813 absent. Results consumed. Stage the four generated claim-control values with fresh owning boxes; preserve first isolated-amend refusal. Keep long/full hosted tests and pause order.
-- [x] **NO REGRESSION** — knowledge-map: OK and native book/copied-source/staged checks pass. Original normal hook passed; final amended index must pass again with generated inventory included. Re-derive log/source/constants; falsify by independent path extraction, absent failures and identity/session census; durability is complete intake, correction receipt and committed owner/book. Preserve nodes/statuses/nonroot children. No complete-suite, selected-gate or publication success.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'run_step "Perl regression suite"' -- bin/ci-regression identifies unsharded full execution. Full14's six-hour prefix and director instruction require critical selection. Actual selection RED proves no pre-push mode; first native attempt proves required APB --json and existing Darwin AXI skips. Real extra APB lint failure is P1 .38, never waived.
+- [x] **ADDRESSED (verified)** — Add explicit closed tier, discoverable list/dry-run, required tools and native GHDL reset fallback preserving Darwin guard. Native gate0 includes21 files/215 tests, APB JSON check and book; focused T313/T1545 and visible GHDL oracles pass. Retain first failures, timing, exact source and distinct deferred scope. Full branch/lifecycle/functions/workflows unchanged; no long test removed.
+- [x] **NO REGRESSION** — All tests successful, Files=21, Tests=215; focused Files=2, Tests=18 plus actual GHDL FSM/ISF reset oracles. Re-derive source/manifest/log/duration; falsify via genuine unsupported-mode RED, first integration failures, exact full-path conservation and independent native oracles; durability is complete receipts/input/proof and committed owner/book/card. Docs/staged/normal hook still required. P1 APB width repair and full hosted/Pages remain pending; no exhaustive or general timing guarantee.

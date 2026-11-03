@@ -1104,4 +1104,47 @@ subtest 'smoke remains an explicit alias for quick turnaround' => sub {
         'smoke and quick use the same curated test list');
 };
 
+subtest 'pre-push selects critical downstream checks without exhaustive families' => sub {
+    my $result = run_ci('pre-push', '--dry-run');
+    ok($result->{success}, 'pre-push dry run succeeds');
+    is($result->{stderr}, '', 'pre-push keeps stderr clean');
+    my @selected = $result->{stdout} =~ m{(t/[^\s]+\.t)}g;
+    is_deeply(\@selected, [qw(
+        t/01-regression.t
+        t/03-assignment-intent-metadata.t
+        t/13-composition-source-classification.t
+        t/29-language-contract-core-forms.t
+        t/84-composition-external-fsm-child-sources.t
+        t/1091-isf-parser-apb-requester.t
+        t/1094-isf-scheduler-module-header.t
+        t/1112-isf-public-interface-contract.t
+        t/1183-ci-regression-tier-selection.t
+        t/1435-axi-ial2-valid-ready-generator.t
+        t/1473-ial2-ahb-requester.t
+        t/1475-ial2-ahb-subordinate.t
+        t/1500-ial2-axi-w-driver.t
+        t/1505-ial2-axi-r-beat-acceptor.t
+        t/1548-source-hir-phase-control.t
+        t/1555-vial-public-source-tooling.t
+        t/1556-vial-public-planning-artifacts.t
+        t/1867-isf-apb-completion-outputs.t
+        t/1885-semantic-source-query-oracles.t
+        t/1892-explicit-reset-hdl-behavior.t
+        t/2302-process-group-admission-order.t
+    )], 'closed selection protects public outputs, timing, reports and containment');
+    like($result->{stdout}, qr/Perl critical downstream suite/, 'selected scope is explicit');
+    like($result->{stdout}, qr/--strict\s+--check\s+--json\s+ppif\/apb_completer\.ppif/,
+        'APB target also reaches the public strict CLI');
+    like($result->{stdout}, qr/==> mdBook build/, 'normal pre-push includes the book');
+    unlike($result->{stdout}, qr/VIAL regression-promotion|t\/(?:143[678]|147[012]|296|301|303|1884)-/,
+        'exhaustive protocol, corpus and scale families stay outside pre-push');
+    unlike($result->{stdout}, qr/prove\s+-I\s+perl\s+t\s*$/m,
+        'pre-push never invokes the complete Perl directory');
+    my $listed = run_ci('--list');
+    like($listed->{stdout}, qr/pre-push tests:\n/, 'selection is discoverable');
+    my $sharded = run_ci('pre-push', '--hosted-file-shard=0/16', '--no-book', '--dry-run');
+    ok(!$sharded->{success}, 'pre-push cannot masquerade as a full hosted shard');
+    like($sharded->{stderr}, qr/hosted shards require full mode/, 'scope refusal is explicit');
+};
+
 done_testing();

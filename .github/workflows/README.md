@@ -32,7 +32,9 @@ records. Always-cleanup removes its exact evidence, provider, result, and stage.
 This configures CI; it is not a completed hosted performance/support result.
 
 Hosted tests use repository shard options with `full --no-book`; one job owns
-mdBook. Local `./bin/ci-regression` retains the unsharded pre-push gate and book.
+mdBook. Local `./bin/ci-regression pre-push` selects critical downstream checks
+and the book; changed behavior also needs focused checks. `full` retains the
+complete unsharded suite for explicit qualification, independently of pushing.
 Actions use immutable Node 24 pins and exact local mdBook 0.5.4; no insecure
 Node fallback is enabled.
 
