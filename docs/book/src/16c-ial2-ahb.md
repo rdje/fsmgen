@@ -373,7 +373,7 @@ strict check. Focused literal, shift and proof-refusal checks pass. A prior
 native publication gate also passed the HBURST subordinate/interconnect tests
 T1490–T1493 on this source. Later regression failures prevent complete
 publication qualification, owned by `PUBLICATION-REGRESSION-REPAIRS.13`;
-a fresh full run follows focused repairs; partial results do not qualify publication.
+a fresh full run has a pre-exec HDL-tool failure; full qualification remains pending.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:
