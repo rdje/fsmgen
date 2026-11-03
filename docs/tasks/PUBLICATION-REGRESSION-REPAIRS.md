@@ -673,34 +673,34 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.34`
   Status: `done`
   Goal: `Resolve native HDL-launch process-group admission EPERM.`
-  Acceptance: `P1 publication blocker. Preserve actual T1436 setpgid EPERM before Verilator exec; inspect shared supervisor/kernel contract and relevant history. Reproduce the smallest native cause with complete group/session/error identity; repair only proven behavior with genuine failure, membership and cleanup controls. Keep fail-closed admission, deadlines, output bounds and88/4096. Focused checks/book/live docs/normal commit precede fresh qualification; no blind retry or historical Git-cause inference.`
-  Verification: `Native concurrency reproduces EPERM at350: parent0, child-1/errno1, child group equals its PID in the same nonleader session. Child-only and EOF-serialized controls complete10000 iterations each without rejection, bounded observations only. Corrected T2302 RED fails only overlap; final syntax/three files22 tests/exact retained HDL Verilator+Yosys pass0. EOF preserves parent setup and mandatory child successful call/group check, schemas/bounds/cleanup. First POSIX string-oracle and wrong T313 path failures remain retained. Book/card/source and normal gates qualify current repair only; historical causes/full14/push stay open.`
+  Acceptance: `Resolve the reproduced current launch race with focused native and public controls. Keep parent setup, mandatory child success/group admission, schemas/bounds/cleanup. Exact original contract/source remains in group-admission and this preflight intake.`
+  Verification: `Native concurrent RED350 has parent0/childEPERM with intended same-session group; child-only/serialized controls finish10000 iterations each, bounded scope only. Corrected ordering RED and final three files22 tests/exact HDL Verilator+Yosys pass. EOF serialization preserves strict refusal and cleanup. First oracle/path/staged-token corrections are retained. Book/card/normal gates pass at1dd3061b9; historical causes and full publication remain open.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.34: serialize parent and child group setup`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.35`
   Status: `done`
   Goal: `Recognize indented native test failures in progress monitoring.`
-  Acceptance: `P1 before next native launch: fix only the proven indentation gap, retain original observer/actual missed samples, and use native failed-body, clean-pass and unrelated-text controls. Preserve exact run/journal/source/process authentication, complete-pass extraction and raw telemetry; focused evidence and normal commit.`
-  Verification: `Saved native classifier RED sees only the outer failure, missing both indented bodies. New anchored whitespace-aware helper detects all3 native lines, the original missed sample, four positive formats and seven clean/unrelated controls. Actual observer selected-expression bridge changes false to true on that sample, preserves clean false and every other observer byte. No journal/process/counter/native programme replay. Current source/template/first evidence retain in native-failure records; book/card/staged/normal gates precede .36.`
+  Acceptance: `Repair proven indentation gap using actual missed native samples and clean/adverse controls. Preserve source/journal/process authentication and telemetry. Exact original contract/source remains in native-failure and this preflight intake.`
+  Verification: `Native RED sees only outer line; helper GREEN detects all3 lines, missed sample, four positive and seven clean controls. Selected observer expression fixes false to true, clean stays false; all other bytes restore exactly. No spent programme replay. Source/receipt/book/card/staged/normal gates pass at c913dc92f; .36 adopts corrected template.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.35: detect indented native failure diagnostics`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.36`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify fresh full14 readiness after current launch and monitor repairs.`
   Acceptance: `After .34/.35 commit clean, join exact native/focused sources and settlement, refresh raw capacity/pressure with independent parser under unchanged88/4096, declare unused full14 slots/checkpoint and unchanged full programme/workflows. Commit before .13 once-only native run; complete0 precedes authorized push/all exact-SHA hosted/Pages and director pause. No blind retry, filters, opt-ins or spent replay.`
-  Verification: `Full13 nonpass is settled; native full14 has not started.`
-  Commit: `pending`
+  Verification: `Fresh57.78484344482422pct/pressure1 and independent saved-counter parser admit unchanged88/4096; five full14 slots absent. Exact source/proof/focused joins include changed shared supervisor/new T2302 and repaired classifier/template. Prior494 passing paths stay historical; full14 reruns all defaults. CI/guard/recorder/workflows and160 required jobs match source. Commit readiness before .13 once-only launch; no full/hosted success or future-headroom promise.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.36: qualify exclusive full14 readiness`
 
 ## Current Frontier
 
-Committed launch repair and saved-native diagnostic controls qualify .36 readiness.
-Join exact changed supervisor/tests and focused evidence; old native prefixes remain
-historical because the shared supervisor changed. Refresh capacity and declare
-exclusive full14 before .13 complete native/push/hosted/Pages and director pause.
+.36 joins committed repairs and fresh capacity for exclusive full14 readiness.
+.13 launches once from clean committed source, adopts the corrected classifier
+and consumes complete native success before push/all exact-SHA hosted/Pages.
+Then honor director pause; older prefixes/causes remain historically scoped.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.36` | `pending` | Admit exclusive full14 using the corrected classifier/template. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.13` | `active` | Launch/consume full14; complete native0 precedes push/hosted/Pages. |
 
 ## Decisions
 
@@ -709,7 +709,7 @@ exclusive full14 before .13 complete native/push/hosted/Pages and director pause
 
 ## Blockers
 
-- Focused repairs pass; fresh readiness and complete publication qualification remain.
+- Fresh readiness passes; complete native/push/hosted/Pages qualification remains.
 - Full13 is settled; no background result or user permission is outstanding.
 - Complete local/push/hosted/Pages remain .13; honor director pause afterward.
 
@@ -717,10 +717,10 @@ exclusive full14 before .13 complete native/push/hosted/Pages and director pause
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and observer retain in native-failure intake/source records.
+Exact prior task/history and completed repair narrative retain in full14-preflight-intake.
 
-## Acceptance Checklist — indented native failure diagnostics
+## Acceptance Checklist — exclusive full14 readiness
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual native diagnostic at t/1436-ial2-ppif-parser-cli.t line 5755 is indented. The old observer allows leading whitespace only for not ok, so its retained intermediate sample reports false despite both failed-body lines. Saved-log RED returns only the later outer line; no workload replay is needed.
-- [x] **ADDRESSED (verified)** — Use one anchored whitespace-aware classifier, retaining complete original lines. Native GREEN detects all3 lines and the missed sample; independent positive/clean controls pass. The exact observer bridge evaluates only its selected expression: original false becomes true, clean stays false, all other source bytes restore exactly. Preserve original source/RED and snapshot current helper/template for .36 adoption.
-- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify documents. Re-derive original native hash/body and missed sample; falsify actual old-classifier RED, independent diagnostic formats, clean prefix and unrelated text; durability is complete receipts/source/intakes and committed helper/book/card. No spent full13 journal, PID/counter programme, native regression, push or hosted replay. .36 must account for the changed shared supervisor before full14.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S _child_group_admission_error joins the shared admission contract; full13's actual pre-exec failure and missed indented body now have committed native race/ordering and saved-classifier RED/GREEN proofs. Shared supervisor changed, so old native prefixes cannot qualify current runtime; full14 must execute every default stage.
+- [x] **ADDRESSED (verified)** — Join exact current repair sources/focused receipts and settled native outcome, raw capacity/pressure with independent parser, five unused full14 slots and unchanged88/4096/CI/workflows. Preserve corrected observer template/helper and explicit actual-HEAD adoption. Commit readiness before .13 once-only unfiltered Perl/VIAL/book; no filters, opt-ins, replay or historical-cause inference.
+- [x] **NO REGRESSION** — knowledge-map: OK plus native book/copied-source/staged/normal gates qualify readiness. Re-derive source/counter/receipt joins; falsify exact changed-input set, independent parsers and genuine retained RED/refusal controls; durability is immutable closure/admission/plan/source and committed pointer. Full native/push/all exact-SHA hosted/Pages remain pending; pause follows their qualification.

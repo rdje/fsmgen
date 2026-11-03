@@ -371,9 +371,9 @@ preserved, and inactive read lanes are zero-filled.
 The arithmetic-mask width selector repair restores the shipped subordinate's
 strict check. Focused literal, shift and proof-refusal checks pass. A prior
 native publication gate also passed the HBURST subordinate/interconnect tests
-T1490–T1493 on this source. Later regression failures prevent complete
+T1490–T1493 in that run. Later regression failures prevent complete
 publication qualification, owned by `PUBLICATION-REGRESSION-REPAIRS.13`;
-the launch repair passes focused checks; complete publication remains pending.
+a fresh full run follows the launch repair; complete publication remains pending.
 
 Run the shipped generic byte-lane HBURST `SEQ` subordinate through the same
 review path:
