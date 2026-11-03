@@ -21,15 +21,10 @@ volume, normally `.artifacts/`. Persist relative paths; derive absolute paths.
 `PROJECT_DATA_LOCALITY.md` owns roots/external-input exceptions. Migration:
 copy/verify/use/delete exact owned data; retain ambiguous shared caches.
 
-Adoption is complete. `scripts/check_project_data_locality.sh` rejects OS-temp
-paths in runtime/tests/config/README/toolbox/book/cards/Knowledge Map and checks
-shared runtime/launcher controls.
+Adopted guard: `scripts/check_project_data_locality.sh` rejects OS-temp paths in runtime/tests/config/README/toolbox/book/cards/Knowledge Map and checks shared runtime/launcher controls.
 
 From repo cwd, `mdbook build docs/book --dest-dir .artifacts/book` resolves from
 cwd. Task `.3.2.15.7.3.9`: misplaced build's local copy, complete hashes, rendered
 inspection, exact deletion/residue.
 
-For `gh`, use the book's local XDG cache/state/temp wrapper with updates and
-telemetry disabled. Config/keychain remain read-only auth inputs.
-PUBLICATION-REGRESSION-REPAIRS.5 owns exact log-cache migration proof; other
-shared entries stay.
+`gh`: book-local XDG cache/state/temp, updates/telemetry off, config/keychain read-only auth. PUBLICATION-REGRESSION-REPAIRS.5 owns exact log-cache migration proof; other shared entries stay.

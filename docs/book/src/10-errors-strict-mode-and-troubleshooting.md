@@ -648,6 +648,14 @@ revision and results must be checked. Follow the task’s stated order for an
 open historical platform investigation, keeping its causal status separate
 from observed failures in those runs.
 
+Audit source snapshots use repository-relative producer addresses. The scoped
+reader checks those addresses, source hashes and readback from a relocated copy;
+original source text and native outcomes remain preserved:
+
+```bash
+python3 -B docs/audits/push-readiness-20261025/verify_audit_source_paths.py
+```
+
 T1545 emits failed fixture Git supervisor results as canonical JSON after
 `fixture Git result: `. It preserves launch errors, separate streams, status,
 timings, bounds and cleanup even when Git emits nothing. Failed checker results

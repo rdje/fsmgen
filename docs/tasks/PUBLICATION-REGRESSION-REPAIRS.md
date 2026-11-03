@@ -615,8 +615,8 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
 - ID: `PUBLICATION-REGRESSION-REPAIRS.28`
   Status: `done`
   Goal: `Refresh capacity and admit fresh full12 after the director resume.`
-  Acceptance: `After full11 outcome commits clean, inspect finished journal/receipt/settlement and prior source/repair joins. Director resume authorizes continuation, not higher limits or guaranteed headroom. Fresh raw capacity/kernel pressure plus independent adopted-formula parser must admit unchanged88/4096. If not admitted, retain the actual blocker; never kill unrelated jobs or blindly replay. Join current source/receipts and explicit late-path gaps, declare unique full12 journal/log/checkpoint/results and unchanged CI/recorder/workflows. Commit readiness before .13 once-only full Perl/VIAL/book; complete0 precedes normal push/all exact-SHA hosted/Pages. No reused checkpoint, filter or software-cause attribution without evidence.`
-  Verification: `After the director reports three other projects paused, fresh admission63.57549031575521pct/pressure1 passes unchanged88/4096; independent raw-counter parsing agrees. All five full12 native slots remain absent. Current closure preserves prior source/focused joins and536 independently extracted full11 passes on exact unchanged test bytes, with partial1472/later stages unqualified. CI/guard/recorder/workflow hashes and required-job inventory match the prior source-derived plan. Commit readiness before .13 once-only launch; no future headroom or full-success promise.`
+  Acceptance: `After settled full11, preserve current repair/source/receipt joins and late-path gaps; require fresh raw capacity/pressure with independent parsing, unchanged88/4096 and programme/workflows, unused full12 slots and a clean committed readiness boundary before .13. No reuse/filter/attribution or headroom promise. Full original/source remains in 4256f3431 and audit-source-paths-intake.`
+  Verification: `After three projects pause, new admission63.57549031575521pct/pressure1 independently passes; all five full12 native slots are unused. Closure retains prior focused sources and536 independently extracted unchanged full11 passing paths, with partial1472/later stages still open at that boundary. CI/guard/recorder/workflow hashes and required-job inventory match. Book/source/normal gates qualify readiness only; actual subsequent full12 nonpass is retained by .13.`
   Commit: `PUBLICATION-REGRESSION-REPAIRS.28: admit fresh full12 after capacity coordination`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.29`
@@ -664,27 +664,26 @@ macOS relevance assessment. The catalog predecessor is committed at1946fd353.
   Commit: `pending`
 
 - ID: `PUBLICATION-REGRESSION-REPAIRS.33`
-  Status: `pending`
+  Status: `done`
   Goal: `Remove project-absolute producer path metadata from publication source packets.`
   Acceptance: `P1 before .30/fresh publication: full12-outcome-source retains an absolute project-owned instrument.path because Python resolves __file__. Inspect structured path metadata in the relevant recent publication packets/producers, preserve exact originals and source identities, normalize only proven project-root path fields to repository-relative values and prevent recurrence in current snapshot helpers. Do not rewrite original source/native payloads or OS/toolchain dependencies. Verify complete field conservation, relocation-safe retrieval and negative controls; sync docs/task and commit separately.`
-  Verification: `Confirmed full12 outcome source instrument.path embeds the current repository root. Current T1545 snapshot helper is corrected before its proof is produced; prior committed packet repair remains this leaf. No runtime/build dependency or compiler behavior is blamed.`
-  Commit: `pending`
+  Verification: `Five producer path fields across the finite full11/full12 source packets normalize to literal relative addresses; all other JSON fields and embedded producer source identities are exact. Complete original compressed bytes retain in audit-source-paths-intake. Original reader RED1 becomes GREEN0 with invalid-address controls and same-volume relocated source/hash readback. Current five template helpers independently return relative metadata from actual absolute __file__ inputs; no spent programme executes. Proof/current helper sources preserve the repairs for fresh-session reuse. Book/fact/task and normal gates qualify metadata only; native CI/production inputs unchanged.`
+  Commit: `PUBLICATION-REGRESSION-REPAIRS.33: make audit producer addresses portable`
 
 ## Current Frontier
 
 .29.1 restores complete Git failure diagnostics and current focused fixture
 qualification; the omitted original full12 launch cause remains .29.2, scheduled
 first at macOS relevance after qualified push/director resume or immediately on
-recurrence. .33 removes project-absolute audit metadata, then .30 phase-control repair,
+recurrence. .33 closes the audit path metadata repair. Next: .30 phase-control repair,
 .31 due maintenance and .32 fresh full13
 readiness precede .13 complete native/push/hosted/Pages and the director pause.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `PUBLICATION-REGRESSION-REPAIRS.33` | `pending` | Repair confirmed project-absolute audit path metadata. |
-| 2 | `PUBLICATION-REGRESSION-REPAIRS.30` | `pending` | Establish intended phase-control output before repairing its mismatch. |
-| 3 | `PUBLICATION-REGRESSION-REPAIRS.31` | `pending` | Complete due safe artifact maintenance. |
-| 4 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness. |
+| 1 | `PUBLICATION-REGRESSION-REPAIRS.30` | `pending` | Establish intended phase-control output before repairing its mismatch. |
+| 2 | `PUBLICATION-REGRESSION-REPAIRS.31` | `pending` | Complete due safe artifact maintenance. |
+| 3 | `PUBLICATION-REGRESSION-REPAIRS.32` | `pending` | Qualify exclusive fresh full13 readiness. |
 
 ## Decisions
 
@@ -702,10 +701,10 @@ readiness precede .13 complete native/push/hosted/Pages and the director pause.
 
 - Acceptance history manifest: `docs/tasks/history/PUBLICATION-REGRESSION-REPAIRS/acceptance-history.jsonl`
 
-Exact prior task/history and curated completed narratives retain in t1545-git-diagnostic-intake-20261103.
+Exact prior task/history/cards and packet bytes retain in audit-source-paths-intake-20261103.
 
-## Acceptance Checklist — fixture Git diagnostic retention
+## Acceptance Checklist — portable audit source metadata
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Full12 reports stage fixture baseline failed (exec_error) at t/1545-task-acceptance-doctrine.t line 352, but command_ok discards diagnostic/exec_error/cleanup and prints only status/empty streams. git log -S my $result = run_fixture_git identifies d630261e as the structured-helper migration; the actual pickaxe command and exact source are retained. Genuine native containment refusal reproduces missing JSON, with no attribution of the old launch cause.
-- [x] **ADDRESSED (verified)** — One canonical failed-Git JSON diagnostic preserves the complete actual supervisor result without altering the original die/streams, helper, command, limits or retry policy. Native retention RED fails only missing emission; current GREEN preserves actual exec_error/PID/cleanup, full-record equality and every original assertion. The first unchanged replay passes and its expected-status mismatch is retained. Historical cause stays scheduled under .29.2 and activates immediately on recurrence.
-- [x] **NO REGRESSION** — All tests successful; Files=1, Tests=12 in t1545-git-retention-green-20261103. Exact inverse conserves all original test bytes; helper/supervisor hashes are unchanged. Re-derive actual native results/source/record; falsify via original missing-diagnostic RED and genuine kernel refusal plus independent child/group absence; durability is complete native/source/intake/proof, book/fact/task/Git. Native book/KMap/staged/normal gates qualify this focused slice only; full local/push/hosted remain pending.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual saved instrument.path metadata contains the checkout root or its placeholder because producers stringify Python __file__ without relativizing it. git log -S full12-outcome-intake identifies 6da362e27/4256f3431 ownership; exact original packets and producer helpers retain in the intake. The finite native reader rejects the original address before any mutation.
+- [x] **ADDRESSED (verified)** — Normalize only the declared producer path field in each affected packet; all other JSON/source/hash/native fields remain exact and original compressed bytes are retained. Correct current helper functions/expressions and exercise actual absolute inputs without replaying spent programmes. Reader GREEN, invalid-address refusals, independent expected paths and relocated source/hash readback qualify portability.
+- [x] **NO REGRESSION** — knowledge-map: OK and native book/copied-source/staged/normal gates qualify this metadata slice only. Re-derive original/current fields, packet/source hashes and helper returns; falsify via original reader RED, exact field-excluded JSON equality, sibling-root refusals and relocated readback; durability is complete intake/proof/source/native receipts plus book/fact/task/Git. Production, compiler, CI, guard and native outcome bytes are unchanged; full local/push/hosted remain pending.
